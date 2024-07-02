@@ -1,0 +1,45 @@
+@import "app/styles/abstracts/variables"
+
+
+.inputLabel
+  display: block
+  max-width: 30rem
+  min-width: 15rem
+  padding: 0 1rem
+
+  .info
+    width: 100%
+    display: flex
+    align-items: center
+    justify-content: space-between
+    span
+      font-weight: 600
+      font-size: 1.5rem
+      margin-bottom: 1rem
+  .field
+    width: 100%
+    display: flex
+    align-items: center
+    .input
+      border: 1px solid $main-border-color
+      outline: none
+      font-size: 1.6rem
+      padding: 2px 10px
+      width: 100%
+      height: 3.5rem
+      border-radius: 15px
+      &:focus
+        outline: 1px solid $main-border-color
+      &.error
+        border: none
+        outline: 2px solid  $error-outline-color
+    .eye
+      margin-left: 1rem
+      font-size: 2rem
+  .message
+    position: relative
+    margin-top: 1rem
+    &__error
+      font-size: 1.5rem
+      color: $error-color
+
