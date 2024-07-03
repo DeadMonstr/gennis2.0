@@ -1,6 +1,6 @@
 import cls from "./login.module.sass"
-import gennisImg from "shared/assets/ghcvb 1.svg"
-import loginAside from "shared/assets/login-page-4468581-3783954 1.svg"
+import gennisImg from "shared/assets/images/ghcvb 1.svg"
+import loginAside from "shared/assets/images/login-page-4468581-3783954 1.svg"
 import Button from "../../../shared/ui/button/button";
 import Input from "shared/ui/input/input";
 import {useState} from "react";
