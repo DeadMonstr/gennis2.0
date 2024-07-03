@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Button from "shared/ui/button/button";
 import Radio from "../../../shared/ui/radio/radio";
-import Dropdawn from "../../../shared/ui/dropdawn/dropdown";
+import Dropdown from "../../../shared/ui/dropdawn/dropdown";
 
 export const Home = () => {
     const [selected, setSelected] = useState(false)
@@ -34,13 +34,12 @@ export const Home = () => {
             <Radio onChange={() => setSelected} checked={selected}>
                 dsa
             </Radio>
-            <Dropdawn title={"dadsad1"} >
+            <Dropdown title={"dadsad1"} >
                 hello
                 <Button>
                     push
                 </Button>
-            </Dropdawn>
+            </Dropdown>
         </div>
-    );
-};
+)}
 
