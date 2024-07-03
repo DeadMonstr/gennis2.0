@@ -1,0 +1,48 @@
+.login
+  width: 100%
+  height: auto
+  padding: 2px
+  display: flex
+  justify-content: center
+  align-items: center
+  &__boxes
+    background-color: white
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.10), 0 6px 14px 0 rgba(0, 0, 0, 0.10), 0 25px 25px 0 rgba(0, 0, 0, 0.09), 0 56px 33px 0 rgba(0, 0, 0, 0.05), 0 99px 40px 0 rgba(0, 0, 0, 0.01), 0 155px 43px 0 rgba(0, 0, 0, 0.00)
+    padding: 30px
+    display: flex
+    width: 57%
+    justify-content: space-between
+    border-radius: 5px
+    gap: 30px
+    &__login__box
+      text-align: center
+
+    &__box
+      display: grid
+      grid-template-rows: 80px 165px
+      padding-top: 30px
+      &__headerTitle
+        text-transform: capitalize
+      &__form
+        form
+          display: flex
+          flex-direction: column
+          justify-content: space-between
+          height: auto
+          div
+            display: flex
+            text-transform: capitalize
+
+
+  &__aside
+    background-color: #bae6fd
+    border-radius: 10px
+    width: 70%
+    display: flex
+    align-items: center
+    justify-content: center
+    &__img
+      object-fit: cover
+      filter: contrast(100%)
+
+
