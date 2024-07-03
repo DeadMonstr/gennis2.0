@@ -1,0 +1,63 @@
+@import "app/styles/abstracts/variables"
+@import "app/styles/abstracts/mixins"
+
+
+.btn
+  display: flex
+  justify-content: center
+  gap: 5px
+  font-weight: 700
+  align-items: center
+  //width: fit-content
+  //height: fit-content
+  padding: 10px 20px 10px 20px
+  color: #F5F5F5
+  border-radius: 5px
+  cursor: pointer
+  outline: none
+  text-transform: capitalize
+  margin: 5px
+  @include btn-active
+  border: 2px solid #008ac6
+  background-color: $btn-gennis
+
+  &.simple
+    @include btn-active
+    border: 2px solid #008ac6
+    background-color: $btn-gennis
+
+  &.success
+    @include btn-active
+    background-color: $btn-success
+    border: 2px solid #BBF7D0
+
+  &.danger
+    @include btn-active
+    background-color: $btn-danger
+    border: 1px solid #fecdd3
+
+  &.warning
+    @include btn-active
+    background-color: $btn-warning
+    border: 2px solid #FEF08A
+
+  &.disabled
+    background: #eeeeee
+    border: none
+    backdrop-filter: blur(5px)
+    color: #9f9d9d
+    cursor: not-allowed
+    transform: none
+
+  &.star
+    @include btn-active
+    padding: 0
+    width: 50px
+    height: 50px
+    border-radius: 50%
+    border: none
+    background-color: $btn-gennis
+
+    img
+      transform: translate(0, -1px)
+

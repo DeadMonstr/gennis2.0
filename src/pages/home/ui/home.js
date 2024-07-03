@@ -1,10 +1,16 @@
-import React, {useMemo, useState} from 'react';
+import React, {useMemo, useState} from "react";
+
 
 import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
 import {Pagination} from "shared/ui/pagination";
 import {Table} from "shared/ui/table";
 import {Form} from "shared/ui/form";
+
+import Dropdown from "shared/ui/dropdawn/dropdown";
+import Button from "shared/ui/button/button";
+import {Alert} from "shared/ui/alert/alert";
+import Radio from "shared/ui/radio/radio";
 
 const list = [
     {
@@ -134,6 +140,8 @@ export const Home = () => {
 
     const [search, setSearch] = useState("")
 
+    const [selected, setSelected] = useState()
+
 
     const searchedUsers = useMemo(() => {
         const filteredHeroes = users.slice()
@@ -153,10 +161,10 @@ export const Home = () => {
 
 
     const renderStudents = () => {
-        return users.map((item,index) => {
+        return users.map((item, index) => {
             return (
                 <tr>
-                    <td>{index+1}</td>
+                    <td>{index + 1}</td>
                     <td>{item.name}</td>
                     <td>{item.surname}</td>
                     <td>{item.username}</td>
@@ -260,9 +268,41 @@ export const Home = () => {
 
             </Form>
 
-
-
+            <div>
+                <h1>Hello</h1>
+                <Button type={"simple"}>
+                    click
+                </Button>
+                <Button type={"danger"}>
+                    click
+                </Button>
+                <Button type={"success"}>
+                    click
+                </Button>
+                <Button type={"warning"}>
+                    click
+                </Button>
+                <Button type={"disabled"}>
+                    click
+                </Button>
+                <Button type={"danger"} status={"checked"}>
+                    click
+                </Button>
+                <Button type={"warning"} status={"false"}>
+                    click
+                </Button>
+                <Button type={"star"}/>
+                <Radio onChange={() => setSelected} checked={selected}>
+                    dsa
+                </Radio>
+                <Dropdown title={"dadsad1"}>
+                    hello
+                    <Button>
+                        push
+                    </Button>
+                </Dropdown>
+                <Alert/>
+            </div>
         </div>
-    );
+    )
 };
-
