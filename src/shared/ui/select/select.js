@@ -6,7 +6,7 @@ import classNames from "classnames";
 export const Select = ({options, keyValue, all, required, defaultValue, title, onChangeOption, status}) => {
 
     const [selectOption, setSelectOption] = useState("")
-    const [optionsData, setOptionsData] = useState(null)
+    const [optionsData, setOptionsData] = useState([])
 
     useEffect(() => {
         setOptionsData(options)
@@ -22,19 +22,22 @@ export const Select = ({options, keyValue, all, required, defaultValue, title, o
     const renderOptionsOfSelect = useCallback(() => {
         return optionsData?.map((item, index) => {
 
-            const value = item[keyValue] || item.value || item.id || item.name || item
-            const key = item.name || item
+            //
+            // const value = item[keyValue] || item.value || item.id || item.name || item
+            // const key = item.name || item
+            //
+            // if (!item.length)
+                return (
+                    <option
+                        disabled={item.disabled}
+                        key={index}
+                        value={item.value}
+                    >
+                        {item.label}
+                    </option>
 
-            if (!item.length)
-            return (
-                <option
-                    disabled={item.disabled}
-                    key={index}
-                    value={value}
-                >
-                    {key}
-                </option>
-            )
+                )
+
         })
     }, [optionsData, keyValue])
 

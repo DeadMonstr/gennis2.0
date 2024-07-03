@@ -3,8 +3,8 @@ import {createRoutesFromElements, Route, RouterProvider} from "react-router";
 import {createBrowserRouter} from "react-router-dom";
 import {Home} from "pages/home/ui/home";
 import Login from "pages/login/ui/login";
-import Register from "pages/register/ui/register";
-import NotFoundPage from "pages/notfound/ui/notfound";
+import {Register} from "pages/register/ui/register";
+import {NotFoundPage} from "pages/notfound/ui/notfound";
 
 import "app/styles/index.sass"
 

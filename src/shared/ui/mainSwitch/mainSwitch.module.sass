@@ -1,0 +1,56 @@
+@import "app/styles/abstracts/variables"
+
+.mainSwitch
+  width: 160px
+  height: 5rem
+  display: flex
+  padding: 5px
+  align-items: center
+  border: none
+  gap: 15px
+  border-radius: 25px
+  &__iconHandler
+    width: 40px
+    height: 40px
+    border-radius: 50%
+    display: flex
+    align-items: center
+    text-align: center
+    justify-content: center
+    background: $color-success-bg
+    transition: 0.3s ease-in-out
+    transform: translateX(0)
+    &__center
+      width: 40px
+      height: 40px
+      border-radius: 50%
+      display: flex
+      align-items: center
+      text-align: center
+      justify-content: center
+      background: $color-success-bg
+      transition: 0.3s ease-in-out
+      transform: translateX(110px)
+
+  &__icon
+    width: 30px
+    filter: contrast(100%)
+  &__text
+    color: $white-main-color
+    letter-spacing: 1.3px
+    font-weight: 500
+    transition: 0.3s ease-in-out
+    transform: translateX(0)
+    &__center
+      color: $white-main-color
+      letter-spacing: 1.3px
+      font-weight: 500
+      transform: translateX(-50px)
+      transition: 0.3s ease-in-out
+
+.activeBg
+
+  background: linear-gradient(to right, $btn-switch-center, $btn-switch-center-gr)
+
+.passiveBg
+  background: linear-gradient(to right, $btn-switch-school, $btn-switch-school-gr)

@@ -6,13 +6,13 @@ const SearchInput = memo(({ search}) => {
 
     return (
         <label id={cls.search} className={cls.search}>
+            <span><i className="fas fa-search" /></span>
             <input
                 value={search}
                 placeholder={"Qidiruv "}
                 id="search"
                 type="text"
             />
-            <span><i className="fas fa-search" /></span>
         </label>
     );
 });

@@ -1,16 +1,30 @@
-import React, {useMemo, useState} from "react";
-
-
+import React, {useMemo, useState} from 'react';
+import Input from "shared/ui/input/input";
+import Switch from "shared/ui/switch/switch";
+import SearchInput from "shared/ui/searchInput/search";
+import Textarea from "shared/ui/textArea/textArea";
+import {Alert} from "shared/ui/alert/alert";
+import Button from "shared/ui/button/button";
+import Radio from "shared/ui/radio/radio";
+import Dropdawn from "shared/ui/dropdawn/dropdown";
 import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
 import {Pagination} from "shared/ui/pagination";
-import {Table} from "shared/ui/table";
-import {Form} from "shared/ui/form";
+import {MainSwitch} from "../../../shared/ui/mainSwitch";
+// import {Table} from "shared/ui/table";
+const activeRows = {
+    name: true,
+    surname: true,
+    username: true,
+    phone: false,
+    reason: false,
+    job: false,
+    age: false,
+    reg_date: false,
+    deleted_date: false,
+    deletedDate: false
+}
 
-import Dropdown from "shared/ui/dropdawn/dropdown";
-import Button from "shared/ui/button/button";
-import {Alert} from "shared/ui/alert/alert";
-import Radio from "shared/ui/radio/radio";
 
 const list = [
     {
@@ -41,90 +55,28 @@ const list = [
 
 const users = [
     {
-        id: 1,
         username: "NoN",
         name: "John",
-        surname: "Smith",
-        age: 13,
-        subjects: ["matem"],
-        reg_date: "2024-07-03",
-        comment: "dsfgsdfdsfg"
+        surname: "Smith"
     },
     {
-        id: 2,
         username: "noname",
         name: "Alex",
-        surname: "Smith",
-        age: 10,
-        subjects: ["Tarix", "matem"],
-        reg_date: "2024-07-03",
-        comment: "dsfdsfaer thyjgfjn g "
+        surname: "Smith"
     },
     {
-        id: 3,
         username: "killer",
         name: "Stive",
-        surname: "Smith",
-        age: 15,
-        subjects: ["Ingliz tili"],
-        reg_date: "2024-07-03",
-        comment: "sdfsd"
+        surname: "Smith"
     },
     {
-        id: 4,
         username: "god",
         name: "Notch",
-        surname: "Smith",
-        age: 11,
-        subjects: ["Biologiya"],
-        reg_date: "2024-07-03",
-        comment: "24f34fwe312f"
-    },
-    {
-        id: 5,
-        username: "god",
-        name: "Notch",
-        surname: "Smith",
-        age: 15,
-        subjects: ["Biologiya"],
-        reg_date: "2024-07-03",
-        comment: "24f34fwe312f"
-    },
-    {
-        id: 6,
-        username: "god",
-        name: "Notch",
-        surname: "Smith",
-        age: 16,
-        subjects: ["Biologiya"],
-        reg_date: "2024-07-03",
-        comment: "24f34fwe312f"
-    },
-    {
-        id: 7,
-        username: "god",
-        name: "Notch",
-        surname: "Smith",
-        age: 17,
-        subjects: ["Biologiya"],
-        reg_date: "2024-07-03",
-        comment: "24f34fwe312f"
-    },
-    {
-        id: 8,
-        username: "god",
-        name: "Notch",
-        surname: "Smith",
-        age: 18,
-        subjects: ["Biologiya"],
-        reg_date: "2024-07-03",
-        comment: "24f34fwe312f"
+        surname: "Smith"
     }
 ]
-
-
 export const Home = () => {
-
+    const [selected, setSelected] = useState(false)
     const [active, setActive] = useState(true)
 
     const onChange = (value) => {
@@ -132,15 +84,11 @@ export const Home = () => {
 
 
     }
-
-
     let PageSize = useMemo(() => 1, [])
 
     const [currentPage, setCurrentPage] = useState(1);
 
     const [search, setSearch] = useState("")
-
-    const [selected, setSelected] = useState()
 
 
     const searchedUsers = useMemo(() => {
@@ -158,33 +106,13 @@ export const Home = () => {
         const lastPageIndex = firstPageIndex + PageSize;
         return searchedUsers.slice(firstPageIndex, lastPageIndex);
     }, [PageSize, currentPage, searchedUsers]);
-
-
-    const renderStudents = () => {
-        return users.map((item, index) => {
-            return (
-                <tr>
-                    <td>{index + 1}</td>
-                    <td>{item.name}</td>
-                    <td>{item.surname}</td>
-                    <td>{item.username}</td>
-                    {/*{checkTrueFalse(item.dates)}*/}
-                </tr>
-            )
-        })
-    }
-
-
     return (
-        <div
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: "2rem"
-            }}
-        >
-
+        <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "2rem"
+        }}>
 
             <button onClick={() => setActive(!active)}>Enter</button>
 
@@ -218,6 +146,7 @@ export const Home = () => {
                 // keyValue={"label"}
                 defaultValue={"potato"}
             />
+            <Alert/>
 
             <Modal
                 active={active}
@@ -247,65 +176,16 @@ export const Home = () => {
                         setCurrentPage(page)
                     }}
                 />
+                <MainSwitch/>
+                <SearchInput/>
             </div>
 
-            <div style={{width: "100%", padding: "3rem 5rem"}}>
-                <Table>
-                    <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Ism</th>
-                        <th>Familya</th>
-                        <th>Username</th>
+            {/*<Table*/}
+            {/*    users={users}*/}
+            {/*    activeRowsInTable={activeRows}*/}
+            {/*/>*/}
 
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {renderStudents()}
-                    </tbody>
-                </Table>
-            </div>
-
-
-            <Form>
-
-            </Form>
-
-            <div>
-                <h1>Hello</h1>
-                <Button type={"simple"}>
-                    click
-                </Button>
-                <Button type={"danger"}>
-                    click
-                </Button>
-                <Button type={"success"}>
-                    click
-                </Button>
-                <Button type={"warning"}>
-                    click
-                </Button>
-                <Button type={"disabled"}>
-                    click
-                </Button>
-                <Button type={"danger"} status={"checked"}>
-                    click
-                </Button>
-                <Button type={"warning"} status={"false"}>
-                    click
-                </Button>
-                <Button type={"star"}/>
-                <Radio onChange={() => setSelected} checked={selected}>
-                    dsa
-                </Radio>
-                <Dropdown title={"dadsad1"}>
-                    hello
-                    <Button>
-                        push
-                    </Button>
-                </Dropdown>
-                <Alert/>
-            </div>
         </div>
-    )
+    );
+
 };
