@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import cls from "./textArea.module.sass"
 import classNames from "classnames";
 
@@ -18,6 +18,8 @@ const Textarea = React.memo((
         extraClassName,
         value
     }) => {
+
+    const [silk, setSilk] = useState("")
 
 
     return register ? (
@@ -40,7 +42,7 @@ const Textarea = React.memo((
                     value:value,
                     defaultValue: defaultValue,
                     placeholder: placeholder,
-                    onChange: e => onChange ? onChange(e): null
+                    onChange: setSilk
                 })}
             />
             <div className={cls.message}>
@@ -67,7 +69,7 @@ const Textarea = React.memo((
                 required={required}
                 defaultValue={defaultValue}
                 placeholder={placeholder}
-                onChange={e => onChange(e.target.value)}
+                onChange={setSilk}
             />
         </label>
     );

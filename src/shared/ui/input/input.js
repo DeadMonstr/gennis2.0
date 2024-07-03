@@ -25,7 +25,7 @@ const Input = React.memo((
     }) => {
 
     const [showPassword,setShowPassword] = useState(false)
-
+    const [silk, setSilk] = useState("")
 
 
     return register ? (
@@ -33,8 +33,8 @@ const Input = React.memo((
             {
                 title || subTitle ?
                     <div className={cls.info}>
-                        <span>{title}</span>
-                        <span>{subTitle}</span>
+                        {title && <span>{title}</span>}
+                        {subTitle && <span>{subTitle}</span>}
                     </div> : null
             }
             <div className={cls.field}>
@@ -52,8 +52,8 @@ const Input = React.memo((
                         defaultValue: defaultValue,
                         placeholder: placeholder,
                         value:value,
-                        ...extraValues
-                        // onChange: e => onChange(e.target.value)
+                        ...extraValues,
+                        onChange: setSilk
                     })}
                 />
                 {
@@ -81,8 +81,8 @@ const Input = React.memo((
     ) : (
         <label style={style} className={cls.inputLabel} htmlFor={name}>
             <div className={cls.info}>
-                <span>{title}</span>
-                <span>{subTitle}</span>
+                {title && <span>{title}</span>}
+                {subTitle && <span>{subTitle}</span>}
             </div>
             <div className={cls.field}>
                 <input
@@ -97,7 +97,7 @@ const Input = React.memo((
                     pattern={pattern}
                     required={required}
                     placeholder={placeholder}
-                    onChange={e => onChange(e.target.value)}
+                    onChange={setSilk}
                     {...extraValues}
                 />
                 {

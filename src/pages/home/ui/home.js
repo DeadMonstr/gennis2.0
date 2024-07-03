@@ -1,7 +1,15 @@
 import React, {useState} from 'react';
+
 import Button from "shared/ui/button/button";
 import Radio from "../../../shared/ui/radio/radio";
 import Dropdown from "../../../shared/ui/dropdawn/dropdown";
+
+import Input from "shared/ui/input/input";
+import Switch from "shared/ui/switch/switch";
+import SearchInput from "shared/ui/searchInput/search";
+import Textarea from "shared/ui/textArea/textArea";
+import {Alert} from "shared/ui/alert/alert";
+
 
 export const Home = () => {
     const [selected, setSelected] = useState(false)
