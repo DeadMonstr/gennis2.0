@@ -1,0 +1,38 @@
+
+.label
+  width: fit-content
+  height: fit-content
+  display: flex
+  flex-direction: column
+  gap: .7rem
+  position: relative
+
+  &__inner
+    min-width: 240px
+    min-height: 40px
+    padding: .5rem 1rem
+    font-size: 1.3rem
+    border-radius: .5rem
+
+    &.error
+      border: 1px solid #900B09
+
+  &__title
+    font-size: 1.1rem
+    position: absolute
+    left: 1.5rem
+    top: -.7rem
+    background-color: white
+    padding: .2rem .5rem
+    color: #676767
+    z-index: 10
+
+    &.disabled
+      color: #949494
+
+    &.error
+      color: #900B09
+
+  &__error
+    font-size: 1.1rem
+    color: #900B09

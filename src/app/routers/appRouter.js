@@ -3,6 +3,8 @@ import {createRoutesFromElements, Route, RouterProvider} from "react-router";
 import {createBrowserRouter} from "react-router-dom";
 import {Home} from "pages/home/ui/home";
 
+import "app/styles/index.sass"
+
 export const AppRouter = () => {
 
     const router = createBrowserRouter(

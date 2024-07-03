@@ -4,7 +4,7 @@ import classNames from "classnames";
 import cls from "./modal.module.sass";
 import close from "shared/assets/icons/cross.svg";
 
-const Modal = ({children, active, setActive}) => {
+export const Modal = ({children, active, setActive}) => {
 
     const onClick = (target) => {
         if (target.className.includes("outClose")) {
@@ -33,5 +33,3 @@ const Modal = ({children, active, setActive}) => {
         );
     }
 };
-
-export default Modal;
