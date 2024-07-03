@@ -174,6 +174,7 @@ export const Home = () => {
                     }}
                 />
                 <MainSwitch/>
+                <SearchInput/>
             </div>
 
             {/*<Table*/}
