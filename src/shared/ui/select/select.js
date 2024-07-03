@@ -26,15 +26,15 @@ export const Select = ({options, keyValue, all, required, defaultValue, title, o
             const key = item.name || item
 
             if (!item.length)
-                return (
-                    <option
-                        disabled={item.disabled}
-                        key={index}
-                        value={value}
-                    >
-                        {key}
-                    </option>
-                )
+            return (
+                <option
+                    disabled={item.disabled}
+                    key={index}
+                    value={value}
+                >
+                    {key}
+                </option>
+            )
         })
     }, [optionsData, keyValue])
 

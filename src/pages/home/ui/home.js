@@ -4,21 +4,7 @@ import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
 import {Pagination} from "shared/ui/pagination";
 import {Table} from "shared/ui/table";
-
-
-const activeRows = {
-    name: true,
-    surname: true,
-    username: true,
-    phone: false,
-    reason: false,
-    job: false,
-    age: false,
-    reg_date: false,
-    deleted_date: false,
-    deletedDate: false
-}
-
+import {Form} from "shared/ui/form";
 
 const list = [
     {
@@ -49,24 +35,84 @@ const list = [
 
 const users = [
     {
+        id: 1,
         username: "NoN",
         name: "John",
-        surname: "Smith"
+        surname: "Smith",
+        age: 13,
+        subjects: ["matem"],
+        reg_date: "2024-07-03",
+        comment: "dsfgsdfdsfg"
     },
     {
+        id: 2,
         username: "noname",
         name: "Alex",
-        surname: "Smith"
+        surname: "Smith",
+        age: 10,
+        subjects: ["Tarix", "matem"],
+        reg_date: "2024-07-03",
+        comment: "dsfdsfaer thyjgfjn g "
     },
     {
+        id: 3,
         username: "killer",
         name: "Stive",
-        surname: "Smith"
+        surname: "Smith",
+        age: 15,
+        subjects: ["Ingliz tili"],
+        reg_date: "2024-07-03",
+        comment: "sdfsd"
     },
     {
+        id: 4,
         username: "god",
         name: "Notch",
-        surname: "Smith"
+        surname: "Smith",
+        age: 11,
+        subjects: ["Biologiya"],
+        reg_date: "2024-07-03",
+        comment: "24f34fwe312f"
+    },
+    {
+        id: 5,
+        username: "god",
+        name: "Notch",
+        surname: "Smith",
+        age: 15,
+        subjects: ["Biologiya"],
+        reg_date: "2024-07-03",
+        comment: "24f34fwe312f"
+    },
+    {
+        id: 6,
+        username: "god",
+        name: "Notch",
+        surname: "Smith",
+        age: 16,
+        subjects: ["Biologiya"],
+        reg_date: "2024-07-03",
+        comment: "24f34fwe312f"
+    },
+    {
+        id: 7,
+        username: "god",
+        name: "Notch",
+        surname: "Smith",
+        age: 17,
+        subjects: ["Biologiya"],
+        reg_date: "2024-07-03",
+        comment: "24f34fwe312f"
+    },
+    {
+        id: 8,
+        username: "god",
+        name: "Notch",
+        surname: "Smith",
+        age: 18,
+        subjects: ["Biologiya"],
+        reg_date: "2024-07-03",
+        comment: "24f34fwe312f"
     }
 ]
 
@@ -106,6 +152,21 @@ export const Home = () => {
     }, [PageSize, currentPage, searchedUsers]);
 
 
+    const renderStudents = () => {
+        return users.map((item,index) => {
+            return (
+                <tr>
+                    <td>{index+1}</td>
+                    <td>{item.name}</td>
+                    <td>{item.surname}</td>
+                    <td>{item.username}</td>
+                    {/*{checkTrueFalse(item.dates)}*/}
+                </tr>
+            )
+        })
+    }
+
+
     return (
         <div
             style={{
@@ -115,8 +176,6 @@ export const Home = () => {
                 gap: "2rem"
             }}
         >
-
-
 
 
             <button onClick={() => setActive(!active)}>Enter</button>
@@ -179,10 +238,28 @@ export const Home = () => {
                 />
             </div>
 
-            <Table
-                users={users}
-                activeRowsInTable={activeRows}
-            />
+            <div style={{width: "100%", padding: "3rem 5rem"}}>
+                <Table>
+                    <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Ism</th>
+                        <th>Familya</th>
+                        <th>Username</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {renderStudents()}
+                    </tbody>
+                </Table>
+            </div>
+
+
+            <Form>
+
+            </Form>
+
 
 
         </div>
