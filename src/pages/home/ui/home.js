@@ -189,14 +189,17 @@ export const Home = () => {
             <button onClick={() => setActive(!active)}>Enter</button>
 
 
-            <Select
-                status={"error"}
-                title={"select"}
-                options={list}
-                onChangeOption={onChange}
-                // keyValue={"label"}
-                defaultValue={"potato"}
-            />
+            <div style={{width: "500px"}}>
+
+                <Select
+                    status={"error"}
+                    title={"select"}
+                    options={list}
+                    onChangeOption={onChange}
+                    // keyValue={"label"}
+                    defaultValue={"potato"}
+                />
+            </div>
 
             <Select
                 status={"disabled"}
