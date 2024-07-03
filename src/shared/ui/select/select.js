@@ -21,6 +21,7 @@ export const Select = ({options, keyValue, all, required, defaultValue, title, o
 
     const renderOptionsOfSelect = useCallback(() => {
         return optionsData?.map((item, index) => {
+
             //
             // const value = item[keyValue] || item.value || item.id || item.name || item
             // const key = item.name || item
@@ -36,6 +37,7 @@ export const Select = ({options, keyValue, all, required, defaultValue, title, o
                     </option>
 
                 )
+
         })
     }, [optionsData, keyValue])
 

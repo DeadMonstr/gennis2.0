@@ -1,7 +1,7 @@
 import classNames from "classnames";
-import star from "shared/assets/Star.svg"
-import checked from "shared/assets/Checked.svg"
-import close from "shared/assets/close.svg"
+import star from "shared/assets/icons/Star.svg"
+import checked from "shared/assets/icons/Checked.svg"
+import close from "shared/assets/icons/close.svg"
 
 import cls from "./button.module.sass"
 

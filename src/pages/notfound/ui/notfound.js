@@ -1,6 +1,6 @@
 import React from 'react';
 import cls from "./notfound.module.sass"
-import Notfound from 'shared/assets/404_found.svg'
+import Notfound from 'shared/assets/images/404_found.svg'
 export  const NotFoundPage = () => {
     return (
         <div className={cls.pageStyle}>

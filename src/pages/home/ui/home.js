@@ -10,6 +10,7 @@ import Dropdawn from "shared/ui/dropdawn/dropdown";
 import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
 import {Pagination} from "shared/ui/pagination";
+import {MainSwitch} from "../../../shared/ui/mainSwitch";
 // import {Table} from "shared/ui/table";
 const activeRows = {
     name: true,
@@ -113,74 +114,74 @@ export const Home = () => {
             gap: "2rem"
         }}>
 
-                <button onClick={() => setActive(!active)}>Enter</button>
+            <button onClick={() => setActive(!active)}>Enter</button>
 
 
-                <Select
-                    status={"error"}
-                    title={"select"}
-                    options={list}
-                    onChangeOption={onChange}
-                    // keyValue={"label"}
-                    defaultValue={"potato"}
-                />
+            <Select
+                status={"error"}
+                title={"select"}
+                options={list}
+                onChangeOption={onChange}
+                // keyValue={"label"}
+                defaultValue={"potato"}
+            />
 
-                <Select
-                    status={"disabled"}
-                    title={"select"}
-                    options={list}
-                    onChangeOption={onChange}
-                    // keyValue={"label"}
-                    defaultValue={"potato"}
-                />
+            <Select
+                status={"disabled"}
+                title={"select"}
+                options={list}
+                onChangeOption={onChange}
+                // keyValue={"label"}
+                defaultValue={"potato"}
+            />
 
-                <Select
-                    // status={"error"}
-                    title={"select"}
-                    options={list}
-                    onChangeOption={onChange}
-                    // keyValue={"label"}
-                    defaultValue={"potato"}
-                />
+            <Select
+                // status={"error"}
+                title={"select"}
+                options={list}
+                onChangeOption={onChange}
+                // keyValue={"label"}
+                defaultValue={"potato"}
+            />
             <Alert/>
 
-                <Modal
-                    active={active}
-                    setActive={setActive}
-                >
-                    <h1>Hello Sarik</h1>
-                    <h1>Hello World</h1>
-                </Modal>
+            <Modal
+                active={active}
+                setActive={setActive}
+            >
+                <h1>Hello Sarik</h1>
+                <h1>Hello World</h1>
+            </Modal>
 
 
-                <div>
-                    {
-                        currentTableData.map((item, i) => {
-                            return (
-                                <div key={i}>
-                                    <div>{item.username}</div>
-                                    <p>{item.name} {item.surname}</p>
-                                </div>
-                            )
-                        })
-                    }
-                    <Pagination
-                        currentPage={currentPage}
-                        totalCount={searchedUsers.length}
-                        pageSize={PageSize}
-                        onPageChange={page => {
-                            setCurrentPage(page)
-                        }}
-                    />
-                </div>
-
-                {/*<Table*/}
-                {/*    users={users}*/}
-                {/*    activeRowsInTable={activeRows}*/}
-                {/*/>*/}
-
+            <div>
+                {
+                    currentTableData.map((item, i) => {
+                        return (
+                            <div key={i}>
+                                <div>{item.username}</div>
+                                <p>{item.name} {item.surname}</p>
+                            </div>
+                        )
+                    })
+                }
+                <Pagination
+                    currentPage={currentPage}
+                    totalCount={searchedUsers.length}
+                    pageSize={PageSize}
+                    onPageChange={page => {
+                        setCurrentPage(page)
+                    }}
+                />
+                <MainSwitch/>
             </div>
+
+            {/*<Table*/}
+            {/*    users={users}*/}
+            {/*    activeRowsInTable={activeRows}*/}
+            {/*/>*/}
+
+        </div>
     );
 
 };
-
