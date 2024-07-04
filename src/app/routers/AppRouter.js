@@ -14,12 +14,9 @@ export const AppRouter = () => {
                     element={<Home/>}
                 />
 
-
                 <Route path={"platform"} element={<Layout/>}>
 
                 </Route>
-
-
             </>
         )
     );

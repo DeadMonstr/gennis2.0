@@ -9,11 +9,6 @@ import {Outlet} from "react-router";
 
 const Layout = () => {
 
-
-
-
-
-
     return (
         <div className={cls.layout}>
             <Navbar/>
