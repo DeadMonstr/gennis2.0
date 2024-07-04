@@ -6,6 +6,7 @@ import Login from "pages/login/ui/login";
 import Register from "pages/register/ui/register";
 import NotFoundPage from "pages/notfound/ui/notfound";
 import "app/styles/index.sass"
+import GetLocation from "features/getLocation/getLocation";
 export const AppRouter = () => {
 
     const router = createBrowserRouter(
@@ -22,6 +23,10 @@ export const AppRouter = () => {
                 <Route
                     path={"/register"}
                     element={<Register/>}
+                />
+                <Route
+                    path={"/select"}
+                    element={<GetLocation/>}
                 />
                 <Route
                     path={"*"}
