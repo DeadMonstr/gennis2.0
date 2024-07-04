@@ -272,8 +272,11 @@
 //
 //
 //
- export  const Home =() =>{
+ import {Select} from "../../../shared/ui/select";
+import GetLocation from "../../../features/getLocation/getLocation";
+
+export  const Home =() =>{
     return(
-        <h1>hello</h1>
+        <GetLocation/>
     )
 }
