@@ -1,18 +1,27 @@
 import React from 'react';
-
-
-import cls from "app/layout/Layout.module.sass"
-import {Navbar} from "widgets/Navbar";
 import {Outlet} from "react-router";
 
 
+import {Menubar} from "widgets/menuBar";
+import {Header} from "widgets/header";
 
-const Layout = () => {
+
+import cls from "app/layout/Layout.module.sass"
+
+
+export const Layout = () => {
+
 
     return (
-        <div className={cls.layout}>
-            <Navbar/>
-            <Outlet/>
+        <div style={{display: "flex"}}>
+            <Menubar/>
+            <main className={cls.main}>
+                <Header/>
+
+                <div className={cls.main__content}>
+                    <Outlet/>
+                </div>
+            </main>
         </div>
     );
 };

@@ -1,0 +1,40 @@
+import React, {useEffect, useState} from 'react';
+import cls from "./radio.module.sass"
+import classNames from "classnames";
+
+
+const Radio = ({name, id, value, onChange, checked, children, disabled}) => {
+
+    const [active, setActive] = useState(false)
+    useEffect(() => {
+        setActive(checked)
+    }, [checked])
+
+    return (
+        <label htmlFor={id} className={classNames(cls.radioLabel)}>
+            <input
+                disabled={disabled}
+                className={cls.radioInput}
+                type="radio"
+                name={name}
+                id={id}
+                value={value}
+                onChange={(e) => {
+                    onChange(value)
+                    setActive(e.target.checked)
+                }}
+                checked={checked}
+            />
+            <div className={cls.wrapper}>
+				<span className={classNames(cls.customRadio, {
+                    [cls.active]: active
+                })}/>
+            </div>
+            <span className={cls.text}>
+				{children}
+			</span>
+        </label>
+    );
+};
+
+export default Radio;
