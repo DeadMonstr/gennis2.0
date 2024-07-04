@@ -45,17 +45,17 @@ const GetLocation = () => {
         setSelectedLocation(selectedLocation.filter(item => item.id !== +id))
     }
     return (
-        <div>
+        <div className={cls.locations}>
             <Select
                 onChangeOption={changeSelectedLocation}
                 options={location}
             />
             {
                 selectedLocation.length > 0 ?
-                    <div className={cls.locations}>
+                    <div className={cls.locations__items}>
                         {selectedLocation.map((item, i) => {
                             return (
-                                <div className={cls.locations__items}>
+                                <div className={cls.locations__item}>
                                     <i onClick={() => onDeleteLoc(item.id)} className="fa fa-times"></i>
                                     <p>{item.name}</p>
                                 </div>
