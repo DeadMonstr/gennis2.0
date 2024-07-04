@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
+
 import SearchInput from "shared/ui/searchInput/search";
-export const SearchPlatrofmInput = () => {
+
+export const SearchPlatformInput = () => {
     const [search, setSearch] = useState('');
 
     const handleSearch = (searchValue) => {
@@ -9,8 +11,9 @@ export const SearchPlatrofmInput = () => {
     };
 
     return (
-        <div>
-            <SearchInput search={search} setSearch={handleSearch} />
-        </div>
+        <SearchInput
+            search={search}
+            setSearch={handleSearch}
+        />
     );
 };

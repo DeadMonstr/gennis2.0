@@ -11,41 +11,50 @@ const studentOptions = {
     language:
         [
             {
+                id: 1,
                 value: "uz",
-                label: "o'zbek"
+                name: "o'zbek"
             },
-            { value: "ru",
-                label: "rus"
+            {
+                id: 2,
+                value: "ru",
+                name: "rus"
             }
         ],
     subject:
         [
             {
+                id: 1,
                 value: "rus tili",
-                label: "rus tili"
+                name: "rus tili"
             },
             {
+                id: 1,
                 value: "ingliz tili",
-                label: "ingliz tili"
+                name: "ingliz tili"
             },
             {
+                id: 1,
                 value: "matematika",
-                label: "matematika"
+                name: "matematika"
             }
         ],
     time:
         [
             {
+                id: 1,
                 value: "1-smena",
-                label: "1-smena"
+                name: "1-smena"
             },
             {
+                id: 1,
                 value: "2-smena",
-                label: "2-smena"
+                name: "2-smena"
             },
             {
+                id: 1,
                 value: "hamma vaqt",
-                label: "hamma vaqt"
+                name: "hamma vaqt"
             }
         ]
 };
@@ -54,27 +63,32 @@ const teacherOptions = {
     language:
         [
             {
+                id: 1,
                 value: "uz",
-                label: "o'zbek"
+                name: "o'zbek"
             },
             {
+                id: 1,
                 value: "ru",
-                label: "rus"
+                name: "rus"
             }
         ],
     subject:
         [
             {
+                id: 1,
                 value: "rus tili",
-                label: "rus tili"
+                name: "rus tili"
             },
             {
+                id: 1,
                 value: "ingliz tili",
-                label: "ingliz tili"
+                name: "ingliz tili"
             },
             {
+                id: 1,
                 value: "matematika",
-                label: "matematika"
+                name: "matematika"
             }
         ]
 };
@@ -83,16 +97,19 @@ const employerOptions = {
     profession:
         [
             {
+                id: 1,
                 value: "farrosh",
-                label: "farrosh"
+                name: "farrosh"
             },
             {
+                id: 1,
                 value: "elektrik",
-                label: "elektrik"
+                name: "elektrik"
             },
             {
+                id: 1,
                 value: "qorovul",
-                label: "qorovul"
+                name: "qorovul"
             }
         ]
 };

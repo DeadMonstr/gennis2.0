@@ -1,0 +1,1 @@
+export {SearchPlatformInput} from "./ui/searchPlatrofmInput"

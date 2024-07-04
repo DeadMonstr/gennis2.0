@@ -1,10 +1,9 @@
 import React from 'react';
 
-export const Navbar = () => {
+export const Link = () => {
     return (
         <div>
-            <h1>Hello</h1>
+
         </div>
     );
 };
-
