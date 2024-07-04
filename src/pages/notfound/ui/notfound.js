@@ -1,7 +1,7 @@
 import React from 'react';
 import cls from "./notfound.module.sass"
 import Notfound from 'shared/assets/images/404_found.svg'
-const NotFoundPage = () => {
+export  const NotFoundPage = () => {
     return (
         <div className={cls.pageStyle}>
             <div className={cls.shapeStyle}>
@@ -14,5 +14,3 @@ const NotFoundPage = () => {
         </div>
     );
 };
-
-export default NotFoundPage;

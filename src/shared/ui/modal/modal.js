@@ -1,4 +1,5 @@
 import React from 'react';
+import {createPortal} from "react-dom";
 import classNames from "classnames";
 
 import cls from "./modal.module.sass";
@@ -16,20 +17,23 @@ export const Modal = ({children, active, setActive}) => {
 
     if (active) {
         return (
-            <div
-                className={classNames(cls.modal, "outClose")}
-                onClick={(e) => onClick(e.target)}
-            >
-                <div className={cls.modal__inner}>
-                    <img
-                        className={classNames(cls.modal__close, "innerClose")}
-                        onClick={(e) => onClick(e.target)}
-                        src={close}
-                        alt=""
-                    />
-                    {children}
-                </div>
-            </div>
+            createPortal(
+                <div
+                    className={classNames(cls.modal, "outClose")}
+                    onClick={(e) => onClick(e.target)}
+                >
+                    <div className={cls.modal__inner}>
+                        <img
+                            className={classNames(cls.modal__close, "innerClose")}
+                            onClick={(e) => onClick(e.target)}
+                            src={close}
+                            alt=""
+                        />
+                        {children}
+                    </div>
+                </div>,
+                document.body
+            )
         );
     }
 };
