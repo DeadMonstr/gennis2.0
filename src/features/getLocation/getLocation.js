@@ -45,7 +45,7 @@ const GetLocation = () => {
         setSelectedLocation(selectedLocation.filter(item => item.id !== +id))
     }
     return (
-        <>
+        <div>
             <Select
                 onChangeOption={changeSelectedLocation}
                 options={location}
@@ -65,7 +65,7 @@ const GetLocation = () => {
                     : null
             }
 
-        </>
+        </div>
     )
 }
 export default GetLocation
