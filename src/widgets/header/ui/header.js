@@ -10,7 +10,7 @@ import logo from "shared/assets/images/logo.svg";
 export const Header = () => {
 
     const [selected, setSelected] = useState([])
-    const [deledtedId, setDeletedId] = useState(0)
+    const [deletedId, setDeletedId] = useState(0)
 
     console.log(selected, "selected")
 
@@ -21,7 +21,10 @@ export const Header = () => {
                 <SearchPlatformInput/>
                 <div className={cls.inner}>
                     <MainSwitch/>
-                    <GetLocation/>
+                    <GetLocation
+                        getItem={setSelected}
+                        deletedId={deletedId}
+                    />
                 </div>
             </div>
             <div className={cls.header__bottom}>
