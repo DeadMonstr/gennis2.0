@@ -13,14 +13,15 @@ export const Layout = () => {
 
 
     return (
-        <>
-            <Header/>
+        <div style={{display: "flex"}}>
+            <Menubar/>
             <main className={cls.main}>
-                <Menubar/>
+                <Header/>
+
                 <div className={cls.main__content}>
                     <Outlet/>
                 </div>
             </main>
-        </>
+        </div>
     );
 };

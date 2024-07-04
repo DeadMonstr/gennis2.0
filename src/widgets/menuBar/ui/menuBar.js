@@ -107,32 +107,6 @@ export const Menubar = () => {
                     setActive={setIsActiveLink}
                 />
             )
-            // if (item.children && (role === ROLES.Director || role === ROLES.Accountant)) {
-            //     return (
-            //         <MultipleLink
-            //             key={index}
-            //             item={item}
-            //             activeElem={descActive}
-            //             onDropMenu={onDropMenu}
-            //             menuActive={menuActive}
-            //             setMenuActive={setMenuActive}
-            //             role={role}
-            //         />
-            //     )
-            // } else {
-            //     return (
-            //         <SimpleLink
-            //             location={location}
-            //             role={role}
-            //             key={index}
-            //             item={item}
-            //             activeElem={descActive}
-            //             onDropMenu={onDropMenu}
-            //             menuActive={menuActive}
-            //             setMenuActive={setMenuActive}
-            //         />
-            //     )
-            // }
         })
     }, [])
 

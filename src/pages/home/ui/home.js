@@ -90,7 +90,8 @@ export const Home = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: "2rem"
+            gap: "2rem",
+            padding: "5rem 3rem"
         }}>
 
             <button onClick={() => setActive(!active)}>Enter</button>
