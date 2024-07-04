@@ -20,7 +20,8 @@ const Input = React.memo((
         style,
         extraClassName,
         disabled,
-        extraValues
+        extraValues,
+        checkboxTitle
     }) => {
 
     const [showPassword,setShowPassword] = useState(false)
@@ -32,8 +33,8 @@ const Input = React.memo((
             {
                 title || subTitle ?
                     <div className={cls.info}>
-                        <span>{title}</span>
-                        <span>{subTitle}</span>
+                        {title && <span>{title}</span>}
+                        {subTitle && <span>{subTitle}</span>}
                     </div> : null
             }
             <div className={cls.field}>
@@ -80,8 +81,8 @@ const Input = React.memo((
     ) : (
         <label style={style} className={cls.inputLabel} htmlFor={name}>
             <div className={cls.info}>
-                <span>{title}</span>
-                <span>{subTitle}</span>
+                {title && <span>{title}</span>}
+                {subTitle && <span>{subTitle}</span>}
             </div>
             <div className={cls.field}>
                 <input
@@ -104,12 +105,13 @@ const Input = React.memo((
                         <div className={cls.eye} onClick={() => setShowPassword(!showPassword)}>
                             {
                                 showPassword ?
-                                    <i className="fa-solid fa-eye" />
+                                    <i className="fas fa-eye"></i>
                                     :
-                                    <i className="fa-solid fa-eye-slash" />
+                                    <i className="fas fa-eye-slash"></i>
                             }
                         </div> : null
                 }
+                {checkboxTitle && <span>{checkboxTitle}</span>}
             </div>
 
 
