@@ -7,7 +7,6 @@ export const SearchPlatformInput = () => {
 
     const handleSearch = (searchValue) => {
         setSearch(searchValue);
-        console.log("Search value: ", searchValue);
     };
 
     return (

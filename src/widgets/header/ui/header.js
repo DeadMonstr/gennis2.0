@@ -2,6 +2,8 @@ import React from 'react';
 
 
 import {SearchPlatformInput} from "features/searchInput";
+import GetLocation from "features/getLocation/getLocation";
+import {MainSwitch} from "shared/ui/mainSwitch";
 
 
 import cls from "./header.module.sass";
@@ -17,7 +19,8 @@ export const Header = () => {
                 <SearchPlatformInput/>
             </div>
             <div className={cls.head__location}>
-
+                <MainSwitch/>
+                <GetLocation/>
             </div>
         </header>
     );
