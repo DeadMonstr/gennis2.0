@@ -1,10 +1,25 @@
 import React, {useMemo, useState} from 'react';
-
 import {Alert} from "shared/ui/alert/alert";
 import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
 import {Pagination} from "shared/ui/pagination";
 import {MainSwitch} from "shared/ui/mainSwitch";
+import {SearchPlatrofmInput} from "features/searchInput/ui/searchPlatrofmInput";
+import {Input} from "../../../shared/ui/input";
+// import {Table} from "shared/ui/table";
+const activeRows = {
+    name: true,
+    surname: true,
+    username: true,
+    phone: false,
+    reason: false,
+    job: false,
+    age: false,
+    reg_date: false,
+    deleted_date: false,
+    deletedDate: false
+}
+
 
 
 const list = [
@@ -57,7 +72,7 @@ const users = [
     }
 ]
 export const Home = () => {
-    const [active, setActive] = useState(false)
+    const [active, setActive] = useState(true)
 
     const onChange = (value) => {
         console.log(value, "value")

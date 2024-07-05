@@ -33,12 +33,8 @@ export const AppRouter = () => {
                     <Route
                         path={"home"}
                         element={<Home/>}
-                    />
 
-                    <Route
-                        path={"taskManager"}
                     />
-
 
 
                     <Route
