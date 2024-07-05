@@ -8,7 +8,7 @@ import {Select} from "shared/ui/select";
 import {Pagination} from "shared/ui/pagination";
 import {MainSwitch} from "shared/ui/mainSwitch";
 import {SearchPlatrofmInput} from "features/searchInput/ui/searchPlatrofmInput";
-// import {Table} from "shared/ui/table";
+import {Table} from "shared/ui/table";
 const activeRows = {
     name: true,
     surname: true,
@@ -243,10 +243,10 @@ export const Home = () => {
                 <MainSwitch/>
             </div>
 
-            {/*<Table*/}
-            {/*    users={users}*/}
-            {/*    activeRowsInTable={activeRows}*/}
-            {/*/>*/}
+            <Table
+                users={users}
+                activeRowsInTable={activeRows}
+            />
 
         </div>
     );

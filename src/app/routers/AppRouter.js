@@ -10,6 +10,7 @@ import {NotFoundPage} from "pages/notfound/ui/notfound";
 import {Layout} from "app/layout";
 
 import "app/styles/index.sass"
+import {NewStudents} from "../../pages/newStudents/ui/newStudents";
 
 export const AppRouter = () => {
 
@@ -29,6 +30,7 @@ export const AppRouter = () => {
                     element={<Register/>}
                 />
 
+
                 <Route path={"platform/*"} element={<Layout/>}>
                     <Route
                         path={"home"}
@@ -37,6 +39,11 @@ export const AppRouter = () => {
                     <Route
                         path={"register"}
                         element={<Register/>}
+                    />
+                    <Route
+                        path={"newStudents"}
+                        element={<NewStudents/>}
+
                     />
 
 
