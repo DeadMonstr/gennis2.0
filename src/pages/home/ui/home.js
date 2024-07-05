@@ -3,15 +3,15 @@ import Input from "shared/ui/input/input";
 import Switch from "shared/ui/switch/switch";
 import SearchInput from "shared/ui/searchInput/search";
 import Textarea from "shared/ui/textArea/textArea";
-import {Alert} from "shared/ui/alert/alert";
+import {Alert} from "shared/ui/alert";
 import Button from "shared/ui/button/button";
 import Radio from "shared/ui/radio/radio";
 import Dropdawn from "shared/ui/dropdawn/dropdown";
 import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
 import {Pagination} from "shared/ui/pagination";
-import {MainSwitch} from "../../../shared/ui/mainSwitch";
-import {SearchPlatrofmInput} from "../../../features/searchInput/ui/searchPlatrofmInput";
+import {MainSwitch} from "shared/ui/mainSwitch";
+import {SearchPlatrofmInput} from "features/searchInput/ui/searchPlatrofmInput";
 // import {Table} from "shared/ui/table";
 const activeRows = {
     name: true,
