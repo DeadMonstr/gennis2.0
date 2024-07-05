@@ -1,4 +1,5 @@
 import React, {useMemo, useState} from 'react';
+
 import {Alert} from "shared/ui/alert/alert";
 import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
@@ -56,7 +57,7 @@ const users = [
     }
 ]
 export const Home = () => {
-    const [active, setActive] = useState(true)
+    const [active, setActive] = useState(false)
 
     const onChange = (value) => {
         console.log(value, "value")

@@ -1,5 +1,6 @@
-import React, {useCallback, useState} from 'react';
-import {NavLink} from "react-router-dom";
+import React, {useCallback} from 'react';
+
+import {Link} from "shared/ui/link";
 
 import cls from "./menuBar.module.sass";
 
@@ -12,7 +13,7 @@ const navigateList = [
         roles: []
     },
     {
-        to: "/taskManager",
+        to: "taskManager",
         name: "Task Manager",
         icon: "fa-tasks",
         roles: []
@@ -96,19 +97,24 @@ const navigateList = [
 
 export const Menubar = () => {
 
-
-    const [isActiveLink, setIsActiveLink] = useState("home")
-
     const renderMultipleMenu = useCallback(() => {
         return navigateList.map((item, index) => {
             return (
-                <Link
-                    item={item}
-                    setActive={setIsActiveLink}
-                />
+                <li className={cls.link}>
+                    <Link
+                        to={item.to}
+                        extraClass={cls.link__href}
+                        activeClass={cls.active}
+                        // onClick={() => setActive(item.name)}
+                    >
+                        <i className={`fas ${item.icon} icon-link`}/>
+                        <span className={cls.link__title}>{item.name}</span>
+                    </Link>
+                </li>
             )
         })
     }, [])
+
 
     const renderedMenu = renderMultipleMenu()
 
@@ -121,23 +127,3 @@ export const Menubar = () => {
         </nav>
     );
 };
-
-const Link = ({item, isActive, setActive}) => {
-    return (
-        <li className={cls.link}>
-            <NavLink
-                to={item.to}
-                className={
-                    ({isActive}) =>
-                        isActive ? `${cls.link__href} ${cls.active}` : cls.link__href
-
-                }
-                onClick={() => setActive(item.name)}
-            >
-                <i className={`fas ${item.icon} icon-link`}/>
-                <span className={cls.link__title}>{item.name}</span>
-            </NavLink>
-        </li>
-    )
-}
-

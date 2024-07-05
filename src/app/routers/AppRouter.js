@@ -35,6 +35,10 @@ export const AppRouter = () => {
                         element={<Home/>}
                     />
 
+                    <Route
+                        path={"taskManager"}
+                    />
+
 
 
                     <Route

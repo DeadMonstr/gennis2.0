@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 
+import {BreadCrumbs} from "features/breadCrumbs";
 import {SearchPlatformInput} from "features/searchInput";
 import GetLocation from "features/getLocation/getLocation";
 import {MainSwitch} from "shared/ui/mainSwitch";
@@ -11,8 +12,6 @@ export const Header = () => {
 
     const [selected, setSelected] = useState([])
     const [deletedId, setDeletedId] = useState(0)
-
-    console.log(selected, "selected")
 
     return (
         <header className={cls.header}>
@@ -28,7 +27,9 @@ export const Header = () => {
                 </div>
             </div>
             <div className={cls.header__bottom}>
-                <p className={cls.header__info}>Home / list</p>
+                <BreadCrumbs
+                    defaultLink={"platform"}
+                />
                 <div className={cls.header__selected}>
                     {
                         selected.map(item => {
