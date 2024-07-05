@@ -294,9 +294,9 @@ export const Register = () => {
     return (
         <div className={cls.login}>
             <div>
-                <Button onClick={() => setRegisterType('student')}>Student</Button>
-                <Button onClick={() => setRegisterType('teacher')}>Teacher</Button>
-                <Button onClick={() => setRegisterType('employer')}>Employer</Button>
+                {/*<Button onClick={() => setRegisterType('student')}>Student</Button>*/}
+                {/*<Button onClick={() => setRegisterType('teacher')}>Teacher</Button>*/}
+                {/*<Button onClick={() => setRegisterType('employer')}>Employer</Button>*/}
             </div>
             <div className={cls.login__boxes}>
                 <div className={cls.login__boxes__login__box}>

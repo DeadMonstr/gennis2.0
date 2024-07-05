@@ -34,6 +34,10 @@ export const AppRouter = () => {
                         path={"home"}
                         element={<Home/>}
                     />
+                    <Route
+                        path={"register"}
+                        element={<Register/>}
+                    />
 
 
 
