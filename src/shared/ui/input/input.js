@@ -3,7 +3,7 @@ import cls from "./input.module.sass"
 import classNames from "classnames";
 
 
-const Input = React.memo((
+export const Input = React.memo((
     {
         type,
         defaultValue,
@@ -116,5 +116,3 @@ const Input = React.memo((
         </label>
     );
 });
-
-export default Input;

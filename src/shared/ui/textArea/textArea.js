@@ -3,7 +3,7 @@ import cls from "./textArea.module.sass"
 import classNames from "classnames";
 
 
-const Textarea = React.memo((
+export const Textarea = React.memo((
     {
         defaultValue,
         register,
@@ -74,5 +74,3 @@ const Textarea = React.memo((
         </label>
     );
 });
-
-export default Textarea;

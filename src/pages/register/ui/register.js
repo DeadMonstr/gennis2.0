@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import cls from "./register.module.sass";
 import Button from "shared/ui/button/button";
 import bg__img from 'shared/assets/images/reg__bg.svg'
-import Input from "../../../shared/ui/input/input";
-import Textarea from "../../../shared/ui/textArea/textArea";
+import {Input} from 'shared/ui/input'
+import {Textarea} from "shared/ui/textArea";
 import { Select } from "../../../shared/ui/select";
 
 // Options for Select dropdowns
