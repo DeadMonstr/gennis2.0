@@ -24,10 +24,7 @@ export const AppRouter = () => {
                     path={"login"}
                     element={<Login/>}
                 />
-                <Route
-                    path={"register"}
-                    element={<Register/>}
-                />
+
 
                 <Route path={"platform/*"} element={<Layout/>}>
                     <Route
@@ -37,6 +34,11 @@ export const AppRouter = () => {
 
                     <Route
                         path={"taskManager"}
+                    />
+
+                    <Route
+                        path={"register"}
+                        element={<Register/>}
                     />
 
 
