@@ -128,7 +128,7 @@ export const Register = () => {
                 return (
                     <>
                         <Input
-                            placeholder="username"
+                            placeholder="Username"
                             required
                         />
                         <Input
@@ -153,12 +153,12 @@ export const Register = () => {
                         />
                         <Input
                             placeholder="Telefon nomer"
-                            type="tel"
+                            type="number"
                             required
                         />
                         <Input
                             placeholder="Telefon nomer (ota-onasiniki)"
-                            type="tel"
+                            type="number"
                             required
                         />
                         <Textarea
@@ -188,7 +188,7 @@ export const Register = () => {
                 return (
                     <>
                         <Input
-                            placeholder="username"
+                            placeholder="Username"
                             required
                         />
                         <Input
@@ -213,12 +213,12 @@ export const Register = () => {
                         />
                         <Input
                             placeholder="Telefon nomer"
-                            type="tel"
+                            type="number"
                             required
                         />
                         <Input
                             placeholder="Telefon nomer (ota-onasiniki)"
-                            type="tel"
+                            type="number"
                             required
                         />
                         <Textarea
@@ -242,7 +242,7 @@ export const Register = () => {
                 return (
                     <>
                         <Input
-                            placeholder="username"
+                            placeholder="Username"
                             required
                         />
                         <Input
@@ -267,12 +267,12 @@ export const Register = () => {
                         />
                         <Input
                             placeholder="Telefon nomer"
-                            type="tel"
+                            type="number"
                             required
                         />
                         <Input
                             placeholder="Telefon nomer (ota-onasiniki)"
-                            type="tel"
+                            type="number"
                             required
                         />
                         <Textarea
@@ -294,9 +294,9 @@ export const Register = () => {
     return (
         <div className={cls.login}>
             <div>
-                {/*<Button onClick={() => setRegisterType('student')}>Student</Button>*/}
-                {/*<Button onClick={() => setRegisterType('teacher')}>Teacher</Button>*/}
-                {/*<Button onClick={() => setRegisterType('employer')}>Employer</Button>*/}
+                <Button onClick={() => setRegisterType('student')}>Student</Button>
+                <Button onClick={() => setRegisterType('teacher')}>Teacher</Button>
+                <Button onClick={() => setRegisterType('employer')}>Employer</Button>
             </div>
             <div className={cls.login__boxes}>
                 <div className={cls.login__boxes__login__box}>
