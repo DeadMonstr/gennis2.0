@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+
 import cls from "./switch.module.sass"
 
 const Switch = React.memo((
