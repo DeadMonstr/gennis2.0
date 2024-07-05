@@ -38,37 +38,35 @@ export const Input = React.memo((
                     </div> : null
             }
             <div className={cls.field}>
-                <div className={cls.inputs}>
-                    <input
-                        required={required}
-                        disabled={disabled}
-                        id={name}
-                        className={classNames(cls.input,extraClassName,{
-                            [`${cls?.error}`] : errors?.[name]
-                        })}
-                        type={showPassword ? "text" : type}
+                <input
+                    required={required}
+                    disabled={disabled}
+                    id={name}
+                    className={classNames(cls.input,extraClassName,{
+                        [`${cls?.error}`] : errors?.[name]
+                    })}
+                    type={showPassword ? "text" : type}
 
-                        {...register(name,{
-                            pattern: pattern,
-                            defaultValue: defaultValue,
-                            placeholder: placeholder,
-                            value:value,
-                            ...extraValues,
-                            onChange: setSilk
-                        })}
-                    />
-                    {
-                        type === "password" ?
-                            <div className={cls.eye} onClick={() => setShowPassword(!showPassword)}>
-                                {
-                                    showPassword ?
-                                        <i className="fa-solid fa-eye" />
-                                        :
-                                        <i className="fa-solid fa-eye-slash" />
-                                }
-                            </div> : null
-                    }
-                </div>
+                    {...register(name,{
+                        pattern: pattern,
+                        defaultValue: defaultValue,
+                        placeholder: placeholder,
+                        value:value,
+                        ...extraValues,
+                        onChange: setSilk
+                    })}
+                />
+                {
+                    type === "password" ?
+                        <div className={cls.eye} onClick={() => setShowPassword(!showPassword)}>
+                            {
+                                showPassword ?
+                                    <i className="fa-solid fa-eye" />
+                                    :
+                                    <i className="fa-solid fa-eye-slash" />
+                            }
+                        </div> : null
+                }
 
             </div>
 
@@ -88,35 +86,33 @@ export const Input = React.memo((
                 {subTitle && <span>{subTitle}</span>}
             </div>
             <div className={cls.field}>
-                <div className={cls.inputs}>
-                    <input
-                        disabled={disabled}
-                        id={name}
-                        className={classNames(cls.input,extraClassName,{
-                            [`${cls?.error}`] : errors?.[name]
-                        })}
-                        defaultValue={defaultValue}
-                        value={value}
-                        type={showPassword ? "text" : type}
-                        pattern={pattern}
-                        required={required}
-                        placeholder={placeholder}
-                        onChange={setSilk}
-                        {...extraValues}
-                    />
-                    {
-                        type === "password" ?
-                            <div className={cls.eye} onClick={() => setShowPassword(!showPassword)}>
-                                {
-                                    showPassword ?
-                                        <i className="fas fa-eye"></i>
-                                        :
-                                        <i className="fas fa-eye-slash"></i>
-                                }
-                            </div> : null
-                    }
-                    {checkboxTitle && <span>{checkboxTitle}</span>}
-                </div>
+                <input
+                    disabled={disabled}
+                    id={name}
+                    className={classNames(cls.input,extraClassName,{
+                        [`${cls?.error}`] : errors?.[name]
+                    })}
+                    defaultValue={defaultValue}
+                    value={value}
+                    type={showPassword ? "text" : type}
+                    pattern={pattern}
+                    required={required}
+                    placeholder={placeholder}
+                    onChange={setSilk}
+                    {...extraValues}
+                />
+                {
+                    type === "password" ?
+                        <div className={cls.eye} onClick={() => setShowPassword(!showPassword)}>
+                            {
+                                showPassword ?
+                                    <i className="fas fa-eye"></i>
+                                    :
+                                    <i className="fas fa-eye-slash"></i>
+                            }
+                        </div> : null
+                }
+                {checkboxTitle && <span>{checkboxTitle}</span>}
 
             </div>
 
