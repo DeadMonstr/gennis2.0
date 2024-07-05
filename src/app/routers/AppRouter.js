@@ -41,6 +41,11 @@ export const AppRouter = () => {
                         element={<Register/>}
                     />
 
+                    <Route
+                        path={"register/:itemId"}
+                        element={<Register/>}
+                    />
+
 
 
                     <Route

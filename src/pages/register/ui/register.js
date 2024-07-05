@@ -55,7 +55,7 @@ const studentOptions = {
             {
                 id: 1,
                 value: "hamma vaqt",
-                name: "hamma vaqt"
+                name: "Hamma vaqt"
             }
         ]
 };

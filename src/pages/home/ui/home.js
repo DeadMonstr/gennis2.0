@@ -1,10 +1,11 @@
-import React, {useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 
 import {Alert} from "shared/ui/alert/alert";
 import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
-import {Pagination} from "shared/ui/pagination";
+import {Pagination} from "features/pagination";
 import {MainSwitch} from "shared/ui/mainSwitch";
+import {Table} from "../../../shared/ui/table";
 
 
 const list = [
@@ -70,22 +71,51 @@ export const Home = () => {
 
     const [search, setSearch] = useState("")
 
+    const [currentTableData, setCurrentTableData] = useState([])
 
-    const searchedUsers = useMemo(() => {
-        const filteredHeroes = users.slice()
-        setCurrentPage(1)
-        return filteredHeroes.filter(item =>
-            item.name.toLowerCase().includes(search.toLowerCase()) ||
-            item.surname.toLowerCase().includes(search.toLowerCase()) ||
-            item.username.toLowerCase().includes(search.toLowerCase())
-        )
-    }, [users, search])
 
-    const currentTableData = useMemo(() => {
-        const firstPageIndex = (currentPage - 1) * PageSize;
-        const lastPageIndex = firstPageIndex + PageSize;
-        return searchedUsers.slice(firstPageIndex, lastPageIndex);
-    }, [PageSize, currentPage, searchedUsers]);
+    // const searchedUsers = useMemo(() => {
+    //     const filteredHeroes = users.slice()
+    //     setCurrentPage(1)
+    //     return filteredHeroes.filter(item =>
+    //         item.name.toLowerCase().includes(search.toLowerCase()) ||
+    //         item.surname.toLowerCase().includes(search.toLowerCase()) ||
+    //         item.username.toLowerCase().includes(search.toLowerCase())
+    //     )
+    // }, [users, search])
+
+    // const currentTableData = useMemo(() => {
+    //     const firstPageIndex = (currentPage - 1) * PageSize;
+    //     const lastPageIndex = firstPageIndex + PageSize;
+    //     return searchedUsers.slice(firstPageIndex, lastPageIndex);
+    // }, [PageSize, currentPage, searchedUsers]);
+
+    const renderStudents = () => {
+        return users.map((item,index) => {
+            return (
+                <tr>
+                    <td>{index+1}</td>
+                    <td>{item.name}</td>
+                    <td>{item.username}</td>
+                    {/*{checkTrueFalse(item.dates)}*/}
+                </tr>
+            )
+        })
+    }
+
+    const renderCurrentTableDate = useCallback(() => {
+        return currentTableData.map((item, i) => {
+            return (
+                <div key={i}>
+                    <div>{item.username}</div>
+                    <p>{item.name} {item.surname}</p>
+                </div>
+            )
+        })
+    }, [currentTableData])
+
+    const currentTable = renderCurrentTableDate()
+
     return (
         <div style={{
             display: "flex",
@@ -94,6 +124,26 @@ export const Home = () => {
             gap: "2rem",
             padding: "5rem 3rem"
         }}>
+
+            <Table>
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Ism</th>
+                    <th>Familya</th>
+                    {/*{*/}
+                    {/*    dates.map(item =>{*/}
+                    {/*        return (*/}
+                    {/*            <th>{item}</th>*/}
+                    {/*        )*/}
+                    {/*    })*/}
+                    {/*}*/}
+                </tr>
+                </thead>
+                <tbody>
+                {renderStudents()}
+                </tbody>
+            </Table>
 
             <button onClick={() => setActive(!active)}>Enter</button>
 
@@ -205,19 +255,13 @@ export const Home = () => {
 
 
             <div>
-                {
-                    currentTableData.map((item, i) => {
-                        return (
-                            <div key={i}>
-                                <div>{item.username}</div>
-                                <p>{item.name} {item.surname}</p>
-                            </div>
-                        )
-                    })
-                }
+                {currentTable}
                 <Pagination
+                    setCurrentTableData={setCurrentTableData}
+                    users={users}
+                    search={search}
+                    setCurrentPage={setCurrentPage}
                     currentPage={currentPage}
-                    totalCount={searchedUsers.length}
                     pageSize={PageSize}
                     onPageChange={page => {
                         setCurrentPage(page)
