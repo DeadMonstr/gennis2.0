@@ -25,7 +25,7 @@ export const MainSwitch = () => {
                 }
                 {
                     active ?
-                        <h2 className={cls.mainSwitch__text}>Centre</h2>
+                        <h2 className={cls.mainSwitch__text}>Center</h2>
                         :
                         <h2 className={cls.mainSwitch__text__center}>School</h2>
                 }
