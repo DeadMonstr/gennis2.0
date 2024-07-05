@@ -5,7 +5,6 @@ import {Select} from "shared/ui/select";
 import {Pagination} from "shared/ui/pagination";
 import {MainSwitch} from "shared/ui/mainSwitch";
 import {SearchPlatrofmInput} from "features/searchInput/ui/searchPlatrofmInput";
-import {Input} from "../../../shared/ui/input";
 // import {Table} from "shared/ui/table";
 const activeRows = {
     name: true,

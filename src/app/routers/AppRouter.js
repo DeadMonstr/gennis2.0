@@ -1,8 +1,6 @@
 import React, {Suspense} from 'react';
-import {createRoutesFromElements, Navigate, Route, RouterProvider} from "react-router";
+import {createRoutesFromElements, Route, RouterProvider} from "react-router";
 import {createBrowserRouter} from "react-router-dom";
-
-
 import {Home} from "pages/home/ui/home";
 import Login from "pages/login/ui/login";
 import {Register} from "pages/register/ui/register";
