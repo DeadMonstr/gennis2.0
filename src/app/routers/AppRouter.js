@@ -1,6 +1,8 @@
 import React, {Suspense} from 'react';
-import {createRoutesFromElements, Route, RouterProvider} from "react-router";
+import {createRoutesFromElements, Navigate, Route, RouterProvider} from "react-router";
 import {createBrowserRouter} from "react-router-dom";
+
+
 import {Home} from "pages/home/ui/home";
 import Login from "pages/login/ui/login";
 import {Register} from "pages/register/ui/register";
@@ -27,12 +29,23 @@ export const AppRouter = () => {
                     element={<Register/>}
                 />
 
+
                 <Route path={"platform/*"} element={<Layout/>}>
                     <Route
                         path={"home"}
                         element={<Home/>}
 
                     />
+
+                    <Route
+                        path={"taskManager"}
+                    />
+
+                    <Route
+                        path={"register"}
+                        element={<Register/>}
+                    />
+
 
 
                     <Route

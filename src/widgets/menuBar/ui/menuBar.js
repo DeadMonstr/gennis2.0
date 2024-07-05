@@ -85,7 +85,7 @@ const navigateList = [
         roles: []
     },
     {
-        to: "/login",
+        to: "register",
         name: "Registratsiya",
         icon: "fa-edit",
         roles: []
