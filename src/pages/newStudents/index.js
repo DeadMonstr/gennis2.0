@@ -1,0 +1,1 @@
+export {NewStudentds} from "./ui/newStudents.module.sass"
