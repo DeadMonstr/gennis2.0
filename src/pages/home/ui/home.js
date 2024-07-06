@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 
 import {Alert} from "shared/ui/alert/alert";
 import {Modal} from "shared/ui/modal";
@@ -111,6 +111,7 @@ export const Home = () => {
         }}>
 
             <button onClick={() => setActive(!active)}>Enter</button>
+            <button onClick={() => setActiveG(!activeG)}>Enter</button>
 
 
             <div style={{width: "500px"}}>

@@ -10,7 +10,7 @@ import {NotFoundPage} from "pages/notfound/ui/notfound";
 import {Layout} from "app/layout";
 
 import "app/styles/index.sass"
-import DeletedStudents from "pages/deletedStudents/deletedStudents";
+import {NewStudents} from "../../pages/newStudents/ui/newStudents";
 
 export const AppRouter = () => {
 

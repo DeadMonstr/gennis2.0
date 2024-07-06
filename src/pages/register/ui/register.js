@@ -61,59 +61,76 @@ const studentOptions = {
 };
 
 const teacherOptions = {
-    language:
-        [
-            {
-                id: 1,
-                value: "uz",
-                name: "o'zbek"
-            },
-            {
-                id: 1,
-                value: "ru",
-                name: "rus"
-            }
-        ],
-    subject:
-        [
-            {
-                id: 1,
-                value: "rus tili",
-                name: "rus tili"
-            },
-            {
-                id: 1,
-                value: "ingliz tili",
-                name: "ingliz tili"
-            },
-            {
-                id: 1,
-                value: "matematika",
-                name: "matematika"
-            }
-        ]
+    language: [
+        {
+            id: 1,
+            value: "uz",
+            name: "o'zbek"
+        },
+        {
+            id: 2,
+            value: "ru",
+            name: "rus"
+        }
+    ],
+    subject: [
+        {
+            id: 1,
+            value: "rus tili",
+            name: "rus tili"
+        },
+        {
+            id: 2,
+            value: "ingliz tili",
+            name: "ingliz tili"
+        },
+        {
+            id: 3,
+            value: "matematika",
+            name: "matematika"
+        }
+    ]
 };
 
 const employerOptions = {
-    profession:
-        [
-            {
-                id: 1,
-                value: "farrosh",
-                name: "farrosh"
-            },
-            {
-                id: 1,
-                value: "elektrik",
-                name: "elektrik"
-            },
-            {
-                id: 1,
-                value: "qorovul",
-                name: "qorovul"
-            }
-        ]
+    profession: [
+        {
+            id: 1,
+            value: "farrosh",
+            name: "farrosh"
+        },
+        {
+            id: 2,
+            value: "elektrik",
+            name: "elektrik"
+        },
+        {
+            id: 3,
+            value: "qorovul",
+            name: "qorovul"
+        }
+    ]
 };
+
+const userstype = {
+    types: [
+        {
+            id: 1,
+            value: "student",
+            name: "Student"
+        },
+        {
+            id: 2,
+            value: "teacher",
+            name: "Teacher"
+        },
+        {
+            id: 3,
+            value: "employer",
+            name: "Employer"
+        }
+    ]
+}
 
 export const Register = () => {
     const [registerType, setRegisterType] = useState('student');
@@ -122,13 +139,17 @@ export const Register = () => {
         console.log(value, "value");
     };
 
+    const handleUserTypeChange = (value) => {
+        setRegisterType(value);
+    };
+
     const renderFormFields = () => {
         switch (registerType) {
             case 'student':
                 return (
                     <>
                         <Input
-                            placeholder="username"
+                            placeholder="Username"
                             required
                         />
                         <Input
@@ -153,17 +174,16 @@ export const Register = () => {
                         />
                         <Input
                             placeholder="Telefon nomer"
-                            type="tel"
+                            type="number"
                             required
                         />
                         <Input
                             placeholder="Telefon nomer (ota-onasiniki)"
-                            type="tel"
+                            type="number"
                             required
                         />
                         <Textarea
-                            placeholder="Kommentariya"
-                        />
+                            placeholder="Kommentariya" />
                         <Select
                             defaultValue="Ta'lim tili"
                             options={studentOptions.language}
@@ -188,7 +208,7 @@ export const Register = () => {
                 return (
                     <>
                         <Input
-                            placeholder="username"
+                            placeholder="Username"
                             required
                         />
                         <Input
@@ -213,12 +233,12 @@ export const Register = () => {
                         />
                         <Input
                             placeholder="Telefon nomer"
-                            type="tel"
+                            type="number"
                             required
                         />
                         <Input
                             placeholder="Telefon nomer (ota-onasiniki)"
-                            type="tel"
+                            type="number"
                             required
                         />
                         <Textarea
@@ -242,7 +262,7 @@ export const Register = () => {
                 return (
                     <>
                         <Input
-                            placeholder="username"
+                            placeholder="Username"
                             required
                         />
                         <Input
@@ -267,12 +287,12 @@ export const Register = () => {
                         />
                         <Input
                             placeholder="Telefon nomer"
-                            type="tel"
+                            type="number"
                             required
                         />
                         <Input
                             placeholder="Telefon nomer (ota-onasiniki)"
-                            type="tel"
+                            type="number"
                             required
                         />
                         <Textarea
@@ -293,10 +313,8 @@ export const Register = () => {
 
     return (
         <div className={cls.login}>
-            <div>
-                <Button onClick={() => setRegisterType('student')}>Student</Button>
-                <Button onClick={() => setRegisterType('teacher')}>Teacher</Button>
-                <Button onClick={() => setRegisterType('employer')}>Employer</Button>
+            <div className={cls.selection}>
+                <Select defaultValue="User Type" options={userstype.types} onChangeOption={handleUserTypeChange} />
             </div>
             <div className={cls.login__boxes}>
                 <div className={cls.login__boxes__login__box}>
