@@ -11,6 +11,8 @@ import {Layout} from "app/layout";
 
 import "app/styles/index.sass"
 import {NewStudents} from "../../pages/newStudents/ui/newStudents";
+import DeletedStudents from "../../pages/deletedStudents/deletedStudents";
+import Students from "../../pages/students/students";
 
 export const AppRouter = () => {
 
@@ -51,6 +53,11 @@ export const AppRouter = () => {
                     <Route
                         path={"deletedStudents"}
                         element={<DeletedStudents/>}
+                    />
+                    <Route
+                        path={"students"}
+                        element={<Students/>}
+
                     />
                     <Route
                         index

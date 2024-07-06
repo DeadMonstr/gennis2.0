@@ -1,7 +1,8 @@
 import cls from "./deletedStudents.module.sass"
 import classNames from "classnames";
-import {useState} from "react";
+import React, {useMemo, useState} from "react";
 import {Table} from "../../shared/ui/table";
+import {Pagination} from "../../shared/ui/pagination";
 
 const menuList = [
     {name: "all", label: 'hammasi'},
@@ -14,259 +15,685 @@ const menuList = [
 
 const allStudentsData = [
     {
-        fullName: "AnelyaErmekova",
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
         age: 14,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        teacherDontLike: true,
         id: 1
     },
     {
-        fullName: "AnelyaErmekova",
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
         age: 15,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        badSituation: true,
         id: 2
     },
     {
-        fullName: "AnelyaErmekova",
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
         age: 16,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        couldStudy: true,
         id: 3
     },
     {
-        fullName: "AnelyaErmekova",
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
         age: 18,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        finished: true,
         id: 4
     },
-]
-const teacherDontLike = [
     {
-        fullName: "AnelyaErmekova",
-        age: 120,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 14,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        teacherDontLike: true,
         id: 1
     },
     {
-        fullName: "AnelyaErmekova",
-        age: 35,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 15,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        badSituation: true,
         id: 2
     },
     {
-        fullName: "AnelyaErmekova",
-        age: 56,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 16,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        couldStudy: true,
         id: 3
     },
     {
-        fullName: "AnelyaErmekova",
-        age: 68,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        finished: true,
         id: 4
     },
-]
-const badSituation = [
     {
-        fullName: "AnelyaErmekova",
-        age: 120,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 14,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        teacherDontLike: true,
         id: 1
     },
     {
-        fullName: "AnelyaErmekova",
-        age: 35,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 15,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        badSituation: true,
         id: 2
     },
     {
-        fullName: "AnelyaErmekova",
-        age: 56,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 16,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        couldStudy: true,
         id: 3
     },
     {
-        fullName: "AnelyaErmekova",
-        age: 68,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        finished: true,
         id: 4
     },
-]
-const couldStudy = [
     {
-        fullName: "AnelyaErmekova",
-        age: 120,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 14,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        teacherDontLike: true,
         id: 1
     },
     {
-        fullName: "AnelyaErmekova",
-        age: 35,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 15,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        badSituation: true,
         id: 2
     },
     {
-        fullName: "AnelyaErmekova",
-        age: 56,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 16,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        couldStudy: true,
         id: 3
     },
     {
-        fullName: "AnelyaErmekova",
-        age: 68,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        finished: true,
         id: 4
     },
-]
-const finished = [
     {
-        fullName: "AnelyaErmekova",
-        age: 120,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 14,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        teacherDontLike: true,
         id: 1
     },
     {
-        fullName: "AnelyaErmekova",
-        age: 35,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 15,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        badSituation: true,
         id: 2
     },
     {
-        fullName: "AnelyaErmekova",
-        age: 56,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 16,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        couldStudy: true,
         id: 3
     },
     {
-        fullName: "AnelyaErmekova",
-        age: 68,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        finished: true,
         id: 4
     },
-]
-const other = [
     {
-        fullName: "AnelyaErmekova",
-        age: 120,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 14,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        teacherDontLike: true,
         id: 1
     },
     {
-        fullName: "AnelyaErmekova",
-        age: 35,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 15,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        badSituation: true,
         id: 2
     },
     {
-        fullName: "AnelyaErmekova",
-        age: 56,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 16,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        couldStudy: true,
         id: 3
     },
     {
-        fullName: "AnelyaErmekova",
-        age: 68,
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
         number: 1233131,
         group: "1-guruh",
         reg_date: "22.22.22",
         deletedDate: "12312",
         reason: "boshqa",
+        finished: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 14,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        teacherDontLike: true,
+        id: 1
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 15,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        badSituation: true,
+        id: 2
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 16,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        couldStudy: true,
+        id: 3
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        finished: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 14,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        teacherDontLike: true,
+        id: 1
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 15,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        badSituation: true,
+        id: 2
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 16,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        couldStudy: true,
+        id: 3
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        finished: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 14,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        teacherDontLike: true,
+        id: 1
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 15,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        badSituation: true,
+        id: 2
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 16,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        couldStudy: true,
+        id: 3
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        finished: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        other: true,
         id: 4
     },
 ]
+
 const DeletedStudents = () => {
 
+    let PageSize = useMemo(() => 50, [])
+
+    const [currentPage, setCurrentPage] = useState(1);
+
+
     const [activeMenu, setActiveMenu] = useState(menuList[0]?.name)
+
+    const [search, setSearch] = useState("")
+
+
+    const searchedUsers = useMemo(() => {
+        const filteredHeroes = allStudentsData.slice()
+        setCurrentPage(1)
+        return filteredHeroes.filter(item =>
+            item.name.toLowerCase().includes(search.toLowerCase()) ||
+            item.surname.toLowerCase().includes(search.toLowerCase()) ||
+            item.username.toLowerCase().includes(search.toLowerCase())
+        )
+    }, [allStudentsData, search])
+
+    const currentTableData = useMemo(() => {
+        const firstPageIndex = (currentPage - 1) * PageSize;
+        const lastPageIndex = firstPageIndex + PageSize;
+        return searchedUsers.slice(firstPageIndex, lastPageIndex);
+    }, [PageSize, currentPage, searchedUsers]);
+
+
+
     return (
         <div className={cls.deletedStudents}>
             <ul className={cls.deletedStudents__menu}>
@@ -297,13 +724,13 @@ const DeletedStudents = () => {
                     </tr>
                     </thead>
                     {
-                        activeMenu === "all" ?
-                            allStudentsData.map((item, index) => {
+                        currentTableData.map((item, i) => {
+                            if (activeMenu === "all"){
                                 return (
                                     <tbody>
                                     <tr>
-                                        <td>{item.id}</td>
-                                        <td>{item.fullName}</td>
+                                        <td>{i +1}</td>
+                                        <td>{item.name} {item.surname}</td>
                                         <td>{item.age}</td>
                                         <td>{item.number}</td>
                                         <td>{item.group}</td>
@@ -313,31 +740,109 @@ const DeletedStudents = () => {
                                     </tr>
                                     </tbody>
                                 )
-                            })
-                            :
-                            activeMenu === "teacherDontLike" ?
-                                teacherDontLike.map((item, index) => {
-                                return (
-                                    <tbody>
-                                    <tr>
-                                        <td>{item.id}</td>
-                                        <td>{item.fullName}</td>
-                                        <td>{item.age}</td>
-                                        <td>{item.number}</td>
-                                        <td>{item.group}</td>
-                                        <td>{item.reg_date}</td>
-                                        <td>{item.deletedDate}</td>
-                                        <td>{item.reason}</td>
-                                    </tr>
-                                    </tbody>
-                                )
-                            }) : null
-
-
+                            }
+                            if (activeMenu === "teacherDontLike") {
+                                if (item.teacherDontLike){
+                                    return (
+                                        <tbody>
+                                        <tr>
+                                            <td>{i +1}</td>
+                                            <td>{item.name} {item.surname}</td>
+                                            <td>{item.age}</td>
+                                            <td>{item.number}</td>
+                                            <td>{item.group}</td>
+                                            <td>{item.reg_date}</td>
+                                            <td>{item.deletedDate}</td>
+                                            <td>{item.reason}</td>
+                                        </tr>
+                                        </tbody>
+                                    )
+                                }
+                            }
+                            if (activeMenu === "badSituation") {
+                                if (item.badSituation){
+                                    return (
+                                        <tbody>
+                                        <tr>
+                                            <td>{i +1}</td>
+                                            <td>{item.name} {item.surname}</td>
+                                            <td>{item.age}</td>
+                                            <td>{item.number}</td>
+                                            <td>{item.group}</td>
+                                            <td>{item.reg_date}</td>
+                                            <td>{item.deletedDate}</td>
+                                            <td>{item.reason}</td>
+                                        </tr>
+                                        </tbody>
+                                    )
+                                }
+                            }
+                            if (activeMenu === "couldStudy") {
+                                if (item.couldStudy){
+                                    return (
+                                        <tbody>
+                                        <tr>
+                                            <td>{i +1}</td>
+                                            <td>{item.name} {item.surname}</td>
+                                            <td>{item.age}</td>
+                                            <td>{item.number}</td>
+                                            <td>{item.group}</td>
+                                            <td>{item.reg_date}</td>
+                                            <td>{item.deletedDate}</td>
+                                            <td>{item.reason}</td>
+                                        </tr>
+                                        </tbody>
+                                    )
+                                }
+                            }
+                            if (activeMenu === "finished") {
+                                if (item.finished){
+                                    return (
+                                        <tbody>
+                                        <tr>
+                                            <td>{i +1}</td>
+                                            <td>{item.name} {item.surname}</td>
+                                            <td>{item.age}</td>
+                                            <td>{item.number}</td>
+                                            <td>{item.group}</td>
+                                            <td>{item.reg_date}</td>
+                                            <td>{item.deletedDate}</td>
+                                            <td>{item.reason}</td>
+                                        </tr>
+                                        </tbody>
+                                    )
+                                }
+                            }
+                            if (activeMenu === "other") {
+                                if (item.other){
+                                    return (
+                                        <tbody>
+                                        <tr>
+                                            <td>{i +1}</td>
+                                            <td>{item.name} {item.surname}</td>
+                                            <td>{item.age}</td>
+                                            <td>{item.number}</td>
+                                            <td>{item.group}</td>
+                                            <td>{item.reg_date}</td>
+                                            <td>{item.deletedDate}</td>
+                                            <td>{item.reason}</td>
+                                        </tr>
+                                        </tbody>
+                                    )
+                                }
+                            }
+                        })
                     }
-
                 </Table>
             </div>
+            <Pagination
+                currentPage={currentPage}
+                totalCount={searchedUsers.length}
+                pageSize={PageSize}
+                onPageChange={page => {
+                    setCurrentPage(page)
+                }}
+            />
         </div>
     )
 }

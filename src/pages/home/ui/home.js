@@ -110,8 +110,8 @@ export const Home = () => {
             padding: "5rem 3rem"
         }}>
 
-            <button onClick={() => setActive(!active)}>Enter</button>
-            <button onClick={() => setActiveG(!activeG)}>Enter</button>
+            {/*<button onClick={() => setActive(!active)}>Enter</button>*/}
+            {/*<button onClick={() => setActiveG(!activeG)}>Enter</button>*/}
 
 
             <div style={{width: "500px"}}>

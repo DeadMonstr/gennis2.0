@@ -31,7 +31,7 @@ const navigateList = [
         roles: []
     },
     {
-        to: "/login",
+        to: "students",
         name: "O'qiyotgan O'quvchilar",
         icon: "fa-user-graduate",
         roles: []
