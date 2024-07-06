@@ -725,24 +725,8 @@ const DeletedStudents = () => {
                     </thead>
                     {
                         currentTableData.map((item, i) => {
-                            if (activeMenu === "all"){
-                                return (
-                                    <tbody>
-                                    <tr>
-                                        <td>{i +1}</td>
-                                        <td>{item.name} {item.surname}</td>
-                                        <td>{item.age}</td>
-                                        <td>{item.number}</td>
-                                        <td>{item.group}</td>
-                                        <td>{item.reg_date}</td>
-                                        <td>{item.deletedDate}</td>
-                                        <td>{item.reason}</td>
-                                    </tr>
-                                    </tbody>
-                                )
-                            }
-                            if (activeMenu === "teacherDontLike") {
-                                if (item.teacherDontLike){
+                            switch (activeMenu){
+                                case "all" :
                                     return (
                                         <tbody>
                                         <tr>
@@ -757,79 +741,95 @@ const DeletedStudents = () => {
                                         </tr>
                                         </tbody>
                                     )
-                                }
-                            }
-                            if (activeMenu === "badSituation") {
-                                if (item.badSituation){
-                                    return (
-                                        <tbody>
-                                        <tr>
-                                            <td>{i +1}</td>
-                                            <td>{item.name} {item.surname}</td>
-                                            <td>{item.age}</td>
-                                            <td>{item.number}</td>
-                                            <td>{item.group}</td>
-                                            <td>{item.reg_date}</td>
-                                            <td>{item.deletedDate}</td>
-                                            <td>{item.reason}</td>
-                                        </tr>
-                                        </tbody>
-                                    )
-                                }
-                            }
-                            if (activeMenu === "couldStudy") {
-                                if (item.couldStudy){
-                                    return (
-                                        <tbody>
-                                        <tr>
-                                            <td>{i +1}</td>
-                                            <td>{item.name} {item.surname}</td>
-                                            <td>{item.age}</td>
-                                            <td>{item.number}</td>
-                                            <td>{item.group}</td>
-                                            <td>{item.reg_date}</td>
-                                            <td>{item.deletedDate}</td>
-                                            <td>{item.reason}</td>
-                                        </tr>
-                                        </tbody>
-                                    )
-                                }
-                            }
-                            if (activeMenu === "finished") {
-                                if (item.finished){
-                                    return (
-                                        <tbody>
-                                        <tr>
-                                            <td>{i +1}</td>
-                                            <td>{item.name} {item.surname}</td>
-                                            <td>{item.age}</td>
-                                            <td>{item.number}</td>
-                                            <td>{item.group}</td>
-                                            <td>{item.reg_date}</td>
-                                            <td>{item.deletedDate}</td>
-                                            <td>{item.reason}</td>
-                                        </tr>
-                                        </tbody>
-                                    )
-                                }
-                            }
-                            if (activeMenu === "other") {
-                                if (item.other){
-                                    return (
-                                        <tbody>
-                                        <tr>
-                                            <td>{i +1}</td>
-                                            <td>{item.name} {item.surname}</td>
-                                            <td>{item.age}</td>
-                                            <td>{item.number}</td>
-                                            <td>{item.group}</td>
-                                            <td>{item.reg_date}</td>
-                                            <td>{item.deletedDate}</td>
-                                            <td>{item.reason}</td>
-                                        </tr>
-                                        </tbody>
-                                    )
-                                }
+                                case "teacherDontLike":
+                                    if (item.teacherDontLike){
+                                        return (
+                                            <tbody>
+                                            <tr>
+                                                <td>{i +1}</td>
+                                                <td>{item.name} {item.surname}</td>
+                                                <td>{item.age}</td>
+                                                <td>{item.number}</td>
+                                                <td>{item.group}</td>
+                                                <td>{item.reg_date}</td>
+                                                <td>{item.deletedDate}</td>
+                                                <td>{item.reason}</td>
+                                            </tr>
+                                            </tbody>
+                                        )
+                                    }
+                                    break
+                                case "couldStudy" :
+                                    if (item.couldStudy){
+                                        return (
+                                            <tbody>
+                                            <tr>
+                                                <td>{i +1}</td>
+                                                <td>{item.name} {item.surname}</td>
+                                                <td>{item.age}</td>
+                                                <td>{item.number}</td>
+                                                <td>{item.group}</td>
+                                                <td>{item.reg_date}</td>
+                                                <td>{item.deletedDate}</td>
+                                                <td>{item.reason}</td>
+                                            </tr>
+                                            </tbody>
+                                        )
+                                    }
+                                    break
+                                case "badSituation" :
+                                    if (item.badSituation){
+                                        return (
+                                            <tbody>
+                                            <tr>
+                                                <td>{i +1}</td>
+                                                <td>{item.name} {item.surname}</td>
+                                                <td>{item.age}</td>
+                                                <td>{item.number}</td>
+                                                <td>{item.group}</td>
+                                                <td>{item.reg_date}</td>
+                                                <td>{item.deletedDate}</td>
+                                                <td>{item.reason}</td>
+                                            </tr>
+                                            </tbody>
+                                        )
+                                    }
+                                    break
+                                case "finished" :
+                                    if (item.finished){
+                                        return (
+                                            <tbody>
+                                            <tr>
+                                                <td>{i +1}</td>
+                                                <td>{item.name} {item.surname}</td>
+                                                <td>{item.age}</td>
+                                                <td>{item.number}</td>
+                                                <td>{item.group}</td>
+                                                <td>{item.reg_date}</td>
+                                                <td>{item.deletedDate}</td>
+                                                <td>{item.reason}</td>
+                                            </tr>
+                                            </tbody>
+                                        )
+                                    }
+                                    break
+                                case "other" :
+                                    if (item.other){
+                                        return (
+                                            <tbody>
+                                            <tr>
+                                                <td>{i +1}</td>
+                                                <td>{item.name} {item.surname}</td>
+                                                <td>{item.age}</td>
+                                                <td>{item.number}</td>
+                                                <td>{item.group}</td>
+                                                <td>{item.reg_date}</td>
+                                                <td>{item.deletedDate}</td>
+                                                <td>{item.reason}</td>
+                                            </tr>
+                                            </tbody>
+                                        )
+                                    }
                             }
                         })
                     }
@@ -847,3 +847,114 @@ const DeletedStudents = () => {
     )
 }
 export default DeletedStudents
+
+
+
+
+
+// if (activeMenu === "all"){
+//     return (
+//         <tbody>
+//         <tr>
+//             <td>{i +1}</td>
+//             <td>{item.name} {item.surname}</td>
+//             <td>{item.age}</td>
+//             <td>{item.number}</td>
+//             <td>{item.group}</td>
+//             <td>{item.reg_date}</td>
+//             <td>{item.deletedDate}</td>
+//             <td>{item.reason}</td>
+//         </tr>
+//         </tbody>
+//     )
+// }
+// if (activeMenu === "teacherDontLike") {
+//     if (item.teacherDontLike){
+//         return (
+//             <tbody>
+//             <tr>
+//                 <td>{i +1}</td>
+//                 <td>{item.name} {item.surname}</td>
+//                 <td>{item.age}</td>
+//                 <td>{item.number}</td>
+//                 <td>{item.group}</td>
+//                 <td>{item.reg_date}</td>
+//                 <td>{item.deletedDate}</td>
+//                 <td>{item.reason}</td>
+//             </tr>
+//             </tbody>
+//         )
+//     }
+// }
+// if (activeMenu === "badSituation") {
+//     if (item.badSituation){
+//         return (
+//             <tbody>
+//             <tr>
+//                 <td>{i +1}</td>
+//                 <td>{item.name} {item.surname}</td>
+//                 <td>{item.age}</td>
+//                 <td>{item.number}</td>
+//                 <td>{item.group}</td>
+//                 <td>{item.reg_date}</td>
+//                 <td>{item.deletedDate}</td>
+//                 <td>{item.reason}</td>
+//             </tr>
+//             </tbody>
+//         )
+//     }
+// }
+// if (activeMenu === "couldStudy") {
+//     if (item.couldStudy){
+//         return (
+//             <tbody>
+//             <tr>
+//                 <td>{i +1}</td>
+//                 <td>{item.name} {item.surname}</td>
+//                 <td>{item.age}</td>
+//                 <td>{item.number}</td>
+//                 <td>{item.group}</td>
+//                 <td>{item.reg_date}</td>
+//                 <td>{item.deletedDate}</td>
+//                 <td>{item.reason}</td>
+//             </tr>
+//             </tbody>
+//         )
+//     }
+// }
+// if (activeMenu === "finished") {
+//     if (item.finished){
+//         return (
+//             <tbody>
+//             <tr>
+//                 <td>{i +1}</td>
+//                 <td>{item.name} {item.surname}</td>
+//                 <td>{item.age}</td>
+//                 <td>{item.number}</td>
+//                 <td>{item.group}</td>
+//                 <td>{item.reg_date}</td>
+//                 <td>{item.deletedDate}</td>
+//                 <td>{item.reason}</td>
+//             </tr>
+//             </tbody>
+//         )
+//     }
+// }
+// if (activeMenu === "other") {
+//     if (item.other){
+//         return (
+//             <tbody>
+//             <tr>
+//                 <td>{i +1}</td>
+//                 <td>{item.name} {item.surname}</td>
+//                 <td>{item.age}</td>
+//                 <td>{item.number}</td>
+//                 <td>{item.group}</td>
+//                 <td>{item.reg_date}</td>
+//                 <td>{item.deletedDate}</td>
+//                 <td>{item.reason}</td>
+//             </tr>
+//             </tbody>
+//         )
+//     }
+// }

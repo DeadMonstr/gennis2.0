@@ -43,6 +43,12 @@ const navigateList = [
         roles: []
     },
     {
+        to: "deletedGroups",
+        name: "O'chirilgan Gruppalar",
+        icon: "fa-user-alt-slash",
+        roles: []
+    },
+    {
         to: "/login",
         name: "O'qituvchilar",
         icon: "fa-user-tie",

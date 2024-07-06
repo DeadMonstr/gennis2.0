@@ -1,21 +1,67 @@
 import React, {useMemo, useState} from "react";
 import cls from "./students.module.sass";
-import {Table} from "../../shared/ui/table";
-import {Pagination} from "../../shared/ui/pagination";
+import {Table} from "shared/ui/table";
+import {Pagination} from "shared/ui/pagination";
 
 const studentsData = [
-    {name: "dewd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: 123},
-    {name: "dewd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: 123},
-    {name: "dewd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: 123},
-    {name: "dewd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: 123},
+    {name: "dew1d", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -223},
+    {name: "de32wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: 123},
+    {name: "de321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: 13},
+    {name: "dewedwd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: 123},
+    {name: "dedqwdwd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: 123},
+    {name: "dedqwdwd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: 123},
+    {name: "dedqwdwd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: 123},
+    {name: "dedqwdwd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: 123},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+
 ]
 const Students = () => {
 
     let PageSize = useMemo(() => 50, [])
 
     const [currentPage, setCurrentPage] = useState(1);
-
-
 
 
     const [search, setSearch] = useState("")
@@ -52,17 +98,17 @@ const Students = () => {
                         <th>Guruh narxi</th>
                     </tr>
                     </thead>
-                    {studentsData.map((item, i) => {
+                    {currentTableData.map((item, i) => {
                         return (
                             <tbody>
-                                <tr>
-                                    <td>{i + 1}</td>
-                                    <td>{item.name} {item.surname}</td>
-                                    <td>{item.age}</td>
-                                    <td>{item.number}</td>
-                                    <td>{item.group}</td>
-                                    <td>{item.groupPrice}</td>
-                                </tr>
+                            <tr>
+                                <td>{i + 1}</td>
+                                <td>{item.name} {item.surname}</td>
+                                <td>{item.age}</td>
+                                <td>{item.number}</td>
+                                <td>{item.group}</td>
+                                <td style={{color: '#FF3B30'}}>{item.groupPrice}</td>
+                            </tr>
                             </tbody>
                         )
                     })}

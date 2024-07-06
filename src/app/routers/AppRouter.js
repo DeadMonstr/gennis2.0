@@ -13,6 +13,7 @@ import "app/styles/index.sass"
 import {NewStudents} from "../../pages/newStudents/ui/newStudents";
 import DeletedStudents from "../../pages/deletedStudents/deletedStudents";
 import Students from "../../pages/students/students";
+import DeletedGroups from "../../pages/deletedGroups/ui/deletedGroups";
 
 export const AppRouter = () => {
 
@@ -63,7 +64,10 @@ export const AppRouter = () => {
                         index
                         element={<Navigate to={"home"}/>}
                     />
-
+                    <Route
+                        path={"deletedGroups"}
+                        element={<DeletedGroups/>}
+                    />
 
                 </Route>
 
