@@ -1,11 +1,12 @@
 import React, {useCallback, useMemo, useState} from 'react';
 
+import {Pagination} from "features/pagination";
+import {StudentsFilter} from "features/filters";
 import {Alert} from "shared/ui/alert/alert";
 import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
-import {Pagination} from "features/pagination";
 import {MainSwitch} from "shared/ui/mainSwitch";
-import {Table} from "../../../shared/ui/table";
+import {Table} from "shared/ui/table";
 
 
 const list = [
@@ -91,7 +92,7 @@ export const Home = () => {
     // }, [PageSize, currentPage, searchedUsers]);
 
     const renderStudents = () => {
-        return users.map((item,index) => {
+        return currentTableData.map((item,index) => {
             return (
                 <tr>
                     <td>{index+1}</td>
@@ -147,114 +148,130 @@ export const Home = () => {
 
             <button onClick={() => setActive(!active)}>Enter</button>
 
-
-            <div style={{width: "500px"}}>
-
-                <Select
-                    status={"error"}
-                    title={"select"}
-                    options={list}
-                    onChangeOption={onChange}
-                    // keyValue={"label"}
-                    defaultValue={"potato"}
-                />
-            </div>
-
-            <Select
-                status={"disabled"}
-                title={"select"}
-                options={list}
-                onChangeOption={onChange}
-                // keyValue={"label"}
-                defaultValue={"potato"}
-            />
-
-            <Select
-                // status={"error"}
-                title={"select"}
-                options={list}
-                onChangeOption={onChange}
-                // keyValue={"label"}
-                defaultValue={"potato"}
-            />
-            <Alert/>
-            <button onClick={() => setActive(!active)}>Enter</button>
-
-
-            <div style={{width: "500px"}}>
-
-                <Select
-                    status={"error"}
-                    title={"select"}
-                    options={list}
-                    onChangeOption={onChange}
-                    // keyValue={"label"}
-                    defaultValue={"potato"}
-                />
-            </div>
-
-            <Select
-                status={"disabled"}
-                title={"select"}
-                options={list}
-                onChangeOption={onChange}
-                // keyValue={"label"}
-                defaultValue={"potato"}
-            />
-
-            <Select
-                // status={"error"}
-                title={"select"}
-                options={list}
-                onChangeOption={onChange}
-                // keyValue={"label"}
-                defaultValue={"potato"}
-            />
-            <Alert/>
-            <button onClick={() => setActive(!active)}>Enter</button>
-
-
-            <div style={{width: "500px"}}>
-
-                <Select
-                    status={"error"}
-                    title={"select"}
-                    options={list}
-                    onChangeOption={onChange}
-                    // keyValue={"label"}
-                    defaultValue={"potato"}
-                />
-            </div>
-
-            <Select
-                status={"disabled"}
-                title={"select"}
-                options={list}
-                onChangeOption={onChange}
-                // keyValue={"label"}
-                defaultValue={"potato"}
-            />
-
-            <Select
-                // status={"error"}
-                title={"select"}
-                options={list}
-                onChangeOption={onChange}
-                // keyValue={"label"}
-                defaultValue={"potato"}
-            />
-            <Alert/>
-
-            <Modal
+            <StudentsFilter
                 active={active}
                 setActive={setActive}
-            >
-                <h1>Hello Sarik</h1>
-                <h1>Hello World</h1>
-            </Modal>
+            />
+
+
+            <div style={{width: "500px"}}>
+
+                <Select
+                    status={"error"}
+                    title={"select"}
+                    options={list}
+                    onChangeOption={onChange}
+                    // keyValue={"label"}
+                    defaultValue={"potato"}
+                />
+            </div>
+
+            <Select
+                status={"disabled"}
+                title={"select"}
+                options={list}
+                onChangeOption={onChange}
+                // keyValue={"label"}
+                defaultValue={"potato"}
+            />
+
+            <Select
+                // status={"error"}
+                title={"select"}
+                options={list}
+                onChangeOption={onChange}
+                // keyValue={"label"}
+                defaultValue={"potato"}
+            />
+            <Alert/>
+            <button onClick={() => setActive(!active)}>Enter</button>
+
+
+            <div style={{width: "500px"}}>
+
+                <Select
+                    status={"error"}
+                    title={"select"}
+                    options={list}
+                    onChangeOption={onChange}
+                    // keyValue={"label"}
+                    defaultValue={"potato"}
+                />
+            </div>
+
+            <Select
+                status={"disabled"}
+                title={"select"}
+                options={list}
+                onChangeOption={onChange}
+                // keyValue={"label"}
+                defaultValue={"potato"}
+            />
+
+            <Select
+                // status={"error"}
+                title={"select"}
+                options={list}
+                onChangeOption={onChange}
+                // keyValue={"label"}
+                defaultValue={"potato"}
+            />
+            <Alert/>
+            <button onClick={() => setActive(!active)}>Enter</button>
+
+
+            <div style={{width: "500px"}}>
+
+                <Select
+                    status={"error"}
+                    title={"select"}
+                    options={list}
+                    onChangeOption={onChange}
+                    // keyValue={"label"}
+                    defaultValue={"potato"}
+                />
+            </div>
+
+            <Select
+                status={"disabled"}
+                title={"select"}
+                options={list}
+                onChangeOption={onChange}
+                // keyValue={"label"}
+                defaultValue={"potato"}
+            />
+
+            <Select
+                // status={"error"}
+                title={"select"}
+                options={list}
+                onChangeOption={onChange}
+                // keyValue={"label"}
+                defaultValue={"potato"}
+            />
+            <Alert/>
 
 
             <div>
+                <Table>
+                    <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Ism</th>
+                        <th>Familya</th>
+                        {/*{*/}
+                        {/*    dates.map(item =>{*/}
+                        {/*        return (*/}
+                        {/*            <th>{item}</th>*/}
+                        {/*        )*/}
+                        {/*    })*/}
+                        {/*}*/}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {renderStudents()}
+                    </tbody>
+                </Table>
                 {currentTable}
                 <Pagination
                     setCurrentTableData={setCurrentTableData}
