@@ -5,9 +5,9 @@ import close from "shared/assets/icons/close.svg"
 
 import cls from "./button.module.sass"
 
-const Button = ({children, onClick, type, disabled, status}) => {
+const Button = ({children, onClick, type, disabled, status , extraClass}) => {
     return (
-        <button onClick={onClick} className={classNames(cls.btn, cls[type], {
+        <button onClick={onClick} className={classNames(cls.btn,extraClass, cls[type], {
             [cls.simple]: type === "simple",
             [cls.success]: type === "success",
             [cls.danger]: type === "danger",

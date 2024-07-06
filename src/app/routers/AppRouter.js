@@ -10,6 +10,7 @@ import {NotFoundPage} from "pages/notfound/ui/notfound";
 import {Layout} from "app/layout";
 
 import "app/styles/index.sass"
+import DeletedStudents from "pages/deletedStudents/deletedStudents";
 
 export const AppRouter = () => {
 
@@ -30,6 +31,7 @@ export const AppRouter = () => {
                 />
 
 
+
                 <Route path={"platform/*"} element={<Layout/>}>
                     <Route
                         path={"home"}
@@ -46,12 +48,15 @@ export const AppRouter = () => {
                         element={<Register/>}
                     />
 
-
-
+                    <Route
+                        path={"deletedStudents"}
+                        element={<DeletedStudents/>}
+                    />
                     <Route
                         index
                         element={<Navigate to={"home"}/>}
                     />
+
 
                 </Route>
 

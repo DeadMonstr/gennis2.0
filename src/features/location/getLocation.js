@@ -27,7 +27,7 @@ const GetLocation = ({getItem , deletedId}) => {
                         return {...item, disabled: false}
                     }
                     return item
-                })
+                  })
             })
             setSelectedLocation(selectedLocation.filter(item => item.id !== +deletedId))
             getItem(selectedLocation.filter(item => item.id !== +deletedId))

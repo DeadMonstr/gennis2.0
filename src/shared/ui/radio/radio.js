@@ -3,7 +3,7 @@ import cls from "./radio.module.sass"
 import classNames from "classnames";
 
 
-const Radio = ({name, id, value, onChange, checked, children, disabled}) => {
+const Radio = ({name, id, value, onChange, checked, children, disabled , extraClasses}) => {
 
     const [active, setActive] = useState(false)
     useEffect(() => {
@@ -11,7 +11,7 @@ const Radio = ({name, id, value, onChange, checked, children, disabled}) => {
     }, [checked])
 
     return (
-        <label htmlFor={id} className={classNames(cls.radioLabel)}>
+        <label htmlFor={id} className={classNames(cls.radioLabel , extraClasses)}>
             <input
                 disabled={disabled}
                 className={cls.radioInput}

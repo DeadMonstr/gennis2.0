@@ -112,7 +112,9 @@ export const Input = React.memo((
                             }
                         </div> : null
                 }
-                {checkboxTitle && <span>{checkboxTitle}</span>}
+                <div className={cls.field__checkbox}>
+                    {checkboxTitle && <span>{checkboxTitle}</span>}
+                </div>
 
             </div>
 
