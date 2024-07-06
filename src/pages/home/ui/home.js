@@ -1,7 +1,7 @@
 import React, {useCallback, useMemo, useState} from 'react';
 
 import {Pagination} from "features/pagination";
-import {StudentsFilter} from "features/filters";
+import {GroupsFilter, StudentsFilter} from "features/filters";
 import {Alert} from "shared/ui/alert/alert";
 import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
@@ -60,6 +60,7 @@ const users = [
 ]
 export const Home = () => {
     const [active, setActive] = useState(false)
+    const [activeG, setActiveG] = useState(false)
 
     const onChange = (value) => {
         console.log(value, "value")
@@ -142,15 +143,32 @@ export const Home = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {renderStudents()}
+                {
+                    users.map((item, index) => {
+                        return (
+                            <tr>
+                                <td>{index+1}</td>
+                                <td>{item.name}</td>
+                                <td>{item.username}</td>
+                                {/*{checkTrueFalse(item.dates)}*/}
+                            </tr>
+                        )
+                    })
+                }
                 </tbody>
             </Table>
 
             <button onClick={() => setActive(!active)}>Enter</button>
+            <button onClick={() => setActiveG(!activeG)}>Enter</button>
 
             <StudentsFilter
                 active={active}
                 setActive={setActive}
+            />
+
+            <GroupsFilter
+                active={activeG}
+                setActive={setActiveG}
             />
 
 

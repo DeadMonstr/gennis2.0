@@ -4,7 +4,7 @@ import Button from "shared/ui/button/button";
 import { Select } from "shared/ui/select";
 import Radio from "shared/ui/radio/radio";
 import { Table } from "shared/ui/table";
-import { Pagination } from "../../../shared/ui/pagination";
+import {Pagination} from "features/pagination";
 
 const users = [
     {
