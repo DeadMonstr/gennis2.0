@@ -25,7 +25,7 @@ const navigateList = [
         roles: []
     },
     {
-        to: "/login",
+        to: "deletedStudents",
         name: "O'chirilgan O'quvchilar",
         icon: "fa-user-alt-slash",
         roles: []

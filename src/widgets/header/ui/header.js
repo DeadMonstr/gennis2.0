@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import {BreadCrumbs} from "features/breadCrumbs";
 import {SearchPlatformInput} from "features/searchInput";
-import GetLocation from "features/getLocation/getLocation";
+import GetLocation from "features/location/getLocation";
 import {MainSwitch} from "shared/ui/mainSwitch";
 
 import cls from "./header.module.sass";
