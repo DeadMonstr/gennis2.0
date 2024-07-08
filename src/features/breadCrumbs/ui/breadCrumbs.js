@@ -20,8 +20,6 @@ export const BreadCrumbs = ({defaultLink}) => {
         )
     }, [location, itemId])
 
-    console.log(crumbsData, "normal")
-    console.log(itemId, "id")
     // console.log(crumbsData.sort(), "sort")
 
     let currentLink = ''

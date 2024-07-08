@@ -2,6 +2,8 @@
 
 import {configureStore} from "@reduxjs/toolkit";
 
+import {search} from "features/searchInput";
+import {registerUser} from 'entities/user/userRegister';
 
 
 const stringMiddleware = () => (next) => (action) => {
@@ -15,7 +17,10 @@ const stringMiddleware = () => (next) => (action) => {
 
 
 export const store = configureStore({
-    reducer: {},
+    reducer: {
+        search,
+        registerUser
+    },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(
             stringMiddleware
