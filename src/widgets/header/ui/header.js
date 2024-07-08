@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {useSearchParams} from "react-router-dom";
 
 import {BreadCrumbs} from "features/breadCrumbs";
 import {SearchPlatformInput} from "features/searchInput";
@@ -12,6 +13,53 @@ export const Header = () => {
 
     const [selected, setSelected] = useState([])
     const [deletedId, setDeletedId] = useState(0)
+
+    let [searchParams, setSearchParams] = useSearchParams()
+
+
+    // try {
+    //     addQueryParams({
+    //         sort,
+    //         order,
+    //         search,
+    //         type,
+    //     });
+    //     const response = await extra.api.get<Article[]>('/articles', {
+    //         params: {
+    //             _expand: 'user',
+    //             _limit: limit,
+    //             _page: page,
+    //             _sort: sort,
+    //             _order: order,
+    //             q: search,
+    //             type: type === ArticleType.ALL ? undefined : type,
+    //         },
+    //     });
+    //
+    //     if (!response.data) {
+    //         throw new Error();
+    //     }
+    //
+    //     return response.data;
+    // } catch (e) {
+    //     return rejectWithValue('error');
+    // }
+
+
+    useEffect(() => {
+        try {
+            setSearchParams({
+                sort: "createdAt",
+                order: "asc",
+                search: "it",
+                type: "ALL"
+            })
+        } catch (e) {
+            throw e
+        }
+    }, [searchParams, setSearchParams])
+
+    console.log(searchParams, "search")
 
     return (
         <header className={cls.header}>
