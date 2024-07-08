@@ -226,6 +226,7 @@ export const NewStudents = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     const [selected, setSelected] = useState("");
+    const [currentTableData, setCurrentTableData] = useState([])
 
     const peoples = ["New students", "Studying students", "Deleted students"];
 
@@ -233,21 +234,6 @@ export const NewStudents = () => {
         setSelected(value);
     };
 
-    const searchedUsers = useMemo(() => {
-        const filteredHeroes = users.slice();
-        setCurrentPage(1);
-        return filteredHeroes.filter(item =>
-            item.name.toLowerCase().includes(search.toLowerCase()) ||
-            item.surname.toLowerCase().includes(search.toLowerCase()) ||
-            item.username.toLowerCase().includes(search.toLowerCase())
-        );
-    }, [users, search]);
-
-    const currentTableData = useMemo(() => {
-        const firstPageIndex = (currentPage - 1) * PageSize;
-        const lastPageIndex = firstPageIndex + PageSize;
-        return searchedUsers.slice(firstPageIndex, lastPageIndex);
-    }, [PageSize, currentPage, searchedUsers]);
 
     const renderStudents = () => {
         return currentTableData.map((item, index) => (
@@ -267,13 +253,13 @@ export const NewStudents = () => {
         <div className={cls.mainContainer}>
             <div className={cls.mainContainer_buttonPanelBox}>
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}>
-                    <Button>Create group</Button>
-                    <Button>Add group</Button>
+                    <Button extraClass={cls.extraCutClass}>Create group</Button>
+                    <Button extraClass={cls.noneBackground}>Add group</Button>
                 </div>
                 <Select />
             </div>
             <div className={cls.mainContainer_filterPanelBox}>
-                <Button>Filter</Button>
+                <Button extraClass={cls.extraCutClassFilter}>Filter</Button>
                 <div className={cls.mainContainer_filterPanelBox_rightFilterRadioGroupBox}>
                     {peoples.map((item, id) => (
                         <Radio
@@ -305,11 +291,14 @@ export const NewStudents = () => {
                 </Table>
             </div>
             <Pagination
+                setCurrentTableData={setCurrentTableData}
+                users={users}
+                search={search}
+                setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
-                totalCount={searchedUsers.length}
                 pageSize={PageSize}
                 onPageChange={page => {
-                    setCurrentPage(page);
+                    setCurrentPage(page)
                 }}
             />
         </div>

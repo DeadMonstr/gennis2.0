@@ -7,6 +7,7 @@ import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
 import {MainSwitch} from "shared/ui/mainSwitch";
 import {Table} from "shared/ui/table";
+import {SearchPlatformInput} from "../../../features/searchInput";
 
 
 const list = [
@@ -67,6 +68,10 @@ export const Home = () => {
 
 
     }
+    const handleSearch = (searchValue) => {
+        console.log('Search value:', searchValue);
+    };
+
     let PageSize = useMemo(() => 1, [])
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -303,6 +308,7 @@ export const Home = () => {
                     }}
                 />
                 <MainSwitch/>
+                <SearchPlatformInput onSearch={handleSearch}/>
             </div>
 
             {/*<Table*/}
