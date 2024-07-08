@@ -276,7 +276,7 @@ export const NewStudents = () => {
                 <Table>
                     <thead>
                     <tr>
-                        <th>No</th>
+                        <th>№</th>
                         <th>Full name</th>
                         <th>Age</th>
                         <th>Tel</th>

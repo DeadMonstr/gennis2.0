@@ -19,7 +19,7 @@ const navigateList = [
         roles: []
     },
     {
-        to: "/login",
+        to: "newStudents",
         name: "Yangi O'quvchilar",
         icon: "fa-user",
         roles: []
