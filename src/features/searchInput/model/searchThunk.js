@@ -1,8 +1,10 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 
-export const fetchSearchParams = createAsyncThunk(
-    "searchSlice/fetchSearchParams",
-    async () => {
+import {useResultsSearch} from "shared/api/search";
 
+export const fetchSearch = createAsyncThunk(
+    "newStudents/fetchSearch",
+    async (searchStr) => {
+        return useResultsSearch(searchStr)
     }
 )
