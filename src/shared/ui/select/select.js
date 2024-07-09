@@ -25,7 +25,7 @@ export const Select = ({options, keyValue, all, required, defaultValue, title, o
             onChangeOption(selectOption)
             setIsChanged(false)
         }
-    }, [selectOption, onChangeOption])
+    }, [selectOption, onChangeOption, isChanged])
 
 
     const renderOptionsOfSelect = useCallback(() => {
