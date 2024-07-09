@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import SearchInput from 'shared/ui/searchInput/search';
 
- export const SearchPlatformInput = ({ onSearch }) => {
+export const SearchPlatformInput = ({onSearch}) => {
     const [search, setSearch] = useState('');
 
     const handleSearch = (searchValue) => {

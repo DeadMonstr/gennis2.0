@@ -3,6 +3,7 @@
 import {configureStore} from "@reduxjs/toolkit";
 
 import {search} from "features/searchInput";
+import {filteredTeacher} from "entities/filter/filterTeachers";
 
 
 
@@ -18,7 +19,8 @@ const stringMiddleware = () => (next) => (action) => {
 
 export const store = configureStore({
     reducer: {
-        search
+        search,
+        filteredTeacher
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

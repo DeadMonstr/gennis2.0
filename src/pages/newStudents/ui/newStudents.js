@@ -1,10 +1,13 @@
 import React, { useMemo, useState } from 'react';
-import cls from "./newStudents.module.sass";
-import Button from "shared/ui/button/button";
-import { Select } from "shared/ui/select";
-import Radio from "shared/ui/radio/radio";
-import { Table } from "shared/ui/table";
+
 import {Pagination} from "features/pagination";
+import {StudentsFilter} from "features/filters";
+import { Select } from "shared/ui/select";
+import { Table } from "shared/ui/table";
+import Button from "shared/ui/button/button";
+import Radio from "shared/ui/radio/radio";
+
+import cls from "./newStudents.module.sass";
 
 const users = [
     {
@@ -221,7 +224,8 @@ const users = [
 ];
 
 export const NewStudents = () => {
-    const [active, setActive] = useState("");
+    const [active, setActive] = useState(false);
+    const [activeMenu, setActiveMenu] = useState("");
     const PageSize = useMemo(() => 10, []);
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
@@ -259,7 +263,12 @@ export const NewStudents = () => {
                 <Select />
             </div>
             <div className={cls.mainContainer_filterPanelBox}>
-                <Button extraClass={cls.extraCutClassFilter}>Filter</Button>
+                <Button
+                    extraClass={cls.extraCutClassFilter}
+                    onClick={() => setActive(true)}
+                >
+                    Filter
+                </Button>
                 <div className={cls.mainContainer_filterPanelBox_rightFilterRadioGroupBox}>
                     {peoples.map((item, id) => (
                         <Radio
@@ -300,6 +309,10 @@ export const NewStudents = () => {
                 onPageChange={page => {
                     setCurrentPage(page)
                 }}
+            />
+            <StudentsFilter
+                active={active}
+                setActive={setActive}
             />
         </div>
     );
