@@ -1,11 +1,13 @@
 import React, {useMemo, useState} from "react";
-import cls from "./deletedGroups.module.sass";
+import cls from "./groups.module.sass";
 import {Table} from "shared/ui/table";
 import {Pagination} from "features/pagination";
 import Button from "shared/ui/button/button";
 import Radio from "shared/ui/radio/radio";
 import filter from "shared/assets/Filtericons/Filter.svg"
 import {GroupsFilter} from "../../../features/filters";
+import {Link} from "react-router-dom";
+
 const deletedGroupsData = [
     {
         groupName: "dew1d",
@@ -640,7 +642,7 @@ const deletedGroupsData = [
 
 
 ]
-const DeletedGroups = () => {
+const Groups = () => {
     const [active, setActive] = useState(false);
     let PageSize = useMemo(() => 50, [])
 
@@ -675,7 +677,14 @@ const DeletedGroups = () => {
                 >
                     Filter
                 </Button>
-
+                <Link to={"deletedGroups"}>
+                    <Button type={"login"} status={"timeTable"}
+                            extraClass={cls.extraCutClassFilter}
+                            onClick={() => setActive(true)}
+                    >
+                        Time Table
+                    </Button>
+                </Link>
             </div>
             <div className={cls.table}>
                 <Table extraClass={cls.table__head}>
@@ -687,7 +696,7 @@ const DeletedGroups = () => {
                         <th>Fan</th>
                         <th>Kurs Turi</th>
                         <th>Guruh narxi</th>
-                        <th>O'chirilgan sana</th>
+                        <th>Status</th>
                     </tr>
                     </thead>
                     {currentTableData.map((item, i) => {
@@ -742,4 +751,4 @@ const DeletedGroups = () => {
         </div>
     )
 }
-export default DeletedGroups
+export default Groups

@@ -37,7 +37,7 @@ const navigateList = [
         roles: []
     },
     {
-        to: "/login",
+        to: "groups",
         name: "Gruppalar",
         icon: "fa-users",
         roles: []

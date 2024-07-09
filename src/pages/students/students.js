@@ -1,7 +1,11 @@
 import React, {useMemo, useState} from "react";
 import cls from "./students.module.sass";
 import {Table} from "shared/ui/table";
-import {Pagination} from "shared/ui/pagination";
+import {Pagination} from "features/pagination";
+import Button from "../../shared/ui/button/button";
+import filter from "../../shared/assets/Filtericons/Filter.svg";
+import {StudentsFilter} from "../../features/filters";
+import Radio from "../../shared/ui/radio/radio";
 
 const studentsData = [
     {name: "dew1d", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -223},
@@ -60,11 +64,15 @@ const studentsData = [
 const Students = () => {
 
     let PageSize = useMemo(() => 50, [])
-
+    const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
-
-
+    const peoples = ["New students", "Studying students", "Deleted students"];
+    const [active, setActive] = useState(false);
     const [search, setSearch] = useState("")
+    const [selected, setSelected] = useState("");
+    const handleChange = (value) => {
+        setSelected(value);
+    };
 
 
     const searchedUsers = useMemo(() => {
@@ -77,15 +85,45 @@ const Students = () => {
         )
     }, [studentsData, search])
 
-    const currentTableData = useMemo(() => {
-        const firstPageIndex = (currentPage - 1) * PageSize;
-        const lastPageIndex = firstPageIndex + PageSize;
-        return searchedUsers.slice(firstPageIndex, lastPageIndex);
-    }, [PageSize, currentPage, searchedUsers]);
+    // const currentTableData = useMemo(() => {
+    //     const firstPageIndex = (currentPage - 1) * PageSize;
+    //     const lastPageIndex = firstPageIndex + PageSize;
+    //     return searchedUsers.slice(firstPageIndex, lastPageIndex);
+    // }, [PageSize, currentPage, searchedUsers]);
 
-
+    const renderStudents = () => {
+        return currentTableData.map((item, i) => (
+            <tr>
+                <td>{i + 1}</td>
+                <td>{item.name} {item.surname}</td>
+                <td>{item.age}</td>
+                <td>{item.number}</td>
+                <td>{item.group}</td>
+                <td style={{color: '#FF3B30'}}>{item.groupPrice}</td>
+            </tr>
+        ))
+    }
     return (
         <div className={cls.students}>
+            <div className={cls.mainContainer_filterPanelBox}>
+                <Button type={"filter"}
+                        extraClass={cls.extraCutClassFilter}
+                        onClick={() => setActive(true)}
+                >
+                    Filter
+                </Button>
+                <div className={cls.mainContainer_filterPanelBox_rightFilterRadioGroupBox}>
+                    {peoples.map((item, id) => (
+                        <Radio
+                            key={id}
+                            onChange={() => handleChange(item)}
+                            checked={selected === item}
+                        >
+                            {item}
+                        </Radio>
+                    ))}
+                </div>
+            </div>
             <div className={cls.table}>
                 <Table extraClass={cls.table__head}>
                     <thead>
@@ -98,30 +136,23 @@ const Students = () => {
                         <th>Guruh narxi</th>
                     </tr>
                     </thead>
-                    {currentTableData.map((item, i) => {
-                        return (
-                            <tbody>
-                            <tr>
-                                <td>{i + 1}</td>
-                                <td>{item.name} {item.surname}</td>
-                                <td>{item.age}</td>
-                                <td>{item.number}</td>
-                                <td>{item.group}</td>
-                                <td style={{color: '#FF3B30'}}>{item.groupPrice}</td>
-                            </tr>
-                            </tbody>
-                        )
-                    })}
+                    <tbody>
+                    {renderStudents()}
+                    </tbody>
                 </Table>
             </div>
             <Pagination
+                setCurrentTableData={setCurrentTableData}
+                users={studentsData}
+                search={search}
+                setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
-                totalCount={searchedUsers.length}
                 pageSize={PageSize}
                 onPageChange={page => {
                     setCurrentPage(page)
                 }}
             />
+            <StudentsFilter setActive={setActive} active={active}/>
         </div>
     )
 }

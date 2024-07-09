@@ -2,7 +2,11 @@ import cls from "./deletedStudents.module.sass"
 import classNames from "classnames";
 import React, {useMemo, useState} from "react";
 import {Table} from "../../shared/ui/table";
-import {Pagination} from "../../shared/ui/pagination";
+import {Pagination} from "../../features/pagination";
+import {StudentsFilter} from "../../features/filters";
+import Button from "../../shared/ui/button/button";
+
+import {Select} from "../../shared/ui/select";
 
 const menuList = [
     {name: "all", label: 'hammasi'},
@@ -663,13 +667,16 @@ const allStudentsData = [
         id: 4
     },
 ]
-
+const branches =[
+    {name: "chirchiq" , label: "chirchiq"},
+    {name: "chirchiq1" , label: "chirchiq2"},
+]
 const DeletedStudents = () => {
 
     let PageSize = useMemo(() => 50, [])
-
+    const [active, setActive] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-
+    const [currentTableData, setCurrentTableData] = useState([])
 
     const [activeMenu, setActiveMenu] = useState(menuList[0]?.name)
 
@@ -686,16 +693,25 @@ const DeletedStudents = () => {
         )
     }, [allStudentsData, search])
 
-    const currentTableData = useMemo(() => {
-        const firstPageIndex = (currentPage - 1) * PageSize;
-        const lastPageIndex = firstPageIndex + PageSize;
-        return searchedUsers.slice(firstPageIndex, lastPageIndex);
-    }, [PageSize, currentPage, searchedUsers]);
-
+    // const currentTableData = useMemo(() => {
+    //     const firstPageIndex = (currentPage - 1) * PageSize;
+    //     const lastPageIndex = firstPageIndex + PageSize;
+    //     return searchedUsers.slice(firstPageIndex, lastPageIndex);
+    // }, [PageSize, currentPage, searchedUsers]);
+    //
 
 
     return (
         <div className={cls.deletedStudents}>
+            <div className={cls.mainContainer_filterPanelBox}>
+                <Button type={"filter"}
+                    extraClass={cls.extraCutClassFilter}
+                    onClick={() => setActive(true)}
+                >
+                    Filter
+                </Button>
+                <Select options={branches}/>
+            </div>
             <ul className={cls.deletedStudents__menu}>
                 {menuList.map((item, i) => <li
                     key={i}
@@ -836,13 +852,17 @@ const DeletedStudents = () => {
                 </Table>
             </div>
             <Pagination
+                setCurrentTableData={setCurrentTableData}
+                users={allStudentsData}
+                search={search}
+                setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
-                totalCount={searchedUsers.length}
                 pageSize={PageSize}
                 onPageChange={page => {
                     setCurrentPage(page)
                 }}
             />
+            <StudentsFilter setActive={setActive} active={active}/>
         </div>
     )
 }

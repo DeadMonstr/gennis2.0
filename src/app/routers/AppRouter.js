@@ -4,7 +4,7 @@ import {createBrowserRouter} from "react-router-dom";
 
 
 import {Home} from "pages/home/ui/home";
-import Login from "pages/login/ui/login";
+import {Login} from "pages/login/ui/login";
 import {Register} from "pages/register/ui/register";
 import {NotFoundPage} from "pages/notfound/ui/notfound";
 import {Layout} from "app/layout";
@@ -14,6 +14,7 @@ import {NewStudents} from "../../pages/newStudents/ui/newStudents";
 import DeletedStudents from "../../pages/deletedStudents/deletedStudents";
 import Students from "../../pages/students/students";
 import DeletedGroups from "../../pages/deletedGroups/ui/deletedGroups";
+import Groups from "../../pages/groups/ui/groups";
 
 export const AppRouter = () => {
 
@@ -60,6 +61,7 @@ export const AppRouter = () => {
                         element={<Students/>}
 
                     />
+                    <Route path={"newStudents"} element={<NewStudents/>}/>
                     <Route
                         index
                         element={<Navigate to={"home"}/>}
@@ -68,7 +70,10 @@ export const AppRouter = () => {
                         path={"deletedGroups"}
                         element={<DeletedGroups/>}
                     />
-
+                    <Route
+                        path={"groups"}
+                        element={<Groups/>}
+                    />
                 </Route>
 
                 <Route

@@ -3,10 +3,9 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {Alert} from "shared/ui/alert/alert";
 import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
-import {Pagination} from "shared/ui/pagination";
+import {Pagination} from "features/pagination";
 import {MainSwitch} from "shared/ui/mainSwitch";
 import {Table} from "shared/ui/table";
-import {SearchPlatformInput} from "../../../features/searchInput";
 import {SearchPlatrofmInput} from "features/searchInput/ui/searchPlatrofmInput";
 // import {Table} from "shared/ui/table";
 const activeRows = {
@@ -237,16 +236,16 @@ export const Home = () => {
                         )
                     })
                 }
-                <Pagination
-                    currentPage={currentPage}
-                    totalCount={searchedUsers.length}
-                    pageSize={PageSize}
-                    onPageChange={page => {
-                        setCurrentPage(page)
-                    }}
-                />
+                {/*<Pagination*/}
+                {/*    currentPage={currentPage}*/}
+                {/*    totalCount={searchedUsers.length}*/}
+                {/*    pageSize={PageSize}*/}
+                {/*    onPageChange={page => {*/}
+                {/*        setCurrentPage(page)*/}
+                {/*    }}*/}
+                {/*/>*/}
                 <MainSwitch/>
-                <SearchPlatformInput onSearch={handleSearch}/>
+                {/*<SearchPlatformInput onSearch={handleSearch}/>handleSearch*/}
             </div>
 
             {/*<Table*/}

@@ -7,7 +7,7 @@ import Button from "shared/ui/button/button";
 import Radio from "shared/ui/radio/radio";
 
 import cls from "./newStudents.module.sass";
-import {Pagination} from "shared/ui/pagination";
+import {Pagination} from "features/pagination";
 
 const users = [
     {

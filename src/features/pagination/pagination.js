@@ -1,24 +1,47 @@
-import React, {useCallback} from 'react';
+
+import React, {useCallback, useEffect, useMemo} from 'react';
 import classNames from "classnames";
 
 import {usePagination, DOTS} from "shared/lib/pagination";
 
 import cls from "./pagination.module.sass";
 
-export const Pagination = (props => {
+export const Pagination = React.memo((props) => {
 
     const {
+        users,
+        search,
         onPageChange,
-        totalCount,
         siblingCount = 1,
+        setCurrentPage,
         currentPage,
         pageSize,
-        className
+        className,
+        setCurrentTableData
     } = props;
+
+    const searchedUsers = useMemo(() => {
+        const filteredHeroes = users.slice()
+        setCurrentPage(1)
+        return filteredHeroes.filter(item =>
+            item.name.toLowerCase().includes(search.toLowerCase()) ||
+            item.surname.toLowerCase().includes(search.toLowerCase()) ||
+            item.username.toLowerCase().includes(search.toLowerCase())
+        )
+    }, [users, setCurrentPage, search])
+
+    useEffect(() => {
+        setCurrentTableData(() => {
+            const firstPageIndex = (currentPage - 1) * pageSize;
+            const lastPageIndex = firstPageIndex + pageSize;
+            return searchedUsers.slice(firstPageIndex, lastPageIndex);
+        })
+    }, [pageSize, currentPage, searchedUsers, setCurrentTableData])
+
 
     const paginationRange = usePagination({
         currentPage,
-        totalCount,
+        totalCount: searchedUsers.length,
         siblingCount,
         pageSize
     });

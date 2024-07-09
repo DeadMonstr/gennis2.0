@@ -5,10 +5,11 @@ import Button from "../../../shared/ui/button/button";
 import {Input} from "shared/ui/input";
 import {useState} from "react";
 import DefaultLoader from "../../../shared/ui/defaultLoader/defaultLoader";
+import MiniLoader from "../../../shared/ui/miniLoader/miniLoader";
 
-const Login = () => {
+export const Login = () => {
     const [inputChange, setInputChange] = useState([])
-    const [loading , setLoading] = useState(true)
+    const [loading, setLoading] = useState(true)
 
     const onClick = (e) => {
         e.preventDefault()
@@ -32,9 +33,12 @@ const Login = () => {
                             <form>
                                 <Input title={"Email"} onChange={() => setInputChange} type="text" required/>
                                 <Input title={"password"} onChange={() => setInputChange} type="password" required/>
-                                <Input extraClassName={cls.checkbox} type="checkbox" onChange={() => setInputChange} checkboxTitle={"Remember me"}/>
-                                <Button extraClass={ cls.login__btn} onClick={onClick}>Login</Button>
-                                {loading && loading ?   null : <DefaultLoader/>}
+                                <Input extraClassName={cls.checkbox} type="checkbox" onChange={() => setInputChange}
+                                       checkboxTitle={"Remember me"}/>
+                                {loading && loading ?
+                                    <Button extraClass={cls.login__btn} onClick={onClick}>Login</Button> :
+                                    <MiniLoader/>}
+                                {loading && loading ? null : <DefaultLoader/>}
                             </form>
                         </div>
                     </div>
@@ -47,4 +51,3 @@ const Login = () => {
 
     )
 }
-export default Login
