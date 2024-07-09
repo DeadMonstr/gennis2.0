@@ -1,1 +1,1 @@
-export {NewStudentds} from "./ui/newStudents.module.sass"
+export {NewStudents} from "./ui/newStudents"

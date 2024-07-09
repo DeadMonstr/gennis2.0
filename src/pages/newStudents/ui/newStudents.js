@@ -1,13 +1,13 @@
 import React, { useMemo, useState } from 'react';
 
 import {StudentsFilter} from "features/filters";
+import {Pagination} from "features/pagination";
 import { Select } from "shared/ui/select";
 import { Table } from "shared/ui/table";
-import Button from "shared/ui/button/button";
-import Radio from "shared/ui/radio/radio";
+import {Button} from "shared/ui/button";
+import {Radio} from "shared/ui/radio";
 
 import cls from "./newStudents.module.sass";
-import {Pagination} from "features/pagination";
 
 const users = [
     {

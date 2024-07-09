@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import cls from "./register.module.sass";
-import Button from "shared/ui/button/button";
-import bg__img from 'shared/assets/images/reg__bg.svg'
-import {Input} from 'shared/ui/input'
+
+import {Button} from "shared/ui/button";
+import {Input} from 'shared/ui/input';
 import {Textarea} from "shared/ui/textArea";
-import { Select } from "../../../shared/ui/select";
-import {SearchPlatformInput} from "../../../features/searchInput";
+import { Select } from "shared/ui/select";
+
+import cls from "./register.module.sass";
+import bg__img from 'shared/assets/images/reg__bg.svg';
 
 // Options for Select dropdowns
 const studentOptions = {

@@ -1,11 +1,13 @@
+import {useState} from "react";
+
+import {Button} from "shared/ui/button";
+import {Input} from "shared/ui/input";
+import DefaultLoader from "shared/ui/defaultLoader/defaultLoader";
+import MiniLoader from "shared/ui/miniLoader/miniLoader";
+
 import cls from "./login.module.sass"
 import gennisImg from "shared/assets/images/logo.svg"
 import loginAside from "shared/assets/images/login-page-4468581-3783954 1.svg"
-import Button from "../../../shared/ui/button/button";
-import {Input} from "shared/ui/input";
-import {useState} from "react";
-import DefaultLoader from "../../../shared/ui/defaultLoader/defaultLoader";
-import MiniLoader from "../../../shared/ui/miniLoader/miniLoader";
 
 export const Login = () => {
     const [inputChange, setInputChange] = useState([])

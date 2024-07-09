@@ -1,3 +1,3 @@
-import {Login} from "./ui/login";
+export {Login} from "./ui/login";
 
-import {loginSlice} from "./model/loginSlice";
+export {loginSlice} from "./model/loginSlice";

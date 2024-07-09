@@ -1,12 +1,12 @@
 import React, {useMemo, useState} from "react";
-import cls from "./groups.module.sass";
-import {Table} from "shared/ui/table";
-import {Pagination} from "features/pagination";
-import Button from "shared/ui/button/button";
-import Radio from "shared/ui/radio/radio";
-import filter from "shared/assets/Filtericons/Filter.svg"
-import {GroupsFilter} from "../../../features/filters";
 import {Link} from "react-router-dom";
+
+import {GroupsFilter} from "features/filters";
+import {Pagination} from "features/pagination";
+import {Table} from "shared/ui/table";
+import {Button} from "shared/ui/button";
+
+import cls from "./groups.module.sass";
 
 const deletedGroupsData = [
     {
@@ -642,7 +642,9 @@ const deletedGroupsData = [
 
 
 ]
-const Groups = () => {
+
+export const Groups = () => {
+
     const [active, setActive] = useState(false);
     let PageSize = useMemo(() => 50, [])
 
@@ -751,4 +753,3 @@ const Groups = () => {
         </div>
     )
 }
-export default Groups
