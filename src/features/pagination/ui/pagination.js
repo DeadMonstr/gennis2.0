@@ -94,7 +94,6 @@ export const Pagination = React.memo((props) => {
                 })}
                 onClick={onPrevious}
             >
-                {/*<i className="fas fa-angle-left"/>*/}
                 <i className="fas fa-arrow-left"></i>
             </li>
             <div className={cls.numbers}>
@@ -108,7 +107,6 @@ export const Pagination = React.memo((props) => {
                 })}
                 onClick={onNext}
             >
-                {/*<i className="fas fa-angle-right"/>*/}
                 <i className="fas fa-arrow-right"></i>
             </li>
         </ul>
