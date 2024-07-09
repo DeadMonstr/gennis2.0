@@ -3,7 +3,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import cls from "./select.module.sass"
 import classNames from "classnames";
 
-export const Select = ({id, options, keyValue, all, required, defaultValue, title, onChangeOption, status}) => {
+export const Select = ({options, keyValue, all, required, defaultValue, title, onChangeOption, status, extraClass}) => {
 
     const [selectOption, setSelectOption] = useState("")
     const [optionsData, setOptionsData] = useState([])
@@ -22,15 +22,10 @@ export const Select = ({id, options, keyValue, all, required, defaultValue, titl
     useEffect(() => {
         if (isChanged) {
             if (!selectOption) return
-            if (id) {
-                onChangeOption(id,selectOption)
-                setIsChanged(false)
-            } else {
-                onChangeOption(selectOption)
-                setIsChanged(false)
-            }
+            onChangeOption(selectOption)
+            setIsChanged(false)
         }
-    },[selectOption, onChangeOption, id])
+    }, [selectOption, onChangeOption, isChanged])
 
 
     const renderOptionsOfSelect = useCallback(() => {
@@ -50,7 +45,7 @@ export const Select = ({id, options, keyValue, all, required, defaultValue, titl
                         {key}
                     </option>
 
-                )
+            )
 
         })
     }, [optionsData, keyValue])
@@ -58,7 +53,7 @@ export const Select = ({id, options, keyValue, all, required, defaultValue, titl
     const renderedOptions = renderOptionsOfSelect()
 
     return (
-        <label className={cls.label}>
+        <label className={classNames(cls.label, extraClass)}>
             <span
                 className={classNames(cls.label__title, {
                     [cls.disabled]: status === "disabled",
