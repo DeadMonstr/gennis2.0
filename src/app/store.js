@@ -2,6 +2,8 @@
 
 import {configureStore} from "@reduxjs/toolkit";
 
+import {search} from "features/searchInput";
+
 
 
 const stringMiddleware = () => (next) => (action) => {
@@ -15,7 +17,9 @@ const stringMiddleware = () => (next) => (action) => {
 
 
 export const store = configureStore({
-    reducer: {},
+    reducer: {
+        search
+    },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(
             stringMiddleware

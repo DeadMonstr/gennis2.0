@@ -1,4 +1,4 @@
-import {useLocation} from "react-router";
+import {useLocation , useParams} from "react-router";
 import {useEffect, useState} from "react";
 
 import {Link} from "shared/ui/link";
@@ -8,7 +8,7 @@ import cls from "./breadCrumbs.module.sass";
 export const BreadCrumbs = ({defaultLink}) => {
 
     const location = useLocation()
-
+    const {itemId} = useParams()
     const [crumbsData, setCrumbsData] = useState([])
 
     useEffect(() => {
@@ -16,7 +16,9 @@ export const BreadCrumbs = ({defaultLink}) => {
             location.pathname.split('/')
                 .filter(crumb => crumb !== "")
         )
-    }, [location])
+    }, [location, itemId])
+
+    // console.log(crumbsData.sort(), "sort")
 
     let currentLink = ''
 

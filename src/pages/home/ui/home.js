@@ -5,6 +5,8 @@ import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
 import {Pagination} from "shared/ui/pagination";
 import {MainSwitch} from "shared/ui/mainSwitch";
+import {Table} from "shared/ui/table";
+import {SearchPlatformInput} from "../../../features/searchInput";
 import {SearchPlatrofmInput} from "features/searchInput/ui/searchPlatrofmInput";
 // import {Table} from "shared/ui/table";
 const activeRows = {
@@ -79,6 +81,10 @@ export const Home = () => {
 
 
     }
+    const handleSearch = (searchValue) => {
+        console.log('Search value:', searchValue);
+    };
+
     let PageSize = useMemo(() => 1, [])
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -240,6 +246,7 @@ export const Home = () => {
                     }}
                 />
                 <MainSwitch/>
+                <SearchPlatformInput onSearch={handleSearch}/>
             </div>
 
             {/*<Table*/}
