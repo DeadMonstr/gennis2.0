@@ -1,0 +1,1 @@
+export {default as filteredTeacher} from "./model/filterSlice"

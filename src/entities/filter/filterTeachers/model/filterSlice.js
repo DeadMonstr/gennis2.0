@@ -1,32 +1,31 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {fetchSearch} from "./searchThunk";
+import {fetchTeachersFilter} from "./filterThunk";
 
 const initialState = {
-    newStudents: null,
+    filtered: null,
     loading: false,
     error: null
 }
 
-export const searchSlice = createSlice({
-    name: "search",
+export const filterTeacherSlice = createSlice({
+    name: "filterTeacher",
     initialState,
     reducers: {},
     extraReducers: builder =>
         builder
-            .addCase(fetchSearch.pending, state => {
+            .addCase(fetchTeachersFilter.pending, state => {
                 state.loading = true
                 state.error = null
             })
-            .addCase(fetchSearch.fulfilled, (state, action) => {
-                state.newStudents = action.payload
+            .addCase(fetchTeachersFilter.fulfilled, (state, action) => {
+                state.filtered = action.payload
                 state.loading = false
                 state.error = null
             })
-            .addCase(fetchSearch.rejected, (state, action) => {
+            .addCase(fetchTeachersFilter.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload ?? null
             })
-
 })
 
-export default searchSlice.reducer
+export default filterTeacherSlice.reducer

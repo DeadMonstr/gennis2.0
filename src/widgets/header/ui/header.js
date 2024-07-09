@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useSearchParams} from "react-router-dom";
+import {useDispatch} from "react-redux";
 
+import {fetchSearch} from "features/searchInput/model/searchThunk";
 import {BreadCrumbs} from "features/breadCrumbs";
 import {SearchPlatformInput} from "features/searchInput";
 import GetLocation from "features/location/getLocation";
@@ -11,10 +13,16 @@ import logo from "shared/assets/images/logo.svg";
 
 export const Header = () => {
 
+    const dispatch = useDispatch()
     const [selected, setSelected] = useState([])
     const [deletedId, setDeletedId] = useState(0)
 
     let [searchParams, setSearchParams] = useSearchParams()
+
+    const onSubmitSearchStr = (searchStr) => {
+        console.log(searchStr, "search")
+        dispatch(fetchSearch(searchStr))
+    }
 
 
     // try {
@@ -46,26 +54,28 @@ export const Header = () => {
     // }
 
 
-    useEffect(() => {
-        try {
-            setSearchParams({
-                sort: "createdAt",
-                order: "asc",
-                search: "it",
-                type: "ALL"
-            })
-        } catch (e) {
-            throw e
-        }
-    }, [searchParams, setSearchParams])
-
-    console.log(searchParams, "search")
+    // useEffect(() => {
+    //     try {
+    //         setSearchParams({
+    //             sort: "createdAt",
+    //             order: "asc",
+    //             search: "it",
+    //             type: "ALL"
+    //         })
+    //     } catch (e) {
+    //         throw e
+    //     }
+    // }, [searchParams, setSearchParams])
+    //
+    // console.log(searchParams, "search")
 
     return (
         <header className={cls.header}>
             <div className={cls.header__top}>
                 <img className={cls.header__logo} src={logo} alt=""/>
-                <SearchPlatformInput/>
+                <SearchPlatformInput
+                    onSearch={onSubmitSearchStr}
+                />
                 <div className={cls.inner}>
                     <MainSwitch/>
                     <GetLocation
