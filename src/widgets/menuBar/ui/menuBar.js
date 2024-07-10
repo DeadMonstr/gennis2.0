@@ -1,5 +1,6 @@
-import React, {useCallback, useState} from 'react';
-import {NavLink} from "react-router-dom";
+import React, {useCallback} from 'react';
+
+import {Link} from "shared/ui/link";
 
 import cls from "./menuBar.module.sass";
 
@@ -12,33 +13,39 @@ const navigateList = [
         roles: []
     },
     {
-        to: "/taskManager",
+        to: "taskManager",
         name: "Task Manager",
         icon: "fa-tasks",
         roles: []
     },
     {
-        to: "/login",
+        to: "newStudents",
         name: "Yangi O'quvchilar",
         icon: "fa-user",
         roles: []
     },
     {
-        to: "/login",
+        to: "deletedStudents",
         name: "O'chirilgan O'quvchilar",
         icon: "fa-user-alt-slash",
         roles: []
     },
     {
-        to: "/login",
+        to: "students",
         name: "O'qiyotgan O'quvchilar",
         icon: "fa-user-graduate",
         roles: []
     },
     {
-        to: "/login",
+        to: "groups",
         name: "Gruppalar",
         icon: "fa-users",
+        roles: []
+    },
+    {
+        to: "deletedGroups",
+        name: "O'chirilgan Gruppalar",
+        icon: "fa-user-alt-slash",
         roles: []
     },
     {
@@ -84,7 +91,7 @@ const navigateList = [
         roles: []
     },
     {
-        to: "/login",
+        to: "register",
         name: "Registratsiya",
         icon: "fa-edit",
         roles: []
@@ -96,19 +103,24 @@ const navigateList = [
 
 export const Menubar = () => {
 
-
-    const [isActiveLink, setIsActiveLink] = useState("home")
-
     const renderMultipleMenu = useCallback(() => {
         return navigateList.map((item, index) => {
             return (
-                <Link
-                    item={item}
-                    setActive={setIsActiveLink}
-                />
+                <li className={cls.link}>
+                    <Link
+                        to={item.to}
+                        extraClass={cls.link__href}
+                        activeClass={cls.active}
+                        // onClick={() => setActive(item.name)}
+                    >
+                        <i className={`fas ${item.icon} icon-link`}/>
+                        <span className={cls.link__title}>{item.name}</span>
+                    </Link>
+                </li>
             )
         })
     }, [])
+
 
     const renderedMenu = renderMultipleMenu()
 
@@ -121,23 +133,3 @@ export const Menubar = () => {
         </nav>
     );
 };
-
-const Link = ({item, isActive, setActive}) => {
-    return (
-        <li className={cls.link}>
-            <NavLink
-                to={item.to}
-                className={
-                    ({isActive}) =>
-                        isActive ? `${cls.link__href} ${cls.active}` : cls.link__href
-
-                }
-                onClick={() => setActive(item.name)}
-            >
-                <i className={`fas ${item.icon} icon-link`}/>
-                <span className={cls.link__title}>{item.name}</span>
-            </NavLink>
-        </li>
-    )
-}
-

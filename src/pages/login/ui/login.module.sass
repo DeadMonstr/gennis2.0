@@ -1,12 +1,14 @@
 .container
   height: fit-content
   overflow: auto
+  background-color: #00C2FF
 .login
   width: 100%
   display: flex
   justify-content: center
   height: 100vh
   align-items: center
+
   &__logo
     display: none
     //position: fixed
@@ -16,7 +18,7 @@
     //backdrop-filter: blur(4px)
     align-items: center
     //box-shadow: 0 0 8px -5px
-    padding-left: 20px
+    padding: 20px 0 0 20px
     height: 5rem
   &__boxes
     background-color: white
@@ -32,8 +34,11 @@
     justify-content: space-around
     flex-direction: column
     height: 50rem
+    width: 45rem
     .box
       &__header
+        &_img
+          padding: 30px 0
         &_title
           text-transform: capitalize
           font-size: 28px
@@ -43,12 +48,23 @@
           img
             width: 15rem
       &__form
+        padding: 30px 0
+
         form
           display: flex
           flex-direction: column
-          justify-content: space-between
-          button
-            margin-top: 30px
+          gap: 15px
+          .checkbox
+            width: 20px
+            height: 20px
+            margin-right: 5px
+          .login__btn
+            background-color: #2C2C2C
+            border: none
+            color: #F5F5F5
+            width: 35.2rem
+            //margin: 0
+
   &__aside
     //height: 35rem
     padding: 10px
@@ -57,6 +73,8 @@
     display: flex
     justify-content: center
     align-items: center
+    img
+      width: 50rem
 
 @media (max-width: 1440px)
   .login
@@ -73,7 +91,7 @@
         &__form
           form
             button
-              margin-top: 25px
+              margin-top: 20px
 @media (max-width: 1060px)
   .login
     &__boxes
@@ -81,12 +99,12 @@
       justify-content: space-evenly
       border-radius: 5px
       width: fit-content
-      background: none
+      background-color: white
     &__box
       display: flex
       justify-content: space-evenly
       flex-direction: column
-      //height: 30rem
+      width: 30rem
       .box
         &__header
           &_title
@@ -97,8 +115,9 @@
               width: 13rem
         &__form
           form
-            button
-              margin-top: 25px
+            .login__btn
+              width: 20rem
+              margin-top: 18px
     &__aside
       display: flex
       justify-content: center
@@ -121,6 +140,7 @@
       flex-direction: column-reverse
       padding: 0
       gap: 0
+      background: none
     &__logo
       display: flex
       img
@@ -153,8 +173,8 @@
     justify-content: center
   .login
     display: flex
-    align-items: center
-    padding-top: 5px
+
+    padding-top: 10rem
     &__boxes
       box-shadow: none
       flex-direction: column-reverse

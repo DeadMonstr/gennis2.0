@@ -1,0 +1,1 @@
+export {DeletedGroups} from "./ui/deletedGroups"

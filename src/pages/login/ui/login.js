@@ -1,16 +1,21 @@
+import {useState} from "react";
+
+import {Button} from "shared/ui/button";
+import {Input} from "shared/ui/input";
+import DefaultLoader from "shared/ui/defaultLoader/defaultLoader";
+import MiniLoader from "shared/ui/miniLoader/miniLoader";
+
 import cls from "./login.module.sass"
 import gennisImg from "shared/assets/images/logo.svg"
 import loginAside from "shared/assets/images/login-page-4468581-3783954 1.svg"
-import Button from "../../../shared/ui/button/button";
-import Input from "shared/ui/input/input";
-import {useState} from "react";
 
-const Login = () => {
+export const Login = () => {
     const [inputChange, setInputChange] = useState([])
-
+    const [loading, setLoading] = useState(true)
 
     const onClick = (e) => {
         e.preventDefault()
+        setLoading(false)
     }
     return (
         <div className={cls.container}>
@@ -28,10 +33,14 @@ const Login = () => {
                         </h1>
                         <div className={cls.box__form}>
                             <form>
-                                <Input title={"Email"} onChange={() => setInputChange} type="text"/>
-                                <Input title={"password"} onChange={() => setInputChange} type="password"/>
-                                <Input type="checkbox" onChange={() => setInputChange} checkboxTitle={"Remember me"}/>
-                                <Button onClick={onClick}>Register</Button>
+                                <Input title={"Email"} onChange={() => setInputChange} type="text" required/>
+                                <Input title={"password"} onChange={() => setInputChange} type="password" required/>
+                                <Input extraClassName={cls.checkbox} type="checkbox" onChange={() => setInputChange}
+                                       checkboxTitle={"Remember me"}/>
+                                {loading && loading ?
+                                    <Button extraClass={cls.login__btn} onClick={onClick}>Login</Button> :
+                                    <MiniLoader/>}
+                                {loading && loading ? null : <DefaultLoader/>}
                             </form>
                         </div>
                     </div>
@@ -44,4 +53,3 @@ const Login = () => {
 
     )
 }
-export default Login

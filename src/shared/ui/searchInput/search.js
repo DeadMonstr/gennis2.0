@@ -10,7 +10,7 @@ const SearchInput = memo(({ search, setSearch}) => {
                 value={search}
                 placeholder={"Qidiruv "}
                 id="search"
-                type="text"
+                type="search"
                 onInput={e => {
                     setSearch(e.target.value)
                 }}
