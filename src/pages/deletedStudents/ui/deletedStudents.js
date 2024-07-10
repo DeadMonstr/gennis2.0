@@ -2,7 +2,7 @@ import React, {useMemo, useState} from "react";
 import classNames from "classnames";
 
 import {Pagination} from "features/pagination";
-import {StudentsFilter} from "features/filters";
+import {StudentsFilter} from "features/filters/studentsFilter";
 import {Table} from "shared/ui/table";
 import {Button} from "shared/ui/button";
 import {Select} from "shared/ui/select";

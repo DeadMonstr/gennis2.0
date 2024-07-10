@@ -1,11 +1,14 @@
 import React, {useMemo, useState} from "react";
-import cls from "./groups.module.sass";
+import {Link} from "react-router-dom";
+
+import {GroupsFilter} from "features/filters/groupsFilter";
+
 import {Table} from "shared/ui/table";
 import {Pagination} from "features/pagination";
 import {Button} from "shared/ui/button";
 
-import {GroupsFilter} from "../../../features/filters";
-import {Link} from "react-router-dom";
+
+
 
 const GroupsData =[
     {

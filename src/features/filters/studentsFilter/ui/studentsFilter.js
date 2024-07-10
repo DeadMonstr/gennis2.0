@@ -7,7 +7,7 @@ import {Select} from "shared/ui/select";
 import {Radio} from "shared/ui/radio";
 import {Switch} from "shared/ui/switch";
 
-import cls from "./filters.module.sass";
+import cls from "../../filters.module.sass";
 
 const statusList = [
     {
