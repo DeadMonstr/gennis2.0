@@ -6,13 +6,23 @@ import {Input} from "shared/ui/input";
 import {useState} from "react";
 import DefaultLoader from "../../../shared/ui/defaultLoader/defaultLoader";
 import MiniLoader from "../../../shared/ui/miniLoader/miniLoader";
+import {useForm} from "react-hook-form";
+import {useDispatch, useSelector} from "react-redux";
 
 export const Login = () => {
+
+    // const {username , password} = useSelector(state => state.loginSlice)
+
+
+    const {register ,handleSubmit} = useForm()
     const [inputChange, setInputChange] = useState([])
     const [loading, setLoading] = useState(true)
 
+
+    const dispatch = useDispatch()
+
     const onClick = (e) => {
-        e.preventDefault()
+        // dispatch()
         setLoading(false)
     }
     return (
@@ -30,13 +40,13 @@ export const Login = () => {
                             login
                         </h1>
                         <div className={cls.box__form}>
-                            <form>
-                                <Input title={"Email"} onChange={() => setInputChange} type="text" required/>
-                                <Input title={"password"} onChange={() => setInputChange} type="password" required/>
+                            <form onSubmit={handleSubmit(onClick)}>
+                                <Input title={"Email"} register={register} name={"username"} type="text" required/>
+                                <Input title={"password"} register={register} name={"password"} type="password" required/>
                                 <Input extraClassName={cls.checkbox} type="checkbox" onChange={() => setInputChange}
                                        checkboxTitle={"Remember me"}/>
                                 {loading && loading ?
-                                    <Button extraClass={cls.login__btn} onClick={onClick}>Login</Button> :
+                                    <Button extraClass={cls.login__btn}>Login</Button> :
                                     <MiniLoader/>}
                                 {loading && loading ? null : <DefaultLoader/>}
                             </form>

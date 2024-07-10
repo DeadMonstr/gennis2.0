@@ -49,7 +49,7 @@ const navigateList = [
         roles: []
     },
     {
-        to: "/login",
+        to: "teacher",
         name: "O'qituvchilar",
         icon: "fa-user-tie",
         roles: []

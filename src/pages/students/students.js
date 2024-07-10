@@ -131,7 +131,7 @@ const Students = () => {
                         <th>No</th>
                         <th>Full name</th>
                         <th>Yosh</th>
-                        <th>Telefon nome</th>
+                        <th>Telefon nomer</th>
                         <th>Guruh</th>
                         <th>Guruh narxi</th>
                     </tr>

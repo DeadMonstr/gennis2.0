@@ -10,6 +10,7 @@ const Button = ({children, onClick, type, disabled, status , extraClass}) => {
     return (
         <button onClick={onClick} className={classNames(cls.btn,extraClass, cls[type], {
             [cls.simple]: type === "simple",
+            [cls.simple__add]: type === "simple-add",
             [cls.success]: type === "success",
             [cls.danger]: type === "danger",
             [cls.warning]: type === "warning",

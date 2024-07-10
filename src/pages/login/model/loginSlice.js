@@ -2,8 +2,8 @@ import {createSlice} from "@reduxjs/toolkit";
 import {fetchLoginUser} from "./loginThunk";
 
 const initialState ={
-    username: null,
-    password: null,
+    username: "",
+    password: "",
     loading: false,
     error: null
 }

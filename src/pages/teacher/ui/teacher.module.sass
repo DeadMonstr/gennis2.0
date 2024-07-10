@@ -1,0 +1,29 @@
+.teacher
+  padding: 30px 20px
+  gap: 2rem
+  display: flex
+  flex-direction: column
+  &__header
+    display: flex
+    justify-content: space-between
+    .header__btn
+      display: flex
+  &__filter
+    display: flex
+    justify-content: space-between
+  .table
+    overflow: auto
+    height: calc(100vh - 41rem)
+    &__head
+      tbody
+        tr
+          cursor: pointer
+          td:last-child
+            border: 1px solid
+            display: flex
+            align-items: center
+            justify-content: center
+            border-radius: 15px
+            height: 4rem
+            width: fit-content
+            margin: 5px 0
