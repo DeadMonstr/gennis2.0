@@ -15,6 +15,8 @@ import {Groups} from "pages/groups";
 import {Layout} from "app/layout";
 
 import "app/styles/index.sass"
+import {Teacher} from "../../../pages/teacher";
+import {CreateGroup} from "../../../pages/createGroup";
 
 export const AppRouter = () => {
 
@@ -75,6 +77,7 @@ export const AppRouter = () => {
                         element={<Groups/>}
                     />
                     <Route path={"teacher"} element={<Teacher/>}/>
+                    <Route path={"newStudents/createGroup"} element={<CreateGroup/>}/>
                 </Route>
 
                 <Route

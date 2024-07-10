@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import cls  from "./teacher.module.sass"
-import Button from "shared/ui/button/button";
+import {Button} from "shared/ui/button";
 import {Select} from "../../../shared/ui/select";
 import {Table} from "../../../shared/ui/table";
 import {Pagination} from "../../../features/pagination";

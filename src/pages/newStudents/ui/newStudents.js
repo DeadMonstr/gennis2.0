@@ -8,6 +8,9 @@ import {Button} from "shared/ui/button";
 import {Radio} from "shared/ui/radio";
 
 import cls from "./newStudents.module.sass";
+import {Link} from "react-router-dom";
+
+// import {Link} from "react-router-dom";
 
 const users = [
     {
@@ -257,7 +260,7 @@ export const NewStudents = () => {
         <div className={cls.mainContainer}>
             <div className={cls.mainContainer_buttonPanelBox}>
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}>
-                    <Button extraClass={cls.extraCutClass}>Create group</Button>
+                    <Link to={"createGroup"}><Button extraClass={cls.extraCutClass}>Create group</Button></Link>
                     <Button extraClass={cls.noneBackground}>Add group</Button>
                 </div>
                 <Select />

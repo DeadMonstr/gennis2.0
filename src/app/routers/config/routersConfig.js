@@ -127,6 +127,4 @@ export const routersConfig = [
         element: <Register/>
     }
 
-
-
 ]

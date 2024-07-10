@@ -2,9 +2,8 @@ import React, {useMemo, useState} from "react";
 import cls from "./groups.module.sass";
 import {Table} from "shared/ui/table";
 import {Pagination} from "features/pagination";
-import Button from "shared/ui/button/button";
-import Radio from "shared/ui/radio/radio";
-import filter from "shared/assets/Filtericons/Filter.svg"
+import {Button} from "shared/ui/button";
+
 import {GroupsFilter} from "../../../features/filters";
 import {Link} from "react-router-dom";
 
