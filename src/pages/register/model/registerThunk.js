@@ -10,3 +10,7 @@ export const registerUser = createAsyncThunk(
 
     }
 );
+
+const fetchLanguageUser = createAsyncThunk(
+    'user/registerUser'
+)

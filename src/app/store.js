@@ -1,9 +1,9 @@
-
-
 import {configureStore} from "@reduxjs/toolkit";
-
 import {search} from "features/searchInput";
-import {registerUser} from 'pages/register/model/userRegisterThunk';
+import {registerUser} from 'pages/register/model/registerThunk';
+import {filteredTeacher} from "entities/filter/filterTeachers";
+import {loginSlice} from "../pages/login/model/loginSlice";
+
 
 
 const stringMiddleware = () => (next) => (action) => {
@@ -19,7 +19,9 @@ const stringMiddleware = () => (next) => (action) => {
 export const store = configureStore({
     reducer: {
         search,
-        registerUser
+        registerUser,
+        filteredTeacher,
+        loginSlice
     },
     devTools: process.env.NODE_ENV !== "production",
 })

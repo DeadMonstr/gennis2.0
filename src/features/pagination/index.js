@@ -1,1 +1,1 @@
-export {Pagination} from "./ui/pagination"
+export {Pagination} from "./pagination"

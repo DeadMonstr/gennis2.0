@@ -1,13 +1,26 @@
 import React, {useCallback, useMemo, useState} from 'react';
 
-import {Pagination} from "features/pagination";
-import {GroupsFilter, StudentsFilter} from "features/filters";
 import {Alert} from "shared/ui/alert/alert";
 import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
+import {Pagination} from "features/pagination";
 import {MainSwitch} from "shared/ui/mainSwitch";
 import {Table} from "shared/ui/table";
-import {SearchPlatformInput} from "../../../features/searchInput";
+import {SearchPlatrofmInput} from "features/searchInput/ui/searchPlatrofmInput";
+// import {Table} from "shared/ui/table";
+const activeRows = {
+    name: true,
+    surname: true,
+    username: true,
+    phone: false,
+    reason: false,
+    job: false,
+    age: false,
+    reg_date: false,
+    deleted_date: false,
+    deletedDate: false
+}
+
 
 
 const list = [
@@ -60,8 +73,7 @@ const users = [
     }
 ]
 export const Home = () => {
-    const [active, setActive] = useState(false)
-    const [activeG, setActiveG] = useState(false)
+    const [active, setActive] = useState(true)
 
     const onChange = (value) => {
         console.log(value, "value")
@@ -78,51 +90,22 @@ export const Home = () => {
 
     const [search, setSearch] = useState("")
 
-    const [currentTableData, setCurrentTableData] = useState([])
 
+    const searchedUsers = useMemo(() => {
+        const filteredHeroes = users.slice()
+        setCurrentPage(1)
+        return filteredHeroes.filter(item =>
+            item.name.toLowerCase().includes(search.toLowerCase()) ||
+            item.surname.toLowerCase().includes(search.toLowerCase()) ||
+            item.username.toLowerCase().includes(search.toLowerCase())
+        )
+    }, [users, search])
 
-    // const searchedUsers = useMemo(() => {
-    //     const filteredHeroes = users.slice()
-    //     setCurrentPage(1)
-    //     return filteredHeroes.filter(item =>
-    //         item.name.toLowerCase().includes(search.toLowerCase()) ||
-    //         item.surname.toLowerCase().includes(search.toLowerCase()) ||
-    //         item.username.toLowerCase().includes(search.toLowerCase())
-    //     )
-    // }, [users, search])
-
-    // const currentTableData = useMemo(() => {
-    //     const firstPageIndex = (currentPage - 1) * PageSize;
-    //     const lastPageIndex = firstPageIndex + PageSize;
-    //     return searchedUsers.slice(firstPageIndex, lastPageIndex);
-    // }, [PageSize, currentPage, searchedUsers]);
-
-    const renderStudents = () => {
-        return currentTableData.map((item,index) => {
-            return (
-                <tr>
-                    <td>{index+1}</td>
-                    <td>{item.name}</td>
-                    <td>{item.username}</td>
-                    {/*{checkTrueFalse(item.dates)}*/}
-                </tr>
-            )
-        })
-    }
-
-    const renderCurrentTableDate = useCallback(() => {
-        return currentTableData.map((item, i) => {
-            return (
-                <div key={i}>
-                    <div>{item.username}</div>
-                    <p>{item.name} {item.surname}</p>
-                </div>
-            )
-        })
-    }, [currentTableData])
-
-    const currentTable = renderCurrentTableDate()
-
+    const currentTableData = useMemo(() => {
+        const firstPageIndex = (currentPage - 1) * PageSize;
+        const lastPageIndex = firstPageIndex + PageSize;
+        return searchedUsers.slice(firstPageIndex, lastPageIndex);
+    }, [PageSize, currentPage, searchedUsers]);
     return (
         <div style={{
             display: "flex",
@@ -132,183 +115,137 @@ export const Home = () => {
             padding: "5rem 3rem"
         }}>
 
-            <Table>
-                <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Ism</th>
-                    <th>Familya</th>
-                    {/*{*/}
-                    {/*    dates.map(item =>{*/}
-                    {/*        return (*/}
-                    {/*            <th>{item}</th>*/}
-                    {/*        )*/}
-                    {/*    })*/}
-                    {/*}*/}
-                </tr>
-                </thead>
-                <tbody>
-                {
-                    users.map((item, index) => {
-                        return (
-                            <tr>
-                                <td>{index+1}</td>
-                                <td>{item.name}</td>
-                                <td>{item.username}</td>
-                                {/*{checkTrueFalse(item.dates)}*/}
-                            </tr>
-                        )
-                    })
-                }
-                </tbody>
-            </Table>
+            {/*<button onClick={() => setActive(!active)}>Enter</button>*/}
+            {/*<button onClick={() => setActiveG(!activeG)}>Enter</button>*/}
 
+
+            <div style={{width: "500px"}}>
+
+                <Select
+                    status={"error"}
+                    title={"select"}
+                    options={list}
+                    onChangeOption={onChange}
+                    // keyValue={"label"}
+                    defaultValue={"potato"}
+                />
+            </div>
+
+            <Select
+                status={"disabled"}
+                title={"select"}
+                options={list}
+                onChangeOption={onChange}
+                // keyValue={"label"}
+                defaultValue={"potato"}
+            />
+
+            <Select
+                // status={"error"}
+                title={"select"}
+                options={list}
+                onChangeOption={onChange}
+                // keyValue={"label"}
+                defaultValue={"potato"}
+            />
+            <Alert/>
             <button onClick={() => setActive(!active)}>Enter</button>
-            <button onClick={() => setActiveG(!activeG)}>Enter</button>
 
-            <StudentsFilter
+
+            <div style={{width: "500px"}}>
+
+                <Select
+                    status={"error"}
+                    title={"select"}
+                    options={list}
+                    onChangeOption={onChange}
+                    // keyValue={"label"}
+                    defaultValue={"potato"}
+                />
+            </div>
+
+            <Select
+                status={"disabled"}
+                title={"select"}
+                options={list}
+                onChangeOption={onChange}
+                // keyValue={"label"}
+                defaultValue={"potato"}
+            />
+
+            <Select
+                // status={"error"}
+                title={"select"}
+                options={list}
+                onChangeOption={onChange}
+                // keyValue={"label"}
+                defaultValue={"potato"}
+            />
+            <Alert/>
+            <button onClick={() => setActive(!active)}>Enter</button>
+
+
+            <div style={{width: "500px"}}>
+
+                <Select
+                    status={"error"}
+                    title={"select"}
+                    options={list}
+                    onChangeOption={onChange}
+                    // keyValue={"label"}
+                    defaultValue={"potato"}
+                />
+            </div>
+
+            <Select
+                status={"disabled"}
+                title={"select"}
+                options={list}
+                onChangeOption={onChange}
+                // keyValue={"label"}
+                defaultValue={"potato"}
+            />
+
+            <Select
+                // status={"error"}
+                title={"select"}
+                options={list}
+                onChangeOption={onChange}
+                // keyValue={"label"}
+                defaultValue={"potato"}
+            />
+            <Alert/>
+
+            <Modal
                 active={active}
                 setActive={setActive}
-            />
-
-            <GroupsFilter
-                active={activeG}
-                setActive={setActiveG}
-            />
-
-
-            <div style={{width: "500px"}}>
-
-                <Select
-                    status={"error"}
-                    title={"select"}
-                    options={list}
-                    onChangeOption={onChange}
-                    // keyValue={"label"}
-                    defaultValue={"potato"}
-                />
-            </div>
-
-            <Select
-                status={"disabled"}
-                title={"select"}
-                options={list}
-                onChangeOption={onChange}
-                // keyValue={"label"}
-                defaultValue={"potato"}
-            />
-
-            <Select
-                // status={"error"}
-                title={"select"}
-                options={list}
-                onChangeOption={onChange}
-                // keyValue={"label"}
-                defaultValue={"potato"}
-            />
-            <Alert/>
-            <button onClick={() => setActive(!active)}>Enter</button>
-
-
-            <div style={{width: "500px"}}>
-
-                <Select
-                    status={"error"}
-                    title={"select"}
-                    options={list}
-                    onChangeOption={onChange}
-                    // keyValue={"label"}
-                    defaultValue={"potato"}
-                />
-            </div>
-
-            <Select
-                status={"disabled"}
-                title={"select"}
-                options={list}
-                onChangeOption={onChange}
-                // keyValue={"label"}
-                defaultValue={"potato"}
-            />
-
-            <Select
-                // status={"error"}
-                title={"select"}
-                options={list}
-                onChangeOption={onChange}
-                // keyValue={"label"}
-                defaultValue={"potato"}
-            />
-            <Alert/>
-            <button onClick={() => setActive(!active)}>Enter</button>
-
-
-            <div style={{width: "500px"}}>
-
-                <Select
-                    status={"error"}
-                    title={"select"}
-                    options={list}
-                    onChangeOption={onChange}
-                    // keyValue={"label"}
-                    defaultValue={"potato"}
-                />
-            </div>
-
-            <Select
-                status={"disabled"}
-                title={"select"}
-                options={list}
-                onChangeOption={onChange}
-                // keyValue={"label"}
-                defaultValue={"potato"}
-            />
-
-            <Select
-                // status={"error"}
-                title={"select"}
-                options={list}
-                onChangeOption={onChange}
-                // keyValue={"label"}
-                defaultValue={"potato"}
-            />
-            <Alert/>
+            >
+                <h1>Hello Sarik</h1>
+                <h1>Hello World</h1>
+            </Modal>
 
 
             <div>
-                <Table>
-                    <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Ism</th>
-                        <th>Familya</th>
-                        {/*{*/}
-                        {/*    dates.map(item =>{*/}
-                        {/*        return (*/}
-                        {/*            <th>{item}</th>*/}
-                        {/*        )*/}
-                        {/*    })*/}
-                        {/*}*/}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {renderStudents()}
-                    </tbody>
-                </Table>
-                {currentTable}
-                <Pagination
-                    setCurrentTableData={setCurrentTableData}
-                    users={users}
-                    search={search}
-                    setCurrentPage={setCurrentPage}
-                    currentPage={currentPage}
-                    pageSize={PageSize}
-                    onPageChange={page => {
-                        setCurrentPage(page)
-                    }}
-                />
+                {
+                    currentTableData.map((item, i) => {
+                        return (
+                            <div key={i}>
+                                <div>{item.username}</div>
+                                <p>{item.name} {item.surname}</p>
+                            </div>
+                        )
+                    })
+                }
+                {/*<Pagination*/}
+                {/*    currentPage={currentPage}*/}
+                {/*    totalCount={searchedUsers.length}*/}
+                {/*    pageSize={PageSize}*/}
+                {/*    onPageChange={page => {*/}
+                {/*        setCurrentPage(page)*/}
+                {/*    }}*/}
+                {/*/>*/}
                 <MainSwitch/>
-                <SearchPlatformInput onSearch={handleSearch}/>
+                {/*<SearchPlatformInput onSearch={handleSearch}/>handleSearch*/}
             </div>
 
             {/*<Table*/}

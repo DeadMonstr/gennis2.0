@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import classNames from "classnames";
 
 import cls from "./select.module.sass"
+import classNames from "classnames";
 
 export const Select = ({options, keyValue, all, required, defaultValue, title, onChangeOption, status, extraClass}) => {
 
@@ -25,7 +25,7 @@ export const Select = ({options, keyValue, all, required, defaultValue, title, o
             onChangeOption(selectOption)
             setIsChanged(false)
         }
-    }, [selectOption, onChangeOption])
+    }, [selectOption, onChangeOption, isChanged])
 
 
     const renderOptionsOfSelect = useCallback(() => {
@@ -36,14 +36,14 @@ export const Select = ({options, keyValue, all, required, defaultValue, title, o
             const key = item.name || item
             //
             // if (!item.length)
-            return (
-                <option
-                    disabled={item.disabled}
-                    key={index}
-                    value={value}
-                >
-                    {key}
-                </option>
+                return (
+                    <option
+                        disabled={item.disabled}
+                        key={index}
+                        value={value}
+                    >
+                        {key}
+                    </option>
 
             )
 

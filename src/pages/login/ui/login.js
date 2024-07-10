@@ -1,17 +1,30 @@
+import {useState} from "react";
+
+import {Button} from "shared/ui/button";
+import {Input} from "shared/ui/input";
+import DefaultLoader from "shared/ui/defaultLoader/defaultLoader";
+import MiniLoader from "shared/ui/miniLoader/miniLoader";
+
 import cls from "./login.module.sass"
 import gennisImg from "shared/assets/images/logo.svg"
 import loginAside from "shared/assets/images/login-page-4468581-3783954 1.svg"
-import Button from "../../../shared/ui/button/button";
-import {Input} from "shared/ui/input";
-import {useState} from "react";
-import DefaultLoader from "../../../shared/ui/defaultLoader/defaultLoader";
+import {useForm} from "react-hook-form";
+import {useDispatch} from "react-redux";
 
-const Login = () => {
+export const Login = () => {
+
+    // const {username , password} = useSelector(state => state.loginSlice)
+
+
+    const {register ,handleSubmit} = useForm()
     const [inputChange, setInputChange] = useState([])
-    const [loading , setLoading] = useState(true)
+    const [loading, setLoading] = useState(true)
+
+
+    const dispatch = useDispatch()
 
     const onClick = (e) => {
-        e.preventDefault()
+        // dispatch()
         setLoading(false)
     }
     return (
@@ -29,12 +42,15 @@ const Login = () => {
                             login
                         </h1>
                         <div className={cls.box__form}>
-                            <form>
-                                <Input title={"Email"} onChange={() => setInputChange} type="text" required/>
-                                <Input title={"password"} onChange={() => setInputChange} type="password" required/>
-                                <Input extraClassName={cls.checkbox} type="checkbox" onChange={() => setInputChange} checkboxTitle={"Remember me"}/>
-                                <Button extraClass={ cls.login__btn} onClick={onClick}>Login</Button>
-                                {loading && loading ?   null : <DefaultLoader/>}
+                            <form onSubmit={handleSubmit(onClick)}>
+                                <Input title={"Email"} register={register} name={"username"} type="text" required/>
+                                <Input title={"password"} register={register} name={"password"} type="password" required/>
+                                <Input extraClassName={cls.checkbox} type="checkbox" onChange={() => setInputChange}
+                                       checkboxTitle={"Remember me"}/>
+                                {loading && loading ?
+                                    <Button extraClass={cls.login__btn}>Login</Button> :
+                                    <MiniLoader/>}
+                                {loading && loading ? null : <DefaultLoader/>}
                             </form>
                         </div>
                     </div>
@@ -47,4 +63,3 @@ const Login = () => {
 
     )
 }
-export default Login

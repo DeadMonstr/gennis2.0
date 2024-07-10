@@ -5,6 +5,6 @@ import {useResultsSearch} from "shared/api/search";
 export const fetchSearch = createAsyncThunk(
     "newStudents/fetchSearch",
     async (searchStr) => {
-        return useResultsSearch(searchStr)
+        return await useResultsSearch(searchStr)
     }
 )

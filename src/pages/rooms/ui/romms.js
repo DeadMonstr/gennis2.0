@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import cls from "./rooms.module.sass";
-import Button from "shared/ui/button/button";
+import {Button} from "shared/ui/button";
 import { Select } from "shared/ui/select";
 import {Pagination} from "features/pagination";
 import Rooms_icon from "shared/assets/images/room_image.svg"
@@ -26,7 +26,18 @@ const users = [
         icon: Rooms_icon,
         sitterNumber: "13",
         roomNumber: "12"
+    },
+    {
+        icon: Rooms_icon,
+        sitterNumber: "13",
+        roomNumber: "12"
+    },
+    {
+        icon: Rooms_icon,
+        sitterNumber: "13",
+        roomNumber: "12"
     }
+
 
 
 ];
@@ -79,34 +90,34 @@ export const Rooms = () => {
                 <Select />
             </div>
             <div className={cls.mainContainer_filterPanelBox}>
-                <Button extraClass={cls.extraCutClassFilter}>Filter</Button>
+                <Button extraClass={cls.extraCutClassFilter} type={"filter"}>Filter</Button>
                 <div className={cls.mainContainer_filterPanelBox_rightFilterRadioGroupBox}>
                 </div>
             </div>
             <div className={cls.mainContainer_tablePanelBox}>
-                {/*{*/}
-                {/*    users.map((item, index) => {*/}
-                {/*    return (*/}
-                {/*        <div key={index+1} className={cls.mainContainer_tablePanelBox_cardBox}>*/}
-                {/*            <div className={cls.mainContainer_tablePanelBox_cardBox_imgBox}>*/}
-                {/*                <img src={item.icon} alt="" className={cls.mainContainer_tablePanelBox_cardBox_imgBox_img}/>*/}
-                {/*            </div>*/}
-                {/*            <div className={cls.mainContainer_tablePanelBox_cardBox_articleBox}>*/}
-                {/*                <div className={cls.mainContainer_tablePanelBox_cardBox_articleBox_sitterBox}>*/}
-                {/*                    <h2 className={cls.mainContainer_tablePanelBox_cardBox_articleBox_sitterBox_sitterArticle}>O'rindiqlar soni</h2>*/}
-                {/*                    <h2 className={cls.mainContainer_tablePanelBox_cardBox_articleBox_sitterBox_sitterCounter}>{item.sitterNumber}</h2>*/}
-                {/*                </div>*/}
-                {/*                <div className={cls.mainContainer_tablePanelBox_cardBox_articleBox_boardBox}>*/}
-                {/*                    <h2 className={cls.mainContainer_tablePanelBox_cardBox_articleBox_boardBox_isBoard}>Elektron doska</h2>*/}
-                {/*                    <Switch/>*/}
-                {/*                </div>*/}
-                {/*                <div className={cls.mainContainer_tablePanelBox_cardBox_articleBox_roomNumBox}>*/}
-                {/*                    <h2 className={cls.mainContainer_tablePanelBox_cardBox_articleBox_roomNumBox_roomNum}>{item.roomNumber}-xona</h2>*/}
-                {/*                </div>*/}
-                {/*            </div>*/}
-                {/*        </div>*/}
-                {/*    )*/}
-                {/*})}*/}
+                {
+                    users.map((item, index) => {
+                    return (
+                        <div key={index+1} className={cls.mainContainer_tablePanelBox_cardBox}>
+                            <div className={cls.mainContainer_tablePanelBox_cardBox_imgBox}>
+                                <img src={item.icon} alt="" className={cls.mainContainer_tablePanelBox_cardBox_imgBox_img}/>
+                            </div>
+                            <div className={cls.mainContainer_tablePanelBox_cardBox_articleBox}>
+                                <div className={cls.mainContainer_tablePanelBox_cardBox_articleBox_sitterBox}>
+                                    <h2 className={cls.mainContainer_tablePanelBox_cardBox_articleBox_sitterBox_sitterArticle}>O'rindiqlar soni</h2>
+                                    <h2 className={cls.mainContainer_tablePanelBox_cardBox_articleBox_sitterBox_sitterCounter}>{item.sitterNumber}</h2>
+                                </div>
+                                <div className={cls.mainContainer_tablePanelBox_cardBox_articleBox_boardBox}>
+                                    <h2 className={cls.mainContainer_tablePanelBox_cardBox_articleBox_boardBox_isBoard}>Elektron doska</h2>
+                                    <Switch/>
+                                </div>
+                                <div className={cls.mainContainer_tablePanelBox_cardBox_articleBox_roomNumBox}>
+                                    <h2 className={cls.mainContainer_tablePanelBox_cardBox_articleBox_roomNumBox_roomNum}>{item.roomNumber}-xona</h2>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                })}
                 {currentTable}
             </div>
             {/*<Pagination*/}

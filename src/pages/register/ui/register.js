@@ -1,9 +1,9 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from 'pages/register/model/userRegisterThunk';
+import { useDispatch } from 'react-redux';
+import { registerUser } from 'pages/register/model/registerThunk';
 import cls from "./register.module.sass";
-import Button from "shared/ui/button/button";
+import { Button } from "shared/ui/button";
 import bg__img from 'shared/assets/images/reg__bg.svg';
 import { Input } from 'shared/ui/input';
 import { Textarea } from "shared/ui/textArea";
@@ -55,15 +55,22 @@ const userstype = {
 };
 
 export const Register = () => {
-    const { control, handleSubmit, watch, setValue } = useForm();
+    const { register, control, handleSubmit, watch, setValue } = useForm();
     const registerType = watch("registerType", "student");
     const dispatch = useDispatch();
+    // const [language, setLanguage] = useState()
 
     const onSubmit = (data) => {
-        dispatch(registerUser(data));
-    };
-    const onChange = (value) => {
-        console.log(value, "value");
+        console.log(data);
+        // const res = {
+        //     ...data,
+        //     shift: time,
+        //     language: +language,
+        //     job: employerOptions,
+        //     location: +selectedLocation,
+        //     selectedSubjects: selectedSubjects
+        // }
+        // dispatch(registerUser(data));
     };
 
     const renderFormFields = () => {
@@ -71,46 +78,48 @@ export const Register = () => {
             case 'student':
                 return (
                     <>
-                        <Controller
-                            name="language"
-                            control={control}
-                            render={({ field }) => <Select {...field} defaultValue="Ta'lim tili" options={studentOptions.language} onChangeOption={onChange}/>}
-                        />
-                        <Controller
-                            name="subject"
-                            control={control}
-                            render={({ field }) => <Select {...field} defaultValue="Fan" options={studentOptions.subject}  onChangeOption={onChange}/>}
-                        />
-                        <Controller
-                            name="time"
-                            control={control}
-                            render={({ field }) => <Select {...field} defaultValue="Vaqt" options={studentOptions.time} onChangeOption={onChange}/>}
-                        />
+                         <Select
+                             defaultValue="Ta'lim tili"
+                             options={studentOptions.language}
+                         />
+
+                         <Select
+                             defaultValue="Fan"
+                             options={studentOptions.subject}
+                         />
+
+                         <Select
+                             defaultValue="Vaqt"
+                             options={studentOptions.time}
+                         />
+
                     </>
                 );
             case 'teacher':
                 return (
                     <>
-                        <Controller
-                            name="language"
-                            control={control}
-                            render={({ field }) => <Select {...field} defaultValue="Ta'lim tili" options={teacherOptions.language} onChangeOption={onChange}/>}
-                        />
-                        <Controller
-                            name="subject"
-                            control={control}
-                            render={({ field }) => <Select {...field} defaultValue="Fan" options={teacherOptions.subject} onChangeOption={onChange}/>}
+                         <Select
+                             defaultValue="Ta'lim tili"
+                             options={teacherOptions.language}
+                         />
+                        <Select
+
+                            name={"subject"}
+                            defaultValue="Fan"
+                            options={teacherOptions.subject}
                         />
                     </>
                 );
             case 'employer':
                 return (
                     <>
-                        <Controller
-                            name="profession"
-                            control={control}
-                            render={({ field }) => <Select {...field} defaultValue="Kasb" options={employerOptions.profession} onChangeOption={onChange}/>}
+                        <Select
+
+                            name={"profession"}
+                            defaultValue="Kasb"
+                            options={employerOptions.profession}
                         />
+
                     </>
                 );
             default:
@@ -121,12 +130,10 @@ export const Register = () => {
     return (
         <div className={cls.login}>
             <div className={cls.selection}>
-                <Controller
-                    name="registerType"
-                    control={control}
-                    render={({ field }) => (
-                        <Select {...field} defaultValue="User Type" options={userstype.types} onChange={(value) => setValue('registerType', value)} />
-                    )}
+                <Select
+                    defaultValue="User Type"
+                    options={userstype.types}
+                    onChangeOption={(value) => setValue('registerType', value)}
                 />
             </div>
             <div className={cls.login__boxes}>
@@ -134,51 +141,71 @@ export const Register = () => {
                     <h1 className={cls.login__boxes__box__headerTitle}>Registratsiya</h1>
                     <div className={cls.login__boxes__box__form}>
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <Controller
-                                name="username"
-                                control={control}
-                                render={({ field }) => <Input {...field} placeholder="Username" required />}
+                            <Input
+                                register={register}
+                                placeholder="Username"
+                                required
+                                name={"username"}
                             />
-                            <Controller
-                                name="firstName"
-                                control={control}
-                                render={({ field }) => <Input {...field} placeholder="Ism" required />}
+                            <Input
+                                register={register}
+                                placeholder="Ism"
+                                required
+                                name={"name"}
                             />
-                            <Controller
-                                name="lastName"
-                                control={control}
-                                render={({ field }) => <Input {...field} placeholder="Familiya" required />}
+
+                            <Input
+                                register={register}
+                                placeholder="Familiya"
+                                required
+                                name={"surname"}
                             />
-                            <Controller
-                                name="middleName"
-                                control={control}
-                                render={({ field }) => <Input {...field} placeholder="Otasining ismi" required />}
+
+                            <Input
+                                register={register}
+                                placeholder="Otasi ismi"
+                                required
+                                name={"father_name"}
                             />
-                            <Controller
-                                name="birthDate"
-                                control={control}
-                                render={({ field }) => <Input {...field} placeholder="Tug'ilgan kun" type="date" required />}
+                            <Input
+                                register={register}
+                                placeholder="Parol"
+                                required
+                                type={"password"}
+                                name={"password"}
                             />
-                            <Controller
-                                name="phoneNumber"
-                                control={control}
-                                render={({ field }) => <Input {...field} placeholder="Telefon nomer" type="tel" required />}
+
+                            <Input
+                                register={register}
+                                placeholder="Tug'ilgan kun"
+                                type="date"
+                                required
+                                name={"birth_date"}
                             />
-                            <Controller
-                                name="parentPhoneNumber"
-                                control={control}
-                                render={({ field }) => <Input {...field} placeholder="Telefon nomer (ota-onasiniki)" type="tel" required />}
+
+                            <Input
+                                register={register}
+                                placeholder="Telefon raqami"
+                                type="number"
+                                required
+                                name={"phone"}
                             />
-                            <Controller
-                                name="comment"
-                                control={control}
-                                render={({ field }) => <Textarea {...field} placeholder="Kommentariya" />}
+
+                            <Input
+                                register={register}
+                                placeholder="Ota-ona telefon raqami"
+                                type="number"
+                                required
+                                name={"parents_phone"}
+                            />
+                            <Textarea
+                                register={register}
+                                placeholder="Kommentariya"
+                                name={"comment"}
                             />
                             {renderFormFields()}
                             <Button type="submit">Register</Button>
                         </form>
-                        {/*{status === 'loading' && <p>Loading...</p>}*/}
-                        {/*{status === 'failed' && <p>Error: {error}</p>}*/}
                     </div>
                 </div>
                 <div className={cls.login__aside}>

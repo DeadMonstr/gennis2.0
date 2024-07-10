@@ -4,7 +4,13 @@
   padding: 20px
   display: flex
   flex-direction: column
-  gap: 3rem
+  gap: 1rem
+  .mainContainer_filterPanelBox
+    display: flex
+    justify-content: space-between
+    margin-bottom: 39px
+
+
   &__menu
     display: flex
     justify-content: space-evenly
@@ -28,6 +34,8 @@
       margin-top: 20px
 
   .table
+    overflow: auto
+    height: calc(100vh - 42rem)
     &__head
       thead
         background-color: #EFF6FF

@@ -31,19 +31,25 @@ const navigateList = [
         roles: []
     },
     {
-        to: "/login",
+        to: "students",
         name: "O'qiyotgan O'quvchilar",
         icon: "fa-user-graduate",
         roles: []
     },
     {
-        to: "/login",
+        to: "groups",
         name: "Gruppalar",
         icon: "fa-users",
         roles: []
     },
     {
-        to: "/login",
+        to: "deletedGroups",
+        name: "O'chirilgan Gruppalar",
+        icon: "fa-user-alt-slash",
+        roles: []
+    },
+    {
+        to: "teacher",
         name: "O'qituvchilar",
         icon: "fa-user-tie",
         roles: []
