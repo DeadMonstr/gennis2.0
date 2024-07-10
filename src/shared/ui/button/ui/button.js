@@ -6,7 +6,7 @@ import timeTable from "shared/assets/icons/Clock.png"
 
 import cls from "./button.module.sass"
 import Filter from "shared/assets/Filtericons/Filter.svg";
-const Button = ({children, onClick, type, disabled, status , extraClass}) => {
+export const Button = ({children, onClick, type, disabled, status , extraClass}) => {
     return (
         <button onClick={onClick} className={classNames(cls.btn,extraClass, cls[type], {
             [cls.simple]: type === "simple",
@@ -30,4 +30,3 @@ const Button = ({children, onClick, type, disabled, status , extraClass}) => {
         </button>
     )
 }
-export default Button

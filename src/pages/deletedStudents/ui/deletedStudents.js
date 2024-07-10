@@ -1,12 +1,13 @@
-import cls from "./deletedStudents.module.sass"
-import classNames from "classnames";
 import React, {useMemo, useState} from "react";
-import {Table} from "../../shared/ui/table";
-import {Pagination} from "../../features/pagination";
-import {StudentsFilter} from "../../features/filters";
-import Button from "../../shared/ui/button/button";
+import classNames from "classnames";
 
-import {Select} from "../../shared/ui/select";
+import {Pagination} from "features/pagination";
+import {StudentsFilter} from "features/filters";
+import {Table} from "shared/ui/table";
+import {Button} from "shared/ui/button";
+import {Select} from "shared/ui/select";
+
+import cls from "./deletedStudents.module.sass"
 
 const menuList = [
     {name: "all", label: 'hammasi'},
@@ -671,7 +672,7 @@ const branches =[
     {name: "chirchiq" , label: "chirchiq"},
     {name: "chirchiq1" , label: "chirchiq2"},
 ]
-const DeletedStudents = () => {
+export const DeletedStudents = () => {
 
     let PageSize = useMemo(() => 50, [])
     const [active, setActive] = useState(false);
@@ -866,8 +867,6 @@ const DeletedStudents = () => {
         </div>
     )
 }
-export default DeletedStudents
-
 
 
 

@@ -7,15 +7,14 @@ import {Home} from "pages/home/ui/home";
 import {Login} from "pages/login";
 import {Register} from "pages/register/ui/register";
 import {NotFoundPage} from "pages/notfound/ui/notfound";
+import {NewStudents} from "pages/newStudents/";
+import {DeletedStudents} from "pages/deletedStudents";
+import {Students} from "pages/students";
+import {DeletedGroups} from "pages/deletedGroups";
+import {Groups} from "pages/groups";
 import {Layout} from "app/layout";
 
 import "app/styles/index.sass"
-import {NewStudents} from "../../pages/newStudents/ui/newStudents";
-import DeletedStudents from "../../pages/deletedStudents/deletedStudents";
-import Students from "../../pages/students/students";
-import DeletedGroups from "../../pages/deletedGroups/ui/deletedGroups";
-import Groups from "../../pages/groups/ui/groups";
-import {Teacher} from "../../pages/teacher";
 
 export const AppRouter = () => {
 

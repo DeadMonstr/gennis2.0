@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import cls from "./radio.module.sass"
 import classNames from "classnames";
 
+import cls from "./radio.module.sass"
 
-const Radio = ({name, id, value, onChange, checked, children, disabled , extraClasses}) => {
+
+export const Radio = ({name, id, value, onChange, checked, children, disabled , extraClasses}) => {
 
     const [active, setActive] = useState(false)
     useEffect(() => {
@@ -36,5 +37,3 @@ const Radio = ({name, id, value, onChange, checked, children, disabled , extraCl
         </label>
     );
 };
-
-export default Radio;

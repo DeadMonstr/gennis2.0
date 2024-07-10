@@ -1,11 +1,12 @@
 import React, {useMemo, useState} from "react";
-import cls from "./students.module.sass";
-import {Table} from "shared/ui/table";
+
 import {Pagination} from "features/pagination";
-import Button from "../../shared/ui/button/button";
-import filter from "../../shared/assets/Filtericons/Filter.svg";
-import {StudentsFilter} from "../../features/filters";
-import Radio from "../../shared/ui/radio/radio";
+import {StudentsFilter} from "features/filters";
+import {Table} from "shared/ui/table";
+import {Button} from "shared/ui/button";
+import {Radio} from "shared/ui/radio";
+
+import cls from "./students.module.sass";
 
 const studentsData = [
     {name: "dew1d", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -223},
@@ -61,7 +62,7 @@ const studentsData = [
     {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
 
 ]
-const Students = () => {
+export const Students = () => {
 
     let PageSize = useMemo(() => 50, [])
     const [currentTableData, setCurrentTableData] = useState([])
@@ -156,4 +157,3 @@ const Students = () => {
         </div>
     )
 }
-export default Students

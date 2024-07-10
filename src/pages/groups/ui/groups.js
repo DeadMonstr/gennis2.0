@@ -28,7 +28,9 @@ const GroupsData =[
         deletedDate: ''
     },
 ]
-const Groups = () => {
+
+export const Groups = () => {
+
     const [active, setActive] = useState(false);
     let PageSize = useMemo(() => 50, [])
 
@@ -137,4 +139,3 @@ const Groups = () => {
         </div>
     )
 }
-export default Groups

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import cls from "./switch.module.sass"
 
-const Switch = React.memo((
+export const Switch = React.memo((
     {
         disabled
     }) => {
@@ -34,5 +34,3 @@ const Switch = React.memo((
 
     );
 });
-
-export default Switch;
