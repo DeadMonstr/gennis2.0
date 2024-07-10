@@ -100,7 +100,7 @@ export const Students = () => {
                 <td>{item.age}</td>
                 <td>{item.number}</td>
                 <td>{item.group}</td>
-                <td style={{color: '#FF3B30'}}>{item.groupPrice}</td>
+                <td><div style={{color: '#FF3B30'}}>{item.groupPrice}</div></td>
             </tr>
         ))
     }

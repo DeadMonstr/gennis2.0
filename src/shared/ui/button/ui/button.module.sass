@@ -19,8 +19,15 @@
   text-transform: capitalize
   margin: 5px
   @include btn-active
-  border: 2px solid #008ac6
+  //border: 2px solid #008ac6
   background-color: $btn-gennis
+  border: none
+  transition: .2s ease-in
+  &:hover
+    background: none
+    border: none
+    color: black
+    box-shadow: 0 0 4px 0
   img
     width: 16px
   &.simple

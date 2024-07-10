@@ -9,7 +9,6 @@ import {Home} from "pages/home/ui/home";
 import {Login} from "pages/login";
 import {Register} from "pages/register/ui/register";
 import {NotFoundPage} from "pages/notfound/ui/notfound";
-import {Layout} from "app/layout";
 import {Teacher} from "pages/teacher";
 import {CreateGroup} from "pages/createGroup";
 import "app/styles/index.sass"

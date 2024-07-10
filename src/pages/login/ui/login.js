@@ -13,7 +13,7 @@ import {useDispatch} from "react-redux";
 
 export const Login = () => {
 
-    // const {username , password} = useSelector(state => state.loginSlice)
+    // const {username , password} = useSelector(state => state.loginSlice)/
 
 
     const {register ,handleSubmit} = useForm()
@@ -24,6 +24,7 @@ export const Login = () => {
     const dispatch = useDispatch()
 
     const onClick = (e) => {
+        console.log(e)
         // dispatch()
         setLoading(false)
     }

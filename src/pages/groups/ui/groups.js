@@ -1,14 +1,11 @@
 import React, {useMemo, useState} from "react";
-import {Link} from "react-router-dom";
-
-import {GroupsFilter} from "features/filters/groupsFilter";
-
+import cls from "./groups.module.sass";
 import {Table} from "shared/ui/table";
 import {Pagination} from "features/pagination";
 import {Button} from "shared/ui/button";
 
-
-
+import {GroupsFilter} from "features/filters/groupsFilter";
+import {Link} from "react-router-dom";
 
 const GroupsData =[
     {
@@ -96,29 +93,9 @@ export const Groups = () => {
                                 <td>{i + 1}</td>
                                 <td>{item.groupName}</td>
                                 <td>{item.name} {item.surname}</td>
-                                <td
-                                    style={{
-                                        border: "1px solid",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        borderRadius: "15px",
-                                        height: "4rem",
-                                        width: "fit-content",
-                                        margin: "10px 0"
-                                    }}>{item.subject}</td>
+                                <td><div>{item.subject}</div></td>
                                 <td>{item.typeCourse}</td>
-                                <td style={{
-                                    color: '#00C2FF',
-                                    border: "1px solid #00C2FF",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    borderRadius: "15px",
-                                    height: "4rem",
-                                    width: "fit-content",
-                                    margin: "10px 0"
-                                }}>{item.groupPrice}</td>
+                                <td><div>{item.groupPrice}</div></td>
                                 <td><div><div></div></div></td>
                             </tr>
                             </tbody>

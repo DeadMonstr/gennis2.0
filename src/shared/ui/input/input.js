@@ -98,7 +98,7 @@ export const Input = React.memo((
                     pattern={pattern}
                     required={required}
                     placeholder={placeholder}
-                    onChange={setSilk}
+                    onChange={onChange}
                     {...extraValues}
                 />
                 {

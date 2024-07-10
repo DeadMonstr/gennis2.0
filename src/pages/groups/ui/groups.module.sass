@@ -1,3 +1,5 @@
+@import "app/styles/abstracts/variables"
+
 .deletedGroups
   padding: 20px
 
@@ -30,9 +32,30 @@
               height: 30px
               border-radius: 50%
               background-color: rgba(36, 255, 0, 0.37)
-
               div
-                transform: translate(1px)
+                transform: translate(0.5px)
                 width: 15px
                 height: 15px
                 background-color: #24FF00
+          td:nth-child(4)
+            div
+              border: 1px solid
+              display: flex
+              align-items: center
+              justify-content: center
+              border-radius: 8px
+              height: 4rem
+              width: fit-content
+              //margin: 5px 0
+              padding: 2rem
+          td:nth-child(6)
+            div
+              border: 1px solid $btn-gennis
+              display: flex
+              align-items: center
+              justify-content: center
+              border-radius: 8px
+              height: 4rem
+              width: fit-content
+              //margin: 5px 0
+              padding: 2rem

@@ -9,5 +9,7 @@ export const getRouteStudents = (id) => `students`;
 export const getRouteGroups = (id) => `groups`;
 export const getRouteDeletedGroups = (id) => `deletedGroups`;
 export const getRouteRegister = () => `register`;
+export const getRouteTeacher = () => `teacher`;
+export const getRouteCreateGroup = () => `newStudents/createGroup`;
 
 

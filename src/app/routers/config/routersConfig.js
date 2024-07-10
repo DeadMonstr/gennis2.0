@@ -7,7 +7,9 @@ import {
     getRouteRegister,
     getRouteStudents,
     getRouteGroups,
-    getRouteMain
+    getRouteMain,
+    getRouteTeacher,
+    getRouteCreateGroup
 } from "shared/const/routers";
 
 import {Home} from "pages/home";
@@ -17,6 +19,8 @@ import {Students} from "pages/students";
 import {Groups} from "pages/groups";
 import {DeletedGroups} from "pages/deletedGroups";
 import {Register} from "pages/register";
+import {Teacher} from "pages/teacher";
+import {CreateGroup} from "../../../pages/createGroup";
 
 
 export const routersConfig = [
@@ -69,6 +73,14 @@ export const routersConfig = [
         element: <Groups/>
     },
     {
+        to: "newStudents/createGroup",
+
+        icon: "fa-user",
+        roles: [],
+        path: getRouteCreateGroup(":id"),
+        element: <CreateGroup/>
+    },
+    {
         to: "deletedGroups",
         name: "O'chirilgan Gruppalar",
         icon: "fa-user-alt-slash",
@@ -77,10 +89,12 @@ export const routersConfig = [
         element: <DeletedGroups/>
     },
     {
-        to: "/login",
+        to: "teacher",
         name: "O'qituvchilar",
         icon: "fa-user-tie",
-        roles: []
+        roles: [],
+        path: getRouteTeacher(":id"),
+        element: <Teacher/>
     },
     {
         to: "/login",
