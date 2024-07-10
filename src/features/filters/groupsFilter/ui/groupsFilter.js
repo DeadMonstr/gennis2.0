@@ -5,13 +5,15 @@ import {Input} from "shared/ui/input";
 import {Select} from "shared/ui/select";
 import {Switch} from "shared/ui/switch";
 
-import cls from "./filters.module.sass";
+import cls from "../../filters.module.sass";
 
-export const TeacherFilter = ({active, setActive, activePage}) => {
+export const GroupsFilter = ({active, setActive, activePage}) => {
 
     const [selectedFrom, setSelectedFrom] = useState()
     const [selectedTo, setSelectedTo] = useState()
+    const [selectedSubject, setSelectedSubject] = useState()
     const [selectedTeacher, setSelectedTeacher] = useState()
+    const [selectedType, setSelectedType] = useState()
 
     return (
         <Modal
@@ -27,28 +29,36 @@ export const TeacherFilter = ({active, setActive, activePage}) => {
                         extraClass={cls.filter__select}
                         onChangeOption={setSelectedTeacher}
                     />
+                    <Select
+                        title={"Fan"}
+                        extraClass={cls.filter__select}
+                        onChangeOption={setSelectedSubject}
+                    />
+                    <Select
+                        title={"Kurs turi"}
+                        extraClass={cls.filter__select}
+                        onChangeOption={setSelectedType}
+                    />
 
                     <div className={cls.filter__age}>
                         <Input
                             type={"number"}
                             extraClassName={cls.filter__input}
-                            placeholder={"O’rindiqlar soni (От)"}
+                            placeholder={"O’chirilgan sana (От)"}
                             onChange={setSelectedFrom}
                             value={selectedFrom}
                         />
                         <Input
                             type={"number"}
                             extraClassName={cls.filter__input}
-                            placeholder={"O’rindiqlar soni (До)"}
+                            placeholder={"O’chirilgan sana (До)"}
                             onChange={setSelectedTo}
                             value={selectedTo}
                         />
                     </div>
 
-
-
                     <div className={cls.filter__switch}>
-                        <p>Doska</p>
+                        <p>O’chirilgan</p>
                         <Switch/>
                     </div>
 

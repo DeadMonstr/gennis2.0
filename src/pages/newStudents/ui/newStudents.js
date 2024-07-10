@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 
-import {StudentsFilter} from "features/filters";
+import {StudentsFilter} from "features/filters/studentsFilter";
 import {Pagination} from "features/pagination";
 import { Select } from "shared/ui/select";
 import { Table } from "shared/ui/table";

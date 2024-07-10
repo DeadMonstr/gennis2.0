@@ -1,7 +1,7 @@
 import React, {useMemo, useState} from "react";
 
 import {Pagination} from "features/pagination";
-import {GroupsFilter} from "features/filters";
+import {GroupsFilter} from "features/filters/groupsFilter";
 import {Table} from "shared/ui/table";
 import {Button} from "shared/ui/button";
 

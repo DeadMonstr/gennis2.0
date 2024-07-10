@@ -2,16 +2,12 @@ import React, {Suspense} from 'react';
 import {createRoutesFromElements, Navigate, Route, RouterProvider} from "react-router";
 import {createBrowserRouter} from "react-router-dom";
 
+import {routersConfig} from "app/routers"
+import {Layout} from "app/layout";
 import {Home} from "pages/home/ui/home";
 import {Login} from "pages/login/ui/login";
 import {Register} from "pages/register/ui/register";
 import {NotFoundPage} from "pages/notfound/ui/notfound";
-import {NewStudents} from "pages/newStudents/";
-import {DeletedStudents} from "pages/deletedStudents";
-import {Students} from "pages/students";
-import {DeletedGroups} from "pages/deletedGroups";
-import {Groups} from "pages/groups";
-import {Layout} from "app/layout";
 
 import "app/styles/index.sass"
 
@@ -34,44 +30,55 @@ export const AppRouter = () => {
                 />
 
 
-
                 <Route path={"platform/*"} element={<Layout/>}>
-                    <Route
-                        path={"home"}
-                        element={<Home/>}
 
-                    />
+                    {
+                        routersConfig.map(item =>
+                            <Route
+                                path={item.path}
+                                element={item.element}
+                            />
+                        )
+                    }
 
-                    <Route
-                        path={"taskManager"}
-                    />
+                    {/*<Route*/}
+                    {/*    path={"home"}*/}
+                    {/*    element={<Home/>}*/}
 
-                    <Route
-                        path={"register"}
-                        element={<Register/>}
-                    />
+                    {/*/>*/}
 
-                    <Route
-                        path={"deletedStudents"}
-                        element={<DeletedStudents/>}
-                    />
-                    <Route
-                        path={"students"}
-                        element={<Students/>}
+                    {/*<Route*/}
+                    {/*    path={"taskManager"}*/}
+                    {/*/>*/}
 
-                    />
-                    <Route path={"newStudents"} element={<NewStudents/>}/>
+                    {/*<Route*/}
+                    {/*    path={"register"}*/}
+                    {/*    element={<Register/>}*/}
+                    {/*/>*/}
+
+                    {/*<Route*/}
+                    {/*    path={"deletedStudents"}*/}
+                    {/*    element={<DeletedStudents/>}*/}
+                    {/*/>*/}
+                    {/*<Route*/}
+                    {/*    path={"students"}*/}
+                    {/*    element={<Students/>}*/}
+
+                    {/*/>*/}
+                    {/*<Route path={"newStudents"} element={<NewStudents/>}/>*/}
+
+                    {/*<Route*/}
+                    {/*    path={"deletedGroups"}*/}
+                    {/*    element={<DeletedGroups/>}*/}
+                    {/*/>*/}
+                    {/*<Route*/}
+                    {/*    path={"groups"}*/}
+                    {/*    element={<Groups/>}*/}
+                    {/*/>*/}
+
                     <Route
                         index
                         element={<Navigate to={"home"}/>}
-                    />
-                    <Route
-                        path={"deletedGroups"}
-                        element={<DeletedGroups/>}
-                    />
-                    <Route
-                        path={"groups"}
-                        element={<Groups/>}
                     />
                 </Route>
 
@@ -84,7 +91,7 @@ export const AppRouter = () => {
     );
 
     return (
-        <Suspense >
+        <Suspense>
             <RouterProvider router={router}/>
         </Suspense>
     );

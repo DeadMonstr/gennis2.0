@@ -11,12 +11,12 @@ import {
 } from "shared/const/routers";
 
 import {Home} from "pages/home";
-import {NewStudents} from "../../../pages/newStudents";
-import {DeletedStudents} from "../../../pages/deletedStudents";
-import {Students} from "../../../pages/students";
-import {Groups} from "../../../pages/groups";
-import {DeletedGroups} from "../../../pages/deletedGroups";
-import {Register} from "../../../pages/register";
+import {NewStudents} from "pages/newStudents";
+import {DeletedStudents} from "pages/deletedStudents";
+import {Students} from "pages/students";
+import {Groups} from "pages/groups";
+import {DeletedGroups} from "pages/deletedGroups";
+import {Register} from "pages/register";
 
 
 export const routersConfig = [
