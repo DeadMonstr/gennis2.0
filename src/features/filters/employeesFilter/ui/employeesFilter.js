@@ -5,7 +5,7 @@ import {Input} from "shared/ui/input";
 import {Select} from "shared/ui/select";
 import {Switch} from "shared/ui/switch";
 
-import cls from "./filters.module.sass";
+import cls from "../../filters.module.sass";
 
 export const EmployeesFilter = ({active, setActive, activePage}) => {
 
