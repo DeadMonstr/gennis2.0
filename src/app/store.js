@@ -3,7 +3,7 @@
 import {configureStore} from "@reduxjs/toolkit";
 
 import {search} from "features/searchInput";
-import {registerUser} from 'entities/user/userRegister';
+import {registerUser} from 'pages/register/model/userRegisterThunk';
 
 
 const stringMiddleware = () => (next) => (action) => {
@@ -21,10 +21,6 @@ export const store = configureStore({
         search,
         registerUser
     },
-    middleware: getDefaultMiddleware =>
-        getDefaultMiddleware().concat(
-            stringMiddleware
-        ),
     devTools: process.env.NODE_ENV !== "production",
 })
 

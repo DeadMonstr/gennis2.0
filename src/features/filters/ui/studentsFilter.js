@@ -5,7 +5,7 @@ import {Modal} from "shared/ui/modal";
 import {Input} from "shared/ui/input";
 import {Select} from "shared/ui/select";
 import Radio from "shared/ui/radio/radio";
-import Switch from "shared/ui/switch/switch";
+import {Switch} from "shared/ui/switch";
 
 import cls from "./filters.module.sass";
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from 'entities/user/userRegister/model/userRegisterThunk';
+import { registerUser } from 'pages/register/model/userRegisterThunk';
 import cls from "./register.module.sass";
 import Button from "shared/ui/button/button";
 import bg__img from 'shared/assets/images/reg__bg.svg';

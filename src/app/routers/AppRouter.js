@@ -11,6 +11,7 @@ import {Layout} from "app/layout";
 
 import "app/styles/index.sass"
 import {NewStudents} from "../../pages/newStudents/ui/newStudents";
+import {Rooms} from "../../pages/rooms/ui/romms";
 
 export const AppRouter = () => {
 
@@ -45,6 +46,11 @@ export const AppRouter = () => {
                     <Route
                         path={"newStudents"}
                         element={<NewStudents/>}
+
+                    />
+                    <Route
+                        path={"rooms"}
+                        element={<Rooms/>}
 
                     />
 

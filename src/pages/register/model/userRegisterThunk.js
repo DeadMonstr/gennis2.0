@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {API_URL, useHttp} from "../../../../shared/api/base";
+import {API_URL, useHttp} from "../../../shared/api/base";
 
 export const registerUser = createAsyncThunk(
     'user/registerUser',
