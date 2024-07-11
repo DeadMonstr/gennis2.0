@@ -1,5 +1,5 @@
-import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { registerUser } from 'pages/register/model/registerThunk';
 import cls from "./register.module.sass";
@@ -7,34 +7,19 @@ import { Button } from "shared/ui/button";
 import bg__img from 'shared/assets/images/reg__bg.svg';
 import { Input } from 'shared/ui/input';
 import { Textarea } from "shared/ui/textArea";
-import { Select } from "../../../shared/ui/select";
-
-const studentOptions = {
-    language: [
-        { id: 1, value: "uz", name: "o'zbek" },
-        { id: 2, value: "ru", name: "rus" }
-    ],
-    subject: [
-        { id: 1, value: "rus tili", name: "rus tili" },
-        { id: 2, value: "ingliz tili", name: "ingliz tili" },
-        { id: 3, value: "matematika", name: "matematika" }
-    ],
-    time: [
-        { id: 1, value: "1-smena", name: "1-smena" },
-        { id: 2, value: "2-smena", name: "2-smena" },
-        { id: 3, value: "hamma vaqt", name: "hamma vaqt" }
-    ]
-};
+import { Select } from "shared/ui/select";
+import MiniLoader from "shared/ui/miniLoader/miniLoader";
+import {Alert} from "shared/ui/alert";// Import the Alert component
 
 const teacherOptions = {
     language: [
-        { id: 1, value: "uz", name: "o'zbek" },
-        { id: 2, value: "ru", name: "rus" }
+        { id: 1, name: "o'zbek" },
+        { id: 2, name: "rus" }
     ],
     subject: [
-        { id: 1, value: "rus tili", name: "rus tili" },
-        { id: 2, value: "ingliz tili", name: "ingliz tili" },
-        { id: 3, value: "matematika", name: "matematika" }
+        { id: 1, label: "rus tili", name: "rus tili" },
+        { id: 2, label: "ingliz tili", name: "ingliz tili" },
+        { id: 3, label: "matematika", name: "matematika" }
     ]
 };
 
@@ -58,19 +43,65 @@ export const Register = () => {
     const { register, control, handleSubmit, watch, setValue } = useForm();
     const registerType = watch("registerType", "student");
     const dispatch = useDispatch();
-    // const [language, setLanguage] = useState()
+    const [selectedLang, setSelectedLang] = useState(1);
+    const [selectedSubject, setSelectedSubject] = useState(1);
+    const [selectedTime, setSelectedTime] = useState(1);
+    const [selectedProfession, setSelectedProfession] = useState(1);
+    const [studentOptions, setStudentOptions] = useState({
+        shift: [
+            { id: 1, name: "1-smena" },
+            { id: 2, name: "2-smena" },
+            { id: 3, name: "hamma vaqt" }
+        ],
+        subject: [],
+        language: []
+    });
+    const [loading, setLoading] = useState(false);
+
+    // State for alerts
+    const [alerts, setAlerts] = useState([]);
+
+    const showAlert = (type, message) => {
+        const newAlert = { id: Date.now(), type, message };
+        setAlerts([...alerts, newAlert]);
+        setTimeout(() => {
+            hideAlert(newAlert.id);
+        }, 5000);
+    };
+
+    const hideAlert = (id) => {
+        setAlerts(alerts => alerts.map(alert =>
+            alert.id === id ? { ...alert, hide: true } : alert
+        ));
+        setTimeout(() => {
+            setAlerts(alerts => alerts.filter(alert => alert.id !== id));
+        }, 500);
+    };
 
     const onSubmit = (data) => {
-        console.log(data);
-        // const res = {
-        //     ...data,
-        //     shift: time,
-        //     language: +language,
-        //     job: employerOptions,
-        //     location: +selectedLocation,
-        //     selectedSubjects: selectedSubjects
-        // }
-        // dispatch(registerUser(data));
+        setLoading(true);
+
+        const res = {
+            shift: selectedTime,
+            subject_id: +selectedSubject,
+            parents_number: data.parents_phone,
+            user: {
+                ...data,
+                language: +selectedLang,
+                branch: 1,
+                selectedProfession: +selectedProfession
+            }
+        };
+
+        dispatch(registerUser(res)).then((action) => {
+            setLoading(false);
+            if (action.type === registerUser.fulfilled.type) {
+                showAlert('success', 'Registration successful!');
+            } else {
+                console.error('Registration error:', action.error);
+                showAlert('error', 'Registration failed. Please try again.');
+            }
+        });
     };
 
     const renderFormFields = () => {
@@ -78,34 +109,39 @@ export const Register = () => {
             case 'student':
                 return (
                     <>
-                         <Select
-                             defaultValue="Ta'lim tili"
-                             options={studentOptions.language}
-                         />
+                        <Select
+                            name={"language"}
+                            defaultValue={selectedLang}
+                            onChangeOption={setSelectedLang}
+                            options={studentOptions.language}
+                        />
 
-                         <Select
-                             defaultValue="Fan"
-                             options={studentOptions.subject}
-                         />
+                        <Select
+                            name={"subject_id"}
+                            onChangeOption={setSelectedSubject}
+                            options={studentOptions.subject}
+                        />
 
-                         <Select
-                             defaultValue="Vaqt"
-                             options={studentOptions.time}
-                         />
-
+                        <Select
+                            name={"shift"}
+                            defaultValue={selectedTime}
+                            onChangeOption={setSelectedTime}
+                            options={studentOptions.shift}
+                        />
                     </>
                 );
             case 'teacher':
                 return (
                     <>
-                         <Select
-                             defaultValue="Ta'lim tili"
-                             options={teacherOptions.language}
-                         />
                         <Select
-
-                            name={"subject"}
-                            defaultValue="Fan"
+                            name={"language"}
+                            defaultValue={selectedLang}
+                            onChangeOption={setSelectedLang}
+                            options={teacherOptions.language}
+                        />
+                        <Select
+                            name={"subject_id"}
+                            onChangeOption={setSelectedSubject}
                             options={teacherOptions.subject}
                         />
                     </>
@@ -114,12 +150,10 @@ export const Register = () => {
                 return (
                     <>
                         <Select
-
                             name={"profession"}
-                            defaultValue="Kasb"
+                            onChangeOption={setSelectedProfession}
                             options={employerOptions.profession}
                         />
-
                     </>
                 );
             default:
@@ -129,6 +163,7 @@ export const Register = () => {
 
     return (
         <div className={cls.login}>
+            <Alert alerts={alerts} hideAlert={hideAlert} /> {/* Add Alert component */}
             <div className={cls.selection}>
                 <Select
                     defaultValue="User Type"
@@ -204,7 +239,10 @@ export const Register = () => {
                                 name={"comment"}
                             />
                             {renderFormFields()}
-                            <Button type="submit">Register</Button>
+                            {loading ?
+                                <MiniLoader /> :
+                                <Button type="submit" extraClass={cls.registerBtn}>Register</Button>
+                            }
                         </form>
                     </div>
                 </div>

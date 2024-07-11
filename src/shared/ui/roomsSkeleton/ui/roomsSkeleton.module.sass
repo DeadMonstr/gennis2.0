@@ -60,7 +60,7 @@
       flex-direction: column
       background: $white-main-color
       border-radius: 10px
-      box-shadow: 0 1px 10px 0.3px  $color-grey-dark
+      box-shadow: 0 0.4px 7px 0.3px  $color-grey-dark
       gap: 10px
       &_imgBox
         width: fit-content
@@ -84,3 +84,41 @@
           width: 100%
           display: flex
           justify-content: space-between
+.skeletonContainer
+  display: flex
+  flex-wrap: wrap
+  gap: 1rem
+
+
+.skeleton
+  background-color: #f0f0f0
+  animation: skeleton-loading 1.5s infinite
+
+.skeletonImage, .skeletonText, .skeletonSwitch
+  background-color: #e0e0e0
+  border-radius: 4px
+
+
+.skeletonImage
+  width: 100%
+  height: 150px
+
+
+.skeletonText
+  width: 70%
+  height: 20px
+  margin-bottom: 10px
+
+.skeletonSwitch
+  width: 50px
+  height: 20px
+
+
+@keyframes skeleton-loading
+  0%
+    background-color: #e0e0e0
+  50%
+    background-color: #f0f0f0
+  100%
+    background-color: #e0e0e0
+

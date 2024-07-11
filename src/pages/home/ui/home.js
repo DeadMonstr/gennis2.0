@@ -227,14 +227,14 @@ export const Home = () => {
 
             <div>
                 {
-                    currentTableData.map((item, i) => {
-                        return (
-                            <div key={i}>
-                                <div>{item.username}</div>
-                                <p>{item.name} {item.surname}</p>
-                            </div>
-                        )
-                    })
+                    // currentTableData.map((item, i) => {
+                    //     return (
+                    //         <div key={i}>
+                    //             <div>{item.username}</div>
+                    //             <p>{item.name} {item.surname}</p>
+                    //         </div>
+                    //     )
+                    // })
                 }
                 {/*<Pagination*/}
                 {/*    currentPage={currentPage}*/}

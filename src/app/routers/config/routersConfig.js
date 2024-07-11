@@ -7,16 +7,18 @@ import {
     getRouteRegister,
     getRouteStudents,
     getRouteGroups,
-    getRouteMain
+    getRouteRooms,
+    getRouteMain,
 } from "shared/const/routers";
 
 import {Home} from "pages/home";
-import {NewStudents} from "pages/newStudents";
+import {NewStudents} from "pages/newStudentsPage";
 import {DeletedStudents} from "pages/deletedStudents";
 import {Students} from "pages/students";
 import {Groups} from "pages/groups";
 import {DeletedGroups} from "pages/deletedGroups";
 import {Register} from "pages/register";
+import {Rooms} from "pages/rooms/ui/rooms";
 
 
 export const routersConfig = [
@@ -95,10 +97,12 @@ export const routersConfig = [
         roles: []
     },
     {
-        to: "/login",
+        to: "rooms",
         name: "Honalar",
         icon: "fa-door-closed",
-        roles: []
+        roles: [],
+        path: getRouteRooms(),
+        element: <Rooms/>
     },
     {
         to: "/login",

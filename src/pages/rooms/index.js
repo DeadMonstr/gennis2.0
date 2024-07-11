@@ -1,1 +1,1 @@
-import {Rooms} from "./ui/romms"
+import {Rooms} from "./ui/rooms"
