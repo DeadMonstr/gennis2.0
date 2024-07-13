@@ -10,5 +10,5 @@ export const fetchLoginUser = createAsyncThunk(
             "Authorization": "Bearer " + token,
             'Content-Type': 'application/json'
         }
-        return await request(`${API_URL}check_password`, "POST", JSON.stringify(data), headers)
+        return await request(`${API_URL}api/token/`, "POST", JSON.stringify(data), headers)
     })

@@ -77,10 +77,9 @@ export const Register = () => {
             setAlerts(alerts => alerts.filter(alert => alert.id !== id));
         }, 500);
     };
-
+    
     const onSubmit = (data) => {
         setLoading(true);
-
         const res = {
             shift: selectedTime,
             subject_id: +selectedSubject,

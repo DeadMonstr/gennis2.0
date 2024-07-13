@@ -8,14 +8,15 @@ import {Button} from "shared/ui/button";
 import {Select} from "shared/ui/select";
 
 import cls from "./deletedStudents.module.sass"
-import DeletedStudentsMenu from "../../../entities/deletedStudentsMenu/deletedStudentsMenu";
-import DeletedStudentsList from "../../../entities/deletedStudentsLists/deletedStudentsList";
+import DeletedStudentsMenu from "../../../entities/deletedStudents/deletedStudentsMenu/deletedStudentsMenu";
+import DeletedStudentsList, {
+    allStudentsData
+} from "../../../entities/deletedStudents/deletedStudentsLists/deletedStudentsList";
 
 
-
-const branches =[
-    {name: "chirchiq" , label: "chirchiq"},
-    {name: "chirchiq1" , label: "chirchiq2"},
+const branches = [
+    {name: "chirchiq", label: "chirchiq"},
+    {name: "chirchiq1", label: "chirchiq2"},
 ]
 export const DeletedStudents = () => {
 
@@ -51,32 +52,30 @@ export const DeletedStudents = () => {
         <div className={cls.deletedStudents}>
             <div className={cls.mainContainer_filterPanelBox}>
                 <Button type={"filter"}
-                    extraClass={cls.extraCutClassFilter}
-                    onClick={() => setActive(true)}
+                        extraClass={cls.extraCutClassFilter}
+                        onClick={() => setActive(true)}
                 >
                     Filter
                 </Button>
                 <Select options={branches}/>
             </div>
             <DeletedStudentsMenu/>
-            <DeletedStudentsList/>
-            {/*<Pagination*/}
-            {/*    setCurrentTableData={setCurrentTableData}*/}
-            {/*    users={allStudentsData}*/}
-            {/*    search={search}*/}
-            {/*    setCurrentPage={setCurrentPage}*/}
-            {/*    currentPage={currentPage}*/}
-            {/*    pageSize={PageSize}*/}
-            {/*    onPageChange={page => {*/}
-            {/*        setCurrentPage(page)*/}
-            {/*    }}*/}
-            {/*/>*/}
+            <DeletedStudentsList currentTableData={currentTableData}/>
+            <Pagination
+                setCurrentTableData={setCurrentTableData}
+                users={allStudentsData}
+                search={search}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                pageSize={PageSize}
+                onPageChange={page => {
+                    setCurrentPage(page)
+                }}
+            />
             <StudentsFilter setActive={setActive} active={active}/>
         </div>
     )
 }
-
-
 
 
 // if (activeMenu === "all"){

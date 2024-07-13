@@ -1,9 +1,9 @@
-import cls from "../../pages/deletedStudents/ui/deletedStudents.module.sass";
-import {Table} from "../../shared/ui/table";
+import cls from "../../../pages/deletedStudents/ui/deletedStudents.module.sass";
+import {Table} from "../../../shared/ui/table";
 import React, {useState} from "react";
 import {menuList} from "../deletedStudentsMenu/deletedStudentsMenu";
 
-const allStudentsData = [
+export const allStudentsData = [
     {
         name: "AnelyaErmekova",
         surname: "AnelyaErmekova",
@@ -626,6 +626,54 @@ const allStudentsData = [
         deletedDate: "12312",
         reason: "boshqa",
         finished: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        other: true,
+        id: 4
+    },
+    {
+        name: "AnelyaErmekova",
+        surname: "AnelyaErmekova",
+        age: 18,
+        number: 1233131,
+        group: "1-guruh",
+        reg_date: "22.22.22",
+        deletedDate: "12312",
+        reason: "boshqa",
+        other: true,
         id: 4
     },
     {
@@ -655,11 +703,8 @@ const allStudentsData = [
 ]
 
 
-
-
-const DeletedStudentsList = () => {
+const DeletedStudentsList = ({currentTableData}) => {
     const [activeMenu, setActiveMenu] = useState(menuList)
-    const [currentTableData , setCurrentTableData] = useState([])
 
     return (
         <div className={cls.table}>
@@ -678,14 +723,19 @@ const DeletedStudentsList = () => {
                 </thead>
                 <tbody>
 
-                    {allStudentsData.map((item) =>{
-                        return(
-                            <tr>
-                                <td>{item.name}</td>
-                            </tr>
-                        )
-                    })}
 
+                {currentTableData.map((item, i) => (
+                    <tr>
+                        <td>{i + 1}</td>
+                        <td>{item.name} {item.surname}</td>
+                        <td>{item.age}</td>
+                        <td>{item.number}</td>
+                        <td>{item.group}</td>
+                        <td>{item.reg_date}</td>
+                        <td>{item.deletedDate}</td>
+                        <td>{item.reason}</td>
+                    </tr>
+                ))}
                 </tbody>
             </Table>
         </div>

@@ -4,13 +4,15 @@ import {createBrowserRouter} from "react-router-dom";
 
 import {routersConfig} from "app/routers"
 import {Layout} from "app/layout";
-import {Home} from "pages/home/ui/home";
-import {Login} from "pages/login/ui/login";
+
+import {Login} from "pages/login";
+
 import {Register} from "pages/register/ui/register";
 import {NotFoundPage} from "pages/notfound/ui/notfound";
 import {Teacher} from "pages/teacher";
 import {CreateGroup} from "pages/createGroup";
 import "app/styles/index.sass"
+import {HomePage} from "pages/homePage";
 
 export const AppRouter = () => {
 
@@ -19,7 +21,7 @@ export const AppRouter = () => {
             <>
                 <Route
                     path={"/"}
-                    element={<Home/>}
+                    element={<HomePage/>}
                 />
                 <Route
                     path={"login"}
@@ -32,7 +34,6 @@ export const AppRouter = () => {
 
 
                 <Route path={"platform/*"} element={<Layout/>}>
-
                     {
                         routersConfig.map(item =>
                             <Route

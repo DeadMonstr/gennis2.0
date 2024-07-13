@@ -1,4 +1,4 @@
-import {useState} from "react";
+import React, {useState} from "react";
 
 import {Button} from "shared/ui/button";
 import {Input} from "shared/ui/input";
@@ -10,26 +10,76 @@ import gennisImg from "shared/assets/images/logo.svg"
 import loginAside from "shared/assets/images/login-page-4468581-3783954 1.svg"
 import {useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
+import {fetchLoginUser} from "../model/loginThunk";
+import {registerUser} from "../../register/model/registerThunk";
+import {Alert} from "shared/ui/alert";
+import {useNavigate} from "react-router";
 
 export const Login = () => {
 
     // const {username , password} = useSelector(state => state.loginSlice)/
 
 
-    const {register ,handleSubmit} = useForm()
+    const {register, handleSubmit} = useForm()
     const [inputChange, setInputChange] = useState([])
     const [loading, setLoading] = useState(true)
-
-
     const dispatch = useDispatch()
+    const [alerts, setAlerts] = useState([]);
+    const navigate = useNavigate()
+    const showAlert = (type, message) => {
+        const newAlert = {id: Date.now(), type, message};
+        setAlerts([...alerts, newAlert]);
+        setTimeout(() => {
+            hideAlert(newAlert.id);
+        }, 5000);
+    };
+
+    const hideAlert = (id) => {
+        setAlerts(alerts => alerts.map(alert =>
+            alert.id === id ? {...alert, hide: true} : alert
+        ));
+        setTimeout(() => {
+            setAlerts(alerts => alerts.filter(alert => alert.id !== id));
+        }, 500);
+    };
 
     const onClick = (e) => {
+
         console.log(e)
         // dispatch()
-        setLoading(false)
+
+        const res = {
+            username: e.username,
+            password: e.password
+
+        }
+
+        dispatch(fetchLoginUser(res))
+            .then((action =>{
+                const isNav = localStorage.getItem("navigate")
+                console.log(action)
+                if (action.error) {
+                    console.error('Registration error:', action.error);
+                    showAlert('error', 'Login failed. Please try again.');
+                    navigate(`/login`)
+                    localStorage.removeItem("navigate")
+                } else {
+                    sessionStorage.setItem("token", action.payload.access)
+                    showAlert('success', 'Login successful!');
+                    setLoading(false)
+                    navigate("/platform")
+                }
+            }))
+            .catch(() =>{
+                showAlert("error" ,"error login")
+            })
+        ;
+
+
     }
     return (
         <div className={cls.container}>
+            <Alert alerts={alerts} hideAlert={hideAlert}/>
             <div className={cls.login__logo}>
                 <img src={gennisImg} alt=""/>
             </div>
@@ -44,14 +94,22 @@ export const Login = () => {
                         </h1>
                         <div className={cls.box__form}>
                             <form onSubmit={handleSubmit(onClick)}>
-                                <Input title={"Email"} register={register} name={"username"} type="text" required/>
-                                <Input title={"password"} register={register} name={"password"} type="password" required/>
+                                {loading ? <Input onChange={(e) => setInputChange(e.target.value)} title={"Email"}
+                                                  register={register} name={"username"} type="text" required/> :
+                                    <Input disabled onChange={(e) => setInputChange(e.target.value)} title={"Email"}
+                                           register={register} name={"username"} type="text" required/>}
+                                {loading ?
+                                    <Input title={"password"} register={register} name={"password"} type="password"
+                                           required/> :
+                                    <Input title={"password"} register={register} name={"password"} type="password"
+                                           required disabled/>}
                                 <Input extraClassName={cls.checkbox} type="checkbox" onChange={() => setInputChange}
                                        checkboxTitle={"Remember me"}/>
-                                {loading && loading ?
+                                {/*<Button extraClass={cls.login__btn}>Login</Button>*/}
+                                {loading ?
                                     <Button extraClass={cls.login__btn}>Login</Button> :
                                     <MiniLoader/>}
-                                {loading && loading ? null : <DefaultLoader/>}
+                                {/*{loading ? null : <DefaultLoader/>}*/}
                             </form>
                         </div>
                     </div>

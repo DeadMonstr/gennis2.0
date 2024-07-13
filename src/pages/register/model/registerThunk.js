@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { API_URL, useHttp } from "../../../shared/api/base";
+import { API_URL, useHttp } from "shared/api/base";
 
 export const registerUser = createAsyncThunk(
     'user/registerUser',
@@ -12,7 +12,6 @@ export const registerUser = createAsyncThunk(
                 fetch(`${API_URL}Subjects/subject/`),
                 fetch(`${API_URL}Language/language/`)
             ]);
-
             const subjectsData = await subjectsResponse.json();
             const languagesData = await languagesResponse.json();
 

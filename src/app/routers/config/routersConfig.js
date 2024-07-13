@@ -13,8 +13,8 @@ import {
     getRouteRooms,
 } from "shared/const/routers";
 
-import {Home} from "pages/home";
-import {NewStudents} from "pages/newStudents";
+
+import {NewStudents} from "pages/newStudentsPage";
 import {DeletedStudents} from "pages/deletedStudents";
 import {Students} from "pages/students";
 import {Groups} from "pages/groups";
@@ -23,6 +23,8 @@ import {Register} from "pages/register";
 import {Rooms} from "pages/rooms/ui/rooms";
 import {Teacher} from "pages/teacher";
 import {CreateGroup} from "../../../pages/createGroup";
+import {HomePage} from "../../../pages/homePage";
+import {Home} from "../../../entities/home/ui/home";
 
 
 export const routersConfig = [

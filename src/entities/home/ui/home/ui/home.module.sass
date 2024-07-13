@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap')
+@import "app/styles/abstracts/variables"
+.home
+  background-color: #0EA5E9
+  height: 100vh
+  align-items: center
+  justify-content: center
+  display: flex
+  padding: 30px 10rem
+  &Wrapper
+    display: flex
+    align-items: center
+    gap: 30rem
+    justify-content: center
+    //flex-direction: column
+    height: 50rem
+  &Texts
+    display: flex
+    flex-direction: column
+    gap: 30px
+    width: 50%
+  &Title
+    font-size: 50px
+    color: white
+    font-weight: 700
+  &Paragraph
+    font-size: 20px
+    color: white
+    //width: 50%
+  &Aside
+    background-color: white
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
+    border-radius: 10px
+    width: 50rem
+    gap: 40px
+    padding: 50px 0
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.51) , inset 0 0 5px 0 #544f4f
+    &__title
+      font-weight: 700
+      font-size: 30px
+      color: $btn-gennis
+    form
+      display: flex
+      flex-direction: column
+      justify-content: center
+      align-items: center
+      gap: 20px
+      .select
+        width: 35rem
+      .buttonExtra
+        font-size: 16px
+        height: 4.5rem
+        width: 20rem
+
+
+@media (max-width: 1550px)
+  .home
+    &Title
+      font-size: 40px
+    &Paragraph
+      font-size: 16px
+    &Aside
+      form
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        gap: 20px
+        .select
+          width: 35rem
+        .buttonExtra
+          font-size: 16px
+          height: 4rem
+          width: 18rem
+@media (max-width: 1440px)
+  .home
+    &Wrapper
+      gap: 20rem
+    &Title
+      font-size: 35px
+    &Paragraph
+      font-size: 16px
+@media (max-width: 1200px)
+  .home
+    &Wrapper
+      gap: 15rem
+    &Title
+      font-size: 30px
+    &Paragraph
+      font-size: 15px
+    &Aside
+      form
+        gap: 18px
+        .buttonExtra
+          width: 17rem

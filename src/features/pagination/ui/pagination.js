@@ -26,6 +26,7 @@ export const Pagination = React.memo((props) => {
             item.name?.toLowerCase().includes(search.toLowerCase()) ||
             item.surname?.toLowerCase().includes(search.toLowerCase()) ||
             item.username?.toLowerCase().includes(search.toLowerCase()) ||
+            item.fullName?.toLowerCase().includes(search.toLowerCase()) ||
             item.sitterNumber.toLowerCase().includes(search.toLowerCase())
         )
     }, [users, setCurrentPage, search])
