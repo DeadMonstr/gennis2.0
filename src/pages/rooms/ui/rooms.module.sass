@@ -21,7 +21,8 @@
       gap: 10px
       align-items: center
       padding: 1rem
-
+      .extraCutClass
+        width: 50%
       .noneBackground
         background: none
         border: none
@@ -45,5 +46,41 @@
   &_tablePanelBox
     width: 100%
     height: auto
-    display: flex
     padding: 3rem
+    align-items: center
+    display: flex
+    gap: 38px
+    flex-wrap: wrap
+    &_cardBox
+      width: 27rem
+      height: 30rem
+      padding: 2rem
+      display: flex
+      align-items: center
+      flex-direction: column
+      background: $white-main-color
+      border-radius: 10px
+      box-shadow: 0 1px 10px 0.3px  $color-grey-dark
+      gap: 10px
+      &_imgBox
+        width: fit-content
+        height: fit-content
+        &_img
+          width: 24rem
+      &_articleBox
+        width: 100%
+        display: flex
+        flex-direction: column
+        gap: 10px
+        &_sitterBox
+          width: 100%
+          display: flex
+          justify-content: space-between
+        &_boardBox
+          width: 100%
+          display: flex
+          justify-content: space-between
+        &_roomNumBox
+          width: 100%
+          display: flex
+          justify-content: space-between

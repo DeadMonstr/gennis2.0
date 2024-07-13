@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import classNames from "classnames";
-
 import {Modal} from "shared/ui/modal";
 import {Input} from "shared/ui/input";
 import {Select} from "shared/ui/select";

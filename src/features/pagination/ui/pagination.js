@@ -1,4 +1,3 @@
-
 import React, {useCallback, useEffect, useMemo} from 'react';
 import classNames from "classnames";
 
@@ -24,9 +23,10 @@ export const Pagination = React.memo((props) => {
         const filteredHeroes = users.slice()
         setCurrentPage(1)
         return filteredHeroes.filter(item =>
-            item.name.toLowerCase().includes(search.toLowerCase()) ||
-            item.surname.toLowerCase().includes(search.toLowerCase()) ||
-            item.username.toLowerCase().includes(search.toLowerCase())
+            item.name?.toLowerCase().includes(search.toLowerCase()) ||
+            item.surname?.toLowerCase().includes(search.toLowerCase()) ||
+            item.username?.toLowerCase().includes(search.toLowerCase()) ||
+            item.sitterNumber.toLowerCase().includes(search.toLowerCase())
         )
     }, [users, setCurrentPage, search])
 

@@ -11,5 +11,6 @@ export const getRouteDeletedGroups = (id) => `deletedGroups`;
 export const getRouteRegister = () => `register`;
 export const getRouteTeacher = () => `teacher`;
 export const getRouteCreateGroup = () => `newStudents/createGroup`;
+export const getRouteRooms = () => `rooms`;
 
 

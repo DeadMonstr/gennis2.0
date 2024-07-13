@@ -41,6 +41,7 @@ export const Input = React.memo((
                 <input
                     required={required}
                     disabled={disabled}
+                    placeholder={placeholder}
                     id={name}
                     className={classNames(cls.input,extraClassName,{
                         [`${cls?.error}`] : errors?.[name]
@@ -50,7 +51,7 @@ export const Input = React.memo((
                     {...register(name,{
                         pattern: pattern,
                         defaultValue: defaultValue,
-                        placeholder: placeholder,
+                        // placeholder: placeholder,
                         value:value,
                         ...extraValues,
                         onChange: setSilk
