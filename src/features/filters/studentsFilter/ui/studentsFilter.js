@@ -28,7 +28,7 @@ const statusList = [
 
 ]
 
-export const StudentsFilter = ({active, setActive, activePage, setData}) => {
+export const StudentsFilter = React.memo(({active, setActive, activePage, setData}) => {
 
     const [selectedAgeFrom, setSelectedAgeFrom] = useState()
     const [selectedAgeTo, setSelectedAgeTo] = useState()
@@ -140,4 +140,4 @@ export const StudentsFilter = ({active, setActive, activePage, setData}) => {
             </div>
         </Modal>
     );
-};
+})

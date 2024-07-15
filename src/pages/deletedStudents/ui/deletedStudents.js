@@ -862,6 +862,7 @@ export const DeletedStudents = () => {
                 onPageChange={page => {
                     setCurrentPage(page)
                 }}
+                type={"custom"}
             />
             <StudentsFilter setActive={setActive} active={active}/>
         </div>

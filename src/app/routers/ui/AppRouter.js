@@ -10,6 +10,7 @@ import {Register} from "pages/register/ui/register";
 import {NotFoundPage} from "pages/notfound/ui/notfound";
 
 import "app/styles/index.sass"
+import {ProfilePage} from "../../../pages/profilePage";
 
 export const AppRouter = () => {
 
@@ -35,11 +36,17 @@ export const AppRouter = () => {
                     {
                         routersConfig.map(item =>
                             <Route
+                                key={item.name}
                                 path={item.path}
                                 element={item.element}
                             />
                         )
                     }
+
+                    <Route
+                        path={"profile"}
+                        element={<ProfilePage/>}
+                    />
 
                     {/*<Route*/}
                     {/*    path={"home"}*/}
@@ -73,7 +80,7 @@ export const AppRouter = () => {
                     {/*/>*/}
                     {/*<Route*/}
                     {/*    path={"groups"}*/}
-                    {/*    element={<Groups/>}*/}
+                    {/*    element={<GroupsPage/>}*/}
                     {/*/>*/}
 
                     <Route

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 
 import {StudentsFilter} from "features/filters/studentsFilter";
 import {Pagination} from "features/pagination";
@@ -224,6 +224,7 @@ const users = [
 ];
 
 export const NewStudents = () => {
+
     const [active, setActive] = useState(false);
     const [activeMenu, setActiveMenu] = useState("");
     const PageSize = useMemo(() => 10, []);
@@ -239,7 +240,7 @@ export const NewStudents = () => {
     };
 
 
-    const renderStudents = () => {
+    const renderStudents = useCallback(() => {
         return currentTableData.map((item, index) => (
             <tr key={index + 1}>
                 <td>{(currentPage - 1) * PageSize + index + 1}</td>
@@ -251,7 +252,7 @@ export const NewStudents = () => {
                 <td>{item.dataReg}</td>
             </tr>
         ));
-    };
+    }, [PageSize, currentPage, currentTableData])
 
     return (
         <div className={cls.mainContainer}>
@@ -281,6 +282,7 @@ export const NewStudents = () => {
                     ))}
                 </div>
             </div>
+
             <div className={cls.mainContainer_tablePanelBox}>
                 <Table>
                     <thead>
@@ -299,6 +301,11 @@ export const NewStudents = () => {
                     </tbody>
                 </Table>
             </div>
+
+            {/*<List*/}
+            {/*    renderStudents={renderStudents}*/}
+            {/*/>*/}
+
             <Pagination
                 setCurrentTableData={setCurrentTableData}
                 users={users}
@@ -309,6 +316,7 @@ export const NewStudents = () => {
                 onPageChange={page => {
                     setCurrentPage(page)
                 }}
+                type={"custom"}
             />
             <StudentsFilter
                 active={active}
@@ -317,3 +325,26 @@ export const NewStudents = () => {
         </div>
     );
 };
+
+const List = React.memo(({renderStudents}) => {
+    return (
+        <div className={cls.mainContainer_tablePanelBox}>
+            <Table>
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Full name</th>
+                    <th>Age</th>
+                    <th>Tel</th>
+                    <th>Til</th>
+                    <th>Guruh</th>
+                    <th>Reg. sana</th>
+                </tr>
+                </thead>
+                <tbody>
+                {renderStudents()}
+                </tbody>
+            </Table>
+        </div>
+    )
+})

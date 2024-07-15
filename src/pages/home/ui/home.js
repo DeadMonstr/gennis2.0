@@ -1,6 +1,6 @@
 import React, {useCallback, useMemo, useState} from 'react';
 
-import {Alert} from "shared/ui/alert/alert";
+import {Alert} from "shared/ui/alert/ui/alert";
 import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
 import {Pagination} from "features/pagination";

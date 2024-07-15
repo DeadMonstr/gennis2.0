@@ -2,8 +2,8 @@ import {useState} from "react";
 
 import {Button} from "shared/ui/button";
 import {Input} from "shared/ui/input";
-import DefaultLoader from "shared/ui/defaultLoader/defaultLoader";
-import MiniLoader from "shared/ui/miniLoader/miniLoader";
+import {DefaultLoader} from "shared/ui/defaultLoader";
+import {MiniLoader} from "shared/ui/miniLoader";
 
 import cls from "./login.module.sass"
 import gennisImg from "shared/assets/images/logo.svg"

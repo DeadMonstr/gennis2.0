@@ -8,6 +8,7 @@ import {filteredStudents} from "features/filters/studentsFilter";
 import {filteredEmployees} from "features/filters/employeesFilter";
 import {filteredGroups} from "features/filters/groupsFilter";
 import {filteredRooms} from "features/filters/roomsFilter";
+import {groups} from "entities/groups/index"
 
 
 
@@ -28,7 +29,8 @@ export const store = configureStore({
         filteredStudents,
         filteredEmployees,
         filteredGroups,
-        filteredRooms
+        filteredRooms,
+        groups
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

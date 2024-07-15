@@ -2,7 +2,7 @@
 import React, {useCallback, useEffect, useMemo} from 'react';
 import classNames from "classnames";
 
-import {usePagination, DOTS} from "shared/lib/pagination";
+import {usePagination, DOTS} from "shared/lib/usePagination";
 
 import cls from "./pagination.module.sass";
 
@@ -17,7 +17,8 @@ export const Pagination = React.memo((props) => {
         currentPage,
         pageSize,
         className,
-        setCurrentTableData
+        setCurrentTableData,
+        type = "basic"
     } = props;
 
     const searchedUsers = useMemo(() => {
@@ -56,7 +57,8 @@ export const Pagination = React.memo((props) => {
                 <li
                     key={index}
                     className={classNames(cls.pagination_item, {
-                        [cls.selected]: pageNumber === currentPage
+                        [cls.selected]: pageNumber === currentPage && type === "basic",
+                        [cls.customSelected]: pageNumber === currentPage && type === "custom"
                     })}
                     onClick={() => onPageChange(pageNumber)}
                 >

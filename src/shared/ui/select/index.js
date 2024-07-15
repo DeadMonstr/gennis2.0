@@ -1,1 +1,1 @@
-export {Select} from "./select"
+export {Select} from "./ui/select"

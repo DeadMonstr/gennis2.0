@@ -14,7 +14,7 @@ import {Home} from "pages/home";
 import {NewStudents} from "pages/newStudents";
 import {DeletedStudents} from "pages/deletedStudents";
 import {Students} from "pages/students";
-import {Groups} from "pages/groups";
+import {GroupsPage} from "pages/groupsPage";
 import {DeletedGroups} from "pages/deletedGroups";
 import {Register} from "pages/register";
 
@@ -66,7 +66,7 @@ export const routersConfig = [
         icon: "fa-users",
         roles: [],
         path: getRouteGroups(":id"),
-        element: <Groups/>
+        element: <GroupsPage/>
     },
     {
         to: "deletedGroups",
