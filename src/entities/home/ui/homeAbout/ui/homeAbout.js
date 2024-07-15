@@ -1,9 +1,20 @@
 import cls from "./homeAbout.module.sass"
 import ReactPlayer from "react-player";
+import {useContext, useEffect, useRef} from "react";
+import {Context} from "../../../../../pages/homePage/ui/homePage";
 
 export const HomeAbout = () => {
+    const {setSectionTop} = useContext(Context)
+
+    const sectionRef = useRef()
+
+    useEffect(() => {
+        setSectionTop(cur => ({...cur, about: sectionRef?.current?.offsetTop}))
+    }, [setSectionTop])
+
+
     return (
-        <div className={cls.about}>
+        <div className={cls.about} ref={sectionRef}>
             <div className={cls.about__wrapper}>
                 <div className={cls.about__info}>
                     <div className={cls.about__text}>

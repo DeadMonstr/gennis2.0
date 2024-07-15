@@ -1,6 +1,6 @@
 .course
   background-color: #eee
-  //height: 100vh
+  height: 100vh
   padding: 30px 20px
   display: flex
   justify-content: center
@@ -27,3 +27,30 @@
       img
         width: 100%
         height: 25rem
+@media (max-width: 990px)
+  .course
+    &__box
+      width: 35rem
+      padding: 20px
+      &_img
+        display: flex
+        align-items: center
+        justify-content: center
+        //width: 90%
+        img
+          width: 90%
+          height: 20rem
+@media (max-width: 800px)
+  @media (max-width: 990px)
+  .course
+    &__box
+      width: 30rem
+      padding: 20px
+      &_img
+        display: flex
+        align-items: center
+        justify-content: center
+        //width: 90%
+        img
+          width: 90%
+          height: 20rem

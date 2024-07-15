@@ -6,10 +6,12 @@
 import cls from "./results.module.sass"
 import resultsImg from "shared/assets/images/2024-07-09_225505.png"
 import profileImg from "shared/assets/images/best-shirts-men 1.svg"
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+
+
+import {useRef} from "react";
+import {Context} from "../../../../../pages/homePage/ui/homePage";
 
 //
 //
@@ -69,24 +71,77 @@ const resultsData = [
         studentSurname: "ikromov"
     },
 
+
 ]
 
 
-
-
-
 export function Results() {
+    const {setSectionTop} = useContext(Context)
+
+    const sectionRef = useRef()
+
+    useEffect(() => {
+        setSectionTop(cur => ({...cur, result: sectionRef?.current?.offsetTop}))
+    }, [setSectionTop])
+
+
     const settings = {
-        focusOnSelect: true,
         infinite: true,
-        slidesToShow: 4,
+        dots: true,
+        speed: 500,
+        slidesToShow: 3,
         slidesToScroll: 1,
-        speed: 500
+
+        className: cls.slickVertical,
+        nextArrow: <SampleNextArrow/>,
+        prevArrow: <SamplePrevArrow/>,
+        responsive: [
+            {
+                breakpoint: 1350,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+
+                }
+            },
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+
+                }
+            },
+            {
+                breakpoint: 830,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+
+                }
+            },
+            {
+                breakpoint: 650,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+
+                }
+            },
+            {
+                breakpoint: 500,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
     };
 
     return (
-        <div className={cls.results}>
-            <div className={cls.results__wrapper}>
+        <div className={cls.results} ref={sectionRef} >
+
+            <div>
                 <Slider {...settings}>
                     {resultsData.map(item => {
                         return (
@@ -117,75 +172,31 @@ export function Results() {
                     })}
                 </Slider>
             </div>
+
+
         </div>
     );
 }
 
 
-// // export const Results = () => {
-// //
-// //     const settings = {
-// //         speed: 500,
-// //         slidesToShow: 3,
-// //         slidesToScroll: 3
-// //     };
-// //
-// //     return (
-// //         <div className={cls.results}>
-// //
-// //
-// //         </div>
-// //     );
-// //
-// // };
-// //
-//
-//
-// export const Results = () => {
-//     const settings = {
-//         dots: true,
-//         infinite: false,
-//         speed: 500,
-//         slidesToShow: 4,
-//         slidesToScroll: 4,
-//         initialSlide: 0,
-//         responsive: [
-//             {
-//                 breakpoint: 1024,
-//                 settings: {
-//                     slidesToShow: 3,
-//                     slidesToScroll: 3,
-//                     infinite: true,
-//                     dots: true
-//                 }
-//             },
-//             {
-//                 breakpoint: 600,
-//                 settings: {
-//                     slidesToShow: 2,
-//                     slidesToScroll: 2,
-//                     initialSlide: 2
-//                 }
-//             },
-//             {
-//                 breakpoint: 480,
-//                 settings: {
-//                     slidesToShow: 1,
-//                     slidesToScroll: 1
-//                 }
-//             }
-//         ]
-//     };
-//     return (
-//         <div className={cls.results}>
-//             <div className={"slider-container"}>
-//                 <Slider {...settings}>
+function SampleNextArrow(props) {
+    const {className, style, onClick} = props;
+    return (
+        <div
+            className={className}
+            style={{...style, display: "none",}}
+            onClick={onClick}
+        />
+    );
+}
 
-//                 </Slider>
-//             </div>
-//         </div>
-//     );
-// }
-
-
-
+function SamplePrevArrow(props) {
+    const {className, style, onClick} = props;
+    return (
+        <div
+            className={className}
+            style={{...style, display: "none",}}
+            onClick={onClick}
+        />
+    );
+}

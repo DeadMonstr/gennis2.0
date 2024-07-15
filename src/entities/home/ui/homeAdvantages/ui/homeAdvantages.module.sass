@@ -9,6 +9,7 @@
     display: flex
     flex-direction: column
     align-items: center
+    width: 40rem
     h2
       color: #0EA5E9
       font-size: 2rem
@@ -37,3 +38,15 @@
       padding: 0 0 20px 20px
       color: #7F7F7F
       text-transform: capitalize
+
+
+
+@media (max-width: 500px)
+  .advantages
+    &__box
+      h2
+        font-size: 1.8rem
+      &_item
+        width: 35rem
+      &_info
+        font-size: 1.6rem

@@ -1,7 +1,8 @@
 .about
   display: flex
   height: 100vh
-  padding: 30px 2rem
+  padding: 3rem
+  align-items: center
   justify-content: center
   &__wrapper
     display: flex
@@ -59,6 +60,8 @@
     &__text
       justify-content: center
       align-items: center
+      padding: 0
+      text-align: center
       h1
         font-size: 2.8rem
       span
@@ -69,9 +72,42 @@
           width: 800px !important
 @media (max-width: 1020px)
   .about
+    &__aside
+      .square
+        div
+          width: 800px !important
+@media (max-width: 900px)
+  .about
+    &__aside
+      .square
+        div
+          width: 700px !important
+@media (max-width: 790px)
+  .about
+    &__aside
+      .square
+        div
+          width: 650px !important
+@media (max-width: 690px)
+  .about
+    &__aside
+      .square
+        div
+          width: 450px !important
+@media (max-width: 490px)
+  .about
     &__wrapper
+      justify-content: center
+      align-items: center
+    &__text
+      margin-top: 10px
+      padding: 0
+      h1
+        font-size: 2.3rem
+      span
+        text-align: center
 
     &__aside
       .square
-      div
-        width: 450px !important
+        div
+          width: 350px !important

@@ -6,7 +6,7 @@
   align-items: center
   justify-content: center
   display: flex
-  padding: 30px 10rem
+  padding: 5rem
   &Wrapper
     display: flex
     align-items: center
@@ -49,6 +49,8 @@
       align-items: center
       gap: 20px
       .select
+        width: 35rem
+      .home__input
         width: 35rem
       .buttonExtra
         font-size: 16px
@@ -96,3 +98,104 @@
         gap: 18px
         .buttonExtra
           width: 17rem
+@media (max-width: 900px)
+  .home
+
+    &Wrapper
+      gap: 10rem
+      padding-top: 10rem
+      flex-direction: column
+    &Texts
+      display: flex
+      justify-content: center
+      align-items: center
+      width: 80rem
+    &Title
+      font-size: 25px
+    &Paragraph
+      padding: 0 10px
+@media (max-width: 810px)
+  .home
+    &Title
+      font-size: 20px
+    &Paragraph
+      font-size: 14px
+      padding: 0 40px
+    &Aside
+      width: 45rem
+      &__title
+        font-size: 25px
+      form
+        gap: 15px
+        .buttonExtra
+          width: 15rem
+          font-size: 1.5rem
+@media (max-width: 770px)
+  .home
+    &Paragraph
+      text-align: center
+      width: 80rem
+      font-size: 14px
+
+
+@media (max-width: 720px)
+  .home
+    &Title
+      font-size: 18px
+    &Paragraph
+      //text-align: center
+      //padding: 5rem
+      font-size: 12px
+      width: 70rem
+@media (max-width: 650px)
+  .home
+    &Paragraph
+      //text-align: center
+      //padding: 5rem
+      font-size: 12px
+      width: 60rem
+    &Aside
+      width: 40rem
+      &__title
+        font-size: 20px
+      form
+        .buttonExtra
+          width: 13rem
+          font-size: 1.3rem
+@media (max-width: 590px)
+  .home
+    &Paragraph
+      text-align: center
+      width: 55rem
+      font-size: 12px
+    &Aside
+      width: 40rem
+      &__title
+        font-size: 18px
+      form
+        .buttonExtra
+          width: 12rem
+          font-size: 1.2rem
+
+@media (max-width: 490px)
+  .home
+    &Title
+      font-size: 17px
+    &Paragraph
+      text-align: center
+      width: 40rem
+      font-size: 13px
+    &Aside
+      padding: 10px
+      width: 35rem
+      &__title
+        margin-top: 10px
+        font-size: 18px
+      form
+        .home__input
+          width: 30rem
+        .select
+          width: 29rem
+        .buttonExtra
+          width: 10rem
+          font-size: 1.2rem

@@ -1,6 +1,8 @@
 import cls from "./course.module.sass"
 import englishStatus from "shared/assets/images/english.status.jfif"
 import {Button} from "shared/ui/button";
+import {useContext, useEffect, useRef} from "react";
+import {Context} from "../../../../../pages/homePage/ui/homePage";
 const subjectData = [
     {name: 'English' , status: englishStatus},
     {name: 'English' , status: englishStatus},
@@ -12,8 +14,16 @@ const subjectData = [
 ]
 
 export const Course = () => {
+    const {setSectionTop} = useContext(Context)
+
+    const sectionRef = useRef()
+
+    useEffect(() => {
+        setSectionTop(cur => ({...cur, course: sectionRef?.current?.offsetTop}))
+    }, [setSectionTop])
+
     return (
-        <div className={cls.course}>
+        <div className={cls.course} ref={sectionRef}>
             <div className={cls.course__wrapper}>
                 {subjectData.map(item =>{
                     return(

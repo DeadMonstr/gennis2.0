@@ -20,8 +20,8 @@
     justify-content: center
     flex-direction: column
     overflow: hidden
-    gap: 5rem
-    width: 30%
+    width: 40rem
+
     &_img
       width: fit-content
       height: 35rem
@@ -47,3 +47,45 @@
       color: #0EA5E9
       width: 100%
       font-weight: 700
+      overflow: hidden
+      height: 10rem
+    &_readMoreText
+      height: fit-content
+@media (max-width: 900px)
+  .news
+    &__wrapper
+      padding: 2rem
+    &__box
+      width: 40rem
+      padding: 0
+      gap: 1rem
+      &_readMore
+        display: block
+      &_img
+        height: fit-content
+        img
+          width: 100%
+      &_title
+        padding: 0 0 2rem 2rem
+
+
+@media (max-width: 700px)
+  .news
+    &__wrapper
+      padding: 2rem
+    &__box
+      width: 40rem
+      padding: 0
+      gap: 1rem
+      &_readMore
+        display: block
+      &_img
+        height: fit-content
+        img
+          width: 100%
+      &_info
+        margin-top: 3px
+        font-size: 1.5rem
+      &_subject
+        font-size: 1.2rem
+

@@ -5,9 +5,11 @@ import classNames from "classnames";
 import {Button} from "shared/ui/button";
 import {motion} from "framer-motion";
 import headerImg from "shared/assets/images/logo.svg"
+import {Context} from "pages/homePage/ui/homePage";
+
 
 export const HomeHeader = ({status, setStatus}) => {
-
+    const {sectionTop} = useContext(Context)
 
     const [activeItem, setActiveItem] = useState("home")
     const [activeBar, setActiveBar] = useState(false)
@@ -66,13 +68,12 @@ export const HomeHeader = ({status, setStatus}) => {
             type: "btn"
         }
     ]
+
     const toLink = (top) => {
-        setStatus(false)
+
         setActiveBar(false)
         window.scrollTo(0, top - 100)
     }
-
-
     const renderMenu = (arr) => {
         return (
             <ul className={cls.header__menuItems}>
@@ -104,7 +105,7 @@ export const HomeHeader = ({status, setStatus}) => {
                                 })}
                                 key={i}
                                 onClick={() => {
-                                    // toLink(sectionTop[item.name])
+                                    toLink(sectionTop[item.name])
                                     setActiveItem(item.name)
                                 }}
                             >

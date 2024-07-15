@@ -43,7 +43,7 @@ export const Input = React.memo((
                     disabled={disabled}
                     placeholder={placeholder}
                     id={name}
-                    className={classNames(cls.input,extraClassName,{
+                    className={classNames(cls.input, extraClassName,{
                         [`${cls?.error}`] : errors?.[name]
                     })}
                     type={showPassword ? "text" : type}

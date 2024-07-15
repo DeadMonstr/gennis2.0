@@ -3,8 +3,9 @@ import img1 from "shared/assets/images/photo_2023-11-22_16-14-45.jpg"
 import img2 from "shared/assets/images/photo_2023-11-22_16-14-53.jpg"
 import img3 from "shared/assets/images/photo_2023-11-22_16-32-58.jpg"
 import img4 from "shared/assets/images/photo_2023-11-22_16-30-42.jpg"
-import img from "../../../../../shared/assets/images/login-page-4468581-3783954 1.svg";
-import React from "react";
+import img from "shared/assets/images/login-page-4468581-3783954 1.svg";
+import React, {useContext, useEffect, useRef} from "react";
+import {Context} from "pages/homePage/ui/homePage";
 
 
 const advantagesData = [
@@ -15,6 +16,14 @@ const advantagesData = [
     {img: img4 , advantagesTitle: "Football games in 3 branches\n" ,},
 ]
 export const HomeAdvantages = () => {
+
+    const {setSectionTop} = useContext(Context)
+    const sectionRef = useRef()
+
+    useEffect(() => {
+            setSectionTop(cur => ({...cur, advantages: sectionRef?.current?.offsetTop}))
+    }, [setSectionTop])
+
     return (
         <div className={cls.advantages}>
 
