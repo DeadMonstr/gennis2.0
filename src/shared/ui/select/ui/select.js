@@ -64,7 +64,7 @@ export const Select = React.memo(({options, keyValue, required, defaultValue, ti
             {/*</span>*/}
             <select
                 disabled={status === "disabled"}
-                className={classNames(cls.label__inner, {
+                className={classNames(cls.label__inner, extraClass, {
                     [cls.error]: status === "error"
                 })}
                 required={required}

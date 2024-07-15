@@ -17,49 +17,49 @@ const studentsData = [
     {name: "dedqwdwd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: 123},
     {name: "dedqwdwd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: 123},
     {name: "dedqwdwd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: 123},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
-    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -112332132131232312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -213},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -321},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -123},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
+    {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
 
 ]
 export const Students = () => {
@@ -100,7 +100,7 @@ export const Students = () => {
                 <td>{item.age}</td>
                 <td>{item.number}</td>
                 <td>{item.group}</td>
-                <td style={{color: '#FF3B30'}}>{item.groupPrice}</td>
+                <td><div style={{color: '#FF3B30'}}>{item.groupPrice}</div></td>
             </tr>
         ))
     }
@@ -120,7 +120,7 @@ export const Students = () => {
                             onChange={() => handleChange(item)}
                             checked={selected === item}
                         >
-                            {item}
+                            <div className={selected=== item ? cls.radioText : cls.radioTextDef}>{item}</div>
                         </Radio>
                     ))}
                 </div>
@@ -132,7 +132,7 @@ export const Students = () => {
                         <th>No</th>
                         <th>Full name</th>
                         <th>Yosh</th>
-                        <th>Telefon nome</th>
+                        <th>Telefon nomer</th>
                         <th>Guruh</th>
                         <th>Guruh narxi</th>
                     </tr>

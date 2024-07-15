@@ -12,6 +12,7 @@ export const Button = React.memo(({children, onClick, type, disabled, status , e
     return (
         <button onClick={onClick} className={classNames(cls.btn,extraClass, cls[type], {
             [cls.simple]: type === "simple",
+            [cls.simple__add]: type === "simple-add",
             [cls.success]: type === "success",
             [cls.danger]: type === "danger",
             [cls.warning]: type === "warning",

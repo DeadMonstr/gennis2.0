@@ -1,10 +1,10 @@
 
 
 
-export const API_URL_DOC = `http://192.168.68.102:5002/`
-export const API_URL = `${API_URL_DOC}api/`
+export const API_URL_DOC = `http://192.168.68.112:8000/`
+export const API_URL = `${API_URL_DOC}`  // api have
 export const CLASSROOM_API_URL = `http://localhost:3000/`
-export const CLASSROOM_API_URL_DOC = `http://192.168.68.102:5001/`
+export const CLASSROOM_API_URL_DOC = `http://192.168.68.111:8000/`
 
 // export const API_URL_DOC = `/`
 // export const API_URL = `/api/`

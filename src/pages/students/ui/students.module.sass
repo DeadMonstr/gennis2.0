@@ -1,26 +1,40 @@
 .students
   padding: 30px
+
   .mainContainer_filterPanelBox
     display: flex
     justify-content: space-between
     margin-bottom: 39px
+
     .mainContainer_filterPanelBox_rightFilterRadioGroupBox
       display: flex
       gap: 2rem
       align-items: center
+
+    .radioText
+      transition: .6s all
+      color: #0EA5E9
+
+    .radioTextDef
+      color: #7F7F7F
+
   .table
     overflow: auto
     height: calc(100vh - 35rem)
+
     &__head
       tbody
         tr
           cursor: pointer
+
           td:last-child
-            border: 1px solid
-            display: flex
-            align-items: center
-            justify-content: center
-            border-radius: 15px
-            height: 4rem
-            width: fit-content
-            margin: 5px 0
+            div
+              border: 1px solid
+              display: flex
+              align-items: center
+              justify-content: center
+              border-radius: 8px
+              height: 4rem
+              width: fit-content
+              //margin: 5px 0
+              padding: 2rem

@@ -7,16 +7,24 @@ import {
     getRouteRegister,
     getRouteStudents,
     getRouteGroups,
-    getRouteMain
+    getRouteMain,
+    getRouteTeacher,
+    getRouteCreateGroup,
+    getRouteRooms,
 } from "shared/const/routers";
 
-import {Home} from "pages/home";
-import {NewStudents} from "pages/newStudents";
+
+import {NewStudents} from "pages/newStudentsPage";
 import {DeletedStudents} from "pages/deletedStudents";
 import {Students} from "pages/students";
 import {GroupsPage} from "pages/groupsPage";
 import {DeletedGroups} from "pages/deletedGroups";
 import {Register} from "pages/register";
+import {Rooms} from "pages/rooms/ui/rooms";
+import {Teacher} from "pages/teacher";
+import {CreateGroup} from "../../../pages/createGroup";
+import {HomePage} from "../../../pages/homePage";
+import {Home} from "../../../entities/home/ui/home";
 
 
 export const routersConfig = [
@@ -69,6 +77,14 @@ export const routersConfig = [
         element: <GroupsPage/>
     },
     {
+        to: "newStudents/createGroup",
+
+        icon: "fa-user",
+        roles: [],
+        path: getRouteCreateGroup(":id"),
+        element: <CreateGroup/>
+    },
+    {
         to: "deletedGroups",
         name: "O'chirilgan Gruppalar",
         icon: "fa-user-alt-slash",
@@ -77,10 +93,12 @@ export const routersConfig = [
         element: <DeletedGroups/>
     },
     {
-        to: "/login",
+        to: "teacher",
         name: "O'qituvchilar",
         icon: "fa-user-tie",
-        roles: []
+        roles: [],
+        path: getRouteTeacher(":id"),
+        element: <Teacher/>
     },
     {
         to: "/login",
@@ -95,10 +113,12 @@ export const routersConfig = [
         roles: []
     },
     {
-        to: "/login",
+        to: "rooms",
         name: "Honalar",
         icon: "fa-door-closed",
-        roles: []
+        roles: [],
+        path: getRouteRooms(),
+        element: <Rooms/>
     },
     {
         to: "/login",
@@ -126,7 +146,5 @@ export const routersConfig = [
         path: getRouteRegister(":id"),
         element: <Register/>
     }
-
-
 
 ]

@@ -3,6 +3,8 @@
 import {configureStore} from "@reduxjs/toolkit";
 
 import {search} from "features/searchInput";
+import {registerUser} from 'pages/register';
+import {loginSlice} from "pages/login/model/loginSlice";
 import {filteredTeachers} from "features/filters/teacherFilter";
 import {filteredStudents} from "features/filters/studentsFilter";
 import {filteredEmployees} from "features/filters/employeesFilter";
@@ -25,6 +27,8 @@ const stringMiddleware = () => (next) => (action) => {
 export const store = configureStore({
     reducer: {
         search,
+        registerUser,
+        loginSlice,
         filteredTeachers,
         filteredStudents,
         filteredEmployees,

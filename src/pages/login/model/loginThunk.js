@@ -1,8 +1,8 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {useHttp} from "shared/api/base";
+import {API_URL, useHttp} from "shared/api/base";
 
 export const fetchLoginUser = createAsyncThunk(
-    "loginSlice/fetchLoginUser" ,
+    "loginSlice/fetchLoginUser",
     async (data) => {
         const {request} = useHttp();
         const token = sessionStorage.getItem("token")
@@ -10,5 +10,5 @@ export const fetchLoginUser = createAsyncThunk(
             "Authorization": "Bearer " + token,
             'Content-Type': 'application/json'
         }
-
+        return await request(`${API_URL}api/token/`, "POST", JSON.stringify(data), headers)
     })
