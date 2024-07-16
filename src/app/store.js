@@ -3,11 +3,15 @@
 import {configureStore} from "@reduxjs/toolkit";
 
 import {search} from "features/searchInput";
+import {registerUser} from 'pages/register';
+import {loginSlice} from "pages/login";
 import {filteredTeachers} from "features/filters/teacherFilter";
 import {filteredStudents} from "features/filters/studentsFilter";
 import {filteredEmployees} from "features/filters/employeesFilter";
 import {filteredGroups} from "features/filters/groupsFilter";
 import {filteredRooms} from "features/filters/roomsFilter";
+import {groups} from "entities/groups/index";
+import {user} from "entities/user";
 
 
 
@@ -24,11 +28,15 @@ const stringMiddleware = () => (next) => (action) => {
 export const store = configureStore({
     reducer: {
         search,
+        registerUser,
+        loginSlice,
         filteredTeachers,
         filteredStudents,
         filteredEmployees,
         filteredGroups,
-        filteredRooms
+        filteredRooms,
+        groups,
+        user
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

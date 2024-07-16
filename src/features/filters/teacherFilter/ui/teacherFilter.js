@@ -7,7 +7,7 @@ import {Switch} from "shared/ui/switch";
 
 import cls from "../../filters.module.sass";
 
-export const TeacherFilter = ({active, setActive, activePage}) => {
+export const TeacherFilter = React.memo(({active, setActive, activePage}) => {
 
     const [selectedFrom, setSelectedFrom] = useState()
     const [selectedTo, setSelectedTo] = useState()
@@ -63,4 +63,4 @@ export const TeacherFilter = ({active, setActive, activePage}) => {
             </div>
         </Modal>
     );
-};
+})

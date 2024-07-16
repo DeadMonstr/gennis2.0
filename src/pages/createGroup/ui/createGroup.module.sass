@@ -1,0 +1,41 @@
+.createGroup
+  padding: 30px 20px
+
+  &Header
+    margin-bottom: 20px
+    display: flex
+    align-items: center
+    justify-content: space-between
+    &Btns
+      display: flex
+      gap: 2rem
+      margin-bottom: 20px
+    &Btn
+      display: flex
+      gap: 3rem
+  &Table
+    overflow: auto
+    height: calc(100vh - 35rem)
+    tbody
+      tr
+        background: none
+        td:last-child
+          display: flex
+          //align-items: center
+  &Status
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 30px
+    height: 30px
+    border-radius: 50%
+    background-color: rgba(36, 255, 0, 0.37)
+    div
+      transform: translate(-0.2px)
+      width: 15px
+      border-radius: 50%
+      height: 15px
+      background-color: #24FF00
+  &Input
+    width: 25px !important
+    height: 25px !important

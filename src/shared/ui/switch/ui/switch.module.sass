@@ -2,12 +2,11 @@
 
 .mainBody
   display: block
-  padding: 0 1rem
 
 
 .mainSwitchBox
   width: 4.2rem
-  height: 2rem
+  height: 2.5rem
   border-radius: 18px
   display: flex
   align-items: center
@@ -19,24 +18,25 @@
     height: 1.5rem
     background: $white-main-color
     border-radius: 50%
-    transition: 0.4s ease-in-out
+    transition: 0.3s ease-in-out
   &__offSwitch
     width: 1.5rem
     height: 1.5rem
-    background: $main-font-color
+    background: $white-main-color
     border-radius: 50%
-    margin-left: 60%
-    transition: 0.4s ease-in-out
+    margin-left: 55%
+    transition: 0.3s ease-in-out
 
 .switchOn
   background: $other-back-white-color
-  transition: 0.4s ease-in-out
+  transition: 0.3s ease-in-out
 .switchOff
   background: $gennis-back-color
-  transition: 0.4s ease-in-out
+  transition: 0.3s ease-in-out
 
 .disabled
-  opacity: 0.6
+  opacity: 1
+  filter: contrast(50%)
   cursor: not-allowed
 .notDisabled
   opacity: 1
