@@ -4,11 +4,14 @@ import classNames from "classnames";
 import cls from "./editableCard.module.sass";
 import beetwean from "shared/assets/images/in.png";
 
-export const EditableCard = memo(({extraClass, children, childrenEdit}) => {
+export const EditableCard = memo(({extraClass, children, title, onClick}) => {
     return (
         <div className={classNames(cls.editableCard, extraClass)}>
-            <div className={cls.editableCard__edit}>
-                {childrenEdit ?? <img src={beetwean} alt=""/>}
+            <div
+                className={cls.editableCard__edit}
+                onClick={onClick}
+            >
+                {title ?? <img src={beetwean} alt=""/>}
             </div>
             {children}
         </div>

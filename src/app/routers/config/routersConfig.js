@@ -22,9 +22,8 @@ import {DeletedGroups} from "pages/deletedGroups";
 import {Register} from "pages/register";
 import {Rooms} from "pages/rooms/ui/rooms";
 import {Teacher} from "pages/teacher";
-import {CreateGroup} from "../../../pages/createGroup";
-import {HomePage} from "../../../pages/homePage";
-import {Home} from "../../../entities/home/ui/home";
+import {CreateGroup} from "pages/createGroup";
+import {HomePage} from "pages/homePage";
 
 
 export const routersConfig = [
@@ -32,15 +31,15 @@ export const routersConfig = [
         to: "home",
         name: "Bosh Sahifa",
         icon: "fa-home",
-        roles: [],
+        roles: [true],
         path: getRouteMain(),
-        element: <Home/>
+        element: <HomePage/>
     },
     {
         to: "taskManager",
         name: "Task Manager",
         icon: "fa-tasks",
-        roles: [],
+        roles: [true],
         path: getRouteTaskManager(":id"),
         element: null
     },
@@ -48,7 +47,7 @@ export const routersConfig = [
         to: "newStudents",
         name: "Yangi O'quvchilar",
         icon: "fa-user",
-        roles: [],
+        roles: [true],
         path: getRouteNewStudents(":id"),
         element: <NewStudents/>
     },

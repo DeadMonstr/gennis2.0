@@ -29,7 +29,10 @@ export const BreadCrumbs = ({defaultLink}) => {
 
             if (crumb === defaultLink) return null
             return (
-                <div className={cls.breadCrumbs__item}>
+                <div
+                    key={index}
+                    className={cls.breadCrumbs__item}
+                >
                     <Link
                         to={currentLink}
                         extraClass={cls.breadCrumbs__item}

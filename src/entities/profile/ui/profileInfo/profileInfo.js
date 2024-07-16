@@ -5,11 +5,11 @@ import {EditableCard} from "shared/ui/editableCard";
 import cls from "./profileInfo.module.sass";
 import defaultUserImg from "shared/assets/images/user_image.png";
 
-export const ProfileInfo = memo(() => {
+export const ProfileInfo = memo(({setActive, active}) => {
     return (
         <EditableCard
             extraClass={cls.info}
-            childrenEdit={<i className="fas fa-edit"/>}
+            title={<i className="fas fa-edit"/>}
         >
             <div className={cls.info__avatar}>
                 <img
@@ -31,14 +31,17 @@ export const ProfileInfo = memo(() => {
                     <i className="fas fa-plus"/>
                 </div>
             </div>
-            <div className={cls.info__balance}>
+            <EditableCard
+                extraClass={cls.info__balance}
+                onClick={() => setActive(!active)}
+            >
                 <h2>Balans</h2>
                 <p>Summa</p>
                 <div className={cls.info__money}>
                     <h2>$ 570.000</h2>
                     <p>$ 390.000</p>
                 </div>
-            </div>
+            </EditableCard>
         </EditableCard>
     )
 })

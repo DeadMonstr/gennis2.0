@@ -1,15 +1,14 @@
-import React from 'react';
+import {memo} from 'react';
 import classNames from "classnames";
 
 import cls from "./form.module.sass"
 
-export const Form = ({id, extraClassname, onSubmit, children, typeSubmit= "inside"}) => {
+export const Form = memo(({id, extraClassname, onSubmit, children, typeSubmit= "inside"}) => {
     return (
         <form
             id={id}
             className={classNames(cls.form, extraClassname)}
             onSubmit={onSubmit}
-            action=""
         >
 
             {children}
@@ -24,4 +23,4 @@ export const Form = ({id, extraClassname, onSubmit, children, typeSubmit= "insid
 
         </form>
     );
-};
+})

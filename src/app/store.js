@@ -4,13 +4,14 @@ import {configureStore} from "@reduxjs/toolkit";
 
 import {search} from "features/searchInput";
 import {registerUser} from 'pages/register';
-import {loginSlice} from "pages/login/model/loginSlice";
+import {loginSlice} from "pages/login";
 import {filteredTeachers} from "features/filters/teacherFilter";
 import {filteredStudents} from "features/filters/studentsFilter";
 import {filteredEmployees} from "features/filters/employeesFilter";
 import {filteredGroups} from "features/filters/groupsFilter";
 import {filteredRooms} from "features/filters/roomsFilter";
-import {groups} from "entities/groups/index"
+import {groups} from "entities/groups/index";
+import {user} from "entities/user";
 
 
 
@@ -34,7 +35,8 @@ export const store = configureStore({
         filteredEmployees,
         filteredGroups,
         filteredRooms,
-        groups
+        groups,
+        user
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

@@ -54,7 +54,7 @@ export const Input = React.memo((
                         // placeholder: placeholder,
                         value:value,
                         ...extraValues,
-                        onChange: setSilk
+                        // onChange: setSilk
                     })}
                 />
                 {
