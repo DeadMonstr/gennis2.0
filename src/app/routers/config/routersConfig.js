@@ -11,13 +11,9 @@ import {
     getRouteTeacher,
     getRouteCreateGroup,
     getRouteRooms,
-    getProfile,
 } from "shared/const/routers";
 
-
-import {NewStudents} from "pages/newStudentsPage";
-import {DeletedStudents} from "pages/deletedStudents";
-import {Students} from "pages/students";
+import {StudentsPage} from "pages/studentsPage";
 import {GroupsPage} from "pages/groupsPage";
 import {DeletedGroups} from "pages/deletedGroups";
 import {Register} from "pages/register";
@@ -44,29 +40,14 @@ export const routersConfig = [
         path: getRouteTaskManager(":id"),
         element: null
     },
-    {
-        to: "newStudents",
-        name: "Yangi O'quvchilar",
-        icon: "fa-user",
-        roles: [true],
-        path: getRouteNewStudents(":id"),
-        element: <NewStudents/>
-    },
-    {
-        to: "deletedStudents",
-        name: "O'chirilgan O'quvchilar",
-        icon: "fa-user-alt-slash",
-        roles: [],
-        path: getRouteDeletedStudents(":id"),
-        element: <DeletedStudents/>
-    },
+
     {
         to: "students",
-        name: "O'qiyotgan O'quvchilar",
+        name: " O'quvchilar",
         icon: "fa-user-graduate",
         roles: [],
         path: getRouteStudents(":id"),
-        element: <Students/>
+        element: <StudentsPage/>
     },
     {
         to: "groups",
@@ -75,14 +56,6 @@ export const routersConfig = [
         roles: [],
         path: getRouteGroups(":id"),
         element: <GroupsPage/>
-    },
-    {
-        to: "newStudents/createGroup",
-
-        icon: "fa-user",
-        roles: [],
-        path: getRouteCreateGroup(":id"),
-        element: <CreateGroup/>
     },
     {
         to: "deletedGroups",

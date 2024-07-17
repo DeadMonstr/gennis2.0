@@ -32,7 +32,7 @@ export const Teacher = () => {
     const [currentTableData ,setCurrentTableData]= useState([])
     const [search , setSearch] = useState("")
     const [currentPage, setCurrentPage] = useState(1);
-
+    const [selected , setSelected] = useState([])
     const [active ,setActive] = useState(false)
 
     const searchedUsers = useMemo(() => {
@@ -70,7 +70,7 @@ export const Teacher = () => {
                     </Button>
                 </div>
                 <div className={cls.header__select}>
-                    <Select options={branches}/>
+                    <Select options={branches} onChangeOption={() => setSelected} defaultValue={branches[0].name}/>
                 </div>
             </div>
             <div className={cls.teacher__filter}>

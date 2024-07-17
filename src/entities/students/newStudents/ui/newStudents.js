@@ -1,3 +1,8 @@
+import React, { useMemo, useState } from 'react';
+import {StudentsFilter} from "features/filters/studentsFilter";
+import { Table } from "shared/ui/table";
+import cls from "./newStudents.module.sass";
+
 export const users = [
     {
         username: "NoN",
@@ -209,11 +214,66 @@ export const users = [
         group: "1-guruh",
         dataReg: "2024.07.05"
     }
-];
-export const peoples = ["New students", "Studying students", "Deleted students"];
 
-export const branches =[
-    {name: "chirchiq" , label: "chirchiq"},
-    {name: "gazalkent" , label: "gazalkent"},
-    {name: "xujakent" , label: "xujakent"}
-]
+];
+
+export const NewStudents = ({currentTableData}) => {
+    const [active, setActive] = useState(false);
+    const [activeMenu, setActiveMenu] = useState("");
+    const PageSize = useMemo(() => 10, []);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [search, setSearch] = useState("");
+
+    const renderStudents = () => {
+        return currentTableData.map((item, index) => (
+            <tr key={index + 1}>
+                <td>{(currentPage - 1) * PageSize + index + 1}</td>
+                <td>{item.surname} {item.name}</td>
+                <td>{item.age}</td>
+                <td>{item.number}</td>
+                <td>{item.language}</td>
+                <td>{item.group}</td>
+                <td>{item.reg_date}</td>
+            </tr>
+        ));
+    };
+
+    return (
+        <div className={cls.mainContainer}>
+
+            <div className={cls.mainContainer_tablePanelBox}>
+                <Table>
+                    <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Full name</th>
+                        <th>Age</th>
+                        <th>Telefon numer</th>
+                        <th>Til</th>
+                        <th>Guruh</th>
+                        <th>Reg. sana</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {renderStudents()}
+                    </tbody>
+                </Table>
+            </div>
+            {/*<Pagination*/}
+            {/*    setCurrentTableData={setCurrentTableData}*/}
+            {/*    users={users}*/}
+            {/*    search={search}*/}
+            {/*    setCurrentPage={setCurrentPage}*/}
+            {/*    currentPage={currentPage}*/}
+            {/*    pageSize={PageSize}*/}
+            {/*    onPageChange={page => {*/}
+            {/*        setCurrentPage(page)*/}
+            {/*    }}*/}
+            {/*/>*/}
+            <StudentsFilter
+                active={active}
+                setActive={setActive}
+            />
+        </div>
+    );
+};

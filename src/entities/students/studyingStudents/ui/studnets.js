@@ -1,15 +1,9 @@
 import React, {useMemo, useState} from "react";
-
-import {Pagination} from "features/pagination";
-import {StudentsFilter} from "features/filters/studentsFilter";
 import {Table} from "shared/ui/table";
-import {Button} from "shared/ui/button";
-import {Radio} from "shared/ui/radio";
+import cls from "./studnets.module.sass";
 
-import cls from "./students.module.sass";
+export const studentsData = [
 
-const studentsData = [
-    {name: "dew1d", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -223},
     {name: "de32wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: 123},
     {name: "de321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: 13},
     {name: "dewedwd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: 123},
@@ -62,36 +56,7 @@ const studentsData = [
     {name: "de1321wd", surname: "de", age: 12, number: 2323213, group: "dwqd", groupPrice: -312},
 
 ]
-export const Students = () => {
-
-    let PageSize = useMemo(() => 50, [])
-    const [currentTableData, setCurrentTableData] = useState([])
-    const [currentPage, setCurrentPage] = useState(1);
-    const peoples = ["New students", "Studying students", "Deleted students"];
-    const [active, setActive] = useState(false);
-    const [search, setSearch] = useState("")
-    const [selected, setSelected] = useState("");
-    const handleChange = (value) => {
-        setSelected(value);
-    };
-
-
-    const searchedUsers = useMemo(() => {
-        const filteredHeroes = studentsData.slice()
-        setCurrentPage(1)
-        return filteredHeroes.filter(item =>
-            item.name.toLowerCase().includes(search.toLowerCase()) ||
-            item.surname.toLowerCase().includes(search.toLowerCase()) ||
-            item.username.toLowerCase().includes(search.toLowerCase())
-        )
-    }, [studentsData, search])
-
-    // const currentTableData = useMemo(() => {
-    //     const firstPageIndex = (currentPage - 1) * PageSize;
-    //     const lastPageIndex = firstPageIndex + PageSize;
-    //     return searchedUsers.slice(firstPageIndex, lastPageIndex);
-    // }, [PageSize, currentPage, searchedUsers]);
-
+export const Students = ({currentTableData}) => {
     const renderStudents = () => {
         return currentTableData.map((item, i) => (
             <tr>
@@ -106,25 +71,6 @@ export const Students = () => {
     }
     return (
         <div className={cls.students}>
-            <div className={cls.mainContainer_filterPanelBox}>
-                <Button type={"filter"}
-                        extraClass={cls.extraCutClassFilter}
-                        onClick={() => setActive(true)}
-                >
-                    Filter
-                </Button>
-                <div className={cls.mainContainer_filterPanelBox_rightFilterRadioGroupBox}>
-                    {peoples.map((item, id) => (
-                        <Radio
-                            key={id}
-                            onChange={() => handleChange(item)}
-                            checked={selected === item}
-                        >
-                            <div className={selected=== item ? cls.radioText : cls.radioTextDef}>{item}</div>
-                        </Radio>
-                    ))}
-                </div>
-            </div>
             <div className={cls.table}>
                 <Table extraClass={cls.table__head}>
                     <thead>
@@ -142,19 +88,6 @@ export const Students = () => {
                     </tbody>
                 </Table>
             </div>
-            <Pagination
-                setCurrentTableData={setCurrentTableData}
-                users={studentsData}
-                search={search}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-                pageSize={PageSize}
-                onPageChange={page => {
-                    setCurrentPage(page)
-                }}
-                type={"custom"}
-            />
-            <StudentsFilter setActive={setActive} active={active} activePage={"studying"}/>
         </div>
     )
 }

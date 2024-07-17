@@ -2,18 +2,17 @@ import React, {Suspense} from 'react';
 import {createRoutesFromElements, Navigate, Route, RouterProvider} from "react-router";
 import {createBrowserRouter} from "react-router-dom";
 
-import {RequireAuth} from "./RequireAuth";
 import {routersConfig} from "app/routers"
 import {Layout} from "app/layout";
+
 import {Login} from "pages/login";
-import {ProfilePage} from "pages/profilePage";
-import {HomePage} from "pages/homePage";
+
 import {Register} from "pages/register/ui/register";
 import {NotFoundPage} from "pages/notfound/ui/notfound";
-
+import {Teacher} from "pages/teacher";
+import {CreateGroup} from "pages/createGroup";
 import "app/styles/index.sass"
-import {ProfileTeacherPage} from "../../../pages/profileTeacherPage";
-
+import {HomePage} from "pages/homePage";
 
 export const AppRouter = () => {
 
@@ -33,45 +32,57 @@ export const AppRouter = () => {
                     element={<Register/>}
                 />
 
-                {/*<Route element={<RequireAuth/>}>*/}
+                <Route path={"createGroup"} element={<CreateGroup/>} />
+                <Route path={"platform/*"} element={<Layout/>}>
+                    {
+                        routersConfig.map(item =>
+                            <Route
+                                path={item.path}
+                                element={item.element}
+                            />
+                        )
+                    }
 
-                    <Route path={"platform/*"} element={<Layout/>}>
+                    {/*<Route*/}
+                    {/*    path={"home"}*/}
+                    {/*    element={<Home/>}*/}
 
-                        {
-                            routersConfig.map(item =>
-                                <Route
-                                    key={item.name}
-                                    path={item.path}
-                                    element={
-                                        // <Route element={}>
-                                        //     {item.element}
-                                        // </Route>
-                                        // <RequireAuth roles={item.roles}>
-                                            item.element
-                                        // </RequireAuth>
-                                        // item.element
-                                    }
-                                />
-                            )
-                        }
+                    {/*/>*/}
 
-                        <Route
-                            path={"profile"}
-                            element={<ProfilePage/>}
-                        />
-                        <Route
-                            path={"teacherProfile"}
-                            element={<ProfileTeacherPage/>}
-                        />
+                    {/*<Route*/}
+                    {/*    path={"taskManager"}*/}
+                    {/*/>*/}
 
-                        <Route
-                            index
-                            element={<Navigate to={"home"}/>}
-                        />
+                    {/*<Route*/}
+                    {/*    path={"register"}*/}
+                    {/*    element={<Register/>}*/}
+                    {/*/>*/}
 
-                    </Route>
+                    {/*<Route*/}
+                    {/*    path={"deletedStudents"}*/}
+                    {/*    element={<DeletedStudents/>}*/}
+                    {/*/>*/}
+                    {/*<Route*/}
+                    {/*    path={"studyingStudents"}*/}
+                    {/*    element={<StudentsPage/>}*/}
 
-                {/*</Route>*/}
+                    {/*/>*/}
+                    {/*<Route path={"newStudents"} element={<NewStudents/>}/>*/}
+
+                    {/*<Route*/}
+                    {/*    path={"deletedGroups"}*/}
+                    {/*    element={<DeletedGroups/>}*/}
+                    {/*/>*/}
+                    {/*<Route*/}
+                    {/*    path={"groups"}*/}
+                    {/*    element={<Groups/>}*/}
+                    {/*/>*/}
+
+                    <Route
+                        index
+                        element={<Navigate to={"home"}/>}
+                    />
+                </Route>
 
                 <Route
                     path={"*"}

@@ -19,18 +19,18 @@ const navigateList = [
         icon: "fa-tasks",
         roles: []
     },
-    {
-        to: "newStudents",
-        name: "Yangi O'quvchilar",
-        icon: "fa-user",
-        roles: []
-    },
-    {
-        to: "deletedStudents",
-        name: "O'chirilgan O'quvchilar",
-        icon: "fa-user-alt-slash",
-        roles: []
-    },
+    // {
+    //     to: "newStudents",
+    //     name: "Yangi O'quvchilar",
+    //     icon: "fa-user",
+    //     roles: []
+    // },
+    // {
+    //     to: "deletedStudents",
+    //     name: "O'chirilgan O'quvchilar",
+    //     icon: "fa-user-alt-slash",
+    //     roles: []
+    // },
     {
         to: "students",
         name: "O'qiyotgan O'quvchilar",
