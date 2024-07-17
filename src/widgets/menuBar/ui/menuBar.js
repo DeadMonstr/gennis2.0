@@ -5,6 +5,109 @@ import {routersConfig} from "app/routers";
 
 import cls from "./menuBar.module.sass";
 
+
+const navigateList = [
+    {
+        to: "home",
+        name: "Bosh Sahifa",
+        icon: "fa-home",
+        roles: []
+    },
+    {
+        to: "taskManager",
+        name: "Task Manager",
+        icon: "fa-tasks",
+        roles: []
+    },
+    {
+        to: "newStudents",
+        name: "Yangi O'quvchilar",
+        icon: "fa-user",
+        roles: []
+    },
+    {
+        to: "deletedStudents",
+        name: "O'chirilgan O'quvchilar",
+        icon: "fa-user-alt-slash",
+        roles: []
+    },
+    {
+        to: "students",
+        name: "O'qiyotgan O'quvchilar",
+        icon: "fa-user-graduate",
+        roles: []
+    },
+    {
+        to: "groups",
+        name: "Gruppalar",
+        icon: "fa-users",
+        roles: []
+    },
+    {
+        to: "deletedGroups",
+        name: "O'chirilgan Gruppalar",
+        icon: "fa-user-alt-slash",
+        roles: []
+    },
+    {
+        to: "teacher",
+        name: "O'qituvchilar",
+        icon: "fa-user-tie",
+        roles: []
+    },
+    {
+        to: "/login",
+        name: "Ishchilar",
+        icon: "fa-id-badge",
+        roles: []
+    },
+    {
+        to: "/login",
+        name: "Buxgalteriya Hisobi",
+        icon: "fa-file-invoice-dollar",
+        roles: []
+    },
+    {
+        to: "rooms",
+        name: "Honalar",
+        icon: "fa-door-closed",
+        roles: []
+    },
+    {
+        to: "/login",
+        name: "Capital Category",
+        icon: "fa-coins",
+        roles: []
+    },
+    {
+        to: "/login",
+        name: "Centre info",
+        icon: "fa-info",
+        roles: []
+    },
+    {
+        to: "/login",
+        name: "Kitoblar",
+        icon: "fa-book",
+        roles: []
+    },
+    {
+        to: "profile",
+        name: "Profil",
+        icon: "fa-user",
+        roles: []
+    },
+    {
+        to: "register",
+        name: "Registratsiya",
+        icon: "fa-edit",
+        roles: []
+    }
+
+
+
+]
+
 export const Menubar = () => {
 
     const renderMultipleMenu = useCallback(() => {

@@ -42,17 +42,20 @@ export const Rooms = () => {
                 active={active}
                 setActive={setActive}
             />
-            <Pagination
-                setCurrentTableData={setCurrentTableData}
-                search={search}
-                users={rooms}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-                pageSize={PageSize}
-                onPageChange={page => {
-                    setCurrentPage(page)
-                }}
-            />
+            <div className={cls.paginationBox}>
+                <Pagination
+                    setCurrentTableData={setCurrentTableData}
+                    search={search}
+                    users={rooms}
+                    setCurrentPage={setCurrentPage}
+                    currentPage={currentPage}
+                    pageSize={PageSize}
+                    onPageChange={page => {
+                        setCurrentPage(page)
+                    }}
+                />
+            </div>
+
         </div>
     );
 };

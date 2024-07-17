@@ -12,6 +12,7 @@ import {Register} from "pages/register/ui/register";
 import {NotFoundPage} from "pages/notfound/ui/notfound";
 
 import "app/styles/index.sass"
+import {ProfileTeacherPage} from "../../../pages/profileTeacherPage";
 
 
 export const AppRouter = () => {
@@ -45,9 +46,9 @@ export const AppRouter = () => {
                                         // <Route element={}>
                                         //     {item.element}
                                         // </Route>
-                                        <RequireAuth roles={item.roles}>
-                                            {item.element}
-                                        </RequireAuth>
+                                        // <RequireAuth roles={item.roles}>
+                                            item.element
+                                        // </RequireAuth>
                                         // item.element
                                     }
                                 />
@@ -57,6 +58,10 @@ export const AppRouter = () => {
                         <Route
                             path={"profile"}
                             element={<ProfilePage/>}
+                        />
+                        <Route
+                            path={"teacherProfile"}
+                            element={<ProfileTeacherPage/>}
                         />
 
                         <Route
