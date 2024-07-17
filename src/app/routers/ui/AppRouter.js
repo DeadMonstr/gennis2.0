@@ -6,7 +6,7 @@ import {RequireAuth} from "./RequireAuth";
 import {routersConfig} from "app/routers"
 import {Layout} from "app/layout";
 import {Login} from "pages/login";
-import {ProfilePage} from "pages/profilePage";
+import {StudentProfilePage} from "pages/profilePage";
 import {HomePage} from "pages/homePage";
 import {Register} from "pages/register/ui/register";
 import {NotFoundPage} from "pages/notfound/ui/notfound";
@@ -45,10 +45,10 @@ export const AppRouter = () => {
                                         // <Route element={}>
                                         //     {item.element}
                                         // </Route>
-                                        <RequireAuth roles={item.roles}>
-                                            {item.element}
-                                        </RequireAuth>
-                                        // item.element
+                                        // <RequireAuth roles={item.roles}>
+                                        //     {item.element}
+                                        // </RequireAuth>
+                                        item.element
                                     }
                                 />
                             )
@@ -56,7 +56,7 @@ export const AppRouter = () => {
 
                         <Route
                             path={"profile"}
-                            element={<ProfilePage/>}
+                            element={<StudentProfilePage/>}
                         />
 
                         <Route

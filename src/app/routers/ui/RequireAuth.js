@@ -40,7 +40,7 @@ export const RequireAuth = ({roles, children}) => {
     if (!roles.includes(userRoles)){
         return (
             <Navigate
-                to={"/"}
+                to={"/login"}
             />
         );
     }

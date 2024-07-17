@@ -3,15 +3,18 @@ import classNames from "classnames";
 
 import cls from "./editableCard.module.sass";
 import beetwean from "shared/assets/images/in.png";
+import cross from "shared/assets/icons/cross.svg";
 
-export const EditableCard = memo(({extraClass, children, title, onClick}) => {
+export const EditableCard = memo(({extraClass, children, title, titleType, onClick}) => {
     return (
         <div className={classNames(cls.editableCard, extraClass)}>
             <div
-                className={cls.editableCard__edit}
+                className={classNames(cls.editableCard__edit, {
+                    [cls.cross]: titleType==="cross"
+                })}
                 onClick={onClick}
             >
-                {title ?? <img src={beetwean} alt=""/>}
+                {titleType==="cross" ? <img src={cross} alt=""/> : title ?? <img src={beetwean} alt=""/>}
             </div>
             {children}
         </div>

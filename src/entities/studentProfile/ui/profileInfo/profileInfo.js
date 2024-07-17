@@ -1,11 +1,15 @@
-import {memo} from 'react';
+import {memo, useContext} from 'react';
 
+import {Context} from "pages/profilePage/";
 import {EditableCard} from "shared/ui/editableCard";
 
 import cls from "./profileInfo.module.sass";
 import defaultUserImg from "shared/assets/images/user_image.png";
 
-export const ProfileInfo = memo(({setActive, active}) => {
+export const ProfileInfo = memo(() => {
+
+    const {setActive} = useContext(Context)
+
     return (
         <EditableCard
             extraClass={cls.info}
@@ -33,7 +37,7 @@ export const ProfileInfo = memo(({setActive, active}) => {
             </div>
             <EditableCard
                 extraClass={cls.info__balance}
-                onClick={() => setActive(!active)}
+                onClick={() => setActive("balance")}
             >
                 <h2>Balans</h2>
                 <p>Summa</p>

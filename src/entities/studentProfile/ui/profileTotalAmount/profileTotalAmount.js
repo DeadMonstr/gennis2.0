@@ -1,18 +1,23 @@
-import {memo, useCallback, useState} from 'react';
+import {memo, useCallback, useContext, useState} from 'react';
 import {useForm} from "react-hook-form";
+import classNames from "classnames";
 
+import {Context} from "pages/profilePage";
+import {EditableCard} from "shared/ui/editableCard";
 import {Input} from "shared/ui/input";
 import {Radio} from "shared/ui/radio";
 import {Form} from "shared/ui/form";
-import {amountTypes, amountService} from "../../model/consts";
+import {amountTypes, amountService} from "entities/studentProfile";
 
 import cls from "./profileTotalAmount.module.sass";
 import money from "shared/assets/images/Money.png";
 import creditCard from "shared/assets/images/CreditCard.png";
 import bank from "shared/assets/images/Bank.png";
+import cross from "shared/assets/icons/cross.svg";
 
 export const ProfileTotalAmount = memo(() => {
 
+    const {active, setActive} = useContext(Context)
     const {register, handleSubmit} = useForm()
 
     const [activeService, setActiveService] = useState(amountService[0])
@@ -39,7 +44,14 @@ export const ProfileTotalAmount = memo(() => {
     const renderAmountService = renderAmountServiceTypes()
 
     return (
-        <div className={cls.amount}>
+        <EditableCard
+            extraClass={classNames(cls.amount, {
+                [cls.active]: active === "balanceIn"
+            })}
+            title={<img src={cross} alt=""/>}
+            titleType={"cross"}
+            onClick={() => setActive("balance")}
+        >
             <div className={cls.amount__header}>
                 <h1>Umumiy Hisob</h1>
                 <div className={cls.items}>
@@ -72,6 +84,7 @@ export const ProfileTotalAmount = memo(() => {
                                 </div>
                             )
                         }
+                        <div className={cls.items__active}/>
                     </div>
                     <Form onSubmit={handleSubmit(onSubmit)}>
                         <div className={cls.form__inner}>
@@ -86,6 +99,6 @@ export const ProfileTotalAmount = memo(() => {
                     </Form>
                 </div>
             </div>
-        </div>
-    );
+        </EditableCard>
+    )
 })
