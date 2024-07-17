@@ -2,7 +2,7 @@ import cls from "./home.module.sass"
 import {Input} from "shared/ui/input";
 import {Button} from "shared/ui/button";
 import {Select} from "shared/ui/select";
-import {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {Context} from "pages/homePage/ui/homePage";
 import {Header} from "../../../../../widgets/header";
 import {HomeHeader} from "../../homeHeader";
@@ -25,10 +25,7 @@ export const Home = () => {
 
     return (
         <div className={cls.home} ref={sectionRef}>
-            <HomeHeader
-                status={mobileMenuStatus}
-                setStatus={setMobileMenuStatus}
-            />
+
             <div className={cls.homeWrapper}>
                 <div className={cls.homeTexts}>
                     <div className={cls.homeTitle}>

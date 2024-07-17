@@ -34,7 +34,7 @@ export const routersConfig = [
         icon: "fa-home",
         roles: [],
         path: getRouteMain(),
-        element: <Home/>
+        element: <HomePage/>
     },
     {
         to: "taskManager",

@@ -28,7 +28,7 @@ export const HomePage = () => {
         <>
             <Context.Provider value={{setSectionTop  ,sectionTop}}>
                 <div className={cls.homeMain}>
-
+                    <HomeHeader/>
                     <Home/>
                     <HomeAbout/>
                     <Course/>

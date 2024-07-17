@@ -25,7 +25,7 @@ export const HomeAdvantages = () => {
     }, [setSectionTop])
 
     return (
-        <div className={cls.advantages}>
+        <div className={cls.advantages} ref={sectionRef}>
 
                 <div className={cls.advantages__wrapper}>
 

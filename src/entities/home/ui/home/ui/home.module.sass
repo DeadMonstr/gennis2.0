@@ -3,17 +3,19 @@
 .home
   background-color: #0EA5E9
   height: 100vh
+  //height: fit-content
   align-items: center
   justify-content: center
   display: flex
   padding: 5rem
+
   &Wrapper
     display: flex
     align-items: center
     gap: 30rem
     justify-content: center
     //flex-direction: column
-    height: 50rem
+    //height: 50rem
   &Texts
     display: flex
     flex-direction: column
@@ -103,7 +105,7 @@
 
     &Wrapper
       gap: 10rem
-      padding-top: 10rem
+
       flex-direction: column
     &Texts
       display: flex
@@ -179,6 +181,11 @@
 
 @media (max-width: 490px)
   .home
+    align-items: flex-start
+    padding: 3rem
+    &Wrapper
+      gap: 5rem
+      padding: 0
     &Title
       font-size: 17px
     &Paragraph
@@ -193,7 +200,7 @@
         font-size: 18px
       form
         .home__input
-          width: 30rem
+          width: 30rem!important
         .select
           width: 29rem
         .buttonExtra
