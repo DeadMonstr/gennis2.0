@@ -4,8 +4,8 @@ import {Button} from "shared/ui/button";
 import {Select} from "shared/ui/select";
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {Context} from "pages/homePage/ui/homePage";
-import {Header} from "../../../../../widgets/header";
 import {HomeHeader} from "../../homeHeader";
+
 const branches = [
     {name: "chirchiq"},
     {name: "xo'jakent"},
@@ -13,6 +13,7 @@ const branches = [
     {name: "sergili"},
     {name: "nurafshon"},
 ]
+
 export const Home = () => {
     const [mobileMenuStatus, setMobileMenuStatus] = useState(false)
     const {setSectionTop} = useContext(Context)

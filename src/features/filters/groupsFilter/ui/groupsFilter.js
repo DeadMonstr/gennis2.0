@@ -7,7 +7,7 @@ import {Switch} from "shared/ui/switch";
 
 import cls from "../../filters.module.sass";
 
-export const GroupsFilter = ({active, setActive, activePage}) => {
+export const GroupsFilter = React.memo(({active, setActive, activePage}) => {
 
     const [selectedFrom, setSelectedFrom] = useState()
     const [selectedTo, setSelectedTo] = useState()
@@ -66,4 +66,4 @@ export const GroupsFilter = ({active, setActive, activePage}) => {
             </div>
         </Modal>
     );
-};
+})

@@ -719,6 +719,7 @@ export const DeletedGroups = () => {
                 onPageChange={page => {
                     setCurrentPage(page)
                 }}
+                type={"custom"}
             />
             <GroupsFilter setActive={setActive} active={active}/>
         </div>

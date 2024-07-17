@@ -1,6 +1,7 @@
 import React, {useCallback} from 'react';
 
 import {Link} from "shared/ui/link";
+import {routersConfig} from "app/routers";
 
 import cls from "./menuBar.module.sass";
 
@@ -91,6 +92,12 @@ const navigateList = [
         roles: []
     },
     {
+        to: "profile",
+        name: "Profil",
+        icon: "fa-user",
+        roles: []
+    },
+    {
         to: "register",
         name: "Registratsiya",
         icon: "fa-edit",
@@ -104,9 +111,12 @@ const navigateList = [
 export const Menubar = () => {
 
     const renderMultipleMenu = useCallback(() => {
-        return navigateList.map((item, index) => {
+        return routersConfig.map((item, index) => {
             return (
-                <li className={cls.link}>
+                <li
+                    key={index}
+                    className={cls.link}
+                >
                     <Link
                         to={item.to}
                         extraClass={cls.link__href}

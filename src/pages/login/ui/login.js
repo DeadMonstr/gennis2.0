@@ -1,23 +1,27 @@
 import React, {useState} from "react";
+import {useNavigate} from "react-router";
+import {useDispatch} from "react-redux";
+import {useForm} from "react-hook-form";
 
+import {fetchLoginUser} from "../model/loginThunk";
 import {Button} from "shared/ui/button";
 import {Input} from "shared/ui/input";
-import DefaultLoader from "shared/ui/defaultLoader/defaultLoader";
-import MiniLoader from "shared/ui/miniLoader/miniLoader";
+import {DefaultLoader} from "shared/ui/defaultLoader";
+import {MiniLoader} from "shared/ui/miniLoader";
+import {Alert} from "shared/ui/alert";
 
 import cls from "./login.module.sass"
 import gennisImg from "shared/assets/images/logo.svg"
 import loginAside from "shared/assets/images/login-page-4468581-3783954 1.svg"
-import {useForm} from "react-hook-form";
-import {useDispatch} from "react-redux";
-import {fetchLoginUser} from "../model/loginThunk";
 import {registerUser} from "../../register/model/registerThunk";
-import {Alert} from "shared/ui/alert";
-import {useNavigate} from "react-router";
+import {API_URL, useHttp} from "../../../shared/api/base";
+import {getUserData} from "../model/loginSlice";
 
 export const Login = () => {
 
     // const {username , password} = useSelector(state => state.loginSlice)/
+
+    const {request} = useHttp()
 
 
     const {register, handleSubmit} = useForm()
@@ -45,7 +49,6 @@ export const Login = () => {
 
     const onClick = (e) => {
 
-        console.log(e)
         // dispatch()
 
         const res = {
@@ -54,26 +57,34 @@ export const Login = () => {
 
         }
 
-        dispatch(fetchLoginUser(res))
-            .then((action =>{
-                const isNav = localStorage.getItem("navigate")
-                console.log(action)
-                if (action.error) {
-                    console.error('Registration error:', action.error);
-                    showAlert('error', 'Login failed. Please try again.');
-                    navigate(`/login`)
-                    localStorage.removeItem("navigate")
-                } else {
-                    sessionStorage.setItem("token", action.payload.access)
-                    showAlert('success', 'Login successful!');
-                    setLoading(false)
-                    navigate("/platform")
-                }
-            }))
-            .catch(() =>{
-                showAlert("error" ,"error login")
+        // dispatch(fetchLoginUser(res))
+        // .then((action =>{
+        //     const isNav = localStorage.getItem("navigate")
+        //     console.log(action)
+        //     if (action.error) {
+        //         console.error('Registration error:', action.error);
+        //         showAlert('error', 'Login failed. Please try again.');
+        //         navigate(`/login`)
+        //         localStorage.removeItem("navigate")
+        //     } else {
+        //         sessionStorage.setItem("token", action.payload.access)
+        //         showAlert('success', 'Login successful!');
+        //         setLoading(false)
+        //         navigate("/platform")
+        //     }
+        // }))
+        // .catch(() =>{
+        //     showAlert("error" ,"error login")
+        // })
+
+
+        request(`${API_URL}api/token/`, "POST", JSON.stringify(res))
+            .then(res => {
+                dispatch(getUserData(res))
+                navigate("/platform")
+                console.log(res, "res")
             })
-        ;
+            .catch(err => console.log(err))
 
 
     }

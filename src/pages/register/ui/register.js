@@ -8,7 +8,7 @@ import bg__img from 'shared/assets/images/reg__bg.svg';
 import { Input } from 'shared/ui/input';
 import { Textarea } from "shared/ui/textArea";
 import { Select } from "shared/ui/select";
-import MiniLoader from "shared/ui/miniLoader/miniLoader";
+import {MiniLoader} from "shared/ui/miniLoader";
 import {Alert} from "shared/ui/alert";// Import the Alert component
 
 const teacherOptions = {

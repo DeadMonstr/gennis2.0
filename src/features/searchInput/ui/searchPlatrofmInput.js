@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import SearchInput from 'shared/ui/searchInput/search';
+import {SearchInput} from 'shared/ui/searchInput';
 
 export const SearchPlatformInput = ({onSearch}) => {
     const [search, setSearch] = useState('');

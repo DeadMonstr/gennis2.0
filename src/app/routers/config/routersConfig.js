@@ -11,20 +11,20 @@ import {
     getRouteTeacher,
     getRouteCreateGroup,
     getRouteRooms,
+    getProfile,
 } from "shared/const/routers";
 
 
 import {NewStudents} from "pages/newStudentsPage";
 import {DeletedStudents} from "pages/deletedStudents";
 import {Students} from "pages/students";
-import {Groups} from "pages/groups";
+import {GroupsPage} from "pages/groupsPage";
 import {DeletedGroups} from "pages/deletedGroups";
 import {Register} from "pages/register";
 import {Rooms} from "pages/rooms/ui/rooms";
 import {Teacher} from "pages/teacher";
-import {CreateGroup} from "../../../pages/createGroup";
-import {HomePage} from "../../../pages/homePage";
-import {Home} from "../../../entities/home/ui/home";
+import {CreateGroup} from "pages/createGroup";
+import {HomePage} from "pages/homePage";
 
 
 export const routersConfig = [
@@ -32,7 +32,7 @@ export const routersConfig = [
         to: "home",
         name: "Bosh Sahifa",
         icon: "fa-home",
-        roles: [],
+        roles: [true],
         path: getRouteMain(),
         element: <HomePage/>
     },
@@ -40,7 +40,7 @@ export const routersConfig = [
         to: "taskManager",
         name: "Task Manager",
         icon: "fa-tasks",
-        roles: [],
+        roles: [true],
         path: getRouteTaskManager(":id"),
         element: null
     },
@@ -48,7 +48,7 @@ export const routersConfig = [
         to: "newStudents",
         name: "Yangi O'quvchilar",
         icon: "fa-user",
-        roles: [],
+        roles: [true],
         path: getRouteNewStudents(":id"),
         element: <NewStudents/>
     },
@@ -74,7 +74,7 @@ export const routersConfig = [
         icon: "fa-users",
         roles: [],
         path: getRouteGroups(":id"),
-        element: <Groups/>
+        element: <GroupsPage/>
     },
     {
         to: "newStudents/createGroup",

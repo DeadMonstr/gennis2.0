@@ -152,8 +152,9 @@ export const Students = () => {
                 onPageChange={page => {
                     setCurrentPage(page)
                 }}
+                type={"custom"}
             />
-            <StudentsFilter setActive={setActive} active={active}/>
+            <StudentsFilter setActive={setActive} active={active} activePage={"studying"}/>
         </div>
     )
 }
