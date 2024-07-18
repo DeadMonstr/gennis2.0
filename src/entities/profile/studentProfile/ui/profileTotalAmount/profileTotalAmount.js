@@ -41,7 +41,7 @@ export const ProfileTotalAmount = memo(() => {
     return (
         <div className={cls.amount}>
             <div className={cls.amount__header}>
-                <h1>Umumiy Hisob</h1>
+                {/*<h1>Umumiy Hisob</h1>*/}
                 <div className={cls.items}>
                     <div className={cls.items__inner}>
                         <img src={money} alt=""/>

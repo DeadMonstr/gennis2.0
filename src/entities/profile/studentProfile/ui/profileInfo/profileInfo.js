@@ -4,10 +4,12 @@ import {EditableCard} from "shared/ui/editableCard";
 
 import cls from "./profileInfo.module.sass";
 import defaultUserImg from "shared/assets/images/user_image.png";
+import {Link} from "../../../../../shared/ui/link";
 
 export const ProfileInfo = memo(({setActive, active}) => {
     return (
         <EditableCard
+            onClick={() => setActive(true)}
             extraClass={cls.info}
             title={<i className="fas fa-edit"/>}
         >
@@ -31,17 +33,19 @@ export const ProfileInfo = memo(({setActive, active}) => {
                     <i className="fas fa-plus"/>
                 </div>
             </div>
-            <EditableCard
-                extraClass={cls.info__balance}
-                onClick={() => setActive(!active)}
-            >
-                <h2>Balans</h2>
-                <p>Summa</p>
-                <div className={cls.info__money}>
-                    <h2>$ 570.000</h2>
-                    <p>$ 390.000</p>
-                </div>
-            </EditableCard>
+            <Link to={"/platform/teacherSalaryPage"}>
+                <EditableCard
+                    extraClass={cls.info__balance}
+                >
+                    <h2>Balans</h2>
+                    <p>Summa</p>
+                    <div className={cls.info__money}>
+                        <h2>$ 570.000</h2>
+                        <p>$ 390.000</p>
+                    </div>
+                </EditableCard>
+            </Link>
+
         </EditableCard>
     )
 })

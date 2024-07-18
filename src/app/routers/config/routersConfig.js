@@ -25,6 +25,7 @@ import {Rooms} from "pages/rooms/ui/rooms";
 import {Teacher} from "pages/teacher";
 import {CreateGroup} from "pages/createGroup";
 import {HomePage} from "pages/homePage";
+import {ProfileTeacherPage} from "../../../pages/profileTeacherPage";
 
 
 export const routersConfig = [
@@ -111,6 +112,14 @@ export const routersConfig = [
         name: "Buxgalteriya Hisobi",
         icon: "fa-file-invoice-dollar",
         roles: []
+    },
+    {
+        to: "teacherProfile",
+        name: "Teacher Profile",
+        icon: "fa-user-graduate",
+        roles: [],
+        path: getProfile("id"),
+        element: <ProfileTeacherPage/>
     },
     {
         to: "rooms",

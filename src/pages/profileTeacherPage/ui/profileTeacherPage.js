@@ -5,6 +5,7 @@ import {
     ProfileTotalAmount,
     ProfileTeachersGroup,
 } from "entities/profile";
+import {TeacherEdit} from "../../../features/profileEdits/teacherEdit";
 
 import cls from "./profileTeacherPage.module.sass"
 import classNames from "classnames";
@@ -12,6 +13,7 @@ import classNames from "classnames";
 export const ProfileTeacherPage = () => {
 
     const [active, setActive] = useState(false)
+    const [actives, setActives] = useState(false)
 
     return (
         <div
@@ -22,6 +24,9 @@ export const ProfileTeacherPage = () => {
             <ProfileInfo
                 setActive={setActive}
                 active={active}
+                actives={actives}
+                setActives={setActives}
+
             />
             <div
                 className={classNames(cls.profile__mainContent, {
@@ -29,12 +34,17 @@ export const ProfileTeacherPage = () => {
                 })}
             >
                 <ProfileTeachersGroup/>
+                <TeacherEdit
+                    active={active}
+                    setActive={setActive}
+
+                />
             </div>
-            <div className={classNames(cls.profile__otherContent, {
-                [cls.active]: active
-            })}>
-                <ProfileTotalAmount/>
-            </div>
+            {/*<div className={classNames(cls.profile__otherContent, {*/}
+            {/*    [cls.active]: active*/}
+            {/*})}>*/}
+            {/*    <ProfileTotalAmount/>*/}
+            {/*</div>*/}
         </div>
     );
 };

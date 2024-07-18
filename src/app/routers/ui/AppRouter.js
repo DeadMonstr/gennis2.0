@@ -13,6 +13,8 @@ import {NotFoundPage} from "pages/notfound/ui/notfound";
 
 import "app/styles/index.sass"
 import {ProfileTeacherPage} from "../../../pages/profileTeacherPage";
+import {TeacherSalaryPage} from "../../../pages/teacherSalaryPage/ui/teacherSalaryPage";
+import {GiveSalaryPage} from "../../../pages/giveSalaryPage/ui/giveSalaryPage";
 
 
 export const AppRouter = () => {
@@ -63,6 +65,14 @@ export const AppRouter = () => {
                             path={"teacherProfile"}
                             element={<ProfileTeacherPage/>}
                         />
+                        <Route
+                            path={"teacherSalaryPage"}
+                            element={<TeacherSalaryPage/>}
+                        />
+                        <Route
+                            path={"giveSalaryPage"}
+                            element={<GiveSalaryPage/>}
+                            />
 
                         <Route
                             index

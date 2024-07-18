@@ -92,6 +92,13 @@ const navigateList = [
         roles: []
     },
     {
+
+        to: "teacherProfile",
+        name: "Teacher Profile",
+        icon: "fa-user-graduate",
+
+    },
+    {
         to: "profile",
         name: "Profil",
         icon: "fa-user",
