@@ -1,1 +1,1 @@
-export {DefaultLoader} from "./ui/defaultLoader"
+export {DefaultLoader} from "./defaultLoader"

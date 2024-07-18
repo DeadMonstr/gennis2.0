@@ -1,5 +1,7 @@
 
 @import "app/styles/abstracts/variables"
+@import "app/styles/themes/school"
+@import "app/styles/themes/center"
 
 .pagination_container
   width: 100%
@@ -42,11 +44,11 @@
       cursor: default
 
     &.selected
-      background-color: $color-grey-dark
+      background-color: var(--pagination-bg-color)
       color: white
 
     &.customSelected
-      background-color: $color-main-dark
+      background-color: var(--pagination-bg-color)
       color: white
 
     i

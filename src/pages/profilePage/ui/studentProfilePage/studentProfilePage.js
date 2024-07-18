@@ -2,18 +2,21 @@ import {useState, createContext, useMemo} from 'react';
 import classNames from "classnames";
 
 import {
-    ProfileInfo,
-    ProfileRating,
-    ProfileReward,
-    ProfileSubjects,
-    ProfileTeachers,
-    ProfileAttendance,
-    ProfileTotalAmount, ProfileAmountPath
-} from "entities/studentProfile";
+    StudentProfileInfo,
+    StudentProfileRating,
+    StudentProfileReward,
+    StudentProfileSubjects,
+    StudentProfileTeachers,
+    StudentProfileAttendance,
+    StudentProfileTotalAmount,
+    StudentProfileAmountPath,
+    StudentProfileTotalRating,
+    StudentProfileGroupsHistory, StudentProfileTotalAttendance
+} from "entities/profile";
 
 import cls from "./studentProfilePage.module.sass";
 
-export const Context = createContext(null)
+export const ContextStuPro = createContext(null)
 
 export const StudentProfilePage = () => {
 
@@ -25,34 +28,36 @@ export const StudentProfilePage = () => {
     }), [active])
 
     return (
-        <Context.Provider value={contextObj}>
+        <ContextStuPro.Provider value={contextObj}>
             <div
                 className={classNames(cls.profile, {
                     [cls.active]: active
                 })}
             >
-                <ProfileInfo/>
+                <StudentProfileInfo/>
                 <div
                     className={classNames(cls.profile__mainContent, {
                         [cls.active]: active
                     })}
                 >
-                    <ProfileTeachers/>
-                    <ProfileRating/>
-                    <ProfileReward/>
-                    <ProfileSubjects/>
-                    <ProfileAttendance/>
+                    <StudentProfileTeachers/>
+                    <StudentProfileRating/>
+                    <StudentProfileReward/>
+                    <StudentProfileSubjects/>
+                    <StudentProfileAttendance/>
                 </div>
                 <div
                     className={classNames(cls.profile__otherContent, {
                         [cls.active]: active
                     })}
                 >
-                    <ProfileAmountPath/>
-                    <ProfileTotalAmount/>
+                    <StudentProfileTotalAmount/>
+                    <StudentProfileAmountPath/>
+                    <StudentProfileTotalRating/>
+                    <StudentProfileGroupsHistory/>
+                    <StudentProfileTotalAttendance/>
                 </div>
             </div>
-        </Context.Provider>
-
-    );
-};
+        </ContextStuPro.Provider>
+    )
+}

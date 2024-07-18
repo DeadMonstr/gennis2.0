@@ -1,12 +1,15 @@
-import {Providers} from "./providers";
+import {StoreProvider} from "./providers/storeProvider";
+import {ThemeProvider} from "./providers/themeProvider";
 import {AppRouter} from "./routers";
 
 
 function App() {
     return (
-        <Providers>
-            <AppRouter/>
-        </Providers>
+        <StoreProvider>
+            <ThemeProvider>
+                <AppRouter/>
+            </ThemeProvider>
+        </StoreProvider>
     );
 }
 

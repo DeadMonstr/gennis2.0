@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useMemo} from 'react';
 import classNames from "classnames";
 
-import {usePagination, DOTS} from "shared/lib/usePagination";
+import {usePagination, DOTS} from "shared/lib/hooks/usePagination";
 
 import cls from "./pagination.module.sass";
 

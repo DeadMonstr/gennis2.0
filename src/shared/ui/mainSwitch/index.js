@@ -1,1 +1,1 @@
-export {MainSwitch} from "./ui/mainSwitch"
+export {MainSwitch} from "./mainSwitch"

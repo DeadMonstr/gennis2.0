@@ -1,6 +1,7 @@
 import React, {Suspense} from 'react';
 import {createRoutesFromElements, Navigate, Route, RouterProvider} from "react-router";
 import {createBrowserRouter} from "react-router-dom";
+import classNames from "classnames";
 
 import {RequireAuth} from "./RequireAuth";
 import {routersConfig} from "app/routers"
@@ -10,11 +11,14 @@ import {StudentProfilePage} from "pages/profilePage";
 import {HomePage} from "pages/homePage";
 import {Register} from "pages/register/ui/register";
 import {NotFoundPage} from "pages/notfound/ui/notfound";
+import {useTheme} from "shared/lib/hooks/useTheme";
 
 import "app/styles/index.sass"
 
 
 export const AppRouter = () => {
+
+    const {theme} = useTheme()
 
     const router = createBrowserRouter(
         createRoutesFromElements(
@@ -34,37 +38,37 @@ export const AppRouter = () => {
 
                 {/*<Route element={<RequireAuth/>}>*/}
 
-                    <Route path={"platform/*"} element={<Layout/>}>
+                <Route path={"platform/*"} element={<Layout/>}>
 
-                        {
-                            routersConfig.map(item =>
-                                <Route
-                                    key={item.name}
-                                    path={item.path}
-                                    element={
-                                        // <Route element={}>
-                                        //     {item.element}
-                                        // </Route>
-                                        // <RequireAuth roles={item.roles}>
-                                        //     {item.element}
-                                        // </RequireAuth>
-                                        item.element
-                                    }
-                                />
-                            )
-                        }
+                    {
+                        routersConfig.map(item =>
+                            <Route
+                                key={item.name}
+                                path={item.path}
+                                element={
+                                    // <Route element={}>
+                                    //     {item.element}
+                                    // </Route>
+                                    // <RequireAuth roles={item.roles}>
+                                    //     {item.element}
+                                    // </RequireAuth>
+                                    item.element
+                                }
+                            />
+                        )
+                    }
 
-                        <Route
-                            path={"profile"}
-                            element={<StudentProfilePage/>}
-                        />
+                    <Route
+                        path={"profile"}
+                        element={<StudentProfilePage/>}
+                    />
 
-                        <Route
-                            index
-                            element={<Navigate to={"home"}/>}
-                        />
+                    <Route
+                        index
+                        element={<Navigate to={"home"}/>}
+                    />
 
-                    </Route>
+                </Route>
 
                 {/*</Route>*/}
 
@@ -77,9 +81,11 @@ export const AppRouter = () => {
     );
 
     return (
-        <Suspense>
-            <RouterProvider router={router}/>
-        </Suspense>
+        <div className={classNames("app", [theme])}>
+            <Suspense>
+                <RouterProvider router={router}/>
+            </Suspense>
+        </div>
     );
 };
 
