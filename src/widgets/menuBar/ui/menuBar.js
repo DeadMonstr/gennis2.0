@@ -9,22 +9,24 @@ export const Menubar = () => {
 
     const renderMultipleMenu = useCallback(() => {
         return routersConfig.map((item, index) => {
-            return (
-                <li
-                    key={index}
-                    className={cls.link}
-                >
-                    <Link
-                        to={item.to}
-                        extraClass={cls.link__href}
-                        activeClass={cls.active}
-                        // onClick={() => setActive(item.name)}
+            if (item.isMenu)
+                return (
+                    <li
+                        key={index}
+                        className={cls.link}
                     >
-                        <i className={`fas ${item.icon} icon-link`}/>
-                        <span className={cls.link__title}>{item.name}</span>
-                    </Link>
-                </li>
-            )
+                        <Link
+                            to={item.to}
+                            extraClass={cls.link__href}
+                            activeClass={cls.active}
+                            // onClick={() => setActive(item.name)}
+                        >
+                            <i className={`fas ${item.icon} icon-link`}/>
+                            <span className={cls.link__title}>{item.name}</span>
+                        </Link>
+                    </li>
+                )
+            else return null
         })
     }, [])
 

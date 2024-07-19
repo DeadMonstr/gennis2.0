@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table } from "shared/ui/table";
-
+import cls from './newStudentsList.module.sass'
 export const NewStudentsList = ({ currentTableData, currentPage, PageSize }) => {
     const renderStudents = () => {
         return currentTableData.map((item, index) => (
@@ -18,7 +18,7 @@ export const NewStudentsList = ({ currentTableData, currentPage, PageSize }) => 
 
     return (
         <Table>
-            <thead>
+            <thead className={cls.theadBody}>
             <tr>
                 <th>№</th>
                 <th>Full name</th>

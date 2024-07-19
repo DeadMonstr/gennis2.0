@@ -11,7 +11,8 @@ import {
     StudentProfileTotalAmount,
     StudentProfileAmountPath,
     StudentProfileTotalRating,
-    StudentProfileGroupsHistory, StudentProfileTotalAttendance
+    StudentProfileGroupsHistory,
+    StudentProfileTotalAttendance
 } from "entities/profile";
 
 import cls from "./studentProfilePage.module.sass";
@@ -30,9 +31,7 @@ export const StudentProfilePage = () => {
     return (
         <ContextStuPro.Provider value={contextObj}>
             <div
-                className={classNames(cls.profile, {
-                    [cls.active]: active
-                })}
+                className={classNames(cls.profile)}
             >
                 <StudentProfileInfo/>
                 <div

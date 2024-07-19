@@ -1,0 +1,1 @@
+export {GiveSalaryList} from "./giveSalaryList/giveSalaryList"

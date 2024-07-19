@@ -1,6 +1,6 @@
 export const users = [
     {
-        username: "NoN",
+        allSalary: "NoN",
         name: "Shohjahon",
         surname: "Unarov",
         age: "16",

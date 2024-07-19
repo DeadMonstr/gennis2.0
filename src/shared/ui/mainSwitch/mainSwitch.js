@@ -1,30 +1,29 @@
-import React, {useState} from 'react';
+import React from 'react';
 import switchIcon from 'shared/assets/images/main_switch.svg'
 import cls from "./mainSwitch.module.sass"
 
-export const MainSwitch = () => {
-    const [active, setActvie] = useState(false)
+export const MainSwitch = ({ isActive, onSwitch }) => {
     return (
         <div className={cls.switchHandler}>
             <button
-                className={`${cls.mainSwitch} ${active ? `${cls.activeBg}` : `${cls.passiveBg}`} `}
-                onClick={() => setActvie(!active)}
+                className={`${cls.mainSwitch} ${isActive ? `${cls.activeBg}` : `${cls.passiveBg}`} `}
+                onClick={() => onSwitch(!isActive)}
             >
-                {active ?
+                {isActive ?
                     <div>
-                   <span className={cls.mainSwitch__iconHandler}>
-                <img className={cls.mainSwitch__icon} src={switchIcon} alt=""/>
-            </span>
+                        <span className={cls.mainSwitch__iconHandler}>
+                            <img className={cls.mainSwitch__icon} src={switchIcon} alt=""/>
+                        </span>
                     </div>
                     :
                     <div>
-                   <span className={cls.mainSwitch__iconHandler__center}>
-                <img className={cls.mainSwitch__icon} src={switchIcon} alt=""/>
-            </span>
+                        <span className={cls.mainSwitch__iconHandler__center}>
+                            <img className={cls.mainSwitch__icon} src={switchIcon} alt=""/>
+                        </span>
                     </div>
                 }
                 {
-                    active ?
+                    isActive ?
                         <h2 className={cls.mainSwitch__text}>Center</h2>
                         :
                         <h2 className={cls.mainSwitch__text__center}>School</h2>
@@ -32,6 +31,5 @@ export const MainSwitch = () => {
 
             </button>
         </div>
-
     );
 };

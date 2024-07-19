@@ -6,6 +6,7 @@ export function useTheme() {
     const { theme, setTheme } = useContext(ThemeContext);
 
     const toggleTheme = (theme) => {
+        console.log(theme, "theme")
         let newTheme;
         switch (theme) {
             case "app_center_theme":
@@ -22,7 +23,7 @@ export function useTheme() {
     }
 
     return {
-        theme: theme,
+        theme: theme || "app_center_theme",
         toggleTheme,
     };
 }

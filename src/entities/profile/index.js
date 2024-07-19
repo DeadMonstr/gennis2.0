@@ -24,3 +24,9 @@ export {getBooksData} from "./studentProfile/model/selectors/booksSelector";
 export {default as studentProfileRating} from "./studentProfile/model/slice/ratingSlice";
 export {getRatingData} from "./studentProfile/model/selectors/ratingSelector";
 export {fetch} from "./studentProfile/model/slice/ratingSlice";
+
+//teacherProfile
+export {TeacherProfileTeachersGroup} from "./teacherProfile/ui/teacherProfileTeachersGroup/teacherProfileTeachersGroup";
+
+export {groups} from "./teacherProfile/model/consts";
+

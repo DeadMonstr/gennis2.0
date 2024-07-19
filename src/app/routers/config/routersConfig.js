@@ -11,6 +11,7 @@ import {
     getRouteTeacher,
     getRouteCreateGroup,
     getRouteRooms,
+    getTeacherProfile,
 } from "shared/const/routers";
 
 
@@ -24,6 +25,7 @@ import {Rooms} from "pages/rooms/ui/rooms";
 import {Teacher} from "pages/teacher";
 import {CreateGroup} from "pages/createGroup";
 import {HomePage} from "pages/homePage";
+import {ProfileTeacherPage} from "pages/profileTeacherPage";
 
 
 export const routersConfig = [
@@ -33,7 +35,8 @@ export const routersConfig = [
         icon: "fa-home",
         roles: [true],
         path: getRouteMain(),
-        element: <HomePage/>
+        element: <HomePage/>,
+        isMenu: true
     },
     {
         to: "taskManager",
@@ -41,7 +44,8 @@ export const routersConfig = [
         icon: "fa-tasks",
         roles: [true],
         path: getRouteTaskManager(":id"),
-        element: null
+        element: null,
+        isMenu: true
     },
     {
         to: "newStudents",
@@ -49,7 +53,8 @@ export const routersConfig = [
         icon: "fa-user",
         roles: [true],
         path: getRouteNewStudents(":id"),
-        element: <NewStudents/>
+        element: <NewStudents/>,
+        isMenu: true
     },
     {
         to: "deletedStudents",
@@ -57,7 +62,8 @@ export const routersConfig = [
         icon: "fa-user-alt-slash",
         roles: [],
         path: getRouteDeletedStudents(":id"),
-        element: <DeletedStudents/>
+        element: <DeletedStudents/>,
+        isMenu: true
     },
     {
         to: "students",
@@ -65,7 +71,8 @@ export const routersConfig = [
         icon: "fa-user-graduate",
         roles: [],
         path: getRouteStudents(":id"),
-        element: <Students/>
+        element: <Students/>,
+        isMenu: true
     },
     {
         to: "groups",
@@ -73,7 +80,8 @@ export const routersConfig = [
         icon: "fa-users",
         roles: [],
         path: getRouteGroups(":id"),
-        element: <GroupsPage/>
+        element: <GroupsPage/>,
+        isMenu: true
     },
     {
         to: "newStudents/createGroup",
@@ -81,7 +89,8 @@ export const routersConfig = [
         icon: "fa-user",
         roles: [],
         path: getRouteCreateGroup(":id"),
-        element: <CreateGroup/>
+        element: <CreateGroup/>,
+        isMenu: false
     },
     {
         to: "deletedGroups",
@@ -89,7 +98,8 @@ export const routersConfig = [
         icon: "fa-user-alt-slash",
         roles: [],
         path: getRouteDeletedGroups(":id"),
-        element: <DeletedGroups/>
+        element: <DeletedGroups/>,
+        isMenu: true
     },
     {
         to: "teacher",
@@ -97,7 +107,8 @@ export const routersConfig = [
         icon: "fa-user-tie",
         roles: [],
         path: getRouteTeacher(":id"),
-        element: <Teacher/>
+        element: <Teacher/>,
+        isMenu: true
     },
     {
         to: "/login",
@@ -112,12 +123,22 @@ export const routersConfig = [
         roles: []
     },
     {
+        to: "teacherProfile",
+        name: "Teacher Profile",
+        icon: "fa-user-graduate",
+        roles: [],
+        path: getTeacherProfile("id"),
+        element: <ProfileTeacherPage/>,
+        isMenu: false
+    },
+    {
         to: "rooms",
         name: "Honalar",
         icon: "fa-door-closed",
         roles: [],
         path: getRouteRooms(),
-        element: <Rooms/>
+        element: <Rooms/>,
+        isMenu: true
     },
     {
         to: "/login",
@@ -143,7 +164,8 @@ export const routersConfig = [
         icon: "fa-edit",
         roles: [],
         path: getRouteRegister(":id"),
-        element: <Register/>
+        element: <Register/>,
+        isMenu: true
     }
 
 ]
