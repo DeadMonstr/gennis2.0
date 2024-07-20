@@ -4,6 +4,7 @@ import classNames from "classnames";
 import {usePagination, DOTS} from "shared/lib/hooks/usePagination";
 
 import cls from "./pagination.module.sass";
+import {user} from "../../../entities/user";
 
 export const Pagination = React.memo((props) => {
 
@@ -20,31 +21,20 @@ export const Pagination = React.memo((props) => {
         type = "basic"
     } = props;
 
-    const searchedUsers = useMemo(() => {
-        const filteredHeroes = users.slice()
-        setCurrentPage(1)
-        return filteredHeroes.filter(item =>
-            item.name?.toLowerCase().includes(search.toLowerCase()) ||
-            item.surname?.toLowerCase().includes(search.toLowerCase()) ||
-            item.username?.toLowerCase().includes(search.toLowerCase()) ||
-            item.fullName?.toLowerCase().includes(search.toLowerCase()) ||
-            item.sitterNumber?.toLowerCase().includes(search.toLowerCase()) ||
-            item.allSalary.toLowerCase().includes(search.toLowerCase())
-        )
-    }, [users, setCurrentPage, search])
+    
 
     useEffect(() => {
         setCurrentTableData(() => {
             const firstPageIndex = (currentPage - 1) * pageSize;
             const lastPageIndex = firstPageIndex + pageSize;
-            return searchedUsers.slice(firstPageIndex, lastPageIndex);
+            return users.slice(firstPageIndex, lastPageIndex);
         })
-    }, [pageSize, currentPage, searchedUsers, setCurrentTableData])
+    }, [pageSize, currentPage, users, setCurrentTableData])
 
 
     const paginationRange = usePagination({
         currentPage,
-        totalCount: searchedUsers.length,
+        totalCount: users.length,
         siblingCount,
         pageSize
     });
@@ -68,7 +58,7 @@ export const Pagination = React.memo((props) => {
                 </li>
             );
         })
-    }, [currentPage, onPageChange, paginationRange])
+    }, [currentPage, onPageChange, paginationRange, type])
 
 
     if (currentPage === 0 || paginationRange.length < 2) {

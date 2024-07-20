@@ -12,6 +12,8 @@ import {
     getRouteCreateGroup,
     getRouteRooms,
     getTeacherProfile,
+    getVacancyPage,
+    getDirectorRouteStudents,
 } from "shared/const/routers";
 
 
@@ -26,6 +28,8 @@ import {Teacher} from "pages/teacher";
 import {CreateGroup} from "pages/createGroup";
 import {HomePage} from "pages/homePage";
 import {ProfileTeacherPage} from "pages/profileTeacherPage";
+import {VacancyPage} from "pages/vacancyPage";
+import {StudentsDirectorPage} from "pages/studentsPage";
 
 
 export const routersConfig = [
@@ -75,6 +79,15 @@ export const routersConfig = [
         isMenu: true
     },
     {
+        to: "studentsDirector",
+        name: "O'quvchilar",
+        icon: "fa-user-graduate",
+        roles: [],
+        path: getDirectorRouteStudents(),
+        element: <StudentsDirectorPage/>,
+        isMenu: true
+    },
+    {
         to: "groups",
         name: "Gruppalar",
         icon: "fa-users",
@@ -108,6 +121,15 @@ export const routersConfig = [
         roles: [],
         path: getRouteTeacher(":id"),
         element: <Teacher/>,
+        isMenu: true
+    },
+    {
+        to: "vacancy",
+        name: "Vakansiyalar",
+        icon: "fa-user-tie",
+        roles: [],
+        path: getVacancyPage(),
+        element: <VacancyPage/>,
         isMenu: true
     },
     {

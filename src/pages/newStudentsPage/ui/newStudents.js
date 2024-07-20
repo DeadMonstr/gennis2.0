@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 import { StudentsFilter } from "features/filters/studentsFilter";
 import { Pagination } from "features/pagination";
 import { Select } from "shared/ui/select";
@@ -11,13 +11,16 @@ import {branches} from "entities/newStudents/model";
 
 import cls from "./newStudents.module.sass";
 import { Link } from "react-router-dom";
+import {SearchContext} from "shared/lib/context/searchContext";
 
 export const NewStudents = () => {
+
+    const {search} = useContext(SearchContext)
+
     const [active, setActive] = useState(false);
     const [selected, setSelected] = useState("");
     const PageSize = useMemo(() => 20, []);
     const [currentPage, setCurrentPage] = useState(1);
-    const [search, setSearch] = useState("");
     const [currentTableData, setCurrentTableData] = useState([]);
 
     const handleChange = (value) => {
@@ -27,6 +30,22 @@ export const NewStudents = () => {
     const onChangeOption = (value) => {
         setSelected(value)
     }
+
+    const searchedUsers = useMemo(() => {
+        const filteredHeroes = users.slice()
+        setCurrentPage(1)
+        return filteredHeroes.filter(item => {
+            console.log(item, "item")
+            return (
+                item.name?.toLowerCase().includes(search.toLowerCase()) ||
+                item.surname?.toLowerCase().includes(search.toLowerCase()) ||
+                item.username?.toLowerCase().includes(search.toLowerCase()) ||
+                item.fullName?.toLowerCase().includes(search.toLowerCase()) ||
+                item.sitterNumber?.toLowerCase().includes(search.toLowerCase()) ||
+                item.allSalary?.toLowerCase().includes(search.toLowerCase())
+            )
+        })
+    }, [setCurrentPage, search])
 
     return (
         <div className={cls.mainContainer}>
@@ -71,7 +90,7 @@ export const NewStudents = () => {
             </div>
             <Pagination
                 setCurrentTableData={setCurrentTableData}
-                users={users}
+                users={searchedUsers}
                 search={search}
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}

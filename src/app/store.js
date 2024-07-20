@@ -15,6 +15,7 @@ import {user} from "entities/user";
 import {studentProfilePayment} from "entities/profile";
 import {studentProfileBooks} from "entities/profile";
 import {studentProfileRating} from "entities/profile";
+import {studentsDirectorSlice} from "pages/studentsPage"
 
 
 
@@ -42,7 +43,8 @@ export const store = configureStore({
         user,
         studentProfilePayment,
         studentProfileBooks,
-        studentProfileRating
+        studentProfileRating,
+        studentsDirectorSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

@@ -8,10 +8,10 @@ import {Button} from "shared/ui/button";
 import {Select} from "shared/ui/select";
 
 import cls from "./deletedStudents.module.sass"
-import DeletedStudentsMenu from "../../../entities/deletedStudents/deletedStudentsMenu/deletedStudentsMenu";
+import DeletedStudentsMenu from "entities/deletedStudents/deletedStudentsMenu/deletedStudentsMenu";
 import DeletedStudentsList, {
     allStudentsData
-} from "../../../entities/deletedStudents/deletedStudentsLists/deletedStudentsList";
+} from "entities/deletedStudents/deletedStudentsLists/deletedStudentsList";
 
 
 const branches = [
