@@ -1,32 +1,87 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { API_URL, useHttp } from "shared/api/base";
+import { API_URL, headers, useHttp } from "shared/api/base";
 
-export const registerUser = createAsyncThunk(
-    'user/registerUser',
-    async (userData, thunkAPI) => {
-        const { request } = useHttp();
+// Helper function to get the authorization token
+const getAuthToken = () => {
+    const userData = sessionStorage.getItem('token');
+    return userData ? userData : null;
+};
 
-        // Fetch subjects and languages
+// Thunk for fetching subjects and languages
+export const fetchSubjectsAndLanguages = createAsyncThunk(
+    'user/fetchSubjectsAndLanguages',
+    async (_, thunkAPI) => {
+        const token = getAuthToken();
+
+        if (!token) {
+            return thunkAPI.rejectWithValue('No authorization token found');
+        }
+
         try {
             const [subjectsResponse, languagesResponse] = await Promise.all([
-                fetch(`${API_URL}Subjects/subject/`),
-                fetch(`${API_URL}Language/language/`)
+                fetch(`${API_URL}Subjects/subject/?limit=20`, {
+                    headers: {
+                        ...headers,
+                        Authorization: `JWT ${token}`
+                    }
+                }),
+                fetch(`${API_URL}Language/language/`, {
+                    headers: {
+                        ...headers,
+                        Authorization: `JWT ${token}`
+                    }
+                })
             ]);
+
+            if (!subjectsResponse.ok || !languagesResponse.ok) {
+                throw new Error('Failed to fetch data');
+            }
+
             const subjectsData = await subjectsResponse.json();
             const languagesData = await languagesResponse.json();
 
-            // Map fetched data
-            const subjects = subjectsData.results.map(subj => ({ id: subj.id, name: subj.name }));
-            const languages = languagesData.results.map(lang => ({ id: lang.id, name: lang.name }));
+            const subjects = subjectsData.results.map(subj => ({ id: subj.id, name: subj.name, ball_number: subj.ball_number }));
+            const languages = languagesData.languages.map(lang => ({ id: lang.id, name: lang.name }));
 
-            // Include the fetched data in the user data
-            const completeUserData = {
-                ...userData,
-                subjects,
-                languages
-            };
+            console.log(languages)
 
-            return await request(`${API_URL}Students/students/`, 'POST', JSON.stringify(completeUserData));
+            return { subjects, languages };
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+);
+
+// Thunk for registering user
+export const registerUser = createAsyncThunk(
+    'user/registerUser',
+    async (userData, thunkAPI) => {
+        const token = getAuthToken();
+
+        if (!token) {
+            return thunkAPI.rejectWithValue('No authorization token found');
+        }
+
+        try {
+            const response = await fetch(
+                `${API_URL}Students/students/`,
+                {
+                    method: 'POST',
+                    headers: {
+                        ...headers,
+                        Authorization: `JWT ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error('Failed to register user');
+            }
+
+            const data = await response.json();
+            return data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);
         }
