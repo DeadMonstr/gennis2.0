@@ -24,7 +24,7 @@ export const Button = React.memo(({children, onClick, type, disabled, status , e
                 disabled={disabled}
         >
             {status === "timeTable" ? <img src={timeTable} alt=""/> : null}
-            {type === "filter" ? <img src={Filter} alt=""/> : null}
+            {status === "filter" ? <img src={Filter} alt=""/> : null}
             {type === "star" ? <img src={star} alt=""/> : null}
             {status === "checked" ? <img src={checked} alt=""/> : null}
             {status === "false" ? <img src={close} alt=""/> : null}

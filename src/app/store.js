@@ -10,9 +10,9 @@ import {filteredStudents} from "features/filters/studentsFilter";
 import {filteredEmployees} from "features/filters/employeesFilter";
 import {filteredGroups} from "features/filters/groupsFilter";
 import {filteredRooms} from "features/filters/roomsFilter";
-import {groups} from "entities/groups/index";
+import {deletedGroups, groups} from "entities/groups/index";
 import {user} from "entities/user";
-
+import {deletedStudents, newStudents} from "../entities/students";
 
 
 const stringMiddleware = () => (next) => (action) => {
@@ -36,7 +36,10 @@ export const store = configureStore({
         filteredGroups,
         filteredRooms,
         groups,
-        user
+        deletedGroups,
+        user,
+        newStudents,
+
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

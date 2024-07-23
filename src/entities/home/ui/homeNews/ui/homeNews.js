@@ -87,9 +87,9 @@ export const HomeNews = () => {
                             </div>
                         </div>
                     </div>
-
                 ))}
             </div>
+            <i className={classNames("fa fa-plus" , cls.plus)}></i>
         </div>
     )
 }

@@ -1,19 +1,20 @@
-import {DeletedStudents, NewStudents, Students} from "entities/students";
-import {StudentsHeader} from "../../../entities/students/studentsHeader/ui/studentsHeader";
-import {useMemo, useState} from "react";
+import {CreateGroup, DeletedStudents, NewStudents, Students} from "entities/students";
+import {StudentsHeader} from "entities/students";
+import {useCallback, useEffect, useMemo, useState} from "react";
 
 
-
-import {allStudentsData} from "entities/students/studentsData/studentsData";
 import {Pagination} from "features/pagination";
 
 import cls from "./students.module.sass"
 import {StudentsFilter} from "features/filters/studentsFilter";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchNewStudentsData} from "entities/students/model/newStudentsThunk";
+import {getNewStudentsData, getStudyingStudents} from "entities/students/model/selector/newStudentsSelector";
 
 const studentsFilter = [
-    {name: "newStudents", label: "New studyingStudents"},
-    {name: "studying", label: "Studying studyingStudents"},
-    {name: "deletedStudents", label: "Deleted studyingStudents"},
+    {name: "newStudents", label: "New Students"},
+    {name: "studying", label: "Studying Students"},
+    {name: "deletedStudents", label: "Deleted Students"},
 ]
 
 
@@ -29,42 +30,66 @@ export const StudentsPage = () => {
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("")
-    const [active , setActive] = useState(false)
+    const [active, setActive] = useState(false)
     const [selectedRadio, setSelectedRadio] = useState(studentsFilter[0].name);
-    const [selected , setSelected] = useState([])
+    const [selected, setSelected] = useState([])
+    const dispatch = useDispatch()
+
+
+    // const [newStudentsData, setNewStudentsData] = useState([])
+    // const [deletedStudentsData , setDeletedStudentsData] = useState([])
+
+
+    const studyingStudents = useSelector(getStudyingStudents)
+    const newStudents = useSelector(getNewStudentsData)
+
+    useEffect(() => {
+        dispatch(fetchNewStudentsData())
+    }, [])
+
+    useEffect(() =>{
+        dispatch(fetchNewStudentsData())
+    } , [])
+
     const handleChange = (value) => {
         setSelectedRadio(value);
-        console.log(value)
     };
     const renderStudents = () => {
         switch (selectedRadio) {
             case "newStudents" :
-                return <NewStudents currentTableData={currentTableData}/>
+                return <NewStudents  currentTableData={newStudents}/>
             case "deletedStudents":
-                return <DeletedStudents currentTableData={currentTableData} />
+                return <DeletedStudents  currentTableData={currentTableData}/>
             case "studying" :
-                return <Students currentTableData={currentTableData}/>
+                return <Students currentTableData={studyingStudents}/>
+
         }
     }
+
+
+
     return (
         <>
-            <StudentsHeader selected={selected} setSelected={setSelected} branches={branches} active={active} setActive={setActive} onChange={handleChange} selectedRadio={selectedRadio} setSelectedRadio={setSelectedRadio}
+
+            <StudentsHeader selected={selected}
+                            setSelected={setSelected} branches={branches} active={active} setActive={setActive}
+                            onChange={handleChange} selectedRadio={selectedRadio} setSelectedRadio={setSelectedRadio}
                             peoples={studentsFilter}/>
 
             <div className={cls.tableMain}>
                 {renderStudents()}
             </div>
-            <Pagination
-                setCurrentTableData={setCurrentTableData}
-                users={allStudentsData}
-                search={search}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-                pageSize={PageSize}
-                onPageChange={page => {
-                    setCurrentPage(page)
-                }}
-                type={"custom"}/>
+            {/*<Pagination*/}
+            {/*    setCurrentTableData={setCurrentTableData}*/}
+            {/*    users={newStudents || studyingStudents}*/}
+            {/*    search={search}*/}
+            {/*    setCurrentPage={setCurrentPage}*/}
+            {/*    currentPage={currentPage}*/}
+            {/*    pageSize={PageSize}*/}
+            {/*    onPageChange={page => {*/}
+            {/*        setCurrentPage(page)*/}
+            {/*    }}*/}
+            {/*    type={"custom"}/>*/}
 
 
             <StudentsFilter active={active} setActive={setActive} activePage={selectedRadio}/>

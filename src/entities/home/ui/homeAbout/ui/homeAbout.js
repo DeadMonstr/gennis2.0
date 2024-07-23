@@ -2,6 +2,7 @@ import cls from "./homeAbout.module.sass"
 import ReactPlayer from "react-player";
 import {useContext, useEffect, useRef} from "react";
 import {Context} from "../../../../../pages/homePage/ui/homePage";
+import classNames from "classnames";
 
 export const HomeAbout = () => {
     const {setSectionTop} = useContext(Context)
@@ -17,6 +18,7 @@ export const HomeAbout = () => {
         <div className={cls.about} ref={sectionRef}>
             <div className={cls.about__wrapper}>
                 <div className={cls.about__info}>
+                    <i className={classNames("fa fa-pen" , cls.icon)}></i>
                     <div className={cls.about__text}>
                         <h1>Siz GENNIS oilasimisiz?</h1>
                         <span>Vaqt o'tgani sari markazimiz faoliyati kengayib bormoqda. Va bu bizga yanada ko'p masuliyatni

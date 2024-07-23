@@ -7,13 +7,15 @@ import {Switch} from "shared/ui/switch";
 
 import cls from "../../filters.module.sass";
 
-export const TeacherFilter = React.memo(({active, setActive, activePage}) => {
+export const TeacherFilter = React.memo(({active, setActive, activePage , setActiveSwitch , activeSwitch}) => {
 
     const [selectedFrom, setSelectedFrom] = useState()
     const [selectedTo, setSelectedTo] = useState()
     const [selectedSubject, setSelectedSubject] = useState()
     const [selectedLanguage, setSelectedLanguage] = useState()
-
+    const onChangeSwitch =() =>{
+        setActiveSwitch(!activeSwitch)
+    }
     return (
         <Modal
             active={active}
@@ -56,7 +58,7 @@ export const TeacherFilter = React.memo(({active, setActive, activePage}) => {
 
                     <div className={cls.filter__switch}>
                         <p>O’chirilgan</p>
-                        <Switch/>
+                        <Switch onChangeSwitch={() =>onChangeSwitch()} activeSwitch={activeSwitch}/>
                     </div>
 
                 </div>

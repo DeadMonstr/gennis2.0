@@ -4,10 +4,11 @@ import cls from "./switch.module.sass"
 
 export const Switch = React.memo((
     {
-        disabled
+        disabled,
+        activeSwitch,
+        onChangeSwitch
     }) => {
 
-    const [swtichOff, setSwitchOff ] = useState(false)
 
     return (
         <div className={cls.mainBody}>
@@ -18,11 +19,11 @@ export const Switch = React.memo((
                     `${cls.disabled}` :
                     `${cls.notDisabled}`
                 }
-                ${swtichOff ? 
+                ${activeSwitch ? 
                     `${cls.switchOff}` : 
                     `${cls.switchOn}`}`}
-                onClick={()=> setSwitchOff(!swtichOff)}>
-                {swtichOff ?
+                onClick={()=> onChangeSwitch(!activeSwitch)}>
+                {activeSwitch ?
 
                     <span className={cls.mainSwitchBox__offSwitch}></span>
                     :

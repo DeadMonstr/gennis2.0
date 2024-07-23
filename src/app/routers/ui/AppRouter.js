@@ -9,8 +9,8 @@ import {Login} from "pages/login";
 
 import {Register} from "pages/register/ui/register";
 import {NotFoundPage} from "pages/notfound/ui/notfound";
-import {Teacher} from "pages/teacher";
-import {CreateGroup} from "pages/createGroup";
+
+import {CreateGroup} from "entities/students";
 import "app/styles/index.sass"
 import {HomePage} from "pages/homePage";
 
@@ -32,7 +32,7 @@ export const AppRouter = () => {
                     element={<Register/>}
                 />
 
-                <Route path={"createGroup"} element={<CreateGroup/>} />
+
                 <Route path={"platform/*"} element={<Layout/>}>
                     {
                         routersConfig.map(item =>
@@ -42,7 +42,7 @@ export const AppRouter = () => {
                             />
                         )
                     }
-
+                    <Route path={"students/createGroup"} element={<CreateGroup/>} />
                     {/*<Route*/}
                     {/*    path={"home"}*/}
                     {/*    element={<Home/>}*/}
@@ -59,7 +59,7 @@ export const AppRouter = () => {
                     {/*/>*/}
 
                     {/*<Route*/}
-                    {/*    path={"deletedStudents"}*/}
+                    {/*    path={"deletedStudentsSlice"}*/}
                     {/*    element={<DeletedStudents/>}*/}
                     {/*/>*/}
                     {/*<Route*/}

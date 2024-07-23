@@ -6,6 +6,7 @@ import img4 from "shared/assets/images/photo_2023-11-22_16-30-42.jpg"
 import img from "shared/assets/images/login-page-4468581-3783954 1.svg";
 import React, {useContext, useEffect, useRef} from "react";
 import {Context} from "pages/homePage/ui/homePage";
+import classNames from "classnames";
 
 
 const advantagesData = [
@@ -34,6 +35,7 @@ export const HomeAdvantages = () => {
                             <div className={cls.advantages__box}>
                                 <h2>{item.advantagesTitle}</h2>
                                 <div className={cls.advantages__box_item}>
+                                    <i className={classNames("fa fa-pen" , cls.icon)}></i>
                                     <div className={cls.advantages__box_img}>
                                         <img src={item.img} alt=""/>
                                     </div>

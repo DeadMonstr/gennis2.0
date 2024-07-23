@@ -1,3 +1,5 @@
+@import "app/styles/abstracts/mixins"
+
 .news
   //height: 100vh
   height: fit-content
@@ -5,6 +7,24 @@
   //align-items: center
   //justify-content: center
   padding: 3rem 0
+  position: relative
+  .plus
+    right: 70px
+    bottom: 50px
+    position: absolute
+    width: 90px
+    height: 90px
+    font-size: 40px
+    border-radius: 50%
+    background-color: #00C2FF
+    display: flex
+    justify-content: center
+    align-items: center
+    color: white
+    z-index: 3
+    cursor: pointer
+    @include btn-active
+
   &__wrapper
     display: flex
     justify-content: space-around

@@ -26,7 +26,7 @@ const navigateList = [
     //     roles: []
     // },
     // {
-    //     to: "deletedStudents",
+    //     to: "deletedStudentsSlice",
     //     name: "O'chirilgan O'quvchilar",
     //     icon: "fa-user-alt-slash",
     //     roles: []

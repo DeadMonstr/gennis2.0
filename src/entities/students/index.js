@@ -1,4 +1,8 @@
-export {Students} from "./studyingStudents/ui/studnets"
-export {DeletedStudents} from "./deletedStudents/ui/deletedStudents"
-export {NewStudents} from "./newStudents/ui/newStudents"
-export {allStudentsData} from "./studentsData/studentsData"
+export {Students} from "./ui/studyingStudents/studnets"
+export {DeletedStudents} from "./ui/deletedStudents/deletedStudents"
+export {NewStudents} from "./ui/newStudents/newStudents"
+export {StudentsHeader} from "./ui/studentsHeader/studentsHeader"
+export {CreateGroup} from "./ui/createGroup/CreateGroup"
+
+export {default as newStudents} from "./model/newStudentsSlice"
+

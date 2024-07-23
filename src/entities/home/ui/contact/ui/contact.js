@@ -160,7 +160,12 @@ export const Contact = () => {
                                     }}
                                         className={classNames(cls.contact__branches_list, {
                                             [cls.active]: active === item.name
-                                        })}>{item.name}</li>
+                                        })}>
+
+                                        {item.name}
+
+                                        <i className={classNames("fa fa-pen" , cls.icon)}></i>
+                                    </li>
                                 )
                             })}
                         </ul>

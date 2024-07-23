@@ -1,3 +1,6 @@
+@import "app/styles/abstracts/mixins"
+
+
 .contact
   padding: 5rem 0 0 0
   background-color: white
@@ -40,13 +43,23 @@
       li
         cursor: pointer
         font-size: 2rem
+        gap: 2rem
+        display: flex
+        align-items: center
         transition: .3s all
         text-transform: capitalize
-
+        .icon
+          font-size: 15px
+          //background: #7F7F7F
+          padding: 5px
+          border-radius: 5px
+          //color: white
+          @include btn-active
         &.active
           transform: scale(1.2)
           color: #0EA5E9
           padding-left: 3rem
+
 
   &__locations
     width: 60%

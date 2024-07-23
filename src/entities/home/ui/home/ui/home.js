@@ -5,6 +5,7 @@ import {Select} from "shared/ui/select";
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {Context} from "pages/homePage/ui/homePage";
 import {HomeHeader} from "../../homeHeader";
+import classNames from "classnames";
 
 const branches = [
     {name: "chirchiq"},
@@ -28,7 +29,9 @@ export const Home = () => {
         <div className={cls.home} ref={sectionRef}>
 
             <div className={cls.homeWrapper}>
+
                 <div className={cls.homeTexts}>
+                    <i className={classNames("fa fa-pen "  , cls.icon)}></i>
                     <div className={cls.homeTitle}>
                         GENNIS - "Muvaffaqiyatni  istaganlar uchun"
                     </div>

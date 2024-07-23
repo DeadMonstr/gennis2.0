@@ -15,11 +15,11 @@ import {
 
 import {StudentsPage} from "pages/studentsPage";
 import {GroupsPage} from "pages/groupsPage";
-import {DeletedGroups} from "pages/deletedGroups";
+
 import {Register} from "pages/register";
 import {Rooms} from "pages/rooms/ui/rooms";
-import {Teacher} from "pages/teacher";
-import {CreateGroup} from "pages/createGroup";
+import {TeachersPage} from "pages/teacherPage";
+
 import {HomePage} from "pages/homePage";
 
 
@@ -58,20 +58,12 @@ export const routersConfig = [
         element: <GroupsPage/>
     },
     {
-        to: "deletedGroups",
-        name: "O'chirilgan Gruppalar",
-        icon: "fa-user-alt-slash",
-        roles: [],
-        path: getRouteDeletedGroups(":id"),
-        element: <DeletedGroups/>
-    },
-    {
         to: "teacher",
         name: "O'qituvchilar",
         icon: "fa-user-tie",
         roles: [],
         path: getRouteTeacher(":id"),
-        element: <Teacher/>
+        element: <TeachersPage/>
     },
     {
         to: "/login",
