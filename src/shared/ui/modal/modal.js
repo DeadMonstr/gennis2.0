@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {createPortal} from "react-dom";
 import classNames from "classnames";
 
@@ -7,7 +7,7 @@ import {useTheme} from "../../lib/hooks/useTheme";
 import cls from "./modal.module.sass";
 import close from "shared/assets/icons/cross.svg";
 
-export const Modal = ({children, active, setActive}) => {
+export const Modal = memo(({children, active, setActive, extraClass}) => {
 
     const {theme} = useTheme()
 
@@ -26,7 +26,7 @@ export const Modal = ({children, active, setActive}) => {
                     className={classNames(cls.modal, "outClose", [theme])}
                     onClick={(e) => onClick(e.target)}
                 >
-                    <div className={cls.modal__inner}>
+                    <div className={classNames(cls.modal__inner, extraClass)}>
                         <img
                             className={classNames(cls.modal__close, "innerClose")}
                             onClick={(e) => onClick(e.target)}
@@ -40,4 +40,4 @@ export const Modal = ({children, active, setActive}) => {
             )
         );
     }
-};
+})

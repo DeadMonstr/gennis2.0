@@ -14,6 +14,8 @@ import {NotFoundPage} from "pages/notfound/ui/notfound";
 import {ProfileTeacherPage} from "pages/profileTeacherPage";
 import {TeacherSalaryPage} from "pages/teacherSalaryPage";
 import {GiveSalaryPage} from "pages/giveSalaryPage";
+import {ClassProfilePage} from "pages/School";
+import {ClassMolassesPage} from "pages/School";
 import {useTheme} from "shared/lib/hooks/useTheme";
 
 import "app/styles/index.sass"
@@ -64,6 +66,16 @@ export const AppRouter = () => {
                     <Route
                         path={"profile"}
                         element={<StudentProfilePage/>}
+                    />
+
+                    <Route
+                        path={"classProfile"}
+                        element={<ClassProfilePage/>}
+                    />
+
+                    <Route
+                        path={"molasses"}
+                        element={<ClassMolassesPage/>}
                     />
 
                     <Route

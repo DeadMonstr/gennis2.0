@@ -28,7 +28,6 @@ import {Teacher} from "pages/teacher";
 import {CreateGroup} from "pages/createGroup";
 import {HomePage} from "pages/homePage";
 import {ProfileTeacherPage} from "pages/profileTeacherPage";
-import {VacancyPage} from "pages/vacancyPage";
 import {StudentsDirectorPage} from "pages/studentsPage";
 
 
@@ -40,7 +39,8 @@ export const routersConfig = [
         roles: [true],
         path: getRouteMain(),
         element: <HomePage/>,
-        isMenu: true
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
     },
     {
         to: "taskManager",
@@ -49,7 +49,8 @@ export const routersConfig = [
         roles: [true],
         path: getRouteTaskManager(":id"),
         element: null,
-        isMenu: true
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
     },
     {
         to: "newStudents",
@@ -58,7 +59,8 @@ export const routersConfig = [
         roles: [true],
         path: getRouteNewStudents(":id"),
         element: <NewStudents/>,
-        isMenu: true
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
     },
     {
         to: "deletedStudents",
@@ -67,7 +69,8 @@ export const routersConfig = [
         roles: [],
         path: getRouteDeletedStudents(":id"),
         element: <DeletedStudents/>,
-        isMenu: true
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
     },
     {
         to: "students",
@@ -76,7 +79,8 @@ export const routersConfig = [
         roles: [],
         path: getRouteStudents(":id"),
         element: <Students/>,
-        isMenu: true
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
     },
     {
         to: "studentsDirector",
@@ -85,7 +89,8 @@ export const routersConfig = [
         roles: [],
         path: getDirectorRouteStudents(),
         element: <StudentsDirectorPage/>,
-        isMenu: true
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
     },
     {
         to: "groups",
@@ -94,7 +99,8 @@ export const routersConfig = [
         roles: [],
         path: getRouteGroups(":id"),
         element: <GroupsPage/>,
-        isMenu: true
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
     },
     {
         to: "newStudents/createGroup",
@@ -103,7 +109,8 @@ export const routersConfig = [
         roles: [],
         path: getRouteCreateGroup(":id"),
         element: <CreateGroup/>,
-        isMenu: false
+        isMenu: false,
+        type: ["app_center_theme", "app_school_theme"]
     },
     {
         to: "deletedGroups",
@@ -112,7 +119,8 @@ export const routersConfig = [
         roles: [],
         path: getRouteDeletedGroups(":id"),
         element: <DeletedGroups/>,
-        isMenu: true
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
     },
     {
         to: "teacher",
@@ -121,16 +129,8 @@ export const routersConfig = [
         roles: [],
         path: getRouteTeacher(":id"),
         element: <Teacher/>,
-        isMenu: true
-    },
-    {
-        to: "vacancy",
-        name: "Vakansiyalar",
-        icon: "fa-user-tie",
-        roles: [],
-        path: getVacancyPage(),
-        element: <VacancyPage/>,
-        isMenu: true
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
     },
     {
         to: "/login",
@@ -151,7 +151,8 @@ export const routersConfig = [
         roles: [],
         path: getTeacherProfile("id"),
         element: <ProfileTeacherPage/>,
-        isMenu: false
+        isMenu: false,
+        type: ["app_center_theme", "app_school_theme"]
     },
     {
         to: "rooms",
@@ -160,7 +161,8 @@ export const routersConfig = [
         roles: [],
         path: getRouteRooms(),
         element: <Rooms/>,
-        isMenu: true
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
     },
     {
         to: "/login",
@@ -187,7 +189,8 @@ export const routersConfig = [
         roles: [],
         path: getRouteRegister(":id"),
         element: <Register/>,
-        isMenu: true
-    }
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
+    },
 
 ]

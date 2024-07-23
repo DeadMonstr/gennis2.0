@@ -1,21 +1,26 @@
 import React, {useContext, useMemo, useState} from 'react';
-import { StudentsFilter } from "features/filters/studentsFilter";
-import { Pagination } from "features/pagination";
+import {useSelector} from "react-redux";
+import { Link } from "react-router-dom";
+
+import {SearchContext} from "shared/lib/context/searchContext";
 import { Select } from "shared/ui/select";
 import { Button } from "shared/ui/button";
 import { Radio } from "shared/ui/radio";
+import { StudentsFilter } from "features/filters/studentsFilter";
+import { Pagination } from "features/pagination";
+import {getSearchValue} from "features/searchInput";
 import { NewStudentsList } from "entities/newStudents/ui";
 import { users } from "entities/newStudents/model";
 import {peoples} from "entities/newStudents/model";
 import {branches} from "entities/newStudents/model";
 
 import cls from "./newStudents.module.sass";
-import { Link } from "react-router-dom";
-import {SearchContext} from "shared/lib/context/searchContext";
 
 export const NewStudents = () => {
 
-    const {search} = useContext(SearchContext)
+    // const {search} = useContext(SearchContext)
+
+    const search = useSelector(getSearchValue)
 
     const [active, setActive] = useState(false);
     const [selected, setSelected] = useState("");
@@ -31,11 +36,12 @@ export const NewStudents = () => {
         setSelected(value)
     }
 
+    console.log(search, "search")
+
     const searchedUsers = useMemo(() => {
         const filteredHeroes = users.slice()
         setCurrentPage(1)
         return filteredHeroes.filter(item => {
-            console.log(item, "item")
             return (
                 item.name?.toLowerCase().includes(search.toLowerCase()) ||
                 item.surname?.toLowerCase().includes(search.toLowerCase()) ||
