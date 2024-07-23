@@ -1,1 +1,1 @@
-export {Alert} from "./ui/alert"
+export {Alert} from "./alert"

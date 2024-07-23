@@ -6,7 +6,7 @@ import {fetchSearch} from "features/searchInput/model/searchThunk";
 import {BreadCrumbs} from "features/breadCrumbs";
 import {SearchPlatformInput} from "features/searchInput";
 import GetLocation from "features/location/getLocation";
-import {MainSwitch} from "shared/ui/mainSwitch";
+import {ThemeSwitcher} from "features/themeSwitcher";
 
 import cls from "./header.module.sass";
 import logo from "shared/assets/images/logo.svg";
@@ -77,7 +77,7 @@ export const Header = () => {
                     onSearch={onSubmitSearchStr}
                 />
                 <div className={cls.inner}>
-                    <MainSwitch/>
+                    <ThemeSwitcher/>
                     <GetLocation
                         getItem={setSelected}
                         deletedId={deletedId}

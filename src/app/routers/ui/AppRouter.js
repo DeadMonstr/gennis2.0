@@ -1,23 +1,28 @@
 import React, {Suspense} from 'react';
 import {createRoutesFromElements, Navigate, Route, RouterProvider} from "react-router";
 import {createBrowserRouter} from "react-router-dom";
+import classNames from "classnames";
 
 import {RequireAuth} from "./RequireAuth";
 import {routersConfig} from "app/routers"
 import {Layout} from "app/layout";
 import {Login} from "pages/login";
-import {ProfilePage} from "pages/profilePage";
+import {StudentProfilePage} from "pages/profilePage";
 import {HomePage} from "pages/homePage";
 import {Register} from "pages/register/ui/register";
 import {NotFoundPage} from "pages/notfound/ui/notfound";
+import {ProfileTeacherPage} from "pages/profileTeacherPage";
+import {TeacherSalaryPage} from "pages/teacherSalaryPage";
+import {GiveSalaryPage} from "pages/giveSalaryPage";
+import {useTheme} from "shared/lib/hooks/useTheme";
 
 import "app/styles/index.sass"
-import {ProfileTeacherPage} from "../../../pages/profileTeacherPage";
-import {TeacherSalaryPage} from "../../../pages/teacherSalaryPage/ui/teacherSalaryPage";
-import {GiveSalaryPage} from "../../../pages/giveSalaryPage/ui/giveSalaryPage";
+import {VacancyPage} from "pages/vacancyPage";
 
 
 export const AppRouter = () => {
+
+    const {theme} = useTheme()
 
     const router = createBrowserRouter(
         createRoutesFromElements(
@@ -35,51 +40,53 @@ export const AppRouter = () => {
                     element={<Register/>}
                 />
 
+
                 {/*<Route element={<RequireAuth/>}>*/}
 
-                    <Route path={"platform/*"} element={<Layout/>}>
+                <Route path={"platform/*"} element={<Layout/>}>
 
-                        {
-                            routersConfig.map(item =>
-                                <Route
-                                    key={item.name}
-                                    path={item.path}
-                                    element={
-                                        // <Route element={}>
-                                        //     {item.element}
-                                        // </Route>
-                                        // <RequireAuth roles={item.roles}>
-                                            item.element
-                                        // </RequireAuth>
-                                        // item.element
-                                    }
-                                />
-                            )
-                        }
-
-                        <Route
-                            path={"profile"}
-                            element={<ProfilePage/>}
-                        />
-                        <Route
-                            path={"teacherProfile"}
-                            element={<ProfileTeacherPage/>}
-                        />
-                        <Route
-                            path={"teacherSalaryPage"}
-                            element={<TeacherSalaryPage/>}
-                        />
-                        <Route
-                            path={"giveSalaryPage"}
-                            element={<GiveSalaryPage/>}
+                    {
+                        routersConfig.map(item =>
+                            <Route
+                                key={item.name}
+                                path={item.path}
+                                element={
+                                    // <Route element={}>
+                                    //     {item.element}
+                                    // </Route>
+                                    // <RequireAuth roles={item.roles}>
+                                    //     {item.element}
+                                    // </RequireAuth>
+                                    item.element
+                                }
                             />
+                        )
+                    }
 
-                        <Route
-                            index
-                            element={<Navigate to={"home"}/>}
-                        />
+                    <Route
+                        path={"profile"}
+                        element={<StudentProfilePage/>}
+                    />
 
-                    </Route>
+                    <Route
+                        path={"teacherProfile"}
+                        element={<ProfileTeacherPage/>}
+                    />
+                    <Route
+                        path={"teacherSalaryPage"}
+                        element={<TeacherSalaryPage/>}
+                    />
+                    <Route
+                        path={"giveSalaryPage"}
+                        element={<GiveSalaryPage/>}
+                    />
+
+                    <Route
+                        index
+                        element={<Navigate to={"home"}/>}
+                    />
+
+                </Route>
 
                 {/*</Route>*/}
 
@@ -92,9 +99,11 @@ export const AppRouter = () => {
     );
 
     return (
-        <Suspense>
-            <RouterProvider router={router}/>
-        </Suspense>
+        <div className={classNames("app", [theme])}>
+            <Suspense>
+                <RouterProvider router={router}/>
+            </Suspense>
+        </div>
     );
 };
 

@@ -1,1 +1,1 @@
-export {MiniLoader} from "./ui/miniLoader"
+export {MiniLoader} from "./miniLoader"

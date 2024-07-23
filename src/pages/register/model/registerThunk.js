@@ -40,7 +40,7 @@ export const fetchSubjectsAndLanguages = createAsyncThunk(
             const subjectsData = await subjectsResponse.json();
             const languagesData = await languagesResponse.json();
 
-            const subjects = subjectsData.results.map(subj => ({ id: subj.id, name: subj.name, ball_number: subj.ball_number }));
+            const subjects = subjectsData.subjects.map(subj => ({ id: subj.id, name: subj.name, ball_number: subj.ball_number }));
             const languages = languagesData.languages.map(lang => ({ id: lang.id, name: lang.name }));
 
             console.log(languages)
@@ -81,6 +81,7 @@ export const registerUser = createAsyncThunk(
             }
 
             const data = await response.json();
+            console.log(data)
             return data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);

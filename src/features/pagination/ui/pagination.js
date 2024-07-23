@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useMemo} from 'react';
 import classNames from "classnames";
 
-import {usePagination, DOTS} from "shared/lib/usePagination";
+import {usePagination, DOTS} from "shared/lib/hooks/usePagination";
 
 import cls from "./pagination.module.sass";
 
@@ -29,7 +29,10 @@ export const Pagination = React.memo((props) => {
             item.username?.toLowerCase().includes(search.toLowerCase()) ||
             item.fullName?.toLowerCase().includes(search.toLowerCase()) ||
             item.sitterNumber?.toLowerCase().includes(search.toLowerCase()) ||
-            item.allSalary.toLowerCase().includes(search.toLowerCase())
+            item.allSalary?.toLowerCase().includes(search.toLowerCase()) ||
+            item.subjectName?.toLowerCase().includes(search.toLowerCase()) ||
+            item.workName?.toLowerCase().includes(search.toLowerCase()) ||
+            item.workerName.toLowerCase().includes(search.toLowerCase())
         )
     }, [users, setCurrentPage, search])
 

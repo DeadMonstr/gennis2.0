@@ -1,0 +1,1 @@
+export {GiveSalaryPage} from "./ui/giveSalaryPage";

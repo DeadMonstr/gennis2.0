@@ -8,12 +8,12 @@ import {Button} from "../../../shared/ui/button";
 import {GiveSalaryModal} from "../../../features/giveSalary/giveSalary";
 
 export const GiveSalaryPage = () => {
-    const [active, setActive] = useState(false);
     const [selected, setSelected] = useState("");
     const PageSize = useMemo(() => 20, []);
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     const [currentTableData, setCurrentTableData] = useState([]);
+    const [active, setActive] = useState(false);
 
     const handleChange = (value) => {
         setSelected(value);
