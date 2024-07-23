@@ -10,6 +10,7 @@ import {TeacherEdit} from "features/profileEdits/teacherEdit";
 
 import cls from "./profileTeacherPage.module.sass"
 
+
 export const ProfileTeacherPage = () => {
 
     const [active, setActive] = useState(false)
@@ -21,13 +22,16 @@ export const ProfileTeacherPage = () => {
                 [cls.active]: active
             })}
         >
-            <StudentProfileInfo
+            <StudentProfileInfo/>
                 // setActive={setActive}
                 // active={active}
                 // actives={actives}
                 // setActives={setActives}
 
-            />
+            {/*<ProfileInfo*/}
+            {/*    setActive={setActive}*/}
+            {/*    active={active}*/}
+            {/*/>*/}
             <div
                 className={classNames(cls.profile__mainContent, {
                     [cls.active]: active
@@ -40,11 +44,7 @@ export const ProfileTeacherPage = () => {
 
                 />
             </div>
-            {/*<div className={classNames(cls.profile__otherContent, {*/}
-            {/*    [cls.active]: active*/}
-            {/*})}>*/}
-            {/*    <ProfileTotalAmount/>*/}
-            {/*</div>*/}
+
         </div>
     );
 };

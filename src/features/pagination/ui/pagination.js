@@ -21,7 +21,7 @@ export const Pagination = React.memo((props) => {
         type = "basic"
     } = props;
 
-    
+
 
     useEffect(() => {
         setCurrentTableData(() => {

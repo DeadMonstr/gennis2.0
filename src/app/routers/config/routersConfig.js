@@ -16,16 +16,13 @@ import {
     getDirectorRouteStudents,
 } from "shared/const/routers";
 
-
-import {NewStudents} from "pages/newStudentsPage";
-import {DeletedStudents} from "pages/deletedStudents";
-import {Students} from "pages/students";
+import {StudentsPage} from "pages/studentsPage";
 import {GroupsPage} from "pages/groupsPage";
-import {DeletedGroups} from "pages/deletedGroups";
+
 import {Register} from "pages/register";
 import {Rooms} from "pages/rooms/ui/rooms";
-import {Teacher} from "pages/teacher";
-import {CreateGroup} from "pages/createGroup";
+import {TeachersPage} from "pages/teacherPage";
+
 import {HomePage} from "pages/homePage";
 import {ProfileTeacherPage} from "pages/profileTeacherPage";
 import {StudentsDirectorPage} from "pages/studentsPage";
@@ -53,36 +50,6 @@ export const routersConfig = [
         type: ["app_center_theme", "app_school_theme"]
     },
     {
-        to: "newStudents",
-        name: "Yangi O'quvchilar",
-        icon: "fa-user",
-        roles: [true],
-        path: getRouteNewStudents(":id"),
-        element: <NewStudents/>,
-        isMenu: true,
-        type: ["app_center_theme", "app_school_theme"]
-    },
-    {
-        to: "deletedStudents",
-        name: "O'chirilgan O'quvchilar",
-        icon: "fa-user-alt-slash",
-        roles: [],
-        path: getRouteDeletedStudents(":id"),
-        element: <DeletedStudents/>,
-        isMenu: true,
-        type: ["app_center_theme", "app_school_theme"]
-    },
-    {
-        to: "students",
-        name: "O'qiyotgan O'quvchilar",
-        icon: "fa-user-graduate",
-        roles: [],
-        path: getRouteStudents(":id"),
-        element: <Students/>,
-        isMenu: true,
-        type: ["app_center_theme", "app_school_theme"]
-    },
-    {
         to: "studentsDirector",
         name: "O'quvchilar",
         icon: "fa-user-graduate",
@@ -91,46 +58,34 @@ export const routersConfig = [
         element: <StudentsDirectorPage/>,
         isMenu: true,
         type: ["app_center_theme", "app_school_theme"]
+
+    },
+    {
+        to: "students",
+        name: " O'quvchilar",
+        icon: "fa-user-graduate",
+        roles: [],
+        isMenu: true,
+        path: getRouteStudents(":id"),
+        element: <StudentsPage/>
     },
     {
         to: "groups",
         name: "Gruppalar",
         icon: "fa-users",
         roles: [],
+        isMenu: true,
         path: getRouteGroups(":id"),
-        element: <GroupsPage/>,
-        isMenu: true,
-        type: ["app_center_theme", "app_school_theme"]
-    },
-    {
-        to: "newStudents/createGroup",
-
-        icon: "fa-user",
-        roles: [],
-        path: getRouteCreateGroup(":id"),
-        element: <CreateGroup/>,
-        isMenu: false,
-        type: ["app_center_theme", "app_school_theme"]
-    },
-    {
-        to: "deletedGroups",
-        name: "O'chirilgan Gruppalar",
-        icon: "fa-user-alt-slash",
-        roles: [],
-        path: getRouteDeletedGroups(":id"),
-        element: <DeletedGroups/>,
-        isMenu: true,
-        type: ["app_center_theme", "app_school_theme"]
+        element: <GroupsPage/>
     },
     {
         to: "teacher",
         name: "O'qituvchilar",
         icon: "fa-user-tie",
         roles: [],
-        path: getRouteTeacher(":id"),
-        element: <Teacher/>,
         isMenu: true,
-        type: ["app_center_theme", "app_school_theme"]
+        path: getRouteTeacher(":id"),
+        element: <TeachersPage/>
     },
     {
         to: "/login",

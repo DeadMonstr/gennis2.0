@@ -16,5 +16,6 @@ export const getRouteRooms = () => `rooms`;
 export const getTeacherProfile = (id) => `teacherProfile`;
 
 export const getVacancyPage = () => `vacancy`;
+export const getProfile = (id) => `profile`;
 
 
