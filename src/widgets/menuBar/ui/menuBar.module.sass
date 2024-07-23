@@ -1,0 +1,67 @@
+@import "app/styles/abstracts/variables"
+
+.menu
+  height: 100svh
+  width: 14%
+  padding: 3rem 2rem
+  border-right: 2px solid $main-border-color
+
+  &__inner
+    width: 100%
+    height: 100%
+    padding: 3rem 2rem 2rem .7rem
+    display: flex
+    flex-direction: column
+    gap: 1.5rem
+    overflow: auto
+
+    &::-webkit-scrollbar
+      width: .7rem
+
+    &::-webkit-scrollbar-track
+      border-radius: .4rem
+      box-shadow: inset 0 0 5px $color-grey-dark
+
+    &::-webkit-scrollbar-thumb
+      border-radius: .4rem
+      background: #797979
+
+    &::-webkit-scrollbar-thumb:hover
+      background: $color-grey-dark
+
+  .link
+    list-style: none
+
+    &__href
+      color: $main-font-color
+      display: flex
+      align-items: center
+      gap: 1.5rem
+      transition: .7s
+
+      &:hover
+        i
+          color: $icon-main-light
+          border: 1px solid $icon-main-light
+          box-shadow: 0 0 14px $icon-main-light
+
+      i
+        min-width: 4.5rem
+        min-height: 4.5rem
+        font-size: 2rem
+        border-radius: 50%
+        border: 1px solid $main-font-color
+        display: flex
+        justify-content: center
+        align-items: center
+
+    .active
+      i
+        color: $icon-main-light
+        border: 1px solid $icon-main-light
+        box-shadow: 0 0 14px $icon-main-light
+
+
+    &__title
+      letter-spacing: .1rem
+      font-size: 1.6rem

@@ -1,0 +1,1 @@
+export {DeletedStudents} from "./ui/deletedStudents"
