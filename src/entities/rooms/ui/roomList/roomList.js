@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import cls from "./roomsList.module.sass";
 import { Switch } from "shared/ui/switch";
-import {SkeletonCard} from "shared/ui/roomsSkeleton/ui/roomsSkeleton";
+import {SkeletonCard} from "shared/ui/roomsSkeleton/roomsSkeleton";
 
 export const RoomsList = ({ currentTableData }) => {
     const [loading, setLoading] = useState(true);

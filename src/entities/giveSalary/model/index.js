@@ -1,0 +1,1 @@
+export {giveSalary, branches} from "./constants/constants"

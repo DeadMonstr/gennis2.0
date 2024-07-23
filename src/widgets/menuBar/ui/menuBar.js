@@ -1,135 +1,44 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useContext} from 'react';
 
 import {Link} from "shared/ui/link";
+import {ThemeContext} from "shared/lib/context/themeContext";
 import {routersConfig} from "app/routers";
 
 import cls from "./menuBar.module.sass";
 
 
-const navigateList = [
-    {
-        to: "home",
-        name: "Bosh Sahifa",
-        icon: "fa-home",
-        roles: []
-    },
-    {
-        to: "taskManager",
-        name: "Task Manager",
-        icon: "fa-tasks",
-        roles: []
-    },
-    // {
-    //     to: "newStudents",
-    //     name: "Yangi O'quvchilar",
-    //     icon: "fa-user",
-    //     roles: []
-    // },
-    // {
-    //     to: "deletedStudentsSlice",
-    //     name: "O'chirilgan O'quvchilar",
-    //     icon: "fa-user-alt-slash",
-    //     roles: []
-    // },
-    {
-        to: "students",
-        name: "O'qiyotgan O'quvchilar",
-        icon: "fa-user-graduate",
-        roles: []
-    },
-    {
-        to: "groups",
-        name: "Gruppalar",
-        icon: "fa-users",
-        roles: []
-    },
-    {
-        to: "deletedGroups",
-        name: "O'chirilgan Gruppalar",
-        icon: "fa-user-alt-slash",
-        roles: []
-    },
-    {
-        to: "teacher",
-        name: "O'qituvchilar",
-        icon: "fa-user-tie",
-        roles: []
-    },
-    {
-        to: "/login",
-        name: "Ishchilar",
-        icon: "fa-id-badge",
-        roles: []
-    },
-    {
-        to: "/login",
-        name: "Buxgalteriya Hisobi",
-        icon: "fa-file-invoice-dollar",
-        roles: []
-    },
-    {
-        to: "rooms",
-        name: "Honalar",
-        icon: "fa-door-closed",
-        roles: []
-    },
-    {
-        to: "/login",
-        name: "Capital Category",
-        icon: "fa-coins",
-        roles: []
-    },
-    {
-        to: "/login",
-        name: "Centre info",
-        icon: "fa-info",
-        roles: []
-    },
-    {
-        to: "/login",
-        name: "Kitoblar",
-        icon: "fa-book",
-        roles: []
-    },
-    {
-        to: "profile",
-        name: "Profil",
-        icon: "fa-user",
-        roles: []
-    },
-    {
-        to: "register",
-        name: "Registratsiya",
-        icon: "fa-edit",
-        roles: []
-    }
 
-
-
-]
 
 export const Menubar = () => {
 
+    const {theme} = useContext(ThemeContext)
+
     const renderMultipleMenu = useCallback(() => {
         return routersConfig.map((item, index) => {
-            return (
-                <li
-                    key={index}
-                    className={cls.link}
-                >
-                    <Link
-                        to={item.to}
-                        extraClass={cls.link__href}
-                        activeClass={cls.active}
-                        // onClick={() => setActive(item.name)}
+            // console.log(item.type, "type")
+            // console.log(item.type?.includes(theme), "type")
+            // if (item.type?.includes(theme))
+            if (item.isMenu)
+                return (
+                    <li
+                        key={index}
+                        className={cls.link}
                     >
-                        <i className={`fas ${item.icon} icon-link`}/>
-                        <span className={cls.link__title}>{item.name}</span>
-                    </Link>
-                </li>
-            )
+                        <Link
+                            to={item.to}
+                            extraClass={cls.link__href}
+                            activeClass={cls.active}
+                            // onClick={() => setActive(item.name)}
+                        >
+                            <i className={`fas ${item.icon} icon-link`}/>
+                            <span className={cls.link__title}>{item.name}</span>
+                        </Link>
+                    </li>
+                )
+            else return null
+            // else return null
         })
-    }, [])
+    }, [theme])
 
 
     const renderedMenu = renderMultipleMenu()

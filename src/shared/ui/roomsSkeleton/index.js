@@ -1,1 +1,1 @@
-import {SkeletonCard} from "./ui/roomsSkeleton"
+import {SkeletonCard} from "./roomsSkeleton"

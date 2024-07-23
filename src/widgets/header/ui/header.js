@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useSearchParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
 
@@ -6,12 +6,15 @@ import {fetchSearch} from "features/searchInput/model/searchThunk";
 import {BreadCrumbs} from "features/breadCrumbs";
 import {SearchPlatformInput} from "features/searchInput";
 import GetLocation from "features/location/getLocation";
-import {MainSwitch} from "shared/ui/mainSwitch";
+import {ThemeSwitcher} from "features/themeSwitcher";
+import {SearchContext} from "shared/lib/context/searchContext";
 
 import cls from "./header.module.sass";
 import logo from "shared/assets/images/logo.svg";
 
 export const Header = () => {
+
+    const {setSearch} = useContext(SearchContext)
 
     const dispatch = useDispatch()
     const [selected, setSelected] = useState([])
@@ -21,6 +24,7 @@ export const Header = () => {
 
     const onSubmitSearchStr = (searchStr) => {
         console.log(searchStr, "search")
+        setSearch(searchStr)
         dispatch(fetchSearch(searchStr))
     }
 
@@ -74,10 +78,10 @@ export const Header = () => {
             <div className={cls.header__top}>
                 <img className={cls.header__logo} src={logo} alt=""/>
                 <SearchPlatformInput
-                    onSearch={onSubmitSearchStr}
+                    onSearch={setSearch}
                 />
                 <div className={cls.inner}>
-                    <MainSwitch/>
+                    <ThemeSwitcher/>
                     <GetLocation
                         getItem={setSelected}
                         deletedId={deletedId}

@@ -12,6 +12,11 @@ import {filteredGroups} from "features/filters/groupsFilter";
 import {filteredRooms} from "features/filters/roomsFilter";
 import {deletedGroups, groups} from "entities/groups/index";
 import {user} from "entities/user";
+import {studentProfilePayment} from "entities/profile";
+import {studentProfileBooks} from "entities/profile";
+import {studentProfileRating} from "entities/profile";
+import {studentsDirectorSlice} from "pages/studentsPage"
+
 import {deletedStudents, newStudents} from "../entities/students";
 
 
@@ -36,6 +41,10 @@ export const store = configureStore({
         filteredGroups,
         filteredRooms,
         groups,
+        studentProfilePayment,
+        studentProfileBooks,
+        studentProfileRating,
+        studentsDirectorSlice,
         deletedGroups,
         user,
         newStudents,

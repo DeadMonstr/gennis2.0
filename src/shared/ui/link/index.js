@@ -1,2 +1,2 @@
 
-export {Link} from "./ui/link"
+export {Link} from "./link"

@@ -11,6 +11,9 @@ import {
     getRouteTeacher,
     getRouteCreateGroup,
     getRouteRooms,
+    getTeacherProfile,
+    getVacancyPage,
+    getDirectorRouteStudents,
 } from "shared/const/routers";
 
 import {StudentsPage} from "pages/studentsPage";
@@ -21,6 +24,8 @@ import {Rooms} from "pages/rooms/ui/rooms";
 import {TeachersPage} from "pages/teacherPage";
 
 import {HomePage} from "pages/homePage";
+import {ProfileTeacherPage} from "pages/profileTeacherPage";
+import {StudentsDirectorPage} from "pages/studentsPage";
 
 
 export const routersConfig = [
@@ -30,7 +35,9 @@ export const routersConfig = [
         icon: "fa-home",
         roles: [true],
         path: getRouteMain(),
-        element: <HomePage/>
+        element: <HomePage/>,
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
     },
     {
         to: "taskManager",
@@ -38,14 +45,27 @@ export const routersConfig = [
         icon: "fa-tasks",
         roles: [true],
         path: getRouteTaskManager(":id"),
-        element: null
+        element: null,
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
     },
+    {
+        to: "studentsDirector",
+        name: "O'quvchilar",
+        icon: "fa-user-graduate",
+        roles: [],
+        path: getDirectorRouteStudents(),
+        element: <StudentsDirectorPage/>,
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
 
+    },
     {
         to: "students",
         name: " O'quvchilar",
         icon: "fa-user-graduate",
         roles: [],
+        isMenu: true,
         path: getRouteStudents(":id"),
         element: <StudentsPage/>
     },
@@ -54,6 +74,7 @@ export const routersConfig = [
         name: "Gruppalar",
         icon: "fa-users",
         roles: [],
+        isMenu: true,
         path: getRouteGroups(":id"),
         element: <GroupsPage/>
     },
@@ -62,6 +83,7 @@ export const routersConfig = [
         name: "O'qituvchilar",
         icon: "fa-user-tie",
         roles: [],
+        isMenu: true,
         path: getRouteTeacher(":id"),
         element: <TeachersPage/>
     },
@@ -78,12 +100,24 @@ export const routersConfig = [
         roles: []
     },
     {
+        to: "teacherProfile",
+        name: "Teacher Profile",
+        icon: "fa-user-graduate",
+        roles: [],
+        path: getTeacherProfile("id"),
+        element: <ProfileTeacherPage/>,
+        isMenu: false,
+        type: ["app_center_theme", "app_school_theme"]
+    },
+    {
         to: "rooms",
         name: "Honalar",
         icon: "fa-door-closed",
         roles: [],
         path: getRouteRooms(),
-        element: <Rooms/>
+        element: <Rooms/>,
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
     },
     {
         to: "/login",
@@ -109,7 +143,9 @@ export const routersConfig = [
         icon: "fa-edit",
         roles: [],
         path: getRouteRegister(":id"),
-        element: <Register/>
-    }
+        element: <Register/>,
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
+    },
 
 ]
