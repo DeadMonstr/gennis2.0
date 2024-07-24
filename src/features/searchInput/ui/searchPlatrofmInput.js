@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
-import {useDispatch} from "react-redux";
+import {useEffect, useState} from 'react';
 
 import {SearchInput} from 'shared/ui/searchInput';
-import {getSearchStr} from "../model/searchSlice";
 
-export const SearchPlatformInput = ({onSearch}) => {
-    const dispatch = useDispatch()
-    const [search, setSearch] = useState('');
+export const SearchPlatformInput = ({onSearch, defaultSearch}) => {
+    const [search, setSearch] = useState();
+
+    useEffect(() => {
+        setSearch(defaultSearch)
+    }, [defaultSearch])
 
     const handleSearch = (searchValue) => {
         setSearch(searchValue);
-        dispatch(getSearchStr(searchValue))
         if (onSearch) {
             onSearch(searchValue);
         }

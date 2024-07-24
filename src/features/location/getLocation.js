@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {Select} from "../../shared/ui/select";
 import cls from "./getLocation.module.sass"
-import login from "../../pages/login/ui/login";
+import login from "../../pages/loginPage/ui/login";
 
 const list = [
     {name: "dsad1", label: "dsads", id: 1},

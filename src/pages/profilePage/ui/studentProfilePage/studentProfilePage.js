@@ -13,7 +13,7 @@ import {
     StudentProfileTotalRating,
     StudentProfileGroupsHistory,
     StudentProfileTotalAttendance
-} from "entities/profile";
+} from "entities/profile/studentProfile";
 
 import cls from "./studentProfilePage.module.sass";
 

@@ -146,13 +146,13 @@ export const CreateGroup = () => {
 
 
             <Modal setActive={setActiveBox} active={activeBox}>
-            <div className={cls.studentBox}>
-                <div className={cls.studentBoxHeader}>
-                    <h2>Ingliz Tili</h2>
-                    <SearchInput/>
-                </div>
+                <div className={cls.studentBox}>
+                    <div className={cls.studentBoxHeader}>
+                        <h2>Ingliz Tili</h2>
+                        <SearchInput/>
+                    </div>
 
-            </div>
+                </div>
             </Modal>
 
             <Modal setActive={setActiveModal} active={activeModal}>

@@ -1,11 +1,13 @@
 import React, { useMemo, useState } from 'react';
+
 import { Pagination } from "features/pagination";
+import {GiveSalaryModal} from "features/giveSalary/giveSalary";
+import {GiveSalaryList} from "entities/giveSalary";
+import {giveSalary, branches} from "entities/giveSalary";
 import { Select } from "shared/ui/select";
-import {GiveSalaryList} from "../../../entities/giveSalary/ui";
-import {giveSalary, branches} from "../../../entities/giveSalary/model";
+import {Button} from "shared/ui/button";
+
 import cls from "./giveSalaryPage.module.sass";
-import {Button} from "../../../shared/ui/button";
-import {GiveSalaryModal} from "../../../features/giveSalary/giveSalary";
 
 export const GiveSalaryPage = () => {
     const [active, setActive] = useState(false);

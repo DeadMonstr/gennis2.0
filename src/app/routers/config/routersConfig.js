@@ -19,12 +19,12 @@ import {
 import {StudentsPage} from "pages/studentsPage";
 import {GroupsPage} from "pages/groupsPage";
 
-import {Register} from "pages/register";
-import {Rooms} from "pages/rooms/ui/rooms";
+import {Register} from "pages/registerPage";
+import {Rooms} from "pages/roomsPage/ui/rooms";
 import {TeachersPage} from "pages/teacherPage";
 
 import {HomePage} from "pages/homePage";
-import {ProfileTeacherPage} from "pages/profileTeacherPage";
+import {ProfileTeacherPage} from "pages/profilePage";
 import {StudentsDirectorPage} from "pages/studentsPage";
 
 
