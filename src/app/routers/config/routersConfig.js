@@ -27,9 +27,8 @@ import {TeachersPage} from "pages/teacherPage";
 import {HomePage} from "pages/homePage";
 import {ProfileTeacherPage} from "pages/profilePage";
 import {StudentsDirectorPage} from "pages/studentsPage";
-import {ProfileTeacherPage} from "pages/profileTeacherPage";
-import {VacancyPage} from "../../../pages/vacancyPage";
-import {VacancyWorkPage} from "../../../pages/vacancyWorkPage";
+import {VacancyPage} from "pages/vacancyPage";
+import {VacancyWorkPage} from "pages/vacancyWorkPage";
 
 
 export const routersConfig = [
@@ -126,7 +125,6 @@ export const routersConfig = [
         roles: [],
         path: getVacancyWorkPage(),
         element: <VacancyWorkPage/>,
-        isMenu: false
         isMenu: false,
         type: ["app_center_theme", "app_school_theme"]
     },
