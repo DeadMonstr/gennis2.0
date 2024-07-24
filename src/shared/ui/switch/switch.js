@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
-
-import cls from "./switch.module.sass"
+import React from 'react';
+import cls from "./switch.module.sass";
 
 export const Switch = React.memo((
     {

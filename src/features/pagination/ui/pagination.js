@@ -4,7 +4,6 @@ import classNames from "classnames";
 import {usePagination, DOTS} from "shared/lib/hooks/usePagination";
 
 import cls from "./pagination.module.sass";
-import {user} from "../../../entities/user";
 
 export const Pagination = React.memo((props) => {
 

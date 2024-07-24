@@ -12,8 +12,9 @@ import {
     getRouteCreateGroup,
     getRouteRooms,
     getTeacherProfile,
-    getVacancyPage,
     getDirectorRouteStudents,
+    getVacancyPage,
+    getVacancyWorkPage,
 } from "shared/const/routers";
 
 import {StudentsPage} from "pages/studentsPage";
@@ -26,6 +27,9 @@ import {TeachersPage} from "pages/teacherPage";
 import {HomePage} from "pages/homePage";
 import {ProfileTeacherPage} from "pages/profilePage";
 import {StudentsDirectorPage} from "pages/studentsPage";
+import {ProfileTeacherPage} from "pages/profileTeacherPage";
+import {VacancyPage} from "../../../pages/vacancyPage";
+import {VacancyWorkPage} from "../../../pages/vacancyWorkPage";
 
 
 export const routersConfig = [
@@ -106,6 +110,23 @@ export const routersConfig = [
         roles: [],
         path: getTeacherProfile("id"),
         element: <ProfileTeacherPage/>,
+        isMenu: false
+    },
+    {
+      to: "vacancyPage",
+      name: "Vakansiyalar",
+      icon: "fa-tasks",
+      roles: [],
+      path: getVacancyPage(),
+      element: <VacancyPage/>,
+      isMenu: true
+    },
+    {
+        to: "vacancyPage/vacancyWorkPage",
+        roles: [],
+        path: getVacancyWorkPage(),
+        element: <VacancyWorkPage/>,
+        isMenu: false
         isMenu: false,
         type: ["app_center_theme", "app_school_theme"]
     },

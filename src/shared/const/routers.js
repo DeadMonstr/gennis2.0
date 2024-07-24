@@ -14,8 +14,9 @@ export const getRouteTeacher = () => `teacher`;
 export const getRouteCreateGroup = () => `newStudents/createGroup`;
 export const getRouteRooms = () => `rooms`;
 export const getTeacherProfile = (id) => `teacherProfile`;
+export const getVacancyPage = () => `vacancyPage`
+export const getVacancyWorkPage = () => `vacancyPage/vacancyWorkPage`
 
-export const getVacancyPage = () => `vacancy`;
 export const getProfile = (id) => `profile`;
 
 

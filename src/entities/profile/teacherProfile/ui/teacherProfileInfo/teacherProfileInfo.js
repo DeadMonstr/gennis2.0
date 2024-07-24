@@ -1,15 +1,14 @@
-import {memo, useContext} from 'react';
+import {memo, useContext, useState} from 'react';
 
 import {ContextStuPro} from "pages/profilePage";
 import {EditableCard} from "shared/ui/editableCard";
 import {Link} from "shared/ui/link";
 
-import cls from "./studentProfileInfo.module.sass";
+import cls from "./teacherProfileInfo.module.sass";
 import defaultUserImg from "shared/assets/images/user_image.png";
 
-export const StudentProfileInfo = memo(() => {
+export const TeacherProfileInfo = memo(({active,setActive}) => {
 
-    const {setActive} = useContext(ContextStuPro)
 
     return (
         <EditableCard
@@ -37,29 +36,18 @@ export const StudentProfileInfo = memo(() => {
                     <i className="fas fa-plus"/>
                 </div>
             </div>
-            <EditableCard
-                extraClass={cls.info__balance}
-                onClick={() => setActive("balance")}
-            >
-                <h2>Balans</h2>
-                <p>Summa</p>
-                <div className={cls.info__money}>
-                    <h2>$ 570.000</h2>
-                    <p>$ 390.000</p>
-                </div>
-            </EditableCard>
-            {/*<Link to={"/platform/teacherSalaryPage"}>*/}
-            {/*    <EditableCard*/}
-            {/*        extraClass={cls.info__balance}*/}
-            {/*    >*/}
-            {/*        <h2>Balans</h2>*/}
-            {/*        <p>Summa</p>*/}
-            {/*        <div className={cls.info__money}>*/}
-            {/*            <h2>$ 570.000</h2>*/}
-            {/*            <p>$ 390.000</p>*/}
-            {/*        </div>*/}
-            {/*    </EditableCard>*/}
-            {/*</Link>*/}
+            <Link to={"/platform/teacherSalaryPage"}>
+                <EditableCard
+                    extraClass={cls.info__balance}
+                >
+                    <h2>Balans</h2>
+                    <p>Summa</p>
+                    <div className={cls.info__money}>
+                        <h2>$ 570.000</h2>
+                        <p>$ 390.000</p>
+                    </div>
+                </EditableCard>
+            </Link>
 
         </EditableCard>
     )

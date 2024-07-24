@@ -1,4 +1,3 @@
-
 import React, {Suspense} from 'react';
 import {createRoutesFromElements, Navigate, Route, RouterProvider} from "react-router";
 import {createBrowserRouter} from "react-router-dom";
@@ -21,6 +20,7 @@ import {useTheme} from "shared/lib/hooks/useTheme";
 
 import "app/styles/index.sass"
 import {CreateGroup} from "entities/students";
+import {VacancyPage} from "pages/vacancyPage";
 
 
 export const AppRouter = () => {
@@ -43,9 +43,11 @@ export const AppRouter = () => {
                     element={<Register/>}
                 />
 
+
                 {/*<Route element={<RequireAuth/>}>*/}
 
                 <Route path={"platform/*"} element={<Layout/>}>
+
                     {
                         routersConfig.map(item =>
                             <Route
