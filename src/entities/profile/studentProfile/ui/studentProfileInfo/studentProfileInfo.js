@@ -13,7 +13,7 @@ export const StudentProfileInfo = memo(() => {
 
     return (
         <EditableCard
-            onClick={() => setActive(true)}
+            // onClick={() => setActive(true)}
             extraClass={cls.info}
             title={<i className="fas fa-edit"/>}
         >
