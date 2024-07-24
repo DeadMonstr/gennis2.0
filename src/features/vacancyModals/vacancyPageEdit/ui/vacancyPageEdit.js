@@ -3,9 +3,9 @@ import { Modal } from "shared/ui/modal";
 import { Input } from "shared/ui/input";
 import { Select } from "shared/ui/select";
 import { Button } from "shared/ui/button";
-import cls from "./vacancyEdit.module.sass";
+import cls from "./vacancyPageEdit.module.sass";
 
-export const VacancyEdit = React.memo(({ modal, setModal, vacancy, onSave }) => {
+export const VacancyPageEdit = React.memo(({ modal, setModal, vacancy, onSave }) => {
     const [selectedSubject, setSelectedSubject] = useState(vacancy?.subjectName || "");
     const [selectedType, setSelectedType] = useState(vacancy?.systemType || "");
 
@@ -36,7 +36,7 @@ export const VacancyEdit = React.memo(({ modal, setModal, vacancy, onSave }) => 
                         onChange={(e) => setSelectedSubject(e.target.value)}
                     />
                     <Select
-                        
+
                     />
                     <Button onClick={handleSave}>Change</Button>
                 </div>

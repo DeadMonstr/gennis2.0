@@ -87,7 +87,11 @@ export const Register = () => {
             setLoading(false);
             if (action.type === registerUser.fulfilled.type) {
                 showAlert('success', 'Registration successful!');
-                reset();
+                reset(); // Bu yerda reset funksiyasini chaqiryapmiz
+                setSelectedLang(1); // holatlarni qayta o'rnating
+                setSelectedSubject(1);
+                setSelectedTime(1);
+                setSelectedProfession(1);
             } else {
                 console.error('Registration error:', action.error);
                 showAlert('error', 'Registration failed. Please try again.');

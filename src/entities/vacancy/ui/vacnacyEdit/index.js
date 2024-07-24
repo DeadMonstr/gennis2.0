@@ -1,1 +1,0 @@
-export {VacancyEdit} from './ui/vacancyEdit'

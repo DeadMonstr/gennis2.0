@@ -3,9 +3,10 @@ import { Pagination } from "features/pagination";
 import { GroupsFilter } from "features/filters/groupsFilter";
 import { Button } from "shared/ui/button";
 import cls from "./vacancyPage.module.sass";
-import { VacancyList } from "../../../entities/vacancy/ui/vacancyList";
-import { vacancyPageList } from "../../../entities/vacancy/model";
-import { VacancyEdit } from "../../../entities/vacancy/ui/vacnacyEdit";
+import { VacancyList } from "entities/vacancy/ui/vacancyList";
+import { vacancyPageList } from "entities/vacancy/model";
+import { VacancyPageEdit } from "features/vacancyModals/vacancyPageEdit";
+import { VacancyAdd } from "entities/vacancy/ui/vacancyAdd";
 
 export const VacancyPage = () => {
     const [active, setActive] = useState(false);
@@ -33,6 +34,10 @@ export const VacancyPage = () => {
         setModal(false);
     };
 
+    const addVacancy = (newVacancy) => {
+        setCurrentTableData(prevData => [...prevData, { id: Date.now(), ...newVacancy }]);
+    };
+
     return (
         <div className={cls.deletedGroups}>
             <div className={cls.mainContainer_filterPanelBox}>
@@ -49,14 +54,16 @@ export const VacancyPage = () => {
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}>
                     <Button
                         extraClass={cls.buttonHelper}
-                        children={<i className={"fas fa-plus"}></i>}
                         onClick={() => setModalActive(true)}
-                    />
+                    >
+                        <i className={"fas fa-plus"}></i>
+                    </Button>
                     <Button
                         extraClass={cls.buttonHelper}
-                        children={<i className={"fas fa-pencil"}></i>}
                         onClick={() => setEditMode(!editMode)}
-                    />
+                    >
+                        <i className={"fas fa-pencil"}></i>
+                    </Button>
                 </div>
             </div>
             <div className={cls.mainContainer_tablePanelBox}>
@@ -77,12 +84,17 @@ export const VacancyPage = () => {
                 pageSize={PageSize}
                 onPageChange={page => setCurrentPage(page)}
             />
-            <GroupsFilter setActive={setActive} active={active} />
-            <VacancyEdit
+            {/*<GroupsFilter setActive={setActive} active={active} />*/}
+            <VacancyPageEdit
                 setModal={setModal}
                 modal={modal}
                 vacancy={currentEditingVacancy}
                 onSave={handleVacancyChange}
+            />
+            <VacancyAdd
+                setActive={setModalActive}
+                active={modalActive}
+                addVacancy={addVacancy}
             />
         </div>
     );

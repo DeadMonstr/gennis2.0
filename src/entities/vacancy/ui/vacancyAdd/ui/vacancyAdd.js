@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
-import classNames from "classnames";
 import { Modal } from "shared/ui/modal";
 import { Input } from "shared/ui/input";
 import { Select } from "shared/ui/select";
-import { Radio } from "shared/ui/radio";
-import { Switch } from "shared/ui/switch";
-
 import cls from "./vacancyAdd.module.sass";
 import { Button } from "shared/ui/button";
 
@@ -14,7 +10,7 @@ export const VacancyAdd = React.memo(({ active, setActive, addVacancy }) => {
         { name: "chirchiq", label: "chirchiq" },
         { name: "gazalkent", label: "gazalkent" },
         { name: "xujakent", label: "xujakent" }
-    ]
+    ];
     const [subjectName, setSubjectName] = useState("");
     const [systemType, setSystemType] = useState("");
 
@@ -47,9 +43,10 @@ export const VacancyAdd = React.memo(({ active, setActive, addVacancy }) => {
                     />
                     <Button
                         extraClass={cls.buttonChange}
-                        children={"Add"}
                         onClick={handleAdd}
-                    />
+                    >
+                        Add
+                    </Button>
                 </div>
             </div>
         </Modal>
