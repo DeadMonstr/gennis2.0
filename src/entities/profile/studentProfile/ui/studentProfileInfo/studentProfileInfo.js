@@ -39,7 +39,7 @@ export const StudentProfileInfo = memo(() => {
             </div>
             <EditableCard
                 extraClass={cls.info__balance}
-                onClick={() => setActive("balanceIn")}
+                onClick={() => setActive("balance")}
             >
                 <h2>Balans</h2>
                 <p>Summa</p>

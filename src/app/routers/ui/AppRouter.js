@@ -14,10 +14,15 @@ import {NotFoundPage} from "pages/notfound/ui/notfound";
 import {ProfileTeacherPage} from "pages/profileTeacherPage";
 import {TeacherSalaryPage} from "pages/teacherSalaryPage";
 import {GiveSalaryPage} from "pages/giveSalaryPage";
+import {ClassProfilePage} from "pages/School";
+import {ClassMolassesPage} from "pages/School";
+import {EmployerPage} from "pages/employeesPage"
 import {useTheme} from "shared/lib/hooks/useTheme";
 
 import "app/styles/index.sass"
 import {VacancyPage} from "pages/vacancyPage";
+import {CreateGroup} from "../../../entities/students";
+import {FlowsPage} from "../../../pages/flowsPage";
 
 
 export const AppRouter = () => {
@@ -62,10 +67,23 @@ export const AppRouter = () => {
                             />
                         )
                     }
-
+                    <Route path={"students/createGroup"} element={<CreateGroup/>} />
                     <Route
                         path={"profile"}
                         element={<StudentProfilePage/>}
+                    />
+
+
+                    <Route path={"employer"} element={<EmployerPage/>} />
+                    <Route path={"flows"} element={<FlowsPage/>} />
+                    <Route
+                        path={"classProfile"}
+                        element={<ClassProfilePage/>}
+                    />
+
+                    <Route
+                            path={"molasses"}
+                        element={<ClassMolassesPage/>}
                     />
 
                     <Route
@@ -106,4 +124,3 @@ export const AppRouter = () => {
         </div>
     );
 };
-

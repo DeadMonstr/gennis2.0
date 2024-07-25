@@ -16,6 +16,7 @@ import loginAside from "shared/assets/images/login-page-4468581-3783954 1.svg"
 import {registerUser} from "../../register/model/registerThunk";
 import {API_URL, useHttp} from "../../../shared/api/base";
 import {getUserData} from "../model/loginSlice";
+import {type} from "@testing-library/user-event/dist/type";
 
 export const Login = () => {
 
@@ -84,7 +85,10 @@ export const Login = () => {
                 navigate("/platform")
                 console.log(res, "res")
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                showAlert("error" , "loginda hatolik")
+                console.log(err)
+            })
 
 
     }

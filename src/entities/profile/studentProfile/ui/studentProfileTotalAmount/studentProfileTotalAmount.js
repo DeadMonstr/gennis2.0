@@ -3,12 +3,13 @@ import {useForm} from "react-hook-form";
 import classNames from "classnames";
 
 import {ContextStuPro} from "pages/profilePage";
+import {amountTypes, amountService} from "entities/profile";
 import {EditableCard} from "shared/ui/editableCard";
 import {Input} from "shared/ui/input";
 import {Radio} from "shared/ui/radio";
 import {Select} from "shared/ui/select";
 import {Form} from "shared/ui/form";
-import {amountTypes, amountService} from "entities/profile";
+import {Modal} from "shared/ui/modal";
 
 import cls from "./studentProfileTotalAmount.module.sass";
 import money from "shared/assets/images/Money.png";
@@ -24,10 +25,18 @@ export const StudentProfileTotalAmount = memo(() => {
 
     const [activeService, setActiveService] = useState(amountService[0])
     const [activePaymentType, setActivePaymentType] = useState(0)
+    const [data, setData] = useState({})
+    const [checkModalStatus, setCheckModalStatus] = useState(false)
 
-    const onSubmit = (data) => {
+    const onSubmitData = (data) => {
         console.log(data)
+        setData(data)
+        setCheckModalStatus(true)
 
+    }
+
+    const onSubmitPassword = (data) => {
+        console.log(data)
     }
 
     const renderAmountServiceTypes = useCallback(() => {
@@ -98,7 +107,7 @@ export const StudentProfileTotalAmount = memo(() => {
                                         style={{left: `${listPretcent[activePaymentType]}%`}}
                                     />
                                 </div>
-                                <Form onSubmit={handleSubmit(onSubmit)}>
+                                <Form onSubmit={handleSubmit(onSubmitData)}>
                                     <div className={cls.form__inner}>
                                         <p>{activeService} miqdori</p>
                                         <Input
@@ -113,7 +122,7 @@ export const StudentProfileTotalAmount = memo(() => {
                             :
                             activeService === "Xayriya"
                                 ?
-                                <Form onSubmit={handleSubmit(onSubmit)}>
+                                <Form onSubmit={handleSubmit(onSubmitData)}>
                                     <div className={cls.form__container}>
                                         <Select
                                             extraClass={cls.form__select}
@@ -130,7 +139,7 @@ export const StudentProfileTotalAmount = memo(() => {
                                     </div>
                                 </Form>
                                 :
-                                <Form>
+                                <Form onSubmit={handleSubmit(onSubmitData)}>
                                     <div className={cls.form__inner}>
                                         <p>{activeService} miqdori</p>
                                         <Input
@@ -144,6 +153,25 @@ export const StudentProfileTotalAmount = memo(() => {
                     }
                 </div>
             </div>
+            <Modal
+                active={checkModalStatus}
+                setActive={setCheckModalStatus}
+            >
+                <Form
+                    onSubmit={handleSubmit(onSubmitPassword)}
+                >
+                    <div className={cls.amount__modal}>
+                        <h1>Parol</h1>
+                        <Input
+                            placeholder={"Parol"}
+                            type={"password"}
+                            register={register}
+                            name={"password"}
+                            required
+                        />
+                    </div>
+                </Form>
+            </Modal>
         </EditableCard>
     )
 })

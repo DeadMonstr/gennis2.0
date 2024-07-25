@@ -1,14 +1,23 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useContext} from 'react';
 
 import {Link} from "shared/ui/link";
+import {ThemeContext} from "shared/lib/context/themeContext";
 import {routersConfig} from "app/routers";
 
 import cls from "./menuBar.module.sass";
 
+
+
+
 export const Menubar = () => {
+
+    const {theme} = useContext(ThemeContext)
 
     const renderMultipleMenu = useCallback(() => {
         return routersConfig.map((item, index) => {
+            // console.log(item.type, "type")
+            // console.log(item.type?.includes(theme), "type")
+            // if (item.type?.includes(theme))
             if (item.isMenu)
                 return (
                     <li
@@ -27,8 +36,9 @@ export const Menubar = () => {
                     </li>
                 )
             else return null
+            // else return null
         })
-    }, [])
+    }, [theme])
 
 
     const renderedMenu = renderMultipleMenu()
