@@ -8,7 +8,7 @@ import cls from "./breadCrumbs.module.sass";
 export const BreadCrumbs = ({defaultLink}) => {
 
     const location = useLocation()
-    const {itemId} = useParams()
+    const {id} = useParams()
     const [crumbsData, setCrumbsData] = useState([])
     const [crumbsStory, setCrumbsStory] = useState([])
     // let uniqueCrumbsStory = useMemo(() => [...new Set(crumbsStory)], [crumbsStory])
@@ -18,7 +18,7 @@ export const BreadCrumbs = ({defaultLink}) => {
             location.pathname.split('/')
                 .filter(crumb => crumb !== "")
         )
-    }, [location, itemId])
+    }, [location, id])
 
     // useEffect(() => {
     //     console.log(true, 2)

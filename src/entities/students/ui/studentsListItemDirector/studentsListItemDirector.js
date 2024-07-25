@@ -2,6 +2,7 @@ import {memo} from 'react';
 import classNames from "classnames";
 
 import cls from "./studentsListItemDirector.module.sass";
+import {Link} from "../../../../shared/ui/link";
 
 export const StudentsListItemDirector = memo(({title, data}) => {
 
@@ -12,18 +13,22 @@ export const StudentsListItemDirector = memo(({title, data}) => {
                     [cls.eval]: (i + 1) % 2 === 0
                 })}>
                     {item.name}
-                    <span>{item.count}</span>
+                    <span>{item.label}</span>
                 </h2>
-                {
-                    item.branches.map(branch =>
-                        <h2 className={classNames(cls.studentsListItem__inner, {
-                            [cls.eval]: (i + 1) % 2 === 0
-                        })}>
-                            {branch.name}
-                            <span>{branch.count}</span>
-                        </h2>
-                    )
-                }
+                {/*{*/}
+                {/*    item.branches.map(branch =>*/}
+                {/*        <Link to={`../students/${branch.id}`}>*/}
+                {/*            <h2*/}
+                {/*                className={classNames(cls.studentsListItem__inner, {*/}
+                {/*                    [cls.eval]: (i + 1) % 2 === 0*/}
+                {/*                })}*/}
+                {/*            >*/}
+                {/*                {branch.name}*/}
+                {/*                <span>{branch.count}</span>*/}
+                {/*            </h2>*/}
+                {/*        </Link>*/}
+                {/*    )*/}
+                {/*}*/}
             </div>
         )
     }
@@ -32,7 +37,7 @@ export const StudentsListItemDirector = memo(({title, data}) => {
 
     return (
         <div className={cls.studentsListItem}>
-            <h1  className={cls.studentsListItem__title}>
+            <h1 className={cls.studentsListItem__title}>
                 <i className="fas fa-user-alt"/>
                 {title}
             </h1>

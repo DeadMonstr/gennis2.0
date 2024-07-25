@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {useSearchParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
 
+import {getLocations} from "pages/studentsPage";
 import {BreadCrumbs} from "features/breadCrumbs";
 import {SearchPlatformInput, getSearchStr} from "features/searchInput";
 import GetLocation from "features/location/getLocation";
@@ -24,6 +25,10 @@ export const Header = () => {
     const dispatch = useDispatch()
     const [selected, setSelected] = useState([])
     const [deletedId, setDeletedId] = useState(0)
+
+    useEffect(() => {
+        dispatch(getLocations(selected))
+    }, [selected])
 
     function fetchSearchData() {
         const checkedValue =

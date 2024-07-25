@@ -11,6 +11,8 @@ export const StudentsDirectorPage = () => {
 
     const data = useSelector(getStudentsListDirector)
 
+    console.log(data, "data")
+
     return (
         <div className={cls.studentsPage}>
             <StudentsListDirector
