@@ -15,7 +15,7 @@ import {user} from "entities/user";
 import {studentProfilePayment} from "entities/profile";
 import {studentProfileBooks} from "entities/profile";
 import {studentProfileRating} from "entities/profile";
-
+import {roomsAddSlice} from 'pages/rooms/index'
 
 
 const stringMiddleware = () => (next) => (action) => {
@@ -42,7 +42,8 @@ export const store = configureStore({
         user,
         studentProfilePayment,
         studentProfileBooks,
-        studentProfileRating
+        studentProfileRating,
+        roomsAddSlice,
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(
