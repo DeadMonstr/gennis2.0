@@ -112,7 +112,7 @@ export const teachersData = [
     },
 
 ]
-export const Teachers = () => {
+export const Teachers = ({data}) => {
     const [checkbox , setCheckbox] = useState(false)
 
     const checkBoxChange = (id) =>{
@@ -122,7 +122,7 @@ export const Teachers = () => {
     }
 
     const renderTeacher = () => {
-        return teachersData.map((item, i) => (
+        return data.map((item, i) => (
             <tr key={i}>
                 <td>{i + 1}</td>
                 <td>{item.name} {item.surname}</td>

@@ -58,7 +58,7 @@ export const TeacherFilter = React.memo(({active, setActive, activePage , setAct
 
                     <div className={cls.filter__switch}>
                         <p>O’chirilgan</p>
-                        <Switch onChangeSwitch={() =>onChangeSwitch()} activeSwitch={activeSwitch}/>
+                        <Switch onChangeSwitch={() => onChangeSwitch()} activeSwitch={activeSwitch}/>
                     </div>
 
                 </div>

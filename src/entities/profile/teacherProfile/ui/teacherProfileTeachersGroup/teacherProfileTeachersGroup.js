@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
 import { EditableCard } from "shared/ui/editableCard";
-import {groups} from "entities/profile";
+import {groups} from "entities/profile/teacherProfile";
 
 import cls from "./teacherProfileTeachersGroup.module.sass";
 import cardBg from 'shared/assets/icons/card-bg.svg';

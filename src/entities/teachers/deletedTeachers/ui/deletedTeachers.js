@@ -17,9 +17,9 @@ const teachersData = [
     {name : "sardor" , surname: "ikromov" , username: "ikromovvv" , number: 123123 , age: 17 , subject: "none" , deleteData: "22.22.2222"},
 
 ]
-export const DeletedTeachers = () => {
+export const DeletedTeachers = ({data}) => {
     const renderTeacher = () =>{
-        return teachersData.map((item , i) =>(
+        return data.map((item , i) =>(
             <tr>
                 <td>{i + 1}</td>
                 <td>{item.name} {item.surname}</td>

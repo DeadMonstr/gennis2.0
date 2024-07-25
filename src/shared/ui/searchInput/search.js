@@ -11,7 +11,7 @@ export const SearchInput = memo(({ search, setSearch}) => {
                 placeholder={"Qidiruv "}
                 id="search"
                 type="search"
-                onInput={e => {
+                onChange={e => {
                     setSearch(e.target.value)
                 }}
             />

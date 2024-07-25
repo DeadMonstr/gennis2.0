@@ -5,7 +5,7 @@ import {Navigate} from "react-router";
 // import {getUserAuthData} from "pages/login";
 import {fetchUserData} from "entities/user";
 
-import {getUserRole} from "pages/login";
+import {getUserRole} from "pages/loginPage";
 
 
 export const RequireAuth = ({roles, children}) => {

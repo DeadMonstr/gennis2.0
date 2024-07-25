@@ -1,84 +1,51 @@
-import React, {useContext, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useSearchParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
 
-import {fetchSearch} from "features/searchInput/model/searchThunk";
+import {getLocations} from "pages/studentsPage";
 import {BreadCrumbs} from "features/breadCrumbs";
-import {SearchPlatformInput} from "features/searchInput";
+import {SearchPlatformInput, getSearchStr} from "features/searchInput";
 import GetLocation from "features/location/getLocation";
 import {ThemeSwitcher} from "features/themeSwitcher";
-import {SearchContext} from "shared/lib/context/searchContext";
+import {useDebounce} from "shared/lib/hooks/useDebounce";
 
 import cls from "./header.module.sass";
 import logo from "shared/assets/images/logo.svg";
 
 export const Header = () => {
 
-    const {setSearch} = useContext(SearchContext)
+    const [searchParams, setSearchParams] = useSearchParams({search: ""})
+    const [valueData, setValueData] = useState(null)
+    const debouncedFetchData = useDebounce(fetchSearchData, 500)
+
+    useEffect(() => {
+        debouncedFetchData()
+    }, [valueData])
 
     const dispatch = useDispatch()
     const [selected, setSelected] = useState([])
     const [deletedId, setDeletedId] = useState(0)
 
-    let [searchParams, setSearchParams] = useSearchParams()
+    useEffect(() => {
+        dispatch(getLocations(selected))
+    }, [selected])
 
-    const onSubmitSearchStr = (searchStr) => {
-        console.log(searchStr, "search")
-        setSearch(searchStr)
-        dispatch(fetchSearch(searchStr))
+    function fetchSearchData() {
+        const checkedValue =
+            typeof valueData === "string" ? valueData : searchParams.get("search")
+        setSearchParams({
+            search: checkedValue
+        })
+        dispatch(getSearchStr(checkedValue))
     }
-
-
-    // try {
-    //     addQueryParams({
-    //         sort,
-    //         order,
-    //         search,
-    //         type,
-    //     });
-    //     const response = await extra.api.get<Article[]>('/articles', {
-    //         params: {
-    //             _expand: 'user',
-    //             _limit: limit,
-    //             _page: page,
-    //             _sort: sort,
-    //             _order: order,
-    //             q: search,
-    //             type: type === ArticleType.ALL ? undefined : type,
-    //         },
-    //     });
-    //
-    //     if (!response.data) {
-    //         throw new Error();
-    //     }
-    //
-    //     return response.data;
-    // } catch (e) {
-    //     return rejectWithValue('error');
-    // }
-
-
-    // useEffect(() => {
-    //     try {
-    //         setSearchParams({
-    //             sort: "createdAt",
-    //             order: "asc",
-    //             search: "it",
-    //             type: "ALL"
-    //         })
-    //     } catch (e) {
-    //         throw e
-    //     }
-    // }, [searchParams, setSearchParams])
-    //
-    // console.log(searchParams, "search")
 
     return (
         <header className={cls.header}>
             <div className={cls.header__top}>
                 <img className={cls.header__logo} src={logo} alt=""/>
                 <SearchPlatformInput
-                    onSearch={setSearch}
+                    defaultSearch={searchParams.get("search")}
+                    onSearch={setValueData}
                 />
                 <div className={cls.inner}>
                     <ThemeSwitcher/>
@@ -111,5 +78,5 @@ export const Header = () => {
                 </div>
             </div>
         </header>
-    );
-};
+    )
+}

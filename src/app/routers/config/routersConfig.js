@@ -12,20 +12,23 @@ import {
     getRouteCreateGroup,
     getRouteRooms,
     getTeacherProfile,
-    getVacancyPage,
     getDirectorRouteStudents,
+    getVacancyPage,
+    getVacancyWorkPage,
 } from "shared/const/routers";
 
 import {StudentsPage} from "pages/studentsPage";
 import {GroupsPage} from "pages/groupsPage";
 
-import {Register} from "pages/register";
-import {Rooms} from "pages/rooms/ui/rooms";
+import {Register} from "pages/registerPage";
+import {Rooms} from "pages/roomsPage/ui/rooms";
 import {TeachersPage} from "pages/teacherPage";
 
 import {HomePage} from "pages/homePage";
-import {ProfileTeacherPage} from "pages/profileTeacherPage";
+import {ProfileTeacherPage} from "pages/profilePage";
 import {StudentsDirectorPage} from "pages/studentsPage";
+import {VacancyPage} from "pages/vacancyPage";
+import {VacancyWorkPage} from "pages/vacancyWorkPage";
 import {EmployerPage} from "pages/employeesPage";
 import {FlowsPage} from "../../../pages/flowsPage";
 
@@ -108,6 +111,22 @@ export const routersConfig = [
         roles: [],
         path: getTeacherProfile("id"),
         element: <ProfileTeacherPage/>,
+        isMenu: false
+    },
+    {
+      to: "vacancyPage",
+      name: "Vakansiyalar",
+      icon: "fa-tasks",
+      roles: [],
+      path: getVacancyPage(),
+      element: <VacancyPage/>,
+      isMenu: true
+    },
+    {
+        to: "vacancyPage/vacancyWorkPage",
+        roles: [],
+        path: getVacancyWorkPage(),
+        element: <VacancyWorkPage/>,
         isMenu: false,
         type: ["app_center_theme", "app_school_theme"]
     },

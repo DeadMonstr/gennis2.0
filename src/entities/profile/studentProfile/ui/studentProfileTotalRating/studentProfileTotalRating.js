@@ -7,7 +7,7 @@ import {ContextStuPro} from "pages/profilePage";
 
 import cls from "./studentProfileTotalRating.module.sass";
 import {API_URL, headers, useHttp} from "shared/api/base";
-import {fetch} from "entities/profile";
+import {fetch} from "entities/profile/studentProfile";
 
 export const StudentProfileTotalRating = memo(() => {
 

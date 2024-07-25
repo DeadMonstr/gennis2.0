@@ -1,8 +1,13 @@
 import React, { useMemo, useState } from 'react';
+
 import { Pagination } from "features/pagination";
+import {
+    TeacherSalaryList,
+    branches,
+    salary
+} from "entities/teacherSalary";
 import { Select } from "shared/ui/select";
-import {TeacherSalaryList} from "../../../entities/teacherSalary/ui";
-import {salary, branches} from "../../../entities/teacherSalary/model";
+
 import cls from "./teacherSalaryPage.module.sass";
 
 export const TeacherSalaryPage = () => {

@@ -6,8 +6,9 @@ import {useTheme} from "shared/lib/hooks/useTheme";
 export const ThemeSwitcher = () => {
 
     const {toggleTheme, theme} = useTheme()
+    const currentTheme = localStorage.getItem("theme")
 
-    const [active, setActive] = useState(true)
+    const [active, setActive] = useState(currentTheme === "app_center_theme")
 
     const onClick = (status) => {
         toggleTheme(theme)

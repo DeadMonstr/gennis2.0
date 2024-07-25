@@ -3,7 +3,7 @@ import {useForm} from "react-hook-form";
 import classNames from "classnames";
 
 import {ContextStuPro} from "pages/profilePage";
-import {amountTypes, amountService} from "entities/profile";
+import {amountTypes, amountService} from "entities/profile/studentProfile";
 import {EditableCard} from "shared/ui/editableCard";
 import {Input} from "shared/ui/input";
 import {Radio} from "shared/ui/radio";

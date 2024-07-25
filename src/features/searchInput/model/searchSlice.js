@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import {fetchSearch} from "./searchThunk";
 
 const initialState = {
-    search: "",
+    search: null,
     loading: false,
     error: null
 }

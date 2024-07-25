@@ -1,1 +1,0 @@
-export {HomeTeachers} from "./ui/homeTeachers"

@@ -13,11 +13,11 @@ import {
     StudentProfileTotalRating,
     StudentProfileGroupsHistory,
     StudentProfileTotalAttendance
-} from "entities/profile";
+} from "entities/profile/studentProfile";
 
 import cls from "./studentProfilePage.module.sass";
 
-export const ContextStuPro = createContext(null)
+export const ContextStuPro = createContext({})
 
 export const StudentProfilePage = () => {
 

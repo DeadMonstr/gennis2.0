@@ -3,8 +3,8 @@
 import {configureStore} from "@reduxjs/toolkit";
 
 import {search} from "features/searchInput";
-import {registerUser} from 'pages/register';
-import {loginSlice} from "pages/login";
+import {registerUser} from 'pages/registerPage';
+import {loginSlice} from "pages/loginPage";
 import {filteredTeachers} from "features/filters/teacherFilter";
 import {filteredStudents} from "features/filters/studentsFilter";
 import {filteredEmployees} from "features/filters/employeesFilter";
@@ -12,9 +12,9 @@ import {filteredGroups} from "features/filters/groupsFilter";
 import {filteredRooms} from "features/filters/roomsFilter";
 import {deletedGroups, groups} from "entities/groups/index";
 import {user} from "entities/user";
-import {studentProfilePayment} from "entities/profile";
-import {studentProfileBooks} from "entities/profile";
-import {studentProfileRating} from "entities/profile";
+import {studentProfilePayment} from "entities/profile/studentProfile";
+import {studentProfileBooks} from "entities/profile/studentProfile";
+import {studentProfileRating} from "entities/profile/studentProfile";
 import {studentsDirectorSlice} from "pages/studentsPage"
 
 import {newStudents} from "../entities/students";

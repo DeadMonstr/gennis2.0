@@ -1,6 +1,6 @@
 import {memo, useCallback, useState} from 'react';
 
-import {amountService, amountTypes} from "entities/profile";
+import {amountService, amountTypes} from "entities/profile/studentProfile";
 import {Modal} from "shared/ui/modal";
 import {Form} from "shared/ui/form";
 import {Input} from "shared/ui/input";

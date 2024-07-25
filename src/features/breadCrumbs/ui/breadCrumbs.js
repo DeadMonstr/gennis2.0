@@ -1,5 +1,5 @@
-import {useLocation , useParams} from "react-router";
-import {useEffect, useState} from "react";
+import {useLocation, useParams} from "react-router";
+import {useCallback, useEffect, useMemo, useState} from "react";
 
 import {Link} from "shared/ui/link";
 
@@ -8,21 +8,29 @@ import cls from "./breadCrumbs.module.sass";
 export const BreadCrumbs = ({defaultLink}) => {
 
     const location = useLocation()
-    const {itemId} = useParams()
+    const {id} = useParams()
     const [crumbsData, setCrumbsData] = useState([])
+    const [crumbsStory, setCrumbsStory] = useState([])
+    // let uniqueCrumbsStory = useMemo(() => [...new Set(crumbsStory)], [crumbsStory])
 
     useEffect(() => {
         setCrumbsData(
             location.pathname.split('/')
                 .filter(crumb => crumb !== "")
         )
-    }, [location, itemId])
+    }, [location, id])
 
-    // console.log(crumbsData.sort(), "sort")
+    // useEffect(() => {
+    //     console.log(true, 2)
+    //     setCrumbsStory(
+    //         arr => uniqueCrumbsStory[1] === crumbsData[1] ? [...arr, ...crumbsData] : crumbsData
+    //     )
+    // }, [crumbsData])
 
     let currentLink = ''
 
-    const renderCrumbs = () => {
+    const renderCrumbs = useCallback(() => {
+        // return uniqueCrumbsStory.map((crumb, index) => {
         return crumbsData.map((crumb, index) => {
 
             currentLink += `/${crumb}`
@@ -40,10 +48,11 @@ export const BreadCrumbs = ({defaultLink}) => {
                         {crumb}
                     </Link>
                     {crumbsData.length - 1 === index ? null : <span>/</span>}
+                    {/*{uniqueCrumbsStory.length - 1 === index ? null : <span>/</span>}*/}
                 </div>
             )
         })
-    }
+    }, [crumbsData])
 
     const crumbs = renderCrumbs()
 
