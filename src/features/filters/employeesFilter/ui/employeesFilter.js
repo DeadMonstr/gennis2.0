@@ -7,7 +7,7 @@ import {Switch} from "shared/ui/switch";
 
 import cls from "../../filters.module.sass";
 
-export const EmployeesFilter = React.memo(({active, setActive, activePage}) => {
+export const EmployeesFilter = React.memo(({active, setActive, activePage , activeSwitch , setActiveSwitch}) => {
 
     const [selectedFrom, setSelectedFrom] = useState()
     const [selectedTo, setSelectedTo] = useState()
@@ -56,7 +56,7 @@ export const EmployeesFilter = React.memo(({active, setActive, activePage}) => {
 
                     <div className={cls.filter__switch}>
                         <p>O’chirilgan</p>
-                        <Switch/>
+                        <Switch activeSwitch={activeSwitch} onChangeSwitch={setActiveSwitch}/>
                     </div>
 
                 </div>

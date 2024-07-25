@@ -26,6 +26,8 @@ import {TeachersPage} from "pages/teacherPage";
 import {HomePage} from "pages/homePage";
 import {ProfileTeacherPage} from "pages/profileTeacherPage";
 import {StudentsDirectorPage} from "pages/studentsPage";
+import {EmployerPage} from "pages/employeesPage";
+import {FlowsPage} from "../../../pages/flowsPage";
 
 
 export const routersConfig = [
@@ -108,6 +110,26 @@ export const routersConfig = [
         element: <ProfileTeacherPage/>,
         isMenu: false,
         type: ["app_center_theme", "app_school_theme"]
+    },
+    {
+        to: "employer",
+        name: "Employers",
+        icon: "fa-user-graduate",
+        roles: [],
+        path: getTeacherProfile("id"),
+        element: <EmployerPage/>,
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
+    },
+    {
+        to: "flows",
+        name: "Flows",
+        icon: "fa-user-graduate",
+        roles: [],
+        path: getTeacherProfile("id"),
+        element: <FlowsPage/>,
+        isMenu: true,
+        type: ["app_school_theme"]
     },
     {
         to: "rooms",
