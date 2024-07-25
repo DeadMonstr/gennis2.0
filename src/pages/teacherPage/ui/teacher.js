@@ -1,15 +1,17 @@
-import React, {useMemo, useState} from "react";
-import {useSelector} from "react-redux";
+import React, {useEffect, useMemo, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 
 import {TeacherFilter} from "features/filters/teacherFilter";
 import {Pagination} from "features/pagination";
 import {getSearchValue} from "features/searchInput";
 import {DeletedTeachers, Teachers} from "entities/teachers";
-import {teachersData} from "entities/teachers/teachers/ui/teachers";
+
 import {Button} from "shared/ui/button";
-import {Select} from "shared/ui/select";
+
 
 import cls from "./teacher.module.sass";
+import {getTeachers} from "../../../entities/teachers/model/selector/teacherSelector";
+import {fetchTeachersData} from "../../../entities/teachers/model/teacherThunk";
 
 const branches = [
     {name: "chirchiq"},
@@ -19,10 +21,15 @@ const branches = [
 export const TeachersPage = () => {
 
     const search = useSelector(getSearchValue)
+    const teachersData = useSelector(getTeachers)
+    const dispatch = useDispatch()
 
-    console.log(true)
+    useEffect(() =>{
+        dispatch(fetchTeachersData())
+    } ,[])
 
-    console.log(search, "search Teacher")
+
+    console.log(teachersData , "teach")
 
     let PageSize = useMemo(() => 50, [])
     const [currentTableData, setCurrentTableData] = useState([])
@@ -66,11 +73,13 @@ export const TeachersPage = () => {
                 <h2>{activeSwitch ? "Deleted Teachers" : "Teachers"}</h2>
                 {activeSwitch ?
                     <DeletedTeachers
-                        data={searchedUsers}
+                        data={teachersData}
+                        // data={searchedUsers}
                     />
                     :
                     <Teachers
-                        data={searchedUsers}
+                        // data={teachers}
+                        data={currentTableData}
                     />}
             </div>
 
