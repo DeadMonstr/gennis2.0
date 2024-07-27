@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { roomsAddThunk } from 'pages/rooms/model/roomsAddThunk';
+import { roomsAddThunk } from 'pages/roomsPage/model/roomsAddThunk';
 import { Modal } from '../../../shared/ui/modal';
 import { Input } from '../../../shared/ui/input';
 import { Button } from '../../../shared/ui/button';

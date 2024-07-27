@@ -18,10 +18,10 @@ import {timeTable} from "pages/timePage";
 import {newStudents} from "../entities/students";
 import {teachers} from "../entities/teachers"
 import {employers} from "../entities/employer";
-import {studentProfilePayment} from "entities/profile";
-import {studentProfileBooks} from "entities/profile";
-import {studentProfileRating} from "entities/profile";
-import {roomsAddSlice} from 'pages/rooms/index'
+import {studentProfilePayment} from "entities/profile/studentProfile";
+import {studentProfileBooks} from "entities/profile/studentProfile";
+import {studentProfileRating} from "entities/profile/studentProfile";
+import {roomsAddSlice} from 'pages/roomsPage'
 
 
 const stringMiddleware = () => (next) => (action) => {
