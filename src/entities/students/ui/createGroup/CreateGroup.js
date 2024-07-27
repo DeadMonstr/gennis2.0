@@ -9,16 +9,15 @@ import {Table} from "shared/ui/table";
 import {Modal} from "shared/ui/modal";
 import {Input} from "shared/ui/input";
 import React, {useEffect, useState} from "react";
-import {getNewStudentsData} from "../../model/selector/newStudentsSelector";
+import {getNewStudentsData} from "../../model/selector/studentsSelector";
 import {useDispatch, useSelector} from "react-redux";
-import {teachers, Teachers} from "../../../teachers";
-import {fetchNewStudentsData} from "../../model/newStudentsThunk";
+import {Teachers} from "../../../teachers";
+import {fetchNewStudentsData} from "../../model/studentsThunk";
 import {Form} from "shared/ui/form";
 import {Textarea} from "shared/ui/textArea";
-import {SearchInput} from "../../../../shared/ui/searchInput";
-import {TeachersPage} from "../../../../pages/teacherPage";
-import {fetchTeachersData} from "../../../teachers/model/teacherThunk";
-import {getTeachers} from "../../../teachers/model/selector/teacherSelector";
+import {SearchInput} from "shared/ui/searchInput";
+import {fetchTeachersData} from "../../../teachers";
+import {getTeachers} from "../../../teachers/";
 
 const branches = [
     {name: "chirhciq"},
@@ -110,7 +109,6 @@ export const CreateGroup = () => {
                     </Button>
                     <Button onClick={() => setActiveModal(!activeModal)} status={"timeTable"} type={"login"}>Time
                         Table</Button>
-
                 </div>
                 <div className={cls.mainContainer_filterPanelBox_leftFilterRadioGroupBox}>
                     {peoples.map((item, id) => (
@@ -158,10 +156,8 @@ export const CreateGroup = () => {
                         <h2>Ingliz Tili</h2>
                         <SearchInput/>
                     </div>
-
                 </div>
             </Modal>
-
             <Modal setActive={setActiveModal} active={activeModal}>
                 <div className={cls.timeTable}>
                     <h1 className={cls.timeTableHeader}>
@@ -181,8 +177,6 @@ export const CreateGroup = () => {
                     </div>
                 </div>
             </Modal>
-
-
             <Modal setActive={setCreateGroup} active={createGroup}>
                 <div className={cls.createGroup}>
                     <div className={cls.createGroupTitle}>
@@ -191,7 +185,6 @@ export const CreateGroup = () => {
                     <div className={cls.createGroupForm}>
                         <Form>
                             <Select title={"Fanlar"}/>
-
                             <div className={cls.createGroupFormFilter}>
                                 <Input extraClassName={cls.createGroupInput} placeholder={"Boshlanish vaqti"}/>
                                 <Input extraClassName={cls.createGroupInput} placeholder={'Tugash vaqti'}/>
@@ -204,9 +197,7 @@ export const CreateGroup = () => {
                         </Form>
                     </div>
                 </div>
-
             </Modal>
-
             <Modal setActive={setModalAddGroup} active={modalAddGroup}>
                 <div className={cls.addModal}>
                     <h2>Add Group</h2>

@@ -6,13 +6,14 @@ import {useMemo, useState} from "react";
 import {Table} from "shared/ui/table";
 import {FlowFilter} from "../../../features/filters/flowFilter";
 import {Pagination} from "../../../features/pagination";
+import {Flows} from "../../../entities/flows";
 
 
 const radioFilter = [
     {name: "class", label: 'class'},
     {name: "flow", label: "flow"}
 ]
-const renderFlow = [
+const renderFlowData = [
     {name: "sasdas", class: "sdasadas"},
     {name: "sasdas", class: "sdasadas"},
     {name: "sasdas", class: "sdasadas"},
@@ -24,10 +25,24 @@ export const FlowsPage = () => {
     const [search, setSearch] = useState("")
     const [activeFlow, setActiveFlow] = useState(false)
 
+
+    const [radioFilterItem , setRadioFilterItem] =useState(radioFilter[0].name)
+
+
+    console.log(radioFilter)
+
     const handleChange = (value) => {
-        setRadioChange(value);
+
+        setRadioFilterItem(value);
     };
-    const [radioChange, setRadioChange] = useState(false)
+
+    const renderFlow = () =>{
+        switch (radioFilterItem){
+            case ("flow"):
+                return <Flows currentTableData={currentTableData}/>
+        }
+    }
+
 
     return (
         <div className={cls.flow}>
@@ -44,43 +59,17 @@ export const FlowsPage = () => {
                     {radioFilter.map((item, i) => {
                         return (
                             <div>
-                                <Radio children={item.label} checked={radioChange === item.name}
+                                <Radio children={item.label} checked={radioFilterItem === item.name}
                                        onChange={() => handleChange(item.name)}/>
                             </div>
                         )
                     })}
                 </div>
             </div>
-            <div className={cls.table}>
-                <h2>Flows</h2>
-                <div className={cls.table__wrapper}>
-                    <Table>
-                        <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nomi</th>
-                            <th>Sinf</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {currentTableData.map((item, i) => {
-                            return (
-                                <tr>
-                                    <td>{i + 1}</td>
-                                    <td>{item.name}</td>
-                                    <td>
-                                        <div className={item.class ? cls.flow__itemClass : null}>{item.class}</div>
-                                    </td>
-                                </tr>
-                            )
-                        })}
-                        </tbody>
-                    </Table>
-                </div>
-            </div>
+            {renderFlow()}
             <Pagination
                 setCurrentTableData={setCurrentTableData}
-                users={renderFlow}
+                users={renderFlowData}
                 search={search}
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}

@@ -79,7 +79,49 @@
         font-size: 16px
         height: 4.5rem
         width: 20rem
+  &__modal
+    width: fit-content
+    height: fit-content
+    padding: 2rem
+    background-color: white
+    border-radius: 10px
 
+    h1
+      margin-bottom: 2rem
+      font-size: 2.4rem
+
+    .wrapper
+      gap: 2rem
+      display: flex
+      justify-content: space-around
+      align-items: center
+
+    &_img
+      width: 450px
+      height: 400px
+      background-color: rgba(0, 0, 0, 0.4)
+      border-radius: 10px
+      display: flex
+      justify-content: center
+      align-items: center
+      font-size: 100px
+
+      img
+        width: 100%
+        height: 100%
+
+    &_text
+      width: 450px
+      height: 400px
+      display: flex
+      flex-direction: column
+      justify-content: space-around
+      align-items: center
+
+      textarea
+        padding: 10px
+        font-size: 18px
+        resize: none
 
 @media (max-width: 1550px)
   .home
@@ -234,7 +276,7 @@
 
 @media (max-width: 490px)
   .home
-    align-items: flex-start
+    //align-items: flex-start
     padding: 3rem
 
     &Wrapper

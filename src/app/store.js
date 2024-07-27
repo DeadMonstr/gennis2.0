@@ -16,7 +16,7 @@ import {studentProfilePayment} from "entities/profile/studentProfile";
 import {studentProfileBooks} from "entities/profile/studentProfile";
 import {studentProfileRating} from "entities/profile/studentProfile";
 import {studentsDirectorSlice} from "pages/studentsPage"
-
+import {homeSlice} from "../entities/home";
 import {newStudents} from "../entities/students";
 import {teachers} from "../entities/teachers"
 import {employers} from "../entities/employer";
@@ -51,7 +51,8 @@ export const store = configureStore({
         user,
         newStudents,
         employers,
-        teachers
+        teachers,
+        homeSlice
 
     },
     middleware: getDefaultMiddleware =>

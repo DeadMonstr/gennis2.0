@@ -10,8 +10,8 @@ import {Button} from "shared/ui/button";
 
 
 import cls from "./teacher.module.sass";
-import {getTeachers} from "../../../entities/teachers/model/selector/teacherSelector";
-import {fetchTeachersData} from "../../../entities/teachers/model/teacherThunk";
+import {getTeachers} from "../../../entities/teachers/";
+import {fetchTeachersData} from "../../../entities/teachers";
 
 const branches = [
     {name: "chirchiq"},

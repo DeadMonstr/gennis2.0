@@ -77,17 +77,19 @@ export const Login = () => {
         // .catch(() =>{
         //     showAlert("error" ,"error login")
         // })
-
+        setLoading(!loading)
 
         request(`${API_URL}api/token/`, "POST", JSON.stringify(res))
             .then(res => {
                 dispatch(getUserData(res))
                 navigate("/platform")
                 console.log(res, "res")
+                setLoading(false)
             })
             .catch(err => {
                 showAlert("error" , "loginda hatolik")
                 console.log(err)
+                setLoading(true)
             })
 
 
@@ -109,9 +111,9 @@ export const Login = () => {
                         </h1>
                         <div className={cls.box__form}>
                             <form onSubmit={handleSubmit(onClick)}>
-                                {loading ? <Input onChange={(e) => setInputChange(e.target.value)} title={"Email"}
+                                {loading ? <Input onChange={(e) => setInputChange(e.target.value)} title={"username"}
                                                   register={register} name={"username"} type="text" required/> :
-                                    <Input disabled onChange={(e) => setInputChange(e.target.value)} title={"Email"}
+                                    <Input disabled onChange={(e) => setInputChange(e.target.value)} title={"username"}
                                            register={register} name={"username"} type="text" required/>}
                                 {loading ?
                                     <Input title={"password"} register={register} name={"password"} type="password"

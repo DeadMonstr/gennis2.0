@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-import {fetchNewStudentsData} from "./newStudentsThunk";
+import {fetchNewStudentsData} from "./studentsThunk";
 
 
 const initialState = {
@@ -10,7 +10,7 @@ const initialState = {
     studyingStudents: []
 }
 
-export const newStudentsSlice = createSlice({
+export const studentsSlice = createSlice({
     name: "newStudentsSlice",
     initialState,
     reducers: {},
@@ -30,4 +30,4 @@ export const newStudentsSlice = createSlice({
             })
 })
 
-export default newStudentsSlice.reducer
+export default studentsSlice.reducer

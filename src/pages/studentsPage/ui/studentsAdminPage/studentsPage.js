@@ -8,8 +8,8 @@ import {Pagination} from "features/pagination";
 import cls from "./students.module.sass"
 import {StudentsFilter} from "features/filters/studentsFilter";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchNewStudentsData} from "entities/students/model/newStudentsThunk";
-import {getNewStudentsData, getStudyingStudents} from "entities/students/model/selector/newStudentsSelector";
+import {fetchNewStudentsData} from "entities/students/model/studentsThunk";
+import {getNewStudentsData, getStudyingStudents} from "entities/students/model/selector/studentsSelector";
 
 const studentsFilter = [
     {name: "newStudents", label: "New Students"},
