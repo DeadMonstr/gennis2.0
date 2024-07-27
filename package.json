@@ -49,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "react-dropzone": "^14.2.3",
     "sass": "^1.77.6"
   }
 }

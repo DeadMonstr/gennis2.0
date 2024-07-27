@@ -7,3 +7,6 @@ export {HomeAdvantages} from "./ui/homeAdvantages/homeAdvantages";
 export {HomeHeader} from "./ui/homeHeader/homeHeader";
 export {Results} from "./ui/homeResults/results";
 export {HomeTeachers} from "./ui/homeTeachers/homeTeachers";
+
+
+export {default as homeSlice} from "./ui/model/homeSlice"

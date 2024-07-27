@@ -15,6 +15,7 @@ import {user} from "entities/user";
 import {studentsDirectorSlice} from "pages/studentsPage"
 import {timeTable} from "pages/timePage";
 
+import {homeSlice} from "../entities/home";
 import {newStudents} from "../entities/students";
 import {teachers} from "../entities/teachers"
 import {employers} from "../entities/employer";
@@ -54,6 +55,8 @@ export const store = configureStore({
         newStudents,
         employers,
         teachers,
+        homeSlice,
+
         timeTable,
         roomsAddSlice,
     },

@@ -7,7 +7,53 @@
     justify-content: space-around
     flex-wrap: wrap
     gap: 5rem
+  &__modal
+    width: fit-content
+    height: fit-content
+    padding: 2rem
+    background-color: white
+    border-radius: 10px
+    gap: 2rem
 
+    .wrapper
+      display: flex
+      flex-direction: column
+      gap: 2rem
+
+      &__container
+        display: flex
+        gap: 2rem
+
+        &_item
+          width: 450px
+          height: 400px
+          display: flex
+          flex-direction: column
+          justify-content: space-around
+          align-items: center
+
+          textarea
+            resize: none
+            height: 250px
+            border: 2px solid #626262
+
+          &:nth-child(2)
+            border: 1px solid black
+
+            img
+              width: 100%
+              height: 100%
+
+            .image
+              gap: 2rem
+              display: flex
+              flex-direction: column
+              justify-content: space-evenly
+              align-items: center
+
+              i
+
+                color: black
   &__box
     display: flex
     flex-direction: column

@@ -1,13 +1,19 @@
 import cls from "./contact.module.sass"
-import {useContext, useEffect, useRef, useState} from "react";
+import {useCallback, useContext, useEffect, useRef, useState} from "react";
 import classNames from "classnames";
 import headerImg from "shared/assets/images/gennisHome.svg"
 import {Input} from "shared/ui/input";
 import {Textarea} from "shared/ui/textArea";
 import {Button} from "shared/ui/button";
 import {Context} from "pages/homePage/ui/homePage";
+import {API_URL, headers, useHttp} from "../../../../shared/api/base";
+import {changeHrefs, changeLocation} from "../model/homeSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {useForm} from "react-hook-form";
 
-const branches = [
+import {Modal} from "../../../../shared/ui/modal";
+
+const locations = [
 
     {name: "xo'jakent"},
     {name: "gazalkent"},
@@ -16,7 +22,11 @@ const branches = [
     {name: "nurafshon"},
 ]
 export const Contact = () => {
-
+    const {
+        hrefs,
+        locations,
+        teachersLoadingStatus
+    } = useSelector(state => state?.homeSlice)
     const {setSectionTop} = useContext(Context)
 
     const sectionRef = useRef()
@@ -25,12 +35,197 @@ export const Contact = () => {
         setSectionTop(cur => ({...cur, contact: sectionRef?.current?.offsetTop}))
     }, [setSectionTop])
 
-    const [active, setActive] = useState(branches[0]?.name)
-    const [activeHamburger  ,setActiveHamburger] = useState(false)
+    const [activeHamburger, setActiveHamburger] = useState(false)
 
+    const token = sessionStorage.getItem("token")
+    const formData = new FormData()
+    const {register, handleSubmit, setValue} = useForm()
+    const dispatch = useDispatch()
+    const {request} = useHttp()
+    const [changeStatus, setChangeStatus] = useState(false)
+    const [changeLocStatus, setChangeLocStatus] = useState(false)
+    const [changeItem, setChangeItem] = useState({})
+    const [changeLoc, setChangeLoc] = useState({})
+    const [changeImage, setChangeImage] = useState({})
+    const [activeLoc, setActiveLoc] = useState(0)
+    const [selectedItem, setSelectedItem] = useState(locations[0])
+    const [loading, setLoading] = useState(false)
+
+    const onSubmitHrefs = (data) => {
+        const res = {
+            id: changeItem?.id,
+            link: data?.link,
+            name: data?.name
+        }
+        console.log(res)
+        formData.append("res", JSON.stringify(res))
+        formData.append("img", changeImage)
+        request(`${API_URL}change_link`, "POST", formData, {"Authorization": "Bearer " + token})
+            .then(res => {
+                setChangeStatus(false)
+                dispatch(changeHrefs(res?.link))
+            })
+            .catch(err => console.log(err))
+        formData.delete("res")
+        formData.delete("img")
+    }
+
+    const onSubmitLoc = (data) => {
+        const res = {
+            link: data?.locLink?.slice(
+                data?.locLink.indexOf("src") + 5,
+                data?.locLink.indexOf("style") - 7
+            ),
+            number: data?.locNumber,
+            location: data?.locLocation
+        }
+        request(`${API_URL}change_locations/${changeLoc?.id}`, "POST", JSON.stringify(res), headers())
+            .then(res => {
+                setChangeLocStatus(false)
+                setSelectedItem(res?.location)
+                dispatch(changeLocation(res?.location))
+            })
+            .catch(err => console.log(err))
+    }
+
+    const onChangeModal = (id) => {
+        hrefs.filter(item => {
+            if (item.id === id) {
+                setChangeItem(item)
+                setValue("name", item.name)
+                setValue("link", item.link)
+            }
+        })
+        setChangeStatus(true)
+    }
+
+    const onChangeLoc = (id) => {
+        locations.filter(item => {
+            if (item.id === id) {
+                setChangeLoc(item)
+                setValue("locLink", item.link)
+                setValue("locLocation", item.location)
+                setValue("locNumber", item.number)
+            }
+        })
+        setChangeLocStatus(true)
+    }
+
+
+    const ModalChange = useCallback(({changeStatus, setChangeStatus, onSubmitHrefs, changeItem, changeImage}) => {
+        return (
+            <Modal
+                active={changeStatus}
+                setActive={setChangeStatus}
+            >
+                <div className={cls.footer__modal}>
+                    <div className={cls.wrapper}>
+                        <h1>Silkani o'zgartirish</h1>
+                        <form
+                            className={cls.wrapper__container}
+                            onSubmit={handleSubmit(onSubmitHrefs)}
+                        >
+                            <Input
+                                required
+                                value={changeItem?.name}
+                                defaultValue={changeItem?.name}
+                                register={register}
+                                name={"name"}
+                                placeholder={"Name"}
+                            />
+                            <Input
+                                required
+                                value={changeItem?.link}
+                                register={register}
+                                name={"link"}
+                                placeholder={"Link"}
+                            />
+                            <Button>
+                                O'zgartirish
+                            </Button>
+                        </form>
+                    </div>
+                </div>
+            </Modal>
+        )
+    }, [changeItem])
+
+    const ModalChangeLocation = useCallback(({status, setStatus, onSubmitLoc, changeItem}) => {
+        return (
+            <Modal
+                active={status}
+                setActive={setStatus}
+            >
+                <div className={cls.footer__modalLoc}>
+                    <div className={cls.footer__modalLoc_inner}>
+                        <h1>Lokatsiyani o'zgartirish</h1>
+                        <form
+                            className={cls.wrapperLoc}
+                            onSubmit={handleSubmit(onSubmitLoc)}
+                        >
+                            <h1>{changeItem?.name}</h1>
+                            <Input
+                                register={register}
+                                name={'locLink'}
+                                placeholder={'Link'}
+                            />
+                            <Input
+                                register={register}
+                                name={'locLocation'}
+                                placeholder={'Location'}
+                            />
+                            <Input
+                                register={register}
+                                name={'locNumber'}
+                                placeholder={'Number'}
+                            />
+                            <Button>O'zgartirish</Button>
+                        </form>
+                    </div>
+                </div>
+            </Modal>
+        )
+    }, [changeLoc])
+
+    // const onSubmitReg = (data) => {
+    //     setLoading(true)
+    //     request(`${API_URL}register_lead`, 'POST', JSON.stringify(data))
+    //         .then(res => {
+    //             setLoading(false)
+    //             if (res.success) {
+    //                 dispatch(setMessage({
+    //                     msg: res.msg,
+    //                     type: "success",
+    //                     active: true
+    //                 }))
+    //             } else {
+    //                 dispatch(setMessage({
+    //                     msg: res.msg,
+    //                     type: "error",
+    //                     active: true
+    //                 }))
+    //             }
+    //         })
+    //         .catch(err => {
+    //             setLoading(false)
+    //         })
+    // }
+
+    const selectItem = (id) => {
+        locations.filter(item => {
+            if (item.id === id) {
+                setSelectedItem((item))
+            }
+            return null
+        })
+    }
+
+    function compareById(a, b) {
+        return a.id - b.id;
+    }
 
     const renderInfo = () => {
-        switch (active) {
+        switch (selectedItem) {
             case "chirchiq" :
                 return (
                     <>
@@ -105,7 +300,7 @@ export const Contact = () => {
         }
     }
     const renderMaps = () => {
-        switch (active) {
+        switch (selectedItem) {
             case "gazalkent" :
                 return <iframe
                     src={"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2985.3254498242686!2d69.76749861197915!3d41.56220048501333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38af1ba601d62bc3%3A0xecd7bb024bc3192b!2sGennis%20Campus!5e0!3m2!1sru!2s!4v1721050256490!5m2!1sru!2s"}
@@ -140,31 +335,45 @@ export const Contact = () => {
     }
 
 
-
-
     return (
         <div className={cls.contact} ref={sectionRef}>
+
+
+            <ModalChange
+                changeImage={changeImage}
+                setChangeImage={setChangeImage}
+                changeItem={changeItem}
+                changeStatus={changeStatus}
+                setChangeStatus={setChangeStatus}
+                onSubmitHrefs={onSubmitHrefs}
+            />
+            <ModalChangeLocation
+                status={changeLocStatus}
+                setStatus={setChangeLocStatus}
+                onSubmitLoc={onSubmitLoc}
+                changeItem={changeLoc}
+            />
             <div className={cls.contact__wrapper}>
 
-                <div className={classNames(cls.contact__branches , {
-                    [cls.branches_active] : activeHamburger
+                <div className={classNames(cls.contact__branches, {
+                    [cls.branches_active]: activeHamburger
                 })}>
                     <h2>Filiallar</h2>
                     <div className={cls.contact__branches_name}>
                         <ul>
-                            {branches.map((item) => {
+                            {locations && [...locations].sort(compareById).map((item) => {
                                 return (
                                     <li onClick={() => {
-                                        setActive(item.name)
+                                        setSelectedItem(item.name)
                                         setActiveHamburger(false)
                                     }}
                                         className={classNames(cls.contact__branches_list, {
-                                            [cls.active]: active === item.name
+                                            [cls.active]: selectedItem === item.name
                                         })}>
 
                                         {item.name}
 
-                                        <i className={classNames("fa fa-pen" , cls.icon)}></i>
+                                        <i onClick={() => onChangeLoc(item.id)} className={classNames("fa fa-pen", cls.icon)}></i>
                                     </li>
                                 )
                             })}
@@ -178,9 +387,9 @@ export const Contact = () => {
                     </div>
 
 
-                        <div className={cls.contact__locations_title}>
-                            Biz bilan bog'laning !
-                        </div>
+                    <div className={cls.contact__locations_title}>
+                        Biz bilan bog'laning !
+                    </div>
 
                     <div className={cls.contact__locations_netWorks}>
                         <div>
@@ -202,7 +411,14 @@ export const Contact = () => {
                     </div>
                     <div className={cls.contact__locations_maps}>
                         <div className={cls.contact__locations_info}>
-                            {renderInfo()}
+                            <div className={cls.contact__locations__box_info}>
+                                <h2>{locations[activeLoc]?.name}</h2>
+                                <div>{selectedItem ? <i className={"fa-solid fa-phone "}/> : null} <span>{selectedItem?.number}</span></div>
+                            </div>
+                            <div className={cls.contact__locations__box_locations}>
+                                <h2>Manzil</h2>
+                                <span>{selectedItem?.location}</span>
+                            </div>
                         </div>
                         {renderMaps()}
                     </div>
