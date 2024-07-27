@@ -18,7 +18,9 @@ import {studentProfileRating} from "entities/profile/studentProfile";
 import {studentsDirectorSlice} from "pages/studentsPage"
 import {timeTable} from "pages/timePage";
 
-import {deletedStudents, newStudents} from "entities/students";
+import {newStudents} from "../entities/students";
+import {teachers} from "../entities/teachers"
+import {employers} from "../entities/employer";
 
 
 const stringMiddleware = () => (next) => (action) => {
@@ -49,6 +51,8 @@ export const store = configureStore({
         deletedGroups,
         user,
         newStudents,
+        employers,
+        teachers,
         timeTable
     },
     middleware: getDefaultMiddleware =>

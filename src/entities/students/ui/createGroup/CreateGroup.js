@@ -11,11 +11,14 @@ import {Input} from "shared/ui/input";
 import React, {useEffect, useState} from "react";
 import {getNewStudentsData} from "../../model/selector/newStudentsSelector";
 import {useDispatch, useSelector} from "react-redux";
-import {Teachers} from "../../../teachers";
+import {teachers, Teachers} from "../../../teachers";
 import {fetchNewStudentsData} from "../../model/newStudentsThunk";
 import {Form} from "shared/ui/form";
 import {Textarea} from "shared/ui/textArea";
 import {SearchInput} from "../../../../shared/ui/searchInput";
+import {TeachersPage} from "../../../../pages/teacherPage";
+import {fetchTeachersData} from "../../../teachers/model/teacherThunk";
+import {getTeachers} from "../../../teachers/model/selector/teacherSelector";
 
 const branches = [
     {name: "chirhciq"},
@@ -28,6 +31,7 @@ const peoples = [
 ]
 export const CreateGroup = () => {
     const newStudents = useSelector(getNewStudentsData)
+    const teachers = useSelector(getTeachers)
     const [active, setActive] = useState(false)
     const [activeModal, setActiveModal] = useState(false)
     const [selected, setSelected] = useState([])
@@ -48,6 +52,9 @@ export const CreateGroup = () => {
         dispatch(fetchNewStudentsData())
     }, [])
 
+    useEffect(() => {
+        dispatch(fetchTeachersData())
+    }, [])
 
     console.log(selectedRadio, "radio")
     const renterGroups = () => {
@@ -141,7 +148,7 @@ export const CreateGroup = () => {
 
                         )
                     })}
-                </div> : <Teachers/>}
+                </div> : <Teachers data={teachers}/>}
             </div>
 
 
