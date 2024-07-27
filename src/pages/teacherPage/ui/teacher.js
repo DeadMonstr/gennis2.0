@@ -20,12 +20,10 @@ export const TeachersPage = () => {
 
     const search = useSelector(getSearchValue)
 
-    console.log(true)
-
     console.log(search, "search Teacher")
 
     let PageSize = useMemo(() => 50, [])
-    const [currentTableData, setCurrentTableData] = useState([])
+    const [ , setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [selected, setSelected] = useState()
     const [active, setActive] = useState()

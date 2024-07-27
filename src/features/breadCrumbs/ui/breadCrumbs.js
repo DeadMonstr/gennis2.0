@@ -10,15 +10,21 @@ export const BreadCrumbs = ({defaultLink}) => {
     const location = useLocation()
     const {id} = useParams()
     const [crumbsData, setCrumbsData] = useState([])
+    const [locationHistory, setLocationHistory] = useState("")
     const [crumbsStory, setCrumbsStory] = useState([])
     // let uniqueCrumbsStory = useMemo(() => [...new Set(crumbsStory)], [crumbsStory])
 
     useEffect(() => {
-        setCrumbsData(
-            location.pathname.split('/')
-                .filter(crumb => crumb !== "")
-        )
+        // if (locationHistory !== location.pathname) {
+        //     setLocationHistory(location.pathname)
+            setCrumbsData(
+                location.pathname.split('/')
+                    .filter(crumb => crumb !== "")
+            )
+        // }
     }, [location, id])
+
+    console.log(location.pathname)
 
     // useEffect(() => {
     //     console.log(true, 2)
@@ -27,7 +33,7 @@ export const BreadCrumbs = ({defaultLink}) => {
     //     )
     // }, [crumbsData])
 
-    let currentLink = ''
+    let currentLink= ''
 
     const renderCrumbs = useCallback(() => {
         // return uniqueCrumbsStory.map((crumb, index) => {

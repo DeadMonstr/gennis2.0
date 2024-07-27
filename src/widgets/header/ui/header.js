@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useSearchParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
+import {useLocation, useNavigate} from "react-router";
 
 import {getLocations} from "pages/studentsPage";
 import {BreadCrumbs} from "features/breadCrumbs";
@@ -8,12 +9,15 @@ import {SearchPlatformInput, getSearchStr} from "features/searchInput";
 import GetLocation from "features/location/getLocation";
 import {ThemeSwitcher} from "features/themeSwitcher";
 import {useDebounce} from "shared/lib/hooks/useDebounce";
+import {Button} from "shared/ui/button";
 
 import cls from "./header.module.sass";
 import logo from "shared/assets/images/logo.svg";
 
 export const Header = () => {
 
+    const location = useLocation()
+    const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams({search: ""})
     const [valueData, setValueData] = useState(null)
     const debouncedFetchData = useDebounce(fetchSearchData, 500)
@@ -21,6 +25,11 @@ export const Header = () => {
     useEffect(() => {
         debouncedFetchData()
     }, [valueData])
+
+    useEffect(() => {
+        setSearchParams({search: ""})
+        console.log("location")
+    }, [location.pathname])
 
     const dispatch = useDispatch()
     const [selected, setSelected] = useState([])
@@ -56,9 +65,17 @@ export const Header = () => {
                 </div>
             </div>
             <div className={cls.header__bottom}>
-                <BreadCrumbs
-                    defaultLink={"platform"}
-                />
+                {/*<BreadCrumbs*/}
+                {/*    defaultLink={"platform"}*/}
+                {/*/>*/}
+                <Button
+                    onClick={() => navigate(-1)}
+                    extraClass={cls.header__back}
+                    type={"simple-add"}
+                >
+                    <i className="fas fa-arrow-left-long"/>
+                    Orqaga
+                </Button>
                 <div className={cls.header__selected}>
                     {
                         selected.map(item => {

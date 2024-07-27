@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {memo, useMemo, useState} from 'react';
 import cls from "./teachers.module.sass"
 
 import {Table} from "shared/ui/table";
@@ -112,7 +112,7 @@ export const teachersData = [
     },
 
 ]
-export const Teachers = ({data}) => {
+export const Teachers = memo(({data}) => {
     const [checkbox , setCheckbox] = useState(false)
 
     const checkBoxChange = (id) =>{
@@ -163,6 +163,6 @@ export const Teachers = ({data}) => {
 
 
         </div>
-    );
-};
+    )
+})
 

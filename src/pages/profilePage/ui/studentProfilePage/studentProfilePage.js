@@ -1,4 +1,4 @@
-import {useState, createContext, useMemo} from 'react';
+import {useState} from 'react';
 import classNames from "classnames";
 
 import {
@@ -7,56 +7,62 @@ import {
     StudentProfileReward,
     StudentProfileSubjects,
     StudentProfileTeachers,
-    StudentProfileAttendance,
-    StudentProfileTotalAmount,
     StudentProfileAmountPath,
+    StudentProfileAttendance,
     StudentProfileTotalRating,
+    StudentProfileTotalAmount,
     StudentProfileGroupsHistory,
     StudentProfileTotalAttendance
 } from "entities/profile/studentProfile";
 
 import cls from "./studentProfilePage.module.sass";
 
-export const ContextStuPro = createContext({})
-
 export const StudentProfilePage = () => {
 
     const [active, setActive] = useState(false)
 
-    const contextObj = useMemo(() => ({
-        active,
-        setActive
-    }), [active])
-
     return (
-        <ContextStuPro.Provider value={contextObj}>
+        <div
+            className={classNames(cls.profile)}
+        >
+            <StudentProfileInfo setActive={setActive}/>
             <div
-                className={classNames(cls.profile)}
+                className={classNames(cls.profile__mainContent, {
+                    [cls.active]: active
+                })}
             >
-                <StudentProfileInfo/>
-                <div
-                    className={classNames(cls.profile__mainContent, {
-                        [cls.active]: active
-                    })}
-                >
-                    <StudentProfileTeachers/>
-                    <StudentProfileRating/>
-                    <StudentProfileReward/>
-                    <StudentProfileSubjects/>
-                    <StudentProfileAttendance/>
-                </div>
-                <div
-                    className={classNames(cls.profile__otherContent, {
-                        [cls.active]: active
-                    })}
-                >
-                    <StudentProfileTotalAmount/>
-                    <StudentProfileAmountPath/>
-                    <StudentProfileTotalRating/>
-                    <StudentProfileGroupsHistory/>
-                    <StudentProfileTotalAttendance/>
-                </div>
+                <StudentProfileTeachers/>
+                <StudentProfileRating setActive={setActive}/>
+                <StudentProfileReward/>
+                <StudentProfileSubjects setActive={setActive}/>
+                <StudentProfileAttendance setActive={setActive}/>
             </div>
-        </ContextStuPro.Provider>
+            <div
+                className={classNames(cls.profile__otherContent, {
+                    [cls.active]: active
+                })}
+            >
+                <StudentProfileTotalAmount
+                    active={active}
+                    setActive={setActive}
+                />
+                <StudentProfileAmountPath
+                    active={active}
+                    setActive={setActive}
+                />
+                <StudentProfileTotalRating
+                    active={active}
+                    setActive={setActive}
+                />
+                <StudentProfileGroupsHistory
+                    active={active}
+                    setActive={setActive}
+                />
+                <StudentProfileTotalAttendance
+                    active={active}
+                    setActive={setActive}
+                />
+            </div>
+        </div>
     )
 }

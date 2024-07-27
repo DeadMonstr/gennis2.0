@@ -1,16 +1,11 @@
-import {memo, useContext} from 'react';
+import {memo} from 'react';
 
-import {ContextStuPro} from "pages/profilePage";
 import {EditableCard} from "shared/ui/editableCard";
-import {Link} from "shared/ui/link";
 
 import cls from "./studentProfileInfo.module.sass";
 import defaultUserImg from "shared/assets/images/user_image.png";
 
-export const StudentProfileInfo = memo(() => {
-
-    const {setActive} = useContext(ContextStuPro)
-
+export const StudentProfileInfo = memo(({setActive}) => {
     return (
         <EditableCard
             // onClick={() => setActive(true)}

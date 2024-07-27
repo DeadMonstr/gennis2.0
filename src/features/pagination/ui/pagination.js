@@ -9,10 +9,8 @@ export const Pagination = React.memo((props) => {
 
     const {
         users,
-        search,
         onPageChange,
         siblingCount = 1,
-        setCurrentPage,
         currentPage,
         pageSize,
         className,
