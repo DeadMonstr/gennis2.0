@@ -12,15 +12,16 @@ import {filteredGroups} from "features/filters/groupsFilter";
 import {filteredRooms} from "features/filters/roomsFilter";
 import {deletedGroups, groups} from "entities/groups/index";
 import {user} from "entities/user";
-import {studentProfilePayment} from "entities/profile/studentProfile";
-import {studentProfileBooks} from "entities/profile/studentProfile";
-import {studentProfileRating} from "entities/profile/studentProfile";
 import {studentsDirectorSlice} from "pages/studentsPage"
 import {timeTable} from "pages/timePage";
 
 import {newStudents} from "../entities/students";
 import {teachers} from "../entities/teachers"
 import {employers} from "../entities/employer";
+import {studentProfilePayment} from "entities/profile";
+import {studentProfileBooks} from "entities/profile";
+import {studentProfileRating} from "entities/profile";
+import {roomsAddSlice} from 'pages/rooms/index'
 
 
 const stringMiddleware = () => (next) => (action) => {
@@ -53,7 +54,8 @@ export const store = configureStore({
         newStudents,
         employers,
         teachers,
-        timeTable
+        timeTable,
+        roomsAddSlice,
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(
