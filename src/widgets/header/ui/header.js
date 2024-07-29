@@ -16,28 +16,44 @@ import logo from "shared/assets/images/logo.svg";
 
 export const Header = () => {
 
+    const dispatch = useDispatch()
     const location = useLocation()
     const navigate = useNavigate()
-    const [searchParams, setSearchParams] = useSearchParams({search: ""})
-    const [valueData, setValueData] = useState(null)
-    const debouncedFetchData = useDebounce(fetchSearchData, 500)
 
-    useEffect(() => {
-        debouncedFetchData()
-    }, [valueData])
-
-    useEffect(() => {
-        setSearchParams({search: ""})
-        console.log("location")
-    }, [location.pathname])
-
-    const dispatch = useDispatch()
     const [selected, setSelected] = useState([])
     const [deletedId, setDeletedId] = useState(0)
 
     useEffect(() => {
         dispatch(getLocations(selected))
     }, [selected])
+
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [valueData, setValueData] = useState(null)
+    const debouncedFetchData = useDebounce(fetchSearchData, 500)
+
+    useEffect(() => {
+        if (searchParams.get("search")) {
+            setValueData(searchParams.get("search"))
+        }
+    }, [])
+
+    useEffect(() => {
+        if (valueData) {
+            debouncedFetchData()
+            console.log(true)
+        } else {
+            setSearchParams({})
+            console.log(false)
+        }
+    }, [valueData])
+
+    useEffect(() => {
+        if (!searchParams.get("search")) {
+            setSearchParams({})
+            setValueData(null)
+            console.log(valueData, "valueData")
+        }
+    }, [location.pathname, location.search])
 
     function fetchSearchData() {
         const checkedValue =
@@ -53,7 +69,7 @@ export const Header = () => {
             <div className={cls.header__top}>
                 <img className={cls.header__logo} src={logo} alt=""/>
                 <SearchPlatformInput
-                    defaultSearch={searchParams.get("search")}
+                    defaultSearch={valueData ?? searchParams.get("search")}
                     onSearch={setValueData}
                 />
                 <div className={cls.inner}>
@@ -69,7 +85,11 @@ export const Header = () => {
                 {/*    defaultLink={"platform"}*/}
                 {/*/>*/}
                 <Button
-                    onClick={() => navigate(-1)}
+                    onClick={() => {
+                        navigate(-1)
+                        setSearchParams({})
+                        setValueData(null)
+                    }}
                     extraClass={cls.header__back}
                     type={"simple-add"}
                 >

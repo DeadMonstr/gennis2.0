@@ -1,5 +1,7 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import classNames from "classnames";
+import {useParams} from "react-router";
+import {useDispatch, useSelector} from "react-redux";
 
 import {
     StudentProfileInfo,
@@ -12,20 +14,39 @@ import {
     StudentProfileTotalRating,
     StudentProfileTotalAmount,
     StudentProfileGroupsHistory,
-    StudentProfileTotalAttendance
+    StudentProfileTotalAttendance, StudentProfileChangeImage
 } from "entities/profile/studentProfile";
+import {fetchStudentProfileData} from "../../model/thunk/studentProfileThunk";
+import {getUserData} from "../../model/selector/studentProfileSelector";
 
 import cls from "./studentProfilePage.module.sass";
 
 export const StudentProfilePage = () => {
 
+    const dispatch = useDispatch()
+    const {id} = useParams()
+
+    const userData = useSelector(getUserData)
+
     const [active, setActive] = useState(false)
+    const [activeModal, setActiveModal] = useState("")
+
+    useEffect(() => {
+        dispatch(fetchStudentProfileData(id))
+    }, [id])
+
+    console.log(userData, "all")
+
 
     return (
         <div
             className={classNames(cls.profile)}
         >
-            <StudentProfileInfo setActive={setActive}/>
+            <StudentProfileInfo
+                setActive={setActive}
+                setActiveModal={setActiveModal}
+                data={userData?.user}
+            />
             <div
                 className={classNames(cls.profile__mainContent, {
                     [cls.active]: active
@@ -34,7 +55,10 @@ export const StudentProfilePage = () => {
                 <StudentProfileTeachers/>
                 <StudentProfileRating setActive={setActive}/>
                 <StudentProfileReward/>
-                <StudentProfileSubjects setActive={setActive}/>
+                <StudentProfileSubjects
+                    setActive={setActive}
+                    data={userData?.subject}
+                />
                 <StudentProfileAttendance setActive={setActive}/>
             </div>
             <div
@@ -63,6 +87,11 @@ export const StudentProfilePage = () => {
                     setActive={setActive}
                 />
             </div>
+            <StudentProfileChangeImage
+                setActive={setActiveModal}
+                active={activeModal === "changeImage"}
+                // data={}
+            />
         </div>
     )
 }

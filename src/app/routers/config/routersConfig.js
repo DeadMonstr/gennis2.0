@@ -15,7 +15,7 @@ import {
     getRouteGroups,
     getVacancyPage,
     getRouteRooms,
-    getRouteMain,
+    getRouteMain, getProfile,
 } from "shared/const/routers";
 
 import {StudentsPage} from "pages/studentsPage";
@@ -32,7 +32,8 @@ import {VacancyPage} from "pages/vacancyPage";
 import {VacancyWorkPage} from "pages/vacancyWorkPage";
 import {TimePage} from "pages/timePage";
 import {EmployerPage} from "pages/employeesPage";
-import {FlowsPage} from "../../../pages/flowsPage";
+import {FlowsPage} from "pages/flowsPage";
+import {StudentProfilePage} from "pages/profilePage";
 
 
 export const routersConfig = [
@@ -114,6 +115,15 @@ export const routersConfig = [
         roles: [],
         path: getTeacherProfile("id"),
         element: <ProfileTeacherPage/>,
+        isMenu: false
+    },
+    {
+        to: "profile",
+        name: "Student Profile",
+        icon: "fa-user-graduate",
+        roles: [],
+        path: getProfile(":id"),
+        element: <StudentProfilePage/>,
         isMenu: false
     },
     {

@@ -15,14 +15,15 @@ import {user} from "entities/user";
 import {studentsDirectorSlice} from "pages/studentsPage"
 import {timeTable} from "pages/timePage";
 
-import {homeSlice} from "../entities/home";
-import {newStudents} from "../entities/students";
-import {teachers} from "../entities/teachers"
-import {employers} from "../entities/employer";
+import {homeSlice} from "entities/home";
+import {newStudents} from "entities/students";
+import {teachers} from "entities/teachers"
+import {employers} from "entities/employer";
 import {studentProfilePayment} from "entities/profile/studentProfile";
 import {studentProfileBooks} from "entities/profile/studentProfile";
 import {studentProfileRating} from "entities/profile/studentProfile";
-import {roomsAddSlice} from 'pages/roomsPage'
+import {roomsAddSlice} from 'pages/roomsPage';
+import {studentProfile} from "pages/profilePage";
 
 
 const stringMiddleware = () => (next) => (action) => {
@@ -56,7 +57,7 @@ export const store = configureStore({
         employers,
         teachers,
         homeSlice,
-
+        studentProfile,
         timeTable,
         roomsAddSlice,
     },

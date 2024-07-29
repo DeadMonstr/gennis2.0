@@ -9,8 +9,6 @@ export const SearchPlatformInput = ({onSearch, defaultSearch}) => {
         setSearch(defaultSearch)
     }, [defaultSearch])
 
-    console.log(search, "search")
-
     const handleSearch = (searchValue) => {
         setSearch(searchValue);
         if (onSearch) {
