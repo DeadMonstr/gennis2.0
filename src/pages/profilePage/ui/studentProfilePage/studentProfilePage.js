@@ -14,7 +14,8 @@ import {
     StudentProfileTotalRating,
     StudentProfileTotalAmount,
     StudentProfileGroupsHistory,
-    StudentProfileTotalAttendance, StudentProfileChangeImage
+    StudentProfileTotalAttendance,
+    StudentProfileChangeImage
 } from "entities/profile/studentProfile";
 import {fetchStudentProfileData} from "../../model/thunk/studentProfileThunk";
 import {getUserData} from "../../model/selector/studentProfileSelector";

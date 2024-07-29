@@ -9,7 +9,7 @@ import close from "shared/assets/icons/cross.svg";
 
 export const Modal = memo(({children, active, setActive, extraClass}) => {
 
-    const {theme} = useTheme()
+    // const {theme} = useTheme()
 
     const onClick = (target) => {
         if (target.className.includes("outClose")) {
@@ -23,7 +23,7 @@ export const Modal = memo(({children, active, setActive, extraClass}) => {
         return (
             createPortal(
                 <div
-                    className={classNames(cls.modal, "outClose", [theme])}
+                    className={classNames(cls.modal, "outClose")}
                     onClick={(e) => onClick(e.target)}
                 >
                     <div className={classNames(cls.modal__inner, extraClass)}>

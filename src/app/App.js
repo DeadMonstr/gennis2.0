@@ -6,13 +6,13 @@ import {AppRouter} from "./routers";
 
 function App() {
     return (
-        <StoreProvider>
-            <ThemeProvider>
-                <SearchProvider>
+        // <StoreProvider>
+        //     <ThemeProvider>
+        //         <SearchProvider>
                     <AppRouter/>
-                </SearchProvider>
-            </ThemeProvider>
-        </StoreProvider>
+                // </SearchProvider>
+            // </ThemeProvider>
+        // </StoreProvider>
     );
 }
 

@@ -67,6 +67,7 @@ export const AppRouter = () => {
                             />
                         )
                     }
+
                     <Route path={"students/createGroup"} element={<CreateGroup/>} />
                     <Route
                         path={"profile"}
@@ -82,7 +83,7 @@ export const AppRouter = () => {
                     />
 
                     <Route
-                            path={"molasses"}
+                        path={"molasses"}
                         element={<ClassMolassesPage/>}
                     />
 
