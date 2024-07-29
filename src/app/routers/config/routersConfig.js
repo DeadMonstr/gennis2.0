@@ -11,6 +11,7 @@ import {
     getVacancyPage,
     getVacancyWorkPage,
     getDirectorRouteStudents,
+    getRoomsProfilePage,
 } from "shared/const/routers";
 
 
@@ -25,7 +26,8 @@ import {VacancyPage} from "../../../pages/vacancyPage";
 import {VacancyWorkPage} from "../../../pages/vacancyWorkPage";
 import {StudentsDirectorPage} from "pages/studentsPage";
 import {EmployerPage} from "pages/employeesPage";
-import {FlowsPage} from "../../../pages/flowsPage";
+import {FlowsPage} from "pages/flowsPage";
+import {RoomsProfilePage} from "pages/roomsProiflePage";
 
 
 export const routersConfig = [
@@ -154,6 +156,13 @@ export const routersConfig = [
         element: <Rooms/>,
         isMenu: true,
         type: ["app_center_theme", "app_school_theme"]
+    },
+    {
+        to: "rooms/roomsProfilePage",
+        name: "Rooms Profile",
+        path: getRoomsProfilePage("id"),
+        element: <RoomsProfilePage/>,
+        roles: [],
     },
     {
         to: "/login",

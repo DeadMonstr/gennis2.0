@@ -23,6 +23,7 @@ import "app/styles/index.sass"
 import {VacancyPage} from "pages/vacancyPage";
 import {CreateGroup} from "../../../entities/students";
 import {FlowsPage} from "../../../pages/flowsPage";
+import {RoomsProfilePage} from "pages/roomsProiflePage";
 
 
 export const AppRouter = () => {
