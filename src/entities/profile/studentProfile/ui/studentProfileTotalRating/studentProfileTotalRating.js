@@ -1,15 +1,13 @@
-import {memo, useContext, useEffect} from 'react';
+import {memo, useEffect} from 'react';
 import classNames from "classnames";
 
 import {EditableCard} from "shared/ui/editableCard";
 import {Select} from "shared/ui/select";
-import {ContextStuPro} from "pages/profilePage";
+import {API_URL, useHttp} from "shared/api/base";
 
 import cls from "./studentProfileTotalRating.module.sass";
-import {API_URL, headers, useHttp} from "shared/api/base";
-import {fetch} from "entities/profile/studentProfile";
 
-export const StudentProfileTotalRating = memo(() => {
+export const StudentProfileTotalRating = memo(({active, setActive}) => {
 
     useEffect(() => {
         request(`${API_URL}Permissions/tables/`, "POST", JSON.stringify({
@@ -21,8 +19,6 @@ export const StudentProfileTotalRating = memo(() => {
             .catch(err => console.log(err))
     }, [])
 
-
-    const {active, setActive} = useContext(ContextStuPro)
 
     const {request} = useHttp()
 

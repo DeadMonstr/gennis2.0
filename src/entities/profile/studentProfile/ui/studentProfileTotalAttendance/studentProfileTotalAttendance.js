@@ -1,10 +1,9 @@
-import React, {memo, useContext} from 'react';
+import {memo} from 'react';
 import classNames from "classnames";
 
 import {Select} from "shared/ui/select";
 import {Table} from "shared/ui/table";
 import {EditableCard} from "shared/ui/editableCard";
-import {ContextStuPro} from "pages/profilePage";
 
 import cls from "./studentProfileTotalAttendance.module.sass";
 
@@ -16,9 +15,7 @@ const list = [
     }
 ]
 
-export const StudentProfileTotalAttendance = memo(() => {
-
-    const {active, setActive} = useContext(ContextStuPro)
+export const StudentProfileTotalAttendance = memo(({active, setActive}) => {
 
     const renderAttendance = () => {
         return list.map(item =>

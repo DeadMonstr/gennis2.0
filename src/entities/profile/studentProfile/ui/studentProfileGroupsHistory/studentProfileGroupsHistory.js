@@ -1,9 +1,8 @@
-import React, {memo, useContext} from 'react';
+import {memo} from 'react';
 import classNames from "classnames";
 
 import {EditableCard} from "shared/ui/editableCard";
 import {Table} from "shared/ui/table";
-import {ContextStuPro} from "pages/profilePage";
 
 import cls from "./studentProfileGroupsHistory.module.sass";
 
@@ -38,9 +37,7 @@ const list = [
     }
 ]
 
-export const StudentProfileGroupsHistory = memo(() => {
-
-    const {active, setActive} = useContext(ContextStuPro)
+export const StudentProfileGroupsHistory = memo(({active, setActive}) => {
 
     const renderGroupsHistory = () => {
         return list.map(item =>

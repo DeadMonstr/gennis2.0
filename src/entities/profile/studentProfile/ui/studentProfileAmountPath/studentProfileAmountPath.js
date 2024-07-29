@@ -1,8 +1,7 @@
-import React, {memo, useContext, useState} from 'react';
+import React, {memo, useState} from 'react';
 import classNames from "classnames";
 import {useSelector} from "react-redux";
 
-import {ContextStuPro} from "pages/profilePage";
 import {EditableCard} from "shared/ui/editableCard";
 import {Select} from "shared/ui/select";
 import {Table} from "shared/ui/table";
@@ -12,9 +11,8 @@ import cls from "./studentProfileAmountPath.module.sass";
 import inTo from "shared/assets/images/inTo.png";
 import outTo from "shared/assets/images/out.png";
 
-export const StudentProfileAmountPath = memo(() => {
+export const StudentProfileAmountPath = memo(({active, setActive}) => {
 
-    const {active, setActive} = useContext(ContextStuPro)
     const paymentList = useSelector(getPaymentData)
     const booksList = useSelector(getBooksData)
 

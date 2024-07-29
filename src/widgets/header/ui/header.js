@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useSearchParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
+import {useLocation, useNavigate} from "react-router";
 
 import {getLocations} from "pages/studentsPage";
 import {BreadCrumbs} from "features/breadCrumbs";
@@ -8,27 +9,51 @@ import {SearchPlatformInput, getSearchStr} from "features/searchInput";
 import GetLocation from "features/location/getLocation";
 import {ThemeSwitcher} from "features/themeSwitcher";
 import {useDebounce} from "shared/lib/hooks/useDebounce";
+import {Button} from "shared/ui/button";
 
 import cls from "./header.module.sass";
 import logo from "shared/assets/images/logo.svg";
 
 export const Header = () => {
 
-    const [searchParams, setSearchParams] = useSearchParams({search: ""})
-    const [valueData, setValueData] = useState(null)
-    const debouncedFetchData = useDebounce(fetchSearchData, 500)
-
-    useEffect(() => {
-        debouncedFetchData()
-    }, [valueData])
-
     const dispatch = useDispatch()
+    const location = useLocation()
+    const navigate = useNavigate()
+
     const [selected, setSelected] = useState([])
     const [deletedId, setDeletedId] = useState(0)
 
     useEffect(() => {
         dispatch(getLocations(selected))
     }, [selected])
+
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [valueData, setValueData] = useState(null)
+    const debouncedFetchData = useDebounce(fetchSearchData, 500)
+
+    useEffect(() => {
+        if (searchParams.get("search")) {
+            setValueData(searchParams.get("search"))
+        }
+    }, [])
+
+    useEffect(() => {
+        if (valueData) {
+            debouncedFetchData()
+            console.log(true)
+        } else {
+            setSearchParams({})
+            console.log(false)
+        }
+    }, [valueData])
+
+    useEffect(() => {
+        if (!searchParams.get("search")) {
+            setSearchParams({})
+            setValueData(null)
+            console.log(valueData, "valueData")
+        }
+    }, [location.pathname, location.search])
 
     function fetchSearchData() {
         const checkedValue =
@@ -44,7 +69,7 @@ export const Header = () => {
             <div className={cls.header__top}>
                 <img className={cls.header__logo} src={logo} alt=""/>
                 <SearchPlatformInput
-                    defaultSearch={searchParams.get("search")}
+                    defaultSearch={valueData ?? searchParams.get("search")}
                     onSearch={setValueData}
                 />
                 <div className={cls.inner}>
@@ -56,9 +81,21 @@ export const Header = () => {
                 </div>
             </div>
             <div className={cls.header__bottom}>
-                <BreadCrumbs
-                    defaultLink={"platform"}
-                />
+                {/*<BreadCrumbs*/}
+                {/*    defaultLink={"platform"}*/}
+                {/*/>*/}
+                <Button
+                    onClick={() => {
+                        navigate(-1)
+                        setSearchParams({})
+                        setValueData(null)
+                    }}
+                    extraClass={cls.header__back}
+                    type={"simple-add"}
+                >
+                    <i className="fas fa-arrow-left-long"/>
+                    Orqaga
+                </Button>
                 <div className={cls.header__selected}>
                     {
                         selected.map(item => {

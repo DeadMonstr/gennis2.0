@@ -1,20 +1,21 @@
 
 import {
+    getDirectorRouteStudents,
     getRouteDeletedStudents,
     getRouteDeletedGroups,
     getRouteNewStudents,
-    getRouteTaskManager,
-    getRouteRegister,
-    getRouteStudents,
-    getRouteGroups,
-    getRouteMain,
-    getRouteTeacher,
     getRouteCreateGroup,
-    getRouteRooms,
-    getTeacherProfile,
-    getDirectorRouteStudents,
-    getVacancyPage,
+    getRouteTaskManager,
     getVacancyWorkPage,
+    getTeacherProfile,
+    getRouteStudents,
+    getRouteTimePage,
+    getRouteRegister,
+    getRouteTeacher,
+    getRouteGroups,
+    getVacancyPage,
+    getRouteRooms,
+    getRouteMain, getProfile,
 } from "shared/const/routers";
 
 import {StudentsPage} from "pages/studentsPage";
@@ -29,8 +30,10 @@ import {ProfileTeacherPage} from "pages/profilePage";
 import {StudentsDirectorPage} from "pages/studentsPage";
 import {VacancyPage} from "pages/vacancyPage";
 import {VacancyWorkPage} from "pages/vacancyWorkPage";
+import {TimePage} from "pages/timePage";
 import {EmployerPage} from "pages/employeesPage";
-import {FlowsPage} from "../../../pages/flowsPage";
+import {FlowsPage} from "pages/flowsPage";
+import {StudentProfilePage} from "pages/profilePage";
 
 
 export const routersConfig = [
@@ -40,7 +43,8 @@ export const routersConfig = [
         icon: "fa-home",
         roles: [true],
         path: getRouteMain(),
-        element: <HomePage/>,
+        // element: <HomePage/>,
+        element: null,
         isMenu: true,
         type: ["app_center_theme", "app_school_theme"]
     },
@@ -114,6 +118,15 @@ export const routersConfig = [
         isMenu: false
     },
     {
+        to: "profile",
+        name: "Student Profile",
+        icon: "fa-user-graduate",
+        roles: [],
+        path: getProfile(":id"),
+        element: <StudentProfilePage/>,
+        isMenu: false
+    },
+    {
       to: "vacancyPage",
       name: "Vakansiyalar",
       icon: "fa-tasks",
@@ -121,6 +134,15 @@ export const routersConfig = [
       path: getVacancyPage(),
       element: <VacancyPage/>,
       isMenu: true
+    },
+    {
+        to: "timeTable",
+        name: "Time Table",
+        icon: "fa-tasks",
+        roles: [],
+        path: getRouteTimePage(),
+        element: <TimePage/>,
+        isMenu: true
     },
     {
         to: "vacancyPage/vacancyWorkPage",

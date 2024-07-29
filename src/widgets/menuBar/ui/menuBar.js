@@ -1,13 +1,10 @@
-import React, {useCallback, useContext} from 'react';
+import {useCallback, useContext} from 'react';
 
 import {Link} from "shared/ui/link";
 import {ThemeContext} from "shared/lib/context/themeContext";
 import {routersConfig} from "app/routers";
 
 import cls from "./menuBar.module.sass";
-
-
-
 
 export const Menubar = () => {
 
@@ -25,7 +22,7 @@ export const Menubar = () => {
                         className={cls.link}
                     >
                         <Link
-                            to={item.to}
+                            to={item.to === "students" ? `${item.to}/1` : item.to}
                             extraClass={cls.link__href}
                             activeClass={cls.active}
                             // onClick={() => setActive(item.name)}

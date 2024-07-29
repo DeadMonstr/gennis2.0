@@ -6,8 +6,9 @@ import {Select} from "shared/ui/select";
 import {Switch} from "shared/ui/switch";
 
 import cls from "./vacancyWorkerEdit.module.sass";
-import GetLocation from "../../../location/getLocation";
 import {EditableCard} from "../../../../shared/ui/editableCard";
+import {AnimatedMulti,system, location, branch} from "../../../workerSelect";
+import {Button} from "../../../../shared/ui/button";
 
 export const VacancyWorkerEdit = React.memo(({active, setActive, activePage}) => {
 
@@ -20,29 +21,16 @@ export const VacancyWorkerEdit = React.memo(({active, setActive, activePage}) =>
             setActive={setActive}
         >
             <div className={cls.filter}>
-                <EditableCard>
-                    <GetLocation
-                        getItem={setSelected}
-                        deletedId={deletedId}
-                    />
-                    <div className={cls.header__selected}>
-                        {
-                            selected.map(item => {
-                                return (
-                                    <div
-                                        className={cls.header__item}
-                                    >
-                                        <i
-                                            onClick={() => setDeletedId(item.id)}
-                                            className="fa fa-times"
-                                        />
-                                        <p>{item.name}</p>
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
+                <EditableCard extraClass={cls.cardSelect}>
+                    <AnimatedMulti options={system}/>
                 </EditableCard>
+                <EditableCard extraClass={cls.cardSelect}>
+                    <AnimatedMulti options={location}/>
+                </EditableCard>
+                <EditableCard extraClass={cls.cardSelect}>
+                    <AnimatedMulti options={branch}/>
+                </EditableCard>
+                <Button extraClass={cls.changerButton} children={"Change"}/>
 
             </div>
         </Modal>

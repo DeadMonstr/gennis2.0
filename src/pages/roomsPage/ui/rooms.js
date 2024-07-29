@@ -5,10 +5,12 @@ import { Pagination } from "features/pagination";
 import { RoomsList, rooms } from "entities/rooms";
 import { Button } from "shared/ui/button";
 import { Select } from "shared/ui/select";
+import {RoomModal} from "../../../features/roomsAddModal";
 
 import cls from "./rooms.module.sass";
 
 export const Rooms = () => {
+    const [modal, setModal] = useState(false)
     const [active, setActive] = useState("");
     const PageSize = useMemo(() => 10, []);
     const [currentPage, setCurrentPage] = useState(1);
@@ -27,12 +29,18 @@ export const Rooms = () => {
     return (
         <div className={cls.mainContainer}>
             <div className={cls.mainContainer_buttonPanelBox}>
-                <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}></div>
+                <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}>
+                    <Button onClick={() => setActive(true)}
+                            children={"Add room"}
+                    />
+                </div>
                 <Select />
             </div>
             <div className={cls.mainContainer_filterPanelBox}>
-                <Button extraClass={cls.extraCutClassFilter} type={"filter"} onClick={() => setActive(true)}>Filter</Button>
-                <div className={cls.mainContainer_filterPanelBox_rightFilterRadioGroupBox}></div>
+                <Button extraClass={cls.extraCutClassFilter} type={"filter"} onClick={() => setModal(true)}>Filter</Button>
+
+                <div className={cls.mainContainer_filterPanelBox_rightFilterRadioGroupBox}>
+                </div>
             </div>
             <div className={cls.mainContainer_tablePanelBox}>
                 <RoomsList
@@ -40,8 +48,8 @@ export const Rooms = () => {
                 />
             </div>
             <RoomsFilter
-                active={active}
-                setActive={setActive}
+                active={modal}
+                setActive={setModal}
             />
             <div className={cls.paginationBox}>
                 <Pagination
@@ -56,6 +64,7 @@ export const Rooms = () => {
                     }}
                 />
             </div>
+            <RoomModal isOpen={active} onClose={setActive}/>
 
         </div>
     );

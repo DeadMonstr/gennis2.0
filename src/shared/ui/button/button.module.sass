@@ -1,5 +1,7 @@
 @import "app/styles/abstracts/variables"
 @import "app/styles/abstracts/mixins"
+@import "app/styles/themes/center"
+@import "app/styles/themes/school"
 
 
 .btn
@@ -32,10 +34,11 @@
     width: 16px
   &.simple
     @include btn-active
-    border: 2px solid #008ac6
-    background-color: $btn-gennis
+    color: white
+    border: 2px solid var(--btn-border-color)
+    background-color: var(--btn-bg-color)
   &.simple__add
-    color: $btn-gennis
+    color: var(--btn-bg-color)
     background: none
     border: none
     font-weight: 600

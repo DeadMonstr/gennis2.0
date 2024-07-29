@@ -1,15 +1,13 @@
-import {memo, useContext} from 'react';
+import {memo} from 'react';
 
-import {ContextStuPro} from "pages/profilePage";
 import {EditableCard} from "shared/ui/editableCard";
-import {Link} from "shared/ui/link";
 
 import cls from "./studentProfileInfo.module.sass";
 import defaultUserImg from "shared/assets/images/user_image.png";
 
-export const StudentProfileInfo = memo(() => {
+export const StudentProfileInfo = memo(({setActive, data, setActiveModal}) => {
 
-    const {setActive} = useContext(ContextStuPro)
+    console.log(data)
 
     return (
         <EditableCard
@@ -19,20 +17,21 @@ export const StudentProfileInfo = memo(() => {
         >
             <div className={cls.info__avatar}>
                 <img
+                    onClick={() => setActiveModal("changeImage")}
                     className={cls.info__image}
                     src={defaultUserImg}
                     alt=""
                 />
-                <h1>RIMEFARA</h1>
+                <h1>{data?.username}</h1>
                 <h2 className={cls.info__role}>Student</h2>
             </div>
             <div className={cls.info__text}>
-                <p>Ism: <span>Begzod</span></p>
-                <p>Familiya: <span>Jumaniyozov</span></p>
-                <p>Otasinig ismi: <span>Farhod o’g’li</span></p>
-                <p>Telefon raqami: <span>+998993656845</span></p>
-                <p>Yoshi: <span>23</span></p>
-                <p>Tug'ilgan sana: <span>2001-10-22</span></p>
+                <p>Ism: <span>{data?.name}</span></p>
+                <p>Familiya: <span>{data?.surname}</span></p>
+                <p>Otasinig ismi: <span>{data?.father_name}</span></p>
+                <p>Telefon raqami: <span>{data?.phone}</span></p>
+                <p>Yoshi: <span>{data?.age}</span></p>
+                <p>Tug'ilgan sana: <span>{data?.birth_date}</span></p>
                 <div className={cls.info__addInfo}>
                     <i className="fas fa-plus"/>
                 </div>

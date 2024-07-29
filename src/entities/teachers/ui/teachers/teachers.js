@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {memo, useMemo, useState} from 'react';
 import cls from "./teachers.module.sass"
 
 import {Table} from "shared/ui/table";
@@ -6,7 +6,7 @@ import {Input} from "shared/ui/input";
 import {set} from "react-hook-form";
 
 
-export const Teachers = ({data}) => {
+export const Teachers = memo(({data}) => {
     const [checkbox, setCheckbox] = useState(false)
 
     const checkBoxChange = (id) => {
@@ -52,6 +52,6 @@ export const Teachers = ({data}) => {
 
 
         </div>
-    );
-};
+    )
+})
 

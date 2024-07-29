@@ -12,6 +12,7 @@ export const searchSlice = createSlice({
     initialState,
     reducers: {
         getSearchStr: (state, action) => {
+            console.log(action.payload, "payload")
             state.search = action.payload
             state.loading = false
             state.error = null

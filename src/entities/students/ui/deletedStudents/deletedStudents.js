@@ -1,9 +1,11 @@
-import cls from "./deletedStudents.module.sass";
-import {Table} from "shared/ui/table";
 import React, {useMemo, useState} from "react";
-
 import classNames from "classnames";
 import {useSelector} from "react-redux";
+import {useNavigate} from "react-router";
+
+import {Table} from "shared/ui/table";
+
+import cls from "./deletedStudents.module.sass";
 
 
 
@@ -23,6 +25,7 @@ const menuList = [
 export const DeletedStudents = ({currentTableData}) => {
     const [activeMenu, setActiveMenu] = useState(menuList[0]?.name)
     const [deletedStudentsData , setDeletedStudents] = useState([])
+    const navigation = useNavigate()
 
 
     const renderDeletedStudents = () => {
@@ -32,7 +35,7 @@ export const DeletedStudents = ({currentTableData}) => {
             switch (activeMenu) {
                 case ("all"): {
                     return(
-                        <tr>
+                        <tr  onClick={() => navigation(`profile/${item.id}`)}>
                             <td>{i + 1}</td>
                             <td>{item.name} {item.surname}</td>
                             <td>{item.age}</td>
@@ -47,7 +50,7 @@ export const DeletedStudents = ({currentTableData}) => {
                 case "teacherDontLike" :
                     if (item.teacherDontLike){
                         return (
-                            <tr>
+                            <tr onClick={() => navigation(`profile/${item.id}`)}>
                                 <td>{i + 1}</td>
                                 <td>{item.name} {item.surname}</td>
                                 <td>{item.age}</td>
