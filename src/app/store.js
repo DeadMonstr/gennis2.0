@@ -3,16 +3,27 @@
 import {configureStore} from "@reduxjs/toolkit";
 
 import {search} from "features/searchInput";
-import {registerUser} from 'pages/register';
-import {loginSlice} from "pages/login";
+import {registerUser} from 'pages/registerPage';
+import {loginSlice} from "pages/loginPage";
 import {filteredTeachers} from "features/filters/teacherFilter";
 import {filteredStudents} from "features/filters/studentsFilter";
 import {filteredEmployees} from "features/filters/employeesFilter";
 import {filteredGroups} from "features/filters/groupsFilter";
 import {filteredRooms} from "features/filters/roomsFilter";
-import {groups} from "entities/groups/index";
+import {deletedGroups, groups} from "entities/groups/index";
 import {user} from "entities/user";
+import {studentsDirectorSlice} from "pages/studentsPage"
+import {timeTable} from "pages/timePage";
 
+import {homeSlice} from "entities/home";
+import {newStudents} from "entities/students";
+import {teachers} from "entities/teachers"
+import {employers} from "entities/employer";
+import {studentProfilePayment} from "entities/profile/studentProfile";
+import {studentProfileBooks} from "entities/profile/studentProfile";
+import {studentProfileRating} from "entities/profile/studentProfile";
+import {roomsAddSlice} from 'pages/roomsPage';
+import {studentProfile} from "pages/profilePage";
 
 
 const stringMiddleware = () => (next) => (action) => {
@@ -36,7 +47,19 @@ export const store = configureStore({
         filteredGroups,
         filteredRooms,
         groups,
-        user
+        studentProfilePayment,
+        studentProfileBooks,
+        studentProfileRating,
+        studentsDirectorSlice,
+        deletedGroups,
+        user,
+        newStudents,
+        employers,
+        teachers,
+        homeSlice,
+        studentProfile,
+        timeTable,
+        roomsAddSlice,
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

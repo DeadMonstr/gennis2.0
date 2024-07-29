@@ -1,1 +1,1 @@
-export {Radio} from "./ui/radio"
+export {Radio} from "./radio"

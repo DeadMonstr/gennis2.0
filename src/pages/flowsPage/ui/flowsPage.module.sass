@@ -1,0 +1,39 @@
+.flow
+  padding: 1rem 2rem
+  display: flex
+  flex-direction: column
+  gap: 3rem
+  &__header
+    display: flex
+    flex-direction: column
+    gap: 3rem
+  &__location
+    align-self: flex-end
+  &__filter
+    display: flex
+    justify-content: space-between
+
+  &__radioFilter
+    display: flex
+    gap: 2rem
+    align-self: flex-end
+    text-transform: capitalize
+    & > div
+      color: #0EA5E9
+
+  &__itemClass
+    color: #0EA5E9
+    background-color: #F5F5F5
+    width: fit-content
+    padding: .9rem
+    border-radius: 5px
+    cursor: pointer
+  .table
+    display: flex
+    flex-direction: column
+    gap: 2rem
+    h2
+      font-size: 2rem
+      color: #0EA5E9
+    &__wrapper
+      height: calc(100vh - 55vh)

@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import {fetchSearch} from "./searchThunk";
 
 const initialState = {
-    newStudents: null,
+    search: null,
     loading: false,
     error: null
 }
@@ -10,7 +10,14 @@ const initialState = {
 export const searchSlice = createSlice({
     name: "search",
     initialState,
-    reducers: {},
+    reducers: {
+        getSearchStr: (state, action) => {
+            console.log(action.payload, "payload")
+            state.search = action.payload
+            state.loading = false
+            state.error = null
+        }
+    },
     extraReducers: builder =>
         builder
             .addCase(fetchSearch.pending, state => {
@@ -30,3 +37,4 @@ export const searchSlice = createSlice({
 })
 
 export default searchSlice.reducer
+export const {getSearchStr} = searchSlice.actions

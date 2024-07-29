@@ -1,0 +1,1 @@
+export {VacancyWorkerPermission} from './ui/vacancyWorkerPermission'

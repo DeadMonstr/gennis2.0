@@ -1,0 +1,37 @@
+@import "variables"
+.dropdown
+  display: flex
+  flex-direction: column
+  border-radius: 5px
+  border: 2px solid white
+  background-color: white
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.10), 0 6px 14px 0 rgba(0, 0, 0, 0.10), 0 25px 25px 0 rgba(0, 0, 0, 0.09), 0 56px 33px 0 rgba(0, 0, 0, 0.05), 0 99px 40px 0 rgba(0, 0, 0, 0.01), 0 155px 43px 0 rgba(0, 0, 0, 0.00)
+  width: 45rem
+  padding: 10px 20px 10px 20px
+  .header
+    display: flex
+    align-items: center
+    justify-content: space-between
+    cursor: pointer
+    border-bottom: 2px solid #9f9d9d
+    margin-bottom: 10px
+    padding-bottom: 10px
+    .info
+      div
+        display: flex
+        font-size: 25px
+        margin-bottom: 5px
+      span
+        font-size: 16px
+        color: #605a5a
+  .btns
+    font-size: 20px
+  .info
+    &__visible
+      opacity: 1
+      display: flex
+      flex-direction: column
+    &__invisible
+      opacity: 0
+      display: none
+

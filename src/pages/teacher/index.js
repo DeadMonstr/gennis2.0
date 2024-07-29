@@ -1,1 +1,0 @@
-export {Teacher} from "./ui/teacher"

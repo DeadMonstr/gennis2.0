@@ -1,29 +1,39 @@
 
 import {
+    getDirectorRouteStudents,
     getRouteDeletedStudents,
     getRouteDeletedGroups,
     getRouteNewStudents,
-    getRouteTaskManager,
-    getRouteRegister,
-    getRouteStudents,
-    getRouteGroups,
-    getRouteMain,
-    getRouteTeacher,
     getRouteCreateGroup,
+    getRouteTaskManager,
+    getVacancyWorkPage,
+    getTeacherProfile,
+    getRouteStudents,
+    getRouteTimePage,
+    getRouteRegister,
+    getRouteTeacher,
+    getRouteGroups,
+    getVacancyPage,
     getRouteRooms,
+    getRouteMain, getProfile,
 } from "shared/const/routers";
 
-
-import {NewStudents} from "pages/newStudentsPage";
-import {DeletedStudents} from "pages/deletedStudents";
-import {Students} from "pages/students";
+import {StudentsPage} from "pages/studentsPage";
 import {GroupsPage} from "pages/groupsPage";
-import {DeletedGroups} from "pages/deletedGroups";
-import {Register} from "pages/register";
-import {Rooms} from "pages/rooms/ui/rooms";
-import {Teacher} from "pages/teacher";
-import {CreateGroup} from "pages/createGroup";
+
+import {Register} from "pages/registerPage";
+import {Rooms} from "pages/roomsPage/ui/rooms";
+import {TeachersPage} from "pages/teacherPage";
+
 import {HomePage} from "pages/homePage";
+import {ProfileTeacherPage} from "pages/profilePage";
+import {StudentsDirectorPage} from "pages/studentsPage";
+import {VacancyPage} from "pages/vacancyPage";
+import {VacancyWorkPage} from "pages/vacancyWorkPage";
+import {TimePage} from "pages/timePage";
+import {EmployerPage} from "pages/employeesPage";
+import {FlowsPage} from "pages/flowsPage";
+import {StudentProfilePage} from "pages/profilePage";
 
 
 export const routersConfig = [
@@ -33,7 +43,10 @@ export const routersConfig = [
         icon: "fa-home",
         roles: [true],
         path: getRouteMain(),
-        element: <HomePage/>
+        // element: <HomePage/>,
+        element: null,
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
     },
     {
         to: "taskManager",
@@ -41,63 +54,47 @@ export const routersConfig = [
         icon: "fa-tasks",
         roles: [true],
         path: getRouteTaskManager(":id"),
-        element: null
+        element: null,
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
     },
     {
-        to: "newStudents",
-        name: "Yangi O'quvchilar",
-        icon: "fa-user",
-        roles: [true],
-        path: getRouteNewStudents(":id"),
-        element: <NewStudents/>
-    },
-    {
-        to: "deletedStudents",
-        name: "O'chirilgan O'quvchilar",
-        icon: "fa-user-alt-slash",
+        to: "studentsDirector",
+        name: "O'quvchilar",
+        icon: "fa-user-graduate",
         roles: [],
-        path: getRouteDeletedStudents(":id"),
-        element: <DeletedStudents/>
+        path: getDirectorRouteStudents(),
+        element: <StudentsDirectorPage/>,
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
+
     },
     {
         to: "students",
-        name: "O'qiyotgan O'quvchilar",
+        name: " O'quvchilar",
         icon: "fa-user-graduate",
         roles: [],
+        isMenu: true,
         path: getRouteStudents(":id"),
-        element: <Students/>
+        element: <StudentsPage/>
     },
     {
         to: "groups",
         name: "Gruppalar",
         icon: "fa-users",
         roles: [],
+        isMenu: true,
         path: getRouteGroups(":id"),
         element: <GroupsPage/>
-    },
-    {
-        to: "newStudents/createGroup",
-
-        icon: "fa-user",
-        roles: [],
-        path: getRouteCreateGroup(":id"),
-        element: <CreateGroup/>
-    },
-    {
-        to: "deletedGroups",
-        name: "O'chirilgan Gruppalar",
-        icon: "fa-user-alt-slash",
-        roles: [],
-        path: getRouteDeletedGroups(":id"),
-        element: <DeletedGroups/>
     },
     {
         to: "teacher",
         name: "O'qituvchilar",
         icon: "fa-user-tie",
         roles: [],
+        isMenu: true,
         path: getRouteTeacher(":id"),
-        element: <Teacher/>
+        element: <TeachersPage/>
     },
     {
         to: "/login",
@@ -112,12 +109,78 @@ export const routersConfig = [
         roles: []
     },
     {
+        to: "teacherProfile",
+        name: "Teacher Profile",
+        icon: "fa-user-graduate",
+        roles: [],
+        path: getTeacherProfile("id"),
+        element: <ProfileTeacherPage/>,
+        isMenu: false
+    },
+    {
+        to: "profile",
+        name: "Student Profile",
+        icon: "fa-user-graduate",
+        roles: [],
+        path: getProfile(":id"),
+        element: <StudentProfilePage/>,
+        isMenu: false
+    },
+    {
+      to: "vacancyPage",
+      name: "Vakansiyalar",
+      icon: "fa-tasks",
+      roles: [],
+      path: getVacancyPage(),
+      element: <VacancyPage/>,
+      isMenu: true
+    },
+    {
+        to: "timeTable",
+        name: "Time Table",
+        icon: "fa-tasks",
+        roles: [],
+        path: getRouteTimePage(),
+        element: <TimePage/>,
+        isMenu: true
+    },
+    {
+        to: "vacancyPage/vacancyWorkPage",
+        roles: [],
+        path: getVacancyWorkPage(),
+        element: <VacancyWorkPage/>,
+        isMenu: false,
+        type: ["app_center_theme", "app_school_theme"]
+    },
+    {
+        to: "employer",
+        name: "Employers",
+        icon: "fa-user-graduate",
+        roles: [],
+        path: getTeacherProfile("id"),
+        element: <EmployerPage/>,
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
+    },
+    {
+        to: "flows",
+        name: "Flows",
+        icon: "fa-user-graduate",
+        roles: [],
+        path: getTeacherProfile("id"),
+        element: <FlowsPage/>,
+        isMenu: true,
+        type: ["app_school_theme"]
+    },
+    {
         to: "rooms",
         name: "Honalar",
         icon: "fa-door-closed",
         roles: [],
         path: getRouteRooms(),
-        element: <Rooms/>
+        element: <Rooms/>,
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
     },
     {
         to: "/login",
@@ -143,7 +206,9 @@ export const routersConfig = [
         icon: "fa-edit",
         roles: [],
         path: getRouteRegister(":id"),
-        element: <Register/>
-    }
+        element: <Register/>,
+        isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
+    },
 
 ]

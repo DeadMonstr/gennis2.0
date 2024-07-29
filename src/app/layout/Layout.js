@@ -13,7 +13,7 @@ export const Layout = () => {
 
 
     return (
-        <div style={{display: "flex"}}>
+        <>
             <Menubar/>
             <main className={cls.main}>
                 <Header/>
@@ -22,7 +22,7 @@ export const Layout = () => {
                     <Outlet/>
                 </div>
             </main>
-        </div>
+        </>
     );
 };
 

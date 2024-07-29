@@ -1,1 +1,1 @@
-export {Textarea} from "./ui/textArea"
+export {Textarea} from "./textArea"

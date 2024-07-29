@@ -1,1 +1,1 @@
-export {EditableCard} from "./ui/editableCard";
+export {EditableCard} from "./editableCard";
