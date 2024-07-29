@@ -1,12 +1,9 @@
-import React, {useCallback, useEffect, useMemo} from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import classNames from "classnames";
-
-import {usePagination, DOTS} from "shared/lib/hooks/usePagination";
-
+import { usePagination, DOTS } from "shared/lib/hooks/usePagination";
 import cls from "./pagination.module.sass";
 
 export const Pagination = React.memo((props) => {
-
     const {
         users,
         onPageChange,
@@ -18,20 +15,39 @@ export const Pagination = React.memo((props) => {
         type = "basic"
     } = props;
 
+    const searchedUsers = useMemo(() => {
+        if (!users || !Array.isArray(users)) return [];
+        const filteredHeroes = users.slice();
+        setCurrentPage(1);
+        return filteredHeroes.filter(item =>
+            item.name?.toLowerCase().includes(search.toLowerCase()) ||
+            item.surname?.toLowerCase().includes(search.toLowerCase()) ||
+            item.username?.toLowerCase().includes(search.toLowerCase()) ||
+            item.fullName?.toLowerCase().includes(search.toLowerCase()) ||
+            item.sitterNumber?.toLowerCase().includes(search.toLowerCase()) ||
+            item.allSalary?.toLowerCase().includes(search.toLowerCase()) ||
+            item.subjectName?.toLowerCase().includes(search.toLowerCase()) ||
+            item.workName?.toLowerCase().includes(search.toLowerCase()) ||
+            item.workerName?.toLowerCase().includes(search.toLowerCase()) ||
+            item.seats_number?.toLowerCase().includes(search.toLowerCase()) ||
+            item.title.toLowerCase().includes(search.toLowerCase())
+        );
+    }, [users, setCurrentPage, search]);
 
 
     useEffect(() => {
-        setCurrentTableData(() => {
-            const firstPageIndex = (currentPage - 1) * pageSize;
-            const lastPageIndex = firstPageIndex + pageSize;
-            return users.slice(firstPageIndex, lastPageIndex);
-        })
-    }, [pageSize, currentPage, users, setCurrentTableData])
-
+        if (users && Array.isArray(users)) {
+            setCurrentTableData(() => {
+                const firstPageIndex = (currentPage - 1) * pageSize;
+                const lastPageIndex = firstPageIndex + pageSize;
+                return searchedUsers.slice(firstPageIndex, lastPageIndex);
+            });
+        }
+    }, [pageSize, currentPage, searchedUsers, setCurrentTableData, users]);
 
     const paginationRange = usePagination({
         currentPage,
-        totalCount: users.length,
+        totalCount: searchedUsers.length,
         siblingCount,
         pageSize
     });
@@ -54,9 +70,8 @@ export const Pagination = React.memo((props) => {
                     {pageNumber}
                 </li>
             );
-        })
-    }, [currentPage, onPageChange, paginationRange, type])
-
+        });
+    }, [currentPage, onPageChange, paginationRange]);
 
     if (currentPage === 0 || paginationRange.length < 2) {
         return null;
@@ -72,13 +87,10 @@ export const Pagination = React.memo((props) => {
 
     let lastPage = paginationRange[paginationRange.length - 1];
 
-    const renderedPages = renderPageNumbers()
-
+    const renderedPages = renderPageNumbers();
 
     return (
-        <ul
-            className={classNames(cls.pagination_container, {[className]: className})}
-        >
+        <ul className={classNames(cls.pagination_container, { [className]: className })}>
             <li
                 key={10000}
                 className={classNames(cls.pagination_item, cls.arrow, {
@@ -103,4 +115,4 @@ export const Pagination = React.memo((props) => {
             </li>
         </ul>
     );
-})
+});

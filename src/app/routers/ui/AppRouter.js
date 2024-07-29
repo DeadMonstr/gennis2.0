@@ -23,6 +23,9 @@ import "app/styles/index.sass"
 import {CreateGroup} from "entities/students";
 import {VacancyPage} from "pages/vacancyPage";
 import {FlowsPage} from "../../../pages/flowsPage";
+import {VacancyPage} from "pages/vacancyPage";
+import {CreateGroup} from "../../../entities/students";
+import {FlowsPage} from "../../../pages/flowsPage";
 
 
 export const AppRouter = () => {
