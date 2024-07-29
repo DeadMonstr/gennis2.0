@@ -1,15 +1,11 @@
 
 import {
-    getRouteDeletedStudents,
-    getRouteDeletedGroups,
-    getRouteNewStudents,
     getRouteTaskManager,
     getRouteRegister,
     getRouteStudents,
     getRouteGroups,
     getRouteMain,
     getRouteTeacher,
-    getRouteCreateGroup,
     getRouteRooms,
     getTeacherProfile,
     getVacancyPage,
@@ -18,16 +14,12 @@ import {
 } from "shared/const/routers";
 
 
-import {NewStudents} from "pages/newStudentsPage";
-import {DeletedStudents} from "pages/deletedStudents";
 import {StudentsPage} from "pages/studentsPage";
 import {GroupsPage} from "pages/groupsPage";
-import {DeletedGroups} from "pages/deletedGroups";
 import {Register} from "pages/register";
 import {Rooms} from "pages/rooms/ui/rooms";
-import {Teacher} from "pages/teacher";
-import {CreateGroup} from "pages/createGroup";
 import {HomePage} from "pages/homePage";
+import {TeachersPage} from "pages/teacherPage";
 import {ProfileTeacherPage} from "pages/profileTeacherPage";
 import {VacancyPage} from "../../../pages/vacancyPage";
 import {VacancyWorkPage} from "../../../pages/vacancyWorkPage";

@@ -2,11 +2,7 @@
 import { createPortal } from 'react-dom';
 import classNames from 'classnames';
 import React, {memo} from 'react';
-
-import cls from './modal.module.sass';
-import close from 'shared/assets/icons/cross.svg';
 import {useTheme} from "../../lib/hooks/useTheme";
-
 import cls from "./modal.module.sass";
 import close from "shared/assets/icons/cross.svg";
 

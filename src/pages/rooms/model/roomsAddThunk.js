@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import {API_URL} from "../../../shared/api/base";
 
 export const roomsAddThunk = createAsyncThunk(

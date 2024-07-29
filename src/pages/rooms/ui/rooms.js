@@ -1,25 +1,37 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import cls from "./rooms.module.sass";
-import { Button } from "shared/ui/button";
-import { Select } from "shared/ui/select";
-import { Pagination } from "features/pagination";
-import { RoomsList } from "entities/rooms/ui";
-import { rooms } from "entities/rooms/model";
-import { RoomsFilter } from "features/filters/roomsFilter";
-import {RoomModal} from "../../../features/roomsAddModal";
+import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'shared/ui/button';
+import { Select } from 'shared/ui/select';
+import { Pagination } from 'features/pagination';
+import { RoomsList } from 'entities/rooms/ui';
+import { RoomsFilter } from 'features/filters/roomsFilter';
+import { RoomModal } from 'features/roomsAddModal';
+import { getRoomsData } from 'entities/rooms/model/selectors/roomsSelectors';
+import { fetchRoomsData } from 'entities/rooms/model/roomsThunk';
+import cls from './rooms.module.sass';
 
 export const Rooms = () => {
-    const [modal, setModal] = useState(false)
-    const [active, setActive] = useState("");
+    const [modal, setModal] = useState(false);
+    const [active, setActive] = useState(false);
     const PageSize = useMemo(() => 10, []);
     const [currentPage, setCurrentPage] = useState(1);
-    const [search, setSearch] = useState("");
-    const [selected, setSelected] = useState("");
+    const [search, setSearch] = useState('');
+    const [selected, setSelected] = useState('');
     const [currentTableData, setCurrentTableData] = useState([]);
+    const dispatch = useDispatch();
+
+    const roomsData = useSelector(getRoomsData);
 
     useEffect(() => {
-        setCurrentTableData(rooms.slice(0, PageSize));
-    }, [PageSize]);
+        dispatch(fetchRoomsData())
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (roomsData && Array.isArray(roomsData)) {
+            setCurrentTableData(roomsData.slice(0, PageSize));
+        }
+    }, [roomsData, PageSize]);
+
 
     const handleChange = (value) => {
         setSelected(value);
@@ -29,42 +41,38 @@ export const Rooms = () => {
         <div className={cls.mainContainer}>
             <div className={cls.mainContainer_buttonPanelBox}>
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}>
-                    <Button onClick={() => setActive(true)}
-                            children={"Add room"}
-                    />
+                    <Button onClick={() => setActive(true)} children={'Add room'} />
                 </div>
                 <Select />
             </div>
             <div className={cls.mainContainer_filterPanelBox}>
-                <Button extraClass={cls.extraCutClassFilter} type={"filter"} onClick={() => setModal(true)}>Filter</Button>
-
-                <div className={cls.mainContainer_filterPanelBox_rightFilterRadioGroupBox}>
-                </div>
+                <Button
+                    extraClass={cls.extraCutClassFilter}
+                    type={'filter'}
+                    onClick={() => setModal(true)}
+                >
+                    Filter
+                </Button>
+                <div className={cls.mainContainer_filterPanelBox_rightFilterRadioGroupBox}></div>
             </div>
             <div className={cls.mainContainer_tablePanelBox}>
-                <RoomsList
-                    currentTableData={currentTableData}
-                />
+                <RoomsList currentTableData={currentTableData} />
             </div>
-            <RoomsFilter
-                active={modal}
-                setActive={setModal}
-            />
+            <RoomsFilter active={modal} setActive={setModal} />
             <div className={cls.paginationBox}>
                 <Pagination
                     setCurrentTableData={setCurrentTableData}
                     search={search}
-                    users={rooms}
+                    users={roomsData}
                     setCurrentPage={setCurrentPage}
                     currentPage={currentPage}
                     pageSize={PageSize}
-                    onPageChange={page => {
-                        setCurrentPage(page)
+                    onPageChange={(page) => {
+                        setCurrentPage(page);
                     }}
                 />
             </div>
-            <RoomModal isOpen={active} onClose={setActive}/>
-
+            <RoomModal isOpen={active} onClose={setActive} />
         </div>
     );
 };

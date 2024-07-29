@@ -1,13 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_URL, headers, useHttp } from "shared/api/base";
 
-// Helper function to get the authorization token
 const getAuthToken = () => {
     const userData = sessionStorage.getItem('token');
     return userData ? userData : null;
 };
 
-// Thunk for fetching subjects and languages
 export const fetchSubjectsAndLanguages = createAsyncThunk(
     'user/fetchSubjectsAndLanguages',
     async (_, thunkAPI) => {
@@ -19,7 +17,7 @@ export const fetchSubjectsAndLanguages = createAsyncThunk(
 
         try {
             const [subjectsResponse, languagesResponse] = await Promise.all([
-                fetch(`${API_URL}Subjects/subject/?limit=20`, {
+                fetch(`${API_URL}Subjects/subject/`, {
                     headers: {
                         ...headers,
                         Authorization: `JWT ${token}`
@@ -52,7 +50,6 @@ export const fetchSubjectsAndLanguages = createAsyncThunk(
     }
 );
 
-// Thunk for registering user
 export const registerUser = createAsyncThunk(
     'user/registerUser',
     async (userData, thunkAPI) => {

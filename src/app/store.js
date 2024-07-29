@@ -3,7 +3,7 @@
 import {configureStore} from "@reduxjs/toolkit";
 
 import {search} from "features/searchInput";
-import {registerUser} from 'pages/register';
+import {registerUser} from "../pages/register";
 import {loginSlice} from "pages/login";
 import {filteredTeachers} from "features/filters/teacherFilter";
 import {filteredStudents} from "features/filters/studentsFilter";
@@ -20,6 +20,7 @@ import {studentsDirectorSlice} from "pages/studentsPage"
 
 import {newStudents} from "../entities/students";
 import {employers} from "../entities/employer";
+import {roomsSlice} from "../entities/rooms";
 
 
 const stringMiddleware = () => (next) => (action) => {
@@ -46,13 +47,13 @@ export const store = configureStore({
         studentProfilePayment,
         studentProfileBooks,
         studentProfileRating,
-        roomsAddSlice,
-        studentProfileRating,
         studentsDirectorSlice,
         deletedGroups,
         user,
         newStudents,
-        employers
+        employers,
+        roomsAddSlice,
+        roomsSlice,
 
     },
     middleware: getDefaultMiddleware =>

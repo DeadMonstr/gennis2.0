@@ -1,0 +1,1 @@
+export {default as roomsSlice} from './model/roomsSlice'
