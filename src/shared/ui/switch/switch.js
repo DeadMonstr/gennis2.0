@@ -8,6 +8,7 @@ export const Switch = React.memo((
         onChangeSwitch
     }) => {
 
+
     return (
         <div className={cls.mainBody}>
             <button
@@ -26,7 +27,11 @@ export const Switch = React.memo((
                     :
                     <span className={cls.mainSwitchBox__offSwitch}></span>
                 }
+
             </button>
         </div>
+
     );
 });
+
+

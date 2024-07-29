@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import {fetchSearch} from "./searchThunk";
 
 const initialState = {
-    search: "",
+    search: null,
     loading: false,
     error: null
 }
@@ -12,6 +12,7 @@ export const searchSlice = createSlice({
     initialState,
     reducers: {
         getSearchStr: (state, action) => {
+            console.log(action.payload, "payload")
             state.search = action.payload
             state.loading = false
             state.error = null

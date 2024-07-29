@@ -1,14 +1,10 @@
-import {memo, useContext} from 'react';
+import {memo} from 'react';
 
 import {EditableCard} from "shared/ui/editableCard";
-import {ContextStuPro} from "pages/profilePage";
 
 import cls from "./studentProfileRating.module.sass";
 
-export const StudentProfileRating = memo(() => {
-
-    const {setActive} = useContext(ContextStuPro)
-
+export const StudentProfileRating = memo(({setActive}) => {
     return (
         <EditableCard
             extraClass={cls.rating}

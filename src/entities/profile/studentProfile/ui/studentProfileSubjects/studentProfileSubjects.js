@@ -1,15 +1,41 @@
-import {memo, useContext} from 'react';
+import {memo, useCallback} from 'react';
 import classNames from "classnames";
 
 import {EditableCard} from "shared/ui/editableCard";
-import {ContextStuPro} from "pages/profilePage";
 
 import cls from "./studentProfileSubjects.module.sass";
 import time from "shared/assets/images/oclock.png";
 
-export const StudentProfileSubjects = memo(() => {
+export const StudentProfileSubjects = memo(({setActive, data}) => {
 
-    const {setActive} = useContext(ContextStuPro)
+    const renderSubjects = useCallback(() => {
+        // return data.map(item =>
+        //     <div className={cls.item}>
+        //         <div className={cls.item__inner}>
+        //             <div
+        //                 className={classNames(cls.item__status, {
+        //                     [cls.red]: false,
+        //                     [cls.yellow]: false
+        //                 })}
+        //             />
+        //             <div className={cls.item__info}>
+        //                 <h2>{item.name} Kurs</h2>
+        //                 <p>Seshanba 14:00</p>
+        //             </div>
+        //         </div>
+        //         <p
+        //             className={classNames(cls.item__money, {
+        //                 [cls.red]: false,
+        //                 [cls.yellow]: false
+        //             })}
+        //         >
+        //             390.000
+        //         </p>
+        //     </div>
+        // )
+    }, [data])
+
+    const render = renderSubjects()
 
     return (
         <EditableCard

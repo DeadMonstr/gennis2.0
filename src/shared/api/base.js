@@ -15,13 +15,10 @@ export const CLASSROOM_API_URL_DOC = `http://192.168.68.111:8000/`
 export const headers = () => {
     const token = sessionStorage.getItem("token");
     return {
-        "Authorization": "Bearer " + token,
-        'Content-Type': 'application/json',
-        "Accept":  'application/json',
-        'Cookie': 'abuse_interstitial=5d26-188-113-214-253.ngrok-free.app'
-    };
-};
-
+        "Authorization" : "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+}
 
 
 export const useHttp = () => {

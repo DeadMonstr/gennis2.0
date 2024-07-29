@@ -1,17 +1,21 @@
 import React, {useState} from 'react';
+import {useNavigate} from "react-router";
+
 import {StudentsFilter} from "features/filters/studentsFilter";
 import {Table} from "shared/ui/table";
+
 import cls from "./newStudents.module.sass";
 
 
 export const NewStudents = ({currentTableData}) => {
     const [active, setActive] = useState(false);
+    const navigation = useNavigate()
 
 
     const renderStudents = () => {
         return currentTableData.map((item, i) => {
             return (
-                <tr>
+                <tr onClick={() => navigation(`profile/${item.id}`)}>
                     <td>{i + 1}</td>
                     <td>{item.user.surname} {item.user.name}</td>
                     <td>{item.age}</td>

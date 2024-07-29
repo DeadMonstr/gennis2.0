@@ -1,1 +1,0 @@
-export {ProfileTeacherPage} from "./ui/profileTeacherPage"

@@ -6,7 +6,7 @@ import {Input} from "shared/ui/input";
 import {Radio} from "shared/ui/radio";
 import {Select} from "shared/ui/select";
 import {Form} from "shared/ui/form";
-import {amountTypes, amountService} from "entities/profile";
+import {amountTypes, amountService} from "entities/profile/studentProfile";
 
 import cls from "./teacherProfileTotalAmount.module.sass";
 import money from "shared/assets/images/Money.png";

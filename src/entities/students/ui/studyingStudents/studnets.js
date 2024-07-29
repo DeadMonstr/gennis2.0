@@ -1,13 +1,16 @@
+import {useNavigate} from "react-router";
 
 import {Table} from "shared/ui/table";
+
 import cls from "./studnets.module.sass";
 
 export const Students = ({currentTableData}) => {
 
+    const navigation = useNavigate()
 
     const renderStudents = () => {
         return currentTableData.map((item, i) => (
-            <tr>
+            <tr onClick={() => navigation(`profile/${item.id}`)}>
                 <td>{i + 1}</td>
                 <td>{item.student.user.name} {item.student.user.surname}</td>
                 <td>{item.student.user.age}</td>

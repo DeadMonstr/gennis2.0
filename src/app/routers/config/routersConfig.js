@@ -1,14 +1,23 @@
 
 import {
+    getDirectorRouteStudents,
+    getRouteDeletedStudents,
+    getRouteDeletedGroups,
+    getRouteNewStudents,
+    getRouteCreateGroup,
     getRouteTaskManager,
-    getRouteRegister,
+    getVacancyWorkPage,
+    getTeacherProfile,
     getRouteStudents,
-    getRouteGroups,
-    getRouteMain,
+    getRouteTimePage,
+    getRouteRegister,
     getRouteTeacher,
+    getRouteGroups,
     getRouteRooms,
     getTeacherProfile,
     getVacancyPage,
+    getRouteRooms,
+    getRouteMain, getProfile,
     getVacancyWorkPage,
     getDirectorRouteStudents,
     getRoomsProfilePage,
@@ -25,9 +34,13 @@ import {ProfileTeacherPage} from "pages/profileTeacherPage";
 import {VacancyPage} from "../../../pages/vacancyPage";
 import {VacancyWorkPage} from "../../../pages/vacancyWorkPage";
 import {StudentsDirectorPage} from "pages/studentsPage";
+import {VacancyPage} from "pages/vacancyPage";
+import {VacancyWorkPage} from "pages/vacancyWorkPage";
+import {TimePage} from "pages/timePage";
 import {EmployerPage} from "pages/employeesPage";
 import {FlowsPage} from "pages/flowsPage";
 import {RoomsProfilePage} from "pages/roomsProiflePage";
+import {StudentProfilePage} from "pages/profilePage";
 
 
 export const routersConfig = [
@@ -37,7 +50,8 @@ export const routersConfig = [
         icon: "fa-home",
         roles: [true],
         path: getRouteMain(),
-        element: <HomePage/>,
+        // element: <HomePage/>,
+        element: null,
         isMenu: true,
         type: ["app_center_theme", "app_school_theme"]
     },
@@ -108,6 +122,40 @@ export const routersConfig = [
         roles: [],
         path: getTeacherProfile("id"),
         element: <ProfileTeacherPage/>,
+        isMenu: false
+    },
+    {
+        to: "profile",
+        name: "Student Profile",
+        icon: "fa-user-graduate",
+        roles: [],
+        path: getProfile(":id"),
+        element: <StudentProfilePage/>,
+        isMenu: false
+    },
+    // {
+    //   to: "vacancyPage",
+    //   name: "Vakansiyalar",
+    //   icon: "fa-tasks",
+    //   roles: [],
+    //   path: getVacancyPage(),
+    //   element: <VacancyPage/>,
+    //   isMenu: true
+    // },
+    {
+        to: "timeTable",
+        name: "Time Table",
+        icon: "fa-tasks",
+        roles: [],
+        path: getRouteTimePage(),
+        element: <TimePage/>,
+        isMenu: true
+    },
+    {
+        to: "vacancyPage/vacancyWorkPage",
+        roles: [],
+        path: getVacancyWorkPage(),
+        element: <VacancyWorkPage/>,
         isMenu: false,
         type: ["app_center_theme", "app_school_theme"]
     },

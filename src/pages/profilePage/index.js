@@ -1,3 +1,5 @@
 
 export {StudentProfilePage} from "./ui/studentProfilePage/studentProfilePage";
-export {ContextStuPro} from "./ui/studentProfilePage/studentProfilePage";
+export {default as studentProfile} from "./model/slice/studentProfileSlice";
+
+export {ProfileTeacherPage} from "./ui/profileTeacherPage/profileTeacherPage"

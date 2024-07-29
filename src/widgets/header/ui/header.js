@@ -1,84 +1,76 @@
-import React, {useContext, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useSearchParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
+import {useLocation, useNavigate} from "react-router";
 
-import {fetchSearch} from "features/searchInput/model/searchThunk";
+import {getLocations} from "pages/studentsPage";
 import {BreadCrumbs} from "features/breadCrumbs";
-import {SearchPlatformInput} from "features/searchInput";
+import {SearchPlatformInput, getSearchStr} from "features/searchInput";
 import GetLocation from "features/location/getLocation";
 import {ThemeSwitcher} from "features/themeSwitcher";
-import {SearchContext} from "shared/lib/context/searchContext";
+import {useDebounce} from "shared/lib/hooks/useDebounce";
+import {Button} from "shared/ui/button";
 
 import cls from "./header.module.sass";
 import logo from "shared/assets/images/logo.svg";
 
 export const Header = () => {
 
-    const {setSearch} = useContext(SearchContext)
-
     const dispatch = useDispatch()
+    const location = useLocation()
+    const navigate = useNavigate()
+
     const [selected, setSelected] = useState([])
     const [deletedId, setDeletedId] = useState(0)
 
-    let [searchParams, setSearchParams] = useSearchParams()
+    useEffect(() => {
+        dispatch(getLocations(selected))
+    }, [selected])
 
-    const onSubmitSearchStr = (searchStr) => {
-        console.log(searchStr, "search")
-        setSearch(searchStr)
-        dispatch(fetchSearch(searchStr))
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [valueData, setValueData] = useState(null)
+    const debouncedFetchData = useDebounce(fetchSearchData, 500)
+
+    useEffect(() => {
+        if (searchParams.get("search")) {
+            setValueData(searchParams.get("search"))
+        }
+    }, [])
+
+    useEffect(() => {
+        if (valueData) {
+            debouncedFetchData()
+            console.log(true)
+        } else {
+            setSearchParams({})
+            console.log(false)
+        }
+    }, [valueData])
+
+    useEffect(() => {
+        if (!searchParams.get("search")) {
+            setSearchParams({})
+            setValueData(null)
+            console.log(valueData, "valueData")
+        }
+    }, [location.pathname, location.search])
+
+    function fetchSearchData() {
+        const checkedValue =
+            typeof valueData === "string" ? valueData : searchParams.get("search")
+        setSearchParams({
+            search: checkedValue
+        })
+        dispatch(getSearchStr(checkedValue))
     }
-
-
-    // try {
-    //     addQueryParams({
-    //         sort,
-    //         order,
-    //         search,
-    //         type,
-    //     });
-    //     const response = await extra.api.get<Article[]>('/articles', {
-    //         params: {
-    //             _expand: 'user',
-    //             _limit: limit,
-    //             _page: page,
-    //             _sort: sort,
-    //             _order: order,
-    //             q: search,
-    //             type: type === ArticleType.ALL ? undefined : type,
-    //         },
-    //     });
-    //
-    //     if (!response.data) {
-    //         throw new Error();
-    //     }
-    //
-    //     return response.data;
-    // } catch (e) {
-    //     return rejectWithValue('error');
-    // }
-
-
-    // useEffect(() => {
-    //     try {
-    //         setSearchParams({
-    //             sort: "createdAt",
-    //             order: "asc",
-    //             search: "it",
-    //             type: "ALL"
-    //         })
-    //     } catch (e) {
-    //         throw e
-    //     }
-    // }, [searchParams, setSearchParams])
-    //
-    // console.log(searchParams, "search")
 
     return (
         <header className={cls.header}>
             <div className={cls.header__top}>
                 <img className={cls.header__logo} src={logo} alt=""/>
                 <SearchPlatformInput
-                    onSearch={setSearch}
+                    defaultSearch={valueData ?? searchParams.get("search")}
+                    onSearch={setValueData}
                 />
                 <div className={cls.inner}>
                     <ThemeSwitcher/>
@@ -89,9 +81,21 @@ export const Header = () => {
                 </div>
             </div>
             <div className={cls.header__bottom}>
-                <BreadCrumbs
-                    defaultLink={"platform"}
-                />
+                {/*<BreadCrumbs*/}
+                {/*    defaultLink={"platform"}*/}
+                {/*/>*/}
+                <Button
+                    onClick={() => {
+                        navigate(-1)
+                        setSearchParams({})
+                        setValueData(null)
+                    }}
+                    extraClass={cls.header__back}
+                    type={"simple-add"}
+                >
+                    <i className="fas fa-arrow-left-long"/>
+                    Orqaga
+                </Button>
                 <div className={cls.header__selected}>
                     {
                         selected.map(item => {
@@ -111,5 +115,5 @@ export const Header = () => {
                 </div>
             </div>
         </header>
-    );
-};
+    )
+}

@@ -1,1 +1,0 @@
-export{TeacherSalaryList} from './teacherSalaryList/teacherSalaryList'

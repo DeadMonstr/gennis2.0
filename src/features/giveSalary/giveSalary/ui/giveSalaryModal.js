@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import {Modal} from "shared/ui/modal";
 import cls from './giveSalaryModal.module.sass'
-import {TeacherProfileTotalAmount} from "entities/profile";
+import {TeacherProfileTotalAmount} from "entities/profile/teacherProfile";
 
 export const GiveSalaryModal = React.memo(({active, setActive, activePage}) => {
 

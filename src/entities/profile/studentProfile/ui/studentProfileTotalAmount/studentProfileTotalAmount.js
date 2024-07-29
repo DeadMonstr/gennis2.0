@@ -1,9 +1,8 @@
-import {memo, useCallback, useContext, useState} from 'react';
+import {memo, useCallback, useState} from 'react';
 import {useForm} from "react-hook-form";
 import classNames from "classnames";
 
-import {ContextStuPro} from "pages/profilePage";
-import {amountTypes, amountService} from "entities/profile";
+import {amountTypes, amountService} from "entities/profile/studentProfile";
 import {EditableCard} from "shared/ui/editableCard";
 import {Input} from "shared/ui/input";
 import {Radio} from "shared/ui/radio";
@@ -18,9 +17,8 @@ import bank from "shared/assets/images/Bank.png";
 
 const listPretcent = [-1, 34.8, 70.4]
 
-export const StudentProfileTotalAmount = memo(() => {
+export const StudentProfileTotalAmount = memo(({active, setActive}) => {
 
-    const {active, setActive} = useContext(ContextStuPro)
     const {register, handleSubmit} = useForm()
 
     const [activeService, setActiveService] = useState(amountService[0])
