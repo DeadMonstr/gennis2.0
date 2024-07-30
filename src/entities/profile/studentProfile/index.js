@@ -11,6 +11,7 @@ export {StudentProfileTotalRating} from "./ui/studentProfileTotalRating/studentP
 export {StudentProfileGroupsHistory} from "./ui/studentProfileGroupsHistory/studentProfileGroupsHistory";
 export {StudentProfileTotalAttendance} from "./ui/studentProfileTotalAttendance/studentProfileTotalAttendance";
 export {StudentProfileChangeImage} from "./ui/studentProfileChangeImage/studentProfileChangeImage";
+export {StudentProfileChangeInfo} from "./ui/studentProfileChangeInfo/studentProfileChangeInfo";
 
 export {amountService, amountTypes} from "./model/consts/amountConsts";
 

@@ -5,7 +5,8 @@ import {useSelector} from "react-redux";
 import {EditableCard} from "shared/ui/editableCard";
 import {Select} from "shared/ui/select";
 import {Table} from "shared/ui/table";
-import {getPaymentData, getBooksData} from "entities/profile/studentProfile";
+import {getBooksData} from "../../model/selectors/booksSelector";
+import {getPaymentData} from "../../model/selectors/paymentSelector";
 
 import cls from "./studentProfileAmountPath.module.sass";
 import inTo from "shared/assets/images/inTo.png";

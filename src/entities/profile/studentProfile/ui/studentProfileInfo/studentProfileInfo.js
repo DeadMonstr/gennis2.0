@@ -5,13 +5,18 @@ import {EditableCard} from "shared/ui/editableCard";
 import cls from "./studentProfileInfo.module.sass";
 import defaultUserImg from "shared/assets/images/user_image.png";
 
-export const StudentProfileInfo = memo(({setActive, data, setActiveModal}) => {
+export const StudentProfileInfo = memo((props) => {
 
-    console.log(data)
+    const {
+        setActive,
+        data,
+        setActiveModal,
+        newImage
+    } = props
 
     return (
         <EditableCard
-            // onClick={() => setActive(true)}
+            onClick={() => setActiveModal("changeInfo")}
             extraClass={cls.info}
             title={<i className="fas fa-edit"/>}
         >
@@ -19,7 +24,7 @@ export const StudentProfileInfo = memo(({setActive, data, setActiveModal}) => {
                 <img
                     onClick={() => setActiveModal("changeImage")}
                     className={cls.info__image}
-                    src={defaultUserImg}
+                    src={!!newImage ? newImage : defaultUserImg}
                     alt=""
                 />
                 <h1>{data?.username}</h1>
