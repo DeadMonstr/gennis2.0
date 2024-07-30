@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import classNames from "classnames";
 import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
+import {useForm} from "react-hook-form";
 
 import {
     StudentProfileInfo,
@@ -15,7 +16,7 @@ import {
     StudentProfileTotalAmount,
     StudentProfileGroupsHistory,
     StudentProfileTotalAttendance,
-    StudentProfileChangeImage
+    StudentProfileChangeImage, StudentProfileChangeInfo
 } from "entities/profile/studentProfile";
 import {fetchStudentProfileData} from "../../model/thunk/studentProfileThunk";
 import {getUserData} from "../../model/selector/studentProfileSelector";
@@ -24,6 +25,7 @@ import cls from "./studentProfilePage.module.sass";
 
 export const StudentProfilePage = () => {
 
+    const {register, handleSubmit} = useForm()
     const dispatch = useDispatch()
     const {id} = useParams()
 
@@ -31,12 +33,17 @@ export const StudentProfilePage = () => {
 
     const [active, setActive] = useState(false)
     const [activeModal, setActiveModal] = useState("")
+    const [newImage, setNewImage] = useState("")
 
     useEffect(() => {
         dispatch(fetchStudentProfileData(id))
     }, [id])
 
     console.log(userData, "all")
+
+    const onSubmitData = (data) => {
+        console.log(data, "data info")
+    }
 
 
     return (
@@ -47,6 +54,7 @@ export const StudentProfilePage = () => {
                 setActive={setActive}
                 setActiveModal={setActiveModal}
                 data={userData?.user}
+                newImage={newImage}
             />
             <div
                 className={classNames(cls.profile__mainContent, {
@@ -91,7 +99,13 @@ export const StudentProfilePage = () => {
             <StudentProfileChangeImage
                 setActive={setActiveModal}
                 active={activeModal === "changeImage"}
-                // data={}
+                setNewImage={setNewImage}
+            />
+            <StudentProfileChangeInfo
+                setActive={setActiveModal}
+                active={activeModal === "changeInfo"}
+                register={register}
+                onSubmit={handleSubmit(onSubmitData)}
             />
         </div>
     )

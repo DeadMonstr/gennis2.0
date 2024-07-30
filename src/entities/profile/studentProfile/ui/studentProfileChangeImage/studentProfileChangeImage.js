@@ -1,4 +1,4 @@
-import {memo, useEffect, useRef, useState, DependencyList} from 'react';
+import {memo, useEffect, useMemo, useRef, useState} from 'react';
 import {useDropzone} from "react-dropzone";
 import {
     ReactCrop,
@@ -8,21 +8,22 @@ import {
 } from "react-image-crop";
 
 import {Modal} from "shared/ui/modal";
+import {Button} from "shared/ui/button";
 import {useDebounceEffect} from "shared/lib/hooks/useDebounceEffect";
 
 import cls from "./studentProfileChangeImage.module.sass";
 import 'react-image-crop/dist/ReactCrop.css'
 import user from "shared/assets/images/user_image.png";
 import {Input} from "shared/ui/input";
-
-
+import classNames from "classnames";
 
 
 export const StudentProfileChangeImage = memo((props) => {
 
     const {
         setActive,
-        active
+        active,
+        setNewImage
     } = props
 
 
@@ -48,10 +49,10 @@ export const StudentProfileChangeImage = memo((props) => {
 
 
     const [completedCrop, setCompletedCrop] = useState()
-    const [aspect, setAspect] = useState(16 / 9)
+    const [aspect, setAspect] = useState(null)
     const [scale, setScale] = useState(1)
     const [rotate, setRotate] = useState(0)
-    const [imgSrc, setImgSrc] = useState("https://mir-s3-cdn-cf.behance.net/projects/404/6190e982365125.Y3JvcCwxMTE5LDg3Niw1Miww.jpg")
+    const [imgSrc, setImgSrc] = useState("")
     const imgRef = useRef(null)
     const previewCanvasRef = useRef(null)
 
@@ -72,7 +73,6 @@ export const StudentProfileChangeImage = memo((props) => {
                 imgRef.current &&
                 previewCanvasRef.current
             ) {
-                // We use canvasPreview as it's much faster than imgPreview.
                 await canvasPreview(
                     imgRef.current,
                     previewCanvasRef.current,
@@ -92,16 +92,12 @@ export const StudentProfileChangeImage = memo((props) => {
                 const {width, height} = imgRef.current
                 const newCrop = centerAspectCrop(width, height, 16 / 9)
                 setCrop(newCrop)
-                // Updates the preview
                 setCompletedCrop(convertToPixelCrop(newCrop, width, height))
             }
         }
     }, [aspect])
 
-
     const [crop, setCrop] = useState()
-
-    const [newImage, setNewImage] = useState({})
 
     const {getRootProps, getInputProps} = useDropzone({
         onDrop: acceptedFiles => {
@@ -109,8 +105,56 @@ export const StudentProfileChangeImage = memo((props) => {
         }
     })
 
-    console.log(imgRef, "imgRef")
-    console.log(previewCanvasRef.current, "previewCanvasRef")
+    async function onDownloadCropClick() {
+        const image = imgRef.current
+        const previewCanvas = previewCanvasRef.current
+        if (!image || !previewCanvas || !completedCrop) {
+            throw new Error('Crop canvas does not exist')
+        }
+
+        const scaleX = image.naturalWidth / image.width
+        const scaleY = image.naturalHeight / image.height
+
+        const offscreen = new OffscreenCanvas(
+            completedCrop?.width * scaleX,
+            completedCrop?.height * scaleY,
+        )
+        const ctx = offscreen.getContext('2d')
+        if (!ctx) {
+            throw new Error('No 2d context')
+        }
+
+        ctx.drawImage(
+            previewCanvas,
+            0,
+            0,
+            previewCanvas.width,
+            previewCanvas.height,
+            0,
+            0,
+            offscreen.width,
+            offscreen.height,
+        )
+
+        const blob = await offscreen.convertToBlob({
+            type: 'image/png',
+        })
+
+        const res = new File([blob], "userImg")
+
+        // setImgSrc(URL.createObjectURL(res))
+        setNewImage(URL.createObjectURL(res))
+    }
+
+    const onClear = () => {
+        setScale(1)
+        setRotate(0)
+        setImgSrc("")
+    }
+
+    const imageStyle = useMemo(() => ({
+        transform: `scale(${scale}) rotate(${rotate}deg)`
+    }), [scale, rotate])
 
 
     return (
@@ -123,56 +167,60 @@ export const StudentProfileChangeImage = memo((props) => {
             >
                 <h1>Rasm o'zgartirish</h1>
                 <div
-                    // {...getRootProps()}
                     className={cls.changeImage__inner}
                 >
-                    {/*<div className={cls.settings}>*/}
-                    {/*    <div className={cls.settings__inner}>*/}
-                    {/*        /!*<label htmlFor="scale-input">Scale: </label>*!/*/}
-                    {/*        <Input*/}
-                    {/*            title={"Scale"}*/}
-                    {/*            name={"scale-input"}*/}
-                    {/*            type={"number"}*/}
-                    {/*            extraClassName={cls.settings__input}*/}
-                    {/*            defaultValue={scale}*/}
-                    {/*            onChange={setScale}*/}
-                    {/*            extraValues={{step: "0.1"}}*/}
-                    {/*            required*/}
-                    {/*        />*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-                    {/*<input {...getInputProps()} type="file"/>*/}
-                    {/*<ReactCrop crop={crop} onChange={c => setCrop(c)}>*/}
-                    {/*    {*/}
-                    {/*        newImage.path ?*/}
-                    {/*            <img src={URL.createObjectURL(newImage)} alt=""/>*/}
-                    {/*            :*/}
-                    {/*            <img src={user} alt=""/>*/}
-                    {/*    }*/}
-                    {/*</ReactCrop>*/}
-
-
-                    {!!imgSrc && (
-                        <ReactCrop
-                            crop={crop}
-                            onChange={(_, percentCrop) => setCrop(percentCrop)}
-                            onComplete={(c) => setCompletedCrop(c)}
-                            aspect={aspect}
-                            // minWidth={400}
-                            minHeight={100}
-                            // circularCrop
-                        >
-                            <img
-                                className={cls.changeImage__img}
-                                ref={imgRef}
-                                alt="Crop me"
-                                src={imgSrc}
-                                style={{transform: `scale(${scale}) rotate(${rotate}deg)`}}
-                                onLoad={onImageLoad}
-                            />
-                        </ReactCrop>
-                    )}
-                    {!!completedCrop && (
+                    <Input
+                        name={"scale-input"}
+                        extraValues={{step: "0.1"}}
+                        extraClassName={cls.changeImage__input}
+                        title={"Rasm masshtabini ozgartirish"}
+                        type={"number"}
+                        defaultValue={scale}
+                        onChange={e => setScale(e.target.value)}
+                        disabled={!imgSrc}
+                    />
+                    <Input
+                        name={"rotate-input"}
+                        extraClassName={cls.changeImage__input}
+                        title={"Rasm aylantirish"}
+                        type={"number"}
+                        defaultValue={rotate}
+                        onChange={e => setRotate(e.target.value)}
+                        disabled={!imgSrc}
+                    />
+                    <div className={cls.changeImage__dropzone}>
+                        {!imgSrc && (
+                            <div
+                                {...getRootProps()}
+                                className={classNames(cls.changeImage__drop, {
+                                    [cls.notImage]: !imgSrc
+                                })}
+                            >
+                                <input
+                                    {...getInputProps()}
+                                    type="file"
+                                />
+                                <i className={classNames("far fa-images", cls.changeImage__icon)}/>
+                            </div>
+                        )}
+                        {!!imgSrc && (
+                            <ReactCrop
+                                crop={crop}
+                                onChange={(_, percentCrop) => setCrop(percentCrop)}
+                                onComplete={(c) => setCompletedCrop(c)}
+                                aspect={aspect}
+                                minHeight={100}
+                            >
+                                <img
+                                    className={cls.changeImage__img}
+                                    ref={imgRef}
+                                    alt="Crop me"
+                                    src={imgSrc}
+                                    style={imageStyle}
+                                    onLoad={onImageLoad}
+                                />
+                            </ReactCrop>
+                        )}
                         <canvas
                             ref={previewCanvasRef}
                             style={{
@@ -180,9 +228,16 @@ export const StudentProfileChangeImage = memo((props) => {
                                 objectFit: 'contain',
                                 width: completedCrop?.width,
                                 height: completedCrop?.height,
+                                visibility: "hidden",
+                                display: "none"
                             }}
                         />
-                    )}
+                    </div>
+
+                    <div className={cls.changeImage__btns}>
+                        <Button onClick={onDownloadCropClick}>O'zgartirish</Button>
+                        <Button onClick={onClear}>Tozalash</Button>
+                    </div>
 
 
                 </div>
@@ -201,13 +256,7 @@ export async function canvasPreview(
     rotate = 0,
 ) {
 
-    console.log(image, "image")
-    console.log(canvas, "canvas")
-    // console.log(canvas.getContext(), "canvas.getContext()")
-
     const ctx = canvas.getContext('2d')
-
-    console.log(ctx, "ctx")
 
     if (!ctx) {
         throw new Error('No 2d context')
@@ -215,12 +264,7 @@ export async function canvasPreview(
 
     const scaleX = image.naturalWidth / image.width
     const scaleY = image.naturalHeight / image.height
-    // devicePixelRatio slightly increases sharpness on retina devices
-    // at the expense of slightly slower render times and needing to
-    // size the image back down if you want to download/upload and be
-    // true to the images natural size.
     const pixelRatio = window.devicePixelRatio
-    // const pixelRatio = 1
 
     canvas.width = Math.floor(crop.width * scaleX * pixelRatio)
     canvas.height = Math.floor(crop.height * scaleY * pixelRatio)
@@ -237,15 +281,10 @@ export async function canvasPreview(
 
     ctx.save()
 
-    // 5) Move the crop origin to the canvas origin (0,0)
     ctx.translate(-cropX, -cropY)
-    // 4) Move the origin to the center of the original position
     ctx.translate(centerX, centerY)
-    // 3) Rotate around the origin
     ctx.rotate(rotateRads)
-    // 2) Scale the image
     ctx.scale(scale, scale)
-    // 1) Move the center of the image to the origin (0,0)
     ctx.translate(-centerX, -centerY)
     ctx.drawImage(
         image,

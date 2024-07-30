@@ -4,7 +4,7 @@ import {createBrowserRouter} from "react-router-dom";
 import classNames from "classnames";
 
 import {RequireAuth} from "./RequireAuth";
-import {routersConfig} from "app/routers"
+import {routersConfig} from "../config/routersConfig";
 import {Layout} from "app/layout";
 import {Login} from "pages/loginPage";
 import {StudentProfilePage} from "pages/profilePage";
