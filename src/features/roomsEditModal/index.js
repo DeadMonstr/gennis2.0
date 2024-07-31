@@ -1,0 +1,1 @@
+export {RoomsEditModal} from './ui/roomsEditModal'

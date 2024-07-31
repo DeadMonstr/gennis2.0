@@ -1,35 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import {fetchSubjectsAndLanguages, registerUser} from "./registerThunk";
 
-// Thunks
-export const fetchSubjectsAndLanguages = createAsyncThunk(
-    'user/fetchSubjectsAndLanguages',
-    async () => {
-        const subjectsResponse = await fetch('/api/subjects');
-        const languagesResponse = await fetch('/api/languages');
-        const subjectsData = await subjectsResponse.json();
-        const languagesData = await languagesResponse.json();
-        return {
-            subjects: subjectsData.results,
-            languages: languagesData.languages
-        };
-    }
-);
-
-export const registerUser = createAsyncThunk(
-    'user/registerUser',
-    async (userData) => {
-        const response = await fetch('/api/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
-        });
-        return response.json();
-    }
-);
-
-// Slice
 export const userSlice = createSlice({
     name: 'user',
     initialState: {

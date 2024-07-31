@@ -90,6 +90,7 @@ export const Login = () => {
                 showAlert("error" , "loginda hatolik")
                 console.log(err)
                 setLoading(true)
+
             })
 
 
@@ -111,8 +112,8 @@ export const Login = () => {
                         </h1>
                         <div className={cls.box__form}>
                             <form onSubmit={handleSubmit(onClick)}>
-                                {loading ? <Input onChange={(e) => setInputChange(e.target.value)} title={"username"}
-                                                  register={register} name={"username"} type="text" required/> :
+                                {loading ? <Input  onChange={(e) => setInputChange(e.target.value)} title={"username"}
+                                                  register={register} name={"username"} type="text"  required/> :
                                     <Input disabled onChange={(e) => setInputChange(e.target.value)} title={"username"}
                                            register={register} name={"username"} type="text" required/>}
                                 {loading ?

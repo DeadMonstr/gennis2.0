@@ -20,7 +20,7 @@ export const teachersSlice = createSlice({
             })
             .addCase(fetchTeachersData.fulfilled , (state , action) =>{
                 state.teachersData = action.payload.results
-                // console.log(action.payload , "teacher")
+                console.log(action.payload , "teacher")
                 state.teacherStatus = "success"
             })
             .addCase(fetchTeachersData.rejected , (state , action) =>{

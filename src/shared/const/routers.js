@@ -13,9 +13,11 @@ export const getRouteRegister = () => `register`;
 export const getRouteTeacher = () => `teacher`;
 export const getRouteCreateGroup = () => `newStudents/createGroup`;
 export const getRouteRooms = () => `rooms`;
-export const getTeacherProfile = (id) => `teacherProfile`;
+export const getTeacherProfile = (id) => `teachers/teacherProfile/${id}`;
 export const getVacancyPage = () => `vacancyPage`
 export const getVacancyWorkPage = () => `vacancyPage/vacancyWorkPage`
+
+
 export const getProfile = (id) => `students/:id/profile/${id}`;
 export const getRouteTimePage = (id) => `timeTable`
 

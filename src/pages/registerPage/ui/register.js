@@ -1,8 +1,8 @@
+
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-// import { registerUser, fetchSubjectsAndLanguages } from 'pages/register';
-import {fetchSubjectsAndLanguages, registerUser} from "../model/registerSlice";
+import { registerUser, fetchSubjectsAndLanguages } from 'pages/registerPage/model/registerThunk';
 import cls from "./register.module.sass";
 import { Button } from "shared/ui/button";
 import bg__img from 'shared/assets/images/reg__bg.svg';
@@ -33,7 +33,6 @@ export const Register = () => {
     const subjects = useSelector(state => state.registerUser.subjects) || [];
     const languages = useSelector(state => state.registerUser.languages) || [];
 
-    // State for alerts
     const [alerts, setAlerts] = useState([]);
 
     useEffect(() => {
@@ -73,15 +72,15 @@ export const Register = () => {
                 },
                 branch: {
                     id: 1,
-                    name: "sergili",
+                    name: "Chirchiq",
                     number: 1
                 }
             },
-            subject: {
+            subject:[ {
                 id: selectedSubjectData[0]?.id || null,
                 name: selectedSubjectData[0]?.name || "",
                 ball_number: selectedSubjectData[0]?.ball_number || null
-            }
+            }]
         };
 
         dispatch(registerUser(res)).then((action) => {
