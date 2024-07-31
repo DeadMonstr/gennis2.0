@@ -193,9 +193,8 @@ export const HomeNews = () => {
                                 {item.newsParagraph}
                             </div>
                             <div className={cls.news__box_readMore}>
-                                <Button onClick={() => {
-                                    setReadMore(i)
-                                }}>Read more ...</Button>
+                                <Button onClick={() => setReadMore(i)
+                                }>Read more ...</Button>
                             </div>
                         </div>
                     </div>

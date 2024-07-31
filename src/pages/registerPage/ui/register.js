@@ -1,8 +1,8 @@
+
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-// import { registerUser, fetchSubjectsAndLanguages } from 'pages/register';
-import {fetchSubjectsAndLanguages, registerUser} from "../model/registerSlice";
+import { registerUser, fetchSubjectsAndLanguages } from 'pages/registerPage/model/registerThunk';
 import cls from "./register.module.sass";
 import { Button } from "shared/ui/button";
 import bg__img from 'shared/assets/images/reg__bg.svg';

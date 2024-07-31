@@ -3,21 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'shared/ui/button';
 import { Select } from 'shared/ui/select';
 import { Pagination } from 'features/pagination';
-import { RoomsList } from 'entities/rooms/ui';
+import { RoomsList } from 'entities/rooms';
 import { RoomsFilter } from 'features/filters/roomsFilter';
 import { RoomModal } from 'features/roomsAddModal';
 import { getRoomsData } from 'entities/rooms/model/selectors/roomsSelectors';
 import { fetchRoomsData } from 'entities/rooms/model/roomsThunk';
 import cls from './rooms.module.sass';
-
-import { RoomsFilter } from "features/filters/roomsFilter";
-import { Pagination } from "features/pagination";
-import { RoomsList, rooms } from "entities/rooms";
-import { Button } from "shared/ui/button";
-import { Select } from "shared/ui/select";
-import {RoomModal} from "../../../features/roomsAddModal";
-
-import cls from "./rooms.module.sass";
 
 export const Rooms = () => {
     const [modal, setModal] = useState(false);

@@ -13,37 +13,24 @@ import {
     getRouteRegister,
     getRouteTeacher,
     getRouteRooms,
-    getTeacherProfile,
     getRouteGroups,
     getVacancyPage,
-    getVacancyWorkPage,
-    getDirectorRouteStudents,
-    getRouteRooms,
     getRouteMain, getProfile,
 } from "shared/const/routers";
 
 
 import {StudentsPage} from "pages/studentsPage";
 import {GroupsPage} from "pages/groupsPage";
-import {Register} from "pages/register";
-import {Rooms} from "pages/rooms/ui/rooms";
-
 import {Register} from "pages/registerPage";
-import {Rooms} from "pages/roomsPage/ui/rooms";
-import {TeachersPage} from "pages/teacherPage";
-
+import {Rooms} from "pages/roomsPage";
 import {HomePage} from "pages/homePage";
 import {TeachersPage} from "pages/teacherPage";
-import {ProfileTeacherPage} from "pages/profileTeacherPage";
-import {VacancyPage} from "../../../pages/vacancyPage";
-import {VacancyWorkPage} from "../../../pages/vacancyWorkPage";
 import {ProfileTeacherPage} from "pages/profilePage";
 import {StudentsDirectorPage} from "pages/studentsPage";
 import {VacancyPage} from "pages/vacancyPage";
 import {VacancyWorkPage} from "pages/vacancyWorkPage";
 import {TimePage} from "pages/timePage";
 import {EmployerPage} from "pages/employeesPage";
-import {FlowsPage} from "../../../pages/flowsPage";
 import {FlowsPage} from "pages/flowsPage";
 import {StudentProfilePage} from "pages/profilePage";
 

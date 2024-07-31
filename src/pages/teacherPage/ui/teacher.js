@@ -78,23 +78,23 @@ export const TeachersPage = () => {
                     />
                     :
                     <Teachers
-                        // data={teachers}
-                        data={currentTableData}
+                        data={teachersData}
+                        // data={currentTableData}
                     />}
             </div>
 
-            <Pagination
-                setCurrentTableData={setCurrentTableData}
-                users={searchedUsers}
-                search={search}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-                pageSize={PageSize}
-                onPageChange={page => {
-                    setCurrentPage(page)
-                }}
-                type={"custom"}
-            />
+            {/*<Pagination*/}
+            {/*    setCurrentTableData={setCurrentTableData}*/}
+            {/*    users={searchedUsers}*/}
+            {/*    search={search}*/}
+            {/*    setCurrentPage={setCurrentPage}*/}
+            {/*    currentPage={currentPage}*/}
+            {/*    pageSize={PageSize}*/}
+            {/*    onPageChange={page => {*/}
+            {/*        setCurrentPage(page)*/}
+            {/*    }}*/}
+            {/*    type={"custom"}*/}
+            {/*/>*/}
 
             <TeacherFilter
                 activeSwitch={activeSwitch}

@@ -4,11 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {CreateGroup, DeletedStudents, NewStudents, Students} from "entities/students";
 import {StudentsHeader} from "entities/students";
 import {StudentsFilter} from "features/filters/studentsFilter";
-import {useDispatch, useSelector} from "react-redux";
 import {fetchNewStudentsData} from "entities/students";
 import {getNewStudentsData, getStudyingStudents} from "entities/students";
-import {fetchNewStudentsData} from "entities/students/model/studentsThunk";
-import {getNewStudentsData, getStudyingStudents} from "entities/students/model/selector/studentsSelector";
 import {Pagination} from "features/pagination";
 
 import cls from "./students.module.sass"

@@ -2,44 +2,44 @@ import cls from "./flowsPage.module.sass"
 import {Select} from "shared/ui/select";
 import {Button} from "shared/ui/button";
 import {Radio} from "shared/ui/radio";
-import {useMemo, useState} from "react";
-import {Table} from "shared/ui/table";
-import {FlowFilter} from "../../../features/filters/flowFilter";
-import {Pagination} from "../../../features/pagination";
-import {Flows} from "../../../entities/flows";
+import {useEffect, useMemo, useState} from "react";
 
+import {Flows} from "entities/flows";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchFlows} from "entities/flows";
+import {getFlows} from "entities/flows";
+import {Modal} from "shared/ui/modal";
+import {Input} from "shared/ui/input";
 
 const radioFilter = [
     {name: "class", label: 'class'},
     {name: "flow", label: "flow"}
 ]
-const renderFlowData = [
-    {name: "sasdas", class: "sdasadas"},
-    {name: "sasdas", class: "sdasadas"},
-    {name: "sasdas", class: "sdasadas"},
-]
+
 export const FlowsPage = () => {
     let PageSize = useMemo(() => 50, [])
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("")
-    const [activeFlow, setActiveFlow] = useState(false)
+
+    const [radioFilterItem, setRadioFilterItem] = useState(radioFilter[0].name)
+
+    const flows = useSelector(getFlows)
+    const dispatch = useDispatch()
 
 
-    const [radioFilterItem , setRadioFilterItem] =useState(radioFilter[0].name)
-
-
-    console.log(radioFilter)
+    useEffect(() => {
+        dispatch(fetchFlows())
+    }, [])
 
     const handleChange = (value) => {
-
         setRadioFilterItem(value);
     };
 
-    const renderFlow = () =>{
-        switch (radioFilterItem){
+    const renderFlow = () => {
+        switch (radioFilterItem) {
             case ("flow"):
-                return <Flows currentTableData={currentTableData}/>
+                return <Flows currentTableData={flows}/>
         }
     }
 
@@ -51,10 +51,7 @@ export const FlowsPage = () => {
                 <div className={cls.flow__location}>
                     <Select/>
                 </div>
-                <div className={cls.flow__filter}>
-                    <Button onClick={() => setActiveFlow(!activeFlow)} status={"filter"} type={"filter"}>Filter</Button>
-                    <Button type={"login"} status={"timeTable"}>Time Table</Button>
-                </div>
+
                 <div className={cls.flow__radioFilter}>
                     {radioFilter.map((item, i) => {
                         return (
@@ -67,18 +64,17 @@ export const FlowsPage = () => {
                 </div>
             </div>
             {renderFlow()}
-            <Pagination
-                setCurrentTableData={setCurrentTableData}
-                users={renderFlowData}
-                search={search}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-                pageSize={PageSize}
-                onPageChange={page => {
-                    setCurrentPage(page)
-                }}
-                type={"custom"}/>
-            <FlowFilter setActive={setActiveFlow} active={activeFlow}/>
+            {/*<Pagination*/}
+            {/*    setCurrentTableData={setCurrentTableData}*/}
+            {/*    users={flows}*/}
+            {/*    search={search}*/}
+            {/*    setCurrentPage={setCurrentPage}*/}
+            {/*    currentPage={currentPage}*/}
+            {/*    pageSize={PageSize}*/}
+            {/*    onPageChange={page => {*/}
+            {/*        setCurrentPage(page)*/}
+            {/*    }}*/}
+            {/*    type={"custom"}/>*/}
 
         </div>
     )
