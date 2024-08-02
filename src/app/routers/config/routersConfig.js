@@ -29,7 +29,7 @@ import {ProfileTeacherPage} from "pages/profilePage";
 import {StudentsDirectorPage} from "pages/studentsPage";
 import {VacancyPage} from "pages/vacancyPage";
 import {VacancyWorkPage} from "pages/vacancyWorkPage";
-import {TimePage} from "pages/timePage";
+import {TimeTableListPage} from "pages/timeTableListPage";
 import {EmployerPage} from "pages/employeesPage";
 import {FlowsPage} from "pages/flowsPage";
 import {StudentProfilePage} from "pages/profilePage";
@@ -140,7 +140,7 @@ export const routersConfig = [
         icon: "fa-tasks",
         roles: [],
         path: getRouteTimePage(),
-        element: <TimePage/>,
+        element: <TimeTableListPage/>,
         isMenu: true
     },
     {

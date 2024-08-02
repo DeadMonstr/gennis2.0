@@ -6,19 +6,18 @@ import {
     makeAspectCrop,
     convertToPixelCrop
 } from "react-image-crop";
+import classNames from "classnames";
 
 import {Modal} from "shared/ui/modal";
 import {Button} from "shared/ui/button";
+import {Input} from "shared/ui/input";
 import {useDebounceEffect} from "shared/lib/hooks/useDebounceEffect";
 
-import cls from "./studentProfileChangeImage.module.sass";
+import cls from "./imageCrop.module.sass";
 import 'react-image-crop/dist/ReactCrop.css'
-import user from "shared/assets/images/user_image.png";
-import {Input} from "shared/ui/input";
-import classNames from "classnames";
 
 
-export const StudentProfileChangeImage = memo((props) => {
+export const ImageCrop = memo((props) => {
 
     const {
         setActive,
@@ -101,6 +100,7 @@ export const StudentProfileChangeImage = memo((props) => {
 
     const {getRootProps, getInputProps} = useDropzone({
         onDrop: acceptedFiles => {
+            console.log(acceptedFiles[0], "res2")
             setImgSrc(URL.createObjectURL(acceptedFiles[0]))
         }
     })
@@ -140,10 +140,14 @@ export const StudentProfileChangeImage = memo((props) => {
             type: 'image/png',
         })
 
-        const res = new File([blob], "userImg")
+        const res = new File([blob], "userImg.png", {
+            type: "image/png"
+        })
+
+        console.log(res,"res")
 
         // setImgSrc(URL.createObjectURL(res))
-        setNewImage(URL.createObjectURL(res))
+        setNewImage(res)
     }
 
     const onClear = () => {

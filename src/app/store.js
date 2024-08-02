@@ -17,7 +17,7 @@ import {studentProfileBooks} from "entities/profile/studentProfile";
 import {studentProfileRating} from "entities/profile/studentProfile";
 import {roomsAddSlice} from 'pages/roomsPage'
 import {studentsDirectorSlice} from "pages/studentsPage"
-import {timeTable} from "pages/timePage";
+import {timeTable} from "pages/timeTableListPage";
 import {newStudents} from "../entities/students";
 import {employers} from "../entities/employer";
 import {roomsSlice} from "../entities/rooms";

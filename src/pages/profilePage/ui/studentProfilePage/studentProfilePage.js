@@ -4,6 +4,7 @@ import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 
+import {ImageCrop} from "features/imageCrop";
 import {
     StudentProfileInfo,
     StudentProfileRating,
@@ -16,15 +17,19 @@ import {
     StudentProfileTotalAmount,
     StudentProfileGroupsHistory,
     StudentProfileTotalAttendance,
-    StudentProfileChangeImage, StudentProfileChangeInfo
+    StudentProfileChangeInfo
 } from "entities/profile/studentProfile";
-import {fetchStudentProfileData} from "../../model/thunk/studentProfileThunk";
+import {
+    fetchStudentProfileData,
+    changeStudentProfileData, changeStudentProfileImage
+} from "../../model/thunk/studentProfileThunk";
 import {getUserData} from "../../model/selector/studentProfileSelector";
 
 import cls from "./studentProfilePage.module.sass";
 
 export const StudentProfilePage = () => {
 
+    const formData = new FormData()
     const {register, handleSubmit} = useForm()
     const dispatch = useDispatch()
     const {id} = useParams()
@@ -39,11 +44,21 @@ export const StudentProfilePage = () => {
         dispatch(fetchStudentProfileData(id))
     }, [id])
 
-    console.log(userData, "all")
-
     const onSubmitData = (data) => {
-        console.log(data, "data info")
+        const res = {
+            user: {
+                ...data
+            }
+        }
+        dispatch(changeStudentProfileData({id, res}))
     }
+
+    const onSubmitImage = (data) => {
+        // formData.append("profile_img", data)
+        dispatch(changeStudentProfileImage({id: userData?.user?.id, file: data}))
+    }
+
+    console.log(userData)
 
 
     return (
@@ -96,16 +111,17 @@ export const StudentProfilePage = () => {
                     setActive={setActive}
                 />
             </div>
-            <StudentProfileChangeImage
+            <ImageCrop
                 setActive={setActiveModal}
                 active={activeModal === "changeImage"}
-                setNewImage={setNewImage}
+                setNewImage={onSubmitImage}
             />
             <StudentProfileChangeInfo
                 setActive={setActiveModal}
                 active={activeModal === "changeInfo"}
                 register={register}
                 onSubmit={handleSubmit(onSubmitData)}
+                currentData={userData?.user}
             />
         </div>
     )

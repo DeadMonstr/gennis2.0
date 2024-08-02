@@ -5,6 +5,7 @@ import {Modal} from "shared/ui/modal";
 import {Form} from "shared/ui/form";
 import {Input} from "shared/ui/input";
 import {Button} from "shared/ui/button";
+import {MiniLoader} from "shared/ui/miniLoader";
 
 import cls from "./timeTableChange.module.sass";
 
@@ -15,7 +16,8 @@ export const TimeTableChange = memo((props) => {
     const {
         active,
         setActive,
-        onSubmit
+        onSubmit,
+        loading
     } = props
 
     return (
@@ -33,22 +35,28 @@ export const TimeTableChange = memo((props) => {
                         extraClassName={cls.change__input}
                         placeholder={"Boshlanish vaqti"}
                         register={register}
-                        name={"startTime"}
-                        value={active?.startTime}
+                        name={"start_time"}
+                        value={active?.start_time}
+                        type={"time"}
+                        required
                     />
                     <Input
                         extraClassName={cls.change__input}
                         placeholder={"Tugash vaqti"}
                         register={register}
-                        name={"finishTime"}
-                        value={active?.finishTime}
+                        name={"end_time"}
+                        value={active?.end_time}
+                        type={"time"}
+                        required
                     />
                     <Input
                         extraClassName={cls.change__input}
                         placeholder={"Order"}
                         register={register}
                         name={"order"}
-                        value={active?.timeList}
+                        value={active?.order}
+                        type={"number"}
+                        required
                     />
                     <Input
                         extraClassName={cls.change__input}
@@ -56,13 +64,18 @@ export const TimeTableChange = memo((props) => {
                         register={register}
                         name={"name"}
                         value={active?.name}
+                        required
                     />
-                    <Button
-                        extraClass={cls.change__btn}
-                        type={"simple"}
-                    >
-                        Create
-                    </Button>
+                    {
+                        loading ? <MiniLoader/> :
+                            <Button
+                                extraClass={cls.change__btn}
+                                type={"simple"}
+                            >
+                                O'zgartirish
+                            </Button>
+                    }
+
                 </div>
             </Form>
         </Modal>

@@ -16,7 +16,9 @@ export const StudentProfileInfo = memo((props) => {
 
     return (
         <EditableCard
-            onClick={() => setActiveModal("changeInfo")}
+            onClick={() => {
+                setActiveModal("changeInfo")
+            }}
             extraClass={cls.info}
             title={<i className="fas fa-edit"/>}
         >
