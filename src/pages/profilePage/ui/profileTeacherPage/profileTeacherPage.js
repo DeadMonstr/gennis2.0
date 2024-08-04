@@ -1,7 +1,7 @@
 import React, {createContext, useState} from 'react';
 import classNames from "classnames";
 
-import {TeacherProfileTeachersGroup} from "entities/profile/teacherProfile";
+import {TeacherProfileInfo, TeacherProfileTeachersGroup} from "entities/profile/teacherProfile";
 import {
     StudentProfileInfo,
     StudentProfileTotalAmount
@@ -25,7 +25,7 @@ export const ProfileTeacherPage = () => {
                     [cls.active]: active
                 })}
             >
-                <StudentProfileInfo
+                <TeacherProfileInfo
                     setActive={setActive}
                     active={active}
                 />

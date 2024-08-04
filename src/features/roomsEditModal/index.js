@@ -1,1 +1,1 @@
-export {RoomsEditModal} from './ui/roomsEditModal'
+export {default as roomssSlice} from './ui/roomSlice'

@@ -6,8 +6,10 @@ import cls from "./pagination.module.sass";
 export const Pagination = React.memo((props) => {
     const {
         users,
+        search,
         onPageChange,
         siblingCount = 1,
+        setCurrentPage,
         currentPage,
         pageSize,
         className,
@@ -15,24 +17,24 @@ export const Pagination = React.memo((props) => {
         type = "basic"
     } = props;
 
-    // const searchedUsers = useMemo(() => {
-    //     if (!users || !Array.isArray(users)) return [];
-    //     const filteredHeroes = users.slice();
-    //     setCurrentPage(1);
-    //     return filteredHeroes.filter(item =>
-    //         item.name?.toLowerCase().includes(search.toLowerCase()) ||
-    //         item.surname?.toLowerCase().includes(search.toLowerCase()) ||
-    //         item.username?.toLowerCase().includes(search.toLowerCase()) ||
-    //         item.fullName?.toLowerCase().includes(search.toLowerCase()) ||
-    //         item.sitterNumber?.toLowerCase().includes(search.toLowerCase()) ||
-    //         item.allSalary?.toLowerCase().includes(search.toLowerCase()) ||
-    //         item.subjectName?.toLowerCase().includes(search.toLowerCase()) ||
-    //         item.workName?.toLowerCase().includes(search.toLowerCase()) ||
-    //         item.workerName?.toLowerCase().includes(search.toLowerCase()) ||
-    //         item.seats_number?.toLowerCase().includes(search.toLowerCase()) ||
-    //         item.title.toLowerCase().includes(search.toLowerCase())
-    //     );
-    // }, [users, setCurrentPage, search]);
+    const searchedUsers = useMemo(() => {
+        if (!users || !Array.isArray(users)) return [];
+        const filteredHeroes = users.slice();
+        setCurrentPage(1);
+        return filteredHeroes.filter(item =>
+            item.name?.toLowerCase().includes(search.toLowerCase()) ||
+            item.surname?.toLowerCase().includes(search.toLowerCase()) ||
+            item.username?.toLowerCase().includes(search.toLowerCase()) ||
+            item.fullName?.toLowerCase().includes(search.toLowerCase()) ||
+            item.sitterNumber?.toLowerCase().includes(search.toLowerCase()) ||
+            item.allSalary?.toLowerCase().includes(search.toLowerCase()) ||
+            item.subjectName?.toLowerCase().includes(search.toLowerCase()) ||
+            item.workName?.toLowerCase().includes(search.toLowerCase()) ||
+            item.workerName?.toLowerCase().includes(search.toLowerCase()) ||
+            item.seats_number?.toLowerCase().includes(search.toLowerCase()) ||
+            item.title.toLowerCase().includes(search.toLowerCase())
+        );
+    }, [users, setCurrentPage, search]);
 
     useEffect(() => {
         if (users && Array.isArray(users)) {

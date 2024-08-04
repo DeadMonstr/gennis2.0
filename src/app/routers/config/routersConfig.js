@@ -1,13 +1,7 @@
 
 import {
-    getDirectorRouteStudents,
-    getRouteDeletedStudents,
-    getRouteDeletedGroups,
-    getRouteNewStudents,
-    getRouteCreateGroup,
     getRouteTaskManager,
     getVacancyWorkPage,
-    getTeacherProfile,
     getRouteStudents,
     getRouteTimePage,
     getRouteRegister,
@@ -16,9 +10,7 @@ import {
     getRouteRooms,
     getTeacherProfile,
     getVacancyPage,
-    getRouteRooms,
     getRouteMain, getProfile,
-    getVacancyWorkPage,
     getDirectorRouteStudents,
     getRoomsProfilePage,
 } from "shared/const/routers";
@@ -26,16 +18,14 @@ import {
 
 import {StudentsPage} from "pages/studentsPage";
 import {GroupsPage} from "pages/groupsPage";
-import {Register} from "pages/register";
-import {Rooms} from "pages/rooms/ui/rooms";
+import {Register} from "pages/registerPage";
+import {Rooms} from "pages/roomsPage";
 import {HomePage} from "pages/homePage";
 import {TeachersPage} from "pages/teacherPage";
-import {ProfileTeacherPage} from "pages/profileTeacherPage";
-import {VacancyPage} from "../../../pages/vacancyPage";
-import {VacancyWorkPage} from "../../../pages/vacancyWorkPage";
-import {StudentsDirectorPage} from "pages/studentsPage";
+import {ProfileTeacherPage} from "pages/profilePage";
 import {VacancyPage} from "pages/vacancyPage";
 import {VacancyWorkPage} from "pages/vacancyWorkPage";
+import {StudentsDirectorPage} from "pages/studentsPage";
 import {TimePage} from "pages/timePage";
 import {EmployerPage} from "pages/employeesPage";
 import {FlowsPage} from "pages/flowsPage";
@@ -208,7 +198,7 @@ export const routersConfig = [
     {
         to: "rooms/roomsProfilePage",
         name: "Rooms Profile",
-        path: getRoomsProfilePage("id"),
+        path: getRoomsProfilePage(":id"),
         element: <RoomsProfilePage/>,
         roles: [],
     },
