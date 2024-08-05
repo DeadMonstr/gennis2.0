@@ -9,13 +9,14 @@ import { RoomModal } from 'features/roomsAddModal';
 import { getRoomsData } from 'entities/rooms/model/selectors/roomsSelectors';
 import { fetchRoomsData } from 'entities/rooms/model/roomsThunk';
 import cls from './rooms.module.sass';
+import {getSearchValue} from "../../../features/searchInput";
 
 export const Rooms = () => {
     const [modal, setModal] = useState(false);
     const [active, setActive] = useState(false);
     const PageSize = useMemo(() => 10, []);
     const [currentPage, setCurrentPage] = useState(1);
-    const [search, setSearch] = useState('');
+    const search = useSelector(getSearchValue)
     const [selected, setSelected] = useState('');
     const [currentTableData, setCurrentTableData] = useState([]);
     const dispatch = useDispatch();
@@ -27,11 +28,24 @@ export const Rooms = () => {
         dispatch(fetchRoomsData())
     }, [dispatch]);
 
-    useEffect(() => {
-        if (roomsData && Array.isArray(roomsData)) {
-            setCurrentTableData(roomsData.slice(0, PageSize));
-        }
-    }, [roomsData, PageSize]);
+    const searchedUsers = useMemo(() => {
+        const filteredHeroes = roomsData?.slice()
+        setCurrentPage(1)
+
+        console.log(search, true)
+
+        if (!search) return filteredHeroes
+
+        return filteredHeroes.filter(item =>
+            item.sitterNumber?.toLowerCase().includes(search.toLowerCase())
+        )
+    }, [roomsData, setCurrentPage, search])
+
+    // useEffect(() => {
+    //     if (roomsData && Array.isArray(roomsData)) {
+    //         setCurrentTableData(roomsData.slice(0, PageSize));
+    //     }
+    // }, [roomsData, PageSize]);
 
 
     const handleChange = (value) => {
@@ -63,12 +77,10 @@ export const Rooms = () => {
             <div className={cls.paginationBox}>
                 <Pagination
                     setCurrentTableData={setCurrentTableData}
-                    search={search}
-                    users={roomsData}
-                    setCurrentPage={setCurrentPage}
+                    users={searchedUsers}
                     currentPage={currentPage}
                     pageSize={PageSize}
-                    onPageChange={(page) => {
+                    onPageChange={page => {
                         setCurrentPage(page);
                     }}
                 />

@@ -24,7 +24,7 @@ export const RoomModal = ({ isOpen, onClose }) => {
         };
 
         dispatch(roomsAddThunk(newRoom));
-        window.location.reload()
+        // window.location.reload()
         onClose();
     };
 

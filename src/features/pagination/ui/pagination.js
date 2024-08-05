@@ -5,7 +5,7 @@ import cls from "./pagination.module.sass";
 
 export const Pagination = React.memo((props) => {
     const {
-        users,
+        users = [], // default value if users is undefined
         onPageChange,
         siblingCount = 1,
         currentPage,
@@ -15,18 +15,19 @@ export const Pagination = React.memo((props) => {
         type = "basic"
     } = props;
 
-
     useEffect(() => {
-        setCurrentTableData(() => {
-            const firstPageIndex = (currentPage - 1) * pageSize;
-            const lastPageIndex = firstPageIndex + pageSize;
-            return users.slice(firstPageIndex, lastPageIndex);
-        })
-    }, [pageSize, currentPage, users, setCurrentTableData])
+        if (users && Array.isArray(users)) {
+            setCurrentTableData(() => {
+                const firstPageIndex = (currentPage - 1) * pageSize;
+                const lastPageIndex = firstPageIndex + pageSize;
+                return users.slice(firstPageIndex, lastPageIndex);
+            });
+        }
+    }, [pageSize, currentPage, users, setCurrentTableData]);
 
     const paginationRange = usePagination({
         currentPage,
-        totalCount: users.length,
+        totalCount: users.length || 0,
         siblingCount,
         pageSize
     });
@@ -52,7 +53,7 @@ export const Pagination = React.memo((props) => {
         });
     }, [currentPage, onPageChange, paginationRange]);
 
-    if (currentPage === 0 || paginationRange.length < 2) {
+    if (currentPage === 0 || !paginationRange || paginationRange.length < 2) {
         return null;
     }
 
@@ -82,7 +83,6 @@ export const Pagination = React.memo((props) => {
             <div className={cls.numbers}>
                 {renderedPages}
             </div>
-
             <li
                 key={100001}
                 className={classNames(cls.pagination_item, cls.arrow, {

@@ -35,8 +35,6 @@ import {StudentsDirectorPage} from "pages/studentsPage";
 import {VacancyPage} from "pages/vacancyPage";
 import {VacancyWorkPage} from "pages/vacancyWorkPage";
 import {TimeTableListPage} from "pages/timeTableListPage";
-import {StudentsDirectorPage} from "pages/studentsPage";
-import {TimePage} from "pages/timePage";
 import {EmployerPage} from "pages/employeesPage";
 import {FlowsPage} from "pages/flowsPage";
 import {RoomsProfilePage} from "pages/roomsProiflePage";

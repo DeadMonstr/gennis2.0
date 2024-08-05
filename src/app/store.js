@@ -17,7 +17,7 @@ import {studentProfileBooks} from "entities/profile/studentProfile";
 import {studentProfileRating} from "entities/profile/studentProfile";
 import {roomsAddSlice} from "pages/roomsPage";
 import {studentsDirectorSlice} from "pages/studentsPage"
-import {timeTable} from "pages/timePage";
+// import {timeTable} from "pages/timePage";
 import {homeSlice} from "entities/home";
 import {teachers} from "entities/teachers"
 import {newStudents} from "../entities/students";
@@ -65,7 +65,7 @@ export const store = configureStore({
         teachers,
         homeSlice,
         studentProfile,
-        timeTable,
+        // timeTable,
         roomsAddSlice,
         roomsSlice,
         flowsSlice,
