@@ -19,7 +19,7 @@ export const roomsSlice = createSlice(
                     state.roomsStatus = "loading"
                 })
                 .addCase(fetchRoomsData.fulfilled,( state, action )=> {
-                    state.roomsData = action.payload
+                    state.roomsData = action.payload.rooms
                     console.log(action.payload, "keldim")
                     state.roomsStatus = 'success'
 

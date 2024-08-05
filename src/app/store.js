@@ -28,10 +28,8 @@ import {roomsEditModalSlice} from "features/roomEditModal/model";
 import {roomDeleteSlice} from "features/roomDeleteModal/model";
 import {roomsImageAddSlice} from "features/roomImageAddModal/model";
 import {roomImageSlice} from "../features/roomImagePareModal";
-
 import {studentProfile, teacherProfileData} from "pages/profilePage";
 import {flowsSlice} from "entities/flows";
-
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -65,7 +63,7 @@ export const store = configureStore({
         teachers,
         homeSlice,
         studentProfile,
-        // timeTable,
+        timeTable,
         roomsAddSlice,
         roomsSlice,
         flowsSlice,

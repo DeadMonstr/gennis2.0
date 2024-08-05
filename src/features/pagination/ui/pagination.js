@@ -5,7 +5,7 @@ import cls from "./pagination.module.sass";
 
 export const Pagination = React.memo((props) => {
     const {
-        users = [], // default value if users is undefined
+        users,
         onPageChange,
         siblingCount = 1,
         currentPage,
@@ -15,19 +15,18 @@ export const Pagination = React.memo((props) => {
         type = "basic"
     } = props;
 
+
     useEffect(() => {
-        if (users && Array.isArray(users)) {
-            setCurrentTableData(() => {
-                const firstPageIndex = (currentPage - 1) * pageSize;
-                const lastPageIndex = firstPageIndex + pageSize;
-                return users.slice(firstPageIndex, lastPageIndex);
-            });
-        }
-    }, [pageSize, currentPage, users, setCurrentTableData]);
+        setCurrentTableData(() => {
+            const firstPageIndex = (currentPage - 1) * pageSize;
+            const lastPageIndex = firstPageIndex + pageSize;
+            return users.slice(firstPageIndex, lastPageIndex);
+        })
+    }, [pageSize, currentPage, users, setCurrentTableData])
 
     const paginationRange = usePagination({
         currentPage,
-        totalCount: users.length || 0,
+        totalCount: users.length,
         siblingCount,
         pageSize
     });
@@ -53,7 +52,7 @@ export const Pagination = React.memo((props) => {
         });
     }, [currentPage, onPageChange, paginationRange]);
 
-    if (currentPage === 0 || !paginationRange || paginationRange.length < 2) {
+    if (currentPage === 0 || paginationRange.length < 2) {
         return null;
     }
 

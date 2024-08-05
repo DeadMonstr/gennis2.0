@@ -10,6 +10,7 @@ import { getRoomsData } from 'entities/rooms/model/selectors/roomsSelectors';
 import { fetchRoomsData } from 'entities/rooms/model/roomsThunk';
 import cls from './rooms.module.sass';
 import {getSearchValue} from "../../../features/searchInput";
+import {fetchedImageItems} from "../../../entities/home/ui/model/homeSlice";
 
 export const Rooms = () => {
     const [modal, setModal] = useState(false);
@@ -28,24 +29,24 @@ export const Rooms = () => {
         dispatch(fetchRoomsData())
     }, [dispatch]);
 
+    // useEffect(() => {
+    //     if (roomsData && Array.isArray(roomsData)) {
+    //         setCurrentTableData(roomsData.slice(0, PageSize));
+    //     }
+    // }, [roomsData, PageSize]);
+
     const searchedUsers = useMemo(() => {
         const filteredHeroes = roomsData?.slice()
         setCurrentPage(1)
 
-        console.log(search, true)
-
-        if (!search) return filteredHeroes
+        if (!search) return filteredHeroes.filter(item => !item.deleted)
 
         return filteredHeroes.filter(item =>
             item.sitterNumber?.toLowerCase().includes(search.toLowerCase())
         )
     }, [roomsData, setCurrentPage, search])
 
-    // useEffect(() => {
-    //     if (roomsData && Array.isArray(roomsData)) {
-    //         setCurrentTableData(roomsData.slice(0, PageSize));
-    //     }
-    // }, [roomsData, PageSize]);
+    console.log(searchedUsers, "searchedUsers")
 
 
     const handleChange = (value) => {
@@ -56,9 +57,9 @@ export const Rooms = () => {
         <div className={cls.mainContainer}>
             <div className={cls.mainContainer_buttonPanelBox}>
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}>
-                    <Button onClick={() => setActive(true)} children={'Add room'} />
+                    <Button onClick={() => setActive(true)} children={'Add room'}/>
                 </div>
-                <Select />
+                <Select/>
             </div>
             <div className={cls.mainContainer_filterPanelBox}>
                 <Button
@@ -71,21 +72,23 @@ export const Rooms = () => {
                 <div className={cls.mainContainer_filterPanelBox_rightFilterRadioGroupBox}></div>
             </div>
             <div className={cls.mainContainer_tablePanelBox}>
-                <RoomsList currentTableData={currentTableData} />
+                <RoomsList currentTableData={currentTableData}/>
             </div>
-            <RoomsFilter active={modal} setActive={setModal} />
+            <RoomsFilter active={modal} setActive={setModal}/>
             <div className={cls.paginationBox}>
                 <Pagination
                     setCurrentTableData={setCurrentTableData}
+                    search={search}
                     users={searchedUsers}
+                    setCurrentPage={setCurrentPage}
                     currentPage={currentPage}
                     pageSize={PageSize}
-                    onPageChange={page => {
+                    onPageChange={(page) => {
                         setCurrentPage(page);
                     }}
                 />
             </div>
-            <RoomModal isOpen={active} onClose={setActive} />
+            <RoomModal isOpen={active} onClose={setActive}/>
         </div>
     );
 };

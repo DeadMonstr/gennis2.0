@@ -13,9 +13,9 @@ import {
     getRouteRegister,
     getRouteTeacher,
     getRouteGroups,
+    getVacancyPage,
     getRouteRooms,
     getTeacherProfile,
-    getVacancyPage,
     getRouteMain, getProfile,
     getRoomsProfilePage,
 } from "shared/const/routers";
