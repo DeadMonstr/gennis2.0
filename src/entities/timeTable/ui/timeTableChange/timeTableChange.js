@@ -1,4 +1,4 @@
-import {memo} from 'react';
+import {memo, useEffect, useMemo} from 'react';
 import {useForm} from "react-hook-form";
 
 import {Modal} from "shared/ui/modal";
@@ -11,7 +11,7 @@ import cls from "./timeTableChange.module.sass";
 
 export const TimeTableChange = memo((props) => {
 
-    const {register, handleSubmit} = useForm()
+    const {register, handleSubmit, setValue} = useForm()
 
     const {
         active,
@@ -19,6 +19,18 @@ export const TimeTableChange = memo((props) => {
         onSubmit,
         loading
     } = props
+
+    let startTime = useMemo(() => active?.start_time, [active])
+    let finishTime = useMemo(() => active?.end_time, [active])
+    let order = useMemo(() => active?.order, [active])
+    let name = useMemo(() => active?.name, [active])
+
+    useEffect(() => {
+        setValue("start_time", startTime)
+        setValue("end_time", finishTime)
+        setValue("order", order)
+        setValue("name", name)
+    }, [active])
 
     return (
         <Modal
@@ -36,7 +48,7 @@ export const TimeTableChange = memo((props) => {
                         placeholder={"Boshlanish vaqti"}
                         register={register}
                         name={"start_time"}
-                        value={active?.start_time}
+                        value={active ? startTime : null}
                         type={"time"}
                         required
                     />
@@ -45,7 +57,7 @@ export const TimeTableChange = memo((props) => {
                         placeholder={"Tugash vaqti"}
                         register={register}
                         name={"end_time"}
-                        value={active?.end_time}
+                        value={active ? finishTime : null}
                         type={"time"}
                         required
                     />
@@ -54,7 +66,7 @@ export const TimeTableChange = memo((props) => {
                         placeholder={"Order"}
                         register={register}
                         name={"order"}
-                        value={active?.order}
+                        value={active ? order : null}
                         type={"number"}
                         required
                     />
@@ -63,7 +75,7 @@ export const TimeTableChange = memo((props) => {
                         placeholder={"Name"}
                         register={register}
                         name={"name"}
-                        value={active?.name}
+                        value={name}
                         required
                     />
                     {

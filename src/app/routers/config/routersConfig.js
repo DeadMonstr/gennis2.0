@@ -4,6 +4,7 @@ import {
     getRouteDeletedStudents,
     getRouteDeletedGroups,
     getRouteNewStudents,
+    getRouteUserProfile,
     getRouteCreateGroup,
     getRouteTaskManager,
     getVacancyWorkPage,
@@ -12,10 +13,11 @@ import {
     getRouteTimePage,
     getRouteRegister,
     getRouteTeacher,
-    getRouteRooms,
     getRouteGroups,
     getVacancyPage,
-    getRouteMain, getProfile,
+    getRouteRooms,
+    getRouteMain,
+    getProfile,
 } from "shared/const/routers";
 
 
@@ -25,14 +27,17 @@ import {Register} from "pages/registerPage";
 import {Rooms} from "pages/roomsPage";
 import {HomePage} from "pages/homePage";
 import {TeachersPage} from "pages/teacherPage";
-import {ProfileTeacherPage} from "pages/profilePage";
+import {
+    ProfileTeacherPage,
+    UserProfilePage,
+    StudentProfilePage
+} from "pages/profilePage";
 import {StudentsDirectorPage} from "pages/studentsPage";
 import {VacancyPage} from "pages/vacancyPage";
 import {VacancyWorkPage} from "pages/vacancyWorkPage";
 import {TimeTableListPage} from "pages/timeTableListPage";
 import {EmployerPage} from "pages/employeesPage";
 import {FlowsPage} from "pages/flowsPage";
-import {StudentProfilePage} from "pages/profilePage";
 
 
 export const routersConfig = [
@@ -195,6 +200,16 @@ export const routersConfig = [
         path: getRouteRooms(),
         element: <Rooms/>,
         isMenu: true,
+        type: ["app_center_theme", "app_school_theme"]
+    },
+    {
+        to: "",
+        name: "",
+        icon: "",
+        roles: [],
+        path: getRouteUserProfile(":id"),
+        element: <UserProfilePage/>,
+        isMenu: false,
         type: ["app_center_theme", "app_school_theme"]
     },
     {

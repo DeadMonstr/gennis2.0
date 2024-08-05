@@ -22,7 +22,7 @@ const StudentProfileSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchStudentProfileData.fulfilled, (state, action) => {
-                state.data = action.payload
+                state.data = action.payload?.student
                 state.loading = false
                 state.error = null
             })

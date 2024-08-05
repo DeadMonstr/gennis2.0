@@ -85,22 +85,22 @@ export const ImageCrop = memo((props) => {
         [completedCrop, scale, rotate],
     )
 
-    useEffect(() => {
-        if (aspect) {
-            if (imgRef.current) {
-                const {width, height} = imgRef.current
-                const newCrop = centerAspectCrop(width, height, 16 / 9)
-                setCrop(newCrop)
-                setCompletedCrop(convertToPixelCrop(newCrop, width, height))
-            }
-        }
-    }, [aspect])
+    // useEffect(() => {
+    //     if (aspect) {
+    //         if (imgRef.current) {
+    //             const {width, height} = imgRef.current
+    //             const newCrop = centerAspectCrop(width, height, 16 / 9)
+    //             setCrop(newCrop)
+    //             setCompletedCrop(convertToPixelCrop(newCrop, width, height))
+    //         }
+    //     }
+    // }, [aspect])
 
     const [crop, setCrop] = useState()
 
     const {getRootProps, getInputProps} = useDropzone({
         onDrop: acceptedFiles => {
-            console.log(acceptedFiles[0], "res2")
+            // console.log(acceptedFiles[0], "res2")
             setImgSrc(URL.createObjectURL(acceptedFiles[0]))
         }
     })
@@ -144,7 +144,7 @@ export const ImageCrop = memo((props) => {
             type: "image/png"
         })
 
-        console.log(res,"res")
+        // console.log(res,"res")
 
         // setImgSrc(URL.createObjectURL(res))
         setNewImage(res)

@@ -4,3 +4,5 @@ export {default as studentProfile} from "./model/slice/studentProfileSlice";
 export {default as teacherProfileData} from "./model/slice/teacherProfile.slice";
 
 export {ProfileTeacherPage} from "./ui/profileTeacherPage/profileTeacherPage"
+
+export {UserProfilePage} from "./ui/userProfilePage/userProfilePage";
