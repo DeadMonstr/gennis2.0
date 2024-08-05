@@ -3,6 +3,7 @@ import cls from "./roomsList.module.sass";
 import { Switch } from "shared/ui/switch";
 import { SkeletonCard } from "shared/ui/roomsSkeleton/roomsSkeleton";
 import Icon from "shared/assets/images/room_image.svg";
+import {Link} from "../../../../shared/ui/link";
 
 export const RoomsList = ({ currentTableData }) => {
     const [loading, setLoading] = useState(true);
@@ -55,28 +56,34 @@ export const RoomsList = ({ currentTableData }) => {
 
     return currentTableData.map((item, index) => (
         <>
-            <div key={index} className={cls.mainContainer_tablePanelBox_cardBox}>
-                <div className={cls.mainContainer_tablePanelBox_cardBox_imgBox}>
-                    <img src={Icon} alt="" className={cls.mainContainer_tablePanelBox_cardBox_imgBox_img}/>
-                </div>
-                <div className={cls.mainContainer_tablePanelBox_cardBox_articleBox}>
-                    <div className={cls.mainContainer_tablePanelBox_cardBox_articleBox_sitterBox}>
-                        <h2 className={cls.mainContainer_tablePanelBox_cardBox_articleBox_sitterBox_sitterArticle}>O'rindiqlar soni</h2>
-                        <h2 className={cls.mainContainer_tablePanelBox_cardBox_articleBox_sitterBox_sitterCounter}>{item?.seats_number}</h2>
+            {!item.deleted && (
+                <Link extraClass={cls.extraStyle} to={`roomsProfilePage/${item.id}`}>
+                    <div key={index} className={cls.mainContainer_tablePanelBox_cardBox}>
+                        <div className={cls.mainContainer_tablePanelBox_cardBox_imgBox}>
+                            <img src={Icon} alt="" className={cls.mainContainer_tablePanelBox_cardBox_imgBox_img}/>
+                        </div>
+                        <div className={cls.mainContainer_tablePanelBox_cardBox_articleBox}>
+                            <div className={cls.mainContainer_tablePanelBox_cardBox_articleBox_sitterBox}>
+                                <h2 className={cls.mainContainer_tablePanelBox_cardBox_articleBox_sitterBox_sitterArticle}>O'rindiqlar soni</h2>
+                                <h2 className={cls.mainContainer_tablePanelBox_cardBox_articleBox_sitterBox_sitterCounter}>{item?.seats_number}</h2>
+                            </div>
+                            <div className={cls.mainContainer_tablePanelBox_cardBox_articleBox_boardBox}>
+                                <h2 className={cls.mainContainer_tablePanelBox_cardBox_articleBox_boardBox_isBoard}>Elektron doska</h2>
+                                <Switch
+                                    disabled
+                                    activeSwitch={switchStates[item.id]}
+                                    onChangeSwitch={() => handleSwitchChange(item.id)}
+                                />
+                            </div>
+                            <div className={cls.mainContainer_tablePanelBox_cardBox_articleBox_roomNumBox}>
+                                <h2 className={cls.mainContainer_tablePanelBox_cardBox_articleBox_roomNumBox_roomNum}>{item?.name}</h2>
+                            </div>
+                        </div>
                     </div>
-                    <div className={cls.mainContainer_tablePanelBox_cardBox_articleBox_boardBox}>
-                        <h2 className={cls.mainContainer_tablePanelBox_cardBox_articleBox_boardBox_isBoard}>Elektron doska</h2>
-                        <Switch
-                            disabled
-                            activeSwitch={switchStates[item.id]}
-                            onChangeSwitch={() => handleSwitchChange(item.id)}
-                        />
-                    </div>
-                    <div className={cls.mainContainer_tablePanelBox_cardBox_articleBox_roomNumBox}>
-                        <h2 className={cls.mainContainer_tablePanelBox_cardBox_articleBox_roomNumBox_roomNum}>{item?.name}</h2>
-                    </div>
-                </div>
-            </div>
+                </Link>
+            ) }
+
+
 
         </>
 

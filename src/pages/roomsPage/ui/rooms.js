@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'shared/ui/button';
 import { Select } from 'shared/ui/select';
 import { Pagination } from 'features/pagination';
-import { RoomsList } from 'entities/rooms';
+import {RoomsList} from "entities/rooms/ui/roomList/roomList";
 import { RoomsFilter } from 'features/filters/roomsFilter';
 import { RoomModal } from 'features/roomsAddModal';
 import { getRoomsData } from 'entities/rooms/model/selectors/roomsSelectors';
@@ -21,6 +21,7 @@ export const Rooms = () => {
     const dispatch = useDispatch();
 
     const roomsData = useSelector(getRoomsData);
+    console.log(roomsData)
 
     useEffect(() => {
         dispatch(fetchRoomsData())

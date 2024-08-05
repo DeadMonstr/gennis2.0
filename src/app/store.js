@@ -28,6 +28,12 @@ import {teachers} from "entities/teachers"
 import {studentProfile, teacherProfileData} from "pages/profilePage";
 import {flowsSlice} from "entities/flows";
 
+import {studentProfile} from "pages/profilePage";
+import {roomssSlice} from "../features/roomsEditModal";
+import {roomsEditModalSlice} from "features/roomEditModal/model";
+import {roomDeleteSlice} from "features/roomDeleteModal/model";
+import {roomsImageAddSlice} from "features/roomImageAddModal/model";
+import {roomImageSlice} from "../features/roomImagePareModal";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -65,7 +71,12 @@ export const store = configureStore({
         roomsAddSlice,
         roomsSlice,
         flowsSlice,
-        teacherProfileData
+        teacherProfileData,
+        roomssSlice,
+        roomsEditModalSlice,
+        roomDeleteSlice,
+        roomsImageAddSlice,
+        roomImageSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(
