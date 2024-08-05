@@ -17,6 +17,7 @@ import {
     getRouteRooms,
     getRouteMain,
     getProfile,
+    getTeacherProfile
 } from "shared/const/routers";
 
 

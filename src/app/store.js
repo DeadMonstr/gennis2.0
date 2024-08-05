@@ -28,7 +28,6 @@ import {teachers} from "entities/teachers"
 import {studentProfile, teacherProfileData} from "pages/profilePage";
 import {flowsSlice} from "entities/flows";
 
-import {studentProfile} from "pages/profilePage";
 import {roomssSlice} from "../features/roomsEditModal";
 import {roomsEditModalSlice} from "features/roomEditModal/model";
 import {roomDeleteSlice} from "features/roomDeleteModal/model";
