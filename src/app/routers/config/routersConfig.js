@@ -17,7 +17,7 @@ import {
     getRouteRooms,
     getRouteMain,
     getProfile,
-    getTeacherProfile
+    getTeacherProfile, getRoomsProfilePage
 } from "shared/const/routers";
 
 
@@ -38,6 +38,7 @@ import {VacancyWorkPage} from "pages/vacancyWorkPage";
 import {TimeTableListPage} from "pages/timeTableListPage";
 import {EmployerPage} from "pages/employeesPage";
 import {FlowsPage} from "pages/flowsPage";
+import {RoomsProfilePage} from "../../../pages/roomsProiflePage";
 // import {RoomsProfilePage} from "pages/profilePage";
 
 
@@ -213,13 +214,13 @@ export const routersConfig = [
         isMenu: false,
         type: ["app_center_theme", "app_school_theme"]
     },
-    // {
-    //     to: "rooms/roomsProfilePage",
-    //     name: "Rooms Profile",
-    //     path: getRoomsProfilePage(":id"),
-    //     element: <RoomsProfilePage/>,
-    //     roles: [],
-    // },
+    {
+        to: "rooms/roomsProfilePage",
+        name: "Rooms Profile",
+        path: getRoomsProfilePage(":id"),
+        element: <RoomsProfilePage/>,
+        roles: [],
+    },
     {
         to: "/login",
         name: "Capital Category",

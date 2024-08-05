@@ -1,5 +1,3 @@
-
-
 import {configureStore} from "@reduxjs/toolkit";
 
 import {search} from "features/searchInput";
@@ -22,12 +20,13 @@ import {newStudents} from "../entities/students";
 import {employers} from "../entities/employer";
 import {roomsSlice} from "../entities/rooms";
 import {homeSlice} from "entities/home";
-
 import {teachers} from "entities/teachers"
-
-import {studentProfile, teacherProfileData} from "pages/profilePage";
+import {
+    studentProfile,
+    teacherProfileData,
+    userProfile
+} from "pages/profilePage";
 import {flowsSlice} from "entities/flows";
-
 import {roomssSlice} from "../features/roomsEditModal";
 import {roomsEditModalSlice} from "features/roomEditModal/model";
 import {roomDeleteSlice} from "features/roomDeleteModal/model";
@@ -71,6 +70,7 @@ export const store = configureStore({
         roomsSlice,
         flowsSlice,
         teacherProfileData,
+        userProfile,
         roomssSlice,
         roomsEditModalSlice,
         roomDeleteSlice,
