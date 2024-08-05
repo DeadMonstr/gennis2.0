@@ -18,7 +18,7 @@ export const NewStudents = ({currentTableData}) => {
                 <tr onClick={() => navigation(`profile/${item.id}`)}>
                     <td>{i + 1}</td>
                     <td>{item.user.surname} {item.user.name}</td>
-                    <td>{item.age}</td>
+                    <td>{item.user.age}</td>
                     <td>{item.user.phone}</td>
                     <td>{item.user.language.name}</td>
                     <td>{item.group}</td>

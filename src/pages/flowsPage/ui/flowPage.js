@@ -10,38 +10,39 @@ import {fetchFlows} from "entities/flows";
 import {getFlows} from "entities/flows";
 import {Modal} from "shared/ui/modal";
 import {Input} from "shared/ui/input";
+import {fetchTeachersData, getTeachers} from "entities/teachers";
+import {useForm} from "react-hook-form";
+import {getFlowsLoading} from "../../../entities/flows/model/selector/flowsSelector";
 
-const radioFilter = [
-    {name: "class", label: 'class'},
-    {name: "flow", label: "flow"}
-]
+
 
 export const FlowsPage = () => {
+
+
+
     let PageSize = useMemo(() => 50, [])
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("")
 
-    const [radioFilterItem, setRadioFilterItem] = useState(radioFilter[0].name)
-
     const flows = useSelector(getFlows)
+
+    const flowsLoading = useSelector(getFlowsLoading)
+
+    const teachers = useSelector(getTeachers)
     const dispatch = useDispatch()
 
 
     useEffect(() => {
         dispatch(fetchFlows())
     }, [])
+    useEffect(() => {
+        dispatch(fetchTeachersData())
+    } , [])
 
-    const handleChange = (value) => {
-        setRadioFilterItem(value);
-    };
 
-    const renderFlow = () => {
-        switch (radioFilterItem) {
-            case ("flow"):
-                return <Flows currentTableData={flows}/>
-        }
-    }
+
+
 
 
     return (
@@ -52,18 +53,8 @@ export const FlowsPage = () => {
                     <Select/>
                 </div>
 
-                <div className={cls.flow__radioFilter}>
-                    {radioFilter.map((item, i) => {
-                        return (
-                            <div>
-                                <Radio children={item.label} checked={radioFilterItem === item.name}
-                                       onChange={() => handleChange(item.name)}/>
-                            </div>
-                        )
-                    })}
-                </div>
             </div>
-            {renderFlow()}
+            <Flows currentTableData={flows} loading={flowsLoading} teacherData={teachers}/>
             {/*<Pagination*/}
             {/*    setCurrentTableData={setCurrentTableData}*/}
             {/*    users={flows}*/}
