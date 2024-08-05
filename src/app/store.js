@@ -70,7 +70,6 @@ export const store = configureStore({
         roomDeleteSlice,
         roomsImageAddSlice,
         roomImageSlice
-
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(
