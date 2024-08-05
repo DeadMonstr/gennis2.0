@@ -3,20 +3,16 @@ import {useNavigate} from "react-router";
 import {useDispatch} from "react-redux";
 import {useForm} from "react-hook-form";
 
-import {fetchLoginUser} from "../model/loginThunk";
 import {Button} from "shared/ui/button";
 import {Input} from "shared/ui/input";
-import {DefaultLoader} from "shared/ui/defaultLoader";
 import {MiniLoader} from "shared/ui/miniLoader";
 import {Alert} from "shared/ui/alert";
-
 import cls from "./login.module.sass"
 import gennisImg from "shared/assets/images/logo.svg"
 import loginAside from "shared/assets/images/login-page-4468581-3783954 1.svg"
-import {registerUser} from "../../registerPage/model/registerThunk";
 import {API_URL, useHttp} from "../../../shared/api/base";
 import {getUserData} from "../model/loginSlice";
-import {type} from "@testing-library/user-event/dist/type";
+
 
 export const Login = () => {
 

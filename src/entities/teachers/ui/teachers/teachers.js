@@ -23,10 +23,10 @@ export const Teachers = memo(({data}) => {
         return data.map((item, i) => (
             <tr key={i} onClick={() => navigation(`teacherProfile/${item.id}`)}>
                 <td>{i + 1}</td>
-                <td>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
+                <td>{ item.user.name} {item.user.surname}</td>
                 <td>{item.user.username}</td>
                 <td>{item.user.phone}</td>
-                <td>{item.age}</td>
+                <td>{item.user.age}</td>
                 <td><div className={item.subject ? cls.teacher__language : null}>{item.subject.name}</div></td>
             </tr>
         ))
