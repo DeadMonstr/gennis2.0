@@ -10,7 +10,7 @@ export {StudentProfileAmountPath} from "./ui/studentProfileAmountPath/studentPro
 export {StudentProfileTotalRating} from "./ui/studentProfileTotalRating/studentProfileTotalRating";
 export {StudentProfileGroupsHistory} from "./ui/studentProfileGroupsHistory/studentProfileGroupsHistory";
 export {StudentProfileTotalAttendance} from "./ui/studentProfileTotalAttendance/studentProfileTotalAttendance";
-export {StudentProfileChangeImage} from "./ui/studentProfileChangeImage/studentProfileChangeImage";
+export {StudentProfileChangeInfo} from "./ui/studentProfileChangeInfo/studentProfileChangeInfo";
 
 export {amountService, amountTypes} from "./model/consts/amountConsts";
 

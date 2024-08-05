@@ -1,4 +1,4 @@
-import React, {createContext, useState} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 import classNames from "classnames";
 
 import {TeacherProfileInfo, TeacherProfileTeachersGroup} from "entities/profile/teacherProfile";
@@ -9,6 +9,10 @@ import {
 import {TeacherEdit} from "features/profileEdits/teacherEdit";
 
 import cls from "./profileTeacherPage.module.sass"
+import {useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router";
+import {getUserData} from "../../model/selector/teacherProfile.selector";
+import {fetchTeacherProfileData} from "../../model/thunk/teacherProfile.thunk";
 
 export const ContextStuPro = createContext(null)
 
@@ -16,6 +20,21 @@ export const ProfileTeacherPage = () => {
 
     const [active, setActive] = useState(false)
     const [actives, setActives] = useState(false)
+
+    const dispatch = useDispatch()
+
+    const {id} = useParams()
+
+    const userData = useSelector(getUserData)
+
+
+    useEffect(() => {
+        dispatch(fetchTeacherProfileData(id))
+    } ,[id])
+    console.log(userData, "data user")
+
+
+
 
 
     return (

@@ -4,7 +4,7 @@ import {createBrowserRouter} from "react-router-dom";
 import classNames from "classnames";
 
 import {RequireAuth} from "./RequireAuth";
-import {routersConfig} from "app/routers"
+import {routersConfig} from "../config/routersConfig";
 import {Layout} from "app/layout";
 import {Login} from "pages/loginPage";
 import {StudentProfilePage} from "pages/profilePage";
@@ -18,12 +18,13 @@ import {ClassProfilePage} from "pages/School";
 import {ClassMolassesPage} from "pages/School";
 import {EmployerPage} from "pages/employeesPage"
 import {useTheme} from "shared/lib/hooks/useTheme";
-
 import "app/styles/index.sass"
 import {CreateGroup} from "entities/students";
 import {VacancyPage} from "pages/vacancyPage";
-import {FlowsPage} from "../../../pages/flowsPage";
 import {RoomsProfilePage} from "pages/roomsProiflePage";
+import {FlowsPage} from "pages/flowsPage";
+import {FlowProfileNavigators} from "entities/flowsProfile";
+
 
 export const AppRouter = () => {
 
@@ -67,6 +68,7 @@ export const AppRouter = () => {
                             />
                         )
                     }
+
                     <Route path={"students/createGroup"} element={<CreateGroup/>} />
                     <Route
                         path={"profile"}
@@ -82,8 +84,12 @@ export const AppRouter = () => {
                     />
 
                     <Route
-                            path={"molasses"}
+                        path={"molasses"}
                         element={<ClassMolassesPage/>}
+                    />
+                    <Route
+                        path={"flowsProfile"}
+                        element={<FlowProfileNavigators/>}
                     />
 
                     <Route

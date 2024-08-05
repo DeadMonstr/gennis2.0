@@ -1,49 +1,66 @@
-import React, {memo} from 'react';
+import {memo, useCallback} from 'react';
+import classNames from "classnames";
 
 import {Table} from "shared/ui/table";
+import {DefaultLoader} from "shared/ui/defaultLoader";
 
 import cls from "./timeTableList.module.sass";
 
-export const TimeTableList = memo(({data, setIsChange}) => {
+export const TimeTableList = memo((props) => {
 
-    const renderTimeTableList = () => {
-        return data.map((item, i) =>
+    const {
+        data,
+        setIsChange,
+        loading,
+        setStatus
+    } = props
+
+    const renderTimeTableList = useCallback(() => {
+        return data.sort(compareById).map((item, i) =>
             <tr>
-                <td>{item.id}</td>
-                <td>{item.timeList}</td>
-                <td>{item.startTime}</td>
-                <td>{item.finishTime}</td>
+                <td>{i + 1}</td>
+                <td>{item.order}-dars</td>
+                <td>{item.start_time?.slice(0, 5)}</td>
+                <td>{item.end_time?.slice(0, 5)}</td>
                 <td>{item.name}</td>
                 <td>
                     <i
-                        onClick={() => setIsChange(item)}
-                        className="fas fa-pen"
+                        onClick={() => {
+                            setIsChange(item)
+                            setStatus(false)
+                        }}
+                        className={classNames("fas fa-pen", cls.timeTableList__icon)}
                     />
                 </td>
             </tr>
         )
-    }
+    }, [data, loading])
 
     const render = renderTimeTableList()
 
-    return (
-        <div className={cls.timeTableList}>
-            <Table>
-                <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Soatlar ro’yxati</th>
-                    <th>Boshlanish vaqt</th>
-                    <th>Tugash vaqti</th>
-                    <th>Name</th>
-                    <th/>
-                </tr>
-                </thead>
-                <tbody>
-                {render}
-                </tbody>
-            </Table>
-        </div>
+    function compareById(a, b) {
+        return a.id - b.id;
+    }
 
-    )
+    return loading ? <DefaultLoader/> :
+        (
+            <div className={cls.timeTableList}>
+                <Table>
+                    <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Soatlar ro’yxati</th>
+                        <th>Boshlanish vaqt</th>
+                        <th>Tugash vaqti</th>
+                        <th>Name</th>
+                        <th/>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {render}
+                    </tbody>
+                </Table>
+            </div>
+
+        )
 })

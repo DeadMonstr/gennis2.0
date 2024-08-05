@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import cls from "./input.module.sass";
 import classNames from "classnames";
 
@@ -25,7 +25,7 @@ export const Input = React.memo(({
     const [showPassword, setShowPassword] = useState(false);
     const [silk, setSilk] = useState("");
 
-    console.log(value)
+    console.log(value, "value")
 
     return register ? (
         <label style={style} className={cls.inputLabel} htmlFor={name}>
@@ -55,9 +55,9 @@ export const Input = React.memo(({
                 {type === "password" && (
                     <div className={cls.eye} onClick={() => setShowPassword(!showPassword)}>
                         {showPassword ? (
-                            <i className="fa-solid fa-eye" />
+                            <i className="fa-solid fa-eye"/>
                         ) : (
-                            <i className="fa-solid fa-eye-slash" />
+                            <i className="fa-solid fa-eye-slash"/>
                         )}
                     </div>
                 )}

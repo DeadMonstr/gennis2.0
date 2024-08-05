@@ -2,7 +2,7 @@ import {memo, useCallback, useState} from 'react';
 import {useForm} from "react-hook-form";
 import classNames from "classnames";
 
-import {amountTypes, amountService} from "entities/profile/studentProfile";
+import {amountTypes, amountService} from "../../model/consts/amountConsts";
 import {EditableCard} from "shared/ui/editableCard";
 import {Input} from "shared/ui/input";
 import {Radio} from "shared/ui/radio";

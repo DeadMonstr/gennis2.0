@@ -76,11 +76,11 @@ export const CreateGroup = () => {
             <tr>
                 <td>{i + 1}</td>
                 <td>{item.user.surname} {item.user.name}</td>
-                <td>{item.age}</td>
-                <td>{item.user.phone}</td>
-                <td>{item.user.language.name}</td>
-                <td>{item.group}</td>
+                <td>{item.user.age}</td>
                 <td>{item.user.registered_date}</td>
+                <td>{item.user.comment}</td>
+                <td>{item.group}</td>
+
             </tr>
         ));
     };
@@ -156,6 +156,26 @@ export const CreateGroup = () => {
                         <h2>Ingliz Tili</h2>
                         <SearchInput/>
                     </div>
+                </div>
+
+                <div className={cls.studentBoxTable}>
+                    <Table>
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Ism Familiya</th>
+                            <th>Yosh</th>
+                            <th>Reg.sana</th>
+                            <th>Koment</th>
+                            <th>Status</th>
+                        </tr>
+
+
+                        </thead>
+                        <tbody>
+                        {renderStudents()}
+                        </tbody>
+                    </Table>
                 </div>
             </Modal>
             <Modal setActive={setActiveModal} active={activeModal}>

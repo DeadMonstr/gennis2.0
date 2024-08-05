@@ -17,8 +17,30 @@ import logo from "shared/assets/images/logo.svg";
 export const Header = () => {
 
     const dispatch = useDispatch()
-    const location = useLocation()
+    const {pathname, search} = useLocation()
     const navigate = useNavigate()
+
+    const [locationHistory, setLocationHistory] = useState([])
+
+
+    useEffect(() => {
+        // console.log(`pathname - ${pathname}`)
+
+        if (locationHistory.length >= 5) {
+            // console.log(`locationHistory max ${locationHistory}`)
+            setLocationHistory(arr => {
+                arr.pop()
+                return [pathname, ...arr]
+            })
+        } else {
+            // console.log(`locationHistory-1 : ${locationHistory[0]}`)
+            // console.log(`locationHistory length : ${locationHistory.length}`)
+            setLocationHistory(arr => [pathname, ...arr])
+        }
+
+
+    }, [pathname])
+
 
     const [selected, setSelected] = useState([])
     const [deletedId, setDeletedId] = useState(0)
@@ -40,10 +62,8 @@ export const Header = () => {
     useEffect(() => {
         if (valueData) {
             debouncedFetchData()
-            console.log(true)
         } else {
             setSearchParams({})
-            console.log(false)
         }
     }, [valueData])
 
@@ -51,9 +71,9 @@ export const Header = () => {
         if (!searchParams.get("search")) {
             setSearchParams({})
             setValueData(null)
-            console.log(valueData, "valueData")
+            dispatch(getSearchStr(""))
         }
-    }, [location.pathname, location.search])
+    }, [pathname, search])
 
     function fetchSearchData() {
         const checkedValue =
@@ -86,7 +106,14 @@ export const Header = () => {
                 {/*/>*/}
                 <Button
                     onClick={() => {
-                        navigate(-1)
+                        if (locationHistory.length) {
+                            // console.log(` navigate list : ${locationHistory};  navigate list length : ${locationHistory.length}`)
+                            locationHistory.shift()
+                            // console.log(`navigate - ${locationHistory[0]}`)
+                            navigate(locationHistory[0])
+                            locationHistory.shift()
+                        }
+                        // navigate(-1)
                         setSearchParams({})
                         setValueData(null)
                     }}

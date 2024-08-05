@@ -4,7 +4,7 @@ import {configureStore} from "@reduxjs/toolkit";
 
 import {search} from "features/searchInput";
 import {registerUser} from "pages/registerPage";
-import {loginSlice} from "../pages/loginPage";
+import {loginSlice} from "pages/loginPage";
 import {filteredTeachers} from "features/filters/teacherFilter";
 import {filteredStudents} from "features/filters/studentsFilter";
 import {filteredEmployees} from "features/filters/employeesFilter";
@@ -23,12 +23,15 @@ import {teachers} from "entities/teachers"
 import {newStudents} from "../entities/students";
 import {employers} from "../entities/employer";
 import {roomsSlice} from "../entities/rooms";
-import {studentProfile} from "pages/profilePage";
 import {roomssSlice} from "../features/roomsEditModal";
 import {roomsEditModalSlice} from "features/roomEditModal/model";
 import {roomDeleteSlice} from "features/roomDeleteModal/model";
 import {roomsImageAddSlice} from "features/roomImageAddModal/model";
 import {roomImageSlice} from "../features/roomImagePareModal";
+
+import {studentProfile, teacherProfileData} from "pages/profilePage";
+import {flowsSlice} from "entities/flows";
+
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -65,6 +68,8 @@ export const store = configureStore({
         timeTable,
         roomsAddSlice,
         roomsSlice,
+        flowsSlice,
+        teacherProfileData,
         roomssSlice,
         roomsEditModalSlice,
         roomDeleteSlice,
