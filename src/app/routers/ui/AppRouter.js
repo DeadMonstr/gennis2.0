@@ -18,9 +18,11 @@ import {ClassProfilePage} from "pages/School";
 import {ClassMolassesPage} from "pages/School";
 import {EmployerPage} from "pages/employeesPage"
 import {useTheme} from "shared/lib/hooks/useTheme";
+
 import "app/styles/index.sass"
 import {CreateGroup} from "entities/students";
 import {VacancyPage} from "pages/vacancyPage";
+import {RoomsProfilePage} from "pages/roomsProiflePage";
 import {FlowsPage} from "pages/flowsPage";
 import {FlowProfileNavigators} from "entities/flowsProfile";
 

@@ -1,0 +1,1 @@
+export {getRoomsID} from './selectors/selectors'

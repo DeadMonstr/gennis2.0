@@ -1,5 +1,3 @@
-
-
 import {configureStore} from "@reduxjs/toolkit";
 
 import {search} from "features/searchInput";
@@ -22,12 +20,18 @@ import {newStudents} from "../entities/students";
 import {employers} from "../entities/employer";
 import {roomsSlice} from "../entities/rooms";
 import {homeSlice} from "entities/home";
-
 import {teachers} from "entities/teachers"
-
-import {studentProfile, teacherProfileData} from "pages/profilePage";
+import {
+    studentProfile,
+    teacherProfileData,
+    userProfile
+} from "pages/profilePage";
 import {flowsSlice} from "entities/flows";
-
+import {roomssSlice} from "../features/roomsEditModal";
+import {roomsEditModalSlice} from "features/roomEditModal/model";
+import {roomDeleteSlice} from "features/roomDeleteModal/model";
+import {roomsImageAddSlice} from "features/roomImageAddModal/model";
+import {roomImageSlice} from "../features/roomImagePareModal";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -65,7 +69,13 @@ export const store = configureStore({
         roomsAddSlice,
         roomsSlice,
         flowsSlice,
-        teacherProfileData
+        teacherProfileData,
+        userProfile,
+        roomssSlice,
+        roomsEditModalSlice,
+        roomDeleteSlice,
+        roomsImageAddSlice,
+        roomImageSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

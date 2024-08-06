@@ -8,7 +8,6 @@ import {
     getRouteCreateGroup,
     getRouteTaskManager,
     getVacancyWorkPage,
-    getTeacherProfile,
     getRouteStudents,
     getRouteTimePage,
     getRouteRegister,
@@ -18,6 +17,7 @@ import {
     getRouteRooms,
     getRouteMain,
     getProfile,
+    getTeacherProfile, getRoomsProfilePage
 } from "shared/const/routers";
 
 
@@ -38,6 +38,8 @@ import {VacancyWorkPage} from "pages/vacancyWorkPage";
 import {TimeTableListPage} from "pages/timeTableListPage";
 import {EmployerPage} from "pages/employeesPage";
 import {FlowsPage} from "pages/flowsPage";
+import {RoomsProfilePage} from "../../../pages/roomsProiflePage";
+// import {RoomsProfilePage} from "pages/profilePage";
 
 
 export const routersConfig = [
@@ -130,15 +132,15 @@ export const routersConfig = [
         element: <StudentProfilePage/>,
         isMenu: false
     },
-    {
-      to: "vacancyPage",
-      name: "Vakansiyalar",
-      icon: "fa-tasks",
-      roles: [],
-      path: getVacancyPage(),
-      element: <VacancyPage/>,
-      isMenu: true
-    },
+    // {
+    //   to: "vacancyPage",
+    //   name: "Vakansiyalar",
+    //   icon: "fa-tasks",
+    //   roles: [],
+    //   path: getVacancyPage(),
+    //   element: <VacancyPage/>,
+    //   isMenu: true
+    // },
     {
         to: "timeTable",
         name: "Time Table",
@@ -211,6 +213,13 @@ export const routersConfig = [
         element: <UserProfilePage/>,
         isMenu: false,
         type: ["app_center_theme", "app_school_theme"]
+    },
+    {
+        to: "rooms/roomsProfilePage",
+        name: "Rooms Profile",
+        path: getRoomsProfilePage(":id"),
+        element: <RoomsProfilePage/>,
+        roles: [],
     },
     {
         to: "/login",

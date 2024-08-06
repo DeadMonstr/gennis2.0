@@ -23,7 +23,7 @@ export const headersImg = () => {
     const token = sessionStorage.getItem("token")
     return {
         "Authorization" : "Bearer " + token,
-        'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
+        // 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
     }
 }
 
@@ -45,4 +45,3 @@ export const useHttp = () => {
 
     return {request}
 }
-
