@@ -30,6 +30,7 @@ import {TeachersPage} from "pages/teacherPage";
 import {
     ProfileTeacherPage,
     UserProfilePage,
+    StudentProfilePage
 } from "pages/profilePage";
 import {StudentsDirectorPage} from "pages/studentsPage";
 import {VacancyPage} from "pages/vacancyPage";
@@ -38,7 +39,8 @@ import {TimeTableListPage} from "pages/timeTableListPage";
 import {EmployerPage} from "pages/employeesPage";
 import {FlowsPage} from "pages/flowsPage";
 import {RoomsProfilePage} from "pages/roomsProiflePage";
-import {StudentProfilePage} from "pages/profilePage";
+import {ClassPage} from "../../../pages/classPage";
+// import {RoomsProfilePage} from "pages/profilePage";
 
 
 export const routersConfig = [
@@ -169,7 +171,7 @@ export const routersConfig = [
         name: "Employers",
         icon: "fa-user-graduate",
         roles: [],
-        path: getTeacherProfile("id"),
+        path: getTeacherProfile(":id"),
         element: <EmployerPage/>,
         isMenu: true,
         type: ["app_center_theme", "app_school_theme"]
@@ -181,6 +183,16 @@ export const routersConfig = [
         roles: [],
         path: getTeacherProfile("id"),
         element: <FlowsPage/>,
+        isMenu: true,
+        type: ["app_school_theme"]
+    },
+    {
+        to: "class",
+        name: "Class",
+        icon: "fa-user-graduate",
+        roles: [],
+        path: getClass("id"),
+        element: <ClassPage/>,
         isMenu: true,
         type: ["app_school_theme"]
     },

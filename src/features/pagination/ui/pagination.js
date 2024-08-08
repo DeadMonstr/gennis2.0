@@ -82,6 +82,7 @@ export const Pagination = React.memo((props) => {
             <div className={cls.numbers}>
                 {renderedPages}
             </div>
+
             <li
                 key={100001}
                 className={classNames(cls.pagination_item, cls.arrow, {

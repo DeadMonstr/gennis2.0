@@ -1,7 +1,5 @@
 
-
 import {configureStore} from "@reduxjs/toolkit";
-
 import {search} from "features/searchInput";
 import {registerUser} from "pages/registerPage";
 import {loginSlice} from "pages/loginPage";

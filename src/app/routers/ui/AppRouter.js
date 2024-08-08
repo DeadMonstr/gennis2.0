@@ -25,6 +25,8 @@ import {VacancyPage} from "pages/vacancyPage";
 import {RoomsProfilePage} from "pages/roomsProiflePage";
 import {FlowsPage} from "pages/flowsPage";
 import {FlowProfileNavigators} from "entities/flowsProfile";
+import {FlowListPage} from "pages/FlowListPage";
+import {ClassPage} from "pages/classPage";
 
 
 export const AppRouter = () => {
@@ -89,6 +91,10 @@ export const AppRouter = () => {
                         element={<ClassMolassesPage/>}
                     />
                     <Route
+                        path={"class"}
+                        element={<ClassPage/>}
+                    />
+                    <Route
                         path={"flowsProfile"}
                         element={<FlowProfileNavigators/>}
                     />
@@ -96,6 +102,10 @@ export const AppRouter = () => {
                     <Route
                         path={"teacherSalaryPage"}
                         element={<TeacherSalaryPage/>}
+                    />
+                    <Route
+                        path={"flows/flow-list"}
+                        element={<FlowListPage/>}
                     />
                     <Route
                         path={"giveSalaryPage"}

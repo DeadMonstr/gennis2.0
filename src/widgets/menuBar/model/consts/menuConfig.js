@@ -104,6 +104,13 @@ export const menuConfig = [
         isMenu: true,
     },
     {
+        to: "class",
+        name: "Class",
+        icon: "fa-user-graduate",
+        roles: [],
+        isMenu: true,
+    },
+    {
         to: "rooms",
         name: "Honalar",
         icon: "fa-door-closed",
