@@ -1,0 +1,40 @@
+.header
+
+  display: flex
+  flex-direction: column
+  gap: 2rem
+  &__branch
+    align-self: flex-end
+  &__btn
+    display: flex
+    justify-content: space-between
+    align-items: center
+  &__changeColor
+    border: 2px solid #CBD5E1
+    display: flex
+    gap: 1rem
+    width: fit-content
+    align-items: center
+    border-radius: 15px
+    padding: 0.5rem 1rem
+    cursor: pointer
+    .changeColorBox
+      width: 30px
+      border-radius: 50%
+      height: 30px
+      background: conic-gradient(#E7E040  ,#EEAA3C , #E8403B , #B33ED5 , #694AE8 , #3CCAE7, #89E743,#E7E040)
+.changeColorItem
+  padding: 2rem
+  display: flex
+  flex-direction: column
+  gap: 2rem
+  h2
+    font-size: 2rem
+    text-transform: capitalize
+  .modalBox
+    width: 30px
+    height: 30px
+  & > div
+    display: flex
+    gap: 2rem
+    //align-items: center

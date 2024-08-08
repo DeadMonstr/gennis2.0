@@ -5,9 +5,10 @@ import {Table} from "shared/ui/table";
 import {Input} from "shared/ui/input";
 import {set} from "react-hook-form";
 import {useNavigate} from "react-router";
+import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 
 
-export const Teachers = memo(({data}) => {
+export const Teachers = memo(({data, loading}) => {
     const [checkbox, setCheckbox] = useState(false)
 
     const navigation = useNavigate()
@@ -23,11 +24,14 @@ export const Teachers = memo(({data}) => {
         return data.map((item, i) => (
             <tr key={i} onClick={() => navigation(`teacherProfile/${item.id}`)}>
                 <td>{i + 1}</td>
-                <td>{ item.user.name} {item.user.surname}</td>
+                <td>{item.user.name} {item.user.surname}</td>
                 <td>{item.user.username}</td>
                 <td>{item.user.phone}</td>
                 <td>{item.user.age}</td>
-                <td><div className={item.subject ? cls.teacher__language : null}>{item.subject.name}</div></td>
+                <td>
+                    {item.subject ?  <div className={item.subject ? cls.teacher__language : null}>{item.subject.name}</div> : null}
+
+                </td>
             </tr>
         ))
     }
@@ -47,9 +51,13 @@ export const Teachers = memo(({data}) => {
                         <th>Status</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    {renderTeacher()}
-                    </tbody>
+                    {/*{loading ?*/}
+                    {/*    <DefaultPageLoader/>*/}
+                    {/*    :*/}
+                        <tbody>
+                        {renderTeacher()}
+                        </tbody>
+                    {/*}*/}
                 </Table>
             </div>
 

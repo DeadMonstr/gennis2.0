@@ -20,7 +20,7 @@ export const NewStudents = ({currentTableData}) => {
                     <td>{item.user.surname} {item.user.name}</td>
                     <td>{item.user.age}</td>
                     <td>{item.user.phone}</td>
-                    <td>{item.user.language.name}</td>
+                    <td>{item.subject.name}</td>
                     <td>{item.group}</td>
                     <td>{item.user.registered_date}</td>
                 </tr>

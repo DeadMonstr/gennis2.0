@@ -17,7 +17,7 @@ import {
     getRouteRooms,
     getRouteMain,
     getProfile,
-    getTeacherProfile, getRoomsProfilePage
+    getTeacherProfile, getRoomsProfilePage, getClass
 } from "shared/const/routers";
 
 
@@ -39,6 +39,7 @@ import {TimeTableListPage} from "pages/timeTableListPage";
 import {EmployerPage} from "pages/employeesPage";
 import {FlowsPage} from "pages/flowsPage";
 import {RoomsProfilePage} from "../../../pages/roomsProiflePage";
+import {ClassPage} from "../../../pages/classPage";
 // import {RoomsProfilePage} from "pages/profilePage";
 
 
@@ -119,7 +120,7 @@ export const routersConfig = [
         name: "Teacher Profile",
         icon: "fa-user-graduate",
         roles: [],
-        path: getTeacherProfile("id"),
+        path: getTeacherProfile(":id"),
         element: <ProfileTeacherPage/>,
         isMenu: false
     },
@@ -179,7 +180,7 @@ export const routersConfig = [
         name: "Employers",
         icon: "fa-user-graduate",
         roles: [],
-        path: getTeacherProfile("id"),
+        path: getTeacherProfile(":id"),
         element: <EmployerPage/>,
         isMenu: true,
         type: ["app_center_theme", "app_school_theme"]
@@ -191,6 +192,16 @@ export const routersConfig = [
         roles: [],
         path: getTeacherProfile("id"),
         element: <FlowsPage/>,
+        isMenu: true,
+        type: ["app_school_theme"]
+    },
+    {
+        to: "class",
+        name: "Class",
+        icon: "fa-user-graduate",
+        roles: [],
+        path: getClass("id"),
+        element: <ClassPage/>,
         isMenu: true,
         type: ["app_school_theme"]
     },

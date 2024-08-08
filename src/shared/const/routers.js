@@ -21,4 +21,5 @@ export const getProfile = (id) => `students/:id/profile/${id}`;
 export const getRouteTimePage = (id) => `timeTable`
 export const getRouteUserProfile = (id) => `profile/${id}`
 
+export const getClass = (id) => `class`
 

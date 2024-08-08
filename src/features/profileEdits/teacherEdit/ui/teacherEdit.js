@@ -63,7 +63,7 @@ export const TeacherEdit = React.memo(({active, setActive, activePage}) => {
                         <Input
                             type={"text"}
                             extraClassName={cls.inputAge}
-                            placeholder={"Class type"}
+                            placeholder={"ClassTable type"}
                             onChange={setSelectedFrom}
                             // value={selectedFrom}
                         />

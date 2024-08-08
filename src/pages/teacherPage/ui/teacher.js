@@ -12,6 +12,7 @@ import {Button} from "shared/ui/button";
 import cls from "./teacher.module.sass";
 import {getTeachers} from "../../../entities/teachers/";
 import {fetchTeachersData} from "../../../entities/teachers";
+import {getTeacherLoading} from "../../../entities/teachers/model/selector/teacherSelector";
 
 const branches = [
     {name: "chirchiq"},
@@ -23,6 +24,8 @@ export const TeachersPage = () => {
     const search = useSelector(getSearchValue)
     const teachersData = useSelector(getTeachers)
     const dispatch = useDispatch()
+
+    const getTeacherLoading = useSelector(getTeachers)
 
     useEffect(() =>{
         dispatch(fetchTeachersData())
@@ -78,6 +81,7 @@ export const TeachersPage = () => {
                     />
                     :
                     <Teachers
+                        loading={getTeacherLoading}
                         data={teachersData}
                         // data={currentTableData}
                     />}
