@@ -133,7 +133,7 @@ export const registerEmployer = createAsyncThunk(
 
         try {
             const response = await fetch(
-                `${API_URL}Employers/employers_create/`,
+                `${API_URL}Users/users/create/`,
                 {
                     method: 'POST',
                     headers: {

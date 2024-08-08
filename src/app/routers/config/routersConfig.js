@@ -18,6 +18,7 @@ import {
     getTeacherProfile,
     getRouteMain, getProfile,
     getRoomsProfilePage,
+    getClass
 } from "shared/const/routers";
 
 
@@ -171,7 +172,7 @@ export const routersConfig = [
         name: "Employers",
         icon: "fa-user-graduate",
         roles: [],
-        path: getTeacherProfile(":id"),
+        // path: getTeacherProfile(":id"),
         element: <EmployerPage/>,
         isMenu: true,
         type: ["app_center_theme", "app_school_theme"]

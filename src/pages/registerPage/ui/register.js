@@ -70,6 +70,12 @@ export const Register = () => {
             },
             subject: [selectedSubjectData?.id || null],
         };
+        let res2 = {
+            ...data,
+            observer: true,
+            language: selectedLanguage?.id || "",
+            branch: 1,
+        }
 
         if (registerType === 'student') {
             res = {
@@ -86,11 +92,11 @@ export const Register = () => {
             };
             dispatch(registerTeacher(res));
         } else if (registerType === 'employer') {
-            res = {
-                ...res,
+            res2 = {
+                ...res2,
                 profession: selectedProfession,
             };
-            dispatch(registerEmployer(res));
+            dispatch(registerEmployer(res2));
         }
 
         let registerAction;
@@ -99,7 +105,7 @@ export const Register = () => {
         } else if (registerType === 'teacher') {
             registerAction = registerTeacher(res);
         } else if (registerType === 'employer') {
-            registerAction = registerEmployer(res);
+            registerAction = registerEmployer(res2);
         }
 
         if (res) {
@@ -115,6 +121,7 @@ export const Register = () => {
                 } else {
                     console.error('Registration error:', action.error);
                     showAlert('error', 'Registration failed. Please try again.');
+                    setError(true)
                 }
             });
         }
@@ -154,12 +161,14 @@ export const Register = () => {
                 return (
                     <>
                         <Select
+                            extraClass={cls.extraClasses}
                             name={"language"}
                             defaultValue={selectedLang}
                             onChangeOption={setSelectedLang}
                             options={languages.map(lang => ({ id: lang.id, name: lang.name }))}
                         />
                         <Select
+                            extraClass={cls.extraClasses}
                             name={"subject_id"}
                             onChangeOption={setSelectedSubject}
                             options={subjects.map(subj => ({ id: subj.id, name: subj.name }))}
@@ -169,6 +178,12 @@ export const Register = () => {
             case 'employer':
                 return (
                     <>
+                        <Select
+                            name={"language"}
+                            defaultValue={selectedLang}
+                            onChangeOption={setSelectedLang}
+                            options={languages.map(lang => ({ id: lang.id, name: lang.name }))}
+                        />
                         <Select
                             name={"profession"}
                             onChangeOption={setSelectedProfession}
@@ -200,13 +215,23 @@ export const Register = () => {
                     <h1 className={cls.login__boxes__box__headerTitle}>Registratsiya</h1>
                     <div className={cls.login__boxes__box__form}>
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            {error && error ? <h1>Bu username ishlatilgan</h1> : null}
+                            {error && error ?
+                                <Input
+                                    title={<p style={{color: "red", textTransform: 'none'}}><i className={"fa-solid fa-circle-exclamation"} style={{color: "#FF3737FF"}}></i> username band</p>}
+                                    register={register}
+                                    placeholder="Username"
+                                    required
+                                    extraClassName={cls.extraClasss}
+                                    name={"username"}
+                                />
+                                :
                             <Input
                                 register={register}
                                 placeholder="Username"
                                 required
                                 name={"username"}
                             />
+                                 }
                             <Input
                                 register={register}
                                 placeholder="Ism"
