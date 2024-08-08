@@ -24,6 +24,8 @@ export const Switch = React.memo((
                 onClick={onChangeSwitch}>
                 {!activeSwitch ?
                     <span className={cls.mainSwitchBox__onSwitch}></span>
+                    :
+                    <span className={cls.mainSwitchBox__offSwitch}></span>
                 }
 
             </button>
@@ -31,5 +33,3 @@ export const Switch = React.memo((
 
     );
 });
-
-

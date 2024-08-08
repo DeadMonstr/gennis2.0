@@ -4,6 +4,7 @@ import { Switch } from "shared/ui/switch";
 import { SkeletonCard } from "shared/ui/roomsSkeleton/roomsSkeleton";
 import Icon from "shared/assets/images/room_image.svg";
 import {Link} from "../../../../shared/ui/link";
+import {DefaultLoader} from "../../../../shared/ui/defaultLoader";
 
 export const RoomsList = ({ currentTableData }) => {
     const [loading, setLoading] = useState(true);
@@ -24,6 +25,7 @@ export const RoomsList = ({ currentTableData }) => {
         }, {});
         setSwitchStates(initialSwitchStates);
     }, [currentTableData]);
+
 
     if (loading) {
         return (
@@ -50,8 +52,6 @@ export const RoomsList = ({ currentTableData }) => {
             [id]: !prevStates[id]
         }));
     };
-
-
 
 
     return currentTableData.map((item, index) => (
@@ -82,9 +82,6 @@ export const RoomsList = ({ currentTableData }) => {
                     </div>
                 </Link>
             ) }
-
-
-
         </>
 
     ));

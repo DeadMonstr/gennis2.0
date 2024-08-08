@@ -1,4 +1,4 @@
-import {memo, useContext, useState} from 'react';
+import React, {memo, useContext, useEffect, useState} from 'react';
 
 import {ContextStuPro} from "pages/profilePage";
 import {EditableCard} from "shared/ui/editableCard";
@@ -6,10 +6,28 @@ import {Link} from "shared/ui/link";
 
 import cls from "./teacherProfileInfo.module.sass";
 import defaultUserImg from "shared/assets/images/user_image.png";
+import {useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router";
+import {fetchTeacherId, getTeacherId} from "../../../../teachers";
+import {TeacherEdit} from "../../../../../features/profileEdits/teacherEdit";
 
 export const TeacherProfileInfo = memo(({active,setActive}) => {
 
+    const dispatch = useDispatch()
+    const {id} = useParams()
+    const teacherId = useSelector(getTeacherId)
+    // const userData = useSelector(getTeacherData);
 
+
+
+    useEffect(() => {
+        if (id)
+        {
+            dispatch(fetchTeacherId(id))
+        }
+
+    } ,[dispatch, id])
+    console.log(teacherId, "data user")
     return (
         <EditableCard
             onClick={() => setActive(true)}
@@ -22,16 +40,16 @@ export const TeacherProfileInfo = memo(({active,setActive}) => {
                     src={defaultUserImg}
                     alt=""
                 />
-                <h1>RIMEFARA</h1>
+                <h1>{teacherId.user?.username}</h1>
                 <h2 className={cls.info__role}>Student</h2>
             </div>
             <div className={cls.info__text}>
-                <p>Ism: <span>Begzod</span></p>
-                <p>Familiya: <span>Jumaniyozov</span></p>
-                <p>Otasinig ismi: <span>Farhod o’g’li</span></p>
-                <p>Telefon raqami: <span>+998993656845</span></p>
-                <p>Yoshi: <span>23</span></p>
-                <p>Tug'ilgan sana: <span>2001-10-22</span></p>
+                <p>Ism: <span>{teacherId.user?.name}</span></p>
+                <p>Familiya: <span>{teacherId.user?.surname}</span></p>
+                <p>Otasinig ismi: <span>{teacherId.user?.father_name}</span></p>
+                <p>Telefon raqami: <span>{teacherId.user?.phone}</span></p>
+                <p>Yoshi: <span>{teacherId.user?.age}</span></p>
+                <p>Tug'ilgan sana: <span>{teacherId.user?.birth_date}</span></p>
                 <div className={cls.info__addInfo}>
                     <i className="fas fa-plus"/>
                 </div>
@@ -48,7 +66,12 @@ export const TeacherProfileInfo = memo(({active,setActive}) => {
                     </div>
                 </EditableCard>
             </Link>
+            <TeacherEdit
+                isOpen={active}
+                onClose={() => setActive(false)}
 
+
+            />
         </EditableCard>
     )
 })

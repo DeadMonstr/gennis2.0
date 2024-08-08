@@ -1,37 +1,32 @@
 import React, {createContext, useEffect, useState} from 'react';
 import classNames from "classnames";
-
 import {TeacherProfileInfo, TeacherProfileTeachersGroup} from "entities/profile/teacherProfile";
-import {
-    StudentProfileInfo,
-    StudentProfileTotalAmount
-} from "entities/profile/studentProfile"
 import {TeacherEdit} from "features/profileEdits/teacherEdit";
-
 import cls from "./profileTeacherPage.module.sass"
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";
-import {getUserData} from "../../model/selector/teacherProfile.selector";
-import {fetchTeacherProfileData} from "../../model/thunk/teacherProfile.thunk";
-
+import {fetchTeacherId, getTeacherId} from "../../../../entities/teachers";
 export const ContextStuPro = createContext(null)
 
 export const ProfileTeacherPage = () => {
 
     const [active, setActive] = useState(false)
     const [actives, setActives] = useState(false)
-
     const dispatch = useDispatch()
-
     const {id} = useParams()
+    const teacherId = useSelector(getTeacherId)
+    // const userData = useSelector(getTeacherData);
 
-    const userData = useSelector(getUserData)
 
-
-    useEffect(() => {
-        dispatch(fetchTeacherProfileData(id))
-    } ,[id])
-    console.log(userData, "data user")
+    //
+    // useEffect(() => {
+    //     if (id)
+    //     {
+    //         dispatch(fetchTeacherId(id))
+    //     }
+    //
+    // } ,[dispatch, id])
+    // console.log(teacherId, "data user")
 
 
 
@@ -62,11 +57,6 @@ export const ProfileTeacherPage = () => {
                     })}
                 >
                     <TeacherProfileTeachersGroup/>
-                    <TeacherEdit
-                        active={active}
-                        setActive={setActive}
-
-                    />
                 </div>
 
             </div>

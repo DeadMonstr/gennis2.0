@@ -94,10 +94,6 @@ export const AppRouter = () => {
                     />
 
                     <Route
-                        path={"teacherProfile"}
-                        element={<ProfileTeacherPage/>}
-                    />
-                    <Route
                         path={"teacherSalaryPage"}
                         element={<TeacherSalaryPage/>}
                     />

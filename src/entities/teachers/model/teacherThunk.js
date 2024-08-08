@@ -9,3 +9,4 @@ export const fetchTeachersData = createAsyncThunk(
         return await request(`${API_URL}Teachers/teachers/?limit=1000000` , "GET" , null , headers())
     }
 )
+

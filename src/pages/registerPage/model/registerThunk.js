@@ -61,7 +61,7 @@ export const registerUser = createAsyncThunk(
 
         try {
             const response = await fetch(
-                `${API_URL}Students/students/`,
+                `${API_URL}Students/students_create/`,
                 {
                     method: 'POST',
                     headers: {
@@ -79,6 +79,78 @@ export const registerUser = createAsyncThunk(
 
             const data = await response.json();
             console.log(data)
+            return data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+);
+
+export const registerTeacher = createAsyncThunk(
+    'user/registerTeacher',
+    async (teacherData, thunkAPI) => {
+        const token = getAuthToken();
+
+        if (!token) {
+            return thunkAPI.rejectWithValue('No authorization token found');
+        }
+
+        try {
+            const response = await fetch(
+                `${API_URL}Teachers/teachers/create/`,
+                {
+                    method: 'POST',
+                    headers: {
+                        ...headers,
+                        Authorization: `JWT ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(teacherData)
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error('Failed to register teacher');
+            }
+
+            const data = await response.json();
+            console.log(data);
+            return data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+);
+
+export const registerEmployer = createAsyncThunk(
+    'user/registerEmployer',
+    async (employerData, thunkAPI) => {
+        const token = getAuthToken();
+
+        if (!token) {
+            return thunkAPI.rejectWithValue('No authorization token found');
+        }
+
+        try {
+            const response = await fetch(
+                `${API_URL}Employers/employers_create/`,
+                {
+                    method: 'POST',
+                    headers: {
+                        ...headers,
+                        Authorization: `JWT ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(employerData)
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error('Failed to register employer');
+            }
+
+            const data = await response.json();
+            console.log(data);
             return data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);

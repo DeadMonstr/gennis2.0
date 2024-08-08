@@ -3,11 +3,11 @@ import { useDropzone } from 'react-dropzone';
 import { useDispatch } from 'react-redux';
 import { Modal } from 'shared/ui/modal';
 import { Button } from 'shared/ui/button';
-import { uploadRoomImageThunk } from '../model/roomImageAddThunk';
+import {uploadRoomImageThunk} from "../model/roomImageAddThunk";
 import cls from './roomImageAddModal.module.sass';
 import defaultImage from 'shared/assets/images/default.png';
 
-export const RoomImageAddModal = ({ isOpen, onClose, roomId }) => {
+export const RoomImageAddModal = ({ isOpen, onClose, roomId, onUpdate }) => {
     const dispatch = useDispatch();
     const [dropzones, setDropzones] = useState([{ id: Date.now(), files: [defaultImage] }]);
 
@@ -27,7 +27,11 @@ export const RoomImageAddModal = ({ isOpen, onClose, roomId }) => {
         const dropzone = dropzones[index];
         if (dropzone.files.length > 0 && dropzone.files[0] !== defaultImage) {
             const imageFile = dropzone.files[0];
-            dispatch(uploadRoomImageThunk({ roomId: roomId, imageFile }));
+            dispatch(uploadRoomImageThunk({ roomId, imageFile }))
+                .then(() => {
+                    onClose();
+                    onUpdate();
+                });
         }
     };
 

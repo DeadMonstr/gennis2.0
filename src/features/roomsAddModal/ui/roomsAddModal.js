@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { roomsAddThunk } from 'pages/roomsPage/model/roomsAddThunk';
-import { Modal } from '../../../shared/ui/modal';
-import { Input } from '../../../shared/ui/input';
-import { Button } from '../../../shared/ui/button';
+import { Modal } from 'shared/ui/modal';
+import { Input } from 'shared/ui/input';
+import { Button } from 'shared/ui/button';
 import cls from './roomsAddModal.module.sass';
+import {addRoom} from "pages/roomsPage/model/roomsAddSlice";
 
 export const RoomModal = ({ isOpen, onClose }) => {
     const [groupName, setGroupName] = useState('');
     const [seatCount, setSeatCount] = useState('');
-    const [image, setImage] = useState(null);
     const [electronicBoard, setElectronicBoard] = useState(false);
     const [branch, setBranch] = useState(1);
     const dispatch = useDispatch();
@@ -23,9 +23,12 @@ export const RoomModal = ({ isOpen, onClose }) => {
             branch: branch,
         };
 
-        dispatch(roomsAddThunk(newRoom));
-        // window.location.reload()
-        onClose();
+        dispatch(roomsAddThunk(newRoom)).then((action) => {
+            if (roomsAddThunk.fulfilled.match(action)) {
+                dispatch(addRoom(action.payload)); // Dispatch the action to add the room to the state
+                onClose();
+            }
+        });
     };
 
     if (!isOpen) return null;
@@ -39,6 +42,7 @@ export const RoomModal = ({ isOpen, onClose }) => {
                         <Input
                             title={"Group name"}
                             type={"text"}
+                            value={groupName}
                             onChange={(e) => setGroupName(e.target.value)}
                         />
                     </div>
@@ -46,6 +50,7 @@ export const RoomModal = ({ isOpen, onClose }) => {
                         <Input
                             title={"Count sitter"}
                             type={"number"}
+                            value={seatCount}
                             onChange={(e) => setSeatCount(e.target.value)}
                         />
                     </div>
@@ -53,6 +58,7 @@ export const RoomModal = ({ isOpen, onClose }) => {
                         <Input
                             title={"Electronic Board"}
                             type={"checkbox"}
+                            checked={electronicBoard}
                             onChange={(e) => setElectronicBoard(e.target.checked)}
                         />
                     </div>
@@ -60,12 +66,13 @@ export const RoomModal = ({ isOpen, onClose }) => {
                         <Input
                             title={"Branch"}
                             type={"number"}
+                            value={branch}
                             onChange={(e) => setBranch(parseInt(e.target.value, 10))}
                         />
                     </div>
                     <div className={cls.filter__switch}>
-                        <Button onClick={handleAddRoom} children={"Add room"} />
-                        <Button onClick={onClose} children={"Close"} extraClass={cls.buttonStyle} />
+                        <Button onClick={handleAddRoom}>Add room</Button>
+                        <Button onClick={onClose} extraClass={cls.buttonStyle}>Close</Button>
                     </div>
                 </div>
             </div>

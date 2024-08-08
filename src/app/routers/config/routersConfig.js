@@ -114,15 +114,6 @@ export const routersConfig = [
         roles: []
     },
     {
-        to: "teacherProfile",
-        name: "Teacher Profile",
-        icon: "fa-user-graduate",
-        roles: [],
-        path: getTeacherProfile("id"),
-        element: <ProfileTeacherPage/>,
-        isMenu: false
-    },
-    {
         to: "profile",
         name: "Student Profile",
         icon: "fa-user-graduate",
@@ -218,6 +209,13 @@ export const routersConfig = [
         name: "Rooms Profile",
         path: getRoomsProfilePage(":id"),
         element: <RoomsProfilePage/>,
+        roles: [],
+    },
+    {
+        to: "teacher/teacherProfile",
+        name: "Teacher Profile",
+        path: getTeacherProfile(":id"),
+        element: <ProfileTeacherPage/>,
         roles: [],
     },
     {

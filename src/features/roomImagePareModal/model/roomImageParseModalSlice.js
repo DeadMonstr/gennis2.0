@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchRoomImages } from './roomImageParseModalThunk';
+import { fetchRoomImages, uploadRoomImageThunk } from './roomImageParseModalThunk';
 
 const initialState = {
     roomImageData: [],
     roomsStatus: 'idle',
-    error: null
+    error: null,
 };
 
 export const roomImageSlice = createSlice({
@@ -17,11 +17,15 @@ export const roomImageSlice = createSlice({
                 state.roomsStatus = 'loading';
             })
             .addCase(fetchRoomImages.fulfilled, (state, action) => {
-                state.roomImageData = action.payload; // Ma'lumotni to'g'ridan-to'g'ri olish
                 state.roomsStatus = 'success';
+                state.roomImageData = action.payload;
             })
             .addCase(fetchRoomImages.rejected, (state) => {
-                state.error = 'error';
+                state.roomsStatus = 'error';
+                state.error = 'Failed to fetch room images';
+            })
+            .addCase(uploadRoomImageThunk.fulfilled, (state, action) => {
+                state.roomImageData.push(action.payload);
             });
     }
 });

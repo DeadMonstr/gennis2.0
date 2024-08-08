@@ -17,7 +17,7 @@ import {studentProfileBooks} from "entities/profile/studentProfile";
 import {studentProfileRating} from "entities/profile/studentProfile";
 import {roomsAddSlice} from "pages/roomsPage";
 import {studentsDirectorSlice} from "pages/studentsPage"
-// import {timeTable} from "pages/timePage";
+import {timeTable} from "pages/timeTableListPage";
 import {homeSlice} from "entities/home";
 import {teachers} from "entities/teachers"
 import {newStudents} from "../entities/students";
@@ -30,6 +30,7 @@ import {roomsImageAddSlice} from "features/roomImageAddModal/model";
 import {roomImageSlice} from "../features/roomImagePareModal";
 import {studentProfile, teacherProfileData} from "pages/profilePage";
 import {flowsSlice} from "entities/flows";
+import {teacherParseSlice} from "entities/teachers";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -66,13 +67,14 @@ export const store = configureStore({
         timeTable,
         roomsAddSlice,
         roomsSlice,
-        flowsSlice,
-        teacherProfileData,
         roomssSlice,
         roomsEditModalSlice,
         roomDeleteSlice,
         roomsImageAddSlice,
-        roomImageSlice
+        roomImageSlice,
+        flowsSlice,
+        teacherProfileData,
+        teacherParseSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

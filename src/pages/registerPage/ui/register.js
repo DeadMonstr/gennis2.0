@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import {fetchSubjectsAndLanguages, registerUser} from "../model/registerThunk";
+import { fetchSubjectsAndLanguages, registerUser, registerTeacher, registerEmployer } from "../model/registerThunk";
 import cls from "./register.module.sass";
 import { Button } from "shared/ui/button";
 import bg__img from 'shared/assets/images/reg__bg.svg';
@@ -57,45 +57,66 @@ export const Register = () => {
 
     const onSubmit = (data) => {
         setLoading(true);
-        const selectedLanguage = languages.filter(lang => lang.id === Number(selectedLang));
-        const selectedSubjectData = subjects.filter(subj => subj.id === Number(selectedSubject));
+        const selectedLanguage = languages.find(lang => lang.id === Number(selectedLang));
+        const selectedSubjectData = subjects.find(subj => subj.id === Number(selectedSubject));
 
-        const res = {
-            shift: selectedTime === 1 ? "1 smen" : selectedTime === 2 ? "2 smen" : "hamma vaqt",
-            parents_number: data.parents_phone,
+        let res = {
             user: {
                 ...data,
                 observer: true,
-                language: {
-                    name: selectedLanguage[0]?.name || ""
-                },
-                branch: {
-                    id: 1,
-                    name: "Chirchiq",
-                    number: 1
-                }
+                language: selectedLanguage?.id || "",
+                branch: 3,
             },
-            subject:[ {
-                id: selectedSubjectData[0]?.id || null,
-                name: selectedSubjectData[0]?.name || "",
-                ball_number: selectedSubjectData[0]?.ball_number || null
-            }]
+            subject: [selectedSubjectData?.id || null],
         };
 
-        dispatch(registerUser(res)).then((action) => {
-            setLoading(false);
-            if (action.type === registerUser.fulfilled.type) {
-                showAlert('success', 'Registration successful!');
-                reset(); // Bu yerda reset funksiyasini chaqiryapmiz
-                setSelectedLang(1); // holatlarni qayta o'rnating
-                setSelectedSubject(1);
-                setSelectedTime(1);
-                setSelectedProfession(1);
-            } else {
-                console.error('Registration error:', action.error);
-                showAlert('error', 'Registration failed. Please try again.');
-            }
-        });
+        if (registerType === 'student') {
+            res = {
+                ...res,
+                shift: selectedTime === 1 ? "1 smen" : selectedTime === 2 ? "2 smen" : "hamma vaqt",
+                parents_number: data.parents_phone,
+            };
+            dispatch(registerUser(res));
+        } else if (registerType === 'teacher') {
+            res = {
+                ...res,
+                total_students: 1212,
+                color: "red",
+            };
+            dispatch(registerTeacher(res));
+        } else if (registerType === 'employer') {
+            res = {
+                ...res,
+                profession: selectedProfession,
+            };
+            dispatch(registerEmployer(res));
+        }
+
+        let registerAction;
+        if (registerType === 'student') {
+            registerAction = registerUser(res);
+        } else if (registerType === 'teacher') {
+            registerAction = registerTeacher(res);
+        } else if (registerType === 'employer') {
+            registerAction = registerEmployer(res);
+        }
+
+        if (res) {
+            dispatch(registerAction).then((action) => {
+                setLoading(false);
+                if (action.type.endsWith('fulfilled')) {
+                    showAlert('success', 'Registration successful!');
+                    reset();
+                    setSelectedLang(1);
+                    setSelectedSubject(1);
+                    setSelectedTime(1);
+                    setSelectedProfession(1);
+                } else {
+                    console.error('Registration error:', action.error);
+                    showAlert('error', 'Registration failed. Please try again.');
+                }
+            });
+        }
     };
 
     const renderFormFields = () => {
@@ -223,13 +244,17 @@ export const Register = () => {
                                 required
                                 name={"phone"}
                             />
-                            <Input
-                                register={register}
-                                placeholder="Ota-ona telefon raqami"
-                                type="number"
-                                required
-                                name={"parents_phone"}
-                            />
+                            {
+                                registerType === 'teacher' && 'employer' ? null :
+                                    <Input
+                                        register={register}
+                                        placeholder="Ota-ona telefon raqami"
+                                        type="number"
+                                        required
+                                        name={"parents_phone"}
+                                    />
+                            }
+
                             <Textarea
                                 register={register}
                                 placeholder="Kommentariya"

@@ -4,13 +4,13 @@ import cls from "./teachers.module.sass"
 import {Table} from "shared/ui/table";
 import {Input} from "shared/ui/input";
 import {set} from "react-hook-form";
-import {useNavigate} from "react-router";
+import {Link} from "../../../../shared/ui/link";
+
 
 
 export const Teachers = memo(({data}) => {
     const [checkbox, setCheckbox] = useState(false)
 
-    const navigation = useNavigate()
 
     const checkBoxChange = (id) => {
         setCheckbox(id)
@@ -21,13 +21,18 @@ export const Teachers = memo(({data}) => {
 
     const renderTeacher = () => {
         return data.map((item, i) => (
-            <tr key={i} onClick={() => navigation(`teacherProfile/${item.id}`)}>
-                <td>{i + 1}</td>
-                <td>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
-                <td>{item.user.username}</td>
-                <td>{item.user.phone}</td>
-                <td>{item.age}</td>
-                <td><div className={item.subject ? cls.teacher__language : null}>{item.subject.name}</div></td>
+            <tr key={i} >
+                    <td>{i + 1}</td>
+                <Link to={`teacherProfile/${item.id}`}>
+                    <td>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
+                </Link>
+
+                    <td>{item.user.username}</td>
+                    <td>{item.user.phone}</td>
+                    <td>{item.age}</td>
+                    <td><div className={item.subject ? cls.teacher__language : null}>{item.subject.name}</div></td>
+
+
             </tr>
         ))
     }

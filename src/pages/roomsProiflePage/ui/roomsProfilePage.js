@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { fetchInsideRoom } from 'features/roomsEditModal/ui/roomThunk';
 import cls from './roomsProfilePage.module.sass';
 import Icon from 'shared/assets/images/room_image.svg';
-import { getRoomsID } from 'features/roomsEditModal/model';
+import { getLoadingStatus, getRoomsID } from 'features/roomsEditModal/model';
 import { Button } from 'shared/ui/button';
 import { Switch } from 'shared/ui/switch';
 import { RoomEditModal } from 'features/roomEditModal';
@@ -14,18 +14,21 @@ import { fetchRoomImages } from 'features/roomImagePareModal/model/roomImagePars
 import { getRoomImage } from 'features/roomImagePareModal/model';
 import { API_URL } from "../../../shared/api/base";
 import { RoomImageParseModal } from "../../../features/roomImagePareModal";
+import { DefaultLoader } from "../../../shared/ui/defaultLoader";
 
 export const RoomsProfilePage = () => {
     const [switchStates, setSwitchStates] = useState({});
     const [active, setActive] = useState(false);
     const [modal, setModal] = useState(false);
-    const [window, setWindow] = useState(false)
+    const [window, setWindow] = useState(false);
     const [image, setImage] = useState(false);
+    const [localRoomData, setLocalRoomData] = useState({});
     const { id } = useParams();
     const dispatch = useDispatch();
     const roomsID = useSelector(getRoomsID);
+    const loading = useSelector(getLoadingStatus);
     const roomImageData = useSelector(getRoomImage);
-    const API_URL_IMAGE = `${API_URL}media/`
+    const API_URL_IMAGE = `${API_URL}media/`;
 
     useEffect(() => {
         if (roomsID) {
@@ -33,6 +36,7 @@ export const RoomsProfilePage = () => {
                 [roomsID?.id]: roomsID.electronic_board || false,
             };
             setSwitchStates(initialSwitchStates);
+            setLocalRoomData(roomsID);
         }
     }, [roomsID]);
 
@@ -48,7 +52,6 @@ export const RoomsProfilePage = () => {
         }
     }, [dispatch, id]);
 
-
     const handleSwitchChange = (id) => {
         setSwitchStates((prevStates) => ({
             ...prevStates,
@@ -56,7 +59,22 @@ export const RoomsProfilePage = () => {
         }));
     };
 
-    return (
+    const handleUpdateRoom = (updatedRoom) => {
+        setSwitchStates((prevStates) => ({
+            ...prevStates,
+            [roomsID?.id]: updatedRoom.electronic_board,
+        }));
+        setLocalRoomData((prevData) => ({
+            ...prevData,
+            ...updatedRoom
+        }));
+    };
+
+    const handleImageUpdate = () => {
+        dispatch(fetchRoomImages(id));
+    };
+
+    return loading ? <DefaultLoader /> : (
         <>
             <div className={cls.container}>
                 <div className={cls.container_leftBox}>
@@ -75,16 +93,16 @@ export const RoomsProfilePage = () => {
                         )}
                         <span onClick={() => setWindow(true)} className={cls.roomSlider} title={"Rasmlarni ko'rish"}>
                             <i className="fa-solid fa-camera"></i>
-                            <h4 >{roomImageData.length}</h4>
+                            <h4>{roomImageData.length}</h4>
                         </span>
                     </div>
 
-                    <h1 className={cls.container_leftBox_roomName}>{roomsID?.name} - xonasi</h1>
+                    <h1 className={cls.container_leftBox_roomName}>{localRoomData?.name} - xonasi</h1>
                     <span className={cls.statusRoom}>Room</span>
                     <Button onClick={() => setActive(true)} extraClass={cls.changeButton} children={"Change"} />
                     <div className={cls.container_leftBox_seatsNumberBox}>
                         <h4 className={cls.container_leftBox_seatsNumberBox_label}>O'rindiqlar soni</h4>
-                        <h2 className={cls.container_leftBox_seatsNumberBox_label}>{roomsID?.seats_number}</h2>
+                        <h2 className={cls.container_leftBox_seatsNumberBox_label}>{localRoomData?.seats_number}</h2>
                     </div>
                     <div className={cls.container_leftBox_seatsNumberBox}>
                         <h4 className={cls.container_leftBox_seatsNumberBox_label}>Qo'shimcha</h4>
@@ -92,18 +110,17 @@ export const RoomsProfilePage = () => {
                             <h2 className={cls.container_leftBox_seatsNumberBox_label}>Elektron doska</h2>
                             <Switch
                                 disabled
-                                activeSwitch={switchStates[roomsID?.id]}
-                                onChangeSwitch={() => handleSwitchChange(roomsID?.id)}
+                                activeSwitch={switchStates[localRoomData?.id]}
+                                onChangeSwitch={() => handleSwitchChange(localRoomData?.id)}
                             />
                         </div>
                     </div>
-                    <RoomImageParseModal isOpen={window} onClose={() => setWindow(false)} roomId={roomsID?.id} />
-                    <RoomImageAddModal isOpen={image} onClose={() => setImage(false)} roomId={roomsID?.id} />
-                    <RoomDeleteModal isOpen={modal} onClose={() => setModal(false)} roomId={roomsID?.id} />
-                    {roomsID?.id && <RoomEditModal isOpen={active} onClose={() => setActive(false)} roomId={roomsID.id} />}
+                    <RoomImageParseModal isOpen={window} onClose={() => setWindow(false)} roomId={localRoomData?.id} />
+                    <RoomImageAddModal isOpen={image} onClose={() => setImage(false)} roomId={localRoomData?.id} onUpdate={handleImageUpdate} />
+                    <RoomDeleteModal isOpen={modal} onClose={() => setModal(false)} roomId={localRoomData?.id} />
+                    {localRoomData?.id && <RoomEditModal isOpen={active} onClose={() => setActive(false)} roomId={localRoomData.id} onUpdate={handleUpdateRoom} />}
                 </div>
                 <div className={cls.container_rightBox}>
-
                 </div>
             </div>
         </>

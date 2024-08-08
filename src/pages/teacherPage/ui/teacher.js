@@ -1,16 +1,12 @@
 import React, {useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-
 import {TeacherFilter} from "features/filters/teacherFilter";
 import {Pagination} from "features/pagination";
 import {getSearchValue} from "features/searchInput";
 import {DeletedTeachers, Teachers} from "entities/teachers";
-
 import {Button} from "shared/ui/button";
-
-
 import cls from "./teacher.module.sass";
-import {getTeachers} from "../../../entities/teachers/";
+import {getTeachers} from "../../../entities/teachers";
 import {fetchTeachersData} from "../../../entities/teachers";
 
 const branches = [
@@ -22,14 +18,19 @@ export const TeachersPage = () => {
 
     const search = useSelector(getSearchValue)
     const teachersData = useSelector(getTeachers)
+
     const dispatch = useDispatch()
 
     useEffect(() =>{
         dispatch(fetchTeachersData())
     } ,[])
-
-
     console.log(teachersData , "teach")
+
+
+
+
+
+
 
     let PageSize = useMemo(() => 50, [])
     const [currentTableData, setCurrentTableData] = useState([])
