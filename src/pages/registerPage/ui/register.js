@@ -23,6 +23,7 @@ export const Register = () => {
     const { register, handleSubmit, watch, setValue, reset } = useForm();
     const registerType = watch("registerType", "student");
     const dispatch = useDispatch();
+    const [error, setError] = useState(false)
     const [selectedLang, setSelectedLang] = useState(1);
     const [selectedSubject, setSelectedSubject] = useState(1);
     const [selectedTime, setSelectedTime] = useState(1);
@@ -65,7 +66,7 @@ export const Register = () => {
                 ...data,
                 observer: true,
                 language: selectedLanguage?.id || "",
-                branch: 3,
+                branch: 1,
             },
             subject: [selectedSubjectData?.id || null],
         };
@@ -199,6 +200,7 @@ export const Register = () => {
                     <h1 className={cls.login__boxes__box__headerTitle}>Registratsiya</h1>
                     <div className={cls.login__boxes__box__form}>
                         <form onSubmit={handleSubmit(onSubmit)}>
+                            {error && error ? <h1>Bu username ishlatilgan</h1> : null}
                             <Input
                                 register={register}
                                 placeholder="Username"

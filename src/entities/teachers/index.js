@@ -7,3 +7,4 @@ export {getTeachers} from "./model/selector/teacherSelector"
 export {getTeacherId} from './model/selector/teacherIdSelector'
 export {default as teachers} from "./model/teacherSlice"
 export {default as teacherParseSlice} from './model/teacherParseSlice'
+import {getLoading} from "./model/selector/teacherIdSelector";

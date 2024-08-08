@@ -3,7 +3,7 @@ import {Button} from "shared/ui/button";
 import {Select} from "shared/ui/select";
 import {DeletedEmployers, Employers} from "entities/employer";
 import {useState} from "react";
-import {EmployeesFilter} from "../../../features/filters/employeesFilter";
+import {EmployeesFilter} from "features/filters/employeesFilter";
 
 export const EmployerPage = () => {
     const [activeFilter , setActiveModal] = useState(false)

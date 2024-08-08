@@ -24,7 +24,7 @@ import {newStudents} from "../entities/students";
 import {employers} from "../entities/employer";
 import {roomsSlice} from "../entities/rooms";
 import {roomssSlice} from "../features/roomsEditModal";
-import {roomsEditModalSlice} from "features/roomEditModal/model";
+// import {roomsEditModalSlice} from "features/roomEditModal/model";
 import {roomDeleteSlice} from "features/roomDeleteModal/model";
 import {roomsImageAddSlice} from "features/roomImageAddModal/model";
 import {roomImageSlice} from "../features/roomImagePareModal";
@@ -68,7 +68,7 @@ export const store = configureStore({
         roomsAddSlice,
         roomsSlice,
         roomssSlice,
-        roomsEditModalSlice,
+        // roomsEditModalSlice,
         roomDeleteSlice,
         roomsImageAddSlice,
         roomImageSlice,

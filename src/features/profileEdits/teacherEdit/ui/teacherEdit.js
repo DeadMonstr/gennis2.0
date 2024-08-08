@@ -7,22 +7,22 @@ import {getTeacherId} from "../../../../entities/teachers";
 import cls from './teacherEdit.module.sass'
 import {Button} from "../../../../shared/ui/button";
 
-export const TeacherEdit = React.memo(({active, setActive, activePage, isOpen, onClose, onUpdate, teacherId}) => {
+export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
     const dispatch = useDispatch();
     const teacherID = useSelector(getTeacherId);
     const [selectedFrom, setSelectedFrom] = useState()
     const [selectedTo, setSelectedTo] = useState()
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
-    const [number, setNumber] = useState('')
+    const [phone, setNumber] = useState('')
     const [age, setAge] = useState('')
     useEffect(() => {
         if (teacherID)
         {
-            setName(teacherID.user.name)
-            setSurname(teacherID.user.surname)
-            setNumber(teacherID.user.phone)
-            setAge(teacherID.user.age)
+            setName(teacherID.user?.name)
+            setSurname(teacherID.user?.surname)
+            setNumber(teacherID.user?.phone)
+            setAge(teacherID.user?.age)
         }
     }, [teacherID])
 
@@ -31,13 +31,14 @@ export const TeacherEdit = React.memo(({active, setActive, activePage, isOpen, o
         const updateTeacher = {
             name: name,
             surname: surname,
-            number: number,
+            phone: phone,
             age: age
         };
-        dispatch(editTeacherThunk({id: teacherId, updateTeacher}))
+        dispatch(editTeacherThunk({id: (teacherID.user.id), updateTeacher}))
             .then(() => {
-                onClose()
                 onUpdate(updateTeacher)
+                onClose()
+                window.location.reload()
             })
     }
     if (!isOpen) return null
@@ -54,7 +55,7 @@ export const TeacherEdit = React.memo(({active, setActive, activePage, isOpen, o
                         type={"text"}
                         extraClassName={cls.inputAge}
                         placeholder={"Ism"}
-                        onChange={setSelectedFrom}
+                        onChange={(e) => setName(e.target.value)}
                         value={name}
                         // value={selectedFrom}
                     />
@@ -64,7 +65,7 @@ export const TeacherEdit = React.memo(({active, setActive, activePage, isOpen, o
                             type={"text"}
                             extraClassName={cls.filter__input}
                             placeholder={"Familiya"}
-                            onChange={setSelectedFrom}
+                            onChange={(e) => setSurname(e.target.value)}
                             value={surname}
                             // value={selectedFrom}
                         />
@@ -72,15 +73,15 @@ export const TeacherEdit = React.memo(({active, setActive, activePage, isOpen, o
                             type={"number"}
                             extraClassName={cls.filter__input}
                             placeholder={"Tel raqami"}
-                            onChange={setSelectedTo}
-                            value={number}
+                            onChange={(e) => setNumber(e.target.value)}
+                            value={phone}
                             // value={selectedTo}
                         />
                         <Input
                             type={"text"}
                             extraClassName={cls.inputAge}
                             placeholder={"Yosh"}
-                            onChange={setSelectedFrom}
+                            onChange={(e) => setAge(e.target.value)}
                             value={age}
                             // value={selectedFrom}
                         />
@@ -105,4 +106,4 @@ export const TeacherEdit = React.memo(({active, setActive, activePage, isOpen, o
             </div>
         </Modal>
     );
-})
+}
