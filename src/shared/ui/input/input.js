@@ -23,6 +23,7 @@ export const Input = React.memo(({
                                      checked
                                  }) => {
     const [showPassword, setShowPassword] = useState(false);
+    const [silk, setSilk] = useState("");
 
     return register ? (
         <label style={style} className={cls.inputLabel} htmlFor={name}>

@@ -27,6 +27,7 @@ import {FlowsPage} from "pages/flowsPage";
 import {FlowProfileNavigators} from "entities/flowsProfile";
 import {FlowListPage} from "pages/FlowListPage";
 import {ClassPage} from "pages/classPage";
+import {TimeTable} from "../../../pages/timeTable";
 
 
 export const AppRouter = () => {
@@ -71,6 +72,11 @@ export const AppRouter = () => {
                             />
                         )
                     }
+
+                    <Route
+                        path={"time"}
+                        element={<TimeTable/>}
+                    />
 
                     <Route path={"students/createGroup"} element={<CreateGroup/>} />
                     <Route

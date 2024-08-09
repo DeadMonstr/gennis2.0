@@ -20,8 +20,6 @@ export const changeStudentProfileData = createAsyncThunk(
 export const changeStudentProfileImage = createAsyncThunk(
     "studentProfile/changeStudentProfileImage",
     async ({id, data}) => {
-        console.log(data.type, "file type")
-        console.log(data, "file")
         const formData = new FormData
         formData.append("profile_img", data)
         const {request} = useHttp()

@@ -5,21 +5,29 @@ import {Button} from "shared/ui/button";
 import cls from "./userProfileInfo.module.sass";
 import defaultUserImage from "shared/assets/images/user_image.png";
 
-export const UserProfileInfo = memo(() => {
+export const UserProfileInfo = memo(({setActive, data, setStatus}) => {
     return (
         <div className={cls.info}>
             <div className={cls.info__container}>
                 <img
+                    onClick={() => {
+                        setActive("changeImage")
+                        setStatus(false)
+                    }}
                     className={cls.info__avatar}
-                    src={defaultUserImage}
+                    src={data?.profile_img ?? defaultUserImage}
                     alt=""
                 />
-                <h3>Kasimxodjayeva Sevinch</h3>
+                <h3>{data?.surname} {data?.name}</h3>
                 <p className={cls.info__role}>Teacher</p>
             </div>
             <Button
                 type={"simple"}
                 extraClass={cls.info__btn}
+                onClick={() => {
+                    setActive("changeInfo")
+                    setStatus(false)
+                }}
             >
                 Change
             </Button>
@@ -29,7 +37,7 @@ export const UserProfileInfo = memo(() => {
                         Father name
                     </span>
                     <p className={cls.infos__value}>
-                        Sanjarovna
+                        {data?.father_name}
                     </p>
                 </div>
                 <div className={cls.infos__item}>
@@ -38,10 +46,10 @@ export const UserProfileInfo = memo(() => {
                     </span>
                     <div className={cls.infos__wrapper}>
                         <p className={cls.infos__value}>
-                            20
+                            {data?.age}
                         </p>
                         <p className={cls.infos__value}>
-                            01.10.2004
+                            {data?.birth_date}
                         </p>
                     </div>
                 </div>
@@ -50,7 +58,7 @@ export const UserProfileInfo = memo(() => {
                         Number
                     </span>
                     <p className={cls.infos__value}>
-                        +998 (90) 222 44 55
+                        {data?.phone}
                     </p>
                 </div>
             </div>
