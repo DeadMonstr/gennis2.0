@@ -3,41 +3,41 @@ import {memo} from 'react';
 import {Table} from "shared/ui/table";
 
 import cls from "./userProfileSalaryList.module.sass";
-import classNames from "classnames";
 
-export const UserProfileSalaryList = memo(({data}) => {
+export const UserProfileSalaryList = memo(({data, setActive}) => {
 
     const renderDataList = () => {
         return data.map(item =>
-            <tr>
+            <tr
+                onClick={() => {setActive(item.id)}}
+            >
                 <td/>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{item.salary}</td>
+                <td>{item.theRest}</td>
+                <td>{item.received}</td>
+                <td>{item.month}</td>
             </tr>
         )
     }
 
+    const render = renderDataList()
+
     return (
         <div className={cls.salaryList}>
-                <h1 className={cls.salaryList__title}>Salary</h1>
-            <div className={cls.salaryList__container}>
-                <Table>
-                    <thead>
-                    <tr>
-                        <th/>
-                        <th>Oylik</th>
-                        <th>Qolgan</th>
-                        <th>Olingan</th>
-                        <th>Sana</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {}
-                    </tbody>
-                </Table>
-            </div>
+            <Table>
+                <thead>
+                <tr>
+                    <th/>
+                    <th>Oylik</th>
+                    <th>Qolgan</th>
+                    <th>Olingan</th>
+                    <th>Sana</th>
+                </tr>
+                </thead>
+                <tbody>
+                {render}
+                </tbody>
+            </Table>
         </div>
     )
 })

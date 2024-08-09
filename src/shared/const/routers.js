@@ -2,23 +2,23 @@
 
 
 export const getRouteMain = () => 'home';
-export const getRouteTaskManager = (id) => `taskManager`;
-export const getRouteNewStudents = (id) => `newStudents`;
-export const getRouteDeletedStudents = (id) => `deletedStudents`;
+export const getRouteTaskManager = (id) => `taskManager/${id}`;
+// export const getRouteNewStudents = (id) => `newStudents`;
+// export const getRouteDeletedStudents = (id) => `deletedStudents`;
 export const getRouteStudents = (id) => `students/${id}`;
-export const getDirectorRouteStudents = () => `studentsDirector`;
-export const getRouteGroups = (id) => `groups`;
-export const getRouteDeletedGroups = (id) => `deletedGroups`;
+export const getDirectorRouteStudents = () => `studentDirector`;
+export const getRouteGroups = (id) => `groups/${id}`;
+// export const getRouteDeletedGroups = (id) => `deletedGroups`;
 export const getRouteRegister = () => `register`;
-export const getRouteTeacher = () => `teacher`;
+export const getRouteTeacher = (id) => `teacher/${id}`;
 export const getRouteCreateGroup = () => `newStudents/createGroup`;
-export const getRouteRooms = () => `rooms`;
-export const getTeacherProfile = (id) => `teachers/teacherProfile/${id}`;
-export const getVacancyPage = () => `vacancyPage`
-export const getVacancyWorkPage = () => `vacancyPage/vacancyWorkPage`
-export const getRoomsProfilePage =(id) => `rooms/roomsProfilePage/${id}`
+export const getRouteRooms = (id) => `rooms/${id}`;
+export const getTeacherProfile = (id) => `teachers/:id/teacherProfile/${id}`;
+export const getVacancyPage = (id) => `vacancyPage/${id}`
+export const getVacancyWorkPage = () => `vacancyPage/:id/vacancyWorkPage`
+export const getRoomsProfilePage =(id) => `rooms/:id/roomsProfilePage/${id}`
 export const getProfile = (id) => `students/:id/profile/${id}`;
-export const getRouteTimePage = (id) => `timeTable`
+export const getRouteTimePage = (id) => `timeTable/${id}`
 export const getRouteUserProfile = (id) => `profile/${id}`
 
 

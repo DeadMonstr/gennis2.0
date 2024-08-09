@@ -1,7 +1,7 @@
 
 
 
-export const API_URL_DOC = `http://192.168.68.104:8000/`
+export const API_URL_DOC = `http://192.168.68.107:8000/`
 export const API_URL = `${API_URL_DOC}`  // api have
 export const CLASSROOM_API_URL = `http://localhost:3000/`
 export const CLASSROOM_API_URL_DOC = `http://192.168.68.116:8000/`
@@ -22,8 +22,7 @@ export const headers = () => {
 export const headersImg = () => {
     const token = sessionStorage.getItem("token")
     return {
-        "Authorization" : "Bearer " + token,
-        // 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
+        "Authorization" : "Bearer " + token
     }
 }
 

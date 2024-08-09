@@ -51,7 +51,7 @@ export const ImageCrop = memo((props) => {
     const [aspect, setAspect] = useState(null)
     const [scale, setScale] = useState(1)
     const [rotate, setRotate] = useState(0)
-    const [imgSrc, setImgSrc] = useState("")
+    const [imgSrc, setImgSrc] = useState()
     const imgRef = useRef(null)
     const previewCanvasRef = useRef(null)
 
@@ -101,7 +101,7 @@ export const ImageCrop = memo((props) => {
     const {getRootProps, getInputProps} = useDropzone({
         onDrop: acceptedFiles => {
             // console.log(acceptedFiles[0], "res2")
-            setImgSrc(URL.createObjectURL(acceptedFiles[0]))
+            setImgSrc(acceptedFiles[0])
         }
     })
 
@@ -109,7 +109,13 @@ export const ImageCrop = memo((props) => {
         const image = imgRef.current
         const previewCanvas = previewCanvasRef.current
         if (!image || !previewCanvas || !completedCrop) {
-            throw new Error('Crop canvas does not exist')
+            // throw new Error('Crop canvas does not exist')
+            setNewImage(imgSrc)
+            setScale(1)
+            setRotate(0)
+            setImgSrc(null)
+            setActive(false)
+            return null
         }
 
         const scaleX = image.naturalWidth / image.width
@@ -122,6 +128,15 @@ export const ImageCrop = memo((props) => {
         const ctx = offscreen.getContext('2d')
         if (!ctx) {
             throw new Error('No 2d context')
+        }
+
+        if (!offscreen.width && !offscreen.height) {
+            setNewImage(imgSrc)
+            setScale(1)
+            setRotate(0)
+            setImgSrc(null)
+            setActive(false)
+            return null
         }
 
         ctx.drawImage(
@@ -148,12 +163,16 @@ export const ImageCrop = memo((props) => {
 
         // setImgSrc(URL.createObjectURL(res))
         setNewImage(res)
+        setScale(1)
+        setRotate(0)
+        setImgSrc(null)
+        setActive(false)
     }
 
     const onClear = () => {
         setScale(1)
         setRotate(0)
-        setImgSrc("")
+        setImgSrc(null)
     }
 
     const imageStyle = useMemo(() => ({
@@ -181,7 +200,7 @@ export const ImageCrop = memo((props) => {
                         type={"number"}
                         defaultValue={scale}
                         onChange={e => setScale(e.target.value)}
-                        disabled={!imgSrc}
+                        disabled={!imgSrc?.path}
                     />
                     <Input
                         name={"rotate-input"}
@@ -190,14 +209,14 @@ export const ImageCrop = memo((props) => {
                         type={"number"}
                         defaultValue={rotate}
                         onChange={e => setRotate(e.target.value)}
-                        disabled={!imgSrc}
+                        disabled={!imgSrc?.path}
                     />
                     <div className={cls.changeImage__dropzone}>
-                        {!imgSrc && (
+                        {!imgSrc?.path && (
                             <div
                                 {...getRootProps()}
                                 className={classNames(cls.changeImage__drop, {
-                                    [cls.notImage]: !imgSrc
+                                    [cls.notImage]: !imgSrc?.path
                                 })}
                             >
                                 <input
@@ -207,7 +226,7 @@ export const ImageCrop = memo((props) => {
                                 <i className={classNames("far fa-images", cls.changeImage__icon)}/>
                             </div>
                         )}
-                        {!!imgSrc && (
+                        {!!imgSrc?.path && (
                             <ReactCrop
                                 crop={crop}
                                 onChange={(_, percentCrop) => setCrop(percentCrop)}
@@ -219,7 +238,7 @@ export const ImageCrop = memo((props) => {
                                     className={cls.changeImage__img}
                                     ref={imgRef}
                                     alt="Crop me"
-                                    src={imgSrc}
+                                    src={URL.createObjectURL(imgSrc)}
                                     style={imageStyle}
                                     onLoad={onImageLoad}
                                 />

@@ -5,134 +5,69 @@ export const menuConfig = [
         to: "home",
         name: "Bosh Sahifa",
         icon: "fa-home",
-        roles: [true],
-        isMenu: true,
     },
     {
-        to: "taskManager",
+        to: "taskManager", // taskManager page yo'
         name: "Task Manager",
         icon: "fa-tasks",
-        roles: [true],
-        isMenu: true,
+        location: true
     },
     {
-        to: "studentsDirector",
+        to: "studentDirector",
         name: "O'quvchilar",
         icon: "fa-user-graduate",
-        roles: [],
-        isMenu: true,
-
     },
     {
         to: "students",
         name: " O'quvchilar",
         icon: "fa-user-graduate",
-        roles: [],
-        isMenu: true,
+        location: true
     },
     {
         to: "groups",
         name: "Gruppalar",
         icon: "fa-users",
-        roles: [],
-        isMenu: true,
+        location: true
     },
     {
         to: "teacher",
         name: "O'qituvchilar",
         icon: "fa-user-tie",
-        roles: [],
-        isMenu: true,
-    },
-    {
-        to: "/login",
-        name: "Ishchilar",
-        icon: "fa-id-badge",
-        roles: []
-    },
-    {
-        to: "/login",
-        name: "Buxgalteriya Hisobi",
-        icon: "fa-file-invoice-dollar",
-        roles: []
-    },
-    {
-        to: "teacherProfile",
-        name: "Teacher Profile",
-        icon: "fa-user-graduate",
-        roles: [],
-        isMenu: false
-    },
-    {
-        to: "profile",
-        name: "Student Profile",
-        icon: "fa-user-graduate",
-        roles: [],
-        isMenu: false
+        location: true
     },
     {
         to: "vacancyPage",
         name: "Vakansiyalar",
         icon: "fa-tasks",
-        roles: [],
-        isMenu: true
+        location: true
     },
     {
         to: "timeTable",
         name: "Time Table",
         icon: "fa-tasks",
-        roles: [],
-        isMenu: true
-    },
-    {
-        to: "vacancyPage/vacancyWorkPage",
-        roles: [],
-        isMenu: false,
+        location: true
     },
     {
         to: "employer",
         name: "Employers",
         icon: "fa-user-graduate",
-        roles: [],
-        isMenu: true,
+        location: true
     },
     {
         to: "flows",
         name: "Flows",
         icon: "fa-user-graduate",
-        roles: [],
-        isMenu: true,
+        location: true
     },
     {
         to: "rooms",
         name: "Honalar",
         icon: "fa-door-closed",
-        roles: [],
-        isMenu: true,
-    },
-    {
-        to: "/login",
-        name: "Capital Category",
-        icon: "fa-coins",
-        roles: []
-    },
-    {
-        to: "/login",
-        name: "Centre info",
-        icon: "fa-info",
-        roles: []
-    },
-    {
-        to: "/login",
-        name: "Kitoblar",
-        icon: "fa-book",
-        roles: []
+        location: true
     },
     {
         to: "register",
         name: "Registratsiya",
-        icon: "fa-edit",
-        isMenu: true,
-    },
-
+        icon: "fa-edit"
+    }
 ]

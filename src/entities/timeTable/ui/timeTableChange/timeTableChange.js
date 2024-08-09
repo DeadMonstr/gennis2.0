@@ -48,7 +48,7 @@ export const TimeTableChange = memo((props) => {
                         placeholder={"Boshlanish vaqti"}
                         register={register}
                         name={"start_time"}
-                        value={active ? startTime : null}
+                        // value={active ? startTime : null}
                         type={"time"}
                         required
                     />
@@ -57,7 +57,7 @@ export const TimeTableChange = memo((props) => {
                         placeholder={"Tugash vaqti"}
                         register={register}
                         name={"end_time"}
-                        value={active ? finishTime : null}
+                        // value={active ? finishTime : null}
                         type={"time"}
                         required
                     />
@@ -66,7 +66,7 @@ export const TimeTableChange = memo((props) => {
                         placeholder={"Order"}
                         register={register}
                         name={"order"}
-                        value={active ? order : null}
+                        // value={active ? order : null}
                         type={"number"}
                         required
                     />
@@ -75,7 +75,7 @@ export const TimeTableChange = memo((props) => {
                         placeholder={"Name"}
                         register={register}
                         name={"name"}
-                        value={name}
+                        // value={name}
                         required
                     />
                     {
