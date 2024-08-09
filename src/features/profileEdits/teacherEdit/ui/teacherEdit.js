@@ -29,16 +29,18 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
     const handleEditTeacher = () => {
         if (!teacherID) return;
         const updateTeacher = {
-            name: name,
-            surname: surname,
-            phone: phone,
-            age: age
+            user: {
+                name: name,
+                surname: surname,
+                phone: phone,
+                age: age
+            }
+
         };
-        dispatch(editTeacherThunk({id: (teacherID.user.id), updateTeacher}))
+        dispatch(editTeacherThunk({id: (teacherID.id), updateTeacher}))
             .then(() => {
                 onUpdate(updateTeacher)
                 onClose()
-                window.location.reload()
             })
     }
     if (!isOpen) return null
@@ -99,7 +101,7 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
 
                     <div className={cls.filter__switch}>
                       <div></div>
-                        <Button type={"submit"} children={"Button"} onClick={handleEditTeacher}/>
+                        <Button extraClass={cls.submitBtn} type={"submit"} children={"Button"} onClick={handleEditTeacher}/>
                     </div>
 
                 </div>

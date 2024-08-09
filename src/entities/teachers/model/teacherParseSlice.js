@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { editTeacherThunk, fetchTeacherId } from "./teacherParseThunk";
+import { editTeacherThunk, fetchTeacherId, changeTeacherProfileImage} from "./teacherParseThunk";
 
 const initialState = {
     teacherId: [],
@@ -33,7 +33,25 @@ export const teacherParseSlice = createSlice({
             .addCase(editTeacherThunk.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
-            });
+            })
+            .addCase(changeTeacherProfileImage.pending, state => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(changeTeacherProfileImage.fulfilled, (state, action) => {
+                state.loading = false;
+                state.teacherId = {
+                    ...state.teacherId,
+                    ...action.payload
+                };
+            })
+            .addCase(changeTeacherProfileImage.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+
+
+
     }
 });
 

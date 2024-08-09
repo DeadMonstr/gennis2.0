@@ -10,7 +10,7 @@ import {getLoading} from "../../../../teachers/model/selector/teacherIdSelector"
 import {TeacherEdit} from "features/profileEdits/teacherEdit";
 import {DefaultLoader} from "../../../../../shared/ui/defaultLoader";
 
-export const TeacherProfileInfo = memo(({active,setActive}) => {
+export const TeacherProfileInfo = memo(({active,setActive,setActiveModal, newImage}) => {
 
     const loading = useSelector(getLoading)
     const dispatch = useDispatch()
@@ -53,8 +53,9 @@ export const TeacherProfileInfo = memo(({active,setActive}) => {
                 <>
                     <div className={cls.info__avatar}>
                         <img
+                            onClick={() => setActiveModal("changeImage")}
                             className={cls.info__image}
-                            src={defaultUserImg}
+                            src={!!teacherId.user?.profile_img ? teacherId.user?.profile_img : defaultUserImg}
                             alt=""
                         />
                         <h1>{teacherId.user?.username}</h1>

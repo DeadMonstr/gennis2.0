@@ -13,7 +13,7 @@ export const getRouteRegister = () => `register`;
 export const getRouteTeacher = (id) => `teacher/${id}`;
 export const getRouteCreateGroup = () => `newStudents/createGroup`;
 export const getRouteRooms = (id) => `rooms/${id}`;
-export const getTeacherProfile = (id) => `teachers/:id/teacherProfile/${id}`;
+export const getTeacherProfile = (id) => `teacher/:id/teacherProfile/${id}`;
 export const getVacancyPage = (id) => `vacancyPage/${id}`
 export const getVacancyWorkPage = () => `vacancyPage/:id/vacancyWorkPage`
 export const getRoomsProfilePage =(id) => `rooms/:id/roomsProfilePage/${id}`
