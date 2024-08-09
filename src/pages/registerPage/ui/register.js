@@ -77,29 +77,31 @@ export const Register = () => {
             branch: 1,
         }
 
+        let registerAction;
+
         if (registerType === 'student') {
             res = {
                 ...res,
                 shift: selectedTime === 1 ? "1 smen" : selectedTime === 2 ? "2 smen" : "hamma vaqt",
                 parents_number: data.parents_phone,
             };
-            dispatch(registerUser(res));
+            registerAction = registerUser(res);
         } else if (registerType === 'teacher') {
             res = {
                 ...res,
                 total_students: 1212,
                 color: "red",
             };
-            dispatch(registerTeacher(res));
+            registerAction = registerTeacher(res);
         } else if (registerType === 'employer') {
             res2 = {
                 ...res2,
                 profession: selectedProfession,
             };
-            dispatch(registerEmployer(res2));
+            registerAction = registerEmployer(res2);
         }
 
-        let registerAction;
+
         if (registerType === 'student') {
             registerAction = registerUser(res);
         } else if (registerType === 'teacher') {
@@ -108,7 +110,7 @@ export const Register = () => {
             registerAction = registerEmployer(res2);
         }
 
-        if (res) {
+        if (registerAction) {
             dispatch(registerAction).then((action) => {
                 setLoading(false);
                 if (action.type.endsWith('fulfilled')) {
