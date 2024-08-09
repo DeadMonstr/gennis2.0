@@ -24,6 +24,8 @@ export const Input = React.memo(({
                                  }) => {
     const [showPassword, setShowPassword] = useState(false);
 
+    const [silk, setSilk] = useState("");
+
     return register ? (
         <label style={style} className={cls.inputLabel} htmlFor={name}>
             {title || subTitle ? (
@@ -39,7 +41,7 @@ export const Input = React.memo(({
                     placeholder={placeholder}
                     id={name}
                     className={classNames(cls.input, extraClassName, {
-                        [cls.error]: errors?.[name] // errors obyekti bilan xatolikni tekshirish
+                        [`${cls?.error}`]: errors?.[name]
                     })}
                     type={showPassword ? "text" : type}
                     {...register(name, {
