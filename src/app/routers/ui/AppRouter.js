@@ -16,7 +16,6 @@ import {TeacherSalaryPage} from "pages/teacherSalaryPage";
 import {GiveSalaryPage} from "pages/giveSalaryPage";
 import {ClassProfilePage} from "pages/School";
 import {ClassMolassesPage} from "pages/School";
-import {EmployerPage} from "pages/employeesPage"
 import {useTheme} from "shared/lib/hooks/useTheme";
 
 import "app/styles/index.sass"
@@ -84,8 +83,6 @@ export const AppRouter = () => {
                         element={<StudentProfilePage/>}
                     />
 
-
-                    <Route path={"employer"} element={<EmployerPage/>} />
                     <Route path={"flows"} element={<FlowsPage/>} />
                     <Route
                         path={"classProfile"}

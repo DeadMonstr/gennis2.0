@@ -14,7 +14,7 @@ import {
     getRouteMain,
     getProfile,
     getTeacherProfile, getRoomsProfilePage,
-    getClass
+    getClass, getEmployerPage
 } from "shared/const/routers";
 
 
@@ -36,6 +36,7 @@ import {EmployerPage} from "pages/employeesPage";
 import {FlowsPage} from "pages/flowsPage";
 import {RoomsProfilePage} from "pages/roomsProiflePage";
 import {ClassPage} from "../../../pages/classPage";
+import {getEmployersData} from "../../../entities/employer/model/selector/employersSelector";
 // import {RoomsProfilePage} from "pages/profilePage";
 
 
@@ -107,8 +108,7 @@ export const routersConfig = [
         name: "Employers",
         icon: "fa-user-graduate",
         roles: [],
-        // path: getTeacherProfile(":id"),
-        // path: getTeacherProfile(":id"),
+        path: getEmployerPage(":id"),
         element: <EmployerPage/>,
     },
     {

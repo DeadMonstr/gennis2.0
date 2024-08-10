@@ -20,6 +20,6 @@ export const getRoomsProfilePage =(id) => `rooms/:id/roomsProfilePage/${id}`
 export const getProfile = (id) => `students/:id/profile/${id}`;
 export const getRouteTimePage = (id) => `timeTable/${id}`
 export const getRouteUserProfile = (id) => `profile/${id}`
-
+export const getEmployerPage = (id) => `employer/${id}`
 export const getClass = (id) => `class`
 

@@ -55,7 +55,7 @@ export const TeacherProfileInfo = memo(({active,setActive,setActiveModal, newIma
                         <img
                             onClick={() => setActiveModal("changeImage")}
                             className={cls.info__image}
-                            src={!!teacherId.user?.profile_img ? teacherId.user?.profile_img : defaultUserImg}
+                            src={ teacherId.user?.profile_img ?? defaultUserImg}
                             alt=""
                         />
                         <h1>{teacherId.user?.username}</h1>

@@ -13,7 +13,7 @@ export const changeStudentProfileData = createAsyncThunk(
     "studentProfile/changeStudentProfileData",
     async (obj) => {
         const {request} = useHttp()
-        return request(`${API_URL}Students/students/${obj.id}/`, "PATCH", JSON.stringify(obj.res), headers())
+        return request(`${API_URL}Students/students_update/${obj.id}/`, "PATCH", JSON.stringify(obj.res), headers())
     }
 )
 
