@@ -8,7 +8,7 @@ import {Button} from "shared/ui/button";
 import cls from "./teacher.module.sass";
 import {getTeachers} from "../../../entities/teachers";
 import {fetchTeachersData} from "../../../entities/teachers";
-import {getTeacherLoading} from "../../../entities/teachers/model/selector/teacherSelector";
+
 
 const branches = [
     {name: "chirchiq"},
@@ -17,7 +17,6 @@ const branches = [
 ]
 export const TeachersPage = () => {
 
-    const search = useSelector(getSearchValue)
     const teachersData = useSelector(getTeachers)
 
     const dispatch = useDispatch()
@@ -27,32 +26,30 @@ export const TeachersPage = () => {
     useEffect(() =>{
         dispatch(fetchTeachersData())
     } ,[])
-    console.log(teachersData , "teach")
 
 
 
-
-
-
-
-    let PageSize = useMemo(() => 50, [])
-    const [currentTableData, setCurrentTableData] = useState([])
-    const [currentPage, setCurrentPage] = useState(1);
     const [selected, setSelected] = useState()
     const [active, setActive] = useState()
     const [activeSwitch, setActiveSwitch] = useState(false)
 
+
+
+    const search = useSelector(getSearchValue)
+    let PageSize = useMemo(() => 50, [])
+    const [currentTableData, setCurrentTableData] = useState([])
+    const [currentPage, setCurrentPage] = useState(1);
+
     const searchedUsers = useMemo(() => {
-        const filteredHeroes = teachersData.slice()
+        const filteredHeroes = teachersData?.slice()
         setCurrentPage(1)
 
-        if (!search) return  filteredHeroes
+        console.log(search, true)
+
+        if (!search) return filteredHeroes
 
         return filteredHeroes.filter(item =>
-            item.name?.toLowerCase().includes(search.toLowerCase()) ||
-            item.surname?.toLowerCase().includes(search.toLowerCase()) ||
-            item.username?.toLowerCase().includes(search.toLowerCase()) ||
-            item.fullName?.toLowerCase().includes(search.toLowerCase())
+            item.name?.toLowerCase().includes(search.toLowerCase())
         )
     }, [teachersData, setCurrentPage, search])
 
@@ -88,18 +85,18 @@ export const TeachersPage = () => {
                     />}
             </div>
 
-            {/*<Pagination*/}
-            {/*    setCurrentTableData={setCurrentTableData}*/}
-            {/*    users={searchedUsers}*/}
-            {/*    search={search}*/}
-            {/*    setCurrentPage={setCurrentPage}*/}
-            {/*    currentPage={currentPage}*/}
-            {/*    pageSize={PageSize}*/}
-            {/*    onPageChange={page => {*/}
-            {/*        setCurrentPage(page)*/}
-            {/*    }}*/}
-            {/*    type={"custom"}*/}
-            {/*/>*/}
+            <Pagination
+                setCurrentTableData={setCurrentTableData}
+                users={searchedUsers}
+                search={search}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                pageSize={PageSize}
+                onPageChange={page => {
+                    setCurrentPage(page)
+                }}
+                type={"custom"}
+            />
 
             <TeacherFilter
                 activeSwitch={activeSwitch}

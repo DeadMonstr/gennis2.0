@@ -6,6 +6,7 @@ const initialState = {
         {name: "sardor", surname: "ikromov", age: 17, phone: 12342131, work: "Manager", status: true, id:1},
         {name: "sardor", surname: "ikromov", age: 17, phone: 12342131, work: "Manager", status: true, id:2},
         {name: "sardor", surname: "ikromov", age: 17, phone: 12342131, work: "Manager", status: true, id:3},
+        {name: "sardor", surname: "ikromov", age: 17, phone: 12342131, work: "Manager", status: false, id:3},
 
     ],
     deletedEmployers: [

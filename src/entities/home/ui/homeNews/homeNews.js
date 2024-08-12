@@ -200,7 +200,7 @@ export const HomeNews = () => {
                     </div>
                 ))}
             </div>
-            <i onClick={onAdd} className={classNames("fa fa-plus", cls.plus)}></i>
+            {/*<i onClick={onAdd} className={classNames("fa fa-plus", cls.plus)}></i>*/}
 
 
             <Modal

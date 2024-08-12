@@ -15,7 +15,8 @@ import {
     getRouteRooms,
     getRouteMain,
     getProfile,
-    getClass
+    getClass,
+    getFlow, getEmployers
 } from "shared/const/routers";
 
 
@@ -111,7 +112,7 @@ export const routersConfig = [
     },
     {
         name: "Employers",
-        path: getTeacherProfile(":id"),
+        path: getEmployers(":id"),
         icon: "fa-user-graduate",
         roles: [],
         // path: getTeacherProfile(":id"),
@@ -119,7 +120,7 @@ export const routersConfig = [
     },
     {
         name: "Flows",
-        path: getTeacherProfile("id"),
+        path: getFlow(":id"),
         element: <FlowsPage/>,
         isMenu: true,
         type: ["app_school_theme"]
@@ -128,8 +129,7 @@ export const routersConfig = [
         to: "class",
         name: "Class",
         icon: "fa-user-graduate",
-        roles: [],
-        path: getClass("id"),
+        path: getClass(":id"),
         element: <ClassPage/>,
         isMenu: true,
         type: ["app_school_theme"]

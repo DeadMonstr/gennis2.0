@@ -11,19 +11,6 @@ export const Employers = () => {
 
     const [clickedCheckbox, setClickedCheckbox] = useState([])
 
-
-    const [removeClickedCheckbox , setRemovedClickedCheckbox] = useState([])
-
-    const checkedItem = (id) => {
-        const filteredCheckbox = clickedCheckbox.filter(item => item !== id)
-        setClickedCheckbox([...filteredCheckbox , id])
-
-
-        // const unFilteredCheckbox = removeClickedCheckbox.filter(item => item === id)
-        // setRemovedClickedCheckbox([...unFilteredCheckbox , id])
-
-    }
-
     const renderEmployers = () => {
         return employersData?.map((item, i) => {
             return (
@@ -34,9 +21,25 @@ export const Employers = () => {
                     <td>{item.age}</td>
                     <td>{item.work}</td>
                     <td>
-                        {item.status ? <div onClick={() => checkedItem(item.id)}
-                                            className={clickedCheckbox.includes(item.id) ? cls.checkbox__checked :  cls.checkbox__minus }> {clickedCheckbox.includes(item.id) ?
-                            <i className={"fa fa-check"}/> : <i className={"fa fa-minus"}/>}</div> : null}
+                        {item.status ?
+                            <div
+                                onClick={() => setClickedCheckbox(arr => {
+                                    if (clickedCheckbox.includes(item.id)){
+                                        return [...arr.filter(i => i !== item.id)]
+                                    }else return [...arr , item.id]
+                                })}
+                                className={clickedCheckbox.includes(item.id)
+                                    ?
+                                    cls.checkbox__checked : cls.checkbox__minus
+                                }>
+                                {clickedCheckbox.includes(item.id) ?
+                                    <i className={"fa fa-check"}/> :
+                                    <i className={"fa fa-minus"}/>
+                                }
+                            </div>
+                            :
+                            null
+                        }
                     </td>
                 </tr>
             )
