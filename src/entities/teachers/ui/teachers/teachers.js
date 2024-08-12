@@ -15,7 +15,6 @@ export const Teachers = memo(({data}) => {
     const checkBoxChange = (id) => {
         setCheckbox(id)
         console.log(id)
-
     }
 
 

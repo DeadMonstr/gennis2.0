@@ -164,8 +164,7 @@ export const HomeAdvantages = () => {
                         <div className={cls.advantages__box}>
                             <h2>{item.advantagesTitle}</h2>
                             <div className={cls.advantages__box_item}>
-                                <i onClick={() => onChangeModal(item.id)}
-                                   className={classNames("fa fa-pen", cls.icon)}></i>
+                                {/*<i onClick={() => onChangeModal(item.id)} className={classNames("fa fa-pen", cls.icon)}/>*/}
                                 <div className={cls.advantages__box_img}>
                                     <img src={`${item?.img}`} alt=""/>
                                 </div>

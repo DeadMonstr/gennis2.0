@@ -10,6 +10,7 @@ const initialState = {
             subject: "ingliz",
             typeCourse: "standart",
             groupPrice: -223,
+            status: true,
             deletedDate: "2222.22.22"
         },
         {

@@ -33,7 +33,7 @@ export const HomeAbout = () => {
         <div className={cls.about} ref={sectionRef}>
             <div className={cls.about__wrapper}>
                 <div className={cls.about__info}>
-                    <i onClick={onChange} className={classNames("fa fa-pen", cls.icon)}></i>
+                    {/*<i onClick={onChange} className={classNames("fa fa-pen", cls.icon)}></i>*/}
                     <div className={cls.about__text}>
                         <h1>Siz GENNIS oilasimisiz?</h1>
                         <span>Vaqt o'tgani sari markazimiz faoliyati kengayib bormoqda. Va bu bizga yanada ko'p masuliyatni

@@ -9,6 +9,7 @@ import {getNewStudentsData, getStudyingStudents} from "entities/students";
 import {Pagination} from "features/pagination";
 
 import cls from "./students.module.sass"
+import {getSearchValue} from "features/searchInput";
 
 
 const studentsFilter = [
@@ -26,23 +27,37 @@ const branches = [
 
 export const StudentsPage = () => {
 
-
-    let PageSize = useMemo(() => 50, [])
-    const [currentTableData, setCurrentTableData] = useState([])
-    const [currentPage, setCurrentPage] = useState(1);
-    const [search, setSearch] = useState("")
-    const [active, setActive] = useState(false)
-    const [selectedRadio, setSelectedRadio] = useState(studentsFilter[0].name);
-    const [selected, setSelected] = useState([])
     const dispatch = useDispatch()
-
-
-    // const [newStudentsData, setNewStudentsData] = useState([])
-    // const [deletedStudentsData , setDeletedStudentsData] = useState([])
 
 
     const studyingStudents = useSelector(getStudyingStudents)
     const newStudents = useSelector(getNewStudentsData)
+
+    const [active, setActive] = useState(false)
+    const [selectedRadio, setSelectedRadio] = useState(studentsFilter[0].name);
+    const [selected, setSelected] = useState([])
+
+    const search = useSelector(getSearchValue)
+    let PageSize = useMemo(() => 50, [])
+    const [currentTableData, setCurrentTableData] = useState([])
+    const [currentPage, setCurrentPage] = useState(1);
+
+    console.log(currentTableData, "data")
+
+    const searchedUsers = useMemo(() => {
+        const filteredHeroes = newStudents?.slice()
+        setCurrentPage(1)
+
+        console.log(search, true)
+
+        if (!search) return filteredHeroes
+
+        return filteredHeroes.filter(item =>
+            item.name?.toLowerCase().includes(search.toLowerCase())
+        )
+    }, [newStudents, setCurrentPage, search])
+
+
 
     useEffect(() => {
         dispatch(fetchNewStudentsData())
@@ -58,7 +73,7 @@ export const StudentsPage = () => {
     const renderStudents = () => {
         switch (selectedRadio) {
             case "newStudents" :
-                return <NewStudents  currentTableData={newStudents}/>
+                return <NewStudents  currentTableData={currentTableData}/>
             case "deletedStudents":
                 return <DeletedStudents  currentTableData={currentTableData}/>
             case "studying" :
@@ -80,17 +95,16 @@ export const StudentsPage = () => {
             <div className={cls.tableMain}>
                 {renderStudents()}
             </div>
-            {/*<Pagination*/}
-            {/*    setCurrentTableData={setCurrentTableData}*/}
-            {/*    users={newStudents || studyingStudents}*/}
-            {/*    search={search}*/}
-            {/*    setCurrentPage={setCurrentPage}*/}
-            {/*    currentPage={currentPage}*/}
-            {/*    pageSize={PageSize}*/}
-            {/*    onPageChange={page => {*/}
-            {/*        setCurrentPage(page)*/}
-            {/*    }}*/}
-            {/*    type={"custom"}/>*/}
+            <Pagination
+                setCurrentTableData={setCurrentTableData}
+                users={searchedUsers}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                pageSize={PageSize}
+                onPageChange={page => {
+                    setCurrentPage(page)
+                }}
+                type={"custom"}/>
 
 
             <StudentsFilter active={active} setActive={setActive} activePage={selectedRadio}/>

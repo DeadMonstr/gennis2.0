@@ -16,6 +16,7 @@ import {TeacherSalaryPage} from "pages/teacherSalaryPage";
 import {GiveSalaryPage} from "pages/giveSalaryPage";
 import {ClassProfilePage} from "pages/School";
 import {ClassMolassesPage} from "pages/School";
+import {EmployerPage} from "pages/employeesPage"
 import {useTheme} from "shared/lib/hooks/useTheme";
 
 import "app/styles/index.sass"
@@ -25,8 +26,8 @@ import {RoomsProfilePage} from "pages/roomsProiflePage";
 import {FlowsPage} from "pages/flowsPage";
 import {FlowProfileNavigators} from "entities/flowsProfile";
 import {FlowListPage} from "pages/FlowListPage";
-import {ClassPage} from "pages/classPage";
-import {TimeTable} from "../../../pages/timeTable";
+import {ClassAddColorPage, ClassPage} from "pages/classPage";
+import {TimeTable} from "pages/timeTable";
 
 
 export const AppRouter = () => {
@@ -77,13 +78,15 @@ export const AppRouter = () => {
                         element={<TimeTable/>}
                     />
 
-                    <Route path={"students/createGroup"} element={<CreateGroup/>} />
+                    <Route path={"students/:id/createGroup"} element={<CreateGroup/>}/>
                     <Route
                         path={"profile"}
                         element={<StudentProfilePage/>}
                     />
 
-                    <Route path={"flows"} element={<FlowsPage/>} />
+
+                    <Route path={"employer"} element={<EmployerPage/>}/>
+                    <Route path={"flows"} element={<FlowsPage/>}/>
                     <Route
                         path={"classProfile"}
                         element={<ClassProfilePage/>}
@@ -92,10 +95,6 @@ export const AppRouter = () => {
                     <Route
                         path={"molasses"}
                         element={<ClassMolassesPage/>}
-                    />
-                    <Route
-                        path={"class"}
-                        element={<ClassPage/>}
                     />
                     <Route
                         path={"flowsProfile"}
@@ -113,6 +112,10 @@ export const AppRouter = () => {
                     <Route
                         path={"giveSalaryPage"}
                         element={<GiveSalaryPage/>}
+                    />
+                    <Route
+                        path={"classColorAdd"}
+                        element={<ClassAddColorPage/>}
                     />
 
                     <Route

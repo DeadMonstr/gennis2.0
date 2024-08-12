@@ -48,10 +48,7 @@ export const TeachersPage = () => {
         if (!search) return  filteredHeroes
 
         return filteredHeroes.filter(item =>
-            item.name?.toLowerCase().includes(search.toLowerCase()) ||
-            item.surname?.toLowerCase().includes(search.toLowerCase()) ||
-            item.username?.toLowerCase().includes(search.toLowerCase()) ||
-            item.fullName?.toLowerCase().includes(search.toLowerCase())
+            item.name?.toLowerCase().includes(search.toLowerCase())
         )
     }, [teachersData, setCurrentPage, search])
 

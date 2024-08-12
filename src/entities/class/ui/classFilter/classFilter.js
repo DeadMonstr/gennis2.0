@@ -40,7 +40,8 @@ export const ClassFilter = () => {
                         return (
                             <li
                                 className={classNames(cls.classFilter_li , {
-                                    [cls.active] : activeMenu === item.name
+                                    [cls.active] : activeMenu === item.name,
+
                                 })}
                                 key={i}
                                 onClick={() => {

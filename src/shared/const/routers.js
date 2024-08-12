@@ -23,3 +23,5 @@ export const getRouteUserProfile = (id) => `profile/${id}`
 export const getEmployerPage = (id) => `employer/${id}`
 export const getClass = (id) => `class`
 
+export const getFlow = (id) => `flows/${id}`
+

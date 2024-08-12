@@ -40,7 +40,7 @@ export const Input = React.memo(({
                     placeholder={placeholder}
                     id={name}
                     className={classNames(cls.input, extraClassName, {
-                        [cls.error]: errors?.[name] // errors obyekti bilan xatolikni tekshirish
+                        [`${cls?.error}`]: errors?.[name]
                     })}
                     type={showPassword ? "text" : type}
                     {...register(name, {

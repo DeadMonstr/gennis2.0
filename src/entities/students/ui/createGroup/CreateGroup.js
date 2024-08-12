@@ -8,7 +8,7 @@ import {Radio} from "shared/ui/radio";
 import {Table} from "shared/ui/table";
 import {Modal} from "shared/ui/modal";
 import {Input} from "shared/ui/input";
-import React, {useEffect, useState} from "react";
+import React, {memo, useEffect, useState} from "react";
 import {getNewStudentsData} from "../../model/selector/studentsSelector";
 import {useDispatch, useSelector} from "react-redux";
 import {Teachers} from "../../../teachers";
@@ -25,10 +25,10 @@ const branches = [
     {name: "xo'jakent"},
 ]
 const peoples = [
-    {name: "studying", label: "Studying Students"},
+    {name: "studying", label: "Students"},
     {name: "teachers", label: "Teachers"},
 ]
-export const CreateGroup = () => {
+export const CreateGroup = memo(() => {
     const newStudents = useSelector(getNewStudentsData)
     const teachers = useSelector(getTeachers)
     const [active, setActive] = useState(false)
@@ -227,4 +227,4 @@ export const CreateGroup = () => {
             </Modal>
         </>
     )
-}
+})
