@@ -1,4 +1,4 @@
-import React, {memo, useMemo, useState} from 'react';
+import React, {memo, useCallback, useMemo, useState} from 'react';
 import cls from "./teachers.module.sass"
 
 import {Table} from "shared/ui/table";
@@ -11,7 +11,7 @@ import {Link} from "../../../../shared/ui/link";
 export const Teachers = memo(({data}) => {
     const [checkbox, setCheckbox] = useState(false)
 
-
+    console.log("ishladi")
     const checkBoxChange = (id) => {
         setCheckbox(id)
         console.log(id)
@@ -19,23 +19,33 @@ export const Teachers = memo(({data}) => {
     }
 
 
-    const renderTeacher = () => {
-        return data.map((item, i) => (
-            <tr key={i} >
+    const renderTeacher = useCallback(() => {
+        console.log(data)
+        if(data && data.length)
+        {
+            console.log(data, "jbkhbk")
+            return data?.map((item, i) => (
+                <tr key={i} >
                     <td>{i + 1}</td>
-                <Link to={`teacherProfile/${item.id}`}>
-                    <td>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
-                </Link>
+                    <Link to={`teacherProfile/${item.id}`}>
+                        <td>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
+                    </Link>
 
                     <td>{item.user.username}</td>
                     <td>{item.user.phone}</td>
-                    <td>{item.age}</td>
+                    <td>{item.user.age}</td>
                     <td><div className={item.subject ? cls.teacher__language : null}>{item.subject.name}</div></td>
 
 
-            </tr>
-        ))
-    }
+                </tr>
+            ))
+        }
+
+    }, [data])
+
+
+
+    const renderedData = renderTeacher()
     return (
         <div className={cls.teacher}>
 
@@ -53,7 +63,7 @@ export const Teachers = memo(({data}) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {renderTeacher()}
+                    {renderedData}
                     </tbody>
                 </Table>
             </div>

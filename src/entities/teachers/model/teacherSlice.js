@@ -6,7 +6,8 @@ import {fetchTeachersData} from "./teacherThunk";
 const initialState = {
     teachersData: [],
     teacherStatus: "idle",
-    deletedTeachers: []
+    deletedTeachers: [],
+    loading: false
 }
 
 export const teachersSlice = createSlice({
@@ -16,12 +17,12 @@ export const teachersSlice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(fetchTeachersData.pending , state =>{
-                state.teacherStatus ="loading"
+                state.loading = true
             })
             .addCase(fetchTeachersData.fulfilled , (state , action) =>{
-                state.teachersData = action.payload.results
+                state.teachersData = action.payload
                 console.log(action.payload , "teacher")
-                state.teacherStatus = "success"
+                state.loading = false
             })
             .addCase(fetchTeachersData.rejected , (state , action) =>{
                 state.teachers = "error"

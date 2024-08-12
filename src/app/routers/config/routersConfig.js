@@ -105,10 +105,11 @@ export const routersConfig = [
         element: <VacancyWorkPage/>,
     },
     {
+
         name: "Employers",
         icon: "fa-user-graduate",
         roles: [],
-        path: getEmployerPage(":id"),
+        path: getEmployerPage("id"),
         element: <EmployerPage/>,
     },
     {

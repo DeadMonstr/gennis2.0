@@ -8,7 +8,7 @@ import {Button} from "shared/ui/button";
 import cls from "./teacher.module.sass";
 import {getTeachers} from "../../../entities/teachers";
 import {fetchTeachersData} from "../../../entities/teachers";
-import {getTeacherLoading} from "../../../entities/teachers/model/selector/teacherSelector";
+
 
 const branches = [
     {name: "chirchiq"},
@@ -22,11 +22,10 @@ export const TeachersPage = () => {
 
     const dispatch = useDispatch()
 
-    const getTeacherLoading = useSelector(getTeachers)
 
     useEffect(() =>{
         dispatch(fetchTeachersData())
-    } ,[])
+    } ,[dispatch])
     console.log(teachersData , "teach")
 
 
@@ -82,24 +81,23 @@ export const TeachersPage = () => {
                     />
                     :
                     <Teachers
-                        loading={getTeacherLoading}
-                        data={teachersData}
+                        data={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
                         // data={currentTableData}
                     />}
             </div>
 
-            {/*<Pagination*/}
-            {/*    setCurrentTableData={setCurrentTableData}*/}
-            {/*    users={searchedUsers}*/}
-            {/*    search={search}*/}
-            {/*    setCurrentPage={setCurrentPage}*/}
-            {/*    currentPage={currentPage}*/}
-            {/*    pageSize={PageSize}*/}
-            {/*    onPageChange={page => {*/}
-            {/*        setCurrentPage(page)*/}
-            {/*    }}*/}
-            {/*    type={"custom"}*/}
-            {/*/>*/}
+            <Pagination
+                setCurrentTableData={setCurrentTableData}
+                users={searchedUsers}
+                search={search}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                pageSize={PageSize}
+                onPageChange={page => {
+                    setCurrentPage(page)
+                }}
+                type={"custom"}
+            />
 
             <TeacherFilter
                 activeSwitch={activeSwitch}

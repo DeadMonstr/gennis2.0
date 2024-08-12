@@ -4,4 +4,4 @@ export const getTeachers = (state) =>
 
 
 export const getTeacherLoading = (state) =>
-    state.teachers.teacherStatus
+    state.teachers.loading

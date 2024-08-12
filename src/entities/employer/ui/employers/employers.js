@@ -1,13 +1,9 @@
 import cls from "./employers.module.sass"
-import {useSelector} from "react-redux";
-import {getEmployersData} from "../../model/selector/employersSelector";
 import {Table} from "shared/ui/table";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 
-export const Employers = () => {
-    const employersData = useSelector(getEmployersData)
-    console.log(employersData)
+export const Employers = ({currentTableData}) => {
 
     const [clickedCheckbox, setClickedCheckbox] = useState([])
 
@@ -24,8 +20,10 @@ export const Employers = () => {
 
     }
 
+
+
     const renderEmployers = () => {
-        return employersData?.map((item, i) => {
+        return currentTableData?.map((item, i) => {
             return (
                 <tr>
                     <td>{i + 1}</td>

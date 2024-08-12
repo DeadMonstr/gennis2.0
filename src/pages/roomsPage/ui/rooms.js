@@ -10,7 +10,7 @@ import {getLoading, getRoomsData} from 'entities/rooms/model/selectors/roomsSele
 import { fetchRoomsData } from 'entities/rooms/model/roomsThunk';
 import cls from './rooms.module.sass';
 import { getSearchValue } from 'features/searchInput';
-import {DefaultLoader} from "../../../shared/ui/defaultLoader";
+import {DefaultLoader, DefaultPageLoader} from "../../../shared/ui/defaultLoader";
 
 export const Rooms = () => {
     const [modal, setModal] = useState(false);
@@ -62,7 +62,7 @@ export const Rooms = () => {
             </div>
             <div className={cls.mainContainer_tablePanelBox}>
                 {
-                    loading ? <DefaultLoader/> :  <RoomsList currentTableData={searchedRooms.slice((currentPage - 1) * PageSize, currentPage * PageSize)} />
+                    loading ? <DefaultPageLoader/> :  <RoomsList currentTableData={searchedRooms.slice((currentPage - 1) * PageSize, currentPage * PageSize)} />
                 }
                 {/*<RoomsList currentTableData={searchedRooms.slice((currentPage - 1) * PageSize, currentPage * PageSize)} />*/}
             </div>
