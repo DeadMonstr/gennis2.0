@@ -14,7 +14,7 @@ export const EmployerPage = () => {
     const dispatch = useDispatch()
     const employersData = useSelector(getEmployersData)
     const [activeFilter , setActiveModal] = useState(false)
-    const PageSize = useMemo(() => 10, []);
+    const PageSize = useMemo(() => 30, []);
     const [currentPage, setCurrentPage] = useState(1);
     const [activeSwitch , setActiveSwitch] = useState(false)
     const search = useSelector(getSearchValue);
@@ -40,7 +40,7 @@ export const EmployerPage = () => {
             <Button onClick={() =>setActiveModal(!activeFilter)} status={"filter"} type={"filter"}>Filter</Button>
             <Select/>
         </div>
-          {activeSwitch ? <DeletedEmployers/> : <Employers currentTableData={searchedEmployers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}/>}
+          {activeSwitch ? <DeletedEmployers/> : <Employers currentTableData={searchedEmployers.slice((currentPage - 1) * PageSize, currentPage * PageSize)} />}
           <EmployeesFilter activeSwitch={activeSwitch} setActiveSwitch={setActiveSwitch} active={activeFilter} setActive={setActiveModal}/>
           <Pagination
               setCurrentTableData={() => {}}

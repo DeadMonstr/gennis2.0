@@ -1,13 +1,16 @@
 import cls from "./employers.module.sass"
 import {Table} from "shared/ui/table";
 import React, {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
+import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
+import {getEmployerLoading} from "../../model/selector/employersSelector";
+import {useSelector} from "react-redux";
 
 
-export const Employers = ({currentTableData}) => {
+export const Employers = ({currentTableData, loading}) => {
 
     const [clickedCheckbox, setClickedCheckbox] = useState([])
-
-
+    const loadingDef = useSelector(getEmployerLoading)
     const [removeClickedCheckbox , setRemovedClickedCheckbox] = useState([])
 
     const checkedItem = (id) => {
@@ -27,7 +30,9 @@ export const Employers = ({currentTableData}) => {
             return (
                 <tr>
                     <td>{i + 1}</td>
-                    <td>{item.name} {item.surname}</td>
+                    <Link to={`employerProfile/${item.id}`}>
+                        <td>{item.name} {item.surname}</td>
+                    </Link>
                     <td>{item.phone}</td>
                     <td>{item.age}</td>
                     <td>{item.work}</td>
@@ -60,7 +65,7 @@ export const Employers = ({currentTableData}) => {
         <div className={cls.employer}>
             <div className={cls.table}>
                 <Table>
-                    <thead>
+                    <thead className={cls.thead}>
                     <tr>
                         <th>No</th>
                         <th>Full name</th>
@@ -70,9 +75,14 @@ export const Employers = ({currentTableData}) => {
                         <th>Status</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    {renderEmployers()}
-                    </tbody>
+                    {
+                        loadingDef ? <DefaultPageLoader/>
+                            :
+                            <tbody>
+                            {renderEmployers()}
+                            </tbody>
+                    }
+
                 </Table>
             </div>
         </div>

@@ -15,7 +15,7 @@ import {
     getProfile,
     getTeacherProfile, getRoomsProfilePage,
     getClass, getEmployerPage,
-    getFlow, getEmployers
+    getFlow, getEmployers, getEmployerProfile
 } from "shared/const/routers";
 
 
@@ -27,7 +27,7 @@ import {TeachersPage} from "pages/teacherPage";
 import {
     ProfileTeacherPage,
     UserProfilePage,
-    StudentProfilePage
+    StudentProfilePage, ProfileEmployerPage
 } from "pages/profilePage";
 import {StudentsDirectorPage} from "pages/studentsPage";
 import {VacancyPage} from "pages/vacancyPage";
@@ -102,7 +102,8 @@ export const routersConfig = [
       element: <VacancyPage/>,
     },
     {
-        path: getVacancyWorkPage(),
+        to: 'vacancyPage/vacancyWorkPage',
+        path: getVacancyWorkPage(":id"),
         element: <VacancyWorkPage/>,
     },
     {
@@ -110,7 +111,7 @@ export const routersConfig = [
         name: "Employers",
         icon: "fa-user-graduate",
         roles: [],
-        path: getEmployerPage("id"),
+        path: getEmployerPage(":id"),
         element: <EmployerPage/>,
     },
     {
@@ -149,6 +150,13 @@ export const routersConfig = [
         name: "Teacher Profile",
         path: getTeacherProfile(":id"),
         element: <ProfileTeacherPage/>,
+        roles: [],
+    },
+    {
+        to: "employer/employerProfile",
+        name: "Employer Page",
+        path: getEmployerProfile(":id"),
+        element: <ProfileEmployerPage/>,
         roles: [],
     },
     {

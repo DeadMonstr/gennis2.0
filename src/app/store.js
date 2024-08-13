@@ -29,6 +29,11 @@ import {roomImageSlice} from "../features/roomImagePareModal";
 import {studentProfile, teacherProfileData} from "pages/profilePage";
 import {flowsSlice} from "entities/flows";
 import {teacherParseSlice} from "entities/teachers";
+import {employerParseSlice} from "../entities/profile/employerProfile";
+import {vacancySlice} from "../features/vacancyModals/vacancyPageAdd";
+import {vacancyPageParseSlice} from "../features/vacancyModals/vacancyPageAdd";
+import {vacancyWorkPageSlice} from "../features/vacancyModals/vacancyWorkPage/model";
+import {vacancyWorkerPermissionSlice} from "../features/vacancyModals/vacancyWorkerPermission";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -72,7 +77,12 @@ export const store = configureStore({
         roomImageSlice,
         flowsSlice,
         teacherProfileData,
-        teacherParseSlice
+        teacherParseSlice,
+        employerParseSlice,
+        vacancySlice,
+        vacancyPageParseSlice,
+        vacancyWorkPageSlice,
+        vacancyWorkerPermissionSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

@@ -63,9 +63,6 @@ export const StudentsPage = () => {
         dispatch(fetchNewStudentsData())
     }, [])
 
-    useEffect(() =>{
-        dispatch(fetchNewStudentsData())
-    } , [])
 
     const handleChange = (value) => {
         setSelectedRadio(value);

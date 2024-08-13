@@ -7,7 +7,9 @@ import {DeletedTeachers, Teachers} from "entities/teachers";
 import {Button} from "shared/ui/button";
 import cls from "./teacher.module.sass";
 import {getTeachers} from "../../../entities/teachers";
+import {getTeacherLoading} from "entities/teachers";
 import {fetchTeachersData} from "../../../entities/teachers";
+import {DefaultLoader} from "../../../shared/ui/defaultLoader";
 
 
 const branches = [
@@ -16,7 +18,7 @@ const branches = [
     {name: "chirchiq2"},
 ]
 export const TeachersPage = () => {
-
+    const loading = useSelector(getTeacherLoading)
     const search = useSelector(getSearchValue)
     const teachersData = useSelector(getTeachers)
 
@@ -68,20 +70,20 @@ export const TeachersPage = () => {
                     time table
                 </Button>
             </div>
-            <div className={cls.table}>
+                    <div className={cls.table}>
 
-                <h2>{activeSwitch ? "Deleted Teachers" : "Teachers"}</h2>
-                {activeSwitch ?
-                    <DeletedTeachers
-                        data={teachersData}
-                        // data={searchedUsers}
-                    />
-                    :
-                    <Teachers
-                        data={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
-                        // data={currentTableData}
-                    />}
-            </div>
+                        <h2>{activeSwitch ? "Deleted Teachers" : "Teachers"}</h2>
+                        {activeSwitch ?
+                            <DeletedTeachers
+                                data={teachersData}
+                                // data={searchedUsers}
+                            />
+                            :
+                            <Teachers
+                                data={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
+                                // data={currentTableData}
+                            />}
+                    </div>
 
             <Pagination
                 setCurrentTableData={setCurrentTableData}

@@ -1,0 +1,29 @@
+import {createAsyncThunk} from "@reduxjs/toolkit";
+import {API_URL, headers, useHttp} from "../../../../shared/api/base";
+
+
+export const fetchPermissionTable = createAsyncThunk(
+    'vacancyWorkerPermissionSlice/fetchPermissionTable',
+    async () => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Permissions/tables/`, "GET", null, headers())
+    }
+)
+
+export const postSelectedTable = createAsyncThunk(
+    'vacancyWorkerPermissionSlice/postSelectedTable',
+    async (selectedTable, { rejectWithValue }) => {
+        const { request } = useHttp();
+        try {
+            const response = await request(
+                `${API_URL}Permissions/tables/`,
+                "POST",
+                JSON.stringify({ table: selectedTable }),
+                headers()
+            );
+            return response;
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);

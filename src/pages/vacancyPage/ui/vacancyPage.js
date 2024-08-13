@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import { Pagination } from "features/pagination";
 import { GroupsFilter } from "features/filters/groupsFilter";
 import { Button } from "shared/ui/button";
@@ -7,6 +7,9 @@ import { VacancyList } from "entities/vacancy/ui/vacancyList";
 import { vacancyPageList } from "entities/vacancy/model";
 import { VacancyPageEdit } from "features/vacancyModals/vacancyPageEdit";
 import { VacancyAdd } from "entities/vacancy/ui/vacancyAdd";
+import {useDispatch, useSelector} from "react-redux";
+import {getVacancyJobs, fetchVacancyData} from "../../../features/vacancyModals/vacancyPageAdd";
+
 
 export const VacancyPage = () => {
     const [active, setActive] = useState(false);
@@ -17,8 +20,15 @@ export const VacancyPage = () => {
     const [currentTableData, setCurrentTableData] = useState([]);
     const [modal, setModal] = useState(false);
     const [currentEditingVacancy, setCurrentEditingVacancy] = useState(null);
+    const dispatch = useDispatch()
+    const getVacancyData = useSelector(getVacancyJobs)
 
     const PageSize = useMemo(() => 20, []);
+
+
+    useEffect(() => {
+        dispatch(fetchVacancyData())
+    }, [dispatch])
 
     const handleEditClick = (vacancy) => {
         setCurrentEditingVacancy(vacancy);
@@ -68,7 +78,7 @@ export const VacancyPage = () => {
             </div>
             <div className={cls.mainContainer_tablePanelBox}>
                 <VacancyList
-                    currentTableData={currentTableData}
+                    currentTableData={getVacancyData}
                     currentPage={currentPage}
                     PageSize={PageSize}
                     editMode={!editMode}

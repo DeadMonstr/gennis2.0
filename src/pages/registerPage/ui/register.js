@@ -10,6 +10,7 @@ import { Textarea } from "shared/ui/textArea";
 import { Select } from "shared/ui/select";
 import { MiniLoader } from "shared/ui/miniLoader";
 import { Alert } from "shared/ui/alert";
+import { API_URL, useHttp, headers } from "../../../shared/api/base";
 
 const userstype = {
     types: [
@@ -22,13 +23,17 @@ const userstype = {
 export const Register = () => {
     const { register, handleSubmit, watch, setValue, reset } = useForm();
     const registerType = watch("registerType", "student");
+    const username = watch("username", "");
     const dispatch = useDispatch();
-    const [error, setError] = useState(false)
+    const [error, setError] = useState(false);
     const [selectedLang, setSelectedLang] = useState(1);
     const [selectedSubject, setSelectedSubject] = useState(1);
     const [selectedTime, setSelectedTime] = useState(1);
     const [selectedProfession, setSelectedProfession] = useState(1);
     const [loading, setLoading] = useState(false);
+
+    const [usernameMessage, setUsernameMessage] = useState('');
+    const [isUsernameAvailable, setIsUsernameAvailable] = useState(true);
 
     const subjects = useSelector(state => state.registerUser.subjects) || [];
     const languages = useSelector(state => state.registerUser.languages) || [];
@@ -38,6 +43,41 @@ export const Register = () => {
     useEffect(() => {
         dispatch(fetchSubjectsAndLanguages());
     }, [dispatch]);
+
+    useEffect(() => {
+        if (username) {
+            const checkUsername = async () => {
+                try {
+                    const response = await fetch(`${API_URL}/Users/username-check/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            ...headers
+                        },
+                        body: JSON.stringify({ username })
+                    });
+
+                    const data = await response.json();
+                    if (data.exists) {
+                        setUsernameMessage(<p className={cls.errorMess}>This username is already taken</p>);
+                        setIsUsernameAvailable(false);
+                    } else {
+                        setUsernameMessage(<p className={cls.successMess}>Username is available</p>);
+                        setIsUsernameAvailable(true);
+                    }
+                } catch (error) {
+                    console.error('Error checking username:', error);
+                    setUsernameMessage('Error checking username');
+                    setIsUsernameAvailable(false);
+                }
+            };
+
+            checkUsername();
+        } else {
+            setUsernameMessage(<p>Username is required</p>);
+            setIsUsernameAvailable(false);
+        }
+    }, [username]);
 
     const showAlert = (type, message) => {
         const newAlert = { id: Date.now(), type, message };
@@ -57,6 +97,11 @@ export const Register = () => {
     };
 
     const onSubmit = (data) => {
+        if (!isUsernameAvailable) {
+            showAlert('error', 'Please choose a different username');
+            return;
+        }
+
         setLoading(true);
         const selectedLanguage = languages.find(lang => lang.id === Number(selectedLang));
         const selectedSubjectData = subjects.find(subj => subj.id === Number(selectedSubject));
@@ -75,7 +120,7 @@ export const Register = () => {
             observer: true,
             language: selectedLanguage?.id || "",
             branch: 1,
-        }
+        };
 
         let registerAction;
 
@@ -101,15 +146,6 @@ export const Register = () => {
             registerAction = registerEmployer(res2);
         }
 
-
-        if (registerType === 'student') {
-            registerAction = registerUser(res);
-        } else if (registerType === 'teacher') {
-            registerAction = registerTeacher(res);
-        } else if (registerType === 'employer') {
-            registerAction = registerEmployer(res2);
-        }
-
         if (registerAction) {
             dispatch(registerAction).then((action) => {
                 setLoading(false);
@@ -120,10 +156,12 @@ export const Register = () => {
                     setSelectedSubject(1);
                     setSelectedTime(1);
                     setSelectedProfession(1);
+                    setUsernameMessage('');
+                    setIsUsernameAvailable(true);
                 } else {
                     console.error('Registration error:', action.error);
                     showAlert('error', 'Registration failed. Please try again.');
-                    setError(true)
+                    setError(true);
                 }
             });
         }
@@ -135,21 +173,22 @@ export const Register = () => {
                 return (
                     <>
                         <Select
+                            extraClass={cls.extraClasses}
                             name={"language"}
-                            defaultValue={selectedLang}
                             onChangeOption={setSelectedLang}
                             options={languages.map(lang => ({ id: lang.id, name: lang.name }))}
                         />
 
                         <Select
+                            extraClass={cls.extraClasses}
                             name={"subject_id"}
                             onChangeOption={setSelectedSubject}
                             options={subjects.map(subj => ({ id: subj.id, name: subj.name }))}
                         />
 
                         <Select
+                            extraClass={cls.extraClasses}
                             name={"shift"}
-                            defaultValue={selectedTime}
                             onChangeOption={setSelectedTime}
                             options={[
                                 { id: 1, name: "1 smen" },
@@ -165,7 +204,6 @@ export const Register = () => {
                         <Select
                             extraClass={cls.extraClasses}
                             name={"language"}
-                            defaultValue={selectedLang}
                             onChangeOption={setSelectedLang}
                             options={languages.map(lang => ({ id: lang.id, name: lang.name }))}
                         />
@@ -181,12 +219,13 @@ export const Register = () => {
                 return (
                     <>
                         <Select
+                            extraClass={cls.extraClasses}
                             name={"language"}
-                            defaultValue={selectedLang}
                             onChangeOption={setSelectedLang}
                             options={languages.map(lang => ({ id: lang.id, name: lang.name }))}
                         />
                         <Select
+                            extraClass={cls.extraClasses}
                             name={"profession"}
                             onChangeOption={setSelectedProfession}
                             options={[
@@ -217,23 +256,14 @@ export const Register = () => {
                     <h1 className={cls.login__boxes__box__headerTitle}>Registratsiya</h1>
                     <div className={cls.login__boxes__box__form}>
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            {error && error ?
-                                <Input
-                                    title={<p style={{color: "red", textTransform: 'none'}}><i className={"fa-solid fa-circle-exclamation"} style={{color: "#FF3737FF"}}></i> username band</p>}
-                                    register={register}
-                                    placeholder="Username"
-                                    required
-                                    extraClassName={cls.extraClasss}
-                                    name={"username"}
-                                />
-                                :
                             <Input
+                                title={usernameMessage && <p className={cls.mess}>{usernameMessage}</p>}
                                 register={register}
                                 placeholder="Username"
                                 required
+                                extraClassName={cls.extraClasss}
                                 name={"username"}
                             />
-                                 }
                             <Input
                                 register={register}
                                 placeholder="Ism"
@@ -273,15 +303,14 @@ export const Register = () => {
                                 required
                                 name={"phone"}
                             />
-                            {
-                                registerType === 'teacher' && 'employer' ? null :
-                                    <Input
-                                        register={register}
-                                        placeholder="Ota-ona telefon raqami"
-                                        type="number"
-                                        required
-                                        name={"parents_phone"}
-                                    />
+                            {registerType === 'student' &&
+                                <Input
+                                    register={register}
+                                    placeholder="Ota-ona telefon raqami"
+                                    type="number"
+                                    required
+                                    name={"parents_phone"}
+                                />
                             }
 
                             <Textarea
@@ -292,7 +321,9 @@ export const Register = () => {
                             {renderFormFields()}
                             {loading ?
                                 <MiniLoader /> :
-                                <Button type="submit" extraClass={cls.registerBtn}>Register</Button>
+                                <Button type="submit" extraClass={cls.registerBtn} disabled={!isUsernameAvailable}>
+                                    Register
+                                </Button>
                             }
                         </form>
                     </div>

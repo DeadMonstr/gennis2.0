@@ -1,28 +1,23 @@
 import React, {memo, useCallback, useMemo, useState} from 'react';
 import cls from "./teachers.module.sass"
-
 import {Table} from "shared/ui/table";
-import {Input} from "shared/ui/input";
-import {set} from "react-hook-form";
 import {Link} from "../../../../shared/ui/link";
+import {getTeacherLoading} from "../../model/selector/teacherSelector";
+import {useSelector} from "react-redux";
+import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 
 
-
-export const Teachers = memo(({data}) => {
+export const Teachers = memo(({data,loading}) => {
     const [checkbox, setCheckbox] = useState(false)
-
-    console.log("ishladi")
+    const loadingDef = useSelector(getTeacherLoading)
     const checkBoxChange = (id) => {
         setCheckbox(id)
-        console.log(id)
     }
 
 
     const renderTeacher = useCallback(() => {
-        console.log(data)
         if(data && data.length)
         {
-            console.log(data, "jbkhbk")
             return data?.map((item, i) => (
                 <tr key={i} >
                     <td>{i + 1}</td>
@@ -61,9 +56,14 @@ export const Teachers = memo(({data}) => {
                         <th>Status</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    {renderedData}
-                    </tbody>
+                    {
+                        loadingDef ? <DefaultPageLoader/>
+                            :
+                            <tbody>
+                            {renderedData}
+                            </tbody>
+                    }
+
                 </Table>
             </div>
 

@@ -15,12 +15,14 @@ export const getRouteCreateGroup = () => `newStudents/createGroup`;
 export const getRouteRooms = (id) => `rooms/${id}`;
 export const getTeacherProfile = (id) => `teacher/:id/teacherProfile/${id}`;
 export const getVacancyPage = (id) => `vacancyPage/${id}`
-export const getVacancyWorkPage = () => `vacancyPage/:id/vacancyWorkPage`
+export const getVacancyWorkPage = (id) => `vacancyPage/:id/vacancyWorkPage/${id}`
 export const getRoomsProfilePage =(id) => `rooms/:id/roomsProfilePage/${id}`
 export const getProfile = (id) => `students/:id/profile/${id}`;
 export const getRouteTimePage = (id) => `timeTable/${id}`
 export const getRouteUserProfile = (id) => `profile/${id}`
 export const getEmployerPage = (id) => `employer/${id}`
+export const getEmployerProfile = (id) => `employer/:id/employerProfile/${id}`;
+
 export const getClass = (id) => `class`
 
 export const getFlow = (id) => `flows/${id}`
