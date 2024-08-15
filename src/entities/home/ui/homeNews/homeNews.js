@@ -21,7 +21,7 @@ import {
     changeNew
 } from "../model/homeSlice";
 
-const list = [1, 2, 3, 4]
+const list = [1, 2, 3, 4 ]
 const newsData = [
     {
         id: 1,

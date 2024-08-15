@@ -1,9 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Table } from "shared/ui/table";
 import cls from './vacancyWorkList.module.sass';
 import { Input } from "shared/ui/input";
+import {useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router-dom";
+import {fetchWorkerWithId} from "features/vacancyModals/vacancyWorkPage/model";
+import {getWorkerId} from "features/vacancyModals/vacancyWorkPage/model";
 
 export const VacancyWorkList = ({ currentTableData, currentPage, PageSize, editMode, onEditClick, selectedItems, setSelectedItems }) => {
+
+    const {id} = useParams()
+    const dispatch = useDispatch()
+    const workerID = useSelector(getWorkerId)
+
+    useEffect(() => {
+        if (id)
+        {
+            dispatch(fetchWorkerWithId(id))
+        }
+
+    }, [dispatch, id])
+
+
+    // console.log(workerID, 'worker id')
 
     const handleSelectAll = (e) => {
         if (e.target.checked) {
@@ -22,11 +41,11 @@ export const VacancyWorkList = ({ currentTableData, currentPage, PageSize, editM
     };
 
     const renderVacancies = () => {
-        return currentTableData.map((item, index) => (
+        return workerID.job?.map((item, index) => (
             <tr key={item.id}>
                 <td>{(currentPage - 1) * PageSize + index + 1}</td>
-                <td>{item.workName}</td>
-                <td>{item.workerNames}</td>
+                <td>{item.group.name}</td>
+                <td>{item.group.permissions}</td>
                 {!editMode && (
                     <td>
                         <Input

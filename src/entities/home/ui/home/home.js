@@ -82,9 +82,9 @@ export const Home = () => {
             <div className={cls.homeWrapper}>
 
                 <div className={cls.homeTexts}>
-                    <div onClick={onChange}>
-                        <i className={classNames("fa fa-pen ", cls.icon)}></i>
-                    </div>
+                    {/*<div onClick={onChange}>*/}
+                    {/*    <i className={classNames("fa fa-pen ", cls.icon)}></i>*/}
+                    {/*</div>*/}
 
                     <div className={cls.homeTitle}>
                         GENNIS - "Muvaffaqiyatni istaganlar uchun"

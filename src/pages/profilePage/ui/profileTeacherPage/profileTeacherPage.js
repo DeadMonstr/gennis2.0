@@ -1,40 +1,33 @@
 import React, {createContext, useEffect, useState} from 'react';
 import classNames from "classnames";
-
 import {TeacherProfileInfo, TeacherProfileTeachersGroup} from "entities/profile/teacherProfile";
-import {
-    StudentProfileInfo,
-    StudentProfileTotalAmount
-} from "entities/profile/studentProfile"
 import {TeacherEdit} from "features/profileEdits/teacherEdit";
-
 import cls from "./profileTeacherPage.module.sass"
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";
-import {getUserData} from "../../model/selector/teacherProfile.selector";
-import {fetchTeacherProfileData} from "../../model/thunk/teacherProfile.thunk";
-
+import {fetchTeacherId, getTeacherId, changeTeacherProfileImage} from "../../../../entities/teachers";
+import {ImageCrop} from "../../../../features/imageCrop";
+import {changeStudentProfileImage} from "../../model/thunk/studentProfileThunk";
 export const ContextStuPro = createContext(null)
 
 export const ProfileTeacherPage = () => {
 
     const [active, setActive] = useState(false)
     const [actives, setActives] = useState(false)
-
     const dispatch = useDispatch()
-
     const {id} = useParams()
-
-    const userData = useSelector(getUserData)
-
-
-    useEffect(() => {
-        dispatch(fetchTeacherProfileData(id))
-    } ,[id])
-    console.log(userData, "data user")
+    const teacherId = useSelector(getTeacherId)
+    const [activeModal, setActiveModal] = useState("")
+    const [newImage, setNewImage] = useState("")
 
 
 
+
+    const onSubmitImage = (data) => {
+        // formData.append("profile_img", data)
+        console.log(data, "file profile-page")
+        dispatch(changeStudentProfileImage({id: teacherId.user?.id, data}))
+    }
 
 
     return (
@@ -47,6 +40,8 @@ export const ProfileTeacherPage = () => {
                 <TeacherProfileInfo
                     setActive={setActive}
                     active={active}
+                    setActiveModal={setActiveModal}
+                    newImage={newImage}
                 />
 
                 {/*// actives={actives}*/}
@@ -62,12 +57,12 @@ export const ProfileTeacherPage = () => {
                     })}
                 >
                     <TeacherProfileTeachersGroup/>
-                    <TeacherEdit
-                        active={active}
-                        setActive={setActive}
-
-                    />
                 </div>
+                <ImageCrop
+                    setActive={setActiveModal}
+                    active={activeModal === "changeImage"}
+                    setNewImage={onSubmitImage}
+                />
 
             </div>
         // </ContextStuPro.Provider>

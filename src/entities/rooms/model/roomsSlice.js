@@ -5,7 +5,8 @@ import {fetchRoomsData} from "./roomsThunk";
 const initialState = {
     roomsData: [],
     roomsStatus: "idle",
-    error: null
+    error: null,
+    loading: false
 }
 
 export const roomsSlice = createSlice(
@@ -16,12 +17,15 @@ export const roomsSlice = createSlice(
         extraReducers: builder =>
             builder
                 .addCase(fetchRoomsData.pending, state => {
-                    state.roomsStatus = "loading"
+                    state.loading = true;
+                    state.error = null;
                 })
                 .addCase(fetchRoomsData.fulfilled,( state, action )=> {
+                    state.loading = false;
                     state.roomsData = action.payload.rooms
                     console.log(action.payload, "keldim")
                     state.roomsStatus = 'success'
+
 
                 })
                 .addCase(fetchRoomsData.rejected, state => {

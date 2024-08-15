@@ -31,7 +31,7 @@ export const GroupsList = React.memo(({currentTableData}) => {
                                 <td>{item.subject}</td>
                                 <td>{item.typeCourse}</td>
                                 <td>{item.groupPrice}</td>
-                                <td>{item.deletedDate}</td>
+                                <td>{item.status ?<div><div/></div> : null }</td>
                             </tr>
                             </tbody>
                         )

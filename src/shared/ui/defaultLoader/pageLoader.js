@@ -1,11 +1,11 @@
 import React from 'react';
 
-import "./defaultLoader.module.sass"
+import cls from "./defaultLoader.module.sass"
 export const DefaultPageLoader = () => {
     return (
-        <div className="defaultLoader">
-            <div className="loadingio-spinner-rolling-fu80w05cx7e">
-                <div className="defaultLoader-box">
+        <div className={cls.defaultLoader}>
+            <div className={cls.loadingio_spinner_rolling_fu80w05cx7e}>
+                <div className={cls.defaultLoader_box}>
                     <div></div>
                 </div>
             </div>

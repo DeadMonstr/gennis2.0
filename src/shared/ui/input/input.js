@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import cls from "./input.module.sass";
 import classNames from "classnames";
 
@@ -53,9 +53,9 @@ export const Input = React.memo(({
                 {type === "password" && (
                     <div className={cls.eye} onClick={() => setShowPassword(!showPassword)}>
                         {showPassword ? (
-                            <i className="fa-solid fa-eye"/>
+                            <i className="fa-solid fa-eye" />
                         ) : (
-                            <i className="fa-solid fa-eye-slash"/>
+                            <i className="fa-solid fa-eye-slash" />
                         )}
                     </div>
                 )}
@@ -64,7 +64,7 @@ export const Input = React.memo(({
             <div className={cls.message}>
                 {errors?.[name] && (
                     <span className={cls.message__error}>
-                        {errors?.[name].message}
+                        {errors[name].message}
                     </span>
                 )}
             </div>
@@ -80,7 +80,7 @@ export const Input = React.memo(({
                     disabled={disabled}
                     id={name}
                     className={classNames(cls.input, extraClassName, {
-                        [`${cls?.error}`]: errors?.[name]
+                        [cls.error]: errors?.[name]
                     })}
                     defaultValue={defaultValue}
                     value={value}

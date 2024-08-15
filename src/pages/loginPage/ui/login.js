@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router";
 import {useDispatch} from "react-redux";
-import {useForm} from "react-hook-form";
+import {set, useForm} from "react-hook-form";
 
 import {Button} from "shared/ui/button";
 import {Input} from "shared/ui/input";
@@ -10,8 +10,9 @@ import {Alert} from "shared/ui/alert";
 import cls from "./login.module.sass"
 import gennisImg from "shared/assets/images/logo.svg"
 import loginAside from "shared/assets/images/login-page-4468581-3783954 1.svg"
-import {API_URL, useHttp} from "../../../shared/api/base";
+import {API_URL, useHttp} from "shared/api/base";
 import {getUserData} from "../model/loginSlice";
+import {DefaultLoader} from "shared/ui/defaultLoader";
 
 
 export const Login = () => {
@@ -21,10 +22,14 @@ export const Login = () => {
     const {request} = useHttp()
 
 
-    const {register, handleSubmit} = useForm()
+    const {register, handleSubmit , setValue} = useForm()
     const [inputChange, setInputChange] = useState([])
     const [loading, setLoading] = useState(true)
+
+
+    const [error, setError] = useState(false)
     const dispatch = useDispatch()
+
     const [alerts, setAlerts] = useState([]);
     const navigate = useNavigate()
     const showAlert = (type, message) => {
@@ -83,9 +88,12 @@ export const Login = () => {
                 setLoading(false)
             })
             .catch(err => {
-                showAlert("error" , "loginda hatolik")
+                showAlert("error", "loginda hatolik")
                 console.log(err)
                 setLoading(true)
+                setError(true)
+                setValue("username" , "")
+                setValue("password" , "")
 
             })
 
@@ -93,30 +101,66 @@ export const Login = () => {
     }
     return (
         <div className={cls.container}>
+
             <Alert alerts={alerts} hideAlert={hideAlert}/>
             <div className={cls.login__logo}>
                 <img src={gennisImg} alt=""/>
             </div>
+
             <div className={cls.login}>
+
                 <div className={cls.login__boxes}>
+
                     <div className={cls.login__box}>
+
                         <div className={cls.box__header_img}>
                             <img src={gennisImg} alt=""/>
                         </div>
                         <h1 className={cls.box__header_title}>
                             login
                         </h1>
+                        {error && error ?
+                            <div className={cls.login__error}>Username yoki Parol notug'ri !</div> : null}
                         <div className={cls.box__form}>
                             <form onSubmit={handleSubmit(onClick)}>
-                                {loading ? <Input  onChange={(e) => setInputChange(e.target.value)} title={"username"}
-                                                  register={register} name={"username"} type="text"  required/> :
-                                    <Input disabled onChange={(e) => setInputChange(e.target.value)} title={"username"}
-                                           register={register} name={"username"} type="text" required/>}
                                 {loading ?
-                                    <Input title={"password"} register={register} name={"password"} type="password"
-                                           required/> :
-                                    <Input title={"password"} register={register} name={"password"} type="password"
-                                           required disabled/>}
+                                    <>
+                                        <Input
+                                            onChange={(e) => setInputChange(e.target.value)}
+                                            title={"username"}
+                                            register={register}
+                                            name={"username"}
+                                            type="text"
+                                            required/>
+
+
+                                        <Input
+                                            title={"password"}
+                                            register={register}
+                                            name={"password"}
+                                            type="password"
+                                            required/>
+                                    </>
+                                    :
+                                    <>
+                                        <Input
+
+                                            disabled
+                                            onChange={(e) => setInputChange(e.target.value)}
+                                            title={"username"}
+                                            register={register}
+                                            name={"username"}
+                                            type="text"
+                                            required/>
+                                        <Input
+                                            title={"password"}
+                                            register={register}
+                                            name={"password"}
+                                            type="password"
+                                            required
+                                            disabled/>
+                                    </>
+                                }
                                 <Input extraClassName={cls.checkbox} type="checkbox" onChange={() => setInputChange}
                                        checkboxTitle={"Remember me"}/>
                                 {/*<Button extraClass={cls.login__btn}>Login</Button>*/}

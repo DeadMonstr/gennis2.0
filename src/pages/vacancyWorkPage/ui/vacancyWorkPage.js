@@ -9,6 +9,9 @@ import { VacancyWorkList } from "entities/vacancy/ui/vacancyWorkList";
 import { Switch } from "../../../shared/ui/switch";
 import { VacancyWorkerList } from "entities/vacancy/ui/vacancyWorkerList";
 import { VacancyWorkerPermission } from "../../../features/vacancyModals/vacancyWorkerPermission";
+import {useSelector, useDispatch} from "react-redux";
+import {getWorkerId} from "../../../features/vacancyModals/vacancyWorkPage/model";
+import {fetchWorkerWithId} from "../../../features/vacancyModals/vacancyWorkPage/model";
 
 export const VacancyWorkPage = () => {
     const [active, setActive] = useState(false);
@@ -21,9 +24,12 @@ export const VacancyWorkPage = () => {
     const [currentTableData, setCurrentTableData] = useState([]);
     const [currentEditingVacancy, setCurrentEditingVacancy] = useState(null);
     const [selectedItems, setSelectedItems] = useState([]);
-
+    const dispatch = useDispatch()
+    const getWorkerID = useSelector(getWorkerId)
     const PageSize = useMemo(() => 20, []);
 
+
+    console.log(getWorkerID)
     useEffect(() => {
         setCurrentTableData(!activeSwitch ? vacancyWorkList : vacancyWorkerList);
     }, [activeSwitch]);
@@ -92,7 +98,7 @@ export const VacancyWorkPage = () => {
                     {!editMode && selectedItems.length > 0 && (
                         <Button
                             extraClass={cls.buttonHelpers}
-                            children={<i className={"fas fa-trash"}></i>}
+                            children={<i style={{color: "white"}} className={"fas fa-trash"}></i>}
                             onClick={handleDelete}
                         />
                     )}

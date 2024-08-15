@@ -1,14 +1,20 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {roomsAddThunk} from "./roomsAddThunk";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { roomsAddThunk } from "./roomsAddThunk";
 
-export const roomsAddSlice = createSlice({
+const initialState = {
+    rooms: [],
+    loading: false,
+    error: null,
+};
+
+const roomsAddSlice = createSlice({
     name: 'rooms',
-    initialState: {
-        rooms: [],
-        loading: false,
-        error: null,
+    initialState,
+    reducers: {
+        addRoom: (state, action) => {
+            state.rooms.push(action.payload);
+        },
     },
-    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(roomsAddThunk.pending, (state) => {
@@ -25,5 +31,7 @@ export const roomsAddSlice = createSlice({
             });
     },
 });
+
+export const { addRoom } = roomsAddSlice.actions;
 
 export default roomsAddSlice.reducer;

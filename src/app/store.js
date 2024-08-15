@@ -1,7 +1,7 @@
-import {configureStore} from "@reduxjs/toolkit";
 
+import {configureStore} from "@reduxjs/toolkit";
 import {search} from "features/searchInput";
-import {registerUser} from "../pages/registerPage";
+import {registerUser} from "pages/registerPage";
 import {loginSlice} from "pages/loginPage";
 import {filteredTeachers} from "features/filters/teacherFilter";
 import {filteredStudents} from "features/filters/studentsFilter";
@@ -13,24 +13,27 @@ import {user} from "entities/user";
 import {studentProfilePayment} from "entities/profile/studentProfile";
 import {studentProfileBooks} from "entities/profile/studentProfile";
 import {studentProfileRating} from "entities/profile/studentProfile";
-import {roomsAddSlice} from 'pages/roomsPage'
+import {roomsAddSlice} from "pages/roomsPage";
 import {studentsDirectorSlice} from "pages/studentsPage"
 import {timeTable} from "pages/timeTableListPage";
+import {homeSlice} from "entities/home";
+import {teachers} from "entities/teachers"
 import {newStudents} from "../entities/students";
 import {employers} from "../entities/employer";
 import {roomsSlice} from "../entities/rooms";
-import {homeSlice} from "entities/home";
-import {teachers} from "entities/teachers"
-import {
-    studentProfile,
-    teacherProfileData,
-    userProfile
-} from "pages/profilePage";
-import {flowsSlice} from "entities/flows";
 import {roomssSlice} from "../features/roomsEditModal";
-import {roomsEditModalSlice} from "features/roomEditModal/model";
+import {capital} from "../entities/capital"
+// import {roomsEditModalSlice} from "features/roomEditModal/model";
 import {roomDeleteSlice} from "features/roomDeleteModal/model";
 import {roomsImageAddSlice} from "features/roomImageAddModal/model";
+import {studentProfile, teacherProfileData} from "pages/profilePage";
+import {flowsSlice} from "entities/flows";
+import {teacherParseSlice} from "entities/teachers";
+import {employerParseSlice} from "../entities/profile/employerProfile";
+import {vacancySlice} from "../features/vacancyModals/vacancyPageAdd";
+import {vacancyPageParseSlice} from "../features/vacancyModals/vacancyPageAdd";
+import {vacancyWorkPageSlice} from "../features/vacancyModals/vacancyWorkPage/model";
+import {vacancyWorkerPermissionSlice} from "../features/vacancyModals/vacancyWorkerPermission";
 import {roomImageSlice} from "features/roomImagePareModal";
 import {timeTableSchool} from "pages/timeTable"
 
@@ -69,13 +72,19 @@ export const store = configureStore({
         timeTable,
         roomsAddSlice,
         roomsSlice,
-        flowsSlice,
-        teacherProfileData,
-        userProfile,
         roomssSlice,
-        roomsEditModalSlice,
+        // roomsEditModalSlice,
         roomDeleteSlice,
         roomsImageAddSlice,
+        flowsSlice,
+        teacherProfileData,
+        teacherParseSlice,
+        capital,
+        employerParseSlice,
+        vacancySlice,
+        vacancyPageParseSlice,
+        vacancyWorkPageSlice,
+        vacancyWorkerPermissionSlice,
         roomImageSlice,
         timeTableSchool
     },

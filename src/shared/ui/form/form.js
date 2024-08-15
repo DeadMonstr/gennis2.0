@@ -16,7 +16,7 @@ export const Form = memo(({id, extraClassname, onSubmit, children, typeSubmit= "
             {
                 typeSubmit === "inside"
                     ?
-                    <input value={"Tasdiqlash"} className={cls.submit} type="submit"/>
+                    <input value={"Tasdiqlash"} className={`${cls.submit} ${extraClassname}`} type="submit"/>
                     :
                     null
             }

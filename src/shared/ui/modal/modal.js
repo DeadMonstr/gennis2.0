@@ -38,7 +38,7 @@ export const Modal = memo(({children, active, setActive, extraClass}) => {
                 </div>,
                 document.body
             )
-        )
+        );
     }
     return null;
 })

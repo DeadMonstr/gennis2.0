@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { API_URL, useHttp, } from 'shared/api/base';
+import {API_URL, headersImg, useHttp,} from 'shared/api/base';
 
 export const uploadRoomImageThunk = createAsyncThunk(
     'rooms/uploadRoomImage',
@@ -9,7 +9,7 @@ export const uploadRoomImageThunk = createAsyncThunk(
             formData.append('image', imageFile);
             formData.append('room', roomId);
 
-            const response = await request(`${API_URL}Rooms/rooms_image_create/`, 'POST', formData);
+            const response = await request(`${API_URL}Rooms/rooms_image_create/`, 'POST', formData, headersImg());
             return { roomId, imageUrl: response.imageUrl };
     }
 );

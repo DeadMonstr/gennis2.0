@@ -4,3 +4,6 @@ export const getEmployersData = (state) =>
 
 export const getDeletedEmployersData = (state) =>
     state.employers?.deletedEmployers
+
+export const getEmployerLoading = (state) =>
+    state.employers?.loading

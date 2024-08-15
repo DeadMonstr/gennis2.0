@@ -25,6 +25,8 @@ import {VacancyPage} from "pages/vacancyPage";
 import {RoomsProfilePage} from "pages/roomsProiflePage";
 import {FlowsPage} from "pages/flowsPage";
 import {FlowProfileNavigators} from "entities/flowsProfile";
+import {FlowListPage} from "pages/FlowListPage";
+import {ClassAddColorPage, ClassPage} from "pages/classPage";
 import {TimeTable} from "pages/timeTable";
 import {CalendarPage} from "pages/calendarPage";
 
@@ -84,8 +86,6 @@ export const AppRouter = () => {
                     />
 
 
-                    <Route path={"employer"} element={<EmployerPage/>} />
-                    <Route path={"flows"} element={<FlowsPage/>} />
                     <Route
                         path={"classProfile"}
                         element={<ClassProfilePage/>}
@@ -101,16 +101,20 @@ export const AppRouter = () => {
                     />
 
                     <Route
-                        path={"teacherProfile"}
-                        element={<ProfileTeacherPage/>}
-                    />
-                    <Route
                         path={"teacherSalaryPage"}
                         element={<TeacherSalaryPage/>}
                     />
                     <Route
+                        path={"flows/flow-list"}
+                        element={<FlowListPage/>}
+                    />
+                    <Route
                         path={"giveSalaryPage"}
                         element={<GiveSalaryPage/>}
+                    />
+                    <Route
+                        path={"classColorAdd"}
+                        element={<ClassAddColorPage/>}
                     />
 
                     <Route
@@ -123,7 +127,6 @@ export const AppRouter = () => {
                         index
                         element={<Navigate to={"home"}/>}
                     />
-
 
                 </Route>
 

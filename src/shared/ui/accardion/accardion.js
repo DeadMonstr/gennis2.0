@@ -3,9 +3,10 @@ import React, {useEffect, useRef, useState} from 'react';
 import cls from "./accordion.module.sass"
 
 import classNames from "classnames";
+import {Input} from "../input";
 
 
-export const Accordion = ({title, subtitle, children, backOpen, setBackOpen, clazz, btns}) => {
+export const Accordion = ({title, subtitle, children, backOpen, setBackOpen, clazz, btns , number}) => {
 
 
     const [open, setOpen] = useState(false)
@@ -38,14 +39,14 @@ export const Accordion = ({title, subtitle, children, backOpen, setBackOpen, cla
             <div onClick={toggleOpen} className={cls.header}>
                 <div className={cls.info}>
 
-                    <div>
-                        <h1>{title}</h1>
-                        {subtitle && <h1>{subtitle}</h1>}
-                    </div>
+                        <span>{number}</span>
+                        <div className={cls.title}>{title}</div>
+
                 </div>
 
 
                 <div className={cls.btns}>
+                    {subtitle && <div className={cls.checkbox}>{subtitle ? <Input type={"checkbox"}/> : null}</div>}
                     {
                         btns?.map(item => {
                             return item
@@ -54,7 +55,7 @@ export const Accordion = ({title, subtitle, children, backOpen, setBackOpen, cla
                     <div className={classNames(cls.arrow, {
                         [cls.active]: backOpen || open
                     })}>
-                        <i className="fas fa-sort-down"></i>
+                        <i className="fas fa-angle-down"></i>
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@ import close from "shared/assets/icons/close.svg"
 import timeTable from "shared/assets/icons/Clock.png"
 import Filter from "shared/assets/Filtericons/Filter.svg";
 
-export const Button = React.memo(({children, onClick, type, disabled, status , extraClass}) => {
+export const Button = React.memo(({children, onClick, type, disabled, status , extraClass , editPlus}) => {
     return (
         <button onClick={onClick} className={classNames(cls.btn,extraClass, cls[type], {
             [cls.simple]: type === "simple",
@@ -20,6 +20,7 @@ export const Button = React.memo(({children, onClick, type, disabled, status , e
             [cls.star]: type === "star",
             [cls.login]: type === "login",
             [cls.filter]: type === "filter",
+            [cls.editPlus]: type === "editPlus",
         })}
                 disabled={disabled}
         >

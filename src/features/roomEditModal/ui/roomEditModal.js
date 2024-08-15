@@ -1,27 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {editRoomThunk} from "../model/roomEditThunk";
+import { editRoomThunk } from "../model/roomEditThunk";
 import { Modal } from 'shared/ui/modal';
 import { Input } from 'shared/ui/input';
 import { Button } from 'shared/ui/button';
 import cls from './roomEditModal.module.sass';
-import {getRoomEdit} from "../model/selectors/selectors";
+import { getRoomsID } from "../../roomsEditModal/model";
 
-export const RoomEditModal = ({ isOpen, onClose, roomId }) => {
+export const RoomEditModal = ({ isOpen, onClose, roomId, onUpdate }) => {
     const dispatch = useDispatch();
-    const room = useSelector(getRoomEdit);
-
+    const room = useSelector(getRoomsID);
     const [groupName, setGroupName] = useState('');
     const [seatCount, setSeatCount] = useState('');
     const [electronicBoard, setElectronicBoard] = useState(false);
-    const [branch, setBranch] = useState(1);
 
     useEffect(() => {
         if (room) {
-            setGroupName(room.name || '');
-            setSeatCount(room.seats_number || '');
-            setElectronicBoard(room.electronic_board || false);
-            setBranch(room.branch || 1);
+            setGroupName(room.name);
+            setSeatCount(room.seats_number);
+            setElectronicBoard(room.electronic_board);
         }
     }, [room]);
 
@@ -31,12 +28,13 @@ export const RoomEditModal = ({ isOpen, onClose, roomId }) => {
             name: groupName,
             seats_number: parseInt(seatCount, 10),
             electronic_board: electronicBoard,
-            branch: branch,
         };
 
-        dispatch(editRoomThunk({ id: roomId, updatedRoom }));
-        window.location.reload()
-        onClose();
+        dispatch(editRoomThunk({ id: roomId, updatedRoom }))
+            .then(() => {
+                onClose();
+                onUpdate(updatedRoom); // Trigger the parent update function
+            });
     };
 
     if (!isOpen) return null;
@@ -68,14 +66,6 @@ export const RoomEditModal = ({ isOpen, onClose, roomId }) => {
                             type={"checkbox"}
                             checked={electronicBoard}
                             onChange={(e) => setElectronicBoard(e.target.checked)}
-                        />
-                    </div>
-                    <div>
-                        <Input
-                            title={"Branch"}
-                            type={"number"}
-                            value={branch}
-                            onChange={(e) => setBranch(parseInt(e.target.value, 10))}
                         />
                     </div>
                     <div className={cls.filter__switch}>

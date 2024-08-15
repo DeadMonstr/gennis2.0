@@ -1,11 +1,8 @@
-
 import {
     getDirectorRouteStudents,
     getRouteUserProfile,
-    getRoomsProfilePage,
     getRouteTaskManager,
     getVacancyWorkPage,
-    getTeacherProfile,
     getRouteStudents,
     getRouteTimePage,
     getRouteRegister,
@@ -14,7 +11,17 @@ import {
     getVacancyPage,
     getRouteRooms,
     getRouteMain,
-    getProfile
+    getProfile,
+    getClass,
+    getFlow,
+    getContract,
+    getCapital,
+    getCapitalInside,
+    getTeacherProfile,
+    getRoomsProfilePage,
+    getEmployerPage,
+    getEmployerProfile,
+    getLocations
 } from "shared/const/routers";
 
 
@@ -26,7 +33,7 @@ import {TeachersPage} from "pages/teacherPage";
 import {
     ProfileTeacherPage,
     UserProfilePage,
-    StudentProfilePage
+    StudentProfilePage, ProfileEmployerPage
 } from "pages/profilePage";
 import {StudentsDirectorPage} from "pages/studentsPage";
 import {VacancyPage} from "pages/vacancyPage";
@@ -35,6 +42,12 @@ import {TimeTableListPage} from "pages/timeTableListPage";
 import {EmployerPage} from "pages/employeesPage";
 import {FlowsPage} from "pages/flowsPage";
 import {RoomsProfilePage} from "pages/roomsProiflePage";
+import {ClassPage} from "pages/classPage";
+import {ContractPage} from "pages/contractPage";
+import {CapitalInside, CapitalPage} from "pages/capitalPage";
+
+import {getEmployersData} from "../../../entities/employer/model/selector/employersSelector";
+import {Location} from "../../../entities/editCreates";
 // import {RoomsProfilePage} from "pages/profilePage";
 
 
@@ -69,7 +82,7 @@ export const routersConfig = [
         name: "O'qituvchilar",
         path: getRouteTeacher(":id"),
         element: <TeachersPage/>
-    },      
+    },
     {
         to: "/login",
         name: "Ishchilar",
@@ -84,13 +97,21 @@ export const routersConfig = [
     },
     {
         name: "Teacher Profile",
-        path: getTeacherProfile("id"),
+        path: getTeacherProfile(":id"),
         element: <ProfileTeacherPage/>,
     },
     {
+        to: "profile",
         name: "Student Profile",
         path: getProfile(":id"),
         element: <StudentProfilePage/>,
+    },
+    {
+        to: "capitalBox",
+        name: "capitalInside",
+        path: getCapitalInside(":id"),
+        element: <CapitalInside/>
+
     },
     {
         name: "Time Table",
@@ -98,24 +119,45 @@ export const routersConfig = [
         element: <TimeTableListPage/>,
     },
     {
-      name: "Vakansiyalar",
-      path: getVacancyPage(":id"),
-      element: <VacancyPage/>,
+        name: "Vakansiyalar",
+        path: getVacancyPage(":id"),
+        element: <VacancyPage/>,
     },
     {
-        path: getVacancyWorkPage(),
+        to: 'vacancyPage/vacancyWorkPage',
+        path: getVacancyWorkPage(":id"),
         element: <VacancyWorkPage/>,
     },
     {
+
         name: "Employers",
-        path: getTeacherProfile(":id"),
+        icon: "fa-user-graduate",
+        roles: [],
+        path: getEmployerPage(":id"),
         element: <EmployerPage/>,
     },
     {
         name: "Flows",
-        path: getTeacherProfile("id"),
+        path: getFlow(":id"),
         element: <FlowsPage/>,
     },
+    {
+        name: "Class",
+        path: getClass(":id"),
+        element: <ClassPage/>,
+    },
+    {
+        path: getContract(":id"),
+        name: "Contract",
+        // icon: "fa fa-book",
+        element: <ContractPage/>
+    },
+    {
+        path: getCapital(":id"),
+        name: "capital",
+        element: <CapitalPage/>
+    },
+
     {
         name: "Honalar",
         path: getRouteRooms(":id"),
@@ -129,6 +171,21 @@ export const routersConfig = [
         name: "Rooms Profile",
         path: getRoomsProfilePage(":id"),
         element: <RoomsProfilePage/>,
+        roles: [],
+    },
+    {
+        to: "teacher/teacherProfile",
+        name: "Teacher Profile",
+        path: getTeacherProfile(":id"),
+        element: <ProfileTeacherPage/>,
+        roles: [],
+    },
+    {
+        to: "employer/employerProfile",
+        name: "Employer Page",
+        path: getEmployerProfile(":id"),
+        element: <ProfileEmployerPage/>,
+        roles: [],
     },
     {
         to: "/login",
@@ -153,5 +210,9 @@ export const routersConfig = [
         path: getRouteRegister(),
         element: <Register/>,
     },
-
+    {
+        name: "location",
+        path: getLocations(":id"),
+        element: <Location/>
+    },
 ]

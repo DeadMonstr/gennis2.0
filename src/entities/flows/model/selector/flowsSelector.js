@@ -6,3 +6,8 @@ export const getFlows = (state) =>
 
 export const getFlowsLoading = (state) =>
     state.flowsSlice?.flowsStatus
+
+
+
+export const getFlowList = (state) =>
+    state.flowsSlice?.flowList
