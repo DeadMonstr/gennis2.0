@@ -34,6 +34,10 @@ import {vacancySlice} from "../features/vacancyModals/vacancyPageAdd";
 import {vacancyPageParseSlice} from "../features/vacancyModals/vacancyPageAdd";
 import {vacancyWorkPageSlice} from "../features/vacancyModals/vacancyWorkPage/model";
 import {vacancyWorkerPermissionSlice} from "../features/vacancyModals/vacancyWorkerPermission";
+import {teacherSalarySlice} from "../entities/teacherSalary";
+import {employerSalarySlice} from "../entities/employerSalary";
+import {giveEmployerSalarySlice} from "../pages/giveSalaryPage";
+import {giveEmployerSalarySlices} from "../features/giveEmployerSalary";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -82,7 +86,11 @@ export const store = configureStore({
         vacancySlice,
         vacancyPageParseSlice,
         vacancyWorkPageSlice,
-        vacancyWorkerPermissionSlice
+        vacancyWorkerPermissionSlice,
+        teacherSalarySlice,
+        employerSalarySlice,
+        giveEmployerSalarySlice,
+        giveEmployerSalarySlices
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

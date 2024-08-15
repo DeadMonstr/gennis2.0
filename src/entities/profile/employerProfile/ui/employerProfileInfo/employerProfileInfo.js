@@ -61,25 +61,25 @@ export const EmployerProfileInfo = memo(({active,setActive,setActiveModal, newIm
                             alt=""
                         />
                         <div className={cls.boxEs}>
-                            <h1 className={cls.username} title={employerId?.username}>{employerId?.username}</h1>
+                            <h1 className={cls.username} title={employerId.user?.username}>{employerId.user?.username}</h1>
                         </div>
 
                         <h2 className={cls.info__role}>Student</h2>
                     </div>
                     <div className={cls.info__text}>
-                        <p>Ism: <span>{employerId?.name}</span></p>
-                        <p>Familiya: <span>{employerId?.surname}</span></p>
-                        <p>Otasinig ismi: <span>{employerId?.father_name}</span></p>
-                        <p>Telefon raqami: <span>{employerId?.phone}</span></p>
-                        <p>Yoshi: <span>{employerId?.age}</span></p>
-                        <p>Tug'ilgan sana: <span>{employerId?.birth_date}</span></p>
+                        <p>Ism: <span>{employerId.user?.name}</span></p>
+                        <p>Familiya: <span>{employerId.user?.surname}</span></p>
+                        <p>Otasinig ismi: <span>{employerId.user?.father_name}</span></p>
+                        <p>Telefon raqami: <span>{employerId.user?.phone}</span></p>
+                        <p>Yoshi: <span>{employerId.user?.age}</span></p>
+                        <p>Tug'ilgan sana: <span>{employerId.user?.birth_date}</span></p>
                         <div className={cls.info__addInfo}>
                             <i className="fas fa-plus"/>
                         </div>
                     </div>
                 </>
             }
-            <Link to={"/platform/teacherSalaryPage"}>
+            <Link to={`employerSalaryPage/${employerId.user?.id}`}>
                 <EditableCard
                     extraClass={cls.info__balance}
                 >

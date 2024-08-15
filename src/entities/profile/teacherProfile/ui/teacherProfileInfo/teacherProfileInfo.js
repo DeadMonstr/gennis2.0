@@ -8,7 +8,7 @@ import {useParams} from "react-router";
 import {fetchTeacherId, getTeacherId} from "../../../../teachers";
 import {getLoading} from "../../../../teachers/model/selector/teacherIdSelector";
 import {TeacherEdit} from "features/profileEdits/teacherEdit";
-import {DefaultLoader} from "../../../../../shared/ui/defaultLoader";
+import {DefaultLoader} from "shared/ui/defaultLoader";
 
 export const TeacherProfileInfo = memo(({active,setActive,setActiveModal, newImage}) => {
 
@@ -74,7 +74,7 @@ export const TeacherProfileInfo = memo(({active,setActive,setActiveModal, newIma
                     </div>
                 </>
             }
-            <Link to={"/platform/teacherSalaryPage"}>
+            <Link to={`teacherSalaryPage/${teacherId?.id}`}>
                 <EditableCard
                     extraClass={cls.info__balance}
                 >

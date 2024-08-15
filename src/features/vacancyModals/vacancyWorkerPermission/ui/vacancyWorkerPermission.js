@@ -6,14 +6,20 @@ import cls from "./vacancyWorkerPermission.module.sass";
 import { Button } from "../../../../shared/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { getPermissionTables } from "../model/selectors/selectors";
-import { fetchPermissionTable, postSelectedTable } from "../model/vacancyWorkerPermissionThunk";
+import {fetchWorkerWithId,getWorkerId} from "features/vacancyModals/vacancyWorkPage/model";
+import { fetchPermissionTable, postSelectedTable, postSelectedPermission } from "../model/vacancyWorkerPermissionThunk";
+import {useParams} from "react-router-dom";
 
 export const VacancyWorkerPermission = React.memo(({ active, setActive, onAddVacancy }) => {
     const [selectedWorkName, setSelectedWorkName] = useState("");
     const [selectedPermissions, setSelectedPermissions] = useState([]);
-    const [availablePermissions, setAvailablePermissions] = useState([]); // Backenddan keladigan permissionlarni saqlash uchun
+    const [availablePermissions, setAvailablePermissions] = useState([]);
+    const selectedJobID = useSelector(getWorkerId)
     const dispatch = useDispatch();
+    const {id} = useParams()
     const permissionData = useSelector(getPermissionTables);
+    const userId = selectedJobID.job?.length ? Number(selectedJobID.job[0].id) : null;
+    console.log(userId);
 
     useEffect(() => {
         dispatch(fetchPermissionTable());
@@ -21,13 +27,12 @@ export const VacancyWorkerPermission = React.memo(({ active, setActive, onAddVac
 
     const onChangeWorkName = (value) => {
         setSelectedWorkName(value);
-        // Tanlangan table ni backendga yuborish
         dispatch(postSelectedTable(value)).then((action) => {
             if (postSelectedTable.fulfilled.match(action)) {
-                console.log("Received Permissions:", action.payload);
-                setAvailablePermissions(action.payload.permissions); // Backenddan kelgan permissionlarni state ga saqlaymiz
+                console.log("Kevotgan permissionla", action.payload);
+                setAvailablePermissions(action.payload.permissions);
             } else {
-                console.error("Failed to fetch permissions:", action.payload);
+                console.error("Permissionlada xato", action.payload);
             }
         });
     };
@@ -41,16 +46,35 @@ export const VacancyWorkerPermission = React.memo(({ active, setActive, onAddVac
     };
 
     const handleAdd = () => {
-        const newVacancy = {
-            id: Date.now(),
-            workName: selectedWorkName,
-            workerNames: selectedPermissions.join(", ")
-        };
-        onAddVacancy(newVacancy);
-        setSelectedPermissions([]);
-        setSelectedWorkName("");
-        setActive(false);
+        const selectedPermissionsIds = availablePermissions.permissions
+            .filter(permission => selectedPermissions.includes(permission.name))
+            .map(permission => permission.id);
+
+        if (id) {
+            dispatch(postSelectedPermission({
+                id,
+                selectedJobID: userId,
+                selectedPermissions: selectedPermissionsIds
+            })).then((action) => {
+                if (postSelectedPermission.fulfilled.match(action)) {
+                    dispatch(fetchWorkerWithId(id));
+
+                    const newVacancy = {
+                        id: Date.now(),
+                        permissions: selectedPermissionsIds
+                    };
+                    onAddVacancy(newVacancy);
+                    setSelectedPermissions([]);
+                    setSelectedWorkName("");
+                    setActive(false);
+                } else {
+                    console.error("Xatolik yuz berdi", action.payload);
+                }
+            });
+        }
     };
+
+
 
     return (
         <Modal active={active} setActive={setActive}>
