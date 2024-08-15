@@ -1,5 +1,5 @@
 .schedule
-  width: fit-content
+  min-width: fit-content
   &__inner
     border: 1px solid #000000
     .index
@@ -23,6 +23,10 @@
         border-bottom: 1px solid #000000
         color: #001B61 !important
         padding: 2.7rem 2.4rem 2.4rem !important
+        text-align: center
+        //display: flex
+        //justify-content: center
+        //align-items: center
       td
         border-right: 1px solid #000000
         border-top: 1px solid #000000
@@ -36,7 +40,13 @@
           border-radius: .1rem
         .subject
           background-color: #818CF8
+          &.notActive
+            padding: 1.25rem 0
         .teacher
           background-color: #22C55E
+          &.notActive
+            padding: 1.25rem 0
         .room
           background-color: #EC4899
+          &.notActive
+            padding: 1.25rem 0

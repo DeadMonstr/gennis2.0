@@ -31,7 +31,8 @@ import {roomssSlice} from "../features/roomsEditModal";
 import {roomsEditModalSlice} from "features/roomEditModal/model";
 import {roomDeleteSlice} from "features/roomDeleteModal/model";
 import {roomsImageAddSlice} from "features/roomImageAddModal/model";
-import {roomImageSlice} from "../features/roomImagePareModal";
+import {roomImageSlice} from "features/roomImagePareModal";
+import {timeTableSchool} from "pages/timeTable"
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -75,7 +76,8 @@ export const store = configureStore({
         roomsEditModalSlice,
         roomDeleteSlice,
         roomsImageAddSlice,
-        roomImageSlice
+        roomImageSlice,
+        timeTableSchool
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

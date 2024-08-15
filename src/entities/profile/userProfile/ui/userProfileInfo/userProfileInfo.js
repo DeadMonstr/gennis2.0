@@ -6,6 +6,9 @@ import cls from "./userProfileInfo.module.sass";
 import defaultUserImage from "shared/assets/images/user_image.png";
 
 export const UserProfileInfo = memo(({setActive, data, setStatus}) => {
+
+    console.log(data, "data")
+
     return (
         <div className={cls.info}>
             <div className={cls.info__container}>

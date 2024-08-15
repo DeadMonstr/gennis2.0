@@ -1,6 +1,6 @@
 import {useDroppable} from "@dnd-kit/core";
 
-export function Droppable({id, key, children, extraClass}) {
+export function Droppable({id, children, extraClass}) {
     const {isOver, setNodeRef} = useDroppable({
         id: id
     });
@@ -10,7 +10,7 @@ export function Droppable({id, key, children, extraClass}) {
 
     return (
         <div
-            key={key}
+            key={id}
             ref={setNodeRef}
             style={style}
             className={extraClass}

@@ -25,7 +25,8 @@ import {VacancyPage} from "pages/vacancyPage";
 import {RoomsProfilePage} from "pages/roomsProiflePage";
 import {FlowsPage} from "pages/flowsPage";
 import {FlowProfileNavigators} from "entities/flowsProfile";
-import {TimeTable} from "../../../pages/timeTable";
+import {TimeTable} from "pages/timeTable";
+import {CalendarPage} from "pages/calendarPage";
 
 
 export const AppRouter = () => {
@@ -76,7 +77,7 @@ export const AppRouter = () => {
                         element={<TimeTable/>}
                     />
 
-                    <Route path={"students/createGroup"} element={<CreateGroup/>} />
+                    <Route path={"students/:id/createGroup"} element={<CreateGroup/>} />
                     <Route
                         path={"profile"}
                         element={<StudentProfilePage/>}
@@ -113,9 +114,16 @@ export const AppRouter = () => {
                     />
 
                     <Route
+                        path={"calendar"}
+                        element={<CalendarPage/>}
+                    />
+
+
+                    <Route
                         index
                         element={<Navigate to={"home"}/>}
                     />
+
 
                 </Route>
 

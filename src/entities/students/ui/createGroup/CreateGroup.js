@@ -18,6 +18,8 @@ import {Textarea} from "shared/ui/textArea";
 import {SearchInput} from "shared/ui/searchInput";
 import {fetchTeachersData} from "../../../teachers";
 import {getTeachers} from "../../../teachers/";
+import {AnimatedMulti, location} from "../../../../features/workerSelect";
+import {EditableCard} from "../../../../shared/ui/editableCard";
 
 const branches = [
     {name: "chirhciq"},
@@ -186,8 +188,8 @@ export const CreateGroup = () => {
                     <div className={cls.timeTableForm}>
                         <Select title={"Kunlar"}/>
                         <Select title={"Honalar"}/>
-                        <Input placeholder={"Boshlanish vaqti"}/>
-                        <Input placeholder={"Tugash vaqti"}/>
+                        <Input type={"time"} placeholder={"Boshlanish vaqti"}/>
+                        <Input type={"time"} placeholder={"Tugash vaqti"}/>
                     </div>
                     <div className={cls.timeTableAddPlus}>
                         <i className={"fa fa-plus"}/>
@@ -209,10 +211,13 @@ export const CreateGroup = () => {
                                 <Input extraClassName={cls.createGroupInput} placeholder={"Boshlanish vaqti"}/>
                                 <Input extraClassName={cls.createGroupInput} placeholder={'Tugash vaqti'}/>
                             </div>
-                            <Textarea extraClassName={cls.createGroupFormItem} placeholder={"O'qituvchi "}/>
+                            {/*<Textarea extraClassName={cls.createGroupFormItem} placeholder={"O'qituvchi "}/>*/}
+                            <EditableCard title={""} extraClass={cls.cardSelect}>
+                                <AnimatedMulti options={location}/>
+                            </EditableCard>
                             <Input extraClassName={cls.createGroupFormItem} placeholder={"Gruppa nomi"}/>
                             <Select extraClassName={cls.createGroupFormItem} title={"Kurs turi"}/>
-                            <Input extraClassName={cls.createGroupFormItem} placeholder={"Gruppa nomi"}/>
+                            <Input extraClassName={cls.createGroupFormItem} placeholder={"Gruppa narxi"}/>
                             <Input extraClassName={cls.createGroupFormItem} placeholder={"O'qituvchi ulushi"}/>
                         </Form>
                     </div>
@@ -228,3 +233,5 @@ export const CreateGroup = () => {
         </>
     )
 }
+
+// Group/groups/create/ create

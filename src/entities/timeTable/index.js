@@ -6,3 +6,4 @@ export {TimeTableChange} from "./ui/timeTableChange/timeTableChange";
 export {TimeTableFilters} from "./ui/timeTableFilters/timeTableFilters";
 export {TimeTableSchedule} from "./ui/timeTableSchedule/timeTableSchedule";
 export {TimeTableError} from "./ui/timeTableError/timeTableError";
+export {TimeTableScheduleList} from "./ui/timeTableScheduleList/timeTableScheduleList";
