@@ -22,7 +22,7 @@ export const VacancyWorkList = ({ currentTableData, currentPage, PageSize, editM
     }, [dispatch, id])
 
 
-    console.log(workerID, 'worker id')
+    // console.log(workerID, 'worker id')
 
     const handleSelectAll = (e) => {
         if (e.target.checked) {

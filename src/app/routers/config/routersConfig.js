@@ -1,4 +1,3 @@
-
 import {
     getDirectorRouteStudents,
     getRouteUserProfile,
@@ -13,9 +12,16 @@ import {
     getRouteRooms,
     getRouteMain,
     getProfile,
-    getTeacherProfile, getRoomsProfilePage,
-    getClass, getEmployerPage,
-    getFlow, getEmployers, getEmployerProfile
+    getClass,
+    getFlow,
+    getContract,
+    getCapital,
+    getCapitalInside,
+    getTeacherProfile,
+    getRoomsProfilePage,
+    getEmployerPage,
+    getEmployerProfile,
+    getLocations
 } from "shared/const/routers";
 
 
@@ -36,8 +42,12 @@ import {TimeTableListPage} from "pages/timeTableListPage";
 import {EmployerPage} from "pages/employeesPage";
 import {FlowsPage} from "pages/flowsPage";
 import {RoomsProfilePage} from "pages/roomsProiflePage";
-import {ClassPage} from "../../../pages/classPage";
+import {ClassPage} from "pages/classPage";
+import {ContractPage} from "pages/contractPage";
+import {CapitalInside, CapitalPage} from "pages/capitalPage";
+
 import {getEmployersData} from "../../../entities/employer/model/selector/employersSelector";
+import {Location} from "../../../entities/editCreates";
 // import {RoomsProfilePage} from "pages/profilePage";
 
 
@@ -86,10 +96,22 @@ export const routersConfig = [
         roles: []
     },
     {
+        name: "Teacher Profile",
+        path: getTeacherProfile(":id"),
+        element: <ProfileTeacherPage/>,
+    },
+    {
         to: "profile",
         name: "Student Profile",
         path: getProfile(":id"),
         element: <StudentProfilePage/>,
+    },
+    {
+        to: "capitalBox",
+        name: "capitalInside",
+        path: getCapitalInside(":id"),
+        element: <CapitalInside/>
+
     },
     {
         name: "Time Table",
@@ -97,9 +119,9 @@ export const routersConfig = [
         element: <TimeTableListPage/>,
     },
     {
-      name: "Vakansiyalar",
-      path: getVacancyPage(":id"),
-      element: <VacancyPage/>,
+        name: "Vakansiyalar",
+        path: getVacancyPage(":id"),
+        element: <VacancyPage/>,
     },
     {
         to: 'vacancyPage/vacancyWorkPage',
@@ -118,18 +140,24 @@ export const routersConfig = [
         name: "Flows",
         path: getFlow(":id"),
         element: <FlowsPage/>,
-        isMenu: true,
-        type: ["app_school_theme"]
     },
     {
-        to: "class",
         name: "Class",
-        icon: "fa-user-graduate",
         path: getClass(":id"),
         element: <ClassPage/>,
-        isMenu: true,
-        type: ["app_school_theme"]
     },
+    {
+        path: getContract(":id"),
+        name: "Contract",
+        // icon: "fa fa-book",
+        element: <ContractPage/>
+    },
+    {
+        path: getCapital(":id"),
+        name: "capital",
+        element: <CapitalPage/>
+    },
+
     {
         name: "Honalar",
         path: getRouteRooms(":id"),
@@ -182,5 +210,9 @@ export const routersConfig = [
         path: getRouteRegister(),
         element: <Register/>,
     },
-
+    {
+        name: "location",
+        path: getLocations(":id"),
+        element: <Location/>
+    },
 ]

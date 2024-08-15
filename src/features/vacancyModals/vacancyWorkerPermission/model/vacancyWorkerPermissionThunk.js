@@ -12,13 +12,13 @@ export const fetchPermissionTable = createAsyncThunk(
 
 export const postSelectedTable = createAsyncThunk(
     'vacancyWorkerPermissionSlice/postSelectedTable',
-    async (selectedTable, { rejectWithValue }) => {
-        const { request } = useHttp();
+    async (selectedTable, {rejectWithValue}) => {
+        const {request} = useHttp();
         try {
             const response = await request(
                 `${API_URL}Permissions/tables/`,
                 "POST",
-                JSON.stringify({ table: selectedTable }),
+                JSON.stringify({table: selectedTable}),
                 headers()
             );
             return response;
@@ -27,3 +27,15 @@ export const postSelectedTable = createAsyncThunk(
         }
     }
 );
+
+
+export const selectedPermissionTable = createAsyncThunk(
+    'vacancyWorkerPermissionSlice/postSelectedTable',
+    async (id) => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Permissions/job_profile/${id}`, "POST", JSON.stringify({"permissions": {id}}) , headers())
+    }
+)
+
+
+

@@ -13,17 +13,20 @@ export const NewStudents = memo(({currentTableData}) => {
 
 
     const renderStudents = () => {
-        return currentTableData?.map((item, i) => (
-            <tr onClick={() => navigation(`profile/${item.id}`)}>
-                <td>{i + 1}</td>
-                <td>{item.user.surname} {item.user.name}</td>
-                <td>{item.user.age}</td>
-                <td>{item.user.phone}</td>
-                <td>{item.user.language?.name}</td>
-                <td>{item.group}</td>
-                <td>{item.user.registered_date}</td>
-            </tr>
-        ));
+        if (currentTableData && currentTableData.length)
+        return currentTableData?.map((item, i) => {
+            return (
+                <tr onClick={() => navigation(`profile/${item.id}`)}>
+                    <td>{i + 1}</td>
+                    <td>{item.user.surname} {item.user.name}</td>
+                    <td>{item.user.age}</td>
+                    <td>{item.user.phone}</td>
+                    <td>{item.user.language?.name}</td>
+                    <td>{item.group}</td>
+                    <td>{item.user.registered_date}</td>
+                </tr>
+            )
+        });
     };
 
     const render = renderStudents()

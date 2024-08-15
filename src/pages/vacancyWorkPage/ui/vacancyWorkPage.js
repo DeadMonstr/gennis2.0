@@ -98,7 +98,7 @@ export const VacancyWorkPage = () => {
                     {!editMode && selectedItems.length > 0 && (
                         <Button
                             extraClass={cls.buttonHelpers}
-                            children={<i className={"fas fa-trash"}></i>}
+                            children={<i style={{color: "white"}} className={"fas fa-trash"}></i>}
                             onClick={handleDelete}
                         />
                     )}

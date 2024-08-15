@@ -72,18 +72,19 @@ export const TeachersPage = () => {
             </div>
                     <div className={cls.table}>
 
-                        <h2>{activeSwitch ? "Deleted Teachers" : "Teachers"}</h2>
-                        {activeSwitch ?
-                            <DeletedTeachers
-                                data={teachersData}
-                                // data={searchedUsers}
-                            />
-                            :
-                            <Teachers
-                                data={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
-                                // data={currentTableData}
-                            />}
-                    </div>
+                <h2>{activeSwitch ? "Deleted Teachers" : "Teachers"}</h2>
+                {activeSwitch ?
+                    <DeletedTeachers
+                        data={teachersData}
+                        // data={searchedUsers}
+                    />
+                    :
+                    <Teachers
+                        loading={getTeacherLoading}
+                        data={currentTableData}
+                        // data={currentTableData}
+                    />}
+            </div>
 
             <Pagination
                 setCurrentTableData={setCurrentTableData}

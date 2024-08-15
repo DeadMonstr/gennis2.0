@@ -85,8 +85,6 @@ export const AppRouter = () => {
                     />
 
 
-                    <Route path={"employer"} element={<EmployerPage/>}/>
-                    <Route path={"flows"} element={<FlowsPage/>}/>
                     <Route
                         path={"classProfile"}
                         element={<ClassProfilePage/>}

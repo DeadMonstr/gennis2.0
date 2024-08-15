@@ -67,6 +67,20 @@ export const menuConfig = [
         isMenu: true,
     },
     {
+
+        to: "contract",
+        name: "Contract",
+        icon: "fa-file-contract",
+        roles: [],
+        isMenu: true
+    },
+    {
+        to: "capital",
+        name: "Capital",
+        icon: "fa-book",
+        isMenu: true
+    },
+    {
         to: "rooms",
         name: "Honalar",
         icon: "fa-door-closed",

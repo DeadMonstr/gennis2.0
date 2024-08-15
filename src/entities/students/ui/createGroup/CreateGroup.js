@@ -205,11 +205,6 @@ export const CreateGroup = memo(() => {
                     <div className={cls.createGroupForm}>
                         <Form>
                             <Select title={"Fanlar"}/>
-                            <div className={cls.createGroupFormFilter}>
-                                <Input extraClassName={cls.createGroupInput} placeholder={"Boshlanish vaqti"}/>
-                                <Input extraClassName={cls.createGroupInput} placeholder={'Tugash vaqti'}/>
-                            </div>
-                            <Textarea extraClassName={cls.createGroupFormItem} placeholder={"O'qituvchi "}/>
                             <Input extraClassName={cls.createGroupFormItem} placeholder={"Gruppa nomi"}/>
                             <Select extraClassName={cls.createGroupFormItem} title={"Kurs turi"}/>
                             <Input extraClassName={cls.createGroupFormItem} placeholder={"Gruppa nomi"}/>

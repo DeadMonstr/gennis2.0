@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo, useState} from "react";
+import {memo, useCallback, useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 import {CreateGroup, DeletedStudents, NewStudents, Students} from "entities/students";
@@ -25,7 +25,7 @@ const branches = [
     {name: "xo'jakent"},
 ]
 
-export const StudentsPage = () => {
+export const StudentsPage = memo(() => {
 
     const dispatch = useDispatch()
 
@@ -57,12 +57,9 @@ export const StudentsPage = () => {
         )
     }, [newStudents, setCurrentPage, search])
 
-
-
-    useEffect(() => {
+    useEffect(() =>{
         dispatch(fetchNewStudentsData())
-    }, [])
-
+    } , [])
 
     const handleChange = (value) => {
         setSelectedRadio(value);
@@ -80,6 +77,7 @@ export const StudentsPage = () => {
     }
 
 
+    const renderNewStudents = renderStudents()
 
     return (
         <>
@@ -90,7 +88,7 @@ export const StudentsPage = () => {
                             peoples={studentsFilter}/>
 
             <div className={cls.tableMain}>
-                {renderStudents()}
+                {renderNewStudents}
             </div>
             <Pagination
                 setCurrentTableData={setCurrentTableData}
@@ -107,4 +105,4 @@ export const StudentsPage = () => {
             <StudentsFilter active={active} setActive={setActive} activePage={selectedRadio}/>
         </>
     )
-}
+})

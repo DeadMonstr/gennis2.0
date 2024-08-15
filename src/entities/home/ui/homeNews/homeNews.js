@@ -21,7 +21,7 @@ import {
     changeNew
 } from "../model/homeSlice";
 
-const list = [1, 2, 3, 4]
+const list = [1, 2, 3, 4 ]
 const newsData = [
     {
         id: 1,
@@ -200,7 +200,7 @@ export const HomeNews = () => {
                     </div>
                 ))}
             </div>
-            {/*<i onClick={onAdd} className={classNames("fa fa-plus", cls.plus)}></i>*/}
+            <i onClick={onAdd} className={classNames("fa fa-plus", cls.plus)}></i>
 
 
             <Modal

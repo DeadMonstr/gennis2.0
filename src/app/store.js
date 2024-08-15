@@ -22,6 +22,7 @@ import {newStudents} from "../entities/students";
 import {employers} from "../entities/employer";
 import {roomsSlice} from "../entities/rooms";
 import {roomssSlice} from "../features/roomsEditModal";
+import {capital} from "../entities/capital"
 // import {roomsEditModalSlice} from "features/roomEditModal/model";
 import {roomDeleteSlice} from "features/roomDeleteModal/model";
 import {roomsImageAddSlice} from "features/roomImageAddModal/model";
@@ -78,6 +79,7 @@ export const store = configureStore({
         flowsSlice,
         teacherProfileData,
         teacherParseSlice,
+        capital,
         employerParseSlice,
         vacancySlice,
         vacancyPageParseSlice,
