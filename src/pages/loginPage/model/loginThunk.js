@@ -1,4 +1,3 @@
-
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {API_URL, useHttp} from "shared/api/base";
 
@@ -11,5 +10,14 @@ export const fetchLoginUser = createAsyncThunk(
         //     "Authorization": "Bearer " + token,
         //     'Content-Type': 'application/json'
         // }
-        return await request(`${API_URL}api/token/`, "POST", JSON.stringify(data))
+        return await request(`${API_URL}Api/token/`, "POST", JSON.stringify(data))
     })
+
+export const userRefreshData = createAsyncThunk(
+    "loginSlice/userRefreshData",
+    async (refresh) => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Api/token/refresh/`, "POST", JSON.stringify(refresh))
+    }
+)
+

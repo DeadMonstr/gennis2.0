@@ -1,22 +1,26 @@
 import {createSlice} from "@reduxjs/toolkit";
-
+import {fetchEmployersData} from "./employersThunk";
 
 const initialState = {
-    employersData: [
-        {name: "sardor", surname: "ikromov", age: 17, phone: 12342131, work: "Manager", status: true, id:1},
-        {name: "sardor", surname: "ikromov", age: 17, phone: 12342131, work: "Manager", status: true, id:2},
-        {name: "sardor", surname: "ikromov", age: 17, phone: 12342131, work: "Manager", status: true, id:3},
-
-    ],
-    deletedEmployers: [
-        {name: "sardor", surname: "ikromov", age: 17, phone: 12342131, work: "Manager", deleteData: "12312321"}
-    ]
+    employersData: [],
+    deletedEmployers: [],
+    loading: false,
+    error: null
 }
 
 export const employersSlice = createSlice({
     name: 'employersSlice',
     initialState,
     reducers: {},
-    extraReducers: builder => {}
+    extraReducers: builder => {
+        builder
+            .addCase(fetchEmployersData.pending, (state) => {state.loading = true})
+            .addCase(fetchEmployersData.fulfilled, (state, action) => {
+                state.loading = false
+                state.employersData = action.payload
+                console.log(action.payload, "employeers")
+            })
+            .addCase(fetchEmployersData.rejected, (state) => state.employersData = 'error')
+    }
 })
 export default employersSlice.reducer

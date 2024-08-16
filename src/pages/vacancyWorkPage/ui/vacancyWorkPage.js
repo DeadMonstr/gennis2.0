@@ -9,12 +9,13 @@ import { VacancyWorkList } from "entities/vacancy/ui/vacancyWorkList";
 import { Switch } from "../../../shared/ui/switch";
 import { VacancyWorkerList } from "entities/vacancy/ui/vacancyWorkerList";
 import { VacancyWorkerPermission } from "../../../features/vacancyModals/vacancyWorkerPermission";
+import {useSelector, useDispatch} from "react-redux";
+import {getWorkerId} from "../../../features/vacancyModals/vacancyWorkPage/model";
 
 export const VacancyWorkPage = () => {
     const [active, setActive] = useState(false);
     const [editMode, setEditMode] = useState(false);
-    const [modalActive, setModalActive] = useState(false);
-    const [switchOn, setSwitchOn] = useState(false);
+    const [activeSwitch, setActiveSwitch] = useState(false);
     const [modal, setModal] = useState(false);
     const [modalOn, setModalOn] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
@@ -22,12 +23,15 @@ export const VacancyWorkPage = () => {
     const [currentTableData, setCurrentTableData] = useState([]);
     const [currentEditingVacancy, setCurrentEditingVacancy] = useState(null);
     const [selectedItems, setSelectedItems] = useState([]);
-
+    const dispatch = useDispatch()
+    const getWorkerID = useSelector(getWorkerId)
     const PageSize = useMemo(() => 20, []);
 
+
+    console.log(getWorkerID)
     useEffect(() => {
-        setCurrentTableData(switchOn ? vacancyWorkList : vacancyWorkerList);
-    }, [switchOn]);
+        setCurrentTableData(!activeSwitch ? vacancyWorkList : vacancyWorkerList);
+    }, [activeSwitch]);
 
     const handleEditClick = (vacancy) => {
         setCurrentEditingVacancy(vacancy);
@@ -50,6 +54,10 @@ export const VacancyWorkPage = () => {
         setSelectedItems([]);
     };
 
+    const handleSwitchChange = () => {
+        setActiveSwitch(!activeSwitch);
+    };
+
     const handleAddVacancy = (newVacancy) => {
         setCurrentTableData(prevData => [...prevData, newVacancy]);
     };
@@ -60,37 +68,43 @@ export const VacancyWorkPage = () => {
             </div>
             <div className={cls.mainContainer_buttonPanelBox}>
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButtons}>
-                    <Switch switchOn={switchOn} setSwitchOn={setSwitchOn} />
+                    {/*<Switch activeSwitch={activeSwitch} onChangeSwitch={handleSwitchChange} />*/}
                 </div>
 
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}>
-                    <Button
-                        extraClass={cls.buttonHelper}
-                        children={<i className={"fas fa-plus"}></i>}
-                        onClick={() => setActive(!active)}
-                    />
-                    <Button
-                        extraClass={cls.buttonHelper}
-                        children={<i className={"fas fa-pencil"}></i>}
-                        onClick={() => setEditMode(!editMode)}
-                    />
+                    {!activeSwitch ? (
+                        <>
+                            <Button
+                                extraClass={cls.buttonHelper}
+                                children={<i className={"fas fa-plus"}></i>}
+                                onClick={() => setActive(!active)}
+                            />
+                            <Button
+                                extraClass={cls.buttonHelper}
+                                children={<i className={"fas fa-pencil"}></i>}
+                                onClick={() => setEditMode(!editMode)}
+                            />
+                        </>
+
+                    )
+                    :
+
+                            null
+
+                    }
+
+
                     {!editMode && selectedItems.length > 0 && (
                         <Button
                             extraClass={cls.buttonHelpers}
-                            children={<i className={"fas fa-trash"}></i>}
+                            children={<i style={{color: "white"}} className={"fas fa-trash"}></i>}
                             onClick={handleDelete}
                         />
                     )}
                 </div>
             </div>
             <div className={cls.mainContainer_tablePanelBox}>
-                {!switchOn ? (
-                    <VacancyWorkerList
-                        currentTableData={currentTableData}
-                        currentPage={currentPage}
-                        PageSize={PageSize}
-                    />
-                ) : (
+                {/*{!activeSwitch ? (*/}
                     <VacancyWorkList
                         currentTableData={currentTableData}
                         currentPage={currentPage}
@@ -100,11 +114,17 @@ export const VacancyWorkPage = () => {
                         selectedItems={selectedItems}
                         setSelectedItems={setSelectedItems}
                     />
-                )}
+                {/*) : (*/}
+                {/*    <VacancyWorkerList*/}
+                {/*        currentTableData={currentTableData}*/}
+                {/*        currentPage={currentPage}*/}
+                {/*        PageSize={PageSize}*/}
+                {/*    />*/}
+                {/*)}*/}
             </div>
             <Pagination
                 setCurrentTableData={setCurrentTableData}
-                users={!switchOn ? vacancyWorkerList : vacancyWorkList}
+                users={!activeSwitch ? vacancyWorkList : vacancyWorkerList}
                 search={search}
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}

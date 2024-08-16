@@ -22,7 +22,13 @@ import {useTheme} from "shared/lib/hooks/useTheme";
 import "app/styles/index.sass"
 import {CreateGroup} from "entities/students";
 import {VacancyPage} from "pages/vacancyPage";
-import {FlowsPage} from "../../../pages/flowsPage";
+import {RoomsProfilePage} from "pages/roomsProiflePage";
+import {FlowsPage} from "pages/flowsPage";
+import {FlowProfileNavigators} from "entities/flowsProfile";
+import {FlowListPage} from "pages/FlowListPage";
+import {ClassAddColorPage, ClassPage} from "pages/classPage";
+import {TimeTable} from "pages/timeTable";
+import {CalendarPage} from "pages/calendarPage";
 
 
 export const AppRouter = () => {
@@ -59,24 +65,28 @@ export const AppRouter = () => {
                                     // <Route element={}>
                                     //     {item.element}
                                     // </Route>
-                                    // <RequireAuth roles={item.roles}>
-                                    //     {item.element}
-                                    // </RequireAuth>
-                                    item.element
+                                    <RequireAuth>
+                                        {item.element}
+                                    </RequireAuth>
+                                    // item.element
                                 }
                             />
                         )
                     }
 
-                    <Route path={"students/createGroup"} element={<CreateGroup/>} />
+                    <Route
+                        path={"time"}
+                        element={<TimeTable/>}
+                    />
+                    {/*<RequireAuth>*/}
+                    {/*    <Route path={"students/:id/createGroup"} element={<CreateGroup/>} />*/}
+                    {/*</RequireAuth>*/}
                     <Route
                         path={"profile"}
                         element={<StudentProfilePage/>}
                     />
 
 
-                    <Route path={"employer"} element={<EmployerPage/>} />
-                    <Route path={"flows"} element={<FlowsPage/>} />
                     <Route
                         path={"classProfile"}
                         element={<ClassProfilePage/>}
@@ -86,19 +96,25 @@ export const AppRouter = () => {
                         path={"molasses"}
                         element={<ClassMolassesPage/>}
                     />
+                    <Route
+                        path={"flowsProfile"}
+                        element={<FlowProfileNavigators/>}
+                    />
 
                     <Route
-                        path={"teacherProfile"}
-                        element={<ProfileTeacherPage/>}
+                        path={"flows/flow-list"}
+                        element={<FlowListPage/>}
                     />
                     <Route
-                        path={"teacherSalaryPage"}
-                        element={<TeacherSalaryPage/>}
+                        path={"classColorAdd"}
+                        element={<ClassAddColorPage/>}
                     />
+
                     <Route
-                        path={"giveSalaryPage"}
-                        element={<GiveSalaryPage/>}
+                        path={"calendar"}
+                        element={<CalendarPage/>}
                     />
+
 
                     <Route
                         index

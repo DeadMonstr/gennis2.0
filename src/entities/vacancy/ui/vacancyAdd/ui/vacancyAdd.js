@@ -1,25 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal } from "shared/ui/modal";
 import { Input } from "shared/ui/input";
 import { Select } from "shared/ui/select";
 import cls from "./vacancyAdd.module.sass";
 import { Button } from "shared/ui/button";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchVacancyData, vacancyPageAddThunk } from "features/vacancyModals/vacancyPageAdd";
+import { addVacancy } from "features/vacancyModals/vacancyPageAdd/model/vacancyPageAddSlice";
+import { getVacancyJobs } from "features/vacancyModals/vacancyPageAdd";
 
-export const VacancyAdd = React.memo(({ active, setActive, addVacancy }) => {
-    const branches = [
-        { name: "chirchiq", label: "chirchiq" },
-        { name: "gazalkent", label: "gazalkent" },
-        { name: "xujakent", label: "xujakent" }
-    ];
-    const [subjectName, setSubjectName] = useState("");
-    const [systemType, setSystemType] = useState("");
+export const VacancyAdd = React.memo(({ active, setActive }) => {
+    const [subjectName, setSubjectName] = useState('');
+    const [systemType, setSystemType] = useState('');
+    const dispatch = useDispatch();
+    const vacancySystemData = useSelector(getVacancyJobs);
+
+    useEffect(() => {
+        dispatch(fetchVacancyData());
+    }, [dispatch]);
 
     const handleAdd = () => {
-        const newVacancy = { subjectName, systemType };
-        addVacancy(newVacancy);
-        setActive(false);
-        setSubjectName("");
-        setSystemType("");
+        const newVacancy = {
+            name: subjectName,
+            system_id: systemType
+        };
+
+        dispatch(vacancyPageAddThunk(newVacancy)).then((action) => {
+            if (vacancyPageAddThunk.fulfilled.match(action)) {
+                dispatch(addVacancy(action.payload));
+            } else {
+                console.error('Failed to add vacancy:', action.error);
+            }
+        });
     };
 
     return (
@@ -31,21 +43,22 @@ export const VacancyAdd = React.memo(({ active, setActive, addVacancy }) => {
                 <h1>Vakansiya qo'shish</h1>
                 <div className={cls.filter__container}>
                     <Input
+                        extraClassName={cls.filter__select}
                         placeholder={"Kasb nomi"}
                         value={subjectName}
                         onChange={(e) => setSubjectName(e.target.value)}
                     />
                     <Select
-                        extraClass={cls.inputWidth}
+                        extraClass={cls.filter__select}
                         value={systemType}
                         onChangeOption={(value) => setSystemType(value)}
-                        options={branches}
+                        options={vacancySystemData?.systems || []}
                     />
                     <Button
                         extraClass={cls.buttonChange}
                         onClick={handleAdd}
                     >
-                        Add
+                        Qo'shish
                     </Button>
                 </div>
             </div>

@@ -18,15 +18,14 @@ export const Switch = React.memo((
                     `${cls.disabled}` :
                     `${cls.notDisabled}`
                 }
-                ${activeSwitch ? 
-                    `${cls.switchOff}` : 
-                    `${cls.switchOn}`}`}
-                onClick={()=> onChangeSwitch(!activeSwitch)}>
-                {activeSwitch ?
-
-                    <span className={cls.mainSwitchBox__offSwitch}></span>
-                    :
+                ${!activeSwitch ?
+                    `${cls.switchOn}` :
+                    `${cls.switchOff}`}`}
+                onClick={onChangeSwitch}>
+                {!activeSwitch ?
                     <span className={cls.mainSwitchBox__onSwitch}></span>
+                    :
+                    <span className={cls.mainSwitchBox__offSwitch}></span>
                 }
 
             </button>
@@ -34,5 +33,3 @@ export const Switch = React.memo((
 
     );
 });
-
-

@@ -2,14 +2,36 @@
 
 .menu
   height: 100svh
-  width: 14%
-  padding: 3rem 2rem
-  border-right: 2px solid $main-border-color
+  width: 12%
+  border: 1px solid $main-border-color
+  background-color: #FFFFFF
+  border-radius: 1.6rem
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+
+  &__user
+    display: flex
+    gap: 2.5rem
+    justify-content: center
+    align-items: center
+    background-color: #FAFAFA
+    border-bottom: .2rem solid $main-border-color
+    padding: 1.8rem
+    border-radius: 1.6rem 1.6rem 0 0
+    .userImage
+      width: 5rem
+    .userInfo
+      display: flex
+      flex-direction: column
+      gap: .7rem
+      font-size: 1.4rem
 
   &__inner
+    font-family: Inter, serif
     width: 100%
-    height: 100%
-    padding: 3rem 2rem 2rem .7rem
+    height: fit-content
+    padding: 3rem 0 3rem 2.7rem
     display: flex
     flex-direction: column
     gap: 1.5rem
@@ -31,6 +53,15 @@
 
   .link
     list-style: none
+    padding: 1rem 1.2rem
+    width: fit-content
+    transition: .3s
+    &.active
+      background-color: #F6F6F6
+      border-radius: .8rem
+    &:hover
+      background-color: #F6F6F6
+      border-radius: .8rem
 
     &__href
       color: $main-font-color
@@ -38,30 +69,25 @@
       align-items: center
       gap: 1.5rem
       transition: .7s
-
-      &:hover
-        i
-          color: $icon-main-light
-          border: 1px solid $icon-main-light
-          box-shadow: 0 0 14px $icon-main-light
-
       i
-        min-width: 4.5rem
-        min-height: 4.5rem
         font-size: 2rem
-        border-radius: 50%
-        border: 1px solid $main-font-color
-        display: flex
-        justify-content: center
-        align-items: center
-
-    .active
-      i
-        color: $icon-main-light
-        border: 1px solid $icon-main-light
-        box-shadow: 0 0 14px $icon-main-light
-
+        transition: .3s
 
     &__title
       letter-spacing: .1rem
       font-size: 1.6rem
+  &__footer
+    min-height: 8rem
+    justify-self: flex-end
+    padding: 2.4rem
+    border-top: .2rem solid $main-border-color
+    background-color: #FAFAFA
+    border-radius: 0 0 1.6rem 1.6rem
+    display: flex
+    align-items: center
+    justify-content: center
+    color: #5C5E64
+    font-size: 1.3rem
+    gap: 1rem
+    i
+      font-size: 3rem

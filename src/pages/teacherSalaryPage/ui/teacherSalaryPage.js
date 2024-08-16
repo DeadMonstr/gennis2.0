@@ -1,31 +1,48 @@
-import React, { useMemo, useState } from 'react';
-
+import React, {useEffect, useMemo, useState} from 'react';
 import { Pagination } from "features/pagination";
-import {
-    TeacherSalaryList,
-    branches,
-    salary
-} from "entities/teacherSalary";
+import {TeacherSalaryList, branches,} from "entities/teacherSalary";
 import { Select } from "shared/ui/select";
-
 import cls from "./teacherSalaryPage.module.sass";
+import {useSelector, useDispatch} from "react-redux";
+import {getTeacherSalaries} from "entities/teacherSalary";
+import {fetchTeacherSalaryThunk} from "entities/teacherSalary";
+import {useParams} from "react-router-dom";
+import {getSearchValue} from "../../../features/searchInput";
 
 export const TeacherSalaryPage = () => {
-    const [active, setActive] = useState(false);
     const [selected, setSelected] = useState("");
-    const PageSize = useMemo(() => 20, []);
+    let PageSize = useMemo(() => 20, []);
     const [currentPage, setCurrentPage] = useState(1);
-    const [search, setSearch] = useState("");
+    const search = useSelector(getSearchValue)
     const [currentTableData, setCurrentTableData] = useState([]);
-
+    const dispatch = useDispatch()
+    const teacherSalaries = useSelector(getTeacherSalaries)
+    const {id} = useParams()
     const handleChange = (value) => {
         setSelected(value);
     };
 
+    // const searchedUsers = useMemo(() => {
+    //     const filteredHeroes = teacherSalaries?.usersalary.slice()
+    //     setCurrentPage(1)
+    //
+    //     if (!search) return  filteredHeroes
+    //
+    //     return filteredHeroes.filter(item =>
+    //         item.total_salary?.toLowerCase().includes(search.toLowerCase())
+    //     )
+    // }, [teacherSalaries, setCurrentPage, search])
     const onChangeOption = (value) => {
         setSelected(value)
     }
 
+    useEffect(() => {
+        if (id) {
+            dispatch(fetchTeacherSalaryThunk(id))
+        }
+    }, [dispatch, id])
+
+    console.log(teacherSalaries, "teacherSalaries")
     return (
         <div className={cls.mainContainer}>
             <div className={cls.mainContainer_buttonPanelBox}>
@@ -38,20 +55,20 @@ export const TeacherSalaryPage = () => {
             </div>
             <div className={cls.mainContainer_tablePanelBox}>
                 <TeacherSalaryList
-                    currentTableData={currentTableData}
+                    currentTableData={teacherSalaries?.usersalary}
                     currentPage={currentPage}
                     PageSize={PageSize}
                 />
             </div>
-            <Pagination
-                setCurrentTableData={setCurrentTableData}
-                users={salary}
-                search={search}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-                pageSize={PageSize}
-                onPageChange={page => setCurrentPage(page)}
-            />
+            {/*<Pagination*/}
+            {/*    setCurrentTableData={setCurrentTableData}*/}
+            {/*    users={searchedUsers}*/}
+            {/*    search={search}*/}
+            {/*    setCurrentPage={setCurrentPage}*/}
+            {/*    currentPage={currentPage}*/}
+            {/*    pageSize={PageSize}*/}
+            {/*    onPageChange={page => setCurrentPage(page)}*/}
+            {/*/>*/}
         </div>
     );
 };

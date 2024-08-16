@@ -1,9 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Table } from "shared/ui/table";
 import cls from './vacancyWorkList.module.sass';
 import { Input } from "shared/ui/input";
+import {useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router-dom";
+import {fetchWorkerWithId} from "features/vacancyModals/vacancyWorkPage/model";
+import {getWorkerId, getWorkerLoading} from "features/vacancyModals/vacancyWorkPage/model";
+import {DefaultLoader, DefaultPageLoader} from "shared/ui/defaultLoader";
 
 export const VacancyWorkList = ({ currentTableData, currentPage, PageSize, editMode, onEditClick, selectedItems, setSelectedItems }) => {
+
+    const {id} = useParams()
+    const dispatch = useDispatch()
+    const workerID = useSelector(getWorkerId)
+    const userName = workerID.job?.map(item => item.group.name)
+    const loadingDef = useSelector(getWorkerLoading)
+    console.log(userName, "name")
+
+    useEffect(() => {
+        if (id)
+        {
+            dispatch(fetchWorkerWithId(id))
+        }
+
+    }, [dispatch, id])
+
+
+    // console.log(workerID, 'worker id')
 
     const handleSelectAll = (e) => {
         if (e.target.checked) {
@@ -22,32 +45,47 @@ export const VacancyWorkList = ({ currentTableData, currentPage, PageSize, editM
     };
 
     const renderVacancies = () => {
-        return currentTableData.map((item, index) => (
-            <tr key={item.id}>
-                <td>{(currentPage - 1) * PageSize + index + 1}</td>
-                <td>{item.workName}</td>
-                <td>{item.workerNames}</td>
-                {!editMode && (
-                    <td>
-                        <Input
-                            style={{ width: 25 + "px" }}
-                            type={"checkbox"}
-                            checked={selectedItems.includes(item.id)}
-                            onChange={(e) => handleSelectItem(e, item.id)}
-                        />
-                    </td>
-                )}
-            </tr>
-        ));
+        if (loadingDef) {
+            return <DefaultLoader />;
+        }
+
+        return workerID.job?.map((item, index) => {
+            const permissions = item.group.permissions || [];
+
+            return (
+                <React.Fragment key={item.id}>
+                    {permissions.map((permission, index) => (
+                        <tr key={permission.id}>
+                            <td>{(currentPage - 1) * PageSize + index + 1}</td>
+                            <td>{item.group.name}</td>
+                            <td>{permission.name}</td>
+                            {!editMode && (
+                                <td>
+                                    <Input
+                                        style={{ width: 25 + "px" }}
+                                        type={"checkbox"}
+                                        checked={selectedItems.includes(item.id)}
+                                        onChange={(e) => handleSelectItem(e, item.id)}
+                                    />
+                                </td>
+                            )}
+                        </tr>
+                    ))}
+                </React.Fragment>
+            );
+        });
     };
+
+
+
 
     return (
         <Table>
             <thead className={cls.theadBody}>
             <tr>
                 <th>№</th>
-                <th>Nima ish qilishi</th>
-                <th>Manimcha kimligi bo'sa kere</th>
+                <th>Ishchi ismi</th>
+                <th>Ruxsatlari</th>
                 {!editMode && (
                     <th className={cls.checkBox}>
                         <Input

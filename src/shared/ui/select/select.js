@@ -3,7 +3,18 @@ import classNames from "classnames";
 
 import cls from "./select.module.sass"
 
-export const Select = React.memo(({options, keyValue, required, defaultValue, title, onChangeOption, status, extraClass}) => {
+export const Select = React.memo(({
+                                      options,
+                                      keyValue,
+                                      required,
+                                      defaultValue,
+                                      title,
+                                      onChangeOption,
+                                      status,
+                                      extraClass,
+                                      register,
+                                      name
+                                  }) => {
 
     const [selectOption, setSelectOption] = useState("")
     const [optionsData, setOptionsData] = useState([])
@@ -52,17 +63,35 @@ export const Select = React.memo(({options, keyValue, required, defaultValue, ti
 
     const renderedOptions = renderOptionsOfSelect()
 
-    return (
+    return register ? (
         <label className={classNames(cls.label, extraClass)}>
-            {/*<span*/}
-            {/*    className={classNames(cls.label__title, {*/}
-            {/*        [cls.disabled]: status === "disabled",*/}
-            {/*        [cls.error]: status === "error"*/}
-            {/*    })}*/}
-            {/*>*/}
-            {/*    {title}*/}
-            {/*</span>*/}
             <select
+
+                disabled={status === "disabled"}
+                className={classNames(cls.label__inner, extraClass, {
+                    [cls.error]: status === "error"
+                })}
+                required={required}
+                value={selectOption}
+                // onChange={(e) => {
+                //     setSelectOption(e.target.value)
+                //     setIsChanged(true)
+                // }}
+                {...register(name, {
+                    value: selectOption,
+                    defaultValue: selectOption,
+                    onChange: (e) => setSelectOption(e.target.value)
+                })}
+            >
+                {title ? <option value={""}>{title}</option> : <option value={""} disabled>Tanlang</option>}
+                {renderedOptions}
+            </select>
+            {status === "error" ? <span className={cls.label__error}>Error</span> : null}
+        </label>
+    ) : (
+        <label className={classNames(cls.label, extraClass)}>
+            <select
+
                 disabled={status === "disabled"}
                 className={classNames(cls.label__inner, extraClass, {
                     [cls.error]: status === "error"
@@ -79,5 +108,5 @@ export const Select = React.memo(({options, keyValue, required, defaultValue, ti
             </select>
             {status === "error" ? <span className={cls.label__error}>Error</span> : null}
         </label>
-    );
+    )
 })

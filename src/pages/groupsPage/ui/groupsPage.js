@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from "react";
 import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import {GroupsList} from "entities/groups/groups/ui/groupsList";
 import {getGroupsListData} from "entities/groups/model/selectors/groupsList";
@@ -11,39 +11,52 @@ import {Button} from "shared/ui/button";
 import cls from "./groupsPage.module.sass";
 import {DeletedGroups} from "entities/groups/deletedGroups/ui/deletedGroups";
 import {getDeletedGroupsData} from "../../../entities/groups/model/selectors/deletedGroups";
+import {getSearchValue} from "../../../features/searchInput";
+import {fetchGroupsData} from "../../../entities/groups/model/slice/groupsThunk";
 // import {DeletedGroups} from "entities/groups/index";
 
 
 export const GroupsPage = () => {
 
+    const dispatch = useDispatch()
     const data = useSelector(getGroupsListData)
-    const deletedGroupsData =useSelector(getDeletedGroupsData)
+    const deletedGroupsData = useSelector(getDeletedGroupsData)
 
-    const [deletedGroups , setDeletedGroups] = useState([])
-    const [groupsData, setGroupsData] = useState([])
-    console.log(data)
-
-    useEffect(() => {
-        setGroupsData(data)
-    }, [data])
-
-
-    useEffect(() =>{
-        setDeletedGroups(deletedGroupsData)
-    } , [deletedGroupsData])
-
-
-
-
-    const [currentTableData, setCurrentTableData] = useState([])
-    const [activeSwitch, setActiveSwitch] = useState(false)
+    const [deletedGroups, setDeletedGroups] = useState([])
 
     const [active, setActive] = useState(false);
-    let PageSize = useMemo(() => 50, [])
+    const [activeSwitch, setActiveSwitch] = useState(false)
 
+
+
+
+    const search = useSelector(getSearchValue)
+    let PageSize = useMemo(() => 50, [])
+    const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
 
-    const [search, setSearch] = useState("")
+    console.log(data, "data")
+
+    const searchedUsers = useMemo(() => {
+        const filteredHeroes = data?.slice()
+        setCurrentPage(1)
+
+        console.log(search, true)
+
+        if (!search) return filteredHeroes
+
+        return filteredHeroes.filter(item =>
+            item.name?.toLowerCase().includes(search.toLowerCase())
+        )
+    }, [data, setCurrentPage, search])
+
+    useEffect(() => {
+        setDeletedGroups(deletedGroupsData)
+    }, [deletedGroupsData])
+
+    useEffect(() => {
+        dispatch(fetchGroupsData())
+    }, [])
 
     return (
         <div className={cls.deletedGroups}>
@@ -70,22 +83,21 @@ export const GroupsPage = () => {
             <div className={cls.table}>
 
                 <h2>{activeSwitch ? "Deleted Groups" : "Groups"}</h2>
-                {activeSwitch ? <DeletedGroups currentTableData={currentTableData} /> : <GroupsList
+                {activeSwitch ? <DeletedGroups currentTableData={currentTableData}/> : <GroupsList
                     currentTableData={currentTableData}
                 />}
             </div>
-            {/*<Pagination*/}
-            {/*    setCurrentTableData={setCurrentTableData}*/}
-            {/*    users={activeSwitch ? deletedGroups : groupsData}*/}
-            {/*    search={search}*/}
-            {/*    setCurrentPage={setCurrentPage}*/}
-            {/*    currentPage={currentPage}*/}
-            {/*    pageSize={PageSize}*/}
-            {/*    onPageChange={page => {*/}
-            {/*        setCurrentPage(page)*/}
-            {/*    }}*/}
-            {/*    type={"custom"}*/}
-            {/*/>*/}
+            <Pagination
+                setCurrentTableData={setCurrentTableData}
+                users={searchedUsers}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                pageSize={PageSize}
+                onPageChange={page => {
+                    setCurrentPage(page)
+                }}
+                type={"custom"}
+            />
             <GroupsFilter activeSwitch={activeSwitch} setActiveSwitch={setActiveSwitch} setActive={setActive}
                           active={active}/>
         </div>

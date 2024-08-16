@@ -1,13 +1,8 @@
-
 import {
     getDirectorRouteStudents,
-    getRouteDeletedStudents,
-    getRouteDeletedGroups,
-    getRouteNewStudents,
-    getRouteCreateGroup,
+    getRouteUserProfile,
     getRouteTaskManager,
     getVacancyWorkPage,
-    getTeacherProfile,
     getRouteStudents,
     getRouteTimePage,
     getRouteRegister,
@@ -15,84 +10,91 @@ import {
     getRouteGroups,
     getVacancyPage,
     getRouteRooms,
-    getRouteMain, getProfile,
+    getRouteMain,
+    getProfile,
+    getClass,
+    getFlow,
+    getContract,
+    getCapital,
+    getCapitalInside,
+    getTeacherProfile,
+    getRoomsProfilePage,
+    getEmployerPage,
+    getEmployerProfile,
+    getBranch,
+    getEducation,
+    getSystem,
+    getCreateBranch,
+    getCreateEducation,
+    getCreateLocation,
+    getCreateSystem,
+    getAccounting,
+    getLocations, getRouteCreateGroup, getEmployerSalaryInsideSource, getEmployerSalary, getTeacherSalary,
 } from "shared/const/routers";
+
 
 import {StudentsPage} from "pages/studentsPage";
 import {GroupsPage} from "pages/groupsPage";
-
 import {Register} from "pages/registerPage";
-import {Rooms} from "pages/roomsPage/ui/rooms";
+import {Rooms} from "pages/roomsPage";
 import {TeachersPage} from "pages/teacherPage";
-
-import {HomePage} from "pages/homePage";
-import {ProfileTeacherPage} from "pages/profilePage";
+import {
+    ProfileTeacherPage,
+    UserProfilePage,
+    StudentProfilePage, ProfileEmployerPage
+} from "pages/profilePage";
 import {StudentsDirectorPage} from "pages/studentsPage";
 import {VacancyPage} from "pages/vacancyPage";
 import {VacancyWorkPage} from "pages/vacancyWorkPage";
-import {TimePage} from "pages/timePage";
+import {TimeTableListPage} from "pages/timeTableListPage";
 import {EmployerPage} from "pages/employeesPage";
 import {FlowsPage} from "pages/flowsPage";
-import {StudentProfilePage} from "pages/profilePage";
+import {RoomsProfilePage} from "pages/roomsProiflePage";
+import {ClassPage} from "pages/classPage";
+import {ContractPage} from "pages/contractPage";
+import {CapitalInside, CapitalPage} from "pages/capitalPage";
+
+import {getEmployersData} from "../../../entities/employer/model/selector/employersSelector";
+import {TeacherSalaryPage} from "../../../pages/teacherSalaryPage";
+import {EmployerSalaryPage} from "../../../pages/employerSalaryPage";
+import {GiveSalaryPage} from "../../../pages/giveSalaryPage";
+import {Branch, Education, Location, System} from "../../../entities/editCreates";
+import {BranchCreate, EducationCreate, LocationCreate, SystemCreate} from "../../../entities/creates";
+import {AccountingPageMain} from "../../../pages/accountingPage";
+import {AccountingBooks} from "../../../entities/accounting";
+import {CreateGroup} from "../../../entities/students";
+// import {RoomsProfilePage} from "pages/profilePage";
 
 
 export const routersConfig = [
     {
-        to: "home",
         name: "Bosh Sahifa",
-        icon: "fa-home",
-        roles: [true],
         path: getRouteMain(),
         // element: <HomePage/>,
         element: null,
-        isMenu: true,
-        type: ["app_center_theme", "app_school_theme"]
     },
     {
-        to: "taskManager",
         name: "Task Manager",
-        icon: "fa-tasks",
-        roles: [true],
         path: getRouteTaskManager(":id"),
         element: null,
-        isMenu: true,
-        type: ["app_center_theme", "app_school_theme"]
     },
     {
-        to: "studentsDirector",
         name: "O'quvchilar",
-        icon: "fa-user-graduate",
-        roles: [],
         path: getDirectorRouteStudents(),
         element: <StudentsDirectorPage/>,
-        isMenu: true,
-        type: ["app_center_theme", "app_school_theme"]
-
     },
     {
-        to: "students",
         name: " O'quvchilar",
-        icon: "fa-user-graduate",
-        roles: [],
-        isMenu: true,
         path: getRouteStudents(":id"),
         element: <StudentsPage/>
     },
     {
-        to: "groups",
         name: "Gruppalar",
-        icon: "fa-users",
-        roles: [],
-        isMenu: true,
         path: getRouteGroups(":id"),
         element: <GroupsPage/>
     },
     {
-        to: "teacher",
         name: "O'qituvchilar",
-        icon: "fa-user-tie",
-        roles: [],
-        isMenu: true,
         path: getRouteTeacher(":id"),
         element: <TeachersPage/>
     },
@@ -109,78 +111,115 @@ export const routersConfig = [
         roles: []
     },
     {
-        to: "teacherProfile",
         name: "Teacher Profile",
-        icon: "fa-user-graduate",
-        roles: [],
-        path: getTeacherProfile("id"),
+        path: getTeacherProfile(":id"),
         element: <ProfileTeacherPage/>,
-        isMenu: false
     },
     {
         to: "profile",
         name: "Student Profile",
-        icon: "fa-user-graduate",
-        roles: [],
         path: getProfile(":id"),
         element: <StudentProfilePage/>,
-        isMenu: false
     },
     {
-      to: "vacancyPage",
-      name: "Vakansiyalar",
-      icon: "fa-tasks",
-      roles: [],
-      path: getVacancyPage(),
-      element: <VacancyPage/>,
-      isMenu: true
+        to: "capitalBox",
+        name: "capitalInside",
+        path: getCapitalInside(":id"),
+        element: <CapitalInside/>
+
     },
     {
-        to: "timeTable",
         name: "Time Table",
-        icon: "fa-tasks",
-        roles: [],
-        path: getRouteTimePage(),
-        element: <TimePage/>,
-        isMenu: true
+        path: getRouteTimePage(":id"),
+        element: <TimeTableListPage/>,
     },
     {
-        to: "vacancyPage/vacancyWorkPage",
-        roles: [],
-        path: getVacancyWorkPage(),
+        name: "Vakansiyalar",
+        path: getVacancyPage(":id"),
+        element: <VacancyPage/>,
+    },
+    {
+        to: 'vacancyPage/vacancyWorkPage',
+        path: getVacancyWorkPage(":id"),
         element: <VacancyWorkPage/>,
-        isMenu: false,
-        type: ["app_center_theme", "app_school_theme"]
     },
     {
-        to: "employer",
+
         name: "Employers",
         icon: "fa-user-graduate",
         roles: [],
-        path: getTeacherProfile("id"),
+        path: getEmployerPage(":id"),
         element: <EmployerPage/>,
-        isMenu: true,
-        type: ["app_center_theme", "app_school_theme"]
     },
     {
-        to: "flows",
         name: "Flows",
-        icon: "fa-user-graduate",
-        roles: [],
-        path: getTeacherProfile("id"),
+        path: getFlow(":id"),
         element: <FlowsPage/>,
-        isMenu: true,
-        type: ["app_school_theme"]
     },
     {
-        to: "rooms",
+        name: "Class",
+        path: getClass(":id"),
+        element: <ClassPage/>,
+    },
+    {
+        path: getContract(":id"),
+        name: "Contract",
+        // icon: "fa fa-book",
+        element: <ContractPage/>
+    },
+    {
+        path: getCapital(":id"),
+        name: "capital",
+        element: <CapitalPage/>
+    },
+
+    {
         name: "Honalar",
-        icon: "fa-door-closed",
-        roles: [],
-        path: getRouteRooms(),
+        path: getRouteRooms(":id"),
         element: <Rooms/>,
-        isMenu: true,
-        type: ["app_center_theme", "app_school_theme"]
+    },
+    {
+        path: getRouteUserProfile(":id"),
+        element: <UserProfilePage/>,
+    },
+    {
+        path: getRouteCreateGroup(),
+        element: <CreateGroup/>,
+    },
+    {
+        name: "Rooms Profile",
+        path: getRoomsProfilePage(":id"),
+        element: <RoomsProfilePage/>,
+        roles: [],
+    },
+    {
+        to: "teacher/teacherProfile",
+        name: "Teacher Profile",
+        path: getTeacherProfile(":id"),
+        element: <ProfileTeacherPage/>,
+        roles: [],
+    },
+    {
+        to: "employer/employerProfile",
+        name: "Employer Page",
+        path: getEmployerProfile(":id"),
+        element: <ProfileEmployerPage/>,
+        roles: [],
+    },
+    {
+        name: "Teacher Salary",
+        path: getTeacherSalary(":id"),
+        element: <TeacherSalaryPage/>
+    },
+    {
+        name: "Employer Salary",
+        path: getEmployerSalary(":id"),
+        element: <EmployerSalaryPage/>
+    },
+    {
+      name: "Give salary",
+      path: getEmployerSalaryInsideSource(":id"),
+      element: <GiveSalaryPage/>
     },
     {
         to: "/login",
@@ -201,14 +240,57 @@ export const routersConfig = [
         roles: []
     },
     {
-        to: "register",
         name: "Registratsiya",
-        icon: "fa-edit",
-        roles: [],
-        path: getRouteRegister(":id"),
+        path: getRouteRegister(),
         element: <Register/>,
-        isMenu: true,
-        type: ["app_center_theme", "app_school_theme"]
+    },
+
+
+    {
+        name: "createBranch",
+        path: getCreateBranch(":id"),
+        element: <BranchCreate/>
+    },
+
+    {
+        name: "createSystem",
+        path: getCreateSystem(":id"),
+        element: <SystemCreate/>
+    },
+    {
+        name: "createLocation",
+        path: getCreateLocation(":id"),
+        element: <LocationCreate/>
+    },
+    {
+        name: "createEducation",
+        path: getCreateEducation(":id"),
+        element: <EducationCreate/>
+    },
+    {
+        name: "location",
+        path: getLocations(":id"),
+        element: <Location/>
+    },
+    {
+        name: "branch",
+        path: getBranch(":id"),
+        element: <Branch/>
+    },
+    {
+        name: "education",
+        path: getEducation(":id"),
+        element: <Education/>
+    },
+    {
+        name: "system",
+        path: getSystem(":id"),
+        element: <System/>
+    },
+    {
+        name: "accounting",
+        path: getAccounting(":id"),
+        element: <AccountingPageMain/>,
     },
 
 ]

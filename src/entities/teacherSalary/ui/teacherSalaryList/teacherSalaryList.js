@@ -4,13 +4,13 @@ import cls from './teacherSalaryList.module.sass'
 import {Link} from "../../../../shared/ui/link";
 export const TeacherSalaryList = ({ currentTableData, currentPage, PageSize }) => {
     const renderStudents = () => {
-        return currentTableData.map((item, index) => (
+        return currentTableData?.map((item, index) => (
             <tr key={index + 1}>
                 <td>{(currentPage - 1) * PageSize + index + 1}</td>
-                <td>{item.allSalary}</td>
-                <td>{item.getSalary}</td>
-                <td>{item.loseSalary}</td>
-                <td>{item.dateSalary}</td>
+                <td>{item.total_salary}</td>
+                <td>{item.taken_salary}</td>
+                <td>{item.remaining_salary}</td>
+                <td>{item.date}</td>
             </tr>
         ));
     };

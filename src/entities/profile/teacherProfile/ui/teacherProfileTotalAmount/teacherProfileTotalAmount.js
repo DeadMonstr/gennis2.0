@@ -95,12 +95,19 @@ export const TeacherProfileTotalAmount = memo(({active, setActive}) => {
                                 </div>
                                 <Form onSubmit={handleSubmit(onSubmit)}>
                                     <div className={cls.form__inner}>
-                                        <p>{activeService} miqdori</p>
                                         <Input
+                                            title={"To'lov miqdori"}
                                             register={register}
                                             name={"amount"}
                                             placeholder={"Summa"}
                                             type={"number"}
+                                        />
+                                        <Input
+                                            title={"Sababi"}
+                                            register={register}
+                                            name={"cause"}
+                                            placeholder={"Sababi"}
+                                            type={"text"}
                                         />
                                     </div>
                                 </Form>

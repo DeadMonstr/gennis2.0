@@ -24,7 +24,7 @@
   //border: 2px solid #008ac6
   background-color: $btn-gennis
   border: none
-  transition: .2s ease-in
+  transition: .1s all
   &:hover
     background: none
     border: none
@@ -52,6 +52,9 @@
     @include btn-active
     background-color: $btn-danger
     border: 1px solid #fecdd3
+    &:hover
+
+      color: white
 
   &.warning
     @include btn-active
@@ -87,3 +90,11 @@
     border: none
     color: #F5F5F5
     //width: 15.2rem
+  &.editPlus
+    width: 60px
+    height: 60px
+    background: $search-background
+    color: $gennis-back-color
+    font-size: 21px
+    border-radius: 15px
+    transition: all .1s

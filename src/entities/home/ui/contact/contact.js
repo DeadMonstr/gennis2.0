@@ -24,7 +24,7 @@ const locations = [
 export const Contact = () => {
     const {
         hrefs,
-        locations,
+        // locations,
         teachersLoadingStatus
     } = useSelector(state => state?.homeSlice)
     const {setSectionTop} = useContext(Context)
@@ -48,7 +48,7 @@ export const Contact = () => {
     const [changeLoc, setChangeLoc] = useState({})
     const [changeImage, setChangeImage] = useState({})
     const [activeLoc, setActiveLoc] = useState(0)
-    const [selectedItem, setSelectedItem] = useState(locations[0])
+    const [selectedItem, setSelectedItem] = useState(locations[0].name)
     const [loading, setLoading] = useState(false)
 
     const onSubmitHrefs = (data) => {
@@ -361,7 +361,7 @@ export const Contact = () => {
                     <h2>Filiallar</h2>
                     <div className={cls.contact__branches_name}>
                         <ul>
-                            {locations && [...locations].sort(compareById).map((item) => {
+                            {selectedItem && [...locations].sort(compareById).map((item) => {
                                 return (
                                     <li onClick={() => {
                                         setSelectedItem(item.name)
@@ -373,7 +373,7 @@ export const Contact = () => {
 
                                         {item.name}
 
-                                        <i onClick={() => onChangeLoc(item.id)} className={classNames("fa fa-pen", cls.icon)}></i>
+                                        {/*<i onClick={() => onChangeLoc(item.id)} className={classNames("fa fa-pen", cls.icon)}></i>*/}
                                     </li>
                                 )
                             })}
@@ -411,14 +411,15 @@ export const Contact = () => {
                     </div>
                     <div className={cls.contact__locations_maps}>
                         <div className={cls.contact__locations_info}>
-                            <div className={cls.contact__locations__box_info}>
-                                <h2>{locations[activeLoc]?.name}</h2>
-                                <div>{selectedItem ? <i className={"fa-solid fa-phone "}/> : null} <span>{selectedItem?.number}</span></div>
-                            </div>
-                            <div className={cls.contact__locations__box_locations}>
-                                <h2>Manzil</h2>
-                                <span>{selectedItem?.location}</span>
-                            </div>
+                            {/*<div className={cls.contact__locations__box_info}>*/}
+                            {/*    <h2>{locations[activeLoc]?.name}</h2>*/}
+                            {/*    <div>{selectedItem ? <i className={"fa-solid fa-phone "}/> : null} <span>{selectedItem?.number}</span></div>*/}
+                            {/*</div>*/}
+                            {/*<div className={cls.contact__locations__box_locations}>*/}
+                            {/*    <h2>Manzil</h2>*/}
+                            {/*    <span>{selectedItem?.location}</span>*/}
+                            {/*</div>*/}
+                            {renderInfo()}
                         </div>
                         {renderMaps()}
                     </div>

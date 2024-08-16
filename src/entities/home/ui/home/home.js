@@ -8,10 +8,11 @@ import {Context} from "pages/homePage";
 import {Modal} from "shared/ui/modal"
 import cls from "./home.module.sass"
 import {useForm} from "react-hook-form";
-import {API_URL} from "shared/api/base";
-import {useSelector} from "react-redux";
-import {getLocations} from "../../../../pages/studentsPage";
-import {Textarea} from "../../../../shared/ui/textArea";
+import {API_URL, headers, headersImg, useHttp} from "shared/api/base";
+import {useDispatch, useSelector} from "react-redux";
+import {getLocations} from "pages/studentsPage";
+import {Textarea} from "shared/ui/textArea";
+import {fetchedImageError, fetchedImageItems, fetchingImageItems} from "../model/homeSlice";
 
 const branches = [
     {name: "chirchiq"},
@@ -27,8 +28,10 @@ export const Home = () => {
     const [changeStatus, setChangeStatus] = useState(false)
     const {image, locations} = useSelector(getLocations)
     const [changeImage, setChangeImage] = useState({})
-
+    const dispatch = useDispatch()
     const sectionRef = useRef()
+    const {request} = useHttp()
+    const formData = new FormData()
     useEffect(() => {
         setValue("name", changeItem?.name)
         setValue("text", changeItem?.text)
@@ -42,9 +45,27 @@ export const Home = () => {
         setChangeStatus(!changeStatus)
         console.log(":da")
     }
-    const onSubmit = () => {
+    const onSubmit = (data) => {
         console.log("hello world")
-        setChangeStatus(false)
+        dispatch(fetchingImageItems())
+
+        formData.append("name", data.name)
+        formData.append("text", data.text)
+        formData.append("file", changeImage)
+
+
+        request(`${API_URL}add_home_design`, "POST", formData, headersImg())
+            .then(res => {
+                if (res.success()) {
+                    setChangeStatus(false)
+                }
+                dispatch(fetchedImageItems(res.design))
+            })
+            .catch(dispatch(fetchedImageError))
+        formData.delete("name")
+        formData.delete("text")
+        formData.delete("file")
+
     }
 
 
@@ -61,9 +82,9 @@ export const Home = () => {
             <div className={cls.homeWrapper}>
 
                 <div className={cls.homeTexts}>
-                    <div onClick={onChange}>
-                        <i className={classNames("fa fa-pen ", cls.icon)}></i>
-                    </div>
+                    {/*<div onClick={onChange}>*/}
+                    {/*    <i className={classNames("fa fa-pen ", cls.icon)}></i>*/}
+                    {/*</div>*/}
 
                     <div className={cls.homeTitle}>
                         GENNIS - "Muvaffaqiyatni istaganlar uchun"

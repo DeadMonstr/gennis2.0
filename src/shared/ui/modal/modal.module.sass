@@ -1,5 +1,6 @@
 @import "app/styles/themes/school"
 @import "app/styles/themes/center"
+@import "app/styles/abstracts/mixins"
 
 .modal
   width: 100%
@@ -28,7 +29,8 @@
   &__close
     position: absolute
     top: 1.6rem
-    right: 1.6rem
+    right: 2.5rem
     width: 30px
     height: 30px
     cursor: pointer
+    @include btn-active

@@ -8,16 +8,40 @@ import {Radio} from "shared/ui/radio";
 import {Table} from "shared/ui/table";
 import {Modal} from "shared/ui/modal";
 import {Input} from "shared/ui/input";
-import React, {useEffect, useState} from "react";
-import {getNewStudentsData} from "../../model/selector/studentsSelector";
+import React, {memo, useCallback, useEffect, useState} from "react";
+import {
+    getCurseLevelData,
+    getCurseTypesData,
+    getFilteredErrors, getFilteredStatus,
+    getFilteredStudents,
+    getFilteredTeachers,
+    getNewStudentsData
+} from "../../model/selector/studentsSelector";
 import {useDispatch, useSelector} from "react-redux";
 import {Teachers} from "../../../teachers";
-import {fetchNewStudentsData} from "../../model/studentsThunk";
+import {fetchFilteredStudents, fetchNewStudentsData} from "../../model/studentsThunk";
 import {Form} from "shared/ui/form";
 import {Textarea} from "shared/ui/textArea";
 import {SearchInput} from "shared/ui/searchInput";
 import {fetchTeachersData} from "../../../teachers";
 import {getTeachers} from "../../../teachers/";
+import {AnimatedMulti, location} from "../../../../features/workerSelect";
+import {EditableCard} from "../../../../shared/ui/editableCard";
+import {getUserBranchId} from "pages/profilePage/model/selector/userProfileSelector";
+import {API_URL, headers, useHttp} from "shared/api/base";
+import {getRoomsData} from "../../../rooms/model/selectors/roomsSelectors";
+import {fetchRoomsData} from "../../../rooms/model/roomsThunk";
+import {useForm} from "react-hook-form";
+import {
+    getCurseLevel,
+    getCurseTypes,
+    getFilteredStudentsData,
+    getFilteredStudentsStatus
+} from "../../model/studentsSlice";
+import {compareArraysAsSet} from "@testing-library/jest-dom/dist/utils";
+import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
+import {MiniLoader} from "../../../../shared/ui/miniLoader";
+import {fetchSubjectsAndLanguages} from "../../../../pages/registerPage/model/registerThunk";
 
 const branches = [
     {name: "chirhciq"},
@@ -25,10 +49,124 @@ const branches = [
     {name: "xo'jakent"},
 ]
 const peoples = [
-    {name: "studying", label: "Studying Students"},
+    {name: "studying", label: "Students"},
     {name: "teachers", label: "Teachers"},
 ]
-export const CreateGroup = () => {
+export const CreateGroup = memo(() => {
+
+    const {request} = useHttp()
+    const {register, handleSubmit} = useForm()
+    const userBranchId = useSelector(getUserBranchId)
+    const roomsData = useSelector(getRoomsData);
+    const filteredStudents = useSelector(getFilteredStudents)
+    const filteredTeachers = useSelector(getFilteredTeachers)
+    const filteredErrors = useSelector(getFilteredErrors)
+    const filteredStatus = useSelector(getFilteredStatus)
+    const curseTypesData = useSelector(getCurseTypesData)
+    const curseLevelData = useSelector(getCurseLevelData)
+    const languages = useSelector(state => state.registerUser.languages)
+    const [weekDays, setWeekDays] = useState()
+    const [selectedData, setSelectedData] = useState()
+    const [selectedStudents, setSelectedStudents] = useState([])
+    const [selectedTeachers, setSelectedTeachers] = useState([])
+    const [selectedCurseType, setSelectedCurseType] = useState(null)
+    const [selectedCurseLevel, setSelectedCurseLevel] = useState(null)
+    const [selectedCurseLanguage, setSelectedCurseLanguage] = useState(null)
+    const [selectedSubjectId, setSelectedSubjectId] = useState(null)
+    const [selectTime, setSelectTime] = useState([])
+    const [timeCounter, setTimeCounter] = useState([1])
+
+    console.log(curseLevelData, "curseLevelData")
+    // console.log(selectedTeachers.length, "selectedTeachers length")
+
+    const onSubmitTimeTable = (data) => {
+        let arr = Object.entries(data).sort()
+        const res = timeCounter.map((item, index) =>
+            ({
+                end_time: arr[index][1],
+                start_time: arr[arr.length / 2 + index][1],
+                room: +arr[arr.length / 4 + index][1],
+                week: +arr[arr.length - (timeCounter.length - index)][1],
+                branch: 2
+            })
+        )
+        console.log(res)
+        dispatch(getFilteredStudentsStatus())
+        setSelectTime(res)
+        request(`${API_URL}Students/api/filter_students_subject/2/`, "POST", JSON.stringify(res), headers())
+            .then(res => {
+                console.log(res, "timeTable")
+                dispatch(getFilteredStudentsData(res))
+                setActiveModal(false)
+            })
+            .catch(err => console.log(err))
+    }
+
+    const onSubmitCreateGroup = (data) => {
+        const res = {
+            ...data,
+            students: selectedStudents,
+            teacher: selectedTeachers,
+            branch: userBranchId,
+            course_types: selectedCurseType,
+            level: selectedCurseLevel ?? 0,
+            subject: selectedSubjectId,
+            time_table: selectTime,
+            language: selectedCurseLanguage,
+            system: 1
+        }
+        console.log(res)
+        request(`${API_URL}Group/groups/create/`, "POST", JSON.stringify(res), headers())
+            .then(res => console.log(res, "group create"))
+            .catch(err => console.log(err))
+    }
+
+    const onSelectStudentId = (id, subjectId) => {
+        console.log(subjectId, "subjectId")
+        let newId = id
+        if (!selectedSubjectId) {
+            setSelectedSubjectId(subjectId)
+        } else {
+            if (selectedSubjectId !== subjectId) {
+                console.log(true, "subjectId change")
+                setSelectedSubjectId(subjectId)
+                return null
+            }
+        }
+        if (!selectedStudents.length) {
+            console.log(true)
+            setSelectedStudents([newId])
+        } else {
+            console.log(false)
+            selectedStudents.filter(item => {
+                if (item !== newId) {
+                    console.log("add")
+                    if (newId) {
+                        setSelectedStudents(arr => [...arr, newId])
+                    }
+                } else {
+                    console.log("filter")
+                    setSelectedStudents(selectedStudents.filter(item => item !== newId))
+                    newId = null
+                }
+            })
+        }
+    }
+
+    useEffect(() => {
+        if (selectedSubjectId) {
+            request(`${API_URL}Subjects/level-for-subject/${selectedSubjectId}/`, "GET", null, headers())
+                .then(res => {
+                    console.log(res)
+                    dispatch(getCurseLevel(res))
+                })
+                .catch(err => console.log(err))
+        }
+    }, [selectedSubjectId])
+
+    console.log(selectedStudents, "selectedStudents")
+    console.log(selectedSubjectId, "selectedSubjectId")
+
     const newStudents = useSelector(getNewStudentsData)
     const teachers = useSelector(getTeachers)
     const [active, setActive] = useState(false)
@@ -47,22 +185,39 @@ export const CreateGroup = () => {
     };
 
 
-    useEffect(() => {
-        dispatch(fetchNewStudentsData())
-    }, [])
+    // useEffect(() => {
+    //     dispatch(fetchNewStudentsData())
+    // }, [])
+
+    // useEffect(() => {
+    //     dispatch(fetchTeachersData())
+    // }, [])
 
     useEffect(() => {
-        dispatch(fetchTeachersData())
-    }, [])
+        dispatch(fetchRoomsData());
+        // dispatch(fetchFilteredStudents(userBranchId))
+        request(`${API_URL}TimeTable/week_days`, "GET", null, headers())
+            .then(res => {
+                console.log(res, "days")
+                setWeekDays(res.map(item => ({...item, name: item.name_uz})))
+            })
+            .catch(err => console.log(err))
+        request(`${API_URL}Group/course_types/`, "GET", null, headers())
+            .then(res => {
+                console.log(res, "types")
+                dispatch(getCurseTypes(res))
+            })
+            .catch(err => console.log(err))
+        dispatch(fetchSubjectsAndLanguages())
+    }, [userBranchId])
 
-    console.log(selectedRadio, "radio")
-    const renterGroups = () => {
-        return newStudents.map((item) => {
+    const renterGroups = (data) => {
+        return data.map((item, index) => {
             return (
                 <>
                     <tbody>
                     <tr>
-                        <td></td>
+                        <td>{index + 1}</td>
                         <td>{item.user.surname} {item.user.name}</td>
                         <td>{item.user.age}</td>
                     </tr>
@@ -72,18 +227,68 @@ export const CreateGroup = () => {
         })
     }
     const renderStudents = () => {
-        return newStudents.map((item, i) => (
+        return filteredStudents[selectedData]?.students.map((item, i) => (
             <tr>
                 <td>{i + 1}</td>
                 <td>{item.user.surname} {item.user.name}</td>
-                <td>{item.age}</td>
-                <td>{item.user.phone}</td>
-                <td>{item.user.language.name}</td>
-                <td>{item.group}</td>
+                <td>{item.user.age}</td>
                 <td>{item.user.registered_date}</td>
+                <td>{item.user.comment}</td>
+                <td>{item.extra_info.status ? <div className={cls.studentBoxTable__inner}>
+                    <div className={cls.status}>
+                        <div className={cls.status__inner}/>
+                    </div>
+                    <Input
+                        type={"checkbox"}
+                        extraClassName={cls.studentBoxTable__input}
+                        onChange={() => onSelectStudentId(item.id, filteredStudents[selectedData]?.id)}
+                    />
+                </div> : null}</td>
             </tr>
         ));
     };
+
+    const renderStudent = () => {
+        return filteredStudents.map((item, index) => {
+            return (
+                <div
+                    onClick={() => {
+                        setActiveBox(!activeBox)
+                        setSelectedData(index)
+                    }} className={cls.table__box}>
+                    <h2>{item.name ?? "Ingliz tili"}</h2>
+                    <Table extraClass={cls.table__inner}>
+                        <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Full name</th>
+                            <th>Age</th>
+                        </tr>
+                        </thead>
+                        {renterGroups(item.students)}
+                    </Table>
+                </div>
+            )
+        })
+    }
+
+    const onSelectTeacherId = useCallback((id) => {
+        setSelectedTeachers([id])
+        // setSelectedTeachers(prev => {
+        //     if (!prev.length) {
+        //         return [id]
+        //     } else {
+        //         if (prev.filter(item => item === id)[0]) {
+        //             return [...prev.filter(item => item !== id)]
+        //         } else {
+        //             return [...prev, id]
+        //         }
+        //     }
+        // })
+    }, [selectedTeachers])
+
+    console.log(timeCounter, "timeCounter")
+
     return (
         <>
             <div className={cls.mainContainer}>
@@ -123,32 +328,26 @@ export const CreateGroup = () => {
                     ))}
                 </div>
             </div>
-            <div className={cls.mainContainer}>
-                {selectedRadio === "studying" ? <div className={cls.table}>
-                    {newStudents.map(item => {
-                        return (
-                            <>
-                                <div onClick={() => setActiveBox(!activeBox)} className={cls.table__box}>
-                                    <h2>{item.subject.name}</h2>
-                                    <Table>
-                                        <thead>
-                                        <tr>
-                                            <th>№</th>
-                                            <th>Full name</th>
-                                            <th>Age</th>
-                                        </tr>
-                                        </thead>
-                                        {renterGroups()}
-                                    </Table>
-                                </div>
-
-                            </>
-
-                        )
-                    })}
-                </div> : <Teachers data={teachers}/>}
-            </div>
-
+            {
+                filteredStatus === "loading" ? <DefaultPageLoader/> : <>
+                    <div className={cls.mainError}>
+                        {
+                            filteredErrors?.rooms && filteredErrors.rooms[0] ? <h1>{filteredErrors.rooms[0]}</h1> : null
+                        }
+                    </div>
+                    <div className={cls.mainContainer}>
+                        {
+                            selectedRadio === "studying" ? <div className={cls.table}>
+                                {renderStudent()}
+                            </div> : <Teachers
+                                data={filteredTeachers}
+                                setSelect={onSelectTeacherId}
+                                select={selectedTeachers}
+                            />
+                        }
+                    </div>
+                </>
+            }
 
             <Modal setActive={setActiveBox} active={activeBox}>
                 <div className={cls.studentBox}>
@@ -157,25 +356,93 @@ export const CreateGroup = () => {
                         <SearchInput/>
                     </div>
                 </div>
+
+                <div className={cls.studentBoxTable}>
+                    <Table>
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Ism Familiya</th>
+                            <th>Yosh</th>
+                            <th>Reg.sana</th>
+                            <th>Koment</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {renderStudents()}
+                        </tbody>
+                    </Table>
+                </div>
             </Modal>
-            <Modal setActive={setActiveModal} active={activeModal}>
-                <div className={cls.timeTable}>
+            <Modal
+                setActive={setActiveModal}
+                active={activeModal}
+            >
+                <Form
+                    typeSubmit={""}
+                    extraClassname={cls.timeTable}
+                    onSubmit={handleSubmit(onSubmitTimeTable)}
+                >
                     <h1 className={cls.timeTableHeader}>
                         Vaqti Kiritish
                     </h1>
-                    <div className={cls.timeTableForm}>
-                        <Select title={"Kunlar"}/>
-                        <Select title={"Honalar"}/>
-                        <Input placeholder={"Boshlanish vaqti"}/>
-                        <Input placeholder={"Tugash vaqti"}/>
+                    <div className={cls.timeTable__scroll}>
+                        {
+                            timeCounter.map((item, index) => {
+                                console.log(item)
+                                const days = `week${item}`
+                                const room = `room${item}`
+                                const start_time = `start_time${item}`
+                                const end_time = `end_time${item}`
+
+                                return (
+                                    <div className={cls.timeTableForm}>
+                                        <Select
+                                            title={"Kunlar"}
+                                            options={weekDays}
+                                            // onChangeOption={setSelectDay}
+                                            register={register}
+                                            name={days}
+                                            defaultValue={selectTime[index]?.week}
+                                        />
+                                        <Select
+                                            title={"Honalar"}
+                                            options={roomsData}
+                                            // onChangeOption={setSelectRoom}
+                                            register={register}
+                                            name={room}
+                                            defaultValue={selectTime[index]?.room}
+                                        />
+                                        <Input
+                                            type={"time"}
+                                            placeholder={"Boshlanish vaqti"}
+                                            register={register}
+                                            name={start_time}
+                                        />
+                                        <Input
+                                            type={"time"}
+                                            placeholder={"Tugash vaqti"}
+                                            register={register}
+                                            name={end_time}
+                                        />
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
-                    <div className={cls.timeTableAddPlus}>
+                    <div
+                        className={cls.timeTableAddPlus}
+                        onClick={() => setTimeCounter(prev => [...prev, (prev[prev.length - 1] + 1)])}
+                    >
                         <i className={"fa fa-plus"}/>
                     </div>
                     <div className={cls.timeTableFooterBtn}>
-                        <Button>Tekshirmoq</Button>
+                        {
+                            filteredStatus === "loading" ? <MiniLoader/> : <Button>Tekshirmoq</Button>
+                        }
                     </div>
-                </div>
+                </Form>
             </Modal>
             <Modal setActive={setCreateGroup} active={createGroup}>
                 <div className={cls.createGroup}>
@@ -183,17 +450,45 @@ export const CreateGroup = () => {
                         <h2>Gruppa ochish</h2>
                     </div>
                     <div className={cls.createGroupForm}>
-                        <Form>
-                            <Select title={"Fanlar"}/>
-                            <div className={cls.createGroupFormFilter}>
-                                <Input extraClassName={cls.createGroupInput} placeholder={"Boshlanish vaqti"}/>
-                                <Input extraClassName={cls.createGroupInput} placeholder={'Tugash vaqti'}/>
-                            </div>
-                            <Textarea extraClassName={cls.createGroupFormItem} placeholder={"O'qituvchi "}/>
-                            <Input extraClassName={cls.createGroupFormItem} placeholder={"Gruppa nomi"}/>
-                            <Select extraClassName={cls.createGroupFormItem} title={"Kurs turi"}/>
-                            <Input extraClassName={cls.createGroupFormItem} placeholder={"Gruppa nomi"}/>
-                            <Input extraClassName={cls.createGroupFormItem} placeholder={"O'qituvchi ulushi"}/>
+                        <Form onSubmit={handleSubmit(onSubmitCreateGroup)}>
+                            <Input
+                                extraClassName={cls.createGroupFormItem}
+                                placeholder={"Gruppa nomi"}
+                                register={register}
+                                name={"name"}
+                            />
+                            <Select
+                                extraClassName={cls.createGroupFormItem}
+                                title={"Kurs turi"}
+                                options={curseTypesData}
+                                onChangeOption={setSelectedCurseType}
+                            />
+                            <Select
+                                extraClassName={cls.createGroupFormItem}
+                                title={"Kurs darajasi"}
+                                options={curseLevelData}
+                                onChangeOption={setSelectedCurseLevel}
+                            />
+                            <Select
+                                extraClassName={cls.createGroupFormItem}
+                                title={"Kurs tili"}
+                                options={languages}
+                                onChangeOption={setSelectedCurseLanguage}
+                            />
+                            <Input
+                                extraClassName={cls.createGroupFormItem}
+                                placeholder={"Gruppa narxi"}
+                                register={register}
+                                name={"price"}
+                                type={"number"}
+                            />
+                            <Input
+                                extraClassName={cls.createGroupFormItem}
+                                placeholder={"O'qituvchi ulushi"}
+                                register={register}
+                                name={"teacher_salary"}
+                                type={"number"}
+                            />
                         </Form>
                     </div>
                 </div>
@@ -207,4 +502,5 @@ export const CreateGroup = () => {
             </Modal>
         </>
     )
-}
+})
+

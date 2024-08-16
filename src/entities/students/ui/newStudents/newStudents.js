@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {memo, useState} from 'react';
 import {useNavigate} from "react-router";
 
 import {StudentsFilter} from "features/filters/studentsFilter";
@@ -7,26 +7,29 @@ import {Table} from "shared/ui/table";
 import cls from "./newStudents.module.sass";
 
 
-export const NewStudents = ({currentTableData}) => {
+export const NewStudents = memo(({currentTableData}) => {
     const [active, setActive] = useState(false);
     const navigation = useNavigate()
 
 
     const renderStudents = () => {
-        return currentTableData.map((item, i) => {
+        if (currentTableData && currentTableData.length)
+        return currentTableData?.map((item, i) => {
             return (
                 <tr onClick={() => navigation(`profile/${item.id}`)}>
                     <td>{i + 1}</td>
                     <td>{item.user.surname} {item.user.name}</td>
-                    <td>{item.age}</td>
+                    <td>{item.user.age}</td>
                     <td>{item.user.phone}</td>
-                    <td>{item.user.language.name}</td>
+                    <td>{item.user.language?.name}</td>
                     <td>{item.group}</td>
                     <td>{item.user.registered_date}</td>
                 </tr>
             )
         });
     };
+
+    const render = renderStudents()
 
     return (
         <div className={cls.mainContainer}>
@@ -44,7 +47,7 @@ export const NewStudents = ({currentTableData}) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {renderStudents()}
+                    {render}
                     </tbody>
                 </Table>
 
@@ -56,4 +59,4 @@ export const NewStudents = ({currentTableData}) => {
             />
         </div>
     );
-};
+})

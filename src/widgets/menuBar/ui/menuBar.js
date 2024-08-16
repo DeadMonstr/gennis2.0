@@ -1,179 +1,62 @@
-import {useCallback, useContext} from 'react';
+import {useCallback, useContext, useEffect, useState} from 'react';
+import {useSelector} from "react-redux";
+import {useLocation, useNavigate} from "react-router";
+import classNames from "classnames";
 
+import {getUsername} from "pages/loginPage";
 import {Link} from "shared/ui/link";
 import {ThemeContext} from "shared/lib/context/themeContext";
+import {menuConfig} from "../model/consts/menuConfig";
 
 import cls from "./menuBar.module.sass";
-
-
-const menuConfig = [
-    {
-        to: "home",
-        name: "Bosh Sahifa",
-        icon: "fa-home",
-        roles: [true],
-        isMenu: true,
-    },
-    {
-        to: "taskManager",
-        name: "Task Manager",
-        icon: "fa-tasks",
-        roles: [true],
-        isMenu: true,
-    },
-    {
-        to: "studentsDirector",
-        name: "O'quvchilar",
-        icon: "fa-user-graduate",
-        roles: [],
-        isMenu: true,
-
-    },
-    {
-        to: "students",
-        name: " O'quvchilar",
-        icon: "fa-user-graduate",
-        roles: [],
-        isMenu: true,
-    },
-    {
-        to: "groups",
-        name: "Gruppalar",
-        icon: "fa-users",
-        roles: [],
-        isMenu: true,
-    },
-    {
-        to: "teacher",
-        name: "O'qituvchilar",
-        icon: "fa-user-tie",
-        roles: [],
-        isMenu: true,
-    },
-    {
-        to: "/login",
-        name: "Ishchilar",
-        icon: "fa-id-badge",
-        roles: []
-    },
-    {
-        to: "/login",
-        name: "Buxgalteriya Hisobi",
-        icon: "fa-file-invoice-dollar",
-        roles: []
-    },
-    {
-        to: "teacherProfile",
-        name: "Teacher Profile",
-        icon: "fa-user-graduate",
-        roles: [],
-        isMenu: false
-    },
-    {
-        to: "profile",
-        name: "Student Profile",
-        icon: "fa-user-graduate",
-        roles: [],
-        isMenu: false
-    },
-    {
-        to: "vacancyPage",
-        name: "Vakansiyalar",
-        icon: "fa-tasks",
-        roles: [],
-        isMenu: true
-    },
-    {
-        to: "timeTable",
-        name: "Time Table",
-        icon: "fa-tasks",
-        roles: [],
-        isMenu: true
-    },
-    {
-        to: "vacancyPage/vacancyWorkPage",
-        roles: [],
-        isMenu: false,
-    },
-    {
-        to: "employer",
-        name: "Employers",
-        icon: "fa-user-graduate",
-        roles: [],
-        isMenu: true,
-    },
-    {
-        to: "flows",
-        name: "Flows",
-        icon: "fa-user-graduate",
-        roles: [],
-        isMenu: true,
-    },
-    {
-        to: "rooms",
-        name: "Honalar",
-        icon: "fa-door-closed",
-        roles: [],
-        isMenu: true,
-    },
-    {
-        to: "/login",
-        name: "Capital Category",
-        icon: "fa-coins",
-        roles: []
-    },
-    {
-        to: "/login",
-        name: "Centre info",
-        icon: "fa-info",
-        roles: []
-    },
-    {
-        to: "/login",
-        name: "Kitoblar",
-        icon: "fa-book",
-        roles: []
-    },
-    {
-        to: "register",
-        name: "Registratsiya",
-        icon: "fa-edit",
-        isMenu: true,
-    },
-
-]
-
+import defaultUserImage from "shared/assets/images/user_image.png";
 
 export const Menubar = () => {
 
+    const navigate = useNavigate()
+    const {pathname} = useLocation()
     const {theme} = useContext(ThemeContext)
+    const username = useSelector(getUsername)
+    const location = 1
+    const [activeMenu, setActiveMenu] = useState("home")
+
+    useEffect(() => {
+        menuConfig.map(item => {
+            if (pathname.includes(item.to)) {
+                // console.log(item.to, "effect")
+                setActiveMenu(item.to)
+            }
+        })
+    }, [pathname])
 
     const renderMultipleMenu = useCallback(() => {
         return menuConfig.map((item, index) => {
-            // console.log(item.type, "type")
-            // console.log(item.type?.includes(theme), "type")
-            // if (item.type?.includes(theme))
-            if (item.isMenu)
-                return (
-                    <li
-                        key={index}
-                        className={cls.link}
+            const linkItem = item.location ? `/${location}` : ""
+            return (
+                <li
+                    key={index}
+                    className={classNames(cls.link, {
+                        [cls.active]: item.to === activeMenu
+                    })}
+                    onClick={() => {
+                        // console.log(item.to, "click")
+                        setActiveMenu(item.to)
+                        navigate(`${item.to}${linkItem}`)
+                    }}
+                >
+                    <Link
+                        to={`${item.to}${linkItem}`}
+                        extraClass={cls.link__href}
+                        activeClass={cls.active}
+                        // onClick={() => setActive(item.name)}
                     >
-                        <Link
-                            to={item.to === "students" ? `${item.to}/1` : item.to}
-                            extraClass={cls.link__href}
-                            activeClass={cls.active}
-                            // onClick={() => setActive(item.name)}
-                        >
-                            <i className={`fas ${item.icon} icon-link`}/>
-                            <span className={cls.link__title}>{item.name}</span>
-                        </Link>
-                    </li>
-                )
-            else return null
-            // else return null
+                        <i className={`fas ${item.icon} icon-link`}/>
+                        <span className={cls.link__title}>{item.name}</span>
+                    </Link>
+                </li>
+            )
         })
-    }, [theme])
+    }, [theme, activeMenu])
 
 
     const renderedMenu = renderMultipleMenu()
@@ -181,9 +64,27 @@ export const Menubar = () => {
 
     return (
         <nav className={cls.menu}>
+            <div className={cls.menu__user}>
+                <Link to={"profile/1"}>
+                    <img
+                        className={cls.userImage}
+                        src={defaultUserImage}
+                        alt=""
+                    />
+                </Link>
+                <div className={cls.userInfo}>
+                    {/*<h2>{username ?? "Admin"}</h2>*/}
+                    <h3>Admin</h3>
+                    <p>admin</p>
+                </div>
+            </div>
             <ul className={cls.menu__inner}>
                 {renderedMenu}
             </ul>
+            <div className={cls.menu__footer}>
+                <i className="fas fa-sign-out-alt"/>
+                <h2>Chiqish</h2>
+            </div>
         </nav>
     );
 };

@@ -1,9 +1,7 @@
 
-
 import {configureStore} from "@reduxjs/toolkit";
-
 import {search} from "features/searchInput";
-import {registerUser} from 'pages/registerPage';
+import {registerUser} from "pages/registerPage";
 import {loginSlice} from "pages/loginPage";
 import {filteredTeachers} from "features/filters/teacherFilter";
 import {filteredStudents} from "features/filters/studentsFilter";
@@ -12,19 +10,39 @@ import {filteredGroups} from "features/filters/groupsFilter";
 import {filteredRooms} from "features/filters/roomsFilter";
 import {deletedGroups, groups} from "entities/groups/index";
 import {user} from "entities/user";
-import {studentsDirectorSlice} from "pages/studentsPage"
-import {timeTable} from "pages/timePage";
-
-import {homeSlice} from "entities/home";
-import {newStudents} from "entities/students";
-import {teachers} from "entities/teachers"
-import {employers} from "entities/employer";
 import {studentProfilePayment} from "entities/profile/studentProfile";
 import {studentProfileBooks} from "entities/profile/studentProfile";
 import {studentProfileRating} from "entities/profile/studentProfile";
-import {roomsAddSlice} from 'pages/roomsPage';
-import {studentProfile} from "pages/profilePage";
-
+import {roomsAddSlice} from "pages/roomsPage";
+import {studentsDirectorSlice} from "pages/studentsPage"
+import {timeTable} from "pages/timeTableListPage";
+import {homeSlice} from "entities/home";
+import {teachers} from "entities/teachers"
+import {newStudents} from "../entities/students";
+import {employers} from "../entities/employer";
+import {roomsSlice} from "../entities/rooms";
+import {roomssSlice} from "../features/roomsEditModal";
+import {capital} from "../entities/capital"
+// import {roomsEditModalSlice} from "features/roomEditModal/model";
+import {roomDeleteSlice} from "features/roomDeleteModal/model";
+import {roomsImageAddSlice} from "features/roomImageAddModal/model";
+import {studentProfile, teacherProfileData, userProfile} from "pages/profilePage";
+import {flowsSlice} from "entities/flows";
+import {teacherParseSlice} from "entities/teachers";
+import {employerParseSlice} from "../entities/profile/employerProfile";
+import {vacancySlice} from "../features/vacancyModals/vacancyPageAdd";
+import {vacancyPageParseSlice} from "../features/vacancyModals/vacancyPageAdd";
+import {vacancyWorkPageSlice} from "../features/vacancyModals/vacancyWorkPage/model";
+import {vacancyWorkerPermissionSlice} from "../features/vacancyModals/vacancyWorkerPermission";
+import {roomImageSlice} from "features/roomImagePareModal";
+import {timeTableSchool} from "pages/timeTable"
+import {accountingSlice} from "../entities/accounting";
+import {postBranch, postSystem} from "../entities/creates";
+import {getBranchSlice, getLocationSlice, systemSlice} from "../entities/editCreates";
+import {teacherSalarySlice} from "../entities/teacherSalary";
+import {employerSalarySlice} from "../entities/employerSalary";
+import {giveEmployerSalarySlice} from "../pages/giveSalaryPage";
+import {giveEmployerSalarySlices} from "../features/giveEmployerSalary";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -60,6 +78,33 @@ export const store = configureStore({
         studentProfile,
         timeTable,
         roomsAddSlice,
+        roomsSlice,
+        roomssSlice,
+        // roomsEditModalSlice,
+        roomDeleteSlice,
+        roomsImageAddSlice,
+        flowsSlice,
+        teacherProfileData,
+        teacherParseSlice,
+        capital,
+        employerParseSlice,
+        vacancySlice,
+        vacancyPageParseSlice,
+        vacancyWorkPageSlice,
+        accountingSlice,
+        postSystem,
+        systemSlice,
+        postBranch,
+        getBranchSlice,
+        getLocationSlice,
+        roomImageSlice,
+        timeTableSchool,
+        userProfile,
+        vacancyWorkerPermissionSlice,
+        teacherSalarySlice,
+        employerSalarySlice,
+        giveEmployerSalarySlice,
+        giveEmployerSalarySlices
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

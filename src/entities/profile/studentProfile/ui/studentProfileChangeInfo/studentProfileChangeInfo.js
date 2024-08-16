@@ -13,8 +13,11 @@ export const StudentProfileChangeInfo = memo((props) => {
         setActive,
         active,
         onSubmit,
-        register
+        register,
+        currentData
     } = props
+
+    console.log(currentData, "currentData")
 
     return (
         <Modal
@@ -28,31 +31,45 @@ export const StudentProfileChangeInfo = memo((props) => {
                         placeholder={"Ism"}
                         name={"name"}
                         register={register}
+                        value={currentData?.name}
+                        required
                     />
                     <Input
                         placeholder={"Familiya"}
                         name={"surname"}
                         register={register}
+                        value={currentData?.surname}
+                        required
                     />
                     <Input
                         placeholder={"Otasinig ismi"}
                         name={"father_name"}
                         register={register}
+                        value={currentData?.father_name}
+                        required
                     />
                     <Input
                         placeholder={"Telefon raqami"}
                         name={"phone"}
                         register={register}
+                        value={currentData?.phone}
+                        required
                     />
                     <Input
                         placeholder={"Yoshi"}
                         name={"age"}
                         register={register}
+                        value={currentData?.age}
+                        required
+                        type={"number"}
                     />
                     <Input
                         placeholder={"Tug'ilgan sana"}
                         name={"birth_date"}
                         register={register}
+                        value={currentData?.birth_date}
+                        required
+                        type={"date"}
                     />
                 </Form>
             </div>
