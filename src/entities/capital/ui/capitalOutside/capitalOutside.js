@@ -8,10 +8,6 @@ export const CapitalOutside = memo(({capitalData}) => {
 
     const navigation = useNavigate()
 
-
-    // useEffect(() => {
-    //     dispatch()
-    // })
     return (
         <div className={cls.capital}>
             <div className={cls.capital__wrapper}>

@@ -143,7 +143,6 @@ export const CreateGroup = memo(() => {
                                 </div>
 
                             </>
-
                         )
                     })}
                 </div> : <Teachers data={teachers}/>}

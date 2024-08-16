@@ -14,6 +14,7 @@ import {Input} from "../../../../shared/ui/input";
 import {Button} from "../../../../shared/ui/button";
 import {useDropzone} from "react-dropzone";
 import {useForm} from "react-hook-form";
+import {getOnDemandLazySlides} from "react-slick/lib/utils/innerSliderUtils";
 
 
 const capitalType = [
@@ -25,13 +26,14 @@ const capitalType = [
 export const CapitalInside = memo(() => {
 
     const {register, setValue, handleSubmit} = useForm()
-
-
+    const {id} = useParams()
     useEffect
     (() => {
         dispatch(getCapitalInfo(id))
     }, [])
-    const {id} = useParams()
+
+
+
 
     const dispatch = useDispatch()
 
@@ -40,27 +42,30 @@ export const CapitalInside = memo(() => {
     const loading = useSelector(getLoading)
 
 
-    const [activeMenu, setActiveMenu] = useState(capitalType[0].name)
-
-
-
-
     const [changeItem, setChangeItem] = useState({})
     const [changedImages, setChangedImages] = useState([])
+
+
+    const [activeMenu, setActiveMenu] = useState(capitalType[0].name)
+
     const [activeModal, setActiveModal] = useState(false)
+
+    const [editModal, setEditModal] = useState(false)
 
     const capitalItem = () => {
         return loading ? <DefaultPageLoader/> : (
             <>
-                <CapitalInsideSecond capitalData={getCapitalInsideData}/>
-                <CapitalInsideProduct addModal={activeModal} setAddModal={setActiveModal} capitalData={getCapitalInsideData}/>
+                <CapitalInsideSecond editModal={editModal} setEditModal={() => setEditModal(!editModal)}
+                                     capitalData={getCapitalInsideData}/>
+                <CapitalInsideProduct addModal={activeModal} setAddModal={setActiveModal}
+                                      capitalData={getCapitalInsideData}/>
             </>
         )
     }
 
 
     const onClick = (data) => {
-        console.log(data , "data")
+        console.log(data, "data")
         console.log(setChangedImages)
         setActiveModal(!activeModal)
     }
@@ -75,34 +80,46 @@ export const CapitalInside = memo(() => {
                 categoryMenu={capitalType}
             />
             {capitalItemRender}
+            {<AddCategoryModal register={register} handleSubmit={handleSubmit} onClick={onClick} activeModal={activeModal} setActiveModal={setActiveModal} setChangedImages={setChangedImages} changeItem={changeItem}/>}
+            {<EditModal register={register} handleSubmit={handleSubmit} onClick={onClick} editModal={editModal} setEditModal={setEditModal} setChangedImages={setChangedImages} changeItem={changeItem}/>}
 
-
-            <Modal setActive={setActiveModal} active={activeModal}>
-                <h1>Add</h1>
-                <div style={{display: "flex", gap: "1rem", padding: "2rem"}}>
-                    <ImageDrop
-                        status={activeModal}
-                        image={changeItem?.images}
-                        setChangedImages={setChangedImages}
-
-                    />
-                    <Form extraClassname={cls.form} typeSubmit={""}>
-                        <Input register={register} name={"name"}/>
-                        <Input register={register} name={"number"}/>
-                        <Input register={register} name={"price"}/>
-                        <Input register={register} name={"deadline"}/>
-                        <Input register={register} name={"payment_type"}/>
-                        <Button onClick={handleSubmit(onClick)} extraClass={cls.btn}>Add</Button>
-                    </Form>
-                </div>
-
-
-            </Modal>
 
         </div>
     );
 })
 
+
+
+
+
+const AddCategoryModal = memo(({setActiveModal , activeModal , register , handleSubmit , onClick ,changeItem ,setChangedImages }) => {
+
+
+
+    return (
+        <Modal setActive={setActiveModal} active={activeModal}>
+            <h1>Add</h1>
+            <div style={{display: "flex", gap: "1rem", padding: "2rem"}}>
+                <ImageDrop
+                    status={activeModal}
+                    image={changeItem?.images}
+                    setChangedImages={setChangedImages}
+
+                />
+                <Form extraClassname={cls.form} typeSubmit={""}>
+                    <Input register={register} name={"name"}/>
+                    <Input register={register} name={"number"}/>
+                    <Input register={register} name={"price"}/>
+                    <Input register={register} name={"deadline"}/>
+                    <Input register={register} name={"payment_type"}/>
+                    <Button onClick={handleSubmit(onClick)} extraClass={cls.btn}>Add</Button>
+                </Form>
+            </div>
+
+
+        </Modal>
+    )
+})
 
 const ImageDrop = ({index, setChangedImages, image, status}) => {
     useEffect(() => {
@@ -153,4 +170,27 @@ const ImageDrop = ({index, setChangedImages, image, status}) => {
     )
 }
 
+
+
+const EditModal = memo(({register , handleSubmit , onClick , editModal ,setEditModal ,changeItem ,setChangedImages}) => {
+
+    return(
+        <Modal setActive={setEditModal} active={editModal}>
+            <h1>Change</h1>
+            <div style={{display: "flex", gap: "1rem", padding: "2rem"}}>
+                <ImageDrop
+                    status={editModal}
+                    image={changeItem?.images}
+                    setChangedImages={setChangedImages}
+
+                />
+                <Form extraClassname={cls.form} typeSubmit={""}>
+                    <Input register={register} name={"name"}/>
+                    <Input register={register} name={"id_number"}/>
+                    <Button onClick={handleSubmit(onClick)} extraClass={cls.btn}>Add</Button>
+                </Form>
+            </div>
+        </Modal>
+    )
+})
 

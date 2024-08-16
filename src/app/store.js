@@ -35,6 +35,9 @@ import {vacancySlice} from "../features/vacancyModals/vacancyPageAdd";
 import {vacancyPageParseSlice} from "../features/vacancyModals/vacancyPageAdd";
 import {vacancyWorkPageSlice} from "../features/vacancyModals/vacancyWorkPage/model";
 import {vacancyWorkerPermissionSlice} from "../features/vacancyModals/vacancyWorkerPermission";
+import {accountingSlice} from "../entities/accounting";
+import {postBranch, postSystem} from "../entities/creates";
+import {getBranchSlice, getLocationSlice, systemSlice} from "../entities/editCreates";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -84,7 +87,13 @@ export const store = configureStore({
         vacancySlice,
         vacancyPageParseSlice,
         vacancyWorkPageSlice,
-        vacancyWorkerPermissionSlice
+        vacancyWorkerPermissionSlice,
+        accountingSlice,
+        postSystem,
+        systemSlice,
+        postBranch,
+        getBranchSlice,
+        getLocationSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(
