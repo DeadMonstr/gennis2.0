@@ -36,6 +36,9 @@ import {vacancyWorkPageSlice} from "../features/vacancyModals/vacancyWorkPage/mo
 import {vacancyWorkerPermissionSlice} from "../features/vacancyModals/vacancyWorkerPermission";
 import {roomImageSlice} from "features/roomImagePareModal";
 import {timeTableSchool} from "pages/timeTable"
+import {accountingSlice} from "../entities/accounting";
+import {postBranch, postSystem} from "../entities/creates";
+import {getBranchSlice, getLocationSlice, systemSlice} from "../entities/editCreates";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -84,6 +87,12 @@ export const store = configureStore({
         vacancySlice,
         vacancyPageParseSlice,
         vacancyWorkPageSlice,
+        accountingSlice,
+        postSystem,
+        systemSlice,
+        postBranch,
+        getBranchSlice,
+        getLocationSlice,
         vacancyWorkerPermissionSlice,
         roomImageSlice,
         timeTableSchool,

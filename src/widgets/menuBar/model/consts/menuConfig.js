@@ -44,7 +44,7 @@ export const menuConfig = [
     {
         to: "timeTable",
         name: "Time Table",
-        icon: "fa-tasks",
+        icon: "fa-clock",
         location: true
     },
     {
@@ -79,6 +79,12 @@ export const menuConfig = [
         name: "Capital",
         icon: "fa-book",
         isMenu: true
+    },
+    {
+        to: "accounting",
+        name: "Bugalteriya",
+        isMenu: true,
+        icon: "fa-calculator",
     },
     {
         to: "rooms",

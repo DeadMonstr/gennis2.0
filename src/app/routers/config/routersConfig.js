@@ -21,6 +21,14 @@ import {
     getRoomsProfilePage,
     getEmployerPage,
     getEmployerProfile,
+    getBranch,
+    getEducation,
+    getSystem,
+    getCreateBranch,
+    getCreateEducation,
+    getCreateLocation,
+    getCreateSystem,
+    getAccounting,
     getLocations, getRouteCreateGroup
 } from "shared/const/routers";
 
@@ -47,7 +55,10 @@ import {ContractPage} from "pages/contractPage";
 import {CapitalInside, CapitalPage} from "pages/capitalPage";
 
 import {getEmployersData} from "../../../entities/employer/model/selector/employersSelector";
-import {Location} from "../../../entities/editCreates";
+import {Branch, Education, Location, System} from "../../../entities/editCreates";
+import {BranchCreate, EducationCreate, LocationCreate, SystemCreate} from "../../../entities/creates";
+import {AccountingPageMain} from "../../../pages/accountingPage";
+import {AccountingBooks} from "../../../entities/accounting";
 import {CreateGroup} from "../../../entities/students";
 // import {RoomsProfilePage} from "pages/profilePage";
 
@@ -215,9 +226,53 @@ export const routersConfig = [
         path: getRouteRegister(),
         element: <Register/>,
     },
+
+
+    {
+        name: "createBranch",
+        path: getCreateBranch(":id"),
+        element: <BranchCreate/>
+    },
+
+    {
+        name: "createSystem",
+        path: getCreateSystem(":id"),
+        element: <SystemCreate/>
+    },
+    {
+        name: "createLocation",
+        path: getCreateLocation(":id"),
+        element: <LocationCreate/>
+    },
+    {
+        name: "createEducation",
+        path: getCreateEducation(":id"),
+        element: <EducationCreate/>
+    },
     {
         name: "location",
         path: getLocations(":id"),
         element: <Location/>
     },
+    {
+        name: "branch",
+        path: getBranch(":id"),
+        element: <Branch/>
+    },
+    {
+        name: "education",
+        path: getEducation(":id"),
+        element: <Education/>
+    },
+    {
+        name: "system",
+        path: getSystem(":id"),
+        element: <System/>
+    },
+    {
+        name: "accounting",
+        path: getAccounting(":id"),
+        element: <AccountingPageMain/>,
+    },
+
 ]

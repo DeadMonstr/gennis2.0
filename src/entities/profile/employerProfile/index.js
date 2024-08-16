@@ -6,3 +6,5 @@ export {changeEmployerProfileImage} from './model/employerParseThunk'
 export {getEmployerId} from './model/selector/employerIdSelector'
 export {getEmployerLoading} from './model/selector/employerIdSelector'
 export {default as employerParseSlice} from './model/employerParseSlice'
+
+

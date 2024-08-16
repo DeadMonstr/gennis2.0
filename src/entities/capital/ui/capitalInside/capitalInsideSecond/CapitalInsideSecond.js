@@ -4,7 +4,7 @@ import cls from "./capitalInsideSecond.module.sass"
 import {Button} from "shared/ui/button";
 import {DefaultPageLoader} from "../../../../../shared/ui/defaultLoader";
 
-export const CapitalInsideSecond = memo(({capitalData, loading}) => {
+export const CapitalInsideSecond = memo(({capitalData, editModal, setEditModal}) => {
 
     const capitalDataRender = () => {
         return (
@@ -18,7 +18,7 @@ export const CapitalInsideSecond = memo(({capitalData, loading}) => {
                     </div>
                     <span>Kategoriya raqami: {capitalData?.id_number}</span>
                     <div className={cls.capitalInfo__btn}>
-                        <Button>O’zgartirish</Button>
+                        <Button onClick={setEditModal}>O’zgartirish</Button>
                         <Button>
                             <i className="fas fa-download"/>
                             Download File

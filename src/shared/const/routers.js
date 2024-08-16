@@ -29,7 +29,22 @@ export const getContract = (id) => `contract/${id}`
 export const getCapital = (id) => `capital/${id}`
 
 export const getCapitalInside = (id) => `capital/:id/capitalBoxProfile/${id}`
+
+
+
+export const getCreateBranch = (id) => `createBranch/${id}`
+export const getCreateSystem = (id) => `createSystem/${id}`
+export const getCreateLocation = (id) => `createLocation/${id}`
+export const getCreateEducation = (id) => `createEducation/${id}`
+
+
 export const getLocations = (id) => `location/${id}`
+export const getBranch = (id) => `branches/${id}`
+
 export const getRouteCreateGroup = () => `students/:id/createGroup`
 
+export const getEducation = (id) => `education/${id}`
 
+
+export const getSystem = (id) => `system/${id}`
+export const getAccounting = (id) => `accounting/${id}/*`

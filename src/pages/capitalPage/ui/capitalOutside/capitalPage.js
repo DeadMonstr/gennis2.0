@@ -63,7 +63,7 @@ export const CapitalPage = memo(() => {
                 </div>
             )
         } else {
-            return <div>{getCapital.length}</div>
+            return <div>{getCapital?.length}</div>
         }
     }
 
@@ -88,8 +88,6 @@ export const CapitalPage = memo(() => {
                         <Button onClick={handleSubmit(onClick)} extraClass={cls.btn}>Add</Button>
                     </Form>
                 </div>
-
-
             </Modal>
 
         </div>
