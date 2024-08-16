@@ -26,7 +26,7 @@ import {capital} from "../entities/capital"
 // import {roomsEditModalSlice} from "features/roomEditModal/model";
 import {roomDeleteSlice} from "features/roomDeleteModal/model";
 import {roomsImageAddSlice} from "features/roomImageAddModal/model";
-import {studentProfile, teacherProfileData} from "pages/profilePage";
+import {studentProfile, teacherProfileData, userProfile} from "pages/profilePage";
 import {flowsSlice} from "entities/flows";
 import {teacherParseSlice} from "entities/teachers";
 import {employerParseSlice} from "../entities/profile/employerProfile";
@@ -86,7 +86,8 @@ export const store = configureStore({
         vacancyWorkPageSlice,
         vacancyWorkerPermissionSlice,
         roomImageSlice,
-        timeTableSchool
+        timeTableSchool,
+        userProfile
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

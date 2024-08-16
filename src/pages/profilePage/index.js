@@ -7,3 +7,4 @@ export {ProfileTeacherPage} from "./ui/profileTeacherPage/profileTeacherPage"
 
 export {UserProfilePage} from "./ui/userProfilePage/userProfilePage";
 export {default as userProfile} from "./model/slice/userProfileSlice";
+export {fetchUserProfileData} from "./model/thunk/userProfileThunk"

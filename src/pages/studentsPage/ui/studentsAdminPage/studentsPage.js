@@ -57,9 +57,9 @@ export const StudentsPage = memo(() => {
         )
     }, [newStudents, setCurrentPage, search])
 
-    useEffect(() =>{
-        dispatch(fetchNewStudentsData())
-    } , [])
+    // useEffect(() =>{
+    //     dispatch(fetchNewStudentsData())
+    // } , [])
 
     const handleChange = (value) => {
         setSelectedRadio(value);

@@ -2,10 +2,12 @@ import {createSlice} from "@reduxjs/toolkit";
 
 import {
     fetchUserProfileData,
-    changeUserProfileData, changeUserProfileImage
+    changeUserProfileData,
+    changeUserProfileImage
 } from "../thunk/userProfileThunk";
 
 const initialState = {
+    userBranchId: null,
     userData: null,
     userPermissions: null,
     salaryData: [
@@ -207,7 +209,9 @@ const userProfileSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchUserProfileData.fulfilled, (state, action) => {
+                console.log(action.payload)
                 state.userData = action.payload.user
+                state.userBranchId = action.payload.user.branch.id
                 state.userPermissions = action.payload.permissions
                 state.loading = false
                 state.error = null

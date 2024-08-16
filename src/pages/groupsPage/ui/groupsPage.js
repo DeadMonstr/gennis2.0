@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from "react";
 import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import {GroupsList} from "entities/groups/groups/ui/groupsList";
 import {getGroupsListData} from "entities/groups/model/selectors/groupsList";
@@ -12,11 +12,13 @@ import cls from "./groupsPage.module.sass";
 import {DeletedGroups} from "entities/groups/deletedGroups/ui/deletedGroups";
 import {getDeletedGroupsData} from "../../../entities/groups/model/selectors/deletedGroups";
 import {getSearchValue} from "../../../features/searchInput";
+import {fetchGroupsData} from "../../../entities/groups/model/slice/groupsThunk";
 // import {DeletedGroups} from "entities/groups/index";
 
 
 export const GroupsPage = () => {
 
+    const dispatch = useDispatch()
     const data = useSelector(getGroupsListData)
     const deletedGroupsData = useSelector(getDeletedGroupsData)
 
@@ -51,6 +53,11 @@ export const GroupsPage = () => {
     useEffect(() => {
         setDeletedGroups(deletedGroupsData)
     }, [deletedGroupsData])
+
+    useEffect(() => {
+        dispatch(fetchGroupsData())
+    }, [])
+
     return (
         <div className={cls.deletedGroups}>
             <div className={cls.mainContainer_filterPanelBox}>

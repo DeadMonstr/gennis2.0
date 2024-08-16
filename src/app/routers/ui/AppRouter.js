@@ -65,10 +65,10 @@ export const AppRouter = () => {
                                     // <Route element={}>
                                     //     {item.element}
                                     // </Route>
-                                    // <RequireAuth roles={item.roles}>
-                                    //     {item.element}
-                                    // </RequireAuth>
-                                    item.element
+                                    <RequireAuth>
+                                        {item.element}
+                                    </RequireAuth>
+                                    // item.element
                                 }
                             />
                         )
@@ -78,8 +78,9 @@ export const AppRouter = () => {
                         path={"time"}
                         element={<TimeTable/>}
                     />
-
-                    <Route path={"students/:id/createGroup"} element={<CreateGroup/>} />
+                    {/*<RequireAuth>*/}
+                    {/*    <Route path={"students/:id/createGroup"} element={<CreateGroup/>} />*/}
+                    {/*</RequireAuth>*/}
                     <Route
                         path={"profile"}
                         element={<StudentProfilePage/>}

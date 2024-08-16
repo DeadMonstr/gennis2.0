@@ -8,7 +8,7 @@ export const getRouteGroups = (id) => `groups/${id}`;
 // export const getRouteDeletedGroups = (id) => `deletedGroups`;
 export const getRouteRegister = () => `register`;
 export const getRouteTeacher = (id) => `teacher/${id}`;
-export const getRouteCreateGroup = () => `newStudents/createGroup`;
+// export const getRouteCreateGroup = () => `newStudents/createGroup`;
 export const getRouteRooms = (id) => `rooms/${id}`;
 export const getTeacherProfile = (id) => `teacher/:id/teacherProfile/${id}`;
 export const getVacancyPage = (id) => `vacancyPage/${id}`
@@ -29,9 +29,7 @@ export const getContract = (id) => `contract/${id}`
 export const getCapital = (id) => `capital/${id}`
 
 export const getCapitalInside = (id) => `capital/:id/capitalBoxProfile/${id}`
-
-
-
 export const getLocations = (id) => `location/${id}`
+export const getRouteCreateGroup = () => `students/:id/createGroup`
 
 

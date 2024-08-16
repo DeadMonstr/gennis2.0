@@ -21,7 +21,7 @@ import {
     getRoomsProfilePage,
     getEmployerPage,
     getEmployerProfile,
-    getLocations
+    getLocations, getRouteCreateGroup
 } from "shared/const/routers";
 
 
@@ -48,6 +48,7 @@ import {CapitalInside, CapitalPage} from "pages/capitalPage";
 
 import {getEmployersData} from "../../../entities/employer/model/selector/employersSelector";
 import {Location} from "../../../entities/editCreates";
+import {CreateGroup} from "../../../entities/students";
 // import {RoomsProfilePage} from "pages/profilePage";
 
 
@@ -166,6 +167,10 @@ export const routersConfig = [
     {
         path: getRouteUserProfile(":id"),
         element: <UserProfilePage/>,
+    },
+    {
+        path: getRouteCreateGroup(),
+        element: <CreateGroup/>,
     },
     {
         name: "Rooms Profile",

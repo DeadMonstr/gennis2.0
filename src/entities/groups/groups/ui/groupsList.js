@@ -26,11 +26,11 @@ export const GroupsList = React.memo(({currentTableData}) => {
                             <tbody>
                             <tr>
                                 <td>{i + 1}</td>
-                                <td>{item.groupName}</td>
+                                <td>{item.name}</td>
                                 <td>{item.name} {item.surname}</td>
-                                <td>{item.subject}</td>
-                                <td>{item.typeCourse}</td>
-                                <td>{item.groupPrice}</td>
+                                <td>{item.subject.name}</td>
+                                <td>{item.course_types?.name}</td>
+                                <td>{item.price}</td>
                                 <td>{item.status ?<div><div/></div> : null }</td>
                             </tr>
                             </tbody>

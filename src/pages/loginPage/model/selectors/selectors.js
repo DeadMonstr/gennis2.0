@@ -5,3 +5,9 @@ export const getUserRole = (state) =>
 
 export const getUsername = (state) =>
     state.loginSlice.username
+
+export const getUserRefreshLoading = (state) =>
+    state.loginSlice.loading
+
+export const getUserId = (state) =>
+    state.loginSlice.userId
