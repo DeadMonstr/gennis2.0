@@ -29,7 +29,7 @@ import {
     getCreateLocation,
     getCreateSystem,
     getAccounting,
-    getLocations, getRouteCreateGroup,
+    getLocations, getRouteCreateGroup, getEmployerSalaryInsideSource, getEmployerSalary, getTeacherSalary,
 } from "shared/const/routers";
 
 
