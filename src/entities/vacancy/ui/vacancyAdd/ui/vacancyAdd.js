@@ -43,12 +43,13 @@ export const VacancyAdd = React.memo(({ active, setActive }) => {
                 <h1>Vakansiya qo'shish</h1>
                 <div className={cls.filter__container}>
                     <Input
+                        extraClassName={cls.filter__select}
                         placeholder={"Kasb nomi"}
                         value={subjectName}
                         onChange={(e) => setSubjectName(e.target.value)}
                     />
                     <Select
-                        extraClass={cls.inputWidth}
+                        extraClass={cls.filter__select}
                         value={systemType}
                         onChangeOption={(value) => setSystemType(value)}
                         options={vacancySystemData?.systems || []}
@@ -57,7 +58,7 @@ export const VacancyAdd = React.memo(({ active, setActive }) => {
                         extraClass={cls.buttonChange}
                         onClick={handleAdd}
                     >
-                        Add
+                        Qo'shish
                     </Button>
                 </div>
             </div>

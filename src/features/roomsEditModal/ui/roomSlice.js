@@ -17,7 +17,6 @@ export const roomssSlice = createSlice({
             .addCase(fetchInsideRoom.fulfilled, (state, action) => {
                 state.fetchRoomsStatus = 'success';
                 state.insideRoom = action.payload;
-                console.log(action.payload, "vot eta ");
             })
             .addCase(fetchInsideRoom.rejected, state => { state.fetchRoomsStatus = 'error'; })
             .addCase(editRoomThunk.pending, (state) => {

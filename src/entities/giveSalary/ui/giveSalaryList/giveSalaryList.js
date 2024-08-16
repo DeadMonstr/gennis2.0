@@ -4,10 +4,10 @@ import cls from './giveSalaryList.module.sass'
 import {Link} from "shared/ui/link";
 export const GiveSalaryList = ({ currentTableData, currentPage, PageSize }) => {
     const renderStudents = () => {
-        return currentTableData.map((item, index) => (
+        return currentTableData?.map((item, index) => (
             <tr key={index + 1}>
                 <td>{(currentPage - 1) * PageSize + index + 1}</td>
-                <td>{item.allSalary}</td>
+                <td>{item.salary}</td>
                 <td>{item.salaryType}</td>
                 <td>{item.dateSalary}</td>
             </tr>

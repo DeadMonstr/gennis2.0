@@ -59,10 +59,16 @@ export const Register = () => {
 
                     const data = await response.json();
                     if (data.exists) {
-                        setUsernameMessage(<p className={cls.errorMess}>This username is already taken</p>);
+                        setUsernameMessage(<p className={cls.errorMess}>
+                            <i class="fa-solid fa-circle-exclamation" style={{color: "#f15c5c"}}></i>
+                            Username band
+                        </p>);
                         setIsUsernameAvailable(false);
                     } else {
-                        setUsernameMessage(<p className={cls.successMess}>Username is available</p>);
+                        setUsernameMessage(<p className={cls.successMess}>
+                            <i class="fa-solid fa-circle-check"></i>
+                            Username bo'sh
+                        </p>);
                         setIsUsernameAvailable(true);
                     }
                 } catch (error) {
@@ -74,7 +80,7 @@ export const Register = () => {
 
             checkUsername();
         } else {
-            setUsernameMessage(<p>Username is required</p>);
+            setUsernameMessage(<p>Username kiriting</p>);
             setIsUsernameAvailable(false);
         }
     }, [username]);
@@ -321,7 +327,7 @@ export const Register = () => {
                             {renderFormFields()}
                             {loading ?
                                 <MiniLoader /> :
-                                <Button type="submit" extraClass={cls.registerBtn} disabled={!isUsernameAvailable}>
+                                <Button type={!isUsernameAvailable ? "disabled" : "submit"} extraClass={cls.registerBtn}>
                                     Register
                                 </Button>
                             }

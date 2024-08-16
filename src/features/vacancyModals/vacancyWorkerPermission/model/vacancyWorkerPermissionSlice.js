@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {fetchPermissionTable} from "./vacancyWorkerPermissionThunk";
+import {fetchPermissionTable, postSelectedPermission} from "./vacancyWorkerPermissionThunk";
 
 
 const initialState = {
@@ -27,6 +27,8 @@ export const vacancyWorkerPermissionSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message;
             } )
+
+
     }
 })
 

@@ -39,6 +39,10 @@ import {timeTableSchool} from "pages/timeTable"
 import {accountingSlice} from "../entities/accounting";
 import {postBranch, postSystem} from "../entities/creates";
 import {getBranchSlice, getLocationSlice, systemSlice} from "../entities/editCreates";
+import {teacherSalarySlice} from "../entities/teacherSalary";
+import {employerSalarySlice} from "../entities/employerSalary";
+import {giveEmployerSalarySlice} from "../pages/giveSalaryPage";
+import {giveEmployerSalarySlices} from "../features/giveEmployerSalary";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -93,10 +97,14 @@ export const store = configureStore({
         postBranch,
         getBranchSlice,
         getLocationSlice,
-        vacancyWorkerPermissionSlice,
         roomImageSlice,
         timeTableSchool,
-        userProfile
+        userProfile,
+        vacancyWorkerPermissionSlice,
+        teacherSalarySlice,
+        employerSalarySlice,
+        giveEmployerSalarySlice,
+        giveEmployerSalarySlices
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

@@ -30,25 +30,25 @@ export const Employers = ({currentTableData, loading}) => {
             return (
                 <tr>
                     <td>{i + 1}</td>
-                    <Link to={`employerProfile/${item.id}`}>
-                        <td>{item.name} {item.surname}</td>
+                    <Link to={`employerProfile/${item?.id}`}>
+                        <td>{item?.user.name} {item?.user.surname}</td>
                     </Link>
-                    <td>{item.phone}</td>
-                    <td>{item.age}</td>
-                    <td>{item.work}</td>
+                    <td>{item?.user.phone}</td>
+                    <td>{item?.user.age}</td>
+                    <td>{item?.group.name}</td>
                     <td>
                         {item.status ?
                             <div
                                 onClick={() => setClickedCheckbox(arr => {
-                                    if (clickedCheckbox.includes(item.id)){
-                                        return [...arr.filter(i => i !== item.id)]
-                                    }else return [...arr , item.id]
+                                    if (clickedCheckbox.includes(item?.user.id)){
+                                        return [...arr.filter(i => i !== item?.user.id)]
+                                    }else return [...arr , item?.user.id]
                                 })}
-                                className={clickedCheckbox.includes(item.id)
+                                className={clickedCheckbox.includes(item?.user.id)
                                     ?
                                     cls.checkbox__checked : cls.checkbox__minus
                                 }>
-                                {clickedCheckbox.includes(item.id) ?
+                                {clickedCheckbox.includes(item?.user.id) ?
                                     <i className={"fa fa-check"}/> :
                                     <i className={"fa fa-minus"}/>
                                 }
@@ -71,7 +71,7 @@ export const Employers = ({currentTableData, loading}) => {
                         <th>Full name</th>
                         <th>Tel</th>
                         <th>Yosh</th>
-                        <th>Fan</th>
+                        <th>Ish</th>
                         <th>Status</th>
                     </tr>
                     </thead>

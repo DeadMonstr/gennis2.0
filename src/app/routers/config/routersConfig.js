@@ -29,7 +29,7 @@ import {
     getCreateLocation,
     getCreateSystem,
     getAccounting,
-    getLocations, getRouteCreateGroup
+    getLocations, getRouteCreateGroup,
 } from "shared/const/routers";
 
 
@@ -55,6 +55,9 @@ import {ContractPage} from "pages/contractPage";
 import {CapitalInside, CapitalPage} from "pages/capitalPage";
 
 import {getEmployersData} from "../../../entities/employer/model/selector/employersSelector";
+import {TeacherSalaryPage} from "../../../pages/teacherSalaryPage";
+import {EmployerSalaryPage} from "../../../pages/employerSalaryPage";
+import {GiveSalaryPage} from "../../../pages/giveSalaryPage";
 import {Branch, Education, Location, System} from "../../../entities/editCreates";
 import {BranchCreate, EducationCreate, LocationCreate, SystemCreate} from "../../../entities/creates";
 import {AccountingPageMain} from "../../../pages/accountingPage";
@@ -202,6 +205,21 @@ export const routersConfig = [
         path: getEmployerProfile(":id"),
         element: <ProfileEmployerPage/>,
         roles: [],
+    },
+    {
+        name: "Teacher Salary",
+        path: getTeacherSalary(":id"),
+        element: <TeacherSalaryPage/>
+    },
+    {
+        name: "Employer Salary",
+        path: getEmployerSalary(":id"),
+        element: <EmployerSalaryPage/>
+    },
+    {
+      name: "Give salary",
+      path: getEmployerSalaryInsideSource(":id"),
+      element: <GiveSalaryPage/>
     },
     {
         to: "/login",

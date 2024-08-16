@@ -39,3 +39,21 @@ export const selectedPermissionTable = createAsyncThunk(
 
 
 
+
+
+export const postSelectedPermission = createAsyncThunk(
+    'vacancyWorkerPermissionSlice/postSelectedPermission',
+    async ({ id, selectedTable, selectedPermissions, selectedJobID }) => {
+        const { request } = useHttp();
+        return await request(
+            `${API_URL}Permissions/job_profile/${id}`,
+            "POST",
+            JSON.stringify({
+                job_id: selectedJobID,
+                permissions: selectedPermissions
+            }),
+            headers()
+        );
+    }
+);
+

@@ -3,6 +3,9 @@ import React, {useState} from 'react';
 import {Modal} from "shared/ui/modal";
 import cls from './giveSalaryModal.module.sass'
 import {TeacherProfileTotalAmount} from "entities/profile/teacherProfile";
+// import {EmployerProfileTotalAmount} from "../../../../entities/profile/employerProfile";
+
+
 
 export const GiveSalaryModal = React.memo(({active, setActive, activePage}) => {
 
@@ -16,7 +19,8 @@ export const GiveSalaryModal = React.memo(({active, setActive, activePage}) => {
                 <div  className={cls.filter__container}>
                     <TeacherProfileTotalAmount
                     active={active}
-                    setActive={setActive}/>
+                    setActive={setActive}
+                    />
 
                 </div>
 
