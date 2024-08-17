@@ -30,11 +30,9 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
     const dispatch = useDispatch()
     const userData = useSelector(getSalaryInsideSource)
 
-    console.log(userData, "blet ")
-
     const handleAddSalary = async () => {
         const newSalary = {
-            salary: 13,
+            salary: salary,
             comment: comment,
             deleted: false,
             user_salary: salary_id,
@@ -56,18 +54,12 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
         }
     }
 
-
-    const onSubmit = (data) => {
-        console.log(data)
-
-    }
-
     const renderAmountServiceTypes = useCallback(() => {
         return amountService.map(item =>
             <div className={cls.items__inner}>
                 <Radio
                     extraClasses={cls.items__radio}
-                    onChange={setActiveService}
+                    onChange={() => setActiveService(item)}
                     value={item}
                     checked={item === activeService}
                 />
@@ -113,17 +105,18 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
                             ?
                             <>
                                 <div className={cls.items}>
-                                    {
-                                        amountTypes.map((item, index) =>
-                                            <div
-                                                className={cls.items__inner}
-                                                onClick={() => setActivePaymentType(index)}
-                                            >
-                                                <p>{item.name}</p>
-                                                <img src={item.image} alt=""/>
-                                            </div>
-                                        )
-                                    }
+                                    {amountTypes.map((item, index) =>
+                                        <div
+                                            className={cls.items__inner}
+                                            onClick={() => {
+                                                setActivePaymentType(index);
+                                                setPayment(index + 1); // Bu yerda index + 1 deb qo'yish orqali tanlangan payment_types'ni to'g'ri qiymatga o'rnatish
+                                            }}
+                                        >
+                                            <p>{item.name}</p>
+                                            <img src={item.image} alt=""/>
+                                        </div>
+                                    )}
                                     <div
                                         className={cls.items__active}
                                         style={{left: `${listPretcent[activePaymentType]}%`}}
@@ -133,22 +126,19 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
                                     <div className={cls.form__inner}>
                                         <Input
                                             title={"To'lov miqdori"}
-                                            register={register}
-                                            name={"amount"}
+                                            {...register("amount")}
                                             placeholder={"Summa"}
                                             type={"number"}
-                                            value={salary}
+                                            defaultValue={salary}
                                             onChange={(e) => setSalary(e.target.value)}
                                         />
                                         <Input
                                             title={"Sababi"}
-                                            register={register}
-                                            name={"comment"}
+                                            {...register("comment")}
                                             placeholder={"Sababi"}
                                             type={"text"}
-                                            value={comment}
+                                            defaultValue={comment}
                                             onChange={(e) => setComment(e.target.value)}
-
                                         />
                                     </div>
                                 </Form>
@@ -164,8 +154,7 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
                                         <div className={cls.form__inner}>
                                             <p>{activeService} miqdori</p>
                                             <Input
-                                                register={register}
-                                                name={"amount"}
+                                                {...register("amount")}
                                                 placeholder={"Summa"}
                                                 type={"number"}
                                             />
@@ -177,8 +166,7 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
                                     <div className={cls.form__inner}>
                                         <p>{activeService} miqdori</p>
                                         <Input
-                                            register={register}
-                                            name={"amount"}
+                                            {...register("amount")}
                                             placeholder={"Summa"}
                                             type={"number"}
                                         />
@@ -188,6 +176,5 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
                 </div>
             </div>
         </EditableCard>
-
     )
 })

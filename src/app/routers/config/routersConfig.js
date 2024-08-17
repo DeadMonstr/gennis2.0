@@ -174,7 +174,7 @@ export const routersConfig = [
     },
     {
       name: "Give salary",
-      path: getEmployerSalaryInsideSource(":id"),
+      path: getEmployerSalaryInsideSource(":id", ":permission"),
       element: <GiveSalaryPage/>
     },
     {

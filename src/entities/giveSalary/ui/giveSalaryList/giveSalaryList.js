@@ -8,8 +8,9 @@ export const GiveSalaryList = ({ currentTableData, currentPage, PageSize }) => {
             <tr key={index + 1}>
                 <td>{(currentPage - 1) * PageSize + index + 1}</td>
                 <td>{item.salary}</td>
-                <td>{item.salaryType}</td>
-                <td>{item.dateSalary}</td>
+                <td>{item.payment_types.name}</td>
+                <td>{item.comment}</td>
+                <td>{item.date}</td>
             </tr>
         ));
     };
@@ -21,6 +22,7 @@ export const GiveSalaryList = ({ currentTableData, currentPage, PageSize }) => {
                     <th>№</th>
                     <th>Summa</th>
                     <th>Summa turi</th>
+                    <th>Komment</th>
                     <th>Sana</th>
                 </tr>
                 </thead>
