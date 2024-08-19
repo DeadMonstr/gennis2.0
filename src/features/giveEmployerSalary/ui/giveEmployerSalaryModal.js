@@ -22,7 +22,6 @@ export const GiveEmployerSalaryModal = React.memo(({active, setActive, activePag
                     permission_id={permission_id}
                     user_id={user_id}
                     />
-
                 </div>
 
             </div>

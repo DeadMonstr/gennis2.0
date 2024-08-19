@@ -68,7 +68,7 @@ export const VacancyWorkPage = () => {
             </div>
             <div className={cls.mainContainer_buttonPanelBox}>
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButtons}>
-                    {/*<Switch activeSwitch={activeSwitch} onChangeSwitch={handleSwitchChange} />*/}
+                    <Switch activeSwitch={activeSwitch} onChangeSwitch={handleSwitchChange} />
                 </div>
 
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}>
@@ -104,7 +104,7 @@ export const VacancyWorkPage = () => {
                 </div>
             </div>
             <div className={cls.mainContainer_tablePanelBox}>
-                {/*{!activeSwitch ? (*/}
+                {!activeSwitch ? (
                     <VacancyWorkList
                         currentTableData={currentTableData}
                         currentPage={currentPage}
@@ -114,13 +114,13 @@ export const VacancyWorkPage = () => {
                         selectedItems={selectedItems}
                         setSelectedItems={setSelectedItems}
                     />
-                {/*) : (*/}
-                {/*    <VacancyWorkerList*/}
-                {/*        currentTableData={currentTableData}*/}
-                {/*        currentPage={currentPage}*/}
-                {/*        PageSize={PageSize}*/}
-                {/*    />*/}
-                {/*)}*/}
+                ) : (
+                    <VacancyWorkerList
+                        currentTableData={currentTableData}
+                        currentPage={currentPage}
+                        PageSize={PageSize}
+                    />
+                )}
             </div>
             <Pagination
                 setCurrentTableData={setCurrentTableData}

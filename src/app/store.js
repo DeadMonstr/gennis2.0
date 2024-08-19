@@ -38,6 +38,9 @@ import {teacherSalarySlice} from "../entities/teacherSalary";
 import {employerSalarySlice} from "../entities/employerSalary";
 import {giveEmployerSalarySlice} from "../pages/giveSalaryPage";
 import {giveEmployerSalarySlices} from "../features/giveEmployerSalary";
+import {giveTeacherSalarySlices} from "../features/giveSalary/giveSalary";
+import {teacherSalaryDeleteSlice} from "../features/salaryEdits";
+import {employerSalaryDeleteSlice} from "../features/salaryEdits";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -90,7 +93,10 @@ export const store = configureStore({
         teacherSalarySlice,
         employerSalarySlice,
         giveEmployerSalarySlice,
-        giveEmployerSalarySlices
+        giveEmployerSalarySlices,
+        giveTeacherSalarySlices,
+        teacherSalaryDeleteSlice,
+        employerSalaryDeleteSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

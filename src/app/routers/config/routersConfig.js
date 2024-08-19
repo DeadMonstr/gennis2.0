@@ -13,9 +13,16 @@ import {
     getRouteRooms,
     getRouteMain,
     getProfile,
-    getTeacherProfile, getRoomsProfilePage,
-    getClass, getEmployerPage,
-    getFlow, getEmployerProfile, getTeacherSalary, getEmployerSalary, getEmployerSalaryInsideSource
+    getTeacherProfile,
+    getRoomsProfilePage,
+    getClass,
+    getEmployerPage,
+    getFlow,
+    getEmployerProfile,
+    getTeacherSalary,
+    getEmployerSalary,
+    getEmployerSalaryInsideSource,
+    getTeacherSalaryInsideSource
 } from "shared/const/routers";
 
 
@@ -40,7 +47,7 @@ import {ClassPage} from "../../../pages/classPage";
 import {getEmployersData} from "../../../entities/employer/model/selector/employersSelector";
 import {TeacherSalaryPage} from "../../../pages/teacherSalaryPage";
 import {EmployerSalaryPage} from "../../../pages/employerSalaryPage";
-import {GiveSalaryPage} from "../../../pages/giveSalaryPage";
+import {GiveSalaryPage, GiveTeacherSalaryPage} from "../../../pages/giveSalaryPage";
 // import {RoomsProfilePage} from "pages/profilePage";
 
 
@@ -176,6 +183,12 @@ export const routersConfig = [
       name: "Give salary",
       path: getEmployerSalaryInsideSource(":id", ":permission"),
       element: <GiveSalaryPage/>
+    },
+    {
+        name: "Give salary",
+        path: getTeacherSalaryInsideSource(":id"),
+        element: <GiveTeacherSalaryPage/>
+
     },
     {
         to: "/login",

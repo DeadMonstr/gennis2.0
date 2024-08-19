@@ -29,7 +29,6 @@ export const roomssSlice = createSlice({
                     ...state.insideRoom,
                     ...action.payload
                 };
-                console.log(action.payload, "wds");
             })
             .addCase(editRoomThunk.rejected, (state, action) => {
                 state.loading = false;

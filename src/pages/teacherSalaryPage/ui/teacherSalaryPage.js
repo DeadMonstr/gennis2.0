@@ -42,7 +42,7 @@ export const TeacherSalaryPage = () => {
         }
     }, [dispatch, id])
 
-    console.log(teacherSalaries, "teacherSalaries")
+    console.log(teacherSalaries, "salary")
     return (
         <div className={cls.mainContainer}>
             <div className={cls.mainContainer_buttonPanelBox}>

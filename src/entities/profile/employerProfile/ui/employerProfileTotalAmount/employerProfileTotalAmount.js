@@ -14,7 +14,7 @@ import cls from "./employerProfileTotalAmount.module.sass";
 import money from "shared/assets/images/Money.png";
 import creditCard from "shared/assets/images/CreditCard.png";
 import bank from "shared/assets/images/Bank.png";
-import {getSalaryInsideSource} from "pages/giveSalaryPage";
+import {fetchEmployerSalaryThunk, getSalaryInsideSource} from "pages/giveSalaryPage";
 
 const listPretcent = [-1, 34.8, 70.4]
 
@@ -52,6 +52,9 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
         } catch (error) {
             console.error("An error occurred:", error);
         }
+        dispatch(fetchEmployerSalaryThunk(salary_id))
+        setActive(!active)
+
     }
 
     const renderAmountServiceTypes = useCallback(() => {
