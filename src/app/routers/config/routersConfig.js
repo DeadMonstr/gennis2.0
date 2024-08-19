@@ -67,7 +67,7 @@ import {Branch, Education, Location, System} from "../../../entities/editCreates
 import {BranchCreate, EducationCreate, LocationCreate, SystemCreate} from "../../../entities/creates";
 import {AccountingPageMain} from "../../../pages/accountingPage";
 import {AccountingBooks} from "../../../entities/accounting";
-import Calendar from "react-calendar";
+// import Calendar from "react-calendar";
 import {CalendarPage} from "../../../pages/calendarPage";
 // import {RoomsProfilePage} from "pages/profilePage";
 

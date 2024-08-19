@@ -30,7 +30,6 @@ import {
     teacherProfileData,
     userProfile
 } from "pages/profilePage";
-import {roomImageSlice} from "../features/roomImagePareModal";
 import {flowsSlice} from "entities/flows";
 import {teacherParseSlice} from "entities/teachers";
 import {employerParseSlice} from "../entities/profile/employerProfile";
