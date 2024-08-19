@@ -98,7 +98,7 @@ export const CalendarList = (props) => {
         //     setTrueActive([{}])
         //     setDemoActive([])
         // }
-        console.log(selected, "selected ewgdf sg")
+        // console.log(selected, "selected ewgdf sg")
 
         let newArr = trueActive.map((item, index) => {
             if (item.startId && !item?.finishId) {
@@ -126,7 +126,7 @@ export const CalendarList = (props) => {
         setDemoActive([])
     }
 
-    console.log(selected, 'wewegweg')
+    // console.log(selected, 'wewegweg')
 
     function sortWeeksDays(arr, startDay) {
         let newArr = [...arr]?.sort(compareById)

@@ -30,7 +30,7 @@ export const CalendarPage = () => {
 
     const onSubmitAdd = (data) => {
         let res;
-        console.log(active, "active")
+        // console.log(active, "active")
         setData({...data, ...active})
 
         if (active?.length) {
@@ -41,7 +41,7 @@ export const CalendarPage = () => {
             res = {...data, ...active}
         }
 
-        console.log(res, "res")
+        // console.log(res, "res")
         dispatch(changeDayType(res))
         setActive({})
         // active.onClear()
@@ -49,7 +49,7 @@ export const CalendarPage = () => {
     }
 
     const onSubmitDelete = (data) => {
-        console.log(data, "del")
+        // console.log(data, "del")
         dispatch(deleteDayType({days: data}))
     }
 

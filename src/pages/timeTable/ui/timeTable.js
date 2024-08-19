@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {DndContext} from "@dnd-kit/core"
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import {
     TimeTableScheduleList,
@@ -8,10 +8,16 @@ import {
     TimeTableFilters,
     TimeTableError
 } from "entities/timeTable";
-import {fetchTimeTableData} from "../model/thunk/timeTableThunk";
+import {API_URL, useHttp} from "shared/api/base";
+import {fetchTimeTableBranch, fetchTimeTableClassData, fetchTimeTableColorData} from "../model/thunk/timeTableThunk";
+import {
+    getTimeTableBranchData,
+    getTimeTableClassData,
+    getTimeTableColorData
+} from "../model/selector/timeTableSelector";
 
 import cls from "./timeTable.module.sass";
-import {API_URL, useHttp} from "../../../shared/api/base";
+import {getBranchThunk} from "../../../entities/editCreates/model/thunk/branchThunk";
 
 // get_all_groups/
 
@@ -19,6 +25,9 @@ export const TimeTable = () => {
 
     const {request} = useHttp()
     const dispatch = useDispatch()
+    const classData = useSelector(getTimeTableClassData)
+    const colorData = useSelector(getTimeTableColorData)
+    const branchData = useSelector(getTimeTableBranchData)
 
     const [activeClassList, setActiveClassList] = useState([])
     const [activeDrag, setActiveDrag] = useState(null)
@@ -29,17 +38,22 @@ export const TimeTable = () => {
 
     // console.log(data, "data")
 
+    // useEffect(() => {
+    //     dispatch(fetchTimeTableData())
+    //     request(`${API_URL}Permissions/tables/`, "GET", null)
+    //         .then(res => console.log(res))
+    //         .catch(err => console.log(err))
+    //     request(`${API_URL}Permissions/get_all_groups/`, "GET", null)
+    //         .then(res => console.log(res))
+    //         .catch(err => console.log(err))
+    //     request(`${API_URL}Permissions/create_job/`, "GET", null)
+    //         .then(res => console.log(res))
+    //         .catch(err => console.log(err))
+    // }, [])
     useEffect(() => {
-        dispatch(fetchTimeTableData())
-        request(`${API_URL}Permissions/tables/`, "GET", null)
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
-        request(`${API_URL}Permissions/get_all_groups/`, "GET", null)
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
-        request(`${API_URL}Permissions/create_job/`, "GET", null)
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
+        dispatch(fetchTimeTableClassData())
+        dispatch(fetchTimeTableColorData())
+        dispatch(getBranchThunk())
     }, [])
 
 
@@ -47,6 +61,9 @@ export const TimeTable = () => {
         <DndContext onDragEnd={handleDragEnd} >
             <div className={cls.timeTable}>
                 <TimeTableFilters
+                    classData={classData}
+                    colorData={colorData}
+                    branchData={branchData}
                     setActiveModal={setActiveModal}
                     setActiveDrag={setActiveDrag}
                     setActiveDrop={setActiveDrop}

@@ -61,8 +61,12 @@ const calendarSlice = createSlice({
                         types: action.payload[0]?.month === i.month_number ?
                             [
                                 ...i.types.map(inner => {
-                                    days: inner.days.map(iI => action.payload.filter(ii => iI.id === ii.day_id)[0] ? null : iI)
-                                        .filter(iI => iI)
+                                    return {
+                                        color: inner.color,
+                                        type: inner.type,
+                                        days: inner.days.map(iI => action.payload.filter(ii => iI.id === ii.day_id)[0] ? null : iI)
+                                            .filter(iI => iI)
+                                    }
                                 }),
                                 {
                                     type: action.payload[0]?.type_name,
@@ -85,9 +89,15 @@ const calendarSlice = createSlice({
                 state.error = null
             })
             .addCase(deleteDayType.fulfilled, (state, action) => {
-                state.data = state.data.map(item => {
-
-                })
+                state.data = state.data.map(item => ({
+                    year: item.year,
+                    months: item.months.map(i => ({
+                        month_number: i.month_number,
+                        month_name: i.month_name,
+                        days: i.days,
+                        types: i.types.filter(item => item.color !== action.payload[0]?.type_color)
+                    }))
+                }))
                 state.innerLoading = false
                 state.error = null
             })
