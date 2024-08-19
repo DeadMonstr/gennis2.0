@@ -1,3 +1,4 @@
+
 import {configureStore} from "@reduxjs/toolkit";
 import {search} from "features/searchInput";
 import {registerUser} from "pages/registerPage";
@@ -38,10 +39,10 @@ import {vacancyWorkPageSlice} from "../features/vacancyModals/vacancyWorkPage/mo
 import {vacancyWorkerPermissionSlice} from "../features/vacancyModals/vacancyWorkerPermission";
 import {roomImageSlice} from "features/roomImagePareModal";
 import {timeTableSchool} from "pages/timeTable"
-import {accountingSlice} from "../entities/accounting";
-import {postBranch, postSystem} from "../entities/creates";
+import {accountingSlice, studentSlice} from "../entities/accounting";
+import {postBranch, postEducation, postSystem} from "../entities/creates";
 import {
-    getBranchSlice,
+    getBranchSlice, getEducation,
     getLocationSlice,
     systemSlice
 } from "../entities/editCreates";
@@ -103,7 +104,6 @@ export const store = configureStore({
         systemSlice,
         postBranch,
         getBranchSlice,
-        getLocationSlice,
         roomImageSlice,
         timeTableSchool,
         userProfile,
@@ -112,7 +112,11 @@ export const store = configureStore({
         employerSalarySlice,
         giveEmployerSalarySlice,
         giveEmployerSalarySlices,
-        calendarSlice
+        calendarSlice,
+        getLocationSlice,
+        postEducation,
+        getEducation,
+        studentSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

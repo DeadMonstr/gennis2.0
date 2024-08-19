@@ -49,6 +49,7 @@ export const CapitalPage = memo(() => {
     const onClick = (data) => {
 
         console.log(data)
+        console.log(changedImages)
         setActiveModal(!activeModal)
         setValue("name", '')
         setValue("id_number", '')

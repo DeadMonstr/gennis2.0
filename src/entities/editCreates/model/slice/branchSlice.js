@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getBranchThunk} from "../thunk/branchThunk";
+import {getBranchThunk , changeBranchName} from "../thunk/branchThunk";
+
 
 
 const initialState = {
@@ -11,7 +12,11 @@ const initialState = {
 const getBranchSlice = createSlice({
     name: "getBranchSlice",
     initialState,
-    reducers: {},
+    reducers: {
+        onDeleteBranch: (state, action) => {
+            state.name = state.name.filter(item => item.id !== action.payload.id)
+        },
+    },
     extraReducers: builder =>
         builder
             .addCase(getBranchThunk.pending , state => {
@@ -19,7 +24,7 @@ const getBranchSlice = createSlice({
                 state.error = false
             })
             .addCase(getBranchThunk.fulfilled , (state, action) => {
-                state.name = action.payload.systems
+                state.name = action.payload.branches
                 state.loading = false
                 state.error = false
             })
@@ -27,6 +32,23 @@ const getBranchSlice = createSlice({
                 state.loading = false
                 state.error = true
             })
+            .addCase(changeBranchName.pending, state => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(changeBranchName.fulfilled, (state, action) => {
+                state.name = [
+                    ...state.name.filter(item => item.id !== action.payload.id),
+                    action.payload
+                ]
+                state.loading = false
+                state.error = null
+            })
+            .addCase(changeBranchName.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload ?? null
+            })
 })
 
 export default getBranchSlice.reducer
+export const {onDeleteBranch}  =getBranchSlice.actions

@@ -15,6 +15,7 @@ import {Button} from "../../../../shared/ui/button";
 import {useDropzone} from "react-dropzone";
 import {useForm} from "react-hook-form";
 import {getOnDemandLazySlides} from "react-slick/lib/utils/innerSliderUtils";
+import {changeCapitalInfoThunk} from "../../../../entities/capital/model/thunk/capitalThunk";
 
 
 const capitalType = [
@@ -31,8 +32,6 @@ export const CapitalInside = memo(() => {
     (() => {
         dispatch(getCapitalInfo(id))
     }, [])
-
-
 
 
     const dispatch = useDispatch()
@@ -57,8 +56,8 @@ export const CapitalInside = memo(() => {
             <>
                 <CapitalInsideSecond editModal={editModal} setEditModal={() => setEditModal(!editModal)}
                                      capitalData={getCapitalInsideData}/>
-                <CapitalInsideProduct addModal={activeModal} setAddModal={setActiveModal}
-                                      capitalData={getCapitalInsideData}/>
+                {/*<CapitalInsideProduct addModal={activeModal} setAddModal={setActiveModal}*/}
+                {/*                      capitalData={getCapitalInsideData}/>*/}
             </>
         )
     }
@@ -66,8 +65,12 @@ export const CapitalInside = memo(() => {
 
     const onClick = (data) => {
         console.log(data, "data")
-        console.log(setChangedImages)
-        setActiveModal(!activeModal)
+        console.log(changedImages)
+    }
+    const onChange =(data) =>{
+        console.log(data)
+        setEditModal(!editModal)
+        dispatch(changeCapitalInfoThunk({data , id: id}))
     }
 
     const capitalItemRender = capitalItem()
@@ -80,8 +83,11 @@ export const CapitalInside = memo(() => {
                 categoryMenu={capitalType}
             />
             {capitalItemRender}
-            {<AddCategoryModal register={register} handleSubmit={handleSubmit} onClick={onClick} activeModal={activeModal} setActiveModal={setActiveModal} setChangedImages={setChangedImages} changeItem={changeItem}/>}
-            {<EditModal register={register} handleSubmit={handleSubmit} onClick={onClick} editModal={editModal} setEditModal={setEditModal} setChangedImages={setChangedImages} changeItem={changeItem}/>}
+            <AddCategoryModal register={register} handleSubmit={handleSubmit} onClick={onClick}
+                              activeModal={activeModal} setActiveModal={setActiveModal}
+                              setChangedImages={setChangedImages} changeItem={changeItem}/>
+            <EditModal register={register} handleSubmit={handleSubmit} onClick={onChange} editModal={editModal}
+                       setEditModal={setEditModal} setChangedImages={setChangedImages} changeItem={changeItem}/>
 
 
         </div>
@@ -89,11 +95,15 @@ export const CapitalInside = memo(() => {
 })
 
 
-
-
-
-const AddCategoryModal = memo(({setActiveModal , activeModal , register , handleSubmit , onClick ,changeItem ,setChangedImages }) => {
-
+const AddCategoryModal = memo(({
+                                   setActiveModal,
+                                   activeModal,
+                                   register,
+                                   handleSubmit,
+                                   onClick,
+                                   changeItem,
+                                   setChangedImages
+                               }) => {
 
 
     return (
@@ -171,10 +181,9 @@ const ImageDrop = ({index, setChangedImages, image, status}) => {
 }
 
 
+const EditModal = memo(({register, handleSubmit, onClick, editModal, setEditModal, changeItem, setChangedImages}) => {
 
-const EditModal = memo(({register , handleSubmit , onClick , editModal ,setEditModal ,changeItem ,setChangedImages}) => {
-
-    return(
+    return (
         <Modal setActive={setEditModal} active={editModal}>
             <h1>Change</h1>
             <div style={{display: "flex", gap: "1rem", padding: "2rem"}}>
@@ -184,10 +193,9 @@ const EditModal = memo(({register , handleSubmit , onClick , editModal ,setEditM
                     setChangedImages={setChangedImages}
 
                 />
-                <Form extraClassname={cls.form} typeSubmit={""}>
+                <Form extraClassname={cls.form} onSubmit={handleSubmit(onClick)}>
                     <Input register={register} name={"name"}/>
                     <Input register={register} name={"id_number"}/>
-                    <Button onClick={handleSubmit(onClick)} extraClass={cls.btn}>Add</Button>
                 </Form>
             </div>
         </Modal>

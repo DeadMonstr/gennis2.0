@@ -39,3 +39,11 @@ export const getCapitalInfo = createAsyncThunk(
 )
 
 
+export const changeCapitalInfoThunk  =createAsyncThunk(
+    "changeCapitalInfo/changeCapitalInfoThunk",
+    async ({id ,data})=>{
+        const {request} = useHttp()
+        return await request(`${API_URL}Capital/capital_category/${id}/` , "PATCH" , JSON.stringify(data) , headers())
+    }
+)
+

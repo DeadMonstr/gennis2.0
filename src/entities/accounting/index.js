@@ -14,6 +14,7 @@ export {TeachersSalary} from "./ui/acauntingTables/accountingTableTeacherSalary/
 
 
 
-export {getAccountingSelect } from "./model/selector/accountingSelector"
+export {getAccountingSelect , getStudentsData} from "./model/selector/accountingSelector"
 
 export {default as accountingSlice} from "./model/slice/accountingSlice"
+export {default as studentSlice} from "./model/slice/studetntSlice"
