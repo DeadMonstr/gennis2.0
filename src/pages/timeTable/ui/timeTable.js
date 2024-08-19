@@ -2,22 +2,29 @@ import {useEffect, useState} from 'react';
 import {DndContext} from "@dnd-kit/core"
 import {useDispatch, useSelector} from "react-redux";
 
+import {getUserBranchId} from "pages/profilePage";
+import {fetchSubjectsAndLanguages} from "pages/registerPage";
 import {
     TimeTableScheduleList,
     TimeTableSchedule,
     TimeTableFilters,
     TimeTableError
 } from "entities/timeTable";
+import {getRoomsData, fetchRoomsData} from "entities/rooms";
+import {getBranchThunk, getLocations} from "entities/editCreates";
 import {API_URL, useHttp} from "shared/api/base";
-import {fetchTimeTableBranch, fetchTimeTableClassData, fetchTimeTableColorData} from "../model/thunk/timeTableThunk";
 import {
-    getTimeTableBranchData,
+    fetchTimeTableClassData,
+    fetchTimeTableColorData,
+    fetchTimeTableTeacherData
+} from "../model/thunk/timeTableThunk";
+import {
     getTimeTableClassData,
-    getTimeTableColorData
+    getTimeTableColorData,
+    getTimeTableTeacherData
 } from "../model/selector/timeTableSelector";
 
 import cls from "./timeTable.module.sass";
-import {getBranchThunk} from "../../../entities/editCreates/model/thunk/branchThunk";
 
 // get_all_groups/
 
@@ -27,7 +34,11 @@ export const TimeTable = () => {
     const dispatch = useDispatch()
     const classData = useSelector(getTimeTableClassData)
     const colorData = useSelector(getTimeTableColorData)
-    const branchData = useSelector(getTimeTableBranchData)
+    const branchData = useSelector(getLocations)
+    const userBranchId = useSelector(getUserBranchId)
+    const roomData = useSelector(getRoomsData)
+    const teacherData = useSelector(getTimeTableTeacherData)
+    const subjectData = useSelector(state => state.registerUser.subjects)
 
     const [activeClassList, setActiveClassList] = useState([])
     const [activeDrag, setActiveDrag] = useState(null)
@@ -54,7 +65,15 @@ export const TimeTable = () => {
         dispatch(fetchTimeTableClassData())
         dispatch(fetchTimeTableColorData())
         dispatch(getBranchThunk())
-    }, [])
+        dispatch(fetchRoomsData())
+        dispatch(fetchSubjectsAndLanguages())
+    }, [userBranchId])
+
+    useEffect(() => {
+        if (userBranchId) {
+            dispatch(fetchTimeTableTeacherData(userBranchId))
+        }
+    }, [userBranchId])
 
 
     return (
@@ -64,6 +83,9 @@ export const TimeTable = () => {
                     classData={classData}
                     colorData={colorData}
                     branchData={branchData}
+                    roomData={roomData}
+                    subjectData={subjectData}
+                    teacherData={teacherData}
                     setActiveModal={setActiveModal}
                     setActiveDrag={setActiveDrag}
                     setActiveDrop={setActiveDrop}

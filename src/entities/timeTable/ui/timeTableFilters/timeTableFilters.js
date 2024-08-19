@@ -172,7 +172,10 @@ export const TimeTableFilters = memo((props) => {
         setActiveDrag,
         classData,
         colorData,
-        branchData
+        branchData,
+        roomData,
+        subjectData,
+        teacherData
     } = props
 
     const [activeIdClass, setActiveIdClass] = useState([])
@@ -187,15 +190,15 @@ export const TimeTableFilters = memo((props) => {
     }, [activeIdClass])
 
     useEffect(() => {
-        if (activeIdType === 1) {
-            setCurrentDataType(subjectList)
-        } else if (activeIdType === 2) {
-            setCurrentDataType(teacherList)
+        if (activeIdType === 1 && subjectData) {
+            setCurrentDataType(subjectData)
+        } else if (activeIdType === 2 && teacherData) {
+            setCurrentDataType(teacherData)
         } else {
-            setCurrentDataType(roomList)
+            setCurrentDataType(roomData)
         }
         setData(null)
-    }, [activeIdType])
+    }, [activeIdType, teacherData, subjectData, roomData])
 
     useEffect(() => {
         if (currentDataType)

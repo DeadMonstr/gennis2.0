@@ -1,18 +1,15 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 import {
-    fetchTimeTableBranch,
     fetchTimeTableClassData,
     fetchTimeTableColorData,
+    fetchTimeTableTeacherData,
 } from "../thunk/timeTableThunk";
 
 const initialState = {
     classData: null,
     colorData: null,
-    branchData: null,
-    subjectsData: null,
-    TeachersData: null,
-    RoomsData: null,
+    teachersData: null,
     loading: false,
     error: null
 }
@@ -67,6 +64,20 @@ const timeTableSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchTimeTableColorData.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload ?? null
+            })
+            .addCase(fetchTimeTableTeacherData.pending, state => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(fetchTimeTableTeacherData.fulfilled, (state, action) => {
+                console.log(action.payload, "data teacher")
+                state.teachersData = action.payload
+                state.loading = false
+                state.error = null
+            })
+            .addCase(fetchTimeTableTeacherData.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload ?? null
             })

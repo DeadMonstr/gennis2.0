@@ -5,5 +5,5 @@ export const getTimeTableClassData = (state) =>
 export const getTimeTableColorData = (state) =>
     state.timeTableSchool.colorData
 
-export const getTimeTableBranchData = (state) =>
-    state.timeTableSchool.branchData
+export const getTimeTableTeacherData = (state) =>
+    state.timeTableSchool.teachersData
