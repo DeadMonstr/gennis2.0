@@ -13,8 +13,7 @@ import {Form} from "shared/ui/form";
 import {Input} from "shared/ui/input";
 import {Button} from "shared/ui/button";
 import {useForm} from "react-hook-form";
-import {getCapitalDataThunk} from "entities/capital";
-import {getLoading} from "entities/capital/model/selector/capitalSelector";
+import {getCapitalDataThunk, getCapitalPermission, getLoading} from "entities/capital";
 import {DefaultLoader, DefaultPageLoader} from "shared/ui/defaultLoader";
 
 
@@ -40,6 +39,8 @@ export const CapitalPage = memo(() => {
 
 
     const getCapital = useSelector(getCapitalData)
+    const capitalPermission = useSelector(getCapitalPermission)
+
     useEffect(() => {
         dispatch(getCapitalDataThunk())
     }, [])
@@ -70,8 +71,19 @@ export const CapitalPage = memo(() => {
 
     return (
         <div className={cls.capitalMain}>
-            <CapitalOutsideHeader caunt={loadingCount()} setActiveModal={setActiveModal} active={activeModal}/>
-            {loading ? <DefaultPageLoader/> : <CapitalOutside capitalData={getCapital}/>}
+            <CapitalOutsideHeader
+                caunt={loadingCount()}
+                setActiveModal={setActiveModal}
+                active={activeModal}
+                isCanAdd={capitalPermission[0]?.add_capitalcategory}
+            />
+            {
+                loading ? <DefaultPageLoader/> :
+                    <CapitalOutside
+                        isCanView={capitalPermission[0]?.view_capitalcategory}
+                        capitalData={getCapital}
+                    />
+            }
 
             <Modal setActive={setActiveModal} active={activeModal}>
                 <h1>Add</h1>

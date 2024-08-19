@@ -22,5 +22,5 @@ export {getCapitalDataThunk} from "./model/thunk/capitalThunk"
 export {getCapitalInfo} from "./model/thunk/capitalThunk"
 export {createCapitalCategory} from "./model/thunk/capitalThunk"
 export {default as capital} from "./model/slice/capitalSlice"
-export {getCapitalData , getCapitalInsideInfo} from "./model/selector/capitalSelector"
+export {getCapitalData , getCapitalInsideInfo, getCapitalPermission, getLoading} from "./model/selector/capitalSelector"
 

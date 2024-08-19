@@ -32,7 +32,7 @@ const TimeTableSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchTimeTableListData.fulfilled, (state, action) => {
-                state.data = action.payload?.results
+                state.data = action.payload
                 state.loading = false
                 state.error = null
             })

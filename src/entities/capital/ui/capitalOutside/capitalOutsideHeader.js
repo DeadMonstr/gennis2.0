@@ -1,10 +1,16 @@
 import {Button} from "shared/ui/button";
+import {RequirePermission} from "shared/ui/requirePermission";
 
-export const CapitalOutsideHeader = ({caunt , active , setActiveModal}) => {
+export const CapitalOutsideHeader = ({caunt , active , setActiveModal, isCanAdd}) => {
     return (
         <div>
             <div style={{display: "flex" , justifyContent: "flex-end"}}>
-                <Button onClick={() => setActiveModal(!active) } children={<i className={"fa fa-plus"}/>} type={"editPlus"}/>
+                {/*<RequirePermission permission={isCanAdd}>*/}
+                    <Button
+                        onClick={() => setActiveModal(!active) }
+                        children={<i className={"fa fa-plus"}/>} type={"editPlus"}
+                    />
+                {/*</RequirePermission>*/}
             </div>
 
             <div style={{padding: "2rem 0" , display: "flex" , flexDirection: "column" , gap: "1rem"}}>

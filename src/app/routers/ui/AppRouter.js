@@ -20,7 +20,7 @@ import {EmployerPage} from "pages/employeesPage"
 import {useTheme} from "shared/lib/hooks/useTheme";
 
 import "app/styles/index.sass"
-import {CreateGroup} from "entities/students";
+import {GroupCreatePage} from "entities/students";
 import {VacancyPage} from "pages/vacancyPage";
 import {RoomsProfilePage} from "pages/roomsProiflePage";
 import {FlowsPage} from "pages/flowsPage";
@@ -110,10 +110,10 @@ export const AppRouter = () => {
                         element={<ClassAddColorPage/>}
                     />
 
-                    <Route
-                        path={"calendar"}
-                        element={<CalendarPage/>}
-                    />
+                    {/*<Route*/}
+                    {/*    path={"calendar"}*/}
+                    {/*    element={<CalendarPage/>}*/}
+                    {/*/>*/}
 
 
                     <Route

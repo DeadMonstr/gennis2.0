@@ -11,6 +11,7 @@ import { fetchRoomsData } from 'entities/rooms/model/roomsThunk';
 import cls from './rooms.module.sass';
 import { getSearchValue } from 'features/searchInput';
 import {DefaultLoader, DefaultPageLoader} from "../../../shared/ui/defaultLoader";
+// import {RequirePermission} from "app/routers";
 
 export const Rooms = () => {
     const [modal, setModal] = useState(false);
@@ -46,7 +47,9 @@ export const Rooms = () => {
         <div className={cls.mainContainer}>
             <div className={cls.mainContainer_buttonPanelBox}>
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}>
-                    <Button onClick={() => setActive(true)}>Add room</Button>
+                    {/*<RequirePermission permission={true}>*/}
+                        <Button onClick={() => setActive(true)}>Add room</Button>
+                    {/*</RequirePermission>*/}
                 </div>
                 <Select value={selected} onChange={handleChange} />
             </div>

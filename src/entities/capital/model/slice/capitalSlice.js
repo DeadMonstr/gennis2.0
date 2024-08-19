@@ -7,6 +7,7 @@ const initialState = {
     loading: false,
     error: null,
     capitalsData: [],
+    capitalPermission: [],
     capitalCategoryInfo: null,
 
 }
@@ -24,6 +25,7 @@ export const CapitalSlice = createSlice({
             .addCase(getCapitalDataThunk.fulfilled , (state, action) => {
                 state.loading = false
                 state.capitalsData = action.payload?.capitalcategorys
+                state.capitalPermission = action.payload?.permissions
                 console.log(action.payload , "capital")
             })
             .addCase(getCapitalDataThunk.rejected , (state, action) => {

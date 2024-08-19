@@ -1,24 +1,61 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useForm} from "react-hook-form";
+import {useDispatch, useSelector} from "react-redux";
 
 import {CalendarList} from "features/calendarList"
 import {
     CalendarHeader,
     CalendarAdd
 } from "entities/calendar";
+import {changeDayType, deleteDayType, fetchCalendarData} from "../model/calendarThunk";
+import {getCalendarData, getCalendarLoading} from "../model/calendarSelector";
+
+// http://192.168.0.109:8000/Calendar/get-calendar/{current_year}/{next_year}/
+// http://192.168.0.103:8000/Calendar/change-type/
 
 import cls from "./calendarPage.module.sass";
 
 export const CalendarPage = () => {
 
+    const dispatch = useDispatch()
     const {register, handleSubmit, setValue} = useForm()
-    const [active, setActive] = useState(false)
+    const calendarData = useSelector(getCalendarData)
+    const calendarLoading = useSelector(getCalendarLoading)
+    const [active, setActive] = useState({})
     const [data, setData] = useState({})
+    const [isChanged, setIsChanged] = useState(false)
+    const currentYear = new Date().getFullYear()
+
+    console.log(calendarData, "calendarData")
 
     const onSubmitAdd = (data) => {
+        let res;
+        console.log(active, "active")
         setData({...data, ...active})
-        setActive(false)
+
+        if (active?.length) {
+            res = {...data, days: active}
+        } else if (active?.selected?.length) {
+            res = {...data, days: active?.selected}
+        } else {
+            res = {...data, ...active}
+        }
+
+        console.log(res, "res")
+        dispatch(changeDayType(res))
+        setActive({})
+        // active.onClear()
+        setIsChanged(true)
     }
+
+    const onSubmitDelete = (data) => {
+        console.log(data, "del")
+        dispatch(deleteDayType({days: data}))
+    }
+
+    useEffect(() => {
+        dispatch(fetchCalendarData({current_year: currentYear, next_year: currentYear + 1}))
+    }, [])
 
     return (
         <div className={cls.calendarPage}>
@@ -26,9 +63,16 @@ export const CalendarPage = () => {
             <CalendarList
                 setActive={setActive}
                 currentData={data}
+                loading={calendarLoading}
+                data={calendarData}
+                onSubmit={setActive}
+                onDelete={(someFunc) => someFunc([{}])}
+                isChanged={isChanged}
+                setIsChanged={setIsChanged}
+                onSubmitDelete={onSubmitDelete}
             />
             <CalendarAdd
-                active={active?.finishValue}
+                active={active?.finishValue || active?.length}
                 setActive={setActive}
                 onSubmit={handleSubmit(onSubmitAdd)}
                 register={register}

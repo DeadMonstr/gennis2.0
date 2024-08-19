@@ -17,16 +17,14 @@ export const StudentsHeader = ({
                                    branches,
                                    selected,
                                    setSelected,
-
-
                                }) => {
 
     return (
         <div className={cls.mainContainer}>
             <div className={cls.mainContainer_buttonPanelBox}>
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}>
-                   <Link to={"createGroup"}> <Button type={"filter"}
-                            extraClass={cls.extraCutClass}>Create group</Button></Link>
+                    <Link to={"createGroup"}> <Button type={"filter"}
+                                                      extraClass={cls.extraCutClass}>Create group</Button></Link>
                     <Button type={"filter"} extraClass={cls.noneBackground}>Add group</Button>
                 </div>
                 {branches.length >= 1 ? <Select options={branches} onChangeOption={() => setSelected}
@@ -41,7 +39,7 @@ export const StudentsHeader = ({
                 >
                     Filter
                 </Button>
-                 <div className={cls.mainContainer_filterPanelBox_rightFilterRadioGroupBox}>
+                <div className={cls.mainContainer_filterPanelBox_rightFilterRadioGroupBox}>
                     {peoples.map((item, id) => (
                         <Radio
                             key={id}

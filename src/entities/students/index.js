@@ -2,11 +2,24 @@ export {Students} from "./ui/studyingStudents/studnets"
 export {DeletedStudents} from "./ui/deletedStudents/deletedStudents"
 export {NewStudents} from "./ui/newStudents/newStudents"
 export {StudentsHeader} from "./ui/studentsHeader/studentsHeader"
-export {CreateGroup} from "./ui/createGroup/CreateGroup"
+export {GroupCreatePage} from "../../pages/groupsPage/ui/groupCreatePage/groupCreatePage"
 
-export {default as newStudents} from "./model/studentsSlice"
+export {
+    default as newStudents,
+    getFilteredStudentsData,
+    getFilteredStudentsStatus
+} from "./model/studentsSlice"
 
 export {fetchNewStudentsData} from "./model/studentsThunk"
-export {getNewStudentsData , getStudyingStudents} from "./model/selector/studentsSelector"
+export {
+    getNewStudentsData,
+    getStudyingStudents,
+    getCurseLevelData,
+    getCurseTypesData,
+    getFilteredTeachers,
+    getFilteredStudents,
+    getFilteredStatus,
+    getFilteredErrors
+} from "./model/selector/studentsSelector"
 
 export {StudentsListDirector} from "./ui/studentsListDirector/studentsListDirector";
