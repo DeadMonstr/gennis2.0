@@ -15,7 +15,11 @@ const initialState = {
 export const CapitalSlice = createSlice({
     name: "capitalSlice",
     initialState,
-    reducers: {},
+    reducers: {
+        onDeleteBranch: (state, action) => {
+            state.capitalCategoryInfo = state.capitalCategoryInfo.filter(item => item.id !== action.payload.id)
+        },
+    },
     extraReducers: builder =>
         builder
             .addCase(getCapitalDataThunk.pending , state => {
@@ -63,10 +67,8 @@ export const CapitalSlice = createSlice({
                 state.error = null
             })
             .addCase(changeCapitalInfoThunk.fulfilled , (state, action) =>{
-                state.capitalCategoryInfo =
-                  [...state.capitalCategoryInfo.filter(item => item.id !== action.payload.id),
-                    action.payload
-                ]
+                state.capitalCategoryInfo = action.payload
+
                 console.log(action.payload , "capital info")
                 state.loading = false
                 state.error = null
@@ -77,6 +79,6 @@ export const CapitalSlice = createSlice({
             })
 })
 
-
+export const {onDeleteBranch}  =CapitalSlice.actions
 
 export default CapitalSlice.reducer
