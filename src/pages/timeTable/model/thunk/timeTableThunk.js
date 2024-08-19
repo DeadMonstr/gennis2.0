@@ -1,12 +1,19 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {API_URL, headers, useHttp} from "shared/api/base";
-
-export const fetchTimeTableData = createAsyncThunk(
-    "fetchTimeTableData",
+//Class/class_colors/
+export const fetchTimeTableClassData = createAsyncThunk(
+    "timeTableSlice/fetchTimeTableData",
     async () => {
         const {request} = useHttp()
-        // return await request(`${API_URL}Permissions/get_all_groups/`, "GET", null)
-        // return await request(`${API_URL}Permissions/tables/`, "GET", null)
-        return await request(`${API_URL}Permissions/tables/`, "POST", JSON.stringify({table: "permissions_manybranch"}))
+        return await request(`${API_URL}SchoolTimeTable/timetable-classes/`, "GET", null, headers())
     }
 )
+
+export const fetchTimeTableColorData = createAsyncThunk(
+    "timeTableSlice/fetchTimeTableColorData",
+    async () => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Class/class_colors/`, "GET", null, headers())
+    }
+)
+

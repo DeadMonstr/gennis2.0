@@ -169,7 +169,10 @@ export const TimeTableFilters = memo((props) => {
         setActiveModal,
         setActive,
         setActiveDrop,
-        setActiveDrag
+        setActiveDrag,
+        classData,
+        colorData,
+        branchData
     } = props
 
     const [activeIdClass, setActiveIdClass] = useState([])
@@ -200,7 +203,7 @@ export const TimeTableFilters = memo((props) => {
     }, [activeDrag])
 
     const renderClassListData = () => {
-        return classList.map(item =>
+        return classData?.map(item =>
             <div
                 className={classNames(cls.classList__inner, {
                     [cls.active]: activeIdClass.includes(item.id)
@@ -214,13 +217,13 @@ export const TimeTableFilters = memo((props) => {
                 {
                     activeIdClass.includes(item.id) ? <img src={checkIcon} alt=""/> : null
                 }
-                {item.value}
+                {item.name}
             </div>
         )
     }
 
     const renderColorTypes = () => {
-        return colorTypes.map(item =>
+        return colorData?.map(item =>
             <div
                 className={classNames(cls.colorList__inner, {
                     [cls.active]: activeIdColor === item.id
@@ -274,6 +277,7 @@ export const TimeTableFilters = memo((props) => {
                 </div>
                 <Select
                     title={"Branch"}
+                    options={branchData}
                 />
             </div>
             <div

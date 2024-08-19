@@ -1,9 +1,18 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-import {fetchTimeTableData} from "../thunk/timeTableThunk";
+import {
+    fetchTimeTableBranch,
+    fetchTimeTableClassData,
+    fetchTimeTableColorData,
+} from "../thunk/timeTableThunk";
 
 const initialState = {
-    data: null,
+    classData: null,
+    colorData: null,
+    branchData: null,
+    subjectsData: null,
+    TeachersData: null,
+    RoomsData: null,
     loading: false,
     error: null
 }
@@ -33,17 +42,31 @@ const timeTableSlice = createSlice({
     },
     extraReducers: builder =>
         builder
-            .addCase(fetchTimeTableData.pending, state => {
+            .addCase(fetchTimeTableClassData.pending, state => {
                 state.loading = true
                 state.error = null
             })
-            .addCase(fetchTimeTableData.fulfilled, (state, action) => {
-                console.log(action.payload, "data")
-                state.data = action.payload
+            .addCase(fetchTimeTableClassData.fulfilled, (state, action) => {
+                console.log(action.payload, "data class")
+                state.classData = action.payload
                 state.loading = false
                 state.error = null
             })
-            .addCase(fetchTimeTableData.rejected, (state, action) => {
+            .addCase(fetchTimeTableClassData.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload ?? null
+            })
+            .addCase(fetchTimeTableColorData.pending, state => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(fetchTimeTableColorData.fulfilled, (state, action) => {
+                console.log(action.payload, "data color")
+                state.colorData = action.payload?.classcolors
+                state.loading = false
+                state.error = null
+            })
+            .addCase(fetchTimeTableColorData.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload ?? null
             })
