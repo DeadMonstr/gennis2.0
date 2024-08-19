@@ -21,7 +21,7 @@ export const Switch = React.memo((
                 ${!activeSwitch ?
                     `${cls.switchOn}` :
                     `${cls.switchOff}`}`}
-                onClick={onChangeSwitch}>
+                onClick={()=>onChangeSwitch(!activeSwitch)}>
                 {!activeSwitch ?
                     <span className={cls.mainSwitchBox__onSwitch}></span>
                     :

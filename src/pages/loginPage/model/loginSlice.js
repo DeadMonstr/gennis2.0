@@ -1,10 +1,11 @@
-
+import {jwtDecode} from "jwt-decode";
 import {createSlice} from "@reduxjs/toolkit";
 import {useNavigate} from "react-router";
 
-import {fetchLoginUser} from "./loginThunk";
+import {fetchLoginUser, userRefreshData} from "./loginThunk";
 
 const initialState ={
+    userId: null,
     username: "",
     password: "",
     role: null,
@@ -17,10 +18,22 @@ export const loginSlice =createSlice({
     initialState,
     reducers: {
         getUserData: (state, action) => {
-            console.log(action.payload)
             sessionStorage.setItem('token', action.payload.access);
             sessionStorage.setItem('refresh_token', action.payload.refresh);
+            if (action.payload.access) {
+                const decodedToken = jwtDecode(action.payload.access);
+                state.userId = decodedToken.user_id; // Bu yerda user_id ni olasiz
+            }
             state.role = action.payload.admin
+            state.loading = false
+            state.error = null
+        },
+        userRefresh: (state, action) => {
+            sessionStorage.setItem('token', action.payload.access);
+            if (action.payload.access) {
+                const decodedToken = jwtDecode(action.payload.access);
+                state.userId = decodedToken.user_id; // Bu yerda user_id ni olasiz
+            }
             state.loading = false
             state.error = null
         }
@@ -35,6 +48,12 @@ export const loginSlice =createSlice({
                 console.log(action.payload)
                 sessionStorage.setItem('token', action.payload.access);
                 sessionStorage.setItem('refresh_token', action.payload.refresh);
+                if (action.payload.access) {
+                    console.log()
+                    const decodedToken = jwtDecode(action.payload.access);
+                    const userId = decodedToken.user_id; // Bu yerda user_id ni olasiz
+                    console.log("User ID:", userId);
+                }
                 state.role = action.payload.admin
                 state.username = action.payload
                 state.password = action.payload
@@ -47,6 +66,24 @@ export const loginSlice =createSlice({
                 state.loading = false
                 state.error = action.payload ?? null
             })
+            .addCase(userRefreshData.pending, state => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(userRefreshData.fulfilled, (state, action) => {
+                sessionStorage.setItem('token', action.payload.access);
+                if (action.payload.access) {
+                    const decodedToken = jwtDecode(action.payload.access);
+                    state.userId = decodedToken.user_id; // Bu yerda user_id ni olasiz
+                }
+                state.loading = false
+                state.error = null
+            })
+            .addCase(userRefreshData.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload ?? null
+            })
+
 })
 export default loginSlice.reducer
-export const {getUserData} = loginSlice.actions
+export const {getUserData, userRefresh} = loginSlice.actions

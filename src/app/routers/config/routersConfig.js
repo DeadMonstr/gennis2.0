@@ -1,4 +1,3 @@
-
 import {
     getDirectorRouteStudents,
     getRouteUserProfile,
@@ -13,21 +12,34 @@ import {
     getRouteRooms,
     getRouteMain,
     getProfile,
+    getClass,
+    getFlow,
+    getTeacherSalaryInsideSource,
+    getContract,
+    getCapital,
+    getCapitalInside,
     getTeacherProfile,
     getRoomsProfilePage,
-    getClass,
     getEmployerPage,
-    getFlow,
     getEmployerProfile,
-    getTeacherSalary,
-    getEmployerSalary,
+    getBranch,
+    getEducation,
+    getSystem,
+    getCreateBranch,
+    getCreateEducation,
+    getCreateLocation,
+    getCreateSystem,
+    getAccounting,
+    getLocations,
+    getRouteCreateGroup,
     getEmployerSalaryInsideSource,
-    getTeacherSalaryInsideSource
+    getEmployerSalary,
+    getTeacherSalary,
 } from "shared/const/routers";
 
 
 import {StudentsPage} from "pages/studentsPage";
-import {GroupsPage} from "pages/groupsPage";
+import {GroupsPage, GroupCreatePage} from "pages/groupsPage";
 import {Register} from "pages/registerPage";
 import {Rooms} from "pages/roomsPage";
 import {TeachersPage} from "pages/teacherPage";
@@ -43,11 +55,20 @@ import {TimeTableListPage} from "pages/timeTableListPage";
 import {EmployerPage} from "pages/employeesPage";
 import {FlowsPage} from "pages/flowsPage";
 import {RoomsProfilePage} from "pages/roomsProiflePage";
-import {ClassPage} from "../../../pages/classPage";
+import {ClassPage} from "pages/classPage";
+import {ContractPage} from "pages/contractPage";
+import {CapitalInside, CapitalPage} from "pages/capitalPage";
+
 import {getEmployersData} from "../../../entities/employer/model/selector/employersSelector";
 import {TeacherSalaryPage} from "../../../pages/teacherSalaryPage";
 import {EmployerSalaryPage} from "../../../pages/employerSalaryPage";
 import {GiveSalaryPage, GiveTeacherSalaryPage} from "../../../pages/giveSalaryPage";
+import {Branch, Education, Location, System} from "../../../entities/editCreates";
+import {BranchCreate, EducationCreate, LocationCreate, SystemCreate} from "../../../entities/creates";
+import {AccountingPageMain} from "../../../pages/accountingPage";
+import {AccountingBooks} from "../../../entities/accounting";
+import Calendar from "react-calendar";
+import {CalendarPage} from "../../../pages/calendarPage";
 // import {RoomsProfilePage} from "pages/profilePage";
 
 
@@ -95,6 +116,11 @@ export const routersConfig = [
         icon: "fa-file-invoice-dollar",
         roles: []
     },
+    // {
+    //     name: "Teacher Profile",
+    //     path: getTeacherProfile(":id"),
+    //     element: <ProfileTeacherPage/>,
+    // },
     {
         to: "profile",
         name: "Student Profile",
@@ -102,14 +128,21 @@ export const routersConfig = [
         element: <StudentProfilePage/>,
     },
     {
+        to: "capitalBox",
+        name: "capitalInside",
+        path: getCapitalInside(":id"),
+        element: <CapitalInside/>
+
+    },
+    {
         name: "Time Table",
         path: getRouteTimePage(":id"),
         element: <TimeTableListPage/>,
     },
     {
-      name: "Vakansiyalar",
-      path: getVacancyPage(":id"),
-      element: <VacancyPage/>,
+        name: "Vakansiyalar",
+        path: getVacancyPage(":id"),
+        element: <VacancyPage/>,
     },
     {
         to: 'vacancyPage/vacancyWorkPage',
@@ -128,18 +161,24 @@ export const routersConfig = [
         name: "Flows",
         path: getFlow(":id"),
         element: <FlowsPage/>,
-        isMenu: true,
-        type: ["app_school_theme"]
     },
     {
-        to: "class",
         name: "Class",
-        icon: "fa-user-graduate",
         path: getClass(":id"),
         element: <ClassPage/>,
-        isMenu: true,
-        type: ["app_school_theme"]
     },
+    {
+        path: getContract(":id"),
+        name: "Contract",
+        // icon: "fa fa-book",
+        element: <ContractPage/>
+    },
+    {
+        path: getCapital(":id"),
+        name: "capital",
+        element: <CapitalPage/>
+    },
+
     {
         name: "Honalar",
         path: getRouteRooms(":id"),
@@ -148,6 +187,14 @@ export const routersConfig = [
     {
         path: getRouteUserProfile(":id"),
         element: <UserProfilePage/>,
+    },
+    {
+        path: getRouteCreateGroup(),
+        element: <GroupCreatePage/>,
+    },
+    {
+        path: "calendar",
+        element: <CalendarPage/>,
     },
     {
         name: "Rooms Profile",
@@ -212,6 +259,54 @@ export const routersConfig = [
         name: "Registratsiya",
         path: getRouteRegister(),
         element: <Register/>,
+    },
+
+
+    {
+        name: "createBranch",
+        path: getCreateBranch(":id"),
+        element: <BranchCreate/>
+    },
+
+    {
+        name: "createSystem",
+        path: getCreateSystem(":id"),
+        element: <SystemCreate/>
+    },
+    {
+        name: "createLocation",
+        path: getCreateLocation(":id"),
+        element: <LocationCreate/>
+    },
+    {
+        name: "createEducation",
+        path: getCreateEducation(":id"),
+        element: <EducationCreate/>
+    },
+    {
+        name: "location",
+        path: getLocations(":id"),
+        element: <Location/>
+    },
+    {
+        name: "branch",
+        path: getBranch(":id"),
+        element: <Branch/>
+    },
+    {
+        name: "education",
+        path: getEducation(":id"),
+        element: <Education/>
+    },
+    {
+        name: "system",
+        path: getSystem(":id"),
+        element: <System/>
+    },
+    {
+        name: "accounting",
+        path: getAccounting(":id"),
+        element: <AccountingPageMain/>,
     },
 
 ]

@@ -48,7 +48,7 @@ export const Contact = () => {
     const [changeLoc, setChangeLoc] = useState({})
     const [changeImage, setChangeImage] = useState({})
     const [activeLoc, setActiveLoc] = useState(0)
-    const [selectedItem, setSelectedItem] = useState(locations[0])
+    const [selectedItem, setSelectedItem] = useState(locations[0].name)
     const [loading, setLoading] = useState(false)
 
     const onSubmitHrefs = (data) => {

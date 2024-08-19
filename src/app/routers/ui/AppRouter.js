@@ -2,7 +2,6 @@ import React, {Suspense} from 'react';
 import {createRoutesFromElements, Navigate, Route, RouterProvider} from "react-router";
 import {createBrowserRouter} from "react-router-dom";
 import classNames from "classnames";
-
 import {RequireAuth} from "./RequireAuth";
 import {routersConfig} from "../config/routersConfig";
 import {Layout} from "app/layout";
@@ -20,7 +19,7 @@ import {EmployerPage} from "pages/employeesPage"
 import {useTheme} from "shared/lib/hooks/useTheme";
 
 import "app/styles/index.sass"
-import {CreateGroup} from "entities/students";
+import {GroupCreatePage} from "entities/students";
 import {VacancyPage} from "pages/vacancyPage";
 import {RoomsProfilePage} from "pages/roomsProiflePage";
 import {FlowsPage} from "pages/flowsPage";
@@ -28,6 +27,7 @@ import {FlowProfileNavigators} from "entities/flowsProfile";
 import {FlowListPage} from "pages/FlowListPage";
 import {ClassAddColorPage, ClassPage} from "pages/classPage";
 import {TimeTable} from "pages/timeTable";
+import {CalendarPage} from "pages/calendarPage";
 
 
 export const AppRouter = () => {
@@ -64,10 +64,10 @@ export const AppRouter = () => {
                                     // <Route element={}>
                                     //     {item.element}
                                     // </Route>
-                                    // <RequireAuth roles={item.roles}>
-                                    //     {item.element}
-                                    // </RequireAuth>
-                                    item.element
+                                    <RequireAuth>
+                                        {item.element}
+                                    </RequireAuth>
+                                    // item.element
                                 }
                             />
                         )
@@ -77,16 +77,15 @@ export const AppRouter = () => {
                         path={"time"}
                         element={<TimeTable/>}
                     />
-
-                    <Route path={"students/:id/createGroup"} element={<CreateGroup/>}/>
+                    {/*<RequireAuth>*/}
+                    {/*    <Route path={"students/:id/createGroup"} element={<CreateGroup/>} />*/}
+                    {/*</RequireAuth>*/}
                     <Route
                         path={"profile"}
                         element={<StudentProfilePage/>}
                     />
 
 
-                    <Route path={"employer"} element={<EmployerPage/>}/>
-                    <Route path={"flows"} element={<FlowsPage/>}/>
                     <Route
                         path={"classProfile"}
                         element={<ClassProfilePage/>}
@@ -109,6 +108,12 @@ export const AppRouter = () => {
                         path={"classColorAdd"}
                         element={<ClassAddColorPage/>}
                     />
+
+                    {/*<Route*/}
+                    {/*    path={"calendar"}*/}
+                    {/*    element={<CalendarPage/>}*/}
+                    {/*/>*/}
+
 
                     <Route
                         index

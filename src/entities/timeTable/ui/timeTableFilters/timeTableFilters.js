@@ -88,37 +88,110 @@ const typesPositionList = [15.55, 48.5, 80.7]
 
 const subjectList = [
     {
-        id: "1drag",
-        value: "Matematika"
+        id: "1dragS",
+        value: "Matematika",
+        name: "subject"
     },
     {
-        id: "2drag",
-        value: "Ingliz Tili"
+        id: "2dragS",
+        value: "Ingliz Tili",
+        name: "subject"
     },
     {
-        id: "3drag",
-        value: "Ona tili"
+        id: "3dragS",
+        value: "Ona tili",
+        name: "subject"
     },
     {
-        id: "4drag",
-        value: "Geografiya"
+        id: "4dragS",
+        value: "Geografiya",
+        name: "subject"
     }
 ]
 
-export const TimeTableFilters = memo(({activeDrag, setData, setActiveModal}) => {
+const teacherList = [
+    {
+        id: "1dragT",
+        value: "Yusupova.Sh",
+        name: "teacher"
+    },
+    {
+        id: "2dragT",
+        value: "Bozorov.S",
+        name: "teacher"
+    },
+    {
+        id: "3dragT",
+        value: "Mavjudodov.Sh",
+        name: "teacher"
+    }
+]
+
+const roomList = [
+    {
+        id: "1dragR",
+        value: "1.1",
+        name: "room"
+    },
+    {
+        id: "2dragR",
+        value: "1.2",
+        name: "room"
+    },
+    {
+        id: "3dragR",
+        value: "1.3",
+        name: "room"
+    },
+    {
+        id: "4dragR",
+        value: "1.4",
+        name: "room"
+    },
+    {
+        id: "5dragR",
+        value: "1.5",
+        name: "room"
+    },
+    {
+        id: "6dragR",
+        value: "1.6",
+        name: "room"
+    }
+
+]
+
+export const TimeTableFilters = memo((props) => {
+
+    const {
+        activeDrag,
+        setData,
+        setActiveModal,
+        setActive,
+        setActiveDrop,
+        setActiveDrag
+    } = props
 
     const [activeIdClass, setActiveIdClass] = useState([])
     const [activeIdColor, setActiveIdColor] = useState(1)
     const [activeIdType, setActiveIdType] = useState(1)
     const [currentDataType, setCurrentDataType] = useState([])
 
+    useEffect(() => {
+        setActive(activeIdClass)
+        setActiveDrop(null)
+        setActiveDrag(null)
+    }, [activeIdClass])
 
     useEffect(() => {
         if (activeIdType === 1) {
             setCurrentDataType(subjectList)
+        } else if (activeIdType === 2) {
+            setCurrentDataType(teacherList)
         } else {
-            setCurrentDataType([])
+            setCurrentDataType(roomList)
         }
+        setData(null)
     }, [activeIdType])
 
     useEffect(() => {

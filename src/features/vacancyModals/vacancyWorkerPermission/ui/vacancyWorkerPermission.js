@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Modal } from "shared/ui/modal";
-import { Input } from "shared/ui/input";
-import { Select } from "shared/ui/select";
+import React, {useEffect, useState} from 'react';
+import {Modal} from "shared/ui/modal";
+import {Input} from "shared/ui/input";
+import {Select} from "shared/ui/select";
 import cls from "./vacancyWorkerPermission.module.sass";
-import { Button } from "../../../../shared/ui/button";
+import {Button} from "../../../../shared/ui/button";
+import {API_URL, headers, useHttp} from "../../../../shared/api/base";
 import { useDispatch, useSelector } from "react-redux";
 import { getPermissionTables } from "../model/selectors/selectors";
 import {fetchWorkerWithId,getWorkerId} from "features/vacancyModals/vacancyWorkPage/model";
 import { fetchPermissionTable, postSelectedTable, postSelectedPermission } from "../model/vacancyWorkerPermissionThunk";
 import {useParams} from "react-router-dom";
 
-export const VacancyWorkerPermission = React.memo(({ active, setActive, onAddVacancy }) => {
+export const VacancyWorkerPermission = React.memo(({active, setActive, onAddVacancy}) => {
     const [selectedWorkName, setSelectedWorkName] = useState("");
     const [selectedPermissions, setSelectedPermissions] = useState([]);
     const [availablePermissions, setAvailablePermissions] = useState([]);
@@ -18,15 +19,19 @@ export const VacancyWorkerPermission = React.memo(({ active, setActive, onAddVac
     const dispatch = useDispatch();
     const {id} = useParams()
     const permissionData = useSelector(getPermissionTables);
+    const {request} = useHttp()
     const userId = selectedJobID.job?.length ? Number(selectedJobID.job[0].id) : null;
     console.log(userId);
 
     useEffect(() => {
         dispatch(fetchPermissionTable());
+        console.log("ishladi")
     }, [dispatch]);
 
     const onChangeWorkName = (value) => {
         setSelectedWorkName(value);
+        console.log("hetti")
+        // Tanlangan table ni backendga yuborish
         dispatch(postSelectedTable(value)).then((action) => {
             if (postSelectedTable.fulfilled.match(action)) {
                 console.log("Kevotgan permissionla", action.payload);
@@ -44,8 +49,20 @@ export const VacancyWorkerPermission = React.memo(({ active, setActive, onAddVac
             setSelectedPermissions(prev => prev.filter(item => item !== permission));
         }
     };
-
+    // {
+    //     "permissions": [1,2,3,4,]
+    // }
     const handleAdd = () => {
+        const newVacancy = {
+            id: Date.now(),
+            workName: selectedWorkName,
+            workerNames: selectedPermissions.join(", ")
+        };
+        onAddVacancy(newVacancy);
+        setSelectedPermissions([]);
+        setSelectedWorkName("");
+        dispatch(postSelectedTable(newVacancy))
+        console.log(newVacancy,"new")
         const selectedPermissionsIds = availablePermissions.permissions
             .filter(permission => selectedPermissions.includes(permission.name))
             .map(permission => permission.id);
@@ -93,7 +110,7 @@ export const VacancyWorkerPermission = React.memo(({ active, setActive, onAddVac
                         <div key={permission.id} className={cls.workerPermission}>
                             <h4>{permission.name}</h4>
                             <Input
-                                style={{ width: "20px", marginTop: "15px" }}
+                                style={{width: "20px", marginTop: "15px"}}
                                 type={"checkbox"}
                                 checked={selectedPermissions.includes(permission.name)}
                                 onChange={(e) => onChangePermission(e, permission.name)}
@@ -102,7 +119,7 @@ export const VacancyWorkerPermission = React.memo(({ active, setActive, onAddVac
                     ))}
                 </div>
                 <div className={cls.buttonHome}>
-                    <Button children={"Add"} onClick={handleAdd} />
+                    <Button children={"Add"} onClick={handleAdd}/>
                 </div>
             </div>
         </Modal>

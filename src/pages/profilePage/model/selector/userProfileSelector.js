@@ -7,3 +7,6 @@ export const getUserSalaryInnerData = (state) =>
 
 export const getUserProfileData = (state) =>
     state.userProfile.userData
+
+export const getUserBranchId = (state) =>
+    state.userProfile.userBranchId

@@ -1,7 +1,7 @@
-import {useCallback, useEffect, useMemo, useState} from "react";
+import {memo, useCallback, useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
-import {CreateGroup, DeletedStudents, NewStudents, Students} from "entities/students";
+import {GroupCreatePage, DeletedStudents, NewStudents, Students} from "entities/students";
 import {StudentsHeader} from "entities/students";
 import {StudentsFilter} from "features/filters/studentsFilter";
 import {fetchNewStudentsData} from "entities/students";
@@ -25,7 +25,7 @@ const branches = [
     {name: "xo'jakent"},
 ]
 
-export const StudentsPage = () => {
+export const StudentsPage = memo(() => {
 
     const dispatch = useDispatch()
 
@@ -57,12 +57,9 @@ export const StudentsPage = () => {
         )
     }, [newStudents, setCurrentPage, search])
 
-
-
-    useEffect(() => {
-        dispatch(fetchNewStudentsData())
-    }, [])
-
+    // useEffect(() =>{
+    //     dispatch(fetchNewStudentsData())
+    // } , [])
 
     const handleChange = (value) => {
         setSelectedRadio(value);
@@ -70,9 +67,9 @@ export const StudentsPage = () => {
     const renderStudents = () => {
         switch (selectedRadio) {
             case "newStudents" :
-                return <NewStudents  currentTableData={currentTableData}/>
+                return <NewStudents currentTableData={currentTableData}/>
             case "deletedStudents":
-                return <DeletedStudents  currentTableData={currentTableData}/>
+                return <DeletedStudents currentTableData={currentTableData}/>
             case "studying" :
                 return <Students currentTableData={studyingStudents}/>
 
@@ -80,17 +77,25 @@ export const StudentsPage = () => {
     }
 
 
+    const renderNewStudents = renderStudents()
 
     return (
         <>
 
-            <StudentsHeader selected={selected}
-                            setSelected={setSelected} branches={branches} active={active} setActive={setActive}
-                            onChange={handleChange} selectedRadio={selectedRadio} setSelectedRadio={setSelectedRadio}
-                            peoples={studentsFilter}/>
+            <StudentsHeader
+                selected={selected}
+                setSelected={setSelected}
+                branches={branches}
+                active={active}
+                setActive={setActive}
+                onChange={handleChange}
+                selectedRadio={selectedRadio}
+                setSelectedRadio={setSelectedRadio}
+                peoples={studentsFilter}
+            />
 
             <div className={cls.tableMain}>
-                {renderStudents()}
+                {renderNewStudents}
             </div>
             <Pagination
                 setCurrentTableData={setCurrentTableData}
@@ -107,4 +112,4 @@ export const StudentsPage = () => {
             <StudentsFilter active={active} setActive={setActive} activePage={selectedRadio}/>
         </>
     )
-}
+})
