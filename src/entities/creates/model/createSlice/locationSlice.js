@@ -1,9 +1,10 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {createLocationThunk} from "../createThunk/locationThunk"
+import {getSystemId} from "../createThunk/createBranchThunk";
 
 const initialState = {
     name: null,
-    system: null,
+    system: [],
     loading: false,
     error: false
 }
@@ -19,13 +20,26 @@ const postCreateLocation = createSlice({
                 state.error = false
             })
             .addCase(createLocationThunk.fulfilled , (state, action) => {
-                state.system = action.payload
                 state.name = action.payload
                 state.loading = false
                 state.error = false
                 console.log(action.payload , "yedi")
             })
             .addCase(createLocationThunk.rejected , (state , action) => {
+                state.error = true
+                state.loading = false
+            })
+            .addCase(getSystemId.pending  ,state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(getSystemId.fulfilled , (state, action) => {
+                state.system = action.payload.systems
+                state.loading = false
+                state.error = false
+                console.log(action.payload , "oldi")
+            })
+            .addCase(getSystemId.rejected , (state , action) => {
                 state.error = true
                 state.loading = false
             })

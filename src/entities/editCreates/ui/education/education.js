@@ -1,37 +1,78 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import cls from "../location/locations.module.sass";
 import {Button} from "../../../../shared/ui/button";
 import classNames from "classnames";
 import {ModalEducation, ModalLocation} from "../modals/modal";
+import {getEducationName, getLocationLoading} from "../../model/selector/educationSelector";
+import {useDispatch, useSelector} from "react-redux";
+import {getEducationChange, getEducationThunk} from "../../model/thunk/educationThunk";
+
+import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
+import {useForm} from "react-hook-form";
+import {onDeleteEducation} from "../../model/slice/educationSlice";
+import {API_URL, headers, useHttp} from "../../../../shared/api/base";
+import {EducationCreate} from "../../../creates";
+
 
 export const Education = () => {
 
+    const {register, handleSubmit, setValue} = useForm()
     const [activeLocationModal, setActiveLocationModal] = useState(false)
+    const dispatch = useDispatch()
+    const loading = useSelector(getLocationLoading)
+    const getEducation = useSelector(getEducationName)
+    const [isChange, setIsChange] = useState([])
+    const [active , setActive] = useState(false)
+    const {request} = useHttp()
+    useEffect(() => {
+        dispatch(getEducationThunk())
+    }, [])
 
 
-    const onAdd = () => {
-        console.log("hello")
+
+    const onChange = (data) => {
+        console.log(data)
+        dispatch(getEducationChange({data, id: isChange.id}))
+        setActiveLocationModal(!activeLocationModal)
+    }
+    const onDelete = () => {
+        request(`${API_URL}Language/language/${isChange.id}/`, "DELETE", JSON.stringify({id: isChange.id}), headers())
+            .catch(err => {
+                console.log(err)
+            })
+        dispatch(onDeleteEducation({id: isChange.id}))
+        setActiveLocationModal(!activeLocationModal)
+        setActive(false)
     }
 
-    return (
-        <div className={cls.location}>
-            <div className={cls.locations__wrapper}>
-                <div style={{width: "fit-content"}} className={cls.locationsBox}>
-                    <div className={cls.locationHeader}>
-                        <h2>Education_language</h2>
-                        <Button onClick={() => setActiveLocationModal(!activeLocationModal)} type={"editPlus"}
-                                children={<i className={"fa fa-pen"}/>}/>
-                    </div>
-                    <div className={cls.location__info}>
-                        <h2>Number</h2>
+    function compareById(a, b) {
+        return a.id - b.id;
+    }
 
+    return loading ? <DefaultPageLoader/> : (
+        <div className={cls.location}>
+            <div className={cls.location__wrapper}>
+                {getEducation && [...getEducation].sort(compareById).map(item => (
+                    <div style={{width: "fit-content"}} className={cls.locationsBox}>
+                        <div className={cls.locationHeader}>
+                            <h2>{item?.name}</h2>
+                            <Button onClick={() => {
+                                setActiveLocationModal(!activeLocationModal)
+                                setIsChange(item)
+                                setValue("name", item.name)
+                            }
+                            } type={"editPlus"}
+                                    children={<i className={"fa fa-pen"}/>}/>
+                        </div>
                     </div>
-                </div>
+                ))}
             </div>
 
 
-            <i onClick={onAdd} className={classNames("fa fa-plus", cls.plus)}></i>
-            <ModalEducation activeModal={activeLocationModal} setActive={setActiveLocationModal}/>
+            <i onClick={() => setActive(!active)} className={classNames("fa fa-plus", cls.plus)}></i>
+            <ModalEducation onDelete={onDelete} register={register} handleSubmit={handleSubmit} onChange={onChange}
+                            activeModal={activeLocationModal} setActive={setActiveLocationModal}/>
+            <EducationCreate active={active} setActive={setActive}/>
         </div>
     );
 };

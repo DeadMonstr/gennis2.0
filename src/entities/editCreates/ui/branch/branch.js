@@ -4,49 +4,110 @@ import {ModalBranch} from "../modals/modal";
 import React, {useEffect, useState} from "react";
 import classNames from "classnames";
 import {useDispatch, useSelector} from "react-redux";
-import {getSystemName} from "../../model/selector/systemSelector";
-import {getSystemThunk} from "../../model/thunk/systemThunk";
-import {getBranchThunk} from "../../model/thunk/branchThunk";
+import {changeBranchName, getBranchThunk} from "../../model/thunk/branchThunk";
+import {getLoading, getLocations} from "../../model/selector/branchSelector";
+import {useForm} from "react-hook-form";
+import {getLocation} from "../../model/selector/locationSelector";
+import {getLocationThunk} from "../../../creates/model/createThunk/createBranchThunk";
+import {API_URL, headers, useHttp} from "../../../../shared/api/base";
+
+import {onDeleteBranch} from "../../model/slice/branchSlice";
+import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
+import {Form} from "../../../../shared/ui/form";
+import {Select} from "../../../../shared/ui/select";
+import {Input} from "../../../../shared/ui/input";
+import {BranchCreate} from "../../../creates";
 
 export const Branch = () => {
     const [activeLocationModal, setActiveLocationModal] = useState(false)
-
-    const getName = useSelector(getSystemName)
+    const {register, setValue, handleSubmit} = useForm()
+    const getName = useSelector(getLocations)
     const dispatch = useDispatch()
+    const [isChange, setIsChange] = useState(null);
+    const getLocationList = useSelector(getLocation)
+    const [active , setActive] = useState(false)
+    const [select, setSelect] = useState([])
+    const {request} = useHttp()
+
+    const loading = useSelector(getLoading)
     useEffect(() => {
         dispatch(getBranchThunk())
     }, [])
 
-
-    console.log(getName)
+    useEffect(() => {
+        dispatch(getLocationThunk())
+    }, [])
     const onAdd = () => {
-        console.log("hello")
+        setActive(!active)
+    }
+    const onChange = (data) => {
+        console.log(select, data)
+        dispatch(changeBranchName({location_text: select, data, id: isChange.id,}));
+        setActiveLocationModal(!activeLocationModal)
+        setValue("name", "");
+        setValue("number", "");
+    }
+    const renderBranch = () => {
+        return getName && [...getName].sort(compareById).map(item => (
+            <div className={cls.locationsBox}>
+                <div className={cls.locationHeader}>
+                    <h2>{item?.name}</h2>
+                    <Button
+                        onClick={() => {
+                            setActiveLocationModal(!activeLocationModal);
+                            setIsChange(item);
+                            setValue("name", item.name)
+                            // setValue("phone_number" , item.phone_number)
+                            setValue("number", item.number)
+                            setValue("location_text", item.location_text)
+                        }}
+                        type={"editPlus"}
+                        children={<i className={"fa fa-pen"}/>}
+                    />
+                </div>
+                <div className={cls.location__info}>
+                    <h2>{item?.number}</h2>
+                    {/*<h2>{item?.phone_number}</h2>*/}
+                    <span>
+                            {item.location_text}
+                        {/*{item.location?.name}*/}
+                    </span>
+                </div>
+            </div>
+
+        ))
     }
 
-    return (
+    function compareById(a, b) {
+        return a.id - b.id;
+    }
+
+    const onDelete = () => {
+        console.log(isChange.id, "hello")
+        request(`${API_URL}Branch/branch_delete/${isChange.id}/`, "DELETE", JSON.stringify({id: isChange.id}), headers())
+            .catch(err => {
+                console.log(err)
+            })
+        setActiveLocationModal(!activeLocationModal)
+        dispatch(onDeleteBranch({id: isChange.id}))
+
+    }
+
+    return loading ? <DefaultPageLoader/> : (
         <div>
             <div className={cls.location}>
-                <div className={cls.locations__wrapper}>
-                    <div className={cls.locationsBox}>
-                        <div className={cls.locationHeader}>
-                            <h2>Location</h2>
-                            <Button onClick={() => setActiveLocationModal(!activeLocationModal)} type={"editPlus"}
-                                    children={<i className={"fa fa-pen"}/>}/>
-                        </div>
-                        <div className={cls.location__info}>
-                            <h2>Number</h2>
-                            <span>
-                            System_id2
-                        </span>
-                        </div>
-                    </div>
+                <div className={cls.location__wrapper}>
+                    {renderBranch()}
                 </div>
 
 
                 <i onClick={onAdd} className={classNames("fa fa-plus", cls.plus)}></i>
 
-                <ModalBranch activeModal={activeLocationModal} setActive={setActiveLocationModal}/>
+                <ModalBranch onDelete={onDelete} select={select} setSelected={setSelect} options={getLocationList}
+                             activeModal={activeLocationModal} setActive={setActiveLocationModal} register={register}
+                             onChange={onChange} handleSubmit={handleSubmit}/>
             </div>
+            <BranchCreate loading={loading} setActive={setActive} active={active}/>
         </div>
     );
 };

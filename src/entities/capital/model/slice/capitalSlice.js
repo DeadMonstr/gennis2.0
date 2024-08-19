@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getCapitalDataThunk,createCapitalCategory ,getCapitalInfo} from "../thunk/capitalThunk";
+import {getCapitalDataThunk,createCapitalCategory ,getCapitalInfo , changeCapitalInfoThunk} from "../thunk/capitalThunk";
 
 
 
@@ -8,7 +8,7 @@ const initialState = {
     error: null,
     capitalsData: [],
     capitalPermission: [],
-    capitalCategoryInfo: null,
+    capitalCategoryInfo: [],
 
 }
 
@@ -55,6 +55,23 @@ export const CapitalSlice = createSlice({
                 state.error = null
             })
             .addCase(getCapitalInfo.rejected , (state, action) => {
+                state.loading = false
+                state.error = action.payload ?? null
+            })
+            .addCase(changeCapitalInfoThunk.pending , state => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(changeCapitalInfoThunk.fulfilled , (state, action) =>{
+                state.capitalCategoryInfo =
+                  [...state.capitalCategoryInfo.filter(item => item.id !== action.payload.id),
+                    action.payload
+                ]
+                console.log(action.payload , "capital info")
+                state.loading = false
+                state.error = null
+            })
+            .addCase(changeCapitalInfoThunk.rejected , (state, action) => {
                 state.loading = false
                 state.error = action.payload ?? null
             })

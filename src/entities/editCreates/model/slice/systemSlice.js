@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getSystemThunk} from "../thunk/systemThunk";
+import {getSystemThunk, changeSystemName} from "../thunk/systemThunk";
 
 
 const initialState = {
@@ -11,22 +11,43 @@ const initialState = {
 const getSystemSlice = createSlice({
     name: "getSystemSlice",
     initialState,
-    reducers: {},
+    reducers: {
+        onDeleteCapitalReducer: (state, action) => {
+            state.name = state.name.filter(item => item.id !== action.payload.id)
+        },
+    },
     extraReducers: builder =>
         builder
-            .addCase(getSystemThunk.pending , state => {
+            .addCase(getSystemThunk.pending, state => {
                 state.loading = true
                 state.error = false
             })
-            .addCase(getSystemThunk.fulfilled , (state, action) => {
+            .addCase(getSystemThunk.fulfilled, (state, action) => {
                 state.name = action.payload.systems
                 state.loading = false
                 state.error = false
             })
-            .addCase(getSystemThunk.rejected , (state, action) => {
+            .addCase(getSystemThunk.rejected, (state, action) => {
                 state.loading = false
                 state.error = true
             })
+            .addCase(changeSystemName.pending, state => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(changeSystemName.fulfilled, (state, action) => {
+                state.name = [
+                    ...state.name.filter(item => item.id !== action.payload.id),
+                    action.payload
+                ]
+                state.loading = false
+                state.error = null
+            })
+            .addCase(changeSystemName.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload ?? null
+            })
 })
 
+export const {onDeleteCapitalReducer} = getSystemSlice.actions
 export default getSystemSlice.reducer

@@ -2,7 +2,6 @@ import React, {Suspense} from 'react';
 import {createRoutesFromElements, Navigate, Route, RouterProvider} from "react-router";
 import {createBrowserRouter} from "react-router-dom";
 import classNames from "classnames";
-
 import {RequireAuth} from "./RequireAuth";
 import {routersConfig} from "../config/routersConfig";
 import {Layout} from "app/layout";

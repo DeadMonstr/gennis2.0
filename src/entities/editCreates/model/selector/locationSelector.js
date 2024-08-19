@@ -1,3 +1,9 @@
 
+
 export const getLocation  = (state) =>
-    state.getLocationSlice?.name
+    state.postBranch?.locationId
+
+export const getLoading = (state) =>
+    state.postBranch?.loading
+
+
