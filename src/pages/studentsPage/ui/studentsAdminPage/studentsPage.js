@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {GroupCreatePage, DeletedStudents, NewStudents, Students} from "entities/students";
 import {StudentsHeader} from "entities/students";
 import {StudentsFilter} from "features/filters/studentsFilter";
-import {fetchNewStudentsData} from "entities/students";
+import {fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData} from "entities/students";
 import {getNewStudentsData, getStudyingStudents} from "entities/students";
 import {Pagination} from "features/pagination";
 
@@ -42,7 +42,7 @@ export const StudentsPage = memo(() => {
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
 
-    console.log(currentTableData, "data")
+    console.log(newStudents, "data")
 
     const searchedUsers = useMemo(() => {
         const filteredHeroes = newStudents?.slice()
@@ -57,9 +57,9 @@ export const StudentsPage = memo(() => {
         )
     }, [newStudents, setCurrentPage, search])
 
-    // useEffect(() =>{
-    //     dispatch(fetchNewStudentsData())
-    // } , [])
+    useEffect(() =>{
+        dispatch(fetchOnlyNewStudentsData())
+    } , [])
 
     const handleChange = (value) => {
         setSelectedRadio(value);
@@ -67,11 +67,11 @@ export const StudentsPage = memo(() => {
     const renderStudents = () => {
         switch (selectedRadio) {
             case "newStudents" :
-                return <NewStudents currentTableData={currentTableData}/>
-            case "deletedStudents":
-                return <DeletedStudents currentTableData={currentTableData}/>
+                return <NewStudents currentTableData={newStudents}/>
             case "studying" :
                 return <Students currentTableData={studyingStudents}/>
+            // case "deletedStudents":
+            //     return <DeletedStudents currentTableData={currentTableData}/>
 
         }
     }
@@ -97,16 +97,16 @@ export const StudentsPage = memo(() => {
             <div className={cls.tableMain}>
                 {renderNewStudents}
             </div>
-            <Pagination
-                setCurrentTableData={setCurrentTableData}
-                users={searchedUsers}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-                pageSize={PageSize}
-                onPageChange={page => {
-                    setCurrentPage(page)
-                }}
-                type={"custom"}/>
+            {/*<Pagination*/}
+            {/*    setCurrentTableData={setCurrentTableData}*/}
+            {/*    users={searchedUsers}*/}
+            {/*    setCurrentPage={setCurrentPage}*/}
+            {/*    currentPage={currentPage}*/}
+            {/*    pageSize={PageSize}*/}
+            {/*    onPageChange={page => {*/}
+            {/*        setCurrentPage(page)*/}
+            {/*    }}*/}
+            {/*    type={"custom"}/>*/}
 
 
             <StudentsFilter active={active} setActive={setActive} activePage={selectedRadio}/>

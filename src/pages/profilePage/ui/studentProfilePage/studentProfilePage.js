@@ -35,7 +35,8 @@ export const StudentProfilePage = () => {
     const {id} = useParams()
 
     const userData = useSelector(getUserData)
-
+    const student_id = userData?.id
+    const branch_id = userData?.user?.branch.id
     const [active, setActive] = useState(false)
     const [activeModal, setActiveModal] = useState("")
     const [newImage, setNewImage] = useState("")
@@ -59,7 +60,8 @@ export const StudentProfilePage = () => {
         dispatch(changeStudentProfileImage({id: userData?.user?.id, data}))
     }
 
-    console.log(userData)
+    console.log(userData, "student ")
+    console.log(student_id, "branc id")
 
 
     return (
@@ -68,6 +70,7 @@ export const StudentProfilePage = () => {
         >
             <StudentProfileInfo
                 setActive={setActive}
+                active={active}
                 setActiveModal={setActiveModal}
                 data={userData?.user}
                 newImage={newImage}
@@ -94,6 +97,8 @@ export const StudentProfilePage = () => {
                 <StudentProfileTotalAmount
                     active={active}
                     setActive={setActive}
+                    student_id={student_id}
+                    branch_id={branch_id}
                 />
                 <StudentProfileAmountPath
                     active={active}

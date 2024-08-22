@@ -7,7 +7,6 @@ import {EmployerSalaryDeleteModal, SalaryDeleteModal} from "../../../../features
 export const GiveSalaryList = ({ currentTableData, currentPage, PageSize, user_id}) => {
     const [modal, setModal] = useState(false);
     const [selectedSalaryId, setSelectedSalaryId] = useState(null);
-    console.log(user_id, "nma gap")
     const handleDeleteClick = (id) => {
         setModal(true);
         setSelectedSalaryId(id);

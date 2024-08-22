@@ -1,16 +1,21 @@
-import React, { useMemo, useState, useEffect } from "react";
-import { Pagination } from "features/pagination";
-import { GroupsFilter } from "features/filters/groupsFilter";
-import { Button } from "shared/ui/button";
+import React, {useMemo, useState, useEffect} from "react";
+import {Pagination} from "features/pagination";
+import {GroupsFilter} from "features/filters/groupsFilter";
+import {Button} from "shared/ui/button";
 import cls from "./vacancyWorkPage.module.sass";
-import { vacancyWorkList, vacancyWorkerList } from "entities/vacancy/model";
-import { VacancyPageEdit } from "features/vacancyModals/vacancyPageEdit";
-import { VacancyWorkList } from "entities/vacancy/ui/vacancyWorkList";
-import { Switch } from "../../../shared/ui/switch";
-import { VacancyWorkerList } from "entities/vacancy/ui/vacancyWorkerList";
-import { VacancyWorkerPermission } from "../../../features/vacancyModals/vacancyWorkerPermission";
+import {vacancyWorkList, vacancyWorkerList} from "entities/vacancy/model";
+import {VacancyPageEdit} from "features/vacancyModals/vacancyPageEdit";
+import {VacancyWorkList} from "entities/vacancy/ui/vacancyWorkList";
+import {Switch} from "../../../shared/ui/switch";
+import {VacancyWorkerList} from "entities/vacancy/ui/vacancyWorkerList";
+import {VacancyWorkerPermission} from "../../../features/vacancyModals/vacancyWorkerPermission";
 import {useSelector, useDispatch} from "react-redux";
 import {getWorkerId} from "../../../features/vacancyModals/vacancyWorkPage/model";
+import {getUserProfileData} from "../../profilePage/model/selector/userProfileSelector";
+import {fetchUserProfileData} from "../../profilePage";
+import {useParams} from "react-router-dom";
+import {getUserPermission} from "../../profilePage";
+import {vacancyWorkerListThunk} from "../../../features/vacancyWorkerList";
 
 export const VacancyWorkPage = () => {
     const [active, setActive] = useState(false);
@@ -23,15 +28,30 @@ export const VacancyWorkPage = () => {
     const [currentTableData, setCurrentTableData] = useState([]);
     const [currentEditingVacancy, setCurrentEditingVacancy] = useState(null);
     const [selectedItems, setSelectedItems] = useState([]);
+    const userPermissions = useSelector(getUserPermission)
+    const [isDirector, setIsDirector] = useState(false)
     const dispatch = useDispatch()
     const getWorkerID = useSelector(getWorkerId)
     const PageSize = useMemo(() => 20, []);
+    const getCurrentUser = useSelector(getUserProfileData)
+    const {id} = useParams()
 
 
+
+    useEffect(() => {
+        if (userPermissions) {
+            const directorRole = userPermissions[1].jobs.some(job => job.director === true)
+            setIsDirector(directorRole)
+        }
+    }, [userPermissions])
     console.log(getWorkerID)
+
     useEffect(() => {
         setCurrentTableData(!activeSwitch ? vacancyWorkList : vacancyWorkerList);
     }, [activeSwitch]);
+
+
+    console.log(getCurrentUser, 'current user')
 
     const handleEditClick = (vacancy) => {
         setCurrentEditingVacancy(vacancy);
@@ -54,8 +74,16 @@ export const VacancyWorkPage = () => {
         setSelectedItems([]);
     };
 
-    const handleSwitchChange = () => {
+    const handleSwitchChange = async (jobId) => {
         setActiveSwitch(!activeSwitch);
+        const fetchUsers = {
+            job: Number(jobId)
+        }
+        try {
+            await dispatch(vacancyWorkerListThunk(fetchUsers));
+        } catch (error) {
+            console.error("An error occurred:", error);
+        }
     };
 
     const handleAddVacancy = (newVacancy) => {
@@ -68,28 +96,32 @@ export const VacancyWorkPage = () => {
             </div>
             <div className={cls.mainContainer_buttonPanelBox}>
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButtons}>
-                    <Switch activeSwitch={activeSwitch} onChangeSwitch={handleSwitchChange} />
+                    {
+                        !isDirector ? null :
+                            <Switch activeSwitch={activeSwitch} onChangeSwitch={() => handleSwitchChange(id)}/>
+                    }
+
                 </div>
 
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}>
                     {!activeSwitch ? (
-                        <>
-                            <Button
-                                extraClass={cls.buttonHelper}
-                                children={<i className={"fas fa-plus"}></i>}
-                                onClick={() => setActive(!active)}
-                            />
-                            <Button
-                                extraClass={cls.buttonHelper}
-                                children={<i className={"fas fa-pencil"}></i>}
-                                onClick={() => setEditMode(!editMode)}
-                            />
-                        </>
+                            <>
+                                <Button
+                                    extraClass={cls.buttonHelper}
+                                    children={<i className={"fas fa-plus"}></i>}
+                                    onClick={() => setActive(!active)}
+                                />
+                                <Button
+                                    extraClass={cls.buttonHelper}
+                                    children={<i className={"fas fa-pencil"}></i>}
+                                    onClick={() => setEditMode(!editMode)}
+                                />
+                            </>
 
-                    )
-                    :
+                        )
+                        :
 
-                            null
+                        null
 
                     }
 
@@ -116,21 +148,21 @@ export const VacancyWorkPage = () => {
                     />
                 ) : (
                     <VacancyWorkerList
-                        currentTableData={currentTableData}
+                        currentTableData={getCurrentUser}
                         currentPage={currentPage}
                         PageSize={PageSize}
                     />
                 )}
             </div>
-            <Pagination
-                setCurrentTableData={setCurrentTableData}
-                users={!activeSwitch ? vacancyWorkList : vacancyWorkerList}
-                search={search}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-                pageSize={PageSize}
-                onPageChange={page => setCurrentPage(page)}
-            />
+            {/*<Pagination*/}
+            {/*    setCurrentTableData={setCurrentTableData}*/}
+            {/*    users={!activeSwitch ? vacancyWorkList : vacancyWorkerList}*/}
+            {/*    search={search}*/}
+            {/*    setCurrentPage={setCurrentPage}*/}
+            {/*    currentPage={currentPage}*/}
+            {/*    pageSize={PageSize}*/}
+            {/*    onPageChange={page => setCurrentPage(page)}*/}
+            {/*/>*/}
             <VacancyPageEdit
                 setModal={setModal}
                 modal={modal}
