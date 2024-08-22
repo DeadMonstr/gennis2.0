@@ -21,7 +21,7 @@ export const Teachers = memo(({data, setSelect, select}) => {
     const renderTeacher = useCallback(() => {
         if (data && data.length) {
             return data?.map((item, i) => {
-                console.log(select.includes(item.id))
+                // console.log(select.includes(item.id))
                 return (
                     <tr key={i}>
                         <td>{i + 1}</td>
@@ -37,7 +37,7 @@ export const Teachers = memo(({data, setSelect, select}) => {
                                 className={item.subject.length ? cls.teacher__language : null}>{item.subject.name}</div>
                         </td>
                         <td>
-                            {item.extra_info.status ? <div className={cls.teacher__inner}>
+                            {item?.extra_info?.status ? <div className={cls.teacher__inner}>
                                 <div className={cls.status}>
                                     <div className={cls.status__inner}/>
                                 </div>
