@@ -1,1 +1,6 @@
 export {VacancyWorkerList} from './ui/vacancyWorkerList'
+export {default as vacancyWorkerSoucre} from './model/vacancyWorkerGetSlice'
+export {default as userSetPermissionSlice} from './model/userSetPermissionSlice'
+export {userSetPermissionThunk, fetchLocationsForSystemsThunk, fetLocationsForBranchesThunk} from './model/userSetPermissionThunk'
+export {vacancyWorkerGetThunk} from './model/vacancyWorkerGetThunk'
+export {getVacancySource} from './model/selectors/selectors'

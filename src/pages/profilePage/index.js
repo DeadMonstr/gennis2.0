@@ -11,3 +11,5 @@ export {fetchUserProfileData} from "./model/thunk/userProfileThunk";
 export {getUserBranchId} from "./model/selector/userProfileSelector";
 
 export {GroupProfilePage} from "./ui/groupProfilePage/groupProfilePage";
+
+export {getUserPermission} from './model/selector/userProfileSelector'

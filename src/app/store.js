@@ -50,7 +50,13 @@ import {teacherSalarySlice} from "../entities/teacherSalary";
 import {employerSalarySlice} from "../entities/employerSalary";
 import {giveEmployerSalarySlice} from "../pages/giveSalaryPage";
 import {giveEmployerSalarySlices} from "../features/giveEmployerSalary";
+import {giveTeacherSalarySlices} from "../features/giveSalary/giveSalary";
+import {teacherSalaryDeleteSlice} from "../features/salaryEdits";
+import {employerSalaryDeleteSlice} from "../features/salaryEdits";
 import {calendarSlice} from "pages/calendarPage";
+import {vacancyWorkerSoucre, userSetPermissionSlice} from "../entities/vacancy/ui/vacancyWorkerList";
+import {vacancyWorkerSlice} from "../features/vacancyWorkerList";
+import {studentPaymentSlice} from "../features/studentPayment";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -91,6 +97,7 @@ export const store = configureStore({
         // roomsEditModalSlice,
         roomDeleteSlice,
         roomsImageAddSlice,
+        roomImageSlice,
         flowsSlice,
         teacherProfileData,
         teacherParseSlice,
@@ -104,7 +111,6 @@ export const store = configureStore({
         systemSlice,
         postBranch,
         getBranchSlice,
-        roomImageSlice,
         timeTableSchool,
         userProfile,
         vacancyWorkerPermissionSlice,
@@ -116,7 +122,14 @@ export const store = configureStore({
         getLocationSlice,
         postEducation,
         getEducation,
-        studentSlice
+        studentSlice,
+        giveTeacherSalarySlices,
+        teacherSalaryDeleteSlice,
+        employerSalaryDeleteSlice,
+        vacancyWorkerSoucre,
+        userSetPermissionSlice,
+        vacancyWorkerSlice,
+        studentPaymentSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

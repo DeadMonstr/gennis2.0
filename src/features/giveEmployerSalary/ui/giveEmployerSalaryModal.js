@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {Modal} from "shared/ui/modal";
 import cls from './giveEmployerSalaryModal.module.sass'
 import {TeacherProfileTotalAmount} from "entities/profile/teacherProfile";
 import {EmployerProfileTotalAmount} from "../../../entities/profile/employerProfile";
+export const GiveEmployerSalaryModal = React.memo(({active, setActive, activePage, salary_id, permission_id, user_id}) => {
 
-export const GiveEmployerSalaryModal = React.memo(({active, setActive, activePage}) => {
+
     return (
         <Modal
             active={active}
@@ -17,8 +18,10 @@ export const GiveEmployerSalaryModal = React.memo(({active, setActive, activePag
                     <EmployerProfileTotalAmount
                     active={active}
                     setActive={setActive}
+                    salary_id={salary_id}
+                    permission_id={permission_id}
+                    user_id={user_id}
                     />
-
                 </div>
 
             </div>

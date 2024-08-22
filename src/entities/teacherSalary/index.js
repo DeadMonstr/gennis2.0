@@ -1,5 +1,5 @@
 export {salary, branches} from './model/constants/constants'
 export {TeacherSalaryList} from './ui/teacherSalaryList/teacherSalaryList'
 export {default as teacherSalarySlice} from './ui/teacherSalarySlice'
-export {fetchTeacherSalaryThunk} from './ui/teacherSalaryThunk'
-export {getTeacherSalaries} from './model/selectors/selectors'
+export {fetchTeacherSalaryThunk, fetchTeacherSalaryIdThunk} from './ui/teacherSalaryThunk'
+export {getTeacherSalaries, getTeacherSalariesList, getTeacherSalaryLoading} from './model/selectors/selectors'

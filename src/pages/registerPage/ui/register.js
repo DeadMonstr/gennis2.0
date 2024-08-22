@@ -48,7 +48,7 @@ export const Register = () => {
         if (username) {
             const checkUsername = async () => {
                 try {
-                    const response = await fetch(`${API_URL}/Users/username-check/`, {
+                    const response = await fetch(`${API_URL}Users/username-check/`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

@@ -6,6 +6,13 @@ export const  fetchTeacherSalaryThunk = createAsyncThunk(
     "teacherSalarySlice/fetchTeacherSalaryThunk",
     async (id) => {
         const {request} = useHttp();
-        return await  request(`${API_URL}Teachers/teacher-salary-list/${id}/`)
+        return await  request(`${API_URL}Teachers/teacher-salary-list/${id}/`, "GET", null, headers())
+    }
+)
+export const  fetchTeacherSalaryIdThunk = createAsyncThunk(
+    "teacherSalarySlice/fetchTeacherSalaryIdThunk",
+    async (id) => {
+        const {request} = useHttp();
+        return await  request(`${API_URL}Teachers/teacher-salary-list-month/${id}/`, "GET", null, headers())
     }
 )
