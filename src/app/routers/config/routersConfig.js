@@ -45,7 +45,7 @@ import {TeachersPage} from "pages/teacherPage";
 import {
     ProfileTeacherPage,
     UserProfilePage,
-    StudentProfilePage, ProfileEmployerPage
+    StudentProfilePage, ProfileEmployerPage, GroupProfilePage
 } from "pages/profilePage";
 import {StudentsDirectorPage} from "pages/studentsPage";
 import {VacancyPage} from "pages/vacancyPage";
@@ -191,6 +191,10 @@ export const routersConfig = [
     {
         path: getRouteCreateGroup(),
         element: <GroupCreatePage/>,
+    },
+    {
+        path: "groups/:id/groupInfo/:id",
+        element: <GroupProfilePage/>,
     },
     {
         path: "calendar",

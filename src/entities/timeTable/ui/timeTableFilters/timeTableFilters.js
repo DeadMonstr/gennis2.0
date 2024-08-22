@@ -201,8 +201,22 @@ export const TimeTableFilters = memo((props) => {
     }, [activeIdType, teacherData, subjectData, roomData])
 
     useEffect(() => {
-        if (currentDataType)
-            setData(currentDataType.filter(item => item.id === activeDrag)[0])
+        if (currentDataType) {
+            if (activeIdType === 2) {
+                setData({
+                    name: currentDataType.filter(item => item.id === activeDrag)[0]?.user?.name,
+                    surname: currentDataType.filter(item => item.id === activeDrag)[0]?.user?.surname,
+                    value: "teacher",
+                    id: currentDataType.filter(item => item.id === activeDrag)[0]?.id
+                })
+            } else {
+                setData({
+                    name: currentDataType.filter(item => item.id === activeDrag)[0]?.name,
+                    value: activeIdType === 1 ? "subject" : "room",
+                    id: currentDataType.filter(item => item.id === activeDrag)[0]?.id
+                })
+            }
+        }
     }, [activeDrag])
 
     const renderClassListData = () => {
@@ -258,7 +272,7 @@ export const TimeTableFilters = memo((props) => {
                 id={item.id}
                 data={{hello: 1}}
             >
-                {item.value}
+                {activeIdType === 2 ? `${item?.user?.name} ${item?.user?.surname}` : item.name}
             </Draggable>
         )
     }, [activeIdType, currentDataType])

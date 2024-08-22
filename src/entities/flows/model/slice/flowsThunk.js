@@ -14,7 +14,7 @@ export const fetchFlows = createAsyncThunk(
 
 export const flowListThunk = createAsyncThunk(
     "flowsSlice/flowListThunk",
-    async () =>{
+    async (data) =>{
         const {request} = useHttp()
         return await request(`${API_URL}/Flow/flow-list-create/` , "GET" , null , headers())
     }

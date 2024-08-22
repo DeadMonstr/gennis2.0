@@ -1,6 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-import {fetchFilteredStudents, fetchNewStudentsData} from "./studentsThunk";
+import {
+    fetchClassColors,
+    fetchClassNumberList,
+    fetchFilteredStudents,
+    fetchNewStudentsData, fetchSchoolStudents
+} from "./studentsThunk";
 
 
 const initialState = {
@@ -9,6 +14,9 @@ const initialState = {
     filteredTeachers: [],
     filteredCurseTypes: [],
     filteredCurseLevel: [],
+    schoolClassNumbers: [],
+    schoolClassColors: [],
+    schoolStudents: [],
     newStudents: [],
     newStudentsStatus: "idle",
     deletedStudents: [],
@@ -59,6 +67,45 @@ export const studentsSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchFilteredStudents.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload ?? null
+            })
+            .addCase(fetchClassNumberList.pending, state => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(fetchClassNumberList.fulfilled, (state, action) => {
+                state.schoolClassNumbers = action.payload?.classnumbers
+                state.loading = false
+                state.error = null
+            })
+            .addCase(fetchClassNumberList.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload ?? null
+            })
+            .addCase(fetchClassColors.pending, state => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(fetchClassColors.fulfilled, (state, action) => {
+                state.schoolClassColors = action.payload.classcolors
+                state.loading = false
+                state.error = null
+            })
+            .addCase(fetchClassColors.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload ?? null
+            })
+            .addCase(fetchSchoolStudents.pending, state => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(fetchSchoolStudents.fulfilled, (state, action) => {
+                state.schoolStudents = action.payload
+                state.loading = false
+                state.error = null
+            })
+            .addCase(fetchSchoolStudents.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload ?? null
             })
