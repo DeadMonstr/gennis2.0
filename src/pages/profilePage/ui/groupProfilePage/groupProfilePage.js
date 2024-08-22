@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import classNames from "classnames";
 
+import {GroupProfileModalTeachers} from "features/groupProfile";
 import {
     GroupProfileInfo,
     GroupProfileTeacher,
@@ -12,7 +13,6 @@ import {
 } from "entities/profile/groupProfile";
 
 import cls from "./groupProfilePage.module.sass";
-import {GroupProfileModalTeachers} from "../../../../features/groupProfile";
 
 export const GroupProfilePage = () => {
 

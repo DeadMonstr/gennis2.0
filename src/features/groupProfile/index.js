@@ -1,0 +1,1 @@
+export {GroupProfileModalTeachers} from "./ui/groupProfileModalTeachers/groupProfileModalTeachers";

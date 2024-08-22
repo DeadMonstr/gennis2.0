@@ -1,11 +1,11 @@
 import React, {memo} from 'react';
+import classNames from "classnames";
 
 import {Table} from "shared/ui/table";
 import {EditableCard} from "shared/ui/editableCard";
 
 import cls from "./groupProfileStudents.module.sass";
 import defaultUserImg from "shared/assets/images/user_image.png";
-import classNames from "classnames";
 
 const data = [
     {
