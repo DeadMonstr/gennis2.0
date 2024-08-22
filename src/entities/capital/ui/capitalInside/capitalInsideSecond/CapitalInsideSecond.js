@@ -6,6 +6,7 @@ import {DefaultPageLoader} from "../../../../../shared/ui/defaultLoader";
 
 export const CapitalInsideSecond = memo(({capitalData, editModal, setEditModal}) => {
 
+
     const capitalDataRender = () => {
         return (
             <div className={cls.capitalBox}>
@@ -30,13 +31,14 @@ export const CapitalInsideSecond = memo(({capitalData, editModal, setEditModal})
             </div>
         )
     }
-
+    function compareById(a, b) {
+        return a.id - b.id;
+    }
     const render = capitalDataRender()
 
     return (
         <div className={cls.capitalInfo}>
             <div className={cls.capitalInfo__wrapper}>
-
                 {render}
             </div>
         </div>

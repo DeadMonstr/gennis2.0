@@ -1,8 +1,10 @@
-import {memo, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {memo, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import classNames from "classnames";
 
 import {Table} from "shared/ui/table";
-import {monthNameList, weekDaysList} from "../../model/consts/constsMonthList";
+import {weekDaysList} from "entities/calendar/index";
+import {Switch} from "shared/ui/switch";
+import {Button} from "shared/ui/button";
 
 import cls from "./calendarListItem.module.sass";
 import 'react-calendar/dist/Calendar.css';
@@ -15,33 +17,83 @@ export const CalendarListItem = memo((props) => {
         data,
         onActiveDays,
         sortWeeksDays,
-        currentData
+        currentData,
+        setSelected,
+        onSubmit,
+        isChanged,
+        setIsChanged,
+        onSubmitDelete
     } = props
 
+    // console.log(data, "data")
+
+    const contentHeight = useRef()
     const weeksCount = useMemo(() =>
         ["1week", "2week", "3week", "4week", "5week", "6week"], [])
 
+    /// important
+    // data
     const [totalWeeksCount, setTotalWeeksCount] = useState([])
+    // hoverActive
     const [demoActive, setDemoActive] = useState([])
+    // selectActive
     const [trueActive, setTrueActive] = useState([{}])
+
+    /// test delete
     const [daysList, setDaysList] = useState([])
 
-    // const onSelectDay = (id) => {
-    //     setTotalWeeksCount(totalWeeksCount.map(item => item.map(i => i.id === id ? {...i, checked: true} : i)))
-    // }
+    /// medium
+    // kunni aydisini olish
+    const [selectedId, setSelectedId] = useState([])
+    // kunlar royhati
+    const [typesOfDays, setTypesOfDays] = useState([])
+    // kunlar royhatini aniqroq korish
+    const [selectedDay, setSelectedDay] = useState([])
+    // svich
+    const [activeSwitch, setActiveSwitch] = useState(true)
+    // single boganda aydi olib berish
+    const [singleId, setSingleId] = useState([])
+    // single boganda ularni olib berish
+    const [singleIdActive, setSingleIdActive] = useState(false)
+    const [deletedId, setDeletedId] = useState([])
 
     useEffect(() => {
-        setTotalWeeksCount(sortWeeksDays(data.daysList, weekDaysList.indexOf(data.day.toUpperCase())))
+        // console.log(data, "data inner")
+        setTotalWeeksCount(sortWeeksDays(data[0]?.days, data[0]?.days[0]?.day_name === "Friday" ?
+            4 : data[0]?.days[0]?.day_name === "Saturday" ?
+                5 : data[0]?.days[0]?.day_name === "Sunday" ?
+                    6 : data[0]?.days[0]?.day_name === "Monday" ?
+                        0 : data[0]?.days[0]?.day_name === "Tuesday" ?
+                            1 : data[0]?.days[0]?.day_name === "Wednesday" ? 2 : 3))
+        setTypesOfDays(data[0]?.types)
+        setTrueActive([{}])
     }, [data])
 
     useEffect(() => {
-        if (currentData.name) {
-            setDaysList(arr => [...arr, currentData])
-            setTrueActive(trueActive.map(item => ({...item, bgColor: currentData.color})))
+        if (isChanged) {
+            setSelectedId([])
+            setSingleId([])
+            setIsChanged(false)
         }
-    }, [currentData])
+    }, [isChanged, selectedId])
 
-    const renderWeekDays = () => {
+    // console.log(isChanged, "isChanged")
+    // console.log(selectedId, "selectedId")
+    // console.log(trueActive, "trueActive")
+
+    useEffect(() => {
+        // console.log(isChanged, "isChanged")
+        if (selectedId.length && !singleIdActive && activeSwitch) {
+            // console.log(true, "select")
+            setSelected(selectedId)
+        }
+    }, [selectedId, singleIdActive])
+
+    // if (selectedId.length) {
+    //     console.log(selectedId, "Iddddddddddd")
+    // }
+
+    const renderWeekDaysSingle = useCallback(() => {
         return weeksCount.map((item, index) =>
             <tr key={index}>
                 {
@@ -51,95 +103,218 @@ export const CalendarListItem = memo((props) => {
                                 key={iI}
                                 onClick={() => {
                                     if (i.value) {
-                                        // onSelectDay(i.id)
-                                        onActiveDays(i.id, i.value, trueActive, setTrueActive, setDemoActive, month)
-                                        if (demoActive.length === 2) {
-                                            setDemoActive([])
-                                        } else {
-                                            setDemoActive([i.id])
-                                        }
-                                    }
-                                }}
-                                onMouseEnter={() => {
-                                    if (demoActive.length) {
-                                        setDemoActive([demoActive[0], i.id])
+                                        setSingleId(prev => {
+                                            if (prev.filter(item => item === i?.value?.id)[0]) {
+                                                return prev.filter(item => item !== i?.value?.id)
+                                            }
+                                            return [...prev, i?.value?.id]
+                                        })
                                     }
                                 }}
                                 className={classNames(cls.inner__day, {
-                                    [cls.active]:
-                                    trueActive.filter(item => item?.startId <= i.id && item?.finishId >= i.id)[0],
-                                    [cls.demoActive]:
-                                    (demoActive[0] > demoActive[1] ? demoActive[1] : demoActive[0]) < i.id
-                                    &&
-                                    (demoActive[0] > demoActive[1] ? demoActive[0] : demoActive[1]) > i.id
+                                    [cls.active]: singleId.includes(i?.value?.id),
+                                    [cls.demoActive]: false
                                 })}
                                 style={{
-                                    backgroundColor:
-                                    trueActive.filter(item => item?.startId <= i.id && item?.finishId >= i.id)[0]?.bgColor
+                                    padding: i?.value?.day_number > 9 ? "1rem 0 .6rem .6rem" : ""
                                 }}
                             >
-                                {i.value}
+                                <p
+                                    className={cls.inner__number}
+                                    style={{
+                                        backgroundColor:
+                                            i?.value?.type_id?.color !== "red" || "green" ? i?.value?.type_id?.color :
+                                                singleId.includes(i?.value?.id) ? "white" : i?.value?.type_id?.color,
+                                        padding: i?.value?.day_number > 9 ? ".4em .9rem" : ""
+                                    }}
+                                >
+                                    {i?.value?.day_number}
+                                </p>
+                                {
+                                    i?.value?.type_id?.type !== ""
+                                }
                             </td>
                         )
                     })
                 }
             </tr>
         )
-    }
+    }, [trueActive, weeksCount, totalWeeksCount, singleId])
+
+
+    // if (trueActive[0]?.finishId) {
+    //     console.log(trueActive, "habdsbkjd")
+    // }
+
+    const renderWeekDaysSelect = useCallback(() => {
+        return weeksCount.map((item, index) =>
+            <tr key={index}>
+                {
+                    totalWeeksCount[index]?.map((i, iI) => {
+                        const active = trueActive.filter(item => (item?.startId <= i?.value?.id) && (item?.finishId >= i?.value?.id))[0]
+                        if (active && !selectedId.length) {
+                            setSelectedId(arr => [...arr, i?.value?.id])
+                            // setSelected(arr => [...arr, i?.value?.id])
+                        }
+                        return (
+                            <td
+                                key={iI}
+                                onClick={() => {
+                                    if (i.value) {
+                                        onActiveDays(i?.value?.id, i?.value?.day_number, trueActive, setTrueActive, setDemoActive, month, selectedId, {func: () => setSelectedId([])})
+                                        if (demoActive.length === 2) {
+                                            setDemoActive([])
+                                        } else {
+                                            setDemoActive([i?.value?.id])
+                                        }
+                                    }
+                                }}
+                                onMouseEnter={() => {
+                                    if (demoActive.length) {
+                                        setDemoActive([demoActive[0], i?.value?.id])
+                                    }
+                                }}
+                                className={classNames(cls.inner__day, {
+                                    [cls.active]: activeSwitch ? active || i.value ? demoActive[0] === i?.value?.id : false :
+                                        i?.value?.type_id?.color !== "red" && i?.value?.type_id?.color !== "green" ? false :
+                                            active ||
+                                            trueActive.filter(item => (item?.startId && !item?.finishId) ? item?.startId === i?.value?.id : false)[0],
+                                    [cls.demoActive]:
+                                    (demoActive[0] > demoActive[1] ? demoActive[1] : demoActive[0]) < i?.value?.id
+                                    &&
+                                    (demoActive[0] > demoActive[1] ? demoActive[0] : demoActive[1]) > i?.value?.id
+                                })}
+                                style={{
+                                    // color: i?.value?.type_id?.color !== "red" || "green" ? i?.value?.type_id?.color : active ? "white" : i?.value?.type_id?.color,
+                                    color: "white",
+                                    padding: i?.value?.day_number > 9 ? "1rem 0 .6rem .6rem" : ""
+                                }}
+                            >
+                                <p
+                                    className={cls.inner__number}
+                                    style={{
+                                        backgroundColor:
+                                            i?.value?.type_id?.color !== "red" || "green" ? i?.value?.type_id?.color : active ? "white" : i?.value?.type_id?.color,
+                                        padding: i?.value?.day_number > 9 ? ".4em .9rem" : ""
+                                    }}
+                                >
+                                    {i?.value?.day_number}
+                                </p>
+                                {
+                                    i?.value?.type_id?.type !== ""
+                                }
+                            </td>
+                        )
+                    })
+                }
+            </tr>
+        )
+    }, [selectedId, trueActive, totalWeeksCount, demoActive])
 
     const renderCelebrateDays = useCallback(() => {
-        return daysList.map(item => {
+        return typesOfDays.map((item, index) => {
+            // console.log(item.days,index, "days")
             return (
-                <div className={cls.item}>
-                    {
-                        item.startValue !== item.finishValue ? <p className={cls.item__inner}>
+                <div
+                    className={cls.all}
+                    style={{borderBottom: `8px solid ${item.color}`}}
+                >
+                    <div
+                        className={cls.item}
+                        // style={{background: item.color}}
+                    >
+                        {
+                            // item.startValue !== item.finishValue ?
+                            <p className={cls.item__inner}>
+                                {
+                                    item.days ? item.days[0]?.day_number : null
+                                }
+                                {
+                                    item.days.length > 1 ? `-${item.days[item.days.length - 1]?.day_number}` : null
+                                }
+                                {/*<span>{data[0]?.month_name}</span>*/}
+                                <span>/</span>
+                                <span>{`${item.type.slice(0, 16)}${item.type.length > 16 ? "..." : ""}`}</span>
+                            </p>
+                        }
+                        <div className={cls.item__icons}>
+                            {/*<i className={classNames("fas fa-pen", cls.item__icon)}/>*/}
                             {
-                                item.startValue < item.finishValue ?
-                                    item.startValue : item.finishValue
-                            }-
-                            {
-                                item.startValue < item.finishValue ?
-                                    item.finishValue : item.startValue
+                                item.type === "Ish kuni" || item.type === "Dam" ? null :
+                                    <i
+                                        className={classNames("fas fa-trash", cls.item__icon)}
+                                        onClick={() => onSubmitDelete(item.days.map(item => item.id))}
+                                    />
                             }
-                            <span>{monthNameList[month]}</span>
-                            <span>/</span>
-                            <span>{item.name}</span>
-                        </p> : <p className={cls.item__inner}>
-                            {item.startValue}
-                            <span>{monthNameList[month]}</span>
-                            <span>/</span>
-                            <span>{item.name}</span>
-                        </p>
-                    }
-                    <div className={cls.item__icons}>
-                        <i className={classNames("fas fa-pen", cls.item__icon)}/>
-                        <i
-                            className={classNames("fas fa-trash", cls.item__icon)}
-                            onClick={() => {
-                                setDaysList(daysList.filter(i => i.name !== item.name))
-                                setTrueActive(trueActive.filter(i =>
-                                    i.startId !== item.startId && i.finishId !== item.finishId
-                                ))
-                                // setTotalWeeksCount(totalWeeksCount.map(inner =>
-                                //     inner.map(i =>
-                                //         (i.id === item.startId) || (i.id === item.finishId) ?
-                                //             {...i, checked: false} : i)))
-                            }}
-                        />
+                            {/*{*/}
+                            {/*    selectedDay[0]?.id === item?.days[0]?.id*/}
+                            {/*        ?*/}
+                            {/*        <i*/}
+                            {/*            className={classNames("fas fa-chevron-up", cls.item__icon)}*/}
+                            {/*            onClick={() => setSelectedDay([])}*/}
+                            {/*        />*/}
+                            {/*        :*/}
+                            {/*        <i*/}
+                            {/*            className={classNames("fas fa-chevron-down", cls.item__icon)}*/}
+                            {/*            onClick={() => setSelectedDay(item?.days)}*/}
+                            {/*        />*/}
+                            {/*}*/}
+                        </div>
                     </div>
+                    {/*<div*/}
+                    {/*    className={classNames(cls.all__active, {*/}
+                    {/*        [cls.active]: selectedDay[0]?.id === item?.days[0]?.id*/}
+                    {/*    })}*/}
+                    {/*    style={*/}
+                    {/*        selectedDay[0]?.id === item?.days[0]?.id ?*/}
+                    {/*            {height: contentHeight.current.scrollHeight}*/}
+                    {/*            : {height: "0px"}*/}
+                    {/*    }*/}
+                    {/*    ref={contentHeight}*/}
+                    {/*>*/}
+                    {/*    <div>*/}
+                    {/*        {*/}
+                    {/*            selectedDay[0]?.id === item?.days[0]?.id*/}
+                    {/*                ?*/}
+                    {/*                <div*/}
+                    {/*                    className={classNames(cls.all__inner, {*/}
+                    {/*                        [cls.active]: selectedDay[0]?.id === item?.days[0]?.id*/}
+                    {/*                    })}*/}
+                    {/*                >*/}
+                    {/*                    {*/}
+                    {/*                        selectedDay.map(item => {*/}
+                    {/*                            return (*/}
+                    {/*                                <div className={cls.small}>*/}
+                    {/*                                <span>*/}
+                    {/*                                    {item?.day_number}*/}
+                    {/*                                </span>*/}
+                    {/*                                    -*/}
+                    {/*                                    <p>*/}
+                    {/*                                        {data[0]?.month_name}*/}
+                    {/*                                    </p>*/}
+                    {/*                                </div>*/}
+                    {/*                            )*/}
+                    {/*                        })*/}
+                    {/*                    }*/}
+                    {/*                </div>*/}
+                    {/*                :*/}
+                    {/*                null*/}
+                    {/*        }*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                 </div>
             )
         })
-    }, [daysList])
+    }, [typesOfDays, selectedDay])
 
-    const render = renderWeekDays()
+    const render = activeSwitch ? renderWeekDaysSelect() : renderWeekDaysSingle()
     const renderDays = renderCelebrateDays()
 
     return (
         <div className={cls.calendarListItem}>
             <div className={cls.inner}>
                 <div className={cls.inner__title}>
-                    {monthNameList[month]}
+                    {data[0]?.month_name}
                 </div>
                 <Table extraClass={cls.inner__items}>
                     <thead>
@@ -165,11 +340,28 @@ export const CalendarListItem = memo((props) => {
             </div>
             <div className={cls.calendarListItem__item}>
                 <div className={cls.calendarListItem__title}>
-                    {monthNameList[month]}
+                    {data[0]?.month_name}
+                    <div className={cls.calendarListItem__display}>
+                        {
+                            activeSwitch ? "select" : "single"
+                        }
+                        <Switch
+                            activeSwitch={activeSwitch}
+                            onChangeSwitch={setActiveSwitch}
+                        />
+                    </div>
                 </div>
                 <div className={cls.calendarListItem__container}>
                     {renderDays}
                 </div>
+                {
+                    !activeSwitch ? <Button
+                        onClick={() => onSubmit(singleId)}
+                        extraClass={cls.calendarListItem__btn}
+                    >
+                        Submit
+                    </Button> : null
+                }
             </div>
         </div>
     )

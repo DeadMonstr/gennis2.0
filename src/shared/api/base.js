@@ -13,9 +13,9 @@ export const CLASSROOM_API_URL_DOC = `http://192.168.68.116:8000/`
 
 
 export const headers = () => {
-    const token = sessionStorage.getItem("token");
+    const token = sessionStorage.getItem("token")
     return {
-        "Authorization" : "Bearer " + token,
+        "Authorization" : "JWT " + token,
         'Content-Type': 'application/json'
     }
 }
@@ -29,7 +29,7 @@ export const headersImg = () => {
 export const useHttp = () => {
     const request = async (url, method = 'GET', body = null, headers = {'Content-Type': 'application/json'}) => {
         try {
-            const response = await fetch(url, {method,mode: 'cors', body, headers, credentials: 'include'});
+            const response = await fetch(url, {method,mode: 'cors', body, headers});
 
             if (!response.ok) {
                 throw new Error(`Could not fetch ${url}, status: ${response.status}`);

@@ -1,7 +1,7 @@
 import {memo, useCallback, useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
-import {CreateGroup, DeletedStudents, NewStudents, Students} from "entities/students";
+import {GroupCreatePage, DeletedStudents, NewStudents, Students} from "entities/students";
 import {StudentsHeader} from "entities/students";
 import {StudentsFilter} from "features/filters/studentsFilter";
 import {fetchNewStudentsData} from "entities/students";
@@ -67,9 +67,9 @@ export const StudentsPage = memo(() => {
     const renderStudents = () => {
         switch (selectedRadio) {
             case "newStudents" :
-                return <NewStudents  currentTableData={currentTableData}/>
+                return <NewStudents currentTableData={currentTableData}/>
             case "deletedStudents":
-                return <DeletedStudents  currentTableData={currentTableData}/>
+                return <DeletedStudents currentTableData={currentTableData}/>
             case "studying" :
                 return <Students currentTableData={studyingStudents}/>
 
@@ -82,10 +82,17 @@ export const StudentsPage = memo(() => {
     return (
         <>
 
-            <StudentsHeader selected={selected}
-                            setSelected={setSelected} branches={branches} active={active} setActive={setActive}
-                            onChange={handleChange} selectedRadio={selectedRadio} setSelectedRadio={setSelectedRadio}
-                            peoples={studentsFilter}/>
+            <StudentsHeader
+                selected={selected}
+                setSelected={setSelected}
+                branches={branches}
+                active={active}
+                setActive={setActive}
+                onChange={handleChange}
+                selectedRadio={selectedRadio}
+                setSelectedRadio={setSelectedRadio}
+                peoples={studentsFilter}
+            />
 
             <div className={cls.tableMain}>
                 {renderNewStudents}

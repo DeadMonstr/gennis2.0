@@ -2,58 +2,70 @@ import {Modal} from "shared/ui/modal";
 import {Input} from "shared/ui/input";
 import {Button} from "shared/ui/button";
 import cls from "../location/locations.module.sass"
+import {Form} from "../../../../shared/ui/form";
+import {Select} from "../../../../shared/ui/select";
 
 
-export const ModalLocation = ({activeModal, setActive}) => {
+export const ModalLocation = ({activeModal, setActive,  register, handleSubmit, onChange, onDelete , setSelect, options }) => {
     return (
         <Modal setActive={setActive} active={activeModal}>
-            <div style={{display: "flex", flexDirection: "column", gap: "2rem", padding: '3rem 2rem'}}>
-                <Button extraClass={cls.btn} type={`editPlus`} children={<><i className={"fa fa-trash"}/></>}/>
-                <Input title={"Name"}/>
-                <Input title={"Number"}/>
-                <Input title={"System_id"}/>
-            </div>
+            <Button onClick={onDelete} extraClass={cls.btn} type={`editPlus`} children={<><i className={"fa fa-trash"}/></>}/>
+           <Form onSubmit={handleSubmit(onChange)}>
+               <div style={{display: "flex", flexDirection: "column", gap: "2rem", padding: '3rem 2rem'}}>
+                   <Input name={"name"} register={register} title={"Name"}/>
+                   <Input title={"Number"} register={register} type={"number"} name={"number"}/>
+                   {/*<Input title={"System_id"} register={register} name={"old_id"}/>*/}
+                   <Select options={options} onChangeOption={setSelect}/>
+               </div>
+           </Form>
         </Modal>
     );
 };
-export const ModalSystem = ({activeModal, setActive}) => {
+export const ModalSystem = ({ activeModal, setActive, register, handleSubmit, onChange, onDelete }) => {
     return (
         <div>
             <Modal setActive={setActive} active={activeModal}>
-                <div style={{display: "flex", flexDirection: "column", gap: "2rem", padding: '3rem 2rem'}}>
-                    <Button extraClass={cls.btn} type={`editPlus`} children={<><i className={"fa fa-trash"}/></>}/>
-                    <Input title={"Name"}/>
-                    <Input title={"System_id"}/>
-                </div>
+                <Button onClick={onDelete} extraClass={cls.btn} type={`editPlus`}><i className={"fa fa-trash"}/></Button>
+                <Form onSubmit={handleSubmit(onChange)}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "2rem", padding: '3rem 2rem' }}>
+                        <Input name={"name"} register={register} title={"Name"} />
+                        <Input name={"number"} type={"Number"} register={register} title={"System_id"} />
+                    </div>
+                </Form>
+            </Modal>
+        </div>
+    );
+};
+export const ModalBranch = ({activeModal, setActive, register, handleSubmit, onChange, onDelete , options, select, setSelected}) => {
+    return (
+        <div>
+            <Modal setActive={setActive} active={activeModal}>
+                <Button onClick={onDelete} extraClass={cls.btn} type={`editPlus`} children={<><i className={"fa fa-trash"}/></>}/>
+                <Form  onSubmit={handleSubmit(onChange)}>
+                    <div style={{display: "flex", flexDirection: "column", gap: "2rem", padding: '3rem 2rem'}}>
+                        <Input register={register} name={"name"} title={"Name"}/>
+                        {/*<Input title={"Number"} register={register} name={"phone_number"}/>*/}
+                        <Input title={"Number"} register={register} name={"number"} type={"number"}/>
+                        <Input title={"Location"} register={register} name={"location_text"}/>
+                        {/*<Select title={"System_id"} options={options} onChangeOption={setSelected}/>*/}
+                    </div>
+                </Form>
             </Modal>
         </div>
     );
 };
 
-export const ModalBranch = ({activeModal, setActive}) => {
+
+export const ModalEducation = ({activeModal, setActive , register , handleSubmit , onChange, onDelete}) => {
     return (
         <div>
             <Modal setActive={setActive} active={activeModal}>
-                <div style={{display: "flex", flexDirection: "column", gap: "2rem", padding: '3rem 2rem'}}>
-                    <Button extraClass={cls.btn} type={`editPlus`} children={<><i className={"fa fa-trash"}/></>}/>
-                    <Input title={"Name"}/>
-                    <Input title={"Number"}/>
-                    <Input title={"System_id"}/>
-                </div>
-            </Modal>
-        </div>
-    );
-};
-
-
-export const ModalEducation = ({activeModal, setActive}) => {
-    return (
-        <div>
-            <Modal setActive={setActive} active={activeModal}>
-                <div style={{display: "flex", flexDirection: "column", padding: '3rem 2rem'}}>
-                    <Button extraClass={cls.btn} type={`editPlus`} children={<><i className={"fa fa-trash"}/></>}/>
-                    <Input title={"Name"}/>
-                </div>
+                <Button onClick={onDelete} extraClass={cls.btn} type={`editPlus`} children={<><i className={"fa fa-trash"}/></>}/>
+                <Form onSubmit={handleSubmit(onChange)}>
+                    <div style={{display: "flex", flexDirection: "column", padding: '3rem 2rem'}}>
+                        <Input title={"Name"} register={register} name={"name"}/>
+                    </div>
+                </Form>
             </Modal>
         </div>
     );

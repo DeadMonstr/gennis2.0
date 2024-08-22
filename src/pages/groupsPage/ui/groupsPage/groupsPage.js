@@ -10,9 +10,9 @@ import {Button} from "shared/ui/button";
 
 import cls from "./groupsPage.module.sass";
 import {DeletedGroups} from "entities/groups/deletedGroups/ui/deletedGroups";
-import {getDeletedGroupsData} from "../../../entities/groups/model/selectors/deletedGroups";
-import {getSearchValue} from "../../../features/searchInput";
-import {fetchGroupsData} from "../../../entities/groups/model/slice/groupsThunk";
+import {getDeletedGroupsData} from "../../../../entities/groups/model/selectors/deletedGroups";
+import {getSearchValue} from "../../../../features/searchInput";
+import {fetchGroupsData} from "../../../../entities/groups/model/slice/groupsThunk";
 // import {DeletedGroups} from "entities/groups/index";
 
 

@@ -2,11 +2,18 @@ import {
     AccountingAdditionalCosts,
     AccountingBooks,
     AccountingCapitalCosts,
-    AccountingHeader, getAccountingSelect, StudentsPayments, TeachersSalary , DebtStudents, EmployeeSalary , StudentsDiscount
+    AccountingHeader,
+    getAccountingSelect,
+    StudentsPayments,
+    TeachersSalary,
+    DebtStudents,
+    EmployeeSalary,
+    StudentsDiscount,
+    getStudentsData
 } from "entities/accounting";
 
-import {Routes  ,Route} from "react-router";
-import {memo, useCallback, useState} from "react";
+import {Routes, Route} from "react-router";
+import {memo, useCallback, useEffect, useState} from "react";
 import cls from './accountingPageMain.module.sass';
 
 import {useDispatch, useSelector} from "react-redux";
@@ -15,7 +22,6 @@ import {onChangeAccountingPage} from "entities/accounting/model/slice/accounting
 import {Button} from "shared/ui/button";
 import {Select} from "shared/ui/select";
 import {Radio} from "shared/ui/radio";
-
 
 
 const number = [
@@ -32,8 +38,9 @@ const typeExpenses = [
 export const AccountingPageMain = memo(() => {
     let {locationId} = useParams()
     const getAccountingPage = useSelector(getAccountingSelect)
+    const studentData = useSelector(getStudentsData)
 
-    const navigate =  useNavigate()
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const [selectedRadio, setSelectedRadio] = useState(typeExpenses[0].id);
 
@@ -46,8 +53,9 @@ export const AccountingPageMain = memo(() => {
     const setPage = useCallback((e) => {
         console.log(e)
         dispatch(onChangeAccountingPage({value: e}))
+
         navigate(`./${e}`)
-    },[])
+    }, [])
 
 
 
@@ -88,13 +96,18 @@ export const AccountingPageMain = memo(() => {
             <Routes>
 
 
-                <Route path={"teachersSalary"} element={<TeachersSalary path={"teachersSalary"} locationId={locationId}/>}/>
-                <Route path={"studentsDiscounts"} element={<StudentsDiscount path={"studentsDiscounts"} locationId={locationId}/>}/>
-                <Route path={"employeesSalary"} element={<EmployeeSalary path={"employeesSalary"} loc   ationId={locationId}/>}/>
+                <Route path={"teachersSalary"}
+                       element={<TeachersSalary path={"teachersSalary"} locationId={locationId}/>}/>
+                <Route path={"studentsDiscounts"}
+                       element={<StudentsDiscount path={"studentsDiscounts"} locationId={locationId}/>}/>
+                <Route path={"employeesSalary"}
+                       element={<EmployeeSalary path={"employeesSalary"} loc ationId={locationId}/>}/>
                 <Route path={"debtStudents"} element={<DebtStudents path={"debtStudents"} locationId={locationId}/>}/>
-                <Route path={"overhead"} element={<AccountingAdditionalCosts path={"overhead"} locationId={locationId}/>}/>
+                <Route path={"overhead"}
+                       element={<AccountingAdditionalCosts path={"overhead"} locationId={locationId}/>}/>
 
-                <Route path={"studentsPayments"} element={<StudentsPayments path={"studentsPayments"} locationId={locationId}/>}/>
+                <Route path={"studentsPayments"}
+                       element={<StudentsPayments studentData={studentData} locationId={locationId}/>}/>
                 <Route path={"bookPayment"} element={<AccountingBooks path={"bookPayment"} locationId={locationId}/>}/>
                 <Route path={"capital"} element={<AccountingCapitalCosts path={"capital"} locationId={locationId}/>}/>
 

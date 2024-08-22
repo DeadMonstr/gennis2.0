@@ -2,7 +2,6 @@ import React, {Suspense} from 'react';
 import {createRoutesFromElements, Navigate, Route, RouterProvider} from "react-router";
 import {createBrowserRouter} from "react-router-dom";
 import classNames from "classnames";
-
 import {RequireAuth} from "./RequireAuth";
 import {routersConfig} from "../config/routersConfig";
 import {Layout} from "app/layout";
@@ -20,7 +19,7 @@ import {EmployerPage} from "pages/employeesPage"
 import {useTheme} from "shared/lib/hooks/useTheme";
 
 import "app/styles/index.sass"
-import {CreateGroup} from "entities/students";
+import {GroupCreatePage} from "entities/students";
 import {VacancyPage} from "pages/vacancyPage";
 import {RoomsProfilePage} from "pages/roomsProiflePage";
 import {FlowsPage} from "pages/flowsPage";
@@ -74,10 +73,6 @@ export const AppRouter = () => {
                         )
                     }
 
-                    <Route
-                        path={"time"}
-                        element={<TimeTable/>}
-                    />
                     {/*<RequireAuth>*/}
                     {/*    <Route path={"students/:id/createGroup"} element={<CreateGroup/>} />*/}
                     {/*</RequireAuth>*/}
@@ -110,10 +105,10 @@ export const AppRouter = () => {
                         element={<ClassAddColorPage/>}
                     />
 
-                    <Route
-                        path={"calendar"}
-                        element={<CalendarPage/>}
-                    />
+                    {/*<Route*/}
+                    {/*    path={"calendar"}*/}
+                    {/*    element={<CalendarPage/>}*/}
+                    {/*/>*/}
 
 
                     <Route

@@ -29,12 +29,16 @@ import {
     getCreateLocation,
     getCreateSystem,
     getAccounting,
-    getLocations, getRouteCreateGroup, getEmployerSalaryInsideSource, getEmployerSalary, getTeacherSalary,
+    getLocations,
+    getRouteCreateGroup,
+    getEmployerSalaryInsideSource,
+    getEmployerSalary,
+    getTeacherSalary,
 } from "shared/const/routers";
 
 
 import {StudentsPage} from "pages/studentsPage";
-import {GroupsPage} from "pages/groupsPage";
+import {GroupsPage, GroupCreatePage} from "pages/groupsPage";
 import {Register} from "pages/registerPage";
 import {Rooms} from "pages/roomsPage";
 import {TeachersPage} from "pages/teacherPage";
@@ -62,7 +66,9 @@ import {Branch, Education, Location, System} from "../../../entities/editCreates
 import {BranchCreate, EducationCreate, LocationCreate, SystemCreate} from "../../../entities/creates";
 import {AccountingPageMain} from "../../../pages/accountingPage";
 import {AccountingBooks} from "../../../entities/accounting";
-import {CreateGroup} from "../../../entities/students";
+import Calendar from "react-calendar";
+import {CalendarPage} from "../../../pages/calendarPage";
+import {TimeTable} from "../../../pages/timeTable";
 // import {RoomsProfilePage} from "pages/profilePage";
 
 
@@ -184,7 +190,15 @@ export const routersConfig = [
     },
     {
         path: getRouteCreateGroup(),
-        element: <CreateGroup/>,
+        element: <GroupCreatePage/>,
+    },
+    {
+        path: "calendar",
+        element: <CalendarPage/>,
+    },
+    {
+        path: "time",
+        element: <TimeTable/>,
     },
     {
         name: "Rooms Profile",

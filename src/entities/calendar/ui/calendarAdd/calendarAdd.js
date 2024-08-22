@@ -38,11 +38,13 @@ export const CalendarAdd = memo((props) => {
                         register={register}
                         placeholder={"Kun nomi"}
                         name={"name"}
+                        required
                     />
                     <Input
                         register={register}
                         type={"color"}
                         name={"color"}
+                        required
                     />
                 </Form>
             </div>
