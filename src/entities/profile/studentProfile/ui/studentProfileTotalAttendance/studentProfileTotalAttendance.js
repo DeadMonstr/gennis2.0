@@ -15,36 +15,36 @@ export const StudentProfileTotalAttendance = memo(({active, setActive, selectedG
     const dispatch = useDispatch();
     const attendanceData = useSelector(getTotalAttendance);
 
-    useEffect(() => {
-        dispatch(studentTotalAddendanceThunk(selectedGroup));
-    }, [selectedGroup, dispatch]);
-
-    const renderAttendance = () => {
-        return Object.keys(attendanceData.students).map((date) => (
-            <>
-                {
-                    attendanceData.students[date].map((student, index) => (
-                        <td key={index}>
-                            {student.status ? (
-                                <i className={classNames("fas fa-check", cls.icon, cls.active)}/>
-                            ) : (
-                                <i className={classNames("fas fa-times", cls.icon)}/>
-                            )}
-                        </td>
-                    ))
-                }
-            </>
-        ));
-    };
-
-    const renderDates = () => {
-        return Object.keys(attendanceData.students).map((date) => (
-            <th>{date}</th>
-        ))
-    }
-
-    const render = renderAttendance();
-    const renderDate = renderDates()
+    // useEffect(() => {
+    //     dispatch(studentTotalAddendanceThunk(selectedGroup));
+    // }, [selectedGroup, dispatch]);
+    //
+    // const renderAttendance = () => {
+    //     return Object.keys(attendanceData.students).map((date) => (
+    //         <>
+    //             {
+    //                 attendanceData.students[date].map((student, index) => (
+    //                     <td key={index}>
+    //                         {student.status ? (
+    //                             <i className={classNames("fas fa-check", cls.icon, cls.active)}/>
+    //                         ) : (
+    //                             <i className={classNames("fas fa-times", cls.icon)}/>
+    //                         )}
+    //                     </td>
+    //                 ))
+    //             }
+    //         </>
+    //     ));
+    // };
+    //
+    // const renderDates = () => {
+    //     return Object.keys(attendanceData.students).map((date) => (
+    //         <th>{date}</th>
+    //     ))
+    // }
+    //
+    // const render = renderAttendance();
+    // const renderDate = renderDates()
     return (
         <EditableCard
             extraClass={classNames(cls.totalAttendance, {
@@ -68,13 +68,13 @@ export const StudentProfileTotalAttendance = memo(({active, setActive, selectedG
                         <thead>
                         <tr>
                             <th>Gruppa fani</th>
-                            {renderDate}
+                            {/*{renderDate}*/}
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
                             <td>{selectedGroupName}</td>
-                            {render}
+                            {/*{render}*/}
                         </tr>
 
                         </tbody>

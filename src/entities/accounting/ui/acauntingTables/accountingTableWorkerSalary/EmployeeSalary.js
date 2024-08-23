@@ -4,7 +4,7 @@ import cls from "./empSalary.module.sass"
 import {Modal} from "../../../../../shared/ui/modal";
 import React, {useState} from "react";
 
-export const EmployeeSalary = ({ filteredSalary, sum2 , activeDeleted  , formatSalary , onChange, changePayment, setChangePayment, deleted ,setChangingData}) => {
+export const EmployeeSalary = ({ filteredSalary, sum2 , activeDeleted  , formatSalary , onChange, changePayment, setChangePayment, deleted ,setChangingData, onDeleteModal}) => {
 
 
     // const changeModal = (name, id) => {
@@ -55,7 +55,7 @@ export const EmployeeSalary = ({ filteredSalary, sum2 , activeDeleted  , formatS
                         <div>
                             <Button
                                 onClick={() => {
-                                    setActiveDelete({
+                                    onDeleteModal({
                                         id: item.id,
                                         userId: item.user.id,
 
