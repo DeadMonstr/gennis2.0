@@ -1,6 +1,3 @@
-
-
-
 export const API_URL_DOC = `http://192.168.0.103:8000/`
 export const API_URL = `${API_URL_DOC}`
 export const API_URL_IMG = `http://192.168.0.103:8000`

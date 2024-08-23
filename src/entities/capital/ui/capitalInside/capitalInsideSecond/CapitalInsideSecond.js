@@ -3,8 +3,9 @@ import {memo} from "react";
 import cls from "./capitalInsideSecond.module.sass"
 import {Button} from "shared/ui/button";
 import {DefaultPageLoader} from "../../../../../shared/ui/defaultLoader";
+import {useNavigate} from "react-router";
 
-export const CapitalInsideSecond = memo(({capitalData, editModal, setEditModal}) => {
+export const CapitalInsideSecond = memo(({capitalData, editModal, setEditModal , onDelete}) => {
 
 
     const capitalDataRender = () => {
@@ -25,7 +26,7 @@ export const CapitalInsideSecond = memo(({capitalData, editModal, setEditModal})
                             Download File
                         </Button>
 
-                        <Button type={"danger"}>O’chirish</Button>
+                        <Button onClick={onDelete} type={"danger"}>O’chirish</Button>
                     </div>
                 </div>
             </div>

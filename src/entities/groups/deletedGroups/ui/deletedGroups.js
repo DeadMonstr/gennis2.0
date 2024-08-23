@@ -24,9 +24,10 @@ export const DeletedGroups = ({currentTableData}) => {
                         <th>O'chirilgan sana</th>
                     </tr>
                     </thead>
+                    <tbody>
                     {currentTableData.map((item, i) => {
                         return (
-                            <tbody>
+
                             <tr>
                                 <td>{i + 1}</td>
                                 <td>{item.groupName}</td>
@@ -36,9 +37,10 @@ export const DeletedGroups = ({currentTableData}) => {
                                 <td><div>{item.groupPrice}</div></td>
                                 <td>{item.deletedDate}</td>
                             </tr>
-                            </tbody>
+
                         )
                     })}
+                    </tbody>
                 </Table>
             </div>
 
