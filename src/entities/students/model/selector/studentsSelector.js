@@ -27,3 +27,12 @@ export const getCurseTypesData = (state) =>
 
 export const getCurseLevelData = (state) =>
     state.newStudents?.filteredCurseLevel
+
+export const getSchoolClassNumbers = (state) =>
+    state.newStudents?.schoolClassNumbers
+
+export const getSchoolClassColors = (state) =>
+    state.newStudents?.schoolClassColors
+
+export const getSchoolStudents = (state) =>
+    state.newStudents?.schoolStudents

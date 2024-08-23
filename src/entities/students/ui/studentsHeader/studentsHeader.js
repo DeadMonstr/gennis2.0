@@ -17,6 +17,8 @@ export const StudentsHeader = ({
                                    branches,
                                    selected,
                                    setSelected,
+                                   theme,
+                                   onClick
                                }) => {
 
 
@@ -24,8 +26,26 @@ export const StudentsHeader = ({
         <div className={cls.mainContainer}>
             <div className={cls.mainContainer_buttonPanelBox}>
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}>
-                    <Link to={"createGroup"}> <Button type={"filter"}
-                                                      extraClass={cls.extraCutClass}>Create group</Button></Link>
+                    {
+                        theme
+                            ?
+                            <Button
+                                type={"filter"}
+                                extraClass={cls.extraCutClass}
+                                onClick={() => onClick(true)}
+                            >
+                                Create group
+                            </Button>
+                            :
+                            <Link to={"createGroup"}>
+                                <Button
+                                    type={"filter"}
+                                    extraClass={cls.extraCutClass}
+                                >
+                                    Create group
+                                </Button>
+                            </Link>
+                    }
                     <Button type={"filter"} extraClass={cls.noneBackground}>Add group</Button>
                 </div>
                 {branches.length >= 1 ? <Select options={branches} onChangeOption={() => setSelected}

@@ -10,7 +10,8 @@ export {
     getFilteredStudentsStatus,
 } from "./model/studentsSlice"
 
-export {fetchNewStudentsData, fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData} from "./model/studentsThunk"
+export {fetchNewStudentsData, fetchClassNumberList, fetchClassColors} from "./model/studentsThunk"
+export {fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData} from "./model/studentsThunk"
 export {
     getNewStudentsData,
     getStudyingStudents,
@@ -19,6 +20,7 @@ export {
     getFilteredTeachers,
     getFilteredStudents,
     getFilteredStatus,
+    getSchoolClassColors,
     getFilteredErrors,
     getNewStudentsLoading
 } from "./model/selector/studentsSelector"

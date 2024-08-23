@@ -46,7 +46,7 @@ import {TeachersPage} from "pages/teacherPage";
 import {
     ProfileTeacherPage,
     UserProfilePage,
-    StudentProfilePage, ProfileEmployerPage
+    StudentProfilePage, ProfileEmployerPage, GroupProfilePage
 } from "pages/profilePage";
 import {StudentsDirectorPage} from "pages/studentsPage";
 import {VacancyPage} from "pages/vacancyPage";
@@ -59,17 +59,18 @@ import {ClassPage} from "pages/classPage";
 import {ContractPage} from "pages/contractPage";
 import {CapitalInside, CapitalPage} from "pages/capitalPage";
 
-import {getEmployersData} from "../../../entities/employer/model/selector/employersSelector";
-import {TeacherSalaryPage} from "../../../pages/teacherSalaryPage";
-import {EmployerSalaryPage} from "../../../pages/employerSalaryPage";
-import {GiveSalaryPage, GiveTeacherSalaryPage} from "../../../pages/giveSalaryPage";
-import {Branch, Education, Location, System} from "../../../entities/editCreates";
-import {BranchCreate, EducationCreate, LocationCreate, SystemCreate} from "../../../entities/creates";
-import {AccountingPageMain} from "../../../pages/accountingPage";
-import {AccountingBooks} from "../../../entities/accounting";
+import {getEmployersData} from "entities/employer/model/selector/employersSelector";
+import {TeacherSalaryPage} from "pages/teacherSalaryPage";
+import {EmployerSalaryPage} from "pages/employerSalaryPage";
+import {GiveSalaryPage, GiveTeacherSalaryPage} from "pages/giveSalaryPage";
+import {Branch, Education, Location, System} from "entities/editCreates";
+import {BranchCreate, EducationCreate, LocationCreate, SystemCreate} from "entities/creates";
+import {AccountingPageMain} from "pages/accountingPage";
+import {AccountingBooks} from "entities/accounting";
 // import Calendar from "react-calendar";
 import {CalendarPage} from "../../../pages/calendarPage";
 import {StudentProfileGroupsHistory} from "../../../entities/profile/studentProfile";
+import {TimeTable} from "pages/timeTable";
 // import {RoomsProfilePage} from "pages/profilePage";
 
 
@@ -194,8 +195,16 @@ export const routersConfig = [
         element: <GroupCreatePage/>,
     },
     {
+        path: "groups/:id/groupInfo/:id",
+        element: <GroupProfilePage/>,
+    },
+    {
         path: "calendar",
         element: <CalendarPage/>,
+    },
+    {
+        path: "time",
+        element: <TimeTable/>,
     },
     {
         name: "Rooms Profile",

@@ -34,3 +34,36 @@ export const fetchFilteredStudents = createAsyncThunk(
         return await request(`${API_URL}Students/api/filter_students_subject/${id}/`, "GET", null, headers())
     }
 )
+
+export const fetchClassNumberList = createAsyncThunk(
+    "studentsSlice/fetchClassNumberList",
+    async () => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Class/class_number_list/`, "GET", null, headers())
+    }
+)
+
+export const fetchClassColors = createAsyncThunk(
+    "studentsSlice/fetchClassColors",
+    async () => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Class/class_colors/`, "GET", null, headers())
+    }
+)
+
+export const fetchSchoolStudents = createAsyncThunk(
+    "studentsSlice/fetchSchoolStudents",
+    async () => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Students/school_students/`, "GET", null, headers())
+    }
+)
+
+export const createSchoolClass = createAsyncThunk(
+    "studentsSlice/createSchoolClass",
+    async (obj) => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Group/groups/create/`, "POST", JSON.stringify(obj), headers())
+    }
+)
+

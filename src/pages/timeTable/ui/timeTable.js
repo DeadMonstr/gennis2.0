@@ -2,22 +2,33 @@ import {useEffect, useState} from 'react';
 import {DndContext} from "@dnd-kit/core"
 import {useDispatch, useSelector} from "react-redux";
 
+import {getUserBranchId} from "pages/profilePage";
+import {fetchSubjectsAndLanguages} from "pages/registerPage";
 import {
     TimeTableScheduleList,
     TimeTableSchedule,
     TimeTableFilters,
     TimeTableError
 } from "entities/timeTable";
+import {getRoomsData, fetchRoomsData} from "entities/rooms";
+import {getBranchThunk, getLocations} from "entities/editCreates";
 import {API_URL, useHttp} from "shared/api/base";
-import {fetchTimeTableBranch, fetchTimeTableClassData, fetchTimeTableColorData} from "../model/thunk/timeTableThunk";
 import {
-    getTimeTableBranchData,
+    addTimeTableData, deleteTimeTableData,
+    fetchTimeTableClassData,
+    fetchTimeTableColorData, fetchTimeTableData,
+    fetchTimeTableTeacherData
+} from "../model/thunk/timeTableThunk";
+import {
+    getCurrentTimeTableData,
     getTimeTableClassData,
-    getTimeTableColorData
+    getTimeTableColorData,
+    getTimeTableData,
+    getTimeTableTeacherData
 } from "../model/selector/timeTableSelector";
 
 import cls from "./timeTable.module.sass";
-import {getBranchThunk} from "../../../entities/editCreates/model/thunk/branchThunk";
+import {addIdForTimeTableData, clearTimeTableData} from "../model/slice/timeTableSlice";
 
 // get_all_groups/
 
@@ -27,7 +38,13 @@ export const TimeTable = () => {
     const dispatch = useDispatch()
     const classData = useSelector(getTimeTableClassData)
     const colorData = useSelector(getTimeTableColorData)
-    const branchData = useSelector(getTimeTableBranchData)
+    const branchData = useSelector(getLocations)
+    const userBranchId = useSelector(getUserBranchId)
+    const roomData = useSelector(getRoomsData)
+    const teacherData = useSelector(getTimeTableTeacherData)
+    const timeData = useSelector(getTimeTableData)
+    const currentTimeTableData = useSelector(getCurrentTimeTableData)
+    const subjectData = useSelector(state => state.registerUser.subjects)
 
     const [activeClassList, setActiveClassList] = useState([])
     const [activeDrag, setActiveDrag] = useState(null)
@@ -36,34 +53,63 @@ export const TimeTable = () => {
 
     const [activeModal, setActiveModal] = useState(false)
 
-    // console.log(data, "data")
-
-    // useEffect(() => {
-    //     dispatch(fetchTimeTableData())
-    //     request(`${API_URL}Permissions/tables/`, "GET", null)
-    //         .then(res => console.log(res))
-    //         .catch(err => console.log(err))
-    //     request(`${API_URL}Permissions/get_all_groups/`, "GET", null)
-    //         .then(res => console.log(res))
-    //         .catch(err => console.log(err))
-    //     request(`${API_URL}Permissions/create_job/`, "GET", null)
-    //         .then(res => console.log(res))
-    //         .catch(err => console.log(err))
-    // }, [])
     useEffect(() => {
         dispatch(fetchTimeTableClassData())
         dispatch(fetchTimeTableColorData())
         dispatch(getBranchThunk())
+        dispatch(fetchRoomsData())
+        dispatch(fetchSubjectsAndLanguages())
     }, [])
 
+    useEffect(() => {
+        if (userBranchId) {
+            dispatch(fetchTimeTableTeacherData(userBranchId))
+        }
+    }, [userBranchId])
+
+    useEffect(() => {
+        activeClassList?.map((item, index) => {
+            if (item !== timeData[index]?.id)
+                dispatch(fetchTimeTableData(item))
+        })
+    }, [activeClassList])
+
+    // useEffect(() => {
+    //     dispatch(clearTimeTableData(activeClassList))
+    // }, [activeClassList])
+
+    useEffect(() => {
+        if (currentTimeTableData && activeClassList.length) {
+            dispatch(addIdForTimeTableData({
+                id: activeClassList[activeClassList.length - 1],
+                data: currentTimeTableData
+            }))
+            dispatch(clearTimeTableData(activeClassList))
+        }
+    }, [currentTimeTableData, activeClassList])
+
+    console.log(timeData, "timeData")
+
+    const onSubmit = (data) => {
+        console.log(data, "data")
+        dispatch(addTimeTableData(data))
+    }
+
+    const onDelete = (data) => {
+        console.log(data, "data delete")
+        dispatch(deleteTimeTableData(data))
+    }
 
     return (
-        <DndContext onDragEnd={handleDragEnd} >
+        <DndContext onDragEnd={handleDragEnd}>
             <div className={cls.timeTable}>
                 <TimeTableFilters
                     classData={classData}
                     colorData={colorData}
                     branchData={branchData}
+                    roomData={roomData}
+                    subjectData={subjectData}
+                    teacherData={teacherData}
                     setActiveModal={setActiveModal}
                     setActiveDrag={setActiveDrag}
                     setActiveDrop={setActiveDrop}
@@ -71,15 +117,16 @@ export const TimeTable = () => {
                     setData={setData}
                     setActive={setActiveClassList}
                 />
-                {/*<TimeTableSchedule*/}
-                {/*    subjectData={data}*/}
-                {/*    activeDrop={activeDrop}*/}
-                {/*/>*/}
                 <TimeTableScheduleList
                     length={activeClassList}
-                    data={data}
+                    data={timeData}
                     setData={setData}
                     activeDrop={activeDrop}
+                    subjectData={data}
+                    onSubmit={onSubmit}
+                    onDelete={onDelete}
+                    userBranchId={userBranchId}
+                    handleDragEndInner={handleDragEndInner}
                 />
                 <TimeTableError
                     setActive={setActiveModal}
@@ -89,8 +136,12 @@ export const TimeTable = () => {
         </DndContext>
     )
 
+    function handleDragEndInner(event) {
+
+    }
+
     function handleDragEnd(event) {
-        const { over, active } = event;
+        const {over, active} = event;
         setActiveDrag(active?.id)
         setActiveDrop(over?.id)
 

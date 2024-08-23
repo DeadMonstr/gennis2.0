@@ -1,5 +1,6 @@
 
 import {configureStore} from "@reduxjs/toolkit";
+import {groupProfile} from "entities/profile/groupProfile";
 import {search} from "features/searchInput";
 import {registerUser} from "pages/registerPage";
 import {loginSlice} from "pages/loginPage";
@@ -97,6 +98,7 @@ export const store = configureStore({
         // roomsEditModalSlice,
         roomDeleteSlice,
         roomsImageAddSlice,
+        roomImageSlice,
         flowsSlice,
         teacherProfileData,
         teacherParseSlice,
@@ -110,7 +112,6 @@ export const store = configureStore({
         systemSlice,
         postBranch,
         getBranchSlice,
-        roomImageSlice,
         timeTableSchool,
         userProfile,
         vacancyWorkerPermissionSlice,
@@ -131,7 +132,8 @@ export const store = configureStore({
         vacancyWorkerSlice,
         studentPaymentSlice,
         employerSlice,
-        teacher
+        teacher,
+        groupProfile
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

@@ -42,8 +42,8 @@ export const menuConfig = [
         location: true, // Bu element director uchun filtrlanadi
     },
     {
-        to: "timeTable",
-        name: "Time Table",
+        to: "timeList",
+        name: "Time List",
         icon: "fa-clock",
         location: true
     },
