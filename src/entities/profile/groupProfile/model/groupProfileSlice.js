@@ -1,32 +1,31 @@
-
 import {createSlice} from "@reduxjs/toolkit";
-import {fetchGroupsData} from "./groupsThunk";
+import {fetchGroupProfile} from "./groupProfileThunk";
 
 const initialState = {
-    data: [],
-    loading: true,
+    data: null,
+    loading: false,
     error: null
 }
 
-export const groupsSlice = createSlice({
-    name: "groupsSlice",
+const groupProfileSlice = createSlice({
+    name: "groupProfileSlice",
     initialState,
     reducers: {},
     extraReducers: builder =>
         builder
-            .addCase(fetchGroupsData.pending, state => {
+            .addCase(fetchGroupProfile.pending, state => {
                 state.loading = true
                 state.error = null
             })
-            .addCase(fetchGroupsData.fulfilled, (state, action) => {
+            .addCase(fetchGroupProfile.fulfilled, (state, action) => {
                 state.data = action.payload
                 state.loading = false
                 state.error = null
             })
-            .addCase(fetchGroupsData.rejected, (state, action) => {
+            .addCase(fetchGroupProfile.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload ?? null
             })
 })
 
-export default groupsSlice.reducer
+export default groupProfileSlice.reducer

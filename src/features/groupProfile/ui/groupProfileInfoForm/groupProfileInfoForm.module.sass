@@ -51,8 +51,8 @@
     box-shadow: 0 8px 16px 0 #00000014
     background: white
     visibility: hidden
-    //padding: .6rem
-    //transform: translate(50%)
+  //padding: .6rem
+  //transform: translate(50%)
 
   &__addInfo
     width: 5rem
@@ -79,7 +79,7 @@
     display: flex
     flex-direction: row
     align-items: center
-    //justify-content: space-between
+  //justify-content: space-between
 
   &__title
     display: flex
@@ -93,3 +93,19 @@
 
     p
       color: var(--balance-p-color)
+
+.infoModal
+  display: flex
+  flex-direction: column
+  gap: 2rem
+  &__btn
+    align-self: flex-end
+  .form
+    display: flex
+    flex-direction: column
+    gap: 2rem
+    &__input
+      min-width: 100% !important
+      margin: 0 !important
+    &__select
+      width: 100%

@@ -4,7 +4,7 @@ import {
     fetchClassColors,
     fetchClassNumberList,
     fetchFilteredStudents,
-    fetchNewStudentsData,
+    fetchNewStudentsData, fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData,
     fetchSchoolStudents
 } from "./studentsThunk";
 

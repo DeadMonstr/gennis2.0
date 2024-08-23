@@ -5,10 +5,12 @@ import {Link} from "../../../../shared/ui/link";
 import {getTeacherLoading} from "../../model/selector/teacherSelector";
 import {useSelector} from "react-redux";
 import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
+import {Input} from "../../../../shared/ui/input";
 
 
 export const Teachers = memo(({data,loading}) => {
     const [checkbox, setCheckbox] = useState(false)
+    const [select, setSelect] = useState()
     const loadingDef = useSelector(getTeacherLoading)
     const checkBoxChange = (id) => {
         setCheckbox(id)
@@ -18,11 +20,14 @@ export const Teachers = memo(({data,loading}) => {
     const renderTeacher = useCallback(() => {
         if(data && data.length) {
             return data?.map((item, i) => (
-                <tr key={i} >
+                <tr key={i}>
                     <td>{i + 1}</td>
                     <Link to={`teacherProfile/${item.id}`}>
                         <td>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
                     </Link>
+                </tr>
+            ))
+        }
         if (data && data.length) {
             return data?.map((item, i) => {
                 // console.log(select.includes(item.id))
@@ -58,14 +63,14 @@ export const Teachers = memo(({data,loading}) => {
                     </tr>
                 )
             })
-                    <td>{item.user.username}</td>
-                    <td>{item.user.phone}</td>
-                    <td>{item.user.age}</td>
-                    <td><div className={item.subject ? cls.teacher__language : null}>{item.subject.name}</div></td>
+                //     <td>{item.user.username}</td>
+                //     <td>{item.user.phone}</td>
+                //     <td>{item.user.age}</td>
+                //     <td><div className={item.subject ? cls.teacher__language : null}>{item.subject.name}</div></td>
+                //
+                //
+                // </tr>
 
-
-                </tr>
-            ))
         }
 
     }, [data])

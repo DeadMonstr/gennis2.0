@@ -96,7 +96,7 @@ export const StudentsPage = memo(() => {
         if (__THEME__) {
             dispatch(fetchSchoolStudents())
         } else {
-            dispatch(fetchNewStudentsData())
+            // dispatch(fetchNewStudentsData())
         }
         dispatch(fetchClassColors())
         dispatch(fetchClassNumberList())
@@ -126,7 +126,7 @@ export const StudentsPage = memo(() => {
     const renderStudents = () => {
         switch (selectedRadio) {
             case "newStudents" :
-                return <NewStudents currentTableData={newStudents}/>
+                // return <NewStudents currentTableData={newStudents}/>
                 return <NewStudents
                     currentTableData={currentTableData}
                     theme={__THEME__ === "app_school_theme"}

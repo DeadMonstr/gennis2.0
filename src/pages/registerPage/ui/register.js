@@ -10,7 +10,7 @@ import { Textarea } from "shared/ui/textArea";
 import { Select } from "shared/ui/select";
 import { MiniLoader } from "shared/ui/miniLoader";
 import { Alert } from "shared/ui/alert";
-import { API_URL, useHttp, headers } from "../../../shared/api/base";
+import { API_URL, useHttp, headers } from "shared/api/base";
 
 const userstype = {
     types: [

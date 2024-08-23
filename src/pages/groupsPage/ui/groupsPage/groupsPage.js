@@ -3,16 +3,20 @@ import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
 import {GroupsList} from "entities/groups/groups/ui/groupsList";
-import {getGroupsListData} from "entities/groups/model/selectors/groupsList";
+import {
+    getGroupsListData,
+    fetchGroupsData,
+    getDeletedGroupsData,
+    DeletedGroups,
+    getGroupsLoading
+} from "entities/groups";
+import {getSearchValue} from "features/searchInput";
 import {GroupsFilter} from "features/filters/groupsFilter";
 import {Pagination} from "features/pagination";
 import {Button} from "shared/ui/button";
+import {DefaultPageLoader} from "shared/ui/defaultLoader";
 
 import cls from "./groupsPage.module.sass";
-import {DeletedGroups} from "entities/groups/deletedGroups/ui/deletedGroups";
-import {getDeletedGroupsData} from "../../../../entities/groups/model/selectors/deletedGroups";
-import {getSearchValue} from "../../../../features/searchInput";
-import {fetchGroupsData} from "../../../../entities/groups/model/slice/groupsThunk";
 // import {DeletedGroups} from "entities/groups/index";
 
 
@@ -21,6 +25,7 @@ export const GroupsPage = () => {
     const dispatch = useDispatch()
     const data = useSelector(getGroupsListData)
     const deletedGroupsData = useSelector(getDeletedGroupsData)
+    const loading = useSelector(getGroupsLoading)
 
     const [deletedGroups, setDeletedGroups] = useState([])
 
@@ -80,24 +85,29 @@ export const GroupsPage = () => {
                     </Button>
                 </Link>
             </div>
-            <div className={cls.table}>
+            {
+                loading ? <DefaultPageLoader/> :
+                    <>
+                        <div className={cls.table}>
 
-                <h2>{activeSwitch ? "Deleted Groups" : "Groups"}</h2>
-                {activeSwitch ? <DeletedGroups currentTableData={currentTableData}/> : <GroupsList
-                    currentTableData={currentTableData}
-                />}
-            </div>
-            <Pagination
-                setCurrentTableData={setCurrentTableData}
-                users={searchedUsers}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-                pageSize={PageSize}
-                onPageChange={page => {
-                    setCurrentPage(page)
-                }}
-                type={"custom"}
-            />
+                            <h2>{activeSwitch ? "Deleted Groups" : "Groups"}</h2>
+                            {activeSwitch ? <DeletedGroups currentTableData={currentTableData}/> : <GroupsList
+                                currentTableData={currentTableData}
+                            />}
+                        </div>
+                        <Pagination
+                            setCurrentTableData={setCurrentTableData}
+                            users={searchedUsers}
+                            setCurrentPage={setCurrentPage}
+                            currentPage={currentPage}
+                            pageSize={PageSize}
+                            onPageChange={page => {
+                                setCurrentPage(page)
+                            }}
+                            type={"custom"}
+                        />
+                    </>
+            }
             <GroupsFilter activeSwitch={activeSwitch} setActiveSwitch={setActiveSwitch} setActive={setActive}
                           active={active}/>
         </div>

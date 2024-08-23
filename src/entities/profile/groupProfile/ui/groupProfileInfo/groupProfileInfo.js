@@ -1,4 +1,6 @@
+import {getGroupProfileData} from "entities/profile/groupProfile/model/groupProfileSelector";
 import React, {memo} from 'react';
+import {useSelector} from "react-redux";
 
 import {EditableCard} from "shared/ui/editableCard";
 
@@ -10,10 +12,11 @@ export const GroupProfileInfo = memo((props) => {
 
     const {
         setActive,
-        data,
         setActiveModal,
         newImage
     } = props
+
+    const data = useSelector(getGroupProfileData)
 
     return (
         <EditableCard
@@ -30,16 +33,22 @@ export const GroupProfileInfo = memo((props) => {
                     src={data?.profile_img ?? defaultUserImg}
                     alt=""
                 />
-                <h1>{data?.username}</h1>
+                <h1>{data?.name}</h1>
                 <h2 className={cls.info__role}>Group</h2>
             </div>
             <div className={cls.info__text}>
-                <p>O'qitish tili: <span>{data?.name}</span></p>
-                <p>Kurs turi: <span>{data?.surname}</span></p>
-                <p>Level: <span>{data?.father_name}</span></p>
-                <p>Guruh narxi: <span>{data?.phone}</span></p>
-                <p>Studentlar soni: <span>{data?.age}</span></p>
-                {/*<p>Tug'ilgan sana: <span>{data?.birth_date}</span></p>*/}
+                <p>O'qitish tili: <span className={cls.info__name}>
+                    {
+                        data?.language?.name.length > 16 ?
+                            `${data?.language?.name.slice(0, 16)}...` :
+                            data?.language?.name
+                    }
+                </span></p>
+                <p className={cls.info__hoverName}>{data?.language?.name}</p>
+                <p>Kurs turi: <span>{data?.course_types?.name}</span></p>
+                <p>Level: <span>{data?.level}</span></p>
+                <p>Guruh narxi: <span>{data?.price}</span></p>
+                <p>Studentlar soni: <span>{data?.students.length}</span></p>
                 <div className={cls.info__addInfo}>
                     <i className="fas fa-plus"/>
                 </div>
@@ -57,24 +66,7 @@ export const GroupProfileInfo = memo((props) => {
                 <div>
                     <img src={nextImage} alt=""/>
                 </div>
-                {/*<div className={cls.info__money}>*/}
-                {/*    <h2>$ 570.000</h2>*/}
-                {/*    <p>$ 390.000</p>*/}
-                {/*</div>*/}
             </EditableCard>
-            {/*<Link to={"/platform/teacherSalaryPage"}>*/}
-            {/*    <EditableCard*/}
-            {/*        extraClass={cls.info__balance}*/}
-            {/*    >*/}
-            {/*        <h2>Balans</h2>*/}
-            {/*        <p>Summa</p>*/}
-            {/*        <div className={cls.info__money}>*/}
-            {/*            <h2>$ 570.000</h2>*/}
-            {/*            <p>$ 390.000</p>*/}
-            {/*        </div>*/}
-            {/*    </EditableCard>*/}
-            {/*</Link>*/}
-
         </EditableCard>
     )
 })

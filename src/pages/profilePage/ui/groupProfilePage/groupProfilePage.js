@@ -1,43 +1,70 @@
-import React, {useState} from 'react';
+import {fetchGroupsData} from "entities/groups";
+import {fetchTeachersData} from "entities/teachers";
+import {GroupProfileDeleteForm} from "features/groupProfile/ui/groupProfileDeleteForm/groupProfileDeleteForm";
+import {fetchSubjectsAndLanguages} from "pages/registerPage";
+import React, {useEffect, useState} from 'react';
 import classNames from "classnames";
+import {useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router";
 
-import {GroupProfileModalTeachers} from "features/groupProfile";
 import {
-    GroupProfileInfo,
-    GroupProfileTeacher,
-    GroupProfileStudents,
-    GroupProfileStatistics,
-    GroupProfileAttendance,
+    GroupProfileAttendanceForm,
+    GroupProfileModalTeachers,
+    GroupProfileTimeForm,
+    GroupProfileInfoForm,
+    GroupProfileStudents
+} from "features/groupProfile";
+import {
     GroupProfileSubjectList,
-    GroupProfileMore
+    GroupProfileAttendance,
+    GroupProfileStatistics,
+    fetchGroupProfile,
+    GroupProfileInfo,
+    GroupProfileMore,
+    getGroupProfileData,
+    getGroupProfileLoading
 } from "entities/profile/groupProfile";
+import {DefaultPageLoader} from "shared/ui/defaultLoader";
 
 import cls from "./groupProfilePage.module.sass";
 
 export const GroupProfilePage = () => {
 
-    const [active, setActive] = useState(false)
-    const [activeModal, setActiveModal] = useState("")
+    const dispatch = useDispatch()
+    const {id} = useParams()
+    const loading = useSelector(getGroupProfileLoading)
 
-    return (
+    const [active, setActive] = useState(false)
+
+    useEffect(() => {
+        dispatch(fetchGroupProfile(id))
+        dispatch(fetchSubjectsAndLanguages())
+        dispatch(fetchTeachersData())
+        dispatch(fetchGroupsData())
+    }, [])
+
+    if (loading) {
+        return <DefaultPageLoader/>
+    } else return (
         <div className={cls.profile}>
-            <GroupProfileInfo/>
+            <GroupProfileInfoForm/>
+            {/*<GroupProfileInfo/>*/}
             <div
                 className={classNames(cls.profile__mainContent, {
                     [cls.active]: active
                 })}
             >
-                <GroupProfileTeacher setActive={setActiveModal}/>
-                <GroupProfileStudents/>
+                <GroupProfileModalTeachers/>
+                {/*<GroupProfileTeacher setActive={setActiveModal}/>*/}
+                <GroupProfileDeleteForm/>
+                {/*<GroupProfileStudents/>*/}
                 <GroupProfileStatistics/>
-                <GroupProfileAttendance/>
-                <GroupProfileSubjectList/>
+                <GroupProfileAttendanceForm/>
+                {/*<GroupProfileAttendance/>*/}
+                <GroupProfileTimeForm/>
+                {/*<GroupProfileSubjectList/>*/}
                 <GroupProfileMore/>
             </div>
-            <GroupProfileModalTeachers
-                active={activeModal === "changeTeacher"}
-                setActive={setActiveModal}
-            />
         </div>
     )
 }

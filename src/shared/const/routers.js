@@ -15,7 +15,7 @@ export const getVacancyPage = (id) => `vacancyPage/${id}`
 export const getVacancyWorkPage = (id) => `vacancyPage/:id/vacancyWorkPage/${id}`
 export const getRoomsProfilePage = (id) => `rooms/:id/roomsProfilePage/${id}`
 export const getProfile = (id) => `students/:id/profile/${id}`;
-export const getRouteTimePage = (id) => `timeTable/${id}`
+export const getRouteTimePage = (id) => `timeList/${id}`
 export const getRouteUserProfile = (id) => `profile/${id}`
 export const getEmployerPage = (id) => `employer/${id}`
 export const getEmployerProfile = (id) => `employer/:id/employerProfile/${id}`;

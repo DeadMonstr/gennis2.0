@@ -1,5 +1,6 @@
 
 import {configureStore} from "@reduxjs/toolkit";
+import {groupProfile} from "entities/profile/groupProfile";
 import {search} from "features/searchInput";
 import {registerUser} from "pages/registerPage";
 import {loginSlice} from "pages/loginPage";
@@ -129,7 +130,8 @@ export const store = configureStore({
         vacancyWorkerSoucre,
         userSetPermissionSlice,
         vacancyWorkerSlice,
-        studentPaymentSlice
+        studentPaymentSlice,
+        groupProfile
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(
