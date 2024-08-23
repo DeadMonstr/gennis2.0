@@ -1,3 +1,5 @@
+@import "app/styles/abstracts/variables"
+
 .subject
   grid-area: subject
 
@@ -28,6 +30,11 @@
       justify-content: space-between
       align-items: center
       font-size: 1.4rem
+      transition: .3s all
+      padding: .7rem
+      border-radius: 10px
+      &:hover
+        background: $color-main-bg
 
       &__inner
         display: flex

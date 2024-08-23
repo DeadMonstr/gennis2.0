@@ -10,10 +10,10 @@ const initialState = {
     filteredCurseTypes: [],
     filteredCurseLevel: [],
     newStudents: [],
+    studyingStudents: [],
     newStudentsStatus: "idle",
     studyingStudentsStatus: "idle",
-    deletedStudents: [],
-    studyingStudents: []
+    deletedStudents: []
 }
 
 export const studentsSlice = createSlice({
@@ -69,7 +69,7 @@ export const studentsSlice = createSlice({
             })
             .addCase(fetchOnlyStudyingStudentsData.fulfilled, (state, action) => {
                 state.studyingStudents = action.payload
-                state.studyingStudents = action.payload.active
+                state.newStudents = action.payload.active
                 console.log(action.payload, "studying")
                 state.studyingStudentsStatus = "success"
             })

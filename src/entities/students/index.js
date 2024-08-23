@@ -19,7 +19,8 @@ export {
     getFilteredTeachers,
     getFilteredStudents,
     getFilteredStatus,
-    getFilteredErrors
+    getFilteredErrors,
+    getNewStudentsLoading
 } from "./model/selector/studentsSelector"
 
 export {StudentsListDirector} from "./ui/studentsListDirector/studentsListDirector";

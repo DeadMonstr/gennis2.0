@@ -5,7 +5,7 @@ import {GroupCreatePage, DeletedStudents, NewStudents, Students} from "entities/
 import {StudentsHeader} from "entities/students";
 import {StudentsFilter} from "features/filters/studentsFilter";
 import {fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData} from "entities/students";
-import {getNewStudentsData, getStudyingStudents} from "entities/students";
+import {getNewStudentsData, getStudyingStudents, getNewStudentsLoading} from "entities/students";
 import {Pagination} from "features/pagination";
 
 import cls from "./students.module.sass"
@@ -32,7 +32,7 @@ export const StudentsPage = memo(() => {
 
     const studyingStudents = useSelector(getStudyingStudents)
     const newStudents = useSelector(getNewStudentsData)
-
+    const newStudentsLoading = useSelector(getNewStudentsLoading)
     const [active, setActive] = useState(false)
     const [selectedRadio, setSelectedRadio] = useState(studentsFilter[0].name);
     const [selected, setSelected] = useState([])
@@ -42,7 +42,7 @@ export const StudentsPage = memo(() => {
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
 
-    console.log(newStudents, "data")
+    console.log(studyingStudents, "data")
 
     const searchedUsers = useMemo(() => {
         const filteredHeroes = newStudents?.slice()
@@ -57,9 +57,15 @@ export const StudentsPage = memo(() => {
         )
     }, [newStudents, setCurrentPage, search])
 
+    // Radio tanlangan holatga qarab tegishli dispatch funksiyasini chaqirish
     useEffect(() =>{
-        dispatch(fetchOnlyNewStudentsData())
-    } , [])
+        if (selectedRadio === "newStudents") {
+            dispatch(fetchOnlyNewStudentsData())
+        } else if (selectedRadio === "studying") {
+            dispatch(fetchOnlyStudyingStudentsData())
+        }
+    } , [dispatch, selectedRadio])
+
 
     const handleChange = (value) => {
         setSelectedRadio(value);

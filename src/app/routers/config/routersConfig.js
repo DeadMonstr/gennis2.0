@@ -34,7 +34,7 @@ import {
     getRouteCreateGroup,
     getEmployerSalaryInsideSource,
     getEmployerSalary,
-    getTeacherSalary,
+    getTeacherSalary, getGroupHistory,
 } from "shared/const/routers";
 
 
@@ -69,6 +69,7 @@ import {AccountingPageMain} from "../../../pages/accountingPage";
 import {AccountingBooks} from "../../../entities/accounting";
 // import Calendar from "react-calendar";
 import {CalendarPage} from "../../../pages/calendarPage";
+import {StudentProfileGroupsHistory} from "../../../entities/profile/studentProfile";
 // import {RoomsProfilePage} from "pages/profilePage";
 
 
@@ -308,5 +309,10 @@ export const routersConfig = [
         path: getAccounting(":id"),
         element: <AccountingPageMain/>,
     },
+    {
+        name: "History",
+        path: getGroupHistory(":id"),
+        element: <StudentProfileGroupsHistory/>
+    }
 
 ]

@@ -3,6 +3,9 @@
 export const getNewStudentsData = (state) =>
     state.newStudents?.newStudents
 
+export const getNewStudentsLoading = (state) =>
+    state.newStudents?.newStudentsStatus
+
 
 export const getStudyingStudents = (state) =>
     state.newStudents?.studyingStudents
