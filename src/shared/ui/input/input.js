@@ -61,13 +61,16 @@ export const Input = React.memo(({
                 )}
             </div>
 
-            <div className={cls.message}>
-                {errors?.[name] && (
-                    <span className={cls.message__error}>
+            {
+                errors ? <div className={cls.message}>
+                    {errors?.[name] && (
+                        <span className={cls.message__error}>
                         {errors[name].message}
                     </span>
-                )}
-            </div>
+                    )}
+                </div> : null
+            }
+
         </label>
     ) : (
         <label style={style} className={cls.inputLabel} htmlFor={name}>

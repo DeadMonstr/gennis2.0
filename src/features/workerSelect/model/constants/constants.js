@@ -29,7 +29,7 @@ export const branch =
     [
         {
             value: 1,
-            label: "Xo'jakent"
+            name: "Xo'jakent"
         },
         {
             value: 2,

@@ -73,10 +73,6 @@ export const AppRouter = () => {
                         )
                     }
 
-                    <Route
-                        path={"time"}
-                        element={<TimeTable/>}
-                    />
                     {/*<RequireAuth>*/}
                     {/*    <Route path={"students/:id/createGroup"} element={<CreateGroup/>} />*/}
                     {/*</RequireAuth>*/}

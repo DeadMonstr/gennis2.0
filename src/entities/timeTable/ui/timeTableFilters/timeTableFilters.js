@@ -169,7 +169,13 @@ export const TimeTableFilters = memo((props) => {
         setActiveModal,
         setActive,
         setActiveDrop,
-        setActiveDrag
+        setActiveDrag,
+        classData,
+        colorData,
+        branchData,
+        roomData,
+        subjectData,
+        teacherData
     } = props
 
     const [activeIdClass, setActiveIdClass] = useState([])
@@ -184,23 +190,37 @@ export const TimeTableFilters = memo((props) => {
     }, [activeIdClass])
 
     useEffect(() => {
-        if (activeIdType === 1) {
-            setCurrentDataType(subjectList)
-        } else if (activeIdType === 2) {
-            setCurrentDataType(teacherList)
+        if (activeIdType === 1 && subjectData) {
+            setCurrentDataType(subjectData)
+        } else if (activeIdType === 2 && teacherData) {
+            setCurrentDataType(teacherData)
         } else {
-            setCurrentDataType(roomList)
+            setCurrentDataType(roomData)
         }
         setData(null)
-    }, [activeIdType])
+    }, [activeIdType, teacherData, subjectData, roomData])
 
     useEffect(() => {
-        if (currentDataType)
-            setData(currentDataType.filter(item => item.id === activeDrag)[0])
+        if (currentDataType) {
+            if (activeIdType === 2) {
+                setData({
+                    name: currentDataType.filter(item => item.id === activeDrag)[0]?.user?.name,
+                    surname: currentDataType.filter(item => item.id === activeDrag)[0]?.user?.surname,
+                    value: "teacher",
+                    id: currentDataType.filter(item => item.id === activeDrag)[0]?.id
+                })
+            } else {
+                setData({
+                    name: currentDataType.filter(item => item.id === activeDrag)[0]?.name,
+                    value: activeIdType === 1 ? "subject" : "room",
+                    id: currentDataType.filter(item => item.id === activeDrag)[0]?.id
+                })
+            }
+        }
     }, [activeDrag])
 
     const renderClassListData = () => {
-        return classList.map(item =>
+        return classData?.map(item =>
             <div
                 className={classNames(cls.classList__inner, {
                     [cls.active]: activeIdClass.includes(item.id)
@@ -214,13 +234,13 @@ export const TimeTableFilters = memo((props) => {
                 {
                     activeIdClass.includes(item.id) ? <img src={checkIcon} alt=""/> : null
                 }
-                {item.value}
+                {item.name}
             </div>
         )
     }
 
     const renderColorTypes = () => {
-        return colorTypes.map(item =>
+        return colorData?.map(item =>
             <div
                 className={classNames(cls.colorList__inner, {
                     [cls.active]: activeIdColor === item.id
@@ -252,7 +272,7 @@ export const TimeTableFilters = memo((props) => {
                 id={item.id}
                 data={{hello: 1}}
             >
-                {item.value}
+                {activeIdType === 2 ? `${item?.user?.name} ${item?.user?.surname}` : item.name}
             </Draggable>
         )
     }, [activeIdType, currentDataType])
@@ -274,6 +294,7 @@ export const TimeTableFilters = memo((props) => {
                 </div>
                 <Select
                     title={"Branch"}
+                    options={branchData}
                 />
             </div>
             <div

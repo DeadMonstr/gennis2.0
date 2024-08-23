@@ -10,6 +10,8 @@ export {default as getEducation} from "./model/slice/educationSlice"
 
 export {getLocation} from "./model/selector/locationSelector"
 
+export {getLocations} from "./model/selector/branchSelector";
+export {getBranchThunk} from "./model/thunk/branchThunk";
 
 export {getSystemName , getLoading} from "./model/selector/systemSelector"
 

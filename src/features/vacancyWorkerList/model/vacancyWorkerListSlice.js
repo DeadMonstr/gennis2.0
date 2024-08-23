@@ -1,32 +1,33 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {fetchVacancyWorkerListThunk} from "./vacancyWorkerListThunk";
+import {vacancyWorkerListThunk} from "./vacancyWorkerListThunk";
 
-const initalState = {
+const initialState = {
     workerData: [],
     loading: false,
     error: null
-}
+};
 
-export const vacancyWorkerListSlice = createSlice({
-    name: "vacancyWorkerListSlice",
-    initalState,
+
+export const vacancyWorkerSlice = createSlice({
+    name: "vacancyWorkerSlice",
+    initialState,
     reducers: {},
     extraReducers: builder =>
     {
         builder
-            .addCase(fetchVacancyWorkerListThunk.pending, (state) => {
+            .addCase(vacancyWorkerListThunk.pending, (state) => {
                 state.loading = true
             })
-            .addCase(fetchVacancyWorkerListThunk.fulfilled, (state, action) => {
+            .addCase(vacancyWorkerListThunk.fulfilled, (state, action) => {
                 state.loading = false;
                 state.workerData = action.payload
-                console.log(action.payload, "workerList")
+
             })
-            .addCase(fetchVacancyWorkerListThunk.rejected, (state, action) => {
+            .addCase(vacancyWorkerListThunk.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message
             })
     }
 })
 
-export default vacancyWorkerListSlice.reducer
+export default vacancyWorkerSlice.reducer

@@ -9,14 +9,14 @@ export const Students = ({currentTableData}) => {
     const navigation = useNavigate()
 
     const renderStudents = () => {
-        return currentTableData.map((item, i) => (
+        return currentTableData?.map((item, i) => (
             <tr onClick={() => navigation(`profile/${item.id}`)}>
                 <td>{i + 1}</td>
-                <td>{item.student.user.name} {item.student.user.surname}</td>
-                <td>{item.student.user.age}</td>
-                <td>{item.student.user.phone}</td>
-                <td>{item.student.user.group}</td>
-                <td><div style={{color: '#FF3B30'}}>{item.groupPrice}</div></td>
+                <td>{item.user.name} {item.user.surname}</td>
+                <td>{item.user.age}</td>
+                <td>{item.user.phone}</td>
+                <td>{item.user.group}</td>
+                <td><div style={{color: '#FF3B30'}}>{item.total_payment_month}</div></td>
             </tr>
         ))
     }

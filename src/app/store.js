@@ -1,5 +1,6 @@
 
 import {configureStore} from "@reduxjs/toolkit";
+import {groupProfile} from "entities/profile/groupProfile";
 import {search} from "features/searchInput";
 import {registerUser} from "pages/registerPage";
 import {loginSlice} from "pages/loginPage";
@@ -50,7 +51,13 @@ import {teacherSalarySlice} from "../entities/teacherSalary";
 import {employerSalarySlice} from "../entities/employerSalary";
 import {giveEmployerSalarySlice} from "../pages/giveSalaryPage";
 import {giveEmployerSalarySlices} from "../features/giveEmployerSalary";
+import {giveTeacherSalarySlices} from "../features/giveSalary/giveSalary";
+import {teacherSalaryDeleteSlice} from "../features/salaryEdits";
+import {employerSalaryDeleteSlice} from "../features/salaryEdits";
 import {calendarSlice} from "pages/calendarPage";
+import {vacancyWorkerSoucre, userSetPermissionSlice} from "../entities/vacancy/ui/vacancyWorkerList";
+import {vacancyWorkerSlice} from "../features/vacancyWorkerList";
+import {studentPaymentSlice} from "../features/studentPayment";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -91,6 +98,7 @@ export const store = configureStore({
         // roomsEditModalSlice,
         roomDeleteSlice,
         roomsImageAddSlice,
+        roomImageSlice,
         flowsSlice,
         teacherProfileData,
         teacherParseSlice,
@@ -104,7 +112,6 @@ export const store = configureStore({
         systemSlice,
         postBranch,
         getBranchSlice,
-        roomImageSlice,
         timeTableSchool,
         userProfile,
         vacancyWorkerPermissionSlice,
@@ -118,7 +125,15 @@ export const store = configureStore({
         getEducation,
         studentSlice,
         employerSlice,
-        teacher
+        teacher,
+        giveTeacherSalarySlices,
+        teacherSalaryDeleteSlice,
+        employerSalaryDeleteSlice,
+        vacancyWorkerSoucre,
+        userSetPermissionSlice,
+        vacancyWorkerSlice,
+        studentPaymentSlice,
+        groupProfile
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

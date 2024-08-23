@@ -77,21 +77,21 @@ export const CalendarListItem = memo((props) => {
         }
     }, [isChanged, selectedId])
 
-    console.log(isChanged, "isChanged")
-    console.log(selectedId, "selectedId")
-    console.log(trueActive, "trueActive")
+    // console.log(isChanged, "isChanged")
+    // console.log(selectedId, "selectedId")
+    // console.log(trueActive, "trueActive")
 
     useEffect(() => {
-        console.log(isChanged, "isChanged")
+        // console.log(isChanged, "isChanged")
         if (selectedId.length && !singleIdActive && activeSwitch) {
-            console.log(true, "select")
+            // console.log(true, "select")
             setSelected(selectedId)
         }
     }, [selectedId, singleIdActive])
 
-    if (selectedId.length) {
-        console.log(selectedId, "Iddddddddddd")
-    }
+    // if (selectedId.length) {
+    //     console.log(selectedId, "Iddddddddddd")
+    // }
 
     const renderWeekDaysSingle = useCallback(() => {
         return weeksCount.map((item, index) =>
@@ -142,9 +142,9 @@ export const CalendarListItem = memo((props) => {
     }, [trueActive, weeksCount, totalWeeksCount, singleId])
 
 
-    if (trueActive[0]?.finishId) {
-        console.log(trueActive, "habdsbkjd")
-    }
+    // if (trueActive[0]?.finishId) {
+    //     console.log(trueActive, "habdsbkjd")
+    // }
 
     const renderWeekDaysSelect = useCallback(() => {
         return weeksCount.map((item, index) =>
@@ -213,7 +213,7 @@ export const CalendarListItem = memo((props) => {
 
     const renderCelebrateDays = useCallback(() => {
         return typesOfDays.map((item, index) => {
-            console.log(item.days,index, "days")
+            // console.log(item.days,index, "days")
             return (
                 <div
                     className={cls.all}
@@ -234,7 +234,7 @@ export const CalendarListItem = memo((props) => {
                                 }
                                 {/*<span>{data[0]?.month_name}</span>*/}
                                 <span>/</span>
-                                <span>{item.type}</span>
+                                <span>{`${item.type.slice(0, 16)}${item.type.length > 16 ? "..." : ""}`}</span>
                             </p>
                         }
                         <div className={cls.item__icons}>

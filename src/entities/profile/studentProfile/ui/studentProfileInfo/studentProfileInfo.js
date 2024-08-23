@@ -10,6 +10,7 @@ export const StudentProfileInfo = memo((props) => {
     const {
         setActive,
         data,
+        active,
         setActiveModal,
         newImage
     } = props
@@ -50,7 +51,7 @@ export const StudentProfileInfo = memo((props) => {
                 <h2>Balans</h2>
                 <p>Summa</p>
                 <div className={cls.info__money}>
-                    <h2>$ 570.000</h2>
+                    <h2 onClick={() => setActive("balanceIn")}>$ 570.000</h2>
                     <p>$ 390.000</p>
                 </div>
             </EditableCard>

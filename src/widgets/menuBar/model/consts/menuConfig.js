@@ -7,7 +7,7 @@ export const menuConfig = [
         icon: "fa-home",
     },
     {
-        to: "taskManager", // taskManager page yo'
+        to: "taskManager",
         name: "Task Manager",
         icon: "fa-tasks",
         location: true
@@ -19,7 +19,7 @@ export const menuConfig = [
     },
     {
         to: "students",
-        name: " O'quvchilar",
+        name: "O'quvchilar",
         icon: "fa-user-graduate",
         location: true
     },
@@ -39,11 +39,11 @@ export const menuConfig = [
         to: "vacancyPage",
         name: "Vakansiyalar",
         icon: "fa-tasks",
-        location: true
+        location: true, // Bu element director uchun filtrlanadi
     },
     {
-        to: "timeTable",
-        name: "Time Table",
+        to: "timeList",
+        name: "Time List",
         icon: "fa-clock",
         location: true
     },
@@ -67,7 +67,6 @@ export const menuConfig = [
         isMenu: true,
     },
     {
-
         to: "contract",
         name: "Contract",
         icon: "fa-file-contract",
@@ -83,8 +82,8 @@ export const menuConfig = [
     {
         to: "accounting",
         name: "Bugalteriya",
-        isMenu: true,
         icon: "fa-calculator",
+        isMenu: true
     },
     {
         to: "rooms",
@@ -97,4 +96,4 @@ export const menuConfig = [
         name: "Registratsiya",
         icon: "fa-edit"
     }
-]
+];

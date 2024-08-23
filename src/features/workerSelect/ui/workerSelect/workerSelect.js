@@ -4,10 +4,12 @@ import makeAnimated from 'react-select/animated';
 
 const animatedComponents = makeAnimated();
 
-export const AnimatedMulti = React.memo(({ options }) => {
+export const AnimatedMulti = React.memo(({ options, onChange }) => {
     const handleChange = (selectedOptions) => {
         console.log('Selected options:', selectedOptions);
-        // Handle removal or any other logic here if needed
+        if (onChange) {
+            onChange(selectedOptions);
+        }
     };
 
     return (
@@ -15,7 +17,7 @@ export const AnimatedMulti = React.memo(({ options }) => {
             styles={{
                 control: (baseStyles, state) => ({
                     ...baseStyles,
-                    fontSize: 20 + "px",
+                    fontSize: '20px',
                 }),
             }}
             closeMenuOnSelect={false}

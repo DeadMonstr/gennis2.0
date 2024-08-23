@@ -14,25 +14,48 @@ import cls from "./studentProfileTotalAmount.module.sass";
 import money from "shared/assets/images/Money.png";
 import creditCard from "shared/assets/images/CreditCard.png";
 import bank from "shared/assets/images/Bank.png";
+import {useDispatch} from "react-redux";
+import {studentPaymentThunk} from "features/studentPayment";
+
 
 const listPretcent = [-1, 34.8, 70.4]
 
-export const StudentProfileTotalAmount = memo(({active, setActive}) => {
+export const StudentProfileTotalAmount = memo(({active, setActive, student_id, branch_id}) => {
 
     const {register, handleSubmit} = useForm()
 
     const [activeService, setActiveService] = useState(amountService[0])
     const [activePaymentType, setActivePaymentType] = useState(0)
+    const [paymentSum, setPaymentSum] = useState(0)
     const [data, setData] = useState({})
     const [checkModalStatus, setCheckModalStatus] = useState(false)
+    const [payment, setPayment] = useState(1)
+    const dispatch = useDispatch()
 
-    const onSubmitData = (data) => {
-        console.log(data)
-        setData(data)
-        setCheckModalStatus(true)
 
-    }
+    const handleAddPayment = (data) => {
+        const newPayment = {
+            student: Number(student_id),
+            payment_type: payment,
+            payment_sum: paymentSum,
+            status: true,
+            branch: branch_id,
+            ...data
+        };
+        console.log(data, "data")
 
+        dispatch(studentPaymentThunk(newPayment));
+
+        console.log("Kemadi")
+
+    };
+
+    // const onSubmitData = (data) => {
+    //     console.log(data)
+    //     setData(data)
+    //     setCheckModalStatus(true)
+    //
+    // }
     const onSubmitPassword = (data) => {
         console.log(data)
     }
@@ -59,7 +82,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive}) => {
                 [cls.active]: active === "balanceIn"
             })}
             titleType={"cross"}
-            onClick={() => setActive("balance")}
+            onClick={() => setActive(!"balanceIn")}
         >
             <div className={cls.amount__header}>
                 <h1>Umumiy Hisob</h1>
@@ -93,7 +116,11 @@ export const StudentProfileTotalAmount = memo(({active, setActive}) => {
                                         amountTypes.map((item, index) =>
                                             <div
                                                 className={cls.items__inner}
-                                                onClick={() => setActivePaymentType(index)}
+                                                onClick={() => {
+                                                    setActivePaymentType(index);
+                                                    setPayment(index + 1)
+                                                }
+                                                }
                                             >
                                                 <p>{item.name}</p>
                                                 <img src={item.image} alt=""/>
@@ -105,22 +132,25 @@ export const StudentProfileTotalAmount = memo(({active, setActive}) => {
                                         style={{left: `${listPretcent[activePaymentType]}%`}}
                                     />
                                 </div>
-                                <Form onSubmit={handleSubmit(onSubmitData)}>
+                                <Form onSubmit={handleSubmit(handleAddPayment)}>
                                     <div className={cls.form__inner}>
                                         <p>{activeService} miqdori</p>
                                         <Input
                                             register={register}
                                             name={"amount"}
                                             placeholder={"Summa"}
+                                            defaultValue={paymentSum}
+                                            // onChange={(e) => setPaymentSum(e.target.value)}
                                             type={"number"}
                                         />
+
                                     </div>
                                 </Form>
                             </>
                             :
                             activeService === "Xayriya"
                                 ?
-                                <Form onSubmit={handleSubmit(onSubmitData)}>
+                                <Form onSubmit={handleSubmit(handleAddPayment)}>
                                     <div className={cls.form__container}>
                                         <Select
                                             extraClass={cls.form__select}
@@ -137,7 +167,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive}) => {
                                     </div>
                                 </Form>
                                 :
-                                <Form onSubmit={handleSubmit(onSubmitData)}>
+                                <Form onSubmit={handleSubmit(handleAddPayment)}>
                                     <div className={cls.form__inner}>
                                         <p>{activeService} miqdori</p>
                                         <Input

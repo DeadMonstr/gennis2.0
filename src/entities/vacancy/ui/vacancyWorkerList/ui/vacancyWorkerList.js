@@ -1,20 +1,33 @@
 import React, {useState} from 'react';
 import { Table } from "shared/ui/table";
 import cls from './vacancyWorkerList.module.sass';
-import { Button } from "../../../../../shared/ui/button";
-import Groups from "../../../../groups";
-import {GroupsFilter} from "../../../../../features/filters/groupsFilter";
 import {VacancyWorkerEdit} from "../../../../../features/vacancyModals/vacancyWorkerEdit";
+import workerImg from "shared/assets/images/workerImg.svg"
+import workerSetting from 'shared/assets/icons/setting.svg'
+import {useSelector} from "react-redux";
+import {API_URL_IMG} from "../../../../../shared/api/base";
 
 export const VacancyWorkerList = ({ currentTableData, currentPage, PageSize, editMode, onEditClick }) => {
-
     const [actives, setActives] = useState(false)
+    const workerData = useSelector(state => state.vacancyWorkerSlice.workerData);
+    const safeData = Array.isArray(workerData) ? workerData : [workerData];
+    const [selectedWorkerId, setSelectedWorkerId] = useState(null);
+    const API_URL_IMAGE = `${API_URL_IMG}`;
+    const handleDeleteClick = (id) => {
+        setActives(true);
+        setSelectedWorkerId(id);
+
+    };
     const renderVacancies = () => {
-        return currentTableData.map((item, index) => (
-            <tr key={item.id}>
+        return safeData?.map((item, index) => (
+            <tr key={item?.id}>
                 <td>{(currentPage - 1) * PageSize + index + 1}</td>
-                <td className={cls.workerList}><img src={item.workerImg} alt=""/> {item.workerName} <img className={cls.workerSetting} onClick={() => setActives(!actives)} src={item.workerSetting} alt=""/></td>
+                <td className={cls.workerList}>
+                    {
+                        !item?.profile_img ? <img src={workerImg} alt=""/> : <img className={cls.userImage} src={`${API_URL_IMAGE}${item.profile_img}`} alt=""/>
+                    }{`${item?.name} - ${item?.surname}`} <img className={cls.workerSetting} onClick={() => handleDeleteClick(item?.id)} src={workerSetting} alt=""/></td>
             </tr>
+
         ));
     };
 
@@ -30,8 +43,11 @@ export const VacancyWorkerList = ({ currentTableData, currentPage, PageSize, edi
                 <tbody>
                 {renderVacancies()}
                 </tbody>
+                {selectedWorkerId && (
+                    <VacancyWorkerEdit user_id={selectedWorkerId} active={actives} setActive={setActives}/>
+                )}
             </Table>
-            <VacancyWorkerEdit active={actives} setActive={setActives}/>
+
         </>
 
 

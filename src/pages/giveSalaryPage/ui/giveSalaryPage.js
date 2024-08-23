@@ -11,6 +11,10 @@ import {useSelector, useDispatch} from "react-redux";
 import {fetchEmployerSalaryThunk} from "../model/giveSalaryPageThunk";
 import {getSalaryInsideSource} from "../model/selectors/selectors";
 import {useParams} from "react-router-dom";
+import {useLocation} from "react-router";
+import {giveEmployerSalaryLoading} from "../../../features/giveEmployerSalary";
+import {DefaultLoader} from "../../../shared/ui/defaultLoader";
+
 
 export const GiveSalaryPage = () => {
     const [selected, setSelected] = useState("");
@@ -20,7 +24,15 @@ export const GiveSalaryPage = () => {
     const [currentTableData, setCurrentTableData] = useState([]);
     const [active, setActive] = useState(false);
     const dispatch = useDispatch()
+    const params = useParams();
+    const { pathname } = useLocation();
     const getSalaryGivesData = useSelector(getSalaryInsideSource)
+    const getSalaryLoading = useSelector(giveEmployerSalaryLoading)
+    const pathParts = Object.values(params);
+    const permissionId = pathParts[pathParts.length - 1];
+    const pathSegments = pathname.split('/');
+    const salaryPageIdx = pathSegments.indexOf('employerSalaryPage') + 1;
+    const employerSalaryPageId = pathSegments[salaryPageIdx];
     const {id} = useParams()
     useEffect(() => {
         if(id)
@@ -29,6 +41,7 @@ export const GiveSalaryPage = () => {
         }
 
     }, [dispatch, id])
+
 
     const handleChange = (value) => {
         setSelected(value);
@@ -58,11 +71,18 @@ export const GiveSalaryPage = () => {
                 </div>
             </div>
             <div className={cls.mainContainer_tablePanelBox}>
-                <GiveSalaryList
-                    currentTableData={getSalaryGivesData?.usersalarylist}
-                    currentPage={currentPage}
-                    PageSize={PageSize}
-                />
+                {
+                    getSalaryLoading ? <DefaultLoader/>
+                        :
+                        <GiveSalaryList
+                            currentTableData={getSalaryGivesData?.usersalarylist}
+                            currentPage={currentPage}
+                            PageSize={PageSize}
+                            user_id={Number(pathParts[1])}
+
+                        />
+                }
+
             </div>
             {/*<Pagination*/}
             {/*    setCurrentTableData={setCurrentTableData}*/}
@@ -76,6 +96,10 @@ export const GiveSalaryPage = () => {
             <GiveEmployerSalaryModal
                 active={active}
                 setActive={setActive}
+                salary_id={id}
+                permission_id={permissionId}
+                user_id={employerSalaryPageId}
+
 
             />
         </div>

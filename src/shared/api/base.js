@@ -17,7 +17,6 @@ export const headers = () => {
         'Content-Type': 'application/json'
     }
 }
-
 export const headersImg = () => {
     const token = sessionStorage.getItem("token")
     return {

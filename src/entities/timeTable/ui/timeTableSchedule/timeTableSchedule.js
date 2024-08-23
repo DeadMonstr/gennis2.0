@@ -5,6 +5,9 @@ import {Table} from "shared/ui/table";
 import {Droppable} from "shared/ui/droppable";
 
 import cls from "./timeTableSchedule.module.sass";
+import {DndContext} from "@dnd-kit/core";
+import {Draggable} from "../../../../shared/ui/draggable";
+import {logDOM} from "@testing-library/react";
 
 
 const timesData = [
@@ -38,170 +41,248 @@ const timesData = [
     }
 ]
 
-export const TimeTableSchedule = memo(({subjectData, activeDrop, uid, setData, data, length}) => {
+export const TimeTableSchedule = memo((props) => {
+
+    const {
+        subjectData,
+        activeDrop,
+        uid,
+        data,
+        index,
+        onSubmit,
+        onDelete,
+        classId,
+        userBranchId
+    } = props
 
     const [currentData, setCurrentData] = useState([])
 
     useEffect(() => {
-        // console.log(data, "data", uid)
-        // console.log(currentData, "currentData")
-        // console.log(uid, "uid")
-        // if (currentData.length === 0) {
-            // console.log(true)
-            if (Array.isArray(data)) {
-                // console.log(data)
-                // console.log(true, "data is arr",uid)
-                setCurrentData(
-                    data.map(item => ({
-                        dayId: item.dayId,
-                        day: item.day,
-                        subjects: item.subjects.map(i => ({
-                            subjectsId: i.subjectsId + uid,
-                            subject: i.subject,
-                            teacher: i.teacher,
-                            room: i.room
-                        }))
-                    }))
-                )
-            } else {
-                // console.log(data)
-                // console.log(true, "data is obj", uid)
-                setCurrentData(data.data)
-            }
-        // }
-    }, [data, length])
+        console.log(data)
+        setCurrentData(
+
+            data?.time_tables.map((item, iI) => ({
+                    weekday: {
+                        name: item.weekday.name,
+                        id: item.weekday.id,
+                        lessons: item.weekday.lessons.map((i, ii) => {
+                            let newID = uid + ((item.weekday.id + (ii + 1)) * (i.hour.id + (iI + 1)))
+                            return {
+                                id: i.id,
+                                hour: i.hour,
+                                status: i.status,
+                                uid: newID,
+                                // subject: i.subject,
+                                // room: i.room,
+                                // teacher: i.teacher,
+                                subject: {
+                                    id: i?.subject?.id,
+                                    name: i?.subject?.name,
+                                    itemUID: i?.subject?.id ? newID + "subject" : null
+                                },
+                                room: {
+                                    id: i?.room?.id,
+                                    name: i?.room?.name,
+                                    itemUID: i?.room?.id ? newID + "room" : null
+                                },
+                                teacher: {
+                                    id: i?.teacher?.id,
+                                    name: i?.teacher?.name,
+                                    surname: i?.teacher?.surname,
+                                    itemUID: i?.teacher?.id ? newID + "teacher" : null
+                                }
+                            }
+                        })
+                    }
+                })
+            ))
+    }, [data])
 
 
     useEffect(() => {
-        // if (!activeDrop && !subjectData) {
-        //     // console.log(data, "data")
-        //     // console.log(currentData.length, "data2")
-        //     // console.log(!currentData.length, "data3")
-        //     if (data.id && data.data.length) {
-        //         setCurrentData(data.data)
-        //     } else {
-        //         setCurrentData(
-        //             data.map(item => ({
-        //                 day: item.day,
-        //                 subjects: item.subjects.map(i => ({
-        //                     subject: {
-        //                         id: i.subject.id + uid,
-        //                         value: i.subject.value
-        //                     },
-        //                     teacher: i.teacher,
-        //                     room: i.room
-        //                 }))
-        //             }))
-        //         )
-        //     }
-        // } else {
-        if (subjectData && currentData.length) {
-            // console.log(activeDrop, "activeDrop")
-            // console.log(subjectData, "subjectData")
-            // console.log(true, "true")
+        if (subjectData && currentData?.length) {
             setCurrentData(
                 currentData.map(item => ({
-                        day: item.day,
-                        subjects: item.subjects.map(i => {
-                            if (i.subjectsId === activeDrop) {
-                                return {
-                                    subjectsId: i.subjectsId,
-                                    subject: subjectData?.name === "subject" ?
-                                        subjectData?.value : i.subject,
-                                    teacher: subjectData?.name === "teacher" ?
-                                        subjectData?.value : i.teacher,
-                                    room: subjectData?.name === "room" ?
-                                        subjectData?.value : i.room
-                                }
-                            } else return i
-                        })
+                        weekday: {
+                            name: item.weekday.name,
+                            id: item.weekday.id,
+                            lessons: item.weekday.lessons.map(i => {
+                                if (i.uid === activeDrop) {
+                                    return {
+                                        hour: i.hour,
+                                        status: i.status,
+                                        uid: i.uid,
+                                        subject: subjectData.value === "subject" ?
+                                            subjectData : i.subject,
+                                        teacher: subjectData.value === "teacher" ?
+                                            subjectData : i.teacher,
+                                        room: subjectData.value === "room" ?
+                                            subjectData : i.room
+                                    }
+                                } else return i
+                            })
+                        }
                     })
                 )
             )
         }
-        // }
-        // setSubjectData(null)
     }, [data, activeDrop, subjectData])
 
 
-    // console.log(data, uid)
-
-
-    // useEffect(() => {
-    //     if (activeDrop) {
-    //         let filtered;
-    //         let filteredDay;
-    //         currentData.filter(item =>
-    //             item.subjects.map(i => {
-    //                 if (i.subject.id === activeDrop) {
-    //                     filtered = i
-    //                     filteredDay = item.day
-    //                 }
-    //             })
-    //         )
-    //         console.log(filtered, "filtered")
-    //         const {subject, teacher, room} = filtered
-    //         if (subject.value && teacher && room) {
-    //             console.log(true)
-    //         }
-    //     }
-    // }, [activeDrop, currentData])
-
-    // console.log(currentData, "currentData")
-
     useEffect(() => {
-        setData(arr => {
-            const filtered = arr.filter(item => item.id !== uid)
-            return [...filtered, {id: uid, data: currentData}]
-        })
-    }, [currentData])
+        if (activeDrop) {
+            let filtered;
+            let filteredDay;
+            currentData.filter(item =>
+                item.weekday.lessons.map(i => {
+                    if (i.uid === activeDrop) {
+                        filtered = i
+                        filteredDay = item.weekday.id
+                    }
+                })
+            )
+            if (filtered?.room.id && filtered?.teacher.id && filtered?.subject.id)
+                onSubmit({
+                    group: classId,
+                    week: filteredDay,
+                    room: filtered?.room?.id,
+                    hours: filtered?.hour?.id,
+                    branch: userBranchId,
+                    teacher: filtered?.teacher?.id,
+                    subject: filtered?.subject?.id
+                })
+        }
+    }, [activeDrop, currentData])
 
     const renderData = useCallback(() => {
-        // console.log(currentData, "currentData render")
-        // console.log(uid, "currentData render")
-        return currentData.map((item, iI) =>
-            <tr>
-                <td style={{padding: "3rem 1.5rem"}}>{item.day}</td>
-                {
-                    item.subjects.map((i, index) =>
-                        <td className={cls.days__item}>
-                            <Droppable
-                                id={i.subjectsId}
-                                key={i.subjectsId}
-                            >
-                                <p
-                                    className={classNames(cls.subject, {
-                                        [cls.notActive]: !i.subject
-                                    })}
-                                >
-                                    {i.subject}
-                                </p>
-                                <p
-                                    className={classNames(cls.teacher, {
-                                        [cls.notActive]: !i.teacher
-                                    })}
-                                >
-                                    {i.teacher}
-                                </p>
-                                <p
-                                    className={classNames(cls.room, {
-                                        [cls.notActive]: !i.room
-                                    })}
-                                >
-                                    {i.room}
-                                </p>
-                            </Droppable>
-                        </td>
-                    )
-                }
-            </tr>
-        )
+        console.log(currentData, "currentData")
+        return currentData?.map((item, iI) => {
+            let status;
+            const renderItem = (
+                <tr>
+                    <td style={{padding: "3rem 1.5rem"}}>{item?.weekday?.name?.slice(0, 3)}</td>
+                    {
+                        item?.weekday?.lessons?.map((i, index) => {
+                            status = i.status
+                            return (
+                                <td className={cls.days__item}>
+                                    <Droppable
+                                        id={i.uid}
+                                        key={i.uid}
+                                    >
+                                        {
+                                            i.subject?.name ?
+                                                <Draggable id={i.subject.itemUID}>
+                                                    <p
+                                                        className={classNames(cls.subject, {
+                                                            [cls.notActive]: !i.subject?.name
+                                                        })}
+                                                    >
+                                                        {i?.subject?.name}
+                                                    </p>
+                                                </Draggable>
+                                                :
+                                                <p
+                                                    className={classNames(cls.subject, {
+                                                        [cls.notActive]: !i.subject?.name
+                                                    })}
+                                                >
+                                                    {i?.subject?.name}
+                                                </p>
+                                        }
+                                        {
+                                            i.teacher?.name ?
+                                                <Draggable id={i.teacher.itemUID}>
+                                                    <p
+                                                        className={classNames(cls.teacher, {
+                                                            [cls.notActive]: !i.teacher?.name
+                                                        })}
+                                                    >
+                                                        <span>
+                                                            {i?.teacher?.name}
+                                                        </span>
+                                                        <span>
+                                                            {i?.teacher?.surname}
+                                                        </span>
+                                                    </p>
+                                                </Draggable>
+                                                :
+                                                <p
+                                                    className={classNames(cls.teacher, {
+                                                        [cls.notActive]: !i.teacher?.name
+                                                    })}
+                                                >
+                                                    <span>
+                                                        {i?.teacher?.name}
+                                                    </span>
+                                                    <span>
+                                                        {i?.teacher?.surname}
+                                                    </span>
+                                                </p>
+                                        }
+                                        {
+                                            i.room?.name ?
+                                                <Draggable id={i.room.itemUID}>
+                                                    <p
+                                                        className={classNames(cls.room, {
+                                                            [cls.notActive]: !i.room?.name
+                                                        })}
+                                                    >
+                                                        {i?.room?.name}
+                                                    </p>
+                                                </Draggable>
+                                                :
+                                                <p
+                                                    className={classNames(cls.room, {
+                                                        [cls.notActive]: !i.room?.name
+                                                    })}
+                                                >
+                                                    {i?.room?.name}
+                                                </p>
+                                        }
+                                    </Droppable>
+                                </td>
+                            )
+                        })
+                    }
+                </tr>
+            )
+            return (
+                // status ? <DndContext onDragEnd={handleDragEndInner}>
+                //     {renderItem}
+                // </DndContext> : renderItem
+                <DndContext onDragEnd={handleDragEndInner}>
+                    {renderItem}
+                </DndContext>
+            )
+        })
     }, [currentData, uid])
 
     const render = renderData()
 
-    if (length.includes(data.id)) {
-        return null
+    function handleDragEndInner(event) {
+        const {active, over} = event;
+        currentData.map(item => {
+            item.weekday.lessons.map(i => {
+                if (active.id.includes("subject")) {
+                    if (i.uid === active.id.slice(0, i.uid.length) && i.uid !== over.id) {
+                        onDelete({id: i.id, res: {item_type: "subject"}})
+                    }
+                } else if (active.id.includes("room")) {
+                    if (i.uid === active.id.slice(0, i.uid.length) && i.uid !== over.id) {
+                        onDelete({id: i.id, res: {item_type: "room"}})
+                    }
+                } else {
+                    if (i.uid === active.id.slice(0, i.uid.length) && i.uid !== over.id) {
+                        onDelete({id: i.id, res: {item_type: "teacher"}})
+                    }
+                }
+            })
+        })
+        // setActiveDrag(active?.id)
+        // setActiveDrop(over?.id)
+
+        console.log(event, "event 2 inner")
     }
 
     return (
@@ -211,11 +292,17 @@ export const TimeTableSchedule = memo(({subjectData, activeDrop, uid, setData, d
                 <tr>
                     <th/>
                     {
-                        timesData.map((item, i) =>
+                        data?.hours_list?.map((item, i) =>
                             <th>
                                 <p className={cls.index}>{i + 1}</p>
-                                <div>
-                                    {item.startTime} {item.endTime}
+                                <div className={cls.schedule__time}>
+                                    <p>
+                                        {item?.start_time.slice(0, 5)}
+                                    </p>
+                                    -
+                                    <p>
+                                        {item?.end_time.slice(0, 5)}
+                                    </p>
                                 </div>
                             </th>
                         )
