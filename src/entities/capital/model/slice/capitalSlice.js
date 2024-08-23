@@ -1,5 +1,12 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getCapitalDataThunk,createCapitalCategory ,getCapitalInfo , changeCapitalInfoThunk} from "../thunk/capitalThunk";
+import {
+    getCapitalDataThunk,
+    createCapitalCategory,
+    getCapitalInfo,
+    changeCapitalInfoThunk,
+    createInsideCategory, getInsideCategory,
+    getPaymentType
+} from "../thunk/capitalThunk";
 
 
 
@@ -9,6 +16,8 @@ const initialState = {
     capitalsData: [],
     capitalPermission: [],
     capitalCategoryInfo: [],
+    capitalInsideCategory: [],
+    paymentTypes: []
 
 }
 
@@ -17,7 +26,8 @@ export const CapitalSlice = createSlice({
     initialState,
     reducers: {
         onDeleteBranch: (state, action) => {
-            state.capitalCategoryInfo = state.capitalCategoryInfo.filter(item => item.id !== action.payload.id)
+            const id = action.payload.id;
+            state.capitalCategoryInfo = action.payload
         },
     },
     extraReducers: builder =>
@@ -41,11 +51,11 @@ export const CapitalSlice = createSlice({
             })
             .addCase(createCapitalCategory.fulfilled , (state  ,action) => {
                 state.loading = false
-                state.capitalsData = [...state.capitalsData , action.payload?.capitalcategorys]
+                state.capitalsData = [...state.capitalsData , action.payload]
                 state.error = null
             })
             .addCase(createCapitalCategory.rejected, (state, action) =>{
-                state.error = action.payload ?? null
+                state.error = "Error"
                 state.loading = false
             })
             .addCase(getCapitalInfo.pending , state => {
@@ -76,6 +86,47 @@ export const CapitalSlice = createSlice({
             .addCase(changeCapitalInfoThunk.rejected , (state, action) => {
                 state.loading = false
                 state.error = action.payload ?? null
+            })
+            .addCase(createInsideCategory.pending , state => {
+                state.loading= true
+                state.error = null
+            })
+            .addCase(createInsideCategory.fulfilled , (state  ,action) => {
+                state.loading = false
+                state.capitalInsideCategory = action.payload
+                state.error = null
+            })
+            .addCase(createInsideCategory.rejected, (state, action) =>{
+                state.error = action.payload ?? null
+                state.loading = false
+            })
+            .addCase(getInsideCategory.pending , state => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(getInsideCategory.fulfilled , (state, action) =>{
+                state.capitalInsideCategory = action.payload.capitals
+                console.log(action.payload , "capital inside info")
+                state.loading = false
+                state.error = null
+            })
+            .addCase(getInsideCategory.rejected , (state, action) => {
+                state.loading = false
+                state.error = action.payload ?? null
+            })
+            .addCase(getPaymentType.pending , state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(getPaymentType.fulfilled , (state , action) => {
+                state.paymentTypes = action.payload.paymenttypes
+                state.loading = false
+                state.error = false
+                console.log(action.payload , "action")
+            })
+            .addCase(getPaymentType.rejected , (state , action) => {
+                state.loading = false
+                state.loading = true
             })
 })
 

@@ -39,7 +39,7 @@ import {vacancyWorkPageSlice} from "../features/vacancyModals/vacancyWorkPage/mo
 import {vacancyWorkerPermissionSlice} from "../features/vacancyModals/vacancyWorkerPermission";
 import {roomImageSlice} from "features/roomImagePareModal";
 import {timeTableSchool} from "pages/timeTable"
-import {accountingSlice, studentSlice} from "../entities/accounting";
+import {accountingSlice, employerSlice, studentSlice, teacher} from "../entities/accounting";
 import {postBranch, postEducation, postSystem} from "../entities/creates";
 import {
     getBranchSlice, getEducation,
@@ -116,7 +116,9 @@ export const store = configureStore({
         getLocationSlice,
         postEducation,
         getEducation,
-        studentSlice
+        studentSlice,
+        employerSlice,
+        teacher
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

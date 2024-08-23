@@ -18,9 +18,8 @@ export {CapitalInsideProduct} from './ui/capitalInside/capitalInsideProduct/capi
 
 
 
-export {getCapitalDataThunk} from "./model/thunk/capitalThunk"
-export {getCapitalInfo} from "./model/thunk/capitalThunk"
-export {createCapitalCategory} from "./model/thunk/capitalThunk"
+export {getCapitalDataThunk , createInsideCategory , getInsideCategory , changeCapitalInfoThunk , getCapitalInfo , createCapitalCategory} from "./model/thunk/capitalThunk"
+
 export {default as capital} from "./model/slice/capitalSlice"
-export {getCapitalData , getCapitalInsideInfo, getCapitalPermission, getLoading} from "./model/selector/capitalSelector"
+export {getCapitalData , getCapitalInsideInfo, getCapitalPermission, getLoading, getCapitalInside , getCapitalTypes} from "./model/selector/capitalSelector"
 

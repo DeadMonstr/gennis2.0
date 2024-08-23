@@ -2,14 +2,14 @@ import {
     AccountingAdditionalCosts,
     AccountingBooks,
     AccountingCapitalCosts,
-    AccountingHeader,
+    // AccountingHeader,
     getAccountingSelect,
     StudentsPayments,
     TeachersSalary,
     DebtStudents,
     EmployeeSalary,
     StudentsDiscount,
-    getStudentsData
+    getStudentsData, getEmployerSalary, getLoading
 } from "entities/accounting";
 
 import {Routes, Route} from "react-router";
@@ -22,6 +22,13 @@ import {onChangeAccountingPage} from "entities/accounting/model/slice/accounting
 import {Button} from "shared/ui/button";
 import {Select} from "shared/ui/select";
 import {Radio} from "shared/ui/radio";
+import {onDeleteStudents} from "../../../entities/accounting/model/slice/studetntSlice";
+import {API_URL, headers, useHttp} from "../../../shared/api/base";
+
+import {getEmpSalary} from "../../../entities/accounting/model/thunk/employerSalary";
+import {EmployerSalaryPage} from "../index";
+import {TeacherSalaryPage} from "../index";
+import {StudentSalary} from "./accountingPages/studentSalary";
 
 
 const number = [
@@ -30,30 +37,19 @@ const number = [
     {number: '1232312', name: "click"},
 ];
 
-const typeExpenses = [
-    {name: "Harajatlar to’plami", id: 1},
-    {name: "Harajatlar tarixi", id: 2}
-];
 
 export const AccountingPageMain = memo(() => {
     let {locationId} = useParams()
     const getAccountingPage = useSelector(getAccountingSelect)
     const studentData = useSelector(getStudentsData)
-
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [selectedRadio, setSelectedRadio] = useState(typeExpenses[0].id);
+    const {request} = useHttp()
 
-
-    const handleChange = (value) => {
-        setSelectedRadio(value);
-        console.log(value);
-    };
 
     const setPage = useCallback((e) => {
         console.log(e)
         dispatch(onChangeAccountingPage({value: e}))
-
         navigate(`./${e}`)
     }, [])
 
@@ -77,15 +73,13 @@ export const AccountingPageMain = memo(() => {
                             ))}
                         </div>
                         <div className={cls.typeExpenses}>
-                            {typeExpenses.map(item => (
-                                <div>
-                                    <Radio
-                                        onChange={() => handleChange(item.name)}
-                                        checked={selectedRadio === item.name}
-                                        type={"radio"}/>
-                                    {item.name}
-                                </div>
-                            ))}
+                            <Button>
+                                Inkasatsiya
+                                {/*Harajatlar to’plami*/}
+                            </Button>
+                            {/*<Button>*/}
+                            {/*    Harajatlar tarixi*/}
+                            {/*</Button>*/}
                         </div>
                     </div>
                 </div>
@@ -96,18 +90,13 @@ export const AccountingPageMain = memo(() => {
             <Routes>
 
 
-                <Route path={"teachersSalary"}
-                       element={<TeachersSalary path={"teachersSalary"} locationId={locationId}/>}/>
-                <Route path={"studentsDiscounts"}
-                       element={<StudentsDiscount path={"studentsDiscounts"} locationId={locationId}/>}/>
-                <Route path={"employeesSalary"}
-                       element={<EmployeeSalary path={"employeesSalary"} loc ationId={locationId}/>}/>
+                <Route path={"teachersSalary"} element={<TeacherSalaryPage path={"teachersSalary"} locationId={locationId}/>}/>
+                <Route path={"studentsDiscounts"} element={<StudentsDiscount path={"studentsDiscounts"} locationId={locationId}/>}/>
+                <Route path={"employeesSalary"} element={<EmployerSalaryPage setPage={setPage} path={"employeesSalary"} locationId={locationId}/>}/>
                 <Route path={"debtStudents"} element={<DebtStudents path={"debtStudents"} locationId={locationId}/>}/>
-                <Route path={"overhead"}
-                       element={<AccountingAdditionalCosts path={"overhead"} locationId={locationId}/>}/>
+                <Route path={"overhead"} element={<AccountingAdditionalCosts path={"overhead"} locationId={locationId}/>}/>
 
-                <Route path={"studentsPayments"}
-                       element={<StudentsPayments studentData={studentData} locationId={locationId}/>}/>
+                <Route path={"studentsPayments"} element={<StudentSalary studentData={studentData} locationId={locationId}/>}/>
                 <Route path={"bookPayment"} element={<AccountingBooks path={"bookPayment"} locationId={locationId}/>}/>
                 <Route path={"capital"} element={<AccountingCapitalCosts path={"capital"} locationId={locationId}/>}/>
 
@@ -117,3 +106,125 @@ export const AccountingPageMain = memo(() => {
         </div>
     );
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import {AccountingFilter, AccountingHeader} from "entities/accounting";
+// import {useDispatch, useSelector} from "react-redux";
+// import {Routes, Route} from "react-router";
+// import {getCapitalInfo, getCapitalTypes, getInsideCategory} from "entities/capital";
+// import {useCallback, useEffect, useState} from "react";
+// import {getPaymentType} from "entities/capital/model/thunk/capitalThunk";
+// import cls from './accountingPageMain.module.sass'
+// import {onChangeAccountingPage} from "../../../entities/accounting/model/slice/accountingSlice";
+// import {useNavigate} from "react-router";
+// import {set} from "react-hook-form";
+// import {useParams} from "react-router-dom";
+// import {
+//     AccountingAdditionalCosts,
+//     AccountingBooks,
+//     AccountingCapitalCosts,
+//     // AccountingHeader,
+//     getAccountingSelect,
+//     StudentsPayments,
+//     TeachersSalary,
+//     DebtStudents,
+//     EmployeeSalary,
+//     StudentsDiscount,
+//     getStudentsData, getEmployerSalary
+// } from "entities/accounting";
+// import {EmployerSalaryPage} from "../index";
+// import {API_URL, headers, useHttp} from "../../../shared/api/base";
+// import {onDeleteStudents} from "../../../entities/accounting/model/slice/studetntSlice";
+// const filter = [
+//     {name: 'teachersSalary', label: "teacher salary"},
+//     {name: 'studentsDiscounts', label: "student discount"},
+//     {name: 'employeesSalary', label: "employer salary"},
+//     {name: 'debtStudents', label: "debt student"},
+//     {name: 'overhead', label: "overhead"},
+//     {name: 'studentsPayments', label: "student payment"},
+//     {name: 'bookPayment', label: "book payment"},
+//     {name: 'capital', label: "capital"},
+// ]
+//
+// export const AccountingPageMain = () => {
+//     let {locationId} = useParams()
+//     const dispatch = useDispatch()
+//     const paymentType = useSelector(getCapitalTypes)
+//     const [selectRadio, setSelectedRadio] = useState(paymentType[0])
+//     const [activeMenu, setActiveMenu] = useState(filter[0]?.name)
+//     const studentData = useSelector(getStudentsData)
+//     const navigate = useNavigate()
+//     const {request} = useHttp()
+//
+//     const setPage = useCallback((value) => {
+//         console.log(value)
+//         dispatch(onChangeAccountingPage({value: value}))
+//         navigate(`./${value}`)
+//     }, [])
+//     const handleChange = (value) => {
+//         setSelectedRadio(value);
+//         console.log(value);
+//     };
+//     const onDelete = (id) => {
+//         console.log(id)
+//         request(`${API_URL}Students/student_payment_delete/${id}/`, "DELETE", JSON.stringify({id}), headers())
+//             .catch(err => {
+//                 console.log(err)
+//             })
+//         dispatch(onDeleteStudents({id: id}))
+//     }
+//
+//     useEffect(() => {
+//         dispatch(getPaymentType())
+//     }, [])
+//
+//     return (
+//         <div className={cls.accountingMain}>
+//             <AccountingHeader setSelectedRadio={selectRadio} onChange={handleChange} paymentType={paymentType}/>
+//             <AccountingFilter setPage={setPage} activeMenu={activeMenu} setActive={setActiveMenu} filter={filter}/>
+//
+//
+//
+//             <Routes>
+//
+//
+//                 <Route path={"teachersSalary"}
+//                        element={<TeachersSalary path={"teachersSalary"} locationId={locationId}/>}/>
+//                 <Route path={"studentsDiscounts"}
+//                        element={<StudentsDiscount path={"studentsDiscounts"} locationId={locationId}/>}/>
+//                 <Route path={"employeesSalary"}
+//                        element={<EmployerSalaryPage path={"employeesSalary"} loc ationId={locationId}/>}/>
+//                 <Route path={"debtStudents"} element={<DebtStudents path={"debtStudents"} locationId={locationId}/>}/>
+//                 <Route path={"overhead"}
+//                        element={<AccountingAdditionalCosts path={"overhead"} locationId={locationId}/>}/>
+//
+//                 <Route path={"studentsPayments"}
+//                        element={<StudentsPayments onDelete={onDelete} studentData={studentData} locationId={locationId}/>}/>
+//                 <Route path={"bookPayment"} element={<AccountingBooks path={"bookPayment"} locationId={locationId}/>}/>
+//                 <Route path={"capital"} element={<AccountingCapitalCosts path={"capital"} locationId={locationId}/>}/>
+//
+//                 {/*<Route path={"debtStudents"} element={<DebtStudents/>}/>*/}
+//             </Routes>
+//
+//         </div>
+//     );
+// };
+
+

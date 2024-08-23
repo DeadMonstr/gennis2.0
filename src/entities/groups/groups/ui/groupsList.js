@@ -21,17 +21,17 @@ export const GroupsList = React.memo(({currentTableData}) => {
                 </tr>
                 </thead>
                 {
-                    currentTableData.map((item, i) => {
+                    currentTableData?.map((item, i) => {
                         return (
                             <tbody>
                             <tr>
                                 <td>{i + 1}</td>
-                                <td>{item.name}</td>
-                                <td>{item.name} {item.surname}</td>
-                                <td>{item.subject.name}</td>
-                                <td>{item.course_types?.name}</td>
-                                <td>{item.price}</td>
-                                <td>{item.status ?<div><div/></div> : null }</td>
+                                <td>{item?.name}</td>
+                                <td>{item?.name} {item?.surname}</td>
+                                <td>{item?.subject?.name}</td>
+                                <td>{item?.course_types?.name}</td>
+                                <td>{item?.price}</td>
+                                <td>{item?.status ? <div><div/></div> : null }</td>
                             </tr>
                             </tbody>
                         )

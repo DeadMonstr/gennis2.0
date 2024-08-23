@@ -38,6 +38,7 @@ export const GroupCreateForm = memo((props) => {
     const languages = useSelector(state => state.registerUser.languages)
 
     const onSubmit = (data) => {
+
         const res = {
             ...data,
             students: selectedStudents,
