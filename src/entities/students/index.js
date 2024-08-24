@@ -22,7 +22,8 @@ export {
     getFilteredStatus,
     getFilteredErrors,
     getSchoolClassNumbers,
-    getSchoolClassColors
+    getSchoolClassColors,
+    getNewStudentsLoading
 } from "./model/selector/studentsSelector"
 
 export {StudentsListDirector} from "./ui/studentsListDirector/studentsListDirector";

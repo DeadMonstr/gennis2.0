@@ -3,6 +3,8 @@ import {Button} from "../../../../../shared/ui/button";
 import cls from "./empSalary.module.sass"
 import {Modal} from "../../../../../shared/ui/modal";
 import React, {useState} from "react";
+
+export const EmployeeSalary = ({ filteredSalary, sum2 , activeDeleted  , formatSalary , onChange, changePayment, setChangePayment, deleted ,setChangingData, onDeleteModal}) => {
 import {onDeleteEmployerSalary} from "../../../model/slice/employerSalary";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {useDispatch} from "react-redux";

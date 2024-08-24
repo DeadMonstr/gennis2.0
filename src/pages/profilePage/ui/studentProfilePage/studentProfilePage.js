@@ -33,10 +33,14 @@ export const StudentProfilePage = () => {
     const {register, handleSubmit} = useForm()
     const dispatch = useDispatch()
     const {id} = useParams()
-
+    const [selectedSubject, setSelectedSubject] = useState(null)
+    const [selectedGroup, setSelectedGroup] = useState(null)
+    const [selectedGroupName, setSelectedGroupName] = useState("")
     const userData = useSelector(getUserData)
     const student_id = userData?.id
     const branch_id = userData?.user?.branch.id
+    // const group_id = userData?.group.length === 1 ? Number(userData.group[0].id) : userData?.group.map(item => Number(item.id));
+    const group_id = userData?.group
     const [active, setActive] = useState(false)
     const [activeModal, setActiveModal] = useState("")
     const [newImage, setNewImage] = useState("")
@@ -61,7 +65,7 @@ export const StudentProfilePage = () => {
     }
 
     console.log(userData, "student ")
-    console.log(student_id, "branc id")
+    console.log(selectedGroup, "branc id")
 
 
     return (
@@ -80,14 +84,20 @@ export const StudentProfilePage = () => {
                     [cls.active]: active
                 })}
             >
-                <StudentProfileTeachers/>
+                <StudentProfileTeachers data={userData?.group}/>
                 <StudentProfileRating setActive={setActive}/>
                 <StudentProfileReward/>
                 <StudentProfileSubjects
                     setActive={setActive}
-                    data={userData?.subject}
+                    data={userData?.group}
+                    onSelectSubject={setSelectedSubject}
                 />
-                <StudentProfileAttendance setActive={setActive}/>
+                <StudentProfileAttendance
+                    setActive={setActive}
+                    data={userData?.group}
+                    onSelectGroup={setSelectedGroup}
+                    onSelectGroupName={setSelectedGroupName}
+                />
             </div>
             <div
                 className={classNames(cls.profile__otherContent, {
@@ -99,6 +109,7 @@ export const StudentProfilePage = () => {
                     setActive={setActive}
                     student_id={student_id}
                     branch_id={branch_id}
+                    group_id={group_id}
                 />
                 <StudentProfileAmountPath
                     active={active}
@@ -111,10 +122,13 @@ export const StudentProfilePage = () => {
                 <StudentProfileGroupsHistory
                     active={active}
                     setActive={setActive}
+                    selectedSubject={id}
                 />
                 <StudentProfileTotalAttendance
                     active={active}
                     setActive={setActive}
+                    selectedGroup={selectedGroup}
+                    selectedGroupName={selectedGroupName}
                 />
             </div>
             <ImageCrop

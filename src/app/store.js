@@ -134,6 +134,7 @@ export const store = configureStore({
         vacancyWorkerSlice,
         studentPaymentSlice,
         groupProfile
+
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

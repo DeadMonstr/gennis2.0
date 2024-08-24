@@ -15,47 +15,47 @@ import money from "shared/assets/images/Money.png";
 import creditCard from "shared/assets/images/CreditCard.png";
 import bank from "shared/assets/images/Bank.png";
 import {useDispatch} from "react-redux";
-import {studentPaymentThunk} from "features/studentPayment";
+import {studentPaymentThunk, studentCharityThunk} from "features/studentPayment";
 
 
 const listPretcent = [-1, 34.8, 70.4]
 
-export const StudentProfileTotalAmount = memo(({active, setActive, student_id, branch_id}) => {
+export const StudentProfileTotalAmount = memo(({active, setActive, student_id, branch_id, group_id}) => {
 
     const {register, handleSubmit} = useForm()
 
     const [activeService, setActiveService] = useState(amountService[0])
     const [activePaymentType, setActivePaymentType] = useState(0)
+    const [option, setOption] = useState(0)
     const [paymentSum, setPaymentSum] = useState(0)
+    const [charitysum, setCharitySum] = useState(0)
     const [data, setData] = useState({})
     const [checkModalStatus, setCheckModalStatus] = useState(false)
     const [payment, setPayment] = useState(1)
     const dispatch = useDispatch()
 
-
     const handleAddPayment = (data) => {
         const newPayment = {
-            student: Number(student_id),
+            student: student_id,
             payment_type: payment,
             payment_sum: paymentSum,
             status: true,
             branch: branch_id,
             ...data
         };
-        console.log(data, "data")
-
-        dispatch(studentPaymentThunk(newPayment));
-
-        console.log("Kemadi")
-
+        dispatch(studentPaymentThunk(newPayment))
     };
 
-    // const onSubmitData = (data) => {
-    //     console.log(data)
-    //     setData(data)
-    //     setCheckModalStatus(true)
-    //
-    // }
+    const handleAddCharity = (data) => {
+        const newCharity = {
+            student: student_id,
+            group: option,
+            charity_sum: charitysum,
+            ...data
+        };
+        dispatch(studentCharityThunk(newCharity))
+    }
+
     const onSubmitPassword = (data) => {
         console.log(data)
     }
@@ -136,11 +136,10 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                                     <div className={cls.form__inner}>
                                         <p>{activeService} miqdori</p>
                                         <Input
-                                            register={register}
-                                            name={"amount"}
+                                            {...register("amount")}
                                             placeholder={"Summa"}
                                             defaultValue={paymentSum}
-                                            // onChange={(e) => setPaymentSum(e.target.value)}
+                                            onChange={(e) => setPaymentSum(e.target.value)}
                                             type={"number"}
                                         />
 
@@ -150,18 +149,20 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                             :
                             activeService === "Xayriya"
                                 ?
-                                <Form onSubmit={handleSubmit(handleAddPayment)}>
+                                <Form onSubmit={handleSubmit(handleAddCharity)}>
                                     <div className={cls.form__container}>
                                         <Select
                                             extraClass={cls.form__select}
+                                            options={group_id}
+                                            onChangeOption={setOption}
                                         />
                                         <div className={cls.form__inner}>
                                             <p>{activeService} miqdori</p>
                                             <Input
-                                                register={register}
-                                                name={"amount"}
+                                                {...register("amount")}
                                                 placeholder={"Summa"}
                                                 type={"number"}
+                                                onChange={(e) => setCharitySum(e.target.value)}
                                             />
                                         </div>
                                     </div>

@@ -12,22 +12,11 @@ import {
 import {StudentsHeader} from "entities/students";
 import {StudentsFilter} from "features/filters/studentsFilter";
 import {fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData} from "entities/students";
-import {getNewStudentsData, getStudyingStudents} from "entities/students";
+import {getNewStudentsData, getStudyingStudents, getNewStudentsLoading} from "entities/students";
 import {Pagination} from "features/pagination";
 
 import cls from "./students.module.sass"
 import {getSearchValue} from "features/searchInput";
-import {Modal} from "../../../../shared/ui/modal";
-import {Form} from "../../../../shared/ui/form";
-import {Select} from "../../../../shared/ui/select";
-import {fetchTeachersData, getTeachers} from "../../../../entities/teachers";
-import {useForm} from "react-hook-form";
-import {fetchSubjectsAndLanguages} from "../../../registerPage";
-import {getSchoolStudents} from "../../../../entities/students/model/selector/studentsSelector";
-import {createSchoolClass, fetchSchoolStudents} from "../../../../entities/students/model/studentsThunk";
-import {Radio} from "../../../../shared/ui/radio";
-import {getUserBranchId} from "../../../profilePage";
-import {Input} from "../../../../shared/ui/input";
 
 
 const studentsFilter = [
@@ -68,6 +57,7 @@ export const StudentsPage = memo(() => {
     const [selectStudents, setSelectStudents] = useState([])
 
     const [activeModal, setActiveModal] = useState(false)
+    const newStudentsLoading = useSelector(getNewStudentsLoading)
     const [active, setActive] = useState(false)
     const [selectedRadio, setSelectedRadio] = useState(studentsFilter[0].name);
     const [selected, setSelected] = useState([])
@@ -116,9 +106,15 @@ export const StudentsPage = memo(() => {
         console.log(res, "res")
         dispatch(createSchoolClass(res))
     }
+    // Radio tanlangan holatga qarab tegishli dispatch funksiyasini chaqirish
     useEffect(() =>{
-        dispatch(fetchOnlyNewStudentsData())
-    } , [])
+        if (selectedRadio === "newStudents") {
+            dispatch(fetchOnlyNewStudentsData())
+        } else if (selectedRadio === "studying") {
+            dispatch(fetchOnlyStudyingStudentsData())
+        }
+    } , [dispatch, selectedRadio])
+
 
     const handleChange = (value) => {
         setSelectedRadio(value);
