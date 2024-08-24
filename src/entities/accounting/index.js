@@ -22,6 +22,8 @@ export {default as studentSlice} from "./model/slice/studetntSlice"
 
 
 export {getEmployerSalary , getLoading , getDeletedEmployer} from "./model/selector/employerSalary"
+
+export {getStudentPaymentes , getLoadingStudent , getDeletedStudent} from "./model/selector/student"
 export {default as employerSlice} from "./model/slice/employerSalary"
 
 export {default as teacher} from "./model/slice/teacher"

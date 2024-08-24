@@ -1,44 +1,9 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {changePaymentType} from "../thunk/teacherSalarythunk";
-
+import {changePaymentType, getTeacherSalary} from "../thunk/teacherSalarythunk";
 
 
 const initialState = {
-    teacherSalary: [
-        {
-            name: "sardor",
-            surname: "ikromov",
-            salary: "12123123",
-            comment: "kere buldi",
-            date: "12.21.12",
-            payment_types: "cash",
-            deleted: true,
-            id: 1
-        },
-        {
-            name: "sardor",
-            surname: "ikromov",
-            salary: "12123123",
-            comment: "kere buldi",
-            date: "12.21.12",
-            payment_types: "click",
-            deleted: true,
-            id: 2
-        },
-        // {name: "sardor" , surname: "ikromov" , salary: "312323232" , comment: "kere buldi" , date: "12.21.12" , paymentType: "cash" , deleted: true , id:3},
-        {
-            name: "sardor",
-            surname: "ikromov",
-            salary: "3",
-            comment: "kere buldi",
-            date: "12.21.12",
-            payment_types: "cash",
-            deleted: false,
-            id: 4
-        },
-
-
-    ],
+    teacherSalary: [],
     loading: false,
     error: false
 }
@@ -50,7 +15,7 @@ const teacherSalary = createSlice({
         onDeleteTeacherSalary: (state, action) => {
             state.teacherSalary = state.teacherSalary.filter(item => item.id !== action.payload.id)
         },
-        onChangePayment: (state,action) => {
+        onChangePayment: (state, action) => {
             state.teacherSalary.payment_types = state.teacherSalary.payment_types.map(item => {
                 if (item.id === action.payload.id) {
                     return {...item, payment_types: action.payload.payment_types}
@@ -74,7 +39,21 @@ const teacherSalary = createSlice({
             //     state.loading = false
             //     state.error = action.payload ?? null
             // })
+            .addCase(getTeacherSalary.pending, state => {
+                state.loading = false
+                state.error = false
+            })
+            .addCase(getTeacherSalary.fulfilled, (state, action) => {
+                state.teacherSalary = action.payload
+                console.log(action.payload , "log213")
+                state.loading = false
+                state.error = false
+            })
+            .addCase(getTeacherSalary.rejected , state => {
+                state.error = true
+                state.loading = false
+            })
 })
 
-export const {onDeleteTeacherSalary, onChangePayment} =  teacherSalary.actions
+export const {onDeleteTeacherSalary, onChangePayment} = teacherSalary.actions
 export default teacherSalary.reducer

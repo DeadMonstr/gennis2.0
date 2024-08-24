@@ -1,6 +1,6 @@
 import {TeachersSalary} from "entities/accounting";
 import {useDispatch, useSelector} from "react-redux";
-import {getTeacherSalary} from "entities/accounting/model/selector/teacher";
+import { getTeacherSalaryData} from "entities/accounting/model/selector/teacher";
 import {onDeleteTeacherSalary , onChangePayment} from "entities/accounting/model/slice/teacher";
 import React, {useEffect, useMemo, useState} from "react";
 import {Button} from "shared/ui/button";
@@ -11,11 +11,13 @@ import {Select} from "shared/ui/select";
 import {Modal} from "shared/ui/modal";
 import {getCapitalTypes} from "entities/capital";
 import {getPaymentType} from "entities/capital/model/thunk/capitalThunk";
+import {getTeacherSalary} from "../../../../entities/accounting/model/thunk/teacherSalarythunk";
+
 
 export const TeacherSalaryPage = () => {
 
     const dispatch = useDispatch()
-    const teacherSalary = useSelector(getTeacherSalary)
+    const teacherSalary = useSelector(getTeacherSalaryData)
     console.log(teacherSalary)
     const [changingData, setChangingData] = useState({})
     const [changePayment, setChangePayment] = useState(false)
@@ -28,8 +30,8 @@ export const TeacherSalaryPage = () => {
 
     useEffect(() => {
         dispatch(getPaymentType())
+        dispatch(getTeacherSalary())
     }, [])
-    console.log(getPaymentTypes , "type")
 
     const searchedUsers = useMemo(() => {
         const filteredHeroes = teacherSalary?.slice()
@@ -45,7 +47,6 @@ export const TeacherSalaryPage = () => {
 
     const [deleted , setDeleted] = useState(false)
     const onDelete = (id) => {
-        console.log(id)
         dispatch(onDeleteTeacherSalary({id : id}))
     }
     // const onChangeType = (id) =>{
@@ -55,7 +56,6 @@ export const TeacherSalaryPage = () => {
 
 
     const onChangeType = (selectedValue) => {
-        console.log(selectedValue)
         dispatch(onChangePayment({
             id: changingData.id,
             payment_types: selectedValue
@@ -63,7 +63,6 @@ export const TeacherSalaryPage = () => {
         setChangePayment(false);
     };
     const currentPaymentType = getPaymentTypes.find(type => type.value === changingData.payment_types);
-    console.log(changingData)
     return (
         <div>
             <div style={{display: "flex" , gap: "2rem"}}>

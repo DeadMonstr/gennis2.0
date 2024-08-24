@@ -1,7 +1,7 @@
 import cls from "./accountFilter.module.sass"
 import classNames from "classnames";
 import React from "react";
-export const AccountingFilter = ({filter , activeMenu , setActive , setPage}) => {
+export const AccountingFilter = ({filter , activeMenu , setPage , setActive }) => {
     // console.log(activeMenu , "filter")
     return (
         <ul className={cls.ul}>
@@ -11,8 +11,9 @@ export const AccountingFilter = ({filter , activeMenu , setActive , setPage}) =>
                     [cls.active]: activeMenu === item.name
                 })}
                 onClick={() => {
-                    setActive(item.name)
                     setPage(item.name)
+                    setActive(item.name)
+
                 }}
             >
                 {item.label}

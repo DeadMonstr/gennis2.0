@@ -34,7 +34,7 @@ import {
     getRouteCreateGroup,
     getEmployerSalaryInsideSource,
     getEmployerSalary,
-    getTeacherSalary,
+    getTeacherSalary, getInkasatsiya,
 } from "shared/const/routers";
 
 
@@ -66,6 +66,7 @@ import {GiveSalaryPage, GiveTeacherSalaryPage} from "pages/giveSalaryPage";
 import {Branch, Education, Location, System} from "entities/editCreates";
 import {BranchCreate, EducationCreate, LocationCreate, SystemCreate} from "entities/creates";
 import {AccountingPageMain} from "pages/accountingPage";
+import {Inkasatsiya} from "pages/inkasatsiyaPage";
 import {AccountingBooks} from "entities/accounting";
 // import Calendar from "react-calendar";
 import {CalendarPage} from "pages/calendarPage";
@@ -317,5 +318,10 @@ export const routersConfig = [
         path: getAccounting(":id"),
         element: <AccountingPageMain/>,
     },
+    {
+        name: "inkasatsiya",
+        path: getInkasatsiya(":id"),
+        element: <Inkasatsiya/>
+    }
 
 ]

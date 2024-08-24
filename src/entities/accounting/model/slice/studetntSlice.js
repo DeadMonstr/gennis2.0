@@ -1,13 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {getDeletedPayment, getStudentPayment} from "../thunk/student";
 
 const initialState = {
-    studentsData: [
-        {name: "sardor", surname: "ikromov", payment: "2023", date: "2322.22.22", typePayment: "cash", delete: true , id: 1},
-        {name: "sardor2", surname: "ikromov2", payment: "2023", date: "2322.22.22", typePayment: "card", delete: false, id: 2},
-        {name: "sardor2", surname: "ikromov2", payment: "2023", date: "2322.22.22", typePayment: "card", delete: false , id: 3},
-    ],
+    studentsData: [],
     loading: false,
-    error: false
+    error: false,
+    deletedStudentsPayment: []
 }
 const studentSlice = createSlice({
     name: "studentSlice",
@@ -17,8 +15,34 @@ const studentSlice = createSlice({
             state.studentsData = state.studentsData.filter(item => item.id !== action.payload.id)
         },
     },
-    extraReducers: builder => {
-    }
+    extraReducers: builder =>
+        builder
+            .addCase(getStudentPayment.pending , state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(getStudentPayment.fulfilled ,(state, action) =>{
+                state.studentsData = action.payload.branches
+                state.loading = false
+                state.error = false
+            } )
+            .addCase(getStudentPayment.rejected , state => {
+                state.error = true
+                state.loading = false
+            })
+            .addCase(getDeletedPayment.pending , state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(getDeletedPayment.fulfilled, (state, action) => {
+                state.deletedStudentsPayment = action.payload.branches
+                state.loading = false
+                state.error = false
+            })
+            .addCase(getDeletedPayment.rejected, state => {
+                state.loading = false
+                state.error = true
+            })
 })
 
 export const {onDeleteStudents} = studentSlice.actions

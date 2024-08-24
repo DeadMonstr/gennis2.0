@@ -1,2 +1,2 @@
-export const getTeacherSalary = (state) =>
+export const getTeacherSalaryData = (state) =>
     state.teacher?.teacherSalary

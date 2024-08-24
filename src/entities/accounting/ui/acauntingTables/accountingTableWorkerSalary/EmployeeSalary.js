@@ -3,64 +3,86 @@ import {Button} from "../../../../../shared/ui/button";
 import cls from "./empSalary.module.sass"
 import {Modal} from "../../../../../shared/ui/modal";
 import React, {useState} from "react";
+import {onDeleteEmployerSalary} from "../../../model/slice/employerSalary";
+import {API_URL, headers, useHttp} from "shared/api/base";
+import {useDispatch} from "react-redux";
+import {Select} from "shared/ui/select";
+import {useNavigate} from "react-router";
 
-export const EmployeeSalary = ({ filteredSalary, sum2 , activeDeleted  , formatSalary , onChange, changePayment, setChangePayment, deleted ,setChangingData}) => {
+export const EmployeeSalary = ({
+                                   changingData,
+                                   filteredSalary,
+                                   sum2,
+                                   formatSalary,
+                                   onChange,
+                                   changePayment,
+                                   setChangePayment,
+                                   setChangingData,
+                                   setActiveDelete,
+                                   activeDelete,
+                                   getCapitalType,
+                                   onDelete
+                               }) => {
+    const navigate = useNavigate()
 
+    const onDeleteModal = (data) => {
+        setActiveDelete(true)
+        console.log(data)
+        console.log(changingData, "changing")
 
-    // const changeModal = (name, id) => {
-    //     console.log(name)
-    //
-    // }
-
-    // const getConfirmDelete = (data) => {
-    //     const newData = {
-    //         id: changingData.id,
-    //         userId: changingData.userId,
-    //         type: changingData.type,
-    //         ...data
-    //     }
-    //     funcSlice?.onDelete(newData)
-    //     setActiveChangeModal(false)
-    //
-    // }
-
-
-    const newData = {
-        id: activeDeleted.id
     }
 
-    console.log(newData , 'log')
+    const changePaymentType = (data) => {
+        setChangePayment(true)
+        console.log(data, 'data')
+    }
+
     const renderFilteredSalary = () => {
         return filteredSalary.map((item, i) => (
             <>
                 <tbody>
                 <tr>
-                    <td>{i + 1}</td>
-                    <td>{item?.user?.name}</td>
+                    <td onClick={() => navigate(`./profile/${item.id}`)}>{i + 1}</td>
+                    <td>{item?.user?.name} {item.user.surname}</td>
                     <td>{item?.salary}</td>
                     <td>{item?.date}</td>
                     <td>{item?.user?.job?.length ? item?.user?.job : "ish turi mavjud emas"}</td>
-                    <td onClick={() => {
-                        setChangingData({
-                            id: item.id,
-                            payment_types: item.payment_types.name,
-                            userId: item.user.id,
-                        })
-                        setChangePayment(!changePayment)
-
-                    }}>
-                        <div className={cls.cash}>{item?.payment_types?.name}</div>
+                    <td>
+                        <div onClick={() => {
+                            setChangingData({
+                                id: item.id,
+                                name: item.user.name,
+                                surname: item.user.surname,
+                                payment_types: item.payment_types.name,
+                            });
+                            changePaymentType({
+                                id: item.id,
+                                name: item.user.name,
+                                surname: item.user.surname,
+                                payment_types: item.payment_types.name,
+                            })
+                        }} className={cls.cash}>
+                            {item?.payment_types?.name}
+                        </div>
                     </td>
                     <td>
                         <div>
                             <Button
                                 onClick={() => {
-                                    setActiveDelete({
+                                    onDeleteModal({
                                         id: item.id,
-                                        userId: item.user.id,
-
+                                        name: item.user.name,
+                                        surname: item.user.surname,
+                                        payment_types: item.payment_types.name,
                                     })
-                                    // deleted(item.id)
+                                    setChangingData({
+                                        id: item.id,
+                                        name: item.user.name,
+                                        surname: item.user.surname,
+                                        payment_types: item.payment_types.name,
+                                    })
+
+
                                 }}
                                 type={"delete"}
                                 children={
@@ -108,6 +130,24 @@ export const EmployeeSalary = ({ filteredSalary, sum2 , activeDeleted  , formatS
                 </thead>
                 {render2}
             </Table>
+            <Modal active={activeDelete} setActive={setActiveDelete}>
+                <div className={cls.modalHeader}> {changingData.name} {changingData.surname}'ning <br/> oyligini
+                    o'chirmoqchimisz
+                </div>
+                <div className={cls.deletemodal}>
+                    <Button type={"danger"} onClick={onDelete}>Xa</Button>
+                    <Button onClick={() => setActiveDelete(!activeDelete)}>Yo'q</Button>
+                </div>
+            </Modal>
+            <Modal active={changePayment} setActive={setChangePayment}>
+
+                <h2>To'lov turini uzgartirish</h2>
+                <div className={cls.changeType}>
+                    <Select title={changingData.payment_types} options={getCapitalType}
+                            onChangeOption={(value) => onChange(value)}/>
+                    {/*<Button onClick={onChange}>Tastiqlash</Button>*/}
+                </div>
+            </Modal>
         </div>
     );
 };
