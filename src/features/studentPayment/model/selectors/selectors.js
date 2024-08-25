@@ -32,3 +32,12 @@ export const getAllAttendanceDatas = (state) =>
 
 export const getPaymentList = (state) =>
     state.studentPaymentSlice?.paymentList
+
+export const getStudentContract = (state) =>
+    state.studentPaymentSlice?.contract;
+
+export const getMessageDelete = (state) =>
+    state.studentPaymentSlice?.deleteList
+
+export const getDeletedList = (state) =>
+    state.studentPaymentSlice?.getDeletedList

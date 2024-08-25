@@ -1,5 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {API_URL, useHttp, headers} from "../../../shared/api/base";
+import {API_URL, useHttp, headers, headersImg} from "../../../shared/api/base";
+import {data} from "../../../entities/calendar";
 
 
 export const studentPaymentThunk = createAsyncThunk(
@@ -107,6 +108,44 @@ export const studentPaymentListThunk =  createAsyncThunk(
     'studentPaymentSlice/studentPaymentListThunk',
     async (id) => {
         const {request} = useHttp();
-        return await request(`${API_URL}Students/student_payment/${id}`, "GET", null, headers())
+        return await request(`${API_URL}Students/student_payment/${id}/?status=False`, "GET", null, headers())
+    }
+)
+
+
+export const studentContractThunk = createAsyncThunk(
+    'studentPaymentSlice/studentContractThunk',
+    async ({id, data}) => {
+        const {request} = useHttp();
+        const response = await request(`${API_URL}Students/create_contract/${id}/`, "POST", JSON.stringify(data), headers())
+        return response
+    }
+)
+
+export const studentContractUploadThunk = createAsyncThunk(
+    'studentPaymentSlice/studentContractUploadThunk',
+    async ({id, file}) => {
+        const {request} = useHttp();
+        const formData =  new FormData();
+        formData.append('file', file)
+
+        return await request(`${API_URL}Students/upload_pdf_contract/${id}/`, "POST", formData, headersImg())
+    }
+)
+
+export const studentPaymenListDelete = createAsyncThunk(
+    'studentPaymentSlice/studentPaymenListDelete',
+    async (id) => {
+        const {request} = useHttp();
+        const response = await request(`${API_URL}Students/student_payment_delete/${id}/`, "DELETE", null, headers())
+        return response
+    }
+)
+
+export const studentPaymentListDeleteGetThunk =  createAsyncThunk(
+    'studentPaymentSlice/studentPaymentListDeleteGetThunk',
+    async (id) => {
+        const {request} = useHttp();
+        return await request(`${API_URL}Students/student_payment/${id}/?status=True`, "GET", null, headers())
     }
 )

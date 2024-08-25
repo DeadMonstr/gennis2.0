@@ -1,43 +1,54 @@
 import React, {memo, useEffect, useState} from 'react';
 import classNames from "classnames";
 import {useSelector, useDispatch} from "react-redux";
-
+import {Alert} from "shared/ui/alert";
 import {EditableCard} from "shared/ui/editableCard";
-import {Select} from "shared/ui/select";
 import {Table} from "shared/ui/table";
 import {getBooksData} from "../../model/selectors/booksSelector";
-import {getPaymentData} from "../../model/selectors/paymentSelector";
 import cls from "./studentProfileAmountPath.module.sass";
 import inTo from "shared/assets/images/inTo.png";
 import outTo from "shared/assets/images/out.png";
-import {getPaymentList, studentPaymentListThunk} from "features/studentPayment";
+import {
+    getPaymentList,
+    getMessageDelete,
+    getDeletedList,
+    studentPaymentListThunk,
+    studentPaymenListDelete,
+    studentPaymentListDeleteGetThunk
+} from "features/studentPayment";
+import {Button} from "shared/ui/button";
+import {WarningModal} from "shared/ui/warning";
 
 export const StudentProfileAmountPath = memo(({active, setActive}) => {
-
-    const paymentList = useSelector(getPaymentData)
     const pathArray = window.location.pathname.split('/');
     const lastId = pathArray[pathArray.length - 1];
-    const booksList = useSelector(getBooksData)
-    const getTotalAmountData = useSelector(getPaymentList)
-    const paymentLists = getTotalAmountData.payments
-    const dispatch = useDispatch()
-    const [activeState, setActiveState] = useState("")
+    const booksList = useSelector(getBooksData);
+    const getTotalAmountData = useSelector(getPaymentList);
+    const getDeleteMes = useSelector(getMessageDelete);
+    const getDeletedLists = useSelector(getDeletedList);
+    const paymentLists = getTotalAmountData.payments;
+    const dispatch = useDispatch();
+    const [activeState, setActiveState] = useState("");
+    const [selectedSalary, setSelectedSalary] = useState(null);
+    const [portal, setPortal] = useState(false);
+    const [change, setChange] = useState(false);
 
 
     useEffect(() => {
-        dispatch(studentPaymentListThunk(lastId))
-    }, [dispatch])
+        if (!change) {
+            dispatch(studentPaymentListThunk(lastId));
+        } else {
+            dispatch(studentPaymentListDeleteGetThunk(lastId));
+        }
+    }, [lastId, dispatch, change]);
 
-    console.log(getTotalAmountData, "payment")
 
     const renderInData = () => {
-        return paymentLists?.map(item =>
-            <tr>
+        const listToRender = change ? getDeletedLists.payments : paymentLists;
+        return listToRender?.map(item =>
+            <tr key={item.id} onClick={() => setSelectedSalary(item.id)}>
                 <td>
-                    {
-                        item.status === true ? <td>To'lov</td> : <td>Chegirma</td>
-                    }
-
+                    {item.status === false ? <td>To'lov</td> : <td>Chegirma</td>}
                 </td>
                 <td>{item.payment_sum}</td>
                 <td>{item.added_data}</td>
@@ -50,23 +61,29 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                         {item?.payment_type.name}
                     </div>
                 </td>
-                <td></td>
+                {!change && (
+                    <td>
+                        <Button onClick={() => setPortal(!portal)} type={"delete"}>
+                            <i style={{color: "white"}} className={"fa-solid fa-xmark"}></i>
+                        </Button>
+                    </td>
+                )}
             </tr>
-        )
-    }
+        );
+    };
 
     const renderOutData = () => {
         return booksList?.map(item =>
-            <tr>
+            <tr key={item.id}>
                 <td>{item.type}</td>
                 <td>{item.payment}</td>
                 <td>{item.date}</td>
             </tr>
-        )
-    }
+        );
+    };
 
-    const renderIn = renderInData()
-    const renderOut = renderOutData()
+    const renderIn = renderInData();
+    const renderOut = renderOutData();
 
     return (
         <EditableCard
@@ -113,6 +130,8 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                     activeState ?
                         <div className={cls.table}>
                             <div className={cls.table__header}>
+                                <Button children={change ? "Amaldagi" : "O'chirilganlar"} extraClass={ change ? cls.buttonDel2 : cls.buttonDel}
+                                        onClick={() => setChange(!change)}/>
                             </div>
                             <div className={cls.table__content}>
                                 {
@@ -123,7 +142,7 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                                             <th>To’lov</th>
                                             <th>Sana</th>
                                             <th>To’lov turi</th>
-                                            <th>O’chirish</th>
+                                            {!change && <th>O’chirish</th>}
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -146,7 +165,11 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                         </div>
                         : null
                 }
+                {!change && (
+                    <WarningModal secondaryThunk={studentPaymentListThunk} contentId={selectedSalary} isOpen={portal} onClose={() => setPortal(false)} contentThunk={studentPaymenListDelete} studentId={lastId}/>
+                )}
             </div>
+
         </EditableCard>
-    )
-})
+    );
+});

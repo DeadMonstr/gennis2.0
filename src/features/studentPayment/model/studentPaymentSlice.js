@@ -9,7 +9,13 @@ import {
     studentProfileAttendanceDataThunk,
     studentProfileAttendanceDataPostThunk,
     studentProfileAttendanceAll,
-    studentProfileAttendanceAllDataThunk, studentProfileAttendanceAllDataPostThunk, studentPaymentListThunk
+    studentProfileAttendanceAllDataThunk,
+    studentProfileAttendanceAllDataPostThunk,
+    studentPaymentListThunk,
+    studentContractThunk,
+    studentContractUploadThunk,
+    studentPaymenListDelete,
+    studentPaymentListDeleteGetThunk
 } from "./studentPaymentThunk";
 
 
@@ -26,6 +32,10 @@ const initialState = {
     allAttendance: [],
     allAttendanceDatas: [],
     paymentList: [],
+    contract: [],
+    contractFile: [],
+    deleteList: [],
+    getDeletedList: [],
     loading: false,
     error: null
 }
@@ -199,6 +209,62 @@ const studentPaymentSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message
             })
+
+
+
+            .addCase(studentContractThunk.pending, (state) => {
+               state.loading = true
+           })
+            .addCase(studentContractThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.contract = action.payload;
+            })
+            .addCase(studentContractThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+
+
+
+            .addCase(studentContractUploadThunk.pending, (state) => {
+               state.loading = true
+           })
+            .addCase(studentContractUploadThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.contractFile = action.payload;
+            })
+            .addCase(studentContractUploadThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+
+
+
+            .addCase(studentPaymenListDelete.pending, (state) => {
+               state.loading = true
+           })
+            .addCase(studentPaymenListDelete.fulfilled, (state, action) => {
+                state.loading = false;
+                state.deleteList = action.payload;
+            })
+            .addCase(studentPaymenListDelete.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+
+
+
+            .addCase(studentPaymentListDeleteGetThunk.pending, (state) => {
+               state.loading = true
+           })
+            .addCase(studentPaymentListDeleteGetThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.getDeletedList = action.payload;
+            })
+            .addCase(studentPaymentListDeleteGetThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            });
     }
 });
 

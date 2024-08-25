@@ -20,7 +20,7 @@ export const headers = () => {
 export const headersImg = () => {
     const token = sessionStorage.getItem("token")
     return {
-        "Authorization" : "Bearer " + token
+        "Authorization" : "JWT " + token
     }
 }
 

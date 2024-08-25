@@ -81,6 +81,7 @@ export const StudentProfilePage = () => {
                 active={active}
                 setActiveModal={setActiveModal}
                 data={userData?.user}
+                contract={userData}
                 newImage={newImage}
             />
             <div

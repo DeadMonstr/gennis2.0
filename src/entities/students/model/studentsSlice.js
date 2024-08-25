@@ -4,7 +4,7 @@ import {
     fetchClassColors,
     fetchClassNumberList,
     fetchFilteredStudents,
-    fetchNewStudentsData, fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData,
+    fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData,
     fetchSchoolStudents
 } from "./studentsThunk";
 
@@ -18,7 +18,7 @@ const initialState = {
     schoolClassNumbers: [],
     schoolClassColors: [],
     schoolStudents: [],
-    newStudents: [],
+    newStudentes: [],
     studyingStudents: [],
     newStudentsStatus: "idle",
     studyingStudentsStatus: "idle",
@@ -47,29 +47,16 @@ export const studentsSlice = createSlice({
     },
     extraReducers: builder =>
         builder
-            // .addCase(fetchNewStudentsData.pending, state => {
-            //     state.newStudentsStatus = "loading"
-            // })
-            // .addCase(fetchNewStudentsData.fulfilled, (state, action) => {
-            //     state.newStudents = action.payload.new_students
-            //     state.studyingStudents = action.payload.active
-            //     console.log(action.payload, "new")
-            //     state.newStudentsStatus = "success"
-            // })
-            // .addCase(fetchNewStudentsData.rejected, (state, action) => {
-            //     state.newStudents = "error"
-            // })
             .addCase(fetchOnlyNewStudentsData.pending, state => {
                 state.newStudentsStatus = "loading"
             })
             .addCase(fetchOnlyNewStudentsData.fulfilled, (state, action) => {
-                state.newStudents = action.payload
-                state.studyingStudents = action.payload.active
-                console.log(action.payload, "new")
+                state.newStudentes = action.payload
+                console.log(state.newStudentes, "new")
                 state.newStudentsStatus = "success"
             })
             .addCase(fetchOnlyNewStudentsData.rejected, (state, action) => {
-                state.newStudents = "error"
+                state.newStudentes = "error"
             })
 
 
@@ -78,7 +65,6 @@ export const studentsSlice = createSlice({
             })
             .addCase(fetchOnlyStudyingStudentsData.fulfilled, (state, action) => {
                 state.studyingStudents = action.payload
-                state.newStudents = action.payload.active
                 console.log(action.payload, "studying")
                 state.studyingStudentsStatus = "success"
             })

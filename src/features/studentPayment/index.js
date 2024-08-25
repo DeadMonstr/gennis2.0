@@ -11,7 +11,11 @@ export {
     studentProfileAttendanceAll,
     studentProfileAttendanceAllDataThunk,
     studentProfileAttendanceAllDataPostThunk,
-    studentPaymentListThunk
+    studentPaymentListThunk,
+    studentContractThunk,
+    studentContractUploadThunk,
+    studentPaymenListDelete,
+    studentPaymentListDeleteGetThunk
 } from './model/studentPaymentThunk'
 export {
     getGroupHistory,
@@ -23,5 +27,8 @@ export {
     getAllAttendances,
     getAllAttendancesData,
     getAllAttendanceDatas,
-    getPaymentList
+    getPaymentList,
+    getStudentContract,
+    getMessageDelete,
+    getDeletedList
 } from './model/selectors/selectors'

@@ -1,13 +1,11 @@
 import React, {memo} from 'react';
-
 import {EditableCard} from "shared/ui/editableCard";
-
 import cls from "./studentProfileInfo.module.sass";
 import defaultUserImg from "shared/assets/images/user_image.png";
-import time from "../../../../../shared/assets/images/oclock.png";
+import {API_URL_IMG} from "../../../../../shared/api/base";
+import {Button} from "../../../../../shared/ui/button";
 
-export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal, newImage}) => {
-
+export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal, newImage, contract}) => {
 
     return (
         <EditableCard
@@ -38,6 +36,19 @@ export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal
                 <p>Telefon raqami: <span>{data?.phone}</span></p>
                 <p>Yoshi: <span>{data?.age}</span></p>
                 <p>Tug'ilgan sana: <span>{data?.birth_date}</span></p>
+                <p>Shartnoma: <span>
+                    {
+                        !contract || !contract.contract || contract.contract.length === 0 ? (
+                            <Button onClick={() => setActive("contract")}>Qo'shish</Button>
+                        ) : (
+                            contract.contract.map((item, index) =>
+                                <a key={index} href={`${API_URL_IMG}${item.url}`} target="_blank" rel="noopener noreferrer">
+                                    Yuklab olish
+                                </a>
+                            )
+                        )
+                    }
+                </span></p>
                 <div className={cls.info__addInfo}>
                     <i className="fas fa-plus"/>
                 </div>
@@ -53,19 +64,6 @@ export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal
                     <p>$ 390.000</p>
                 </div>
             </EditableCard>
-            {/*<Link to={"/platform/teacherSalaryPage"}>*/}
-            {/*    <EditableCard*/}
-            {/*        extraClass={cls.info__balance}*/}
-            {/*    >*/}
-            {/*        <h2>Balans</h2>*/}
-            {/*        <p>Summa</p>*/}
-            {/*        <div className={cls.info__money}>*/}
-            {/*            <h2>$ 570.000</h2>*/}
-            {/*            <p>$ 390.000</p>*/}
-            {/*        </div>*/}
-            {/*    </EditableCard>*/}
-            {/*</Link>*/}
-
         </EditableCard>
-    )
-})
+    );
+});

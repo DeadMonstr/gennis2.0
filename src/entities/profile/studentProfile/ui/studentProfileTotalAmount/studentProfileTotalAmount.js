@@ -15,7 +15,7 @@ import money from "shared/assets/images/Money.png";
 import creditCard from "shared/assets/images/CreditCard.png";
 import bank from "shared/assets/images/Bank.png";
 import {useDispatch} from "react-redux";
-import {studentPaymentThunk, studentCharityThunk, studentDiscountThunk} from "features/studentPayment";
+import {studentPaymentThunk, studentCharityThunk, studentDiscountThunk, studentPaymentListThunk} from "features/studentPayment";
 
 
 const listPretcent = [-1, 34.8, 70.4]
@@ -45,6 +45,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
             ...data
         };
         dispatch(studentPaymentThunk(newPayment));
+        dispatch(studentPaymentListThunk(student_id))
         reset({
             amount: '',
         });
@@ -59,6 +60,8 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
             ...data
         };
         dispatch(studentCharityThunk(newCharity));
+        dispatch(studentPaymentListThunk(student_id))
+
         reset({
             amount: '',
         });
@@ -76,6 +79,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
         };
 
         dispatch(studentDiscountThunk(newDiscount));
+        dispatch(studentPaymentListThunk(student_id))
         reset({
             amount: '',
         });
