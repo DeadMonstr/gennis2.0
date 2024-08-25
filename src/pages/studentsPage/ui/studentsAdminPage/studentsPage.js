@@ -13,25 +13,23 @@ import {
 import {StudentsHeader} from "entities/students";
 import {StudentsFilter} from "features/filters/studentsFilter";
 import {fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData} from "entities/students";
-import {getNewStudentsData, getStudyingStudents} from "entities/students";
+import {getNewStudentsData, getStudyingStudents, getNewStudentsLoading} from "entities/students";
 import {Pagination} from "features/pagination";
 import {useTheme} from "shared/lib/hooks/useTheme";
 
 import cls from "./students.module.sass"
 import {getSearchValue} from "features/searchInput";
-import {Modal} from "../../../../shared/ui/modal";
-import {Form} from "../../../../shared/ui/form";
-import {Select} from "../../../../shared/ui/select";
-import {fetchTeachersData, getTeachers} from "../../../../entities/teachers";
 import {useForm} from "react-hook-form";
-import {fetchSubjectsAndLanguages} from "../../../registerPage";
 import {getSchoolStudents} from "../../../../entities/students/model/selector/studentsSelector";
-import {createSchoolClass, fetchSchoolStudents} from "../../../../entities/students/model/studentsThunk";
-import {Radio} from "../../../../shared/ui/radio";
+import {fetchTeachersData, getTeachers} from "../../../../entities/teachers";
 import {getUserBranchId} from "../../../profilePage";
+import {createSchoolClass, fetchSchoolStudents} from "../../../../entities/students/model/studentsThunk";
+import {fetchSubjectsAndLanguages} from "../../../registerPage";
+import {Modal} from "../../../../shared/ui/modal";
+import {Select} from "../../../../shared/ui/select";
 import {Input} from "../../../../shared/ui/input";
-
-
+import {Form} from "../../../../shared/ui/form";
+import {Radio} from "../../../../shared/ui/radio";
 const studentsFilter = [
     {name: "newStudents", label: "New Students"},
     {name: "studying", label: "Studying Students"},
@@ -70,6 +68,7 @@ export const StudentsPage = memo(() => {
     const [selectStudents, setSelectStudents] = useState([])
 
     const [activeModal, setActiveModal] = useState(false)
+    const newStudentsLoading = useSelector(getNewStudentsLoading)
     const [active, setActive] = useState(false)
     const [selectedRadio, setSelectedRadio] = useState(studentsFilter[0].name);
     const [selected, setSelected] = useState([])
@@ -128,6 +127,15 @@ export const StudentsPage = memo(() => {
     // useEffect(() =>{
     //     dispatch(fetchOnlyNewStudentsData())
     // } , [])
+    // Radio tanlangan holatga qarab tegishli dispatch funksiyasini chaqirish
+    useEffect(() =>{
+        if (selectedRadio === "newStudents") {
+            dispatch(fetchOnlyNewStudentsData())
+        } else if (selectedRadio === "studying") {
+            dispatch(fetchOnlyStudyingStudentsData())
+        }
+    } , [dispatch, selectedRadio])
+
 
     const handleChange = (value) => {
         setSelectedRadio(value);

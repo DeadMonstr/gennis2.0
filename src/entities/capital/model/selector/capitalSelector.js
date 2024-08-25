@@ -1,5 +1,6 @@
 
 
+
 export const getCapitalData = (state) =>
     state.capital?.capitalsData
 
@@ -13,3 +14,11 @@ export const getLoading = (state) =>
 
 export const getCapitalPermission = (state) =>
     state.capital.capitalPermission
+
+
+export const getCapitalInside = (state) =>
+    state.capital?.capitalInsideCategory
+
+
+export const getCapitalTypes = (state) =>
+    state.capital?.paymentTypes

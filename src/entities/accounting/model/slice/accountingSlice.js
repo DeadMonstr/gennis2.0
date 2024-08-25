@@ -7,11 +7,11 @@ const pages = [
         name: "O'quvchilar tolovlari",
         disabled: false
     },
-    {
-        value: "bookPayment",
-        name: "Kitob tolovlari",
-        disabled: false
-    },
+    // {
+    //     value: "bookPayment",
+    //     name: "Kitob tolovlari",
+    //     disabled: false
+    // },
     {
         value: "teachersSalary",
         name: "O'qituvchilar oyligi",
@@ -22,16 +22,16 @@ const pages = [
         name: "Ishchilar oyligi",
         disabled: false
     },
-    {
-        value: "studentsDiscounts",
-        name: "O'quvchilar chegirmalari",
-        disabled: false
-    },
-    {
-        value: "debtStudents",
-        name: "Qarzdor o'quvchilar",
-        disabled: false
-    },
+    // {
+    //     value: "studentsDiscounts",
+    //     name: "O'quvchilar chegirmalari",
+    //     disabled: false
+    // },
+    // {
+    //     value: "debtStudents",
+    //     name: "Qarzdor o'quvchilar",
+    //     disabled: false
+    // },
     {
         value: "overhead",
         name: "Qo'shimcha xarajatlar",

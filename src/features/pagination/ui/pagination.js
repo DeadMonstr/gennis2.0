@@ -26,7 +26,7 @@ export const Pagination = React.memo((props) => {
 
     const paginationRange = usePagination({
         currentPage,
-        totalCount: users.length,
+        totalCount: users?.length,
         siblingCount,
         pageSize
     });

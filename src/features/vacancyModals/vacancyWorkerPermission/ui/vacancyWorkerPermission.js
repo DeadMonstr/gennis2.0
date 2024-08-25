@@ -30,8 +30,6 @@ export const VacancyWorkerPermission = React.memo(({active, setActive, onAddVaca
 
     const onChangeWorkName = (value) => {
         setSelectedWorkName(value);
-        console.log("hetti")
-        // Tanlangan table ni backendga yuborish
         dispatch(postSelectedTable(value)).then((action) => {
             if (postSelectedTable.fulfilled.match(action)) {
                 console.log("Kevotgan permissionla", action.payload);
