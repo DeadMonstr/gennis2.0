@@ -6,19 +6,28 @@ import {getTeacherLoading} from "../../model/selector/teacherSelector";
 import {useSelector} from "react-redux";
 import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 import {Input} from "../../../../shared/ui/input";
-import {Radio} from "../../../../shared/ui/radio";
 
 
-export const Teachers = memo(({data, setSelect, select}) => {
+export const Teachers = memo(({data,loading}) => {
     const [checkbox, setCheckbox] = useState(false)
-    // const loadingDef = useSelector(getTeacherLoading)
+    const [select, setSelect] = useState()
+    const loadingDef = useSelector(getTeacherLoading)
     const checkBoxChange = (id) => {
         setCheckbox(id)
     }
 
-    console.log(select, "select")
 
     const renderTeacher = useCallback(() => {
+        if(data && data.length) {
+            return data?.map((item, i) => (
+                <tr key={i}>
+                    <td>{i + 1}</td>
+                    <Link to={`teacherProfile/${item.id}`}>
+                        <td>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
+                    </Link>
+                </tr>
+            ))
+        }
         if (data && data.length) {
             return data?.map((item, i) => {
                 // console.log(select.includes(item.id))
@@ -54,9 +63,18 @@ export const Teachers = memo(({data, setSelect, select}) => {
                     </tr>
                 )
             })
+                //     <td>{item.user.username}</td>
+                //     <td>{item.user.phone}</td>
+                //     <td>{item.user.age}</td>
+                //     <td><div className={item.subject ? cls.teacher__language : null}>{item.subject.name}</div></td>
+                //
+                //
+                // </tr>
+
         }
 
-    }, [data, select])
+    }, [data])
+
 
 
     const renderedData = renderTeacher()
@@ -76,14 +94,14 @@ export const Teachers = memo(({data, setSelect, select}) => {
                         <th>Status</th>
                     </tr>
                     </thead>
-                    {/*{*/}
-                    {/*    loadingDef ? <DefaultPageLoader/>*/}
-                    {/*        :*/}
-                    {/*        */}
-                    {/*}*/}
-                    <tbody>
-                    {renderedData}
-                    </tbody>
+                    {
+                        loadingDef ? <DefaultPageLoader/>
+                            :
+                            <tbody>
+                            {renderedData}
+                            </tbody>
+                    }
+
                 </Table>
             </div>
 
@@ -91,4 +109,3 @@ export const Teachers = memo(({data, setSelect, select}) => {
         </div>
     )
 })
-

@@ -16,6 +16,7 @@ import {useDropzone} from "react-dropzone";
 import {useForm} from "react-hook-form";
 import {getOnDemandLazySlides} from "react-slick/lib/utils/innerSliderUtils";
 import {changeCapitalInfoThunk} from "../../../../entities/capital/model/thunk/capitalThunk";
+import {onDeleteBranch} from "../../../../entities/editCreates/model/slice/branchSlice";
 
 
 const capitalType = [
@@ -71,8 +72,13 @@ export const CapitalInside = memo(() => {
         console.log(data)
         setEditModal(!editModal)
         dispatch(changeCapitalInfoThunk({data , id: id}))
+        setValue("name" , "")
+        setValue("id_number" , "")
     }
 
+    const onDelete = () => {
+        dispatch(onDeleteBranch({id: id}))
+    }
     const capitalItemRender = capitalItem()
 
     return (

@@ -1,4 +1,4 @@
-import {memo, useCallback, useContext, useState} from 'react';
+import {memo, useCallback, useEffect, useState} from 'react';
 import {useForm} from "react-hook-form";
 import classNames from "classnames";
 import {EditableCard} from "shared/ui/editableCard";
@@ -7,22 +7,55 @@ import {Radio} from "shared/ui/radio";
 import {Select} from "shared/ui/select";
 import {Form} from "shared/ui/form";
 import {amountTypes, amountService} from "entities/profile/studentProfile";
-
+import {useDispatch, useSelector} from "react-redux";
+import {giveTeacherSalaryThunk} from "../../../../../features/giveSalary/giveSalary/model/giveTeacherSalaryThunk";
+import {addSalary} from "../../../../../features/giveSalary/giveSalary/model/giveTeacherSalarySlice";
 import cls from "./teacherProfileTotalAmount.module.sass";
 import money from "shared/assets/images/Money.png";
 import creditCard from "shared/assets/images/CreditCard.png";
 import bank from "shared/assets/images/Bank.png";
+import {fetchTeacherSalaryIdThunk, fetchTeacherSalaryThunk, getTeacherSalaries} from "../../../../teacherSalary";
 
 const listPretcent = [-1, 34.8, 70.4]
 
-export const TeacherProfileTotalAmount = memo(({active, setActive}) => {
+export const TeacherProfileTotalAmount = memo(({active, setActive, salary_id, user_id}) => {
 
     const {register, handleSubmit} = useForm()
     const [activeService, setActiveService] = useState(amountService[0])
     const [activePaymentType, setActivePaymentType] = useState(0)
+    const [salary, setSalary] = useState(0);
+    const [branch, setBranch] = useState(1)
+    const [payment, setPayment] = useState(1)
+    const [comment, setComment] = useState('')
+    const dispatch = useDispatch()
+    const userData = useSelector(getTeacherSalaries);
+    useEffect(() => {
+        console.log("Ma'lumotlar yangilandi: ", userData);
 
-    const onSubmit = (data) => {
-        console.log(data)
+    }, [userData]);
+
+    const handleAddSalary = async () => {
+        const newSalary = {
+            salary: Number(salary),
+            comment: comment,
+            salary_id: salary_id,
+            payment: payment,
+            teacher: user_id,
+            branch: branch
+        };
+        console.log(newSalary)
+        try {
+            const action = await dispatch(giveTeacherSalaryThunk(newSalary));
+            if (giveTeacherSalaryThunk.fulfilled.match(action)) {
+                dispatch(addSalary(action.payload));
+            } else {
+                console.error("Thunk failed with error: ", action.payload);
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+        }
+        dispatch(fetchTeacherSalaryIdThunk(salary_id))
+        setActive(!active)
 
     }
 
@@ -31,7 +64,7 @@ export const TeacherProfileTotalAmount = memo(({active, setActive}) => {
             <div className={cls.items__inner}>
                 <Radio
                     extraClasses={cls.items__radio}
-                    onChange={setActiveService}
+                    onChange={() => setActiveService(item)}
                     value={item}
                     checked={item === activeService}
                 />
@@ -77,37 +110,40 @@ export const TeacherProfileTotalAmount = memo(({active, setActive}) => {
                             ?
                             <>
                                 <div className={cls.items}>
-                                    {
-                                        amountTypes.map((item, index) =>
-                                            <div
-                                                className={cls.items__inner}
-                                                onClick={() => setActivePaymentType(index)}
-                                            >
-                                                <p>{item.name}</p>
-                                                <img src={item.image} alt=""/>
-                                            </div>
-                                        )
-                                    }
+                                    {amountTypes.map((item, index) =>
+                                        <div
+                                            className={cls.items__inner}
+                                            onClick={() => {
+                                                setActivePaymentType(index);
+                                                setPayment(index + 1); // Bu yerda index + 1 deb qo'yish orqali tanlangan payment_types'ni to'g'ri qiymatga o'rnatish
+                                            }}
+                                        >
+                                            <p>{item.name}</p>
+                                            <img src={item.image} alt=""/>
+                                        </div>
+                                    )}
                                     <div
                                         className={cls.items__active}
                                         style={{left: `${listPretcent[activePaymentType]}%`}}
                                     />
                                 </div>
-                                <Form onSubmit={handleSubmit(onSubmit)}>
+                                <Form onSubmit={handleSubmit(handleAddSalary)}>
                                     <div className={cls.form__inner}>
                                         <Input
                                             title={"To'lov miqdori"}
-                                            register={register}
-                                            name={"amount"}
+                                            {...register("amount")}
                                             placeholder={"Summa"}
                                             type={"number"}
+                                            defaultValue={salary}
+                                            onChange={(e) => setSalary(e.target.value)}
                                         />
                                         <Input
                                             title={"Sababi"}
-                                            register={register}
-                                            name={"cause"}
+                                            {...register("comment")}
                                             placeholder={"Sababi"}
                                             type={"text"}
+                                            defaultValue={comment}
+                                            onChange={(e) => setComment(e.target.value)}
                                         />
                                     </div>
                                 </Form>
@@ -115,7 +151,7 @@ export const TeacherProfileTotalAmount = memo(({active, setActive}) => {
                             :
                             activeService === "Xayriya"
                                 ?
-                                <Form onSubmit={handleSubmit(onSubmit)}>
+                                <Form onSubmit={handleSubmit(handleAddSalary)}>
                                     <div className={cls.form__container}>
                                         <Select
                                             extraClass={cls.form__select}
@@ -123,8 +159,7 @@ export const TeacherProfileTotalAmount = memo(({active, setActive}) => {
                                         <div className={cls.form__inner}>
                                             <p>{activeService} miqdori</p>
                                             <Input
-                                                register={register}
-                                                name={"amount"}
+                                                {...register("amount")}
                                                 placeholder={"Summa"}
                                                 type={"number"}
                                             />
@@ -136,8 +171,7 @@ export const TeacherProfileTotalAmount = memo(({active, setActive}) => {
                                     <div className={cls.form__inner}>
                                         <p>{activeService} miqdori</p>
                                         <Input
-                                            register={register}
-                                            name={"amount"}
+                                            {...register("amount")}
                                             placeholder={"Summa"}
                                             type={"number"}
                                         />
@@ -147,6 +181,5 @@ export const TeacherProfileTotalAmount = memo(({active, setActive}) => {
                 </div>
             </div>
         </EditableCard>
-
     )
 })

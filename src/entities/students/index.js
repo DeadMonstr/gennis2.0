@@ -7,10 +7,11 @@ export {GroupCreatePage} from "../../pages/groupsPage/ui/groupCreatePage/groupCr
 export {
     default as newStudents,
     getFilteredStudentsData,
-    getFilteredStudentsStatus
+    getFilteredStudentsStatus,
 } from "./model/studentsSlice"
 
 export {fetchNewStudentsData, fetchClassNumberList, fetchClassColors} from "./model/studentsThunk"
+export {fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData} from "./model/studentsThunk"
 export {
     getNewStudentsData,
     getStudyingStudents,

@@ -1,9 +1,9 @@
 import React, {memo} from 'react';
 
 import {EditableCard} from "shared/ui/editableCard";
+import {Table} from "shared/ui/table";
 
 import cls from "./groupProfileSubjectList.module.sass";
-import {Table} from "../../../../../shared/ui/table";
 
 const data = [
     {

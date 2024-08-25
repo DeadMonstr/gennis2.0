@@ -1,10 +1,14 @@
 import React from 'react';
+import {useNavigate} from "react-router";
 
 import {Table} from "shared/ui/table";
 
 import cls from "./groupsList.module.sass";
 
 export const GroupsList = React.memo(({currentTableData}) => {
+
+    const navigate = useNavigate()
+
     return (
         <>
 
@@ -20,11 +24,11 @@ export const GroupsList = React.memo(({currentTableData}) => {
                     <th>Status</th>
                 </tr>
                 </thead>
+                <tbody>
                 {
-                    currentTableData.map((item, i) => {
+                    currentTableData?.map((item, i) => {
                         return (
-                            <tbody>
-                            <tr>
+                            <tr onClick={() => navigate(`groupInfo/${item.id}`)}>
                                 <td>{i + 1}</td>
                                 <td>{item.name}</td>
                                 <td>{item.name} {item.surname}</td>
@@ -33,10 +37,10 @@ export const GroupsList = React.memo(({currentTableData}) => {
                                 <td>{item.price}</td>
                                 <td>{item.status ?<div><div/></div> : null }</td>
                             </tr>
-                            </tbody>
                         )
                     })
                 }
+                </tbody>
             </Table>
         </>
     );

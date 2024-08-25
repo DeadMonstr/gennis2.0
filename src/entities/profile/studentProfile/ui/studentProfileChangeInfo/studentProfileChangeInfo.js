@@ -17,7 +17,6 @@ export const StudentProfileChangeInfo = memo((props) => {
         currentData
     } = props
 
-    console.log(currentData, "currentData")
 
     return (
         <Modal

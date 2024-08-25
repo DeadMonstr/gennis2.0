@@ -34,11 +34,25 @@
     align-items: center
     font-size: 1.6rem
     gap: 3rem
+    position: relative
 
     p
       width: 100%
       display: flex
       justify-content: space-between
+
+  &__name
+    &:hover
+  &__hoverName
+    z-index: 10
+    position: absolute
+    top: -3rem
+    left: 50%
+    box-shadow: 0 8px 16px 0 #00000014
+    background: white
+    visibility: hidden
+    //padding: .6rem
+    //transform: translate(50%)
 
   &__addInfo
     width: 5rem

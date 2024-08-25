@@ -4,7 +4,8 @@ import {
     fetchClassColors,
     fetchClassNumberList,
     fetchFilteredStudents,
-    fetchNewStudentsData, fetchSchoolStudents
+    fetchNewStudentsData, fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData,
+    fetchSchoolStudents
 } from "./studentsThunk";
 
 
@@ -19,6 +20,7 @@ const initialState = {
     schoolStudents: [],
     newStudents: [],
     newStudentsStatus: "idle",
+    studyingStudentsStatus: "idle",
     deletedStudents: [],
     studyingStudents: []
 }
@@ -45,18 +47,46 @@ export const studentsSlice = createSlice({
     },
     extraReducers: builder =>
         builder
-            .addCase(fetchNewStudentsData.pending, state => {
+            // .addCase(fetchNewStudentsData.pending, state => {
+            //     state.newStudentsStatus = "loading"
+            // })
+            // .addCase(fetchNewStudentsData.fulfilled, (state, action) => {
+            //     state.newStudents = action.payload.new_students
+            //     state.studyingStudents = action.payload.active
+            //     console.log(action.payload, "new")
+            //     state.newStudentsStatus = "success"
+            // })
+            // .addCase(fetchNewStudentsData.rejected, (state, action) => {
+            //     state.newStudents = "error"
+            // })
+            .addCase(fetchOnlyNewStudentsData.pending, state => {
                 state.newStudentsStatus = "loading"
             })
-            .addCase(fetchNewStudentsData.fulfilled, (state, action) => {
-                state.newStudents = action.payload.new_students
+            .addCase(fetchOnlyNewStudentsData.fulfilled, (state, action) => {
+                state.newStudents = action.payload
                 state.studyingStudents = action.payload.active
                 console.log(action.payload, "new")
                 state.newStudentsStatus = "success"
             })
-            .addCase(fetchNewStudentsData.rejected, (state, action) => {
+            .addCase(fetchOnlyNewStudentsData.rejected, (state, action) => {
                 state.newStudents = "error"
             })
+
+
+            .addCase(fetchOnlyStudyingStudentsData.pending, state => {
+                state.studyingStudentsStatus = "loading"
+            })
+            .addCase(fetchOnlyStudyingStudentsData.fulfilled, (state, action) => {
+                state.studyingStudents = action.payload
+                state.studyingStudents = action.payload.active
+                console.log(action.payload, "studying")
+                state.studyingStudentsStatus = "success"
+            })
+            .addCase(fetchOnlyStudyingStudentsData.rejected, (state, action) => {
+                state.studyingStudents = "error"
+            })
+
+
             .addCase(fetchFilteredStudents.pending, state => {
                 state.loading = true
                 state.error = null
