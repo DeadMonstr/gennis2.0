@@ -53,3 +53,5 @@ export const getEducation = (id) => `education/${id}`
 
 export const getSystem = (id) => `system/${id}`
 export const getAccounting = (id) => `accounting/${id}/*`
+
+export const getRouteClassProfile = (id) => `groups/:id/classProfile/${id}`

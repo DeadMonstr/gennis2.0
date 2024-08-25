@@ -1,6 +1,9 @@
-import {useState} from 'react';
+import {fetch} from "entities/profile/studentProfile";
+import {ClassProfileStudentsForm} from "features/classProfile";
+import {useEffect, useState} from 'react';
 import {useForm} from "react-hook-form";
-import {useNavigate} from "react-router";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate, useParams} from "react-router";
 
 import {
     ClassProfileRating,
@@ -9,14 +12,19 @@ import {
     ClassProfileSalaryModal,
     ClassProfileStudentsList
 } from "entities/School/classProfile";
+import {fetchGroupProfile, getGroupProfileData} from "entities/profile/groupProfile";
 import {Button} from "shared/ui/button";
+
 
 import cls from "./classProfilePage.module.sass";
 
 export const ClassProfilePage = () => {
 
+    const {id} = useParams()
+    const dispatch = useDispatch()
     const navigation = useNavigate()
     const {handleSubmit, register} = useForm()
+    const data = useSelector(getGroupProfileData)
 
     const [activeCoin, setActiveCoin] = useState(false)
     const [activeSalary, setActiveSalary] = useState(false)
@@ -29,6 +37,10 @@ export const ClassProfilePage = () => {
         console.log(data, "dataCoin")
     }
 
+    useEffect(() => {
+        dispatch(fetchGroupProfile({id}))
+    }, [])
+
     return (
         <div className={cls.classProfilePage}>
             <Button
@@ -39,8 +51,9 @@ export const ClassProfilePage = () => {
                 Patok
             </Button>
             <ClassProfileNavigators setActive={() => setActiveCoin(true)}/>
-            <ClassProfileRating/>
-            <ClassProfileStudentsList/>
+            {/*<ClassProfileRating/>*/}
+            <ClassProfileStudentsForm/>
+            {/*<ClassProfileStudentsList/>*/}
             <ClassProfileCoinModal
                 active={activeCoin}
                 setActive={setActiveCoin}

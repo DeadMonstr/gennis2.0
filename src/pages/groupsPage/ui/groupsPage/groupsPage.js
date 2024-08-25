@@ -1,3 +1,4 @@
+import {getUserBranchId} from "pages/profilePage";
 import React, {useEffect, useMemo, useState} from "react";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -26,13 +27,12 @@ export const GroupsPage = () => {
     const data = useSelector(getGroupsListData)
     const deletedGroupsData = useSelector(getDeletedGroupsData)
     const loading = useSelector(getGroupsLoading)
+    const userBranchId = useSelector(getUserBranchId)
 
     const [deletedGroups, setDeletedGroups] = useState([])
 
     const [active, setActive] = useState(false);
     const [activeSwitch, setActiveSwitch] = useState(false)
-
-
 
 
     const search = useSelector(getSearchValue)
@@ -60,8 +60,9 @@ export const GroupsPage = () => {
     }, [deletedGroupsData])
 
     useEffect(() => {
-        dispatch(fetchGroupsData())
-    }, [])
+        if (userBranchId)
+            dispatch(fetchGroupsData({userBranchId}))
+    }, [userBranchId])
 
     return (
         <div className={cls.deletedGroups}>

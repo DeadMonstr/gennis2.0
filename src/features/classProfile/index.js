@@ -1,0 +1,1 @@
+export {ClassProfileStudentsForm} from "./ui/classProfileStudentsForm/classProfileStudentsForm";

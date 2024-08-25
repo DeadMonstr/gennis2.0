@@ -4,11 +4,11 @@ import {EditableCard} from "shared/ui/editableCard";
 
 import cls from "./groupProfileStatistics.module.sass";
 
-export const GroupProfileStatistics = memo(() => {
+export const GroupProfileStatistics = memo(({setActive}) => {
     return (
         <EditableCard
             extraClass={cls.rating}
-            // onClick={() => setActive("rating")}
+            onClick={() => setActive("rating")}
         >
             <div className={cls.rating__title}>
                 <h1>Statistics</h1>

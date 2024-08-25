@@ -1,3 +1,4 @@
+@import 'app/styles/abstracts/mixins'
 
 .studentsList
   display: flex
@@ -46,6 +47,14 @@
         padding: 2rem
   &__input
     width: 3rem !important
+    margin: 0 !important
+  &__delete
+    font-size: 2rem
+    cursor: pointer
+    transition: .3s
+    @include btn-active
+    &:hover
+      color: #FF3B30
   &__status
     width: fit-content
     color: #24FF00
@@ -58,3 +67,21 @@
     &.yellow
       color: #FACC15
       border: .1rem solid #FACC15
+
+.deleteForm
+  display: flex
+  flex-direction: column
+  gap: 2rem
+  font-size: 1.3em
+  &__form
+    display: flex
+    flex-direction: column
+    gap: 2rem
+  &__input
+    min-width: 100%
+    margin: 0 !important
+  &__select
+    min-width: 40rem
+    width: 100%
+  &__btn
+    align-self: flex-end

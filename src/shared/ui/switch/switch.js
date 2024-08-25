@@ -12,6 +12,7 @@ export const Switch = React.memo((
     return (
         <div className={cls.mainBody}>
             <button
+                type={"button"}
                 disabled={disabled}
                 className={`${cls.mainSwitchBox}  
                 ${disabled ?

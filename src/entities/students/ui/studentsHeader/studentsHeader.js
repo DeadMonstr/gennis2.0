@@ -1,9 +1,10 @@
+import {useTheme} from "shared/lib/hooks/useTheme";
 import cls from "./studentsHeader.module.sass";
 import {Link} from "react-router-dom";
 import {Button} from "shared/ui/button";
 import {Select} from "shared/ui/select";
 import {Radio} from "shared/ui/radio";
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import classNames from "classnames";
 
 
@@ -17,34 +18,39 @@ export const StudentsHeader = ({
                                    branches,
                                    selected,
                                    setSelected,
-                                   theme,
+                                   // theme,
                                    onClick
                                }) => {
+
+    const {theme} = useTheme()
+
+    const renderCreateBtn = useCallback(() => {
+        return theme === "app_school_theme"
+            ?
+            <Button
+                type={"filter"}
+                extraClass={cls.extraCutClass}
+                onClick={() => onClick(true)}
+            >
+                Create group
+            </Button>
+            :
+            <Link to={"createGroup"}>
+                <Button
+                    type={"filter"}
+                    extraClass={cls.extraCutClass}
+                >
+                    Create group
+                </Button>
+            </Link>
+    }, [theme])
+
 
     return (
         <div className={cls.mainContainer}>
             <div className={cls.mainContainer_buttonPanelBox}>
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}>
-                    {
-                        theme
-                            ?
-                            <Button
-                                type={"filter"}
-                                extraClass={cls.extraCutClass}
-                                onClick={() => onClick(true)}
-                            >
-                                Create group
-                            </Button>
-                            :
-                            <Link to={"createGroup"}>
-                                <Button
-                                    type={"filter"}
-                                    extraClass={cls.extraCutClass}
-                                >
-                                    Create group
-                                </Button>
-                            </Link>
-                    }
+                    {renderCreateBtn()}
                     <Button type={"filter"} extraClass={cls.noneBackground}>Add group</Button>
                 </div>
                 {branches.length >= 1 ? <Select options={branches} onChangeOption={() => setSelected}

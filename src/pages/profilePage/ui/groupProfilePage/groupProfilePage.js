@@ -1,10 +1,16 @@
-import {fetchGroupsData} from "entities/groups";
-import {fetchTeachersData} from "entities/teachers";
-import {GroupProfileDeleteForm} from "features/groupProfile/ui/groupProfileDeleteForm/groupProfileDeleteForm";
-import {fetchSubjectsAndLanguages} from "pages/registerPage";
+import {getTimeTable} from "entities/profile/groupProfile/model/groupProfileSelector";
+import {
+    fetchFilteredStudents,
+    fetchFilteredStudentsAndTeachers,
+    fetchFilteredTeachers,
+    fetchGroupProfileTimeTable,
+    fetchReasons, fetchWeekDays
+} from "entities/profile/groupProfile/model/groupProfileThunk";
+import {fetchRoomsData} from "entities/rooms";
+import {getUserBranchId} from "pages/profilePage/model/selector/userProfileSelector";
 import React, {useEffect, useState} from 'react';
-import classNames from "classnames";
 import {useDispatch, useSelector} from "react-redux";
+import classNames from "classnames";
 import {useParams} from "react-router";
 
 import {
@@ -12,7 +18,8 @@ import {
     GroupProfileModalTeachers,
     GroupProfileTimeForm,
     GroupProfileInfoForm,
-    GroupProfileStudents
+    GroupProfileStudents,
+    GroupProfileDeleteForm
 } from "features/groupProfile";
 import {
     GroupProfileSubjectList,
@@ -22,9 +29,13 @@ import {
     GroupProfileInfo,
     GroupProfileMore,
     getGroupProfileData,
-    getGroupProfileLoading
+    getGroupProfileLoading, GroupProfileRating
 } from "entities/profile/groupProfile";
+import {fetchTeachersData} from "entities/teachers";
+import {fetchGroupsData} from "entities/groups";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
+import {fetchSubjectsAndLanguages} from "pages/registerPage";
+
 
 import cls from "./groupProfilePage.module.sass";
 
@@ -32,16 +43,65 @@ export const GroupProfilePage = () => {
 
     const dispatch = useDispatch()
     const {id} = useParams()
+    const data = useSelector(getGroupProfileData)
+    const timeTable = useSelector(getTimeTable)
     const loading = useSelector(getGroupProfileLoading)
+    const branchId = useSelector(getUserBranchId)
 
     const [active, setActive] = useState(false)
 
     useEffect(() => {
-        dispatch(fetchGroupProfile(id))
+        dispatch(fetchGroupProfile({id}))
         dispatch(fetchSubjectsAndLanguages())
         dispatch(fetchTeachersData())
         dispatch(fetchGroupsData())
+        dispatch(fetchReasons())
+        dispatch(fetchRoomsData())
+        dispatch(fetchWeekDays())
     }, [])
+
+    // useEffect(() => {
+    //     if (branchId && data) {
+    //         dispatch(fetchFilteredTeachers({
+    //             branch_id: branchId,
+    //             subject_id: data?.subject?.id
+    //         }))
+    //         dispatch(fetchFilteredStudents({
+    //             branch_id: branchId,
+    //             subject_id: data?.subject?.id
+    //         }))
+    //
+    //     }
+    // }, [branchId, data])
+
+    useEffect(() => {
+        if (data) {
+            dispatch(fetchGroupProfileTimeTable({
+                group_id: data?.id
+            }))
+        }
+    }, [data])
+
+    useEffect(() => {
+        if (branchId && data && timeTable) {
+            const res = {
+                time_tables: timeTable.map(item => ({
+                    week: item.week.id,
+                    room: item.room.id,
+                    end_time: item.end_time,
+                    start_time: item.start_time
+                })),
+                ignore_students: data?.students.map(item => item.id),
+                ignore_teacher: data?.teacher.map(item => item.id)[0]
+            }
+            dispatch(fetchFilteredStudentsAndTeachers({
+                branch_id: branchId,
+                subject_id: data?.subject?.id,
+                res
+            }))
+        }
+
+    }, [branchId, data, timeTable])
 
     if (loading) {
         return <DefaultPageLoader/>
@@ -58,12 +118,17 @@ export const GroupProfilePage = () => {
                 {/*<GroupProfileTeacher setActive={setActiveModal}/>*/}
                 <GroupProfileDeleteForm/>
                 {/*<GroupProfileStudents/>*/}
-                <GroupProfileStatistics/>
+                <GroupProfileStatistics setActive={setActive}/>
                 <GroupProfileAttendanceForm/>
                 {/*<GroupProfileAttendance/>*/}
                 <GroupProfileTimeForm/>
                 {/*<GroupProfileSubjectList/>*/}
                 <GroupProfileMore/>
+            </div>
+            <div className={classNames(cls.profile__otherContent, {
+                [cls.active]: active
+            })}>
+                <GroupProfileRating/>
             </div>
         </div>
     )
