@@ -53,17 +53,17 @@ export const fetchClassColors = createAsyncThunk(
 
 export const fetchSchoolStudents = createAsyncThunk(
     "studentsSlice/fetchSchoolStudents",
-    async () => {
+    async ({userBranchId}) => {
         const {request} = useHttp()
-        return await request(`${API_URL}Students/school_students/`, "GET", null, headers())
+        return await request(`${API_URL}Students/school_students/?branch=${userBranchId}`, "GET", null, headers())
     }
 )
 
 export const createSchoolClass = createAsyncThunk(
     "studentsSlice/createSchoolClass",
-    async (obj) => {
+    async ({res}) => {
         const {request} = useHttp()
-        return await request(`${API_URL}Group/groups/create/`, "POST", JSON.stringify(obj), headers())
+        return await request(`${API_URL}Group/groups/create/?branch=${res.branch}`, "POST", JSON.stringify(res), headers())
     }
 )
 

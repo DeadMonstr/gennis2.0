@@ -11,5 +11,9 @@ export const getUserProfileData = (state) =>
 export const getUserBranchId = (state) =>
     state.userProfile.userBranchId
 
+export const getUserSystemId = (state) =>
+    state.userProfile.userSystemId
+
+
 export const getUserPermission = (state) =>
     state.userProfile.userPermissions

@@ -1,3 +1,4 @@
+import {user} from "entities/user";
 import {memo, useCallback, useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -14,6 +15,7 @@ import {StudentsFilter} from "features/filters/studentsFilter";
 import {fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData} from "entities/students";
 import {getNewStudentsData, getStudyingStudents, getNewStudentsLoading} from "entities/students";
 import {Pagination} from "features/pagination";
+import {useTheme} from "shared/lib/hooks/useTheme";
 
 import cls from "./students.module.sass"
 import {getSearchValue} from "features/searchInput";
@@ -45,7 +47,7 @@ export const StudentsPage = memo(() => {
 
     // let newStudents
     const dispatch = useDispatch()
-    const __THEME__ = localStorage.getItem("theme")
+    const {theme} = useTheme()
     const {register, handleSubmit} = useForm()
 
     const studyingStudents = useSelector(getStudyingStudents)
@@ -54,7 +56,7 @@ export const StudentsPage = memo(() => {
     // } else {
     //     newStudents = useSelector(getNewStudentsData)
     // }
-    const newStudents = useSelector(__THEME__ ? getSchoolStudents : getNewStudentsData)
+    const newStudents = useSelector(theme === "app_school_theme" ? getSchoolStudents : getNewStudentsData)
     const schoolClassNumbers = useSelector(getSchoolClassNumbers)
     const schoolClassColors = useSelector(getSchoolClassColors)
     const teachers = useSelector(getTeachers)
@@ -79,7 +81,7 @@ export const StudentsPage = memo(() => {
     console.log(newStudents, "data")
 
     const searchedUsers = useMemo(() => {
-        const filteredHeroes = newStudents?.slice()
+        const filteredHeroes = newStudents ? newStudents?.slice() : []
         setCurrentPage(1)
 
         console.log(search, true)
@@ -89,19 +91,24 @@ export const StudentsPage = memo(() => {
         return filteredHeroes.filter(item =>
             item.name?.toLowerCase().includes(search.toLowerCase())
         )
-    }, [newStudents, setCurrentPage, search])
+    }, [newStudents, setCurrentPage, search, theme])
 
     useEffect(() =>{
-        if (__THEME__) {
-            dispatch(fetchSchoolStudents())
+        if (userBranchId) {
+            dispatch(fetchTeachersData({userBranchId}))
+            dispatch(fetchSubjectsAndLanguages())
+        }
+    } , [userBranchId])
+
+    useEffect(() => {
+        if (theme === "app_school_theme" && userBranchId) {
+            dispatch(fetchSchoolStudents({userBranchId}))
+            dispatch(fetchClassColors())
+            dispatch(fetchClassNumberList())
         } else {
             // dispatch(fetchNewStudentsData())
         }
-        dispatch(fetchClassColors())
-        dispatch(fetchClassNumberList())
-        dispatch(fetchTeachersData())
-        dispatch(fetchSubjectsAndLanguages())
-    } , [])
+    }, [theme, userBranchId])
 
     const onSubmit = (data) => {
         const res = {
@@ -110,11 +117,14 @@ export const StudentsPage = memo(() => {
             students: selectStudents,
             color: selectColor,
             branch: userBranchId,
-            create_type: __THEME__ === "app_school_theme" ? "school" : "center"
+            create_type: theme === "app_school_theme" ? "school" : "center",
+            system: 2
         }
         console.log(res, "res")
-        dispatch(createSchoolClass(res))
+        dispatch(createSchoolClass({res}))
+        // setSelectStudents([])
     }
+<<<<<<< HEAD
     // Radio tanlangan holatga qarab tegishli dispatch funksiyasini chaqirish
     useEffect(() =>{
         if (selectedRadio === "newStudents") {
@@ -124,6 +134,11 @@ export const StudentsPage = memo(() => {
         }
     } , [dispatch, selectedRadio])
 
+=======
+    // useEffect(() =>{
+    //     dispatch(fetchOnlyNewStudentsData())
+    // } , [])
+>>>>>>> origin/null
 
     const handleChange = (value) => {
         setSelectedRadio(value);
@@ -134,7 +149,7 @@ export const StudentsPage = memo(() => {
                 // return <NewStudents currentTableData={newStudents}/>
                 return <NewStudents
                     currentTableData={currentTableData}
-                    theme={__THEME__ === "app_school_theme"}
+                    theme={theme === "app_school_theme"}
                     setSelectStudents={setSelectStudents}
                     // setSelectId={}
                 />
@@ -164,23 +179,23 @@ export const StudentsPage = memo(() => {
                 selectedRadio={selectedRadio}
                 setSelectedRadio={setSelectedRadio}
                 peoples={studentsFilter}
-                theme={__THEME__ === "app_school_theme"}
+                theme={theme === "app_school_theme"}
                 onClick={setActiveModal}
             />
 
             <div className={cls.tableMain}>
                 {renderNewStudents}
             </div>
-            {/*<Pagination*/}
-            {/*    setCurrentTableData={setCurrentTableData}*/}
-            {/*    users={searchedUsers}*/}
-            {/*    setCurrentPage={setCurrentPage}*/}
-            {/*    currentPage={currentPage}*/}
-            {/*    pageSize={PageSize}*/}
-            {/*    onPageChange={page => {*/}
-            {/*        setCurrentPage(page)*/}
-            {/*    }}*/}
-            {/*    type={"custom"}/>*/}
+            <Pagination
+                setCurrentTableData={setCurrentTableData}
+                users={searchedUsers}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                pageSize={PageSize}
+                onPageChange={page => {
+                    setCurrentPage(page)
+                }}
+                type={"custom"}/>
 
 
             <StudentsFilter active={active} setActive={setActive} activePage={selectedRadio}/>
@@ -194,6 +209,12 @@ export const StudentsPage = memo(() => {
                         onSubmit={handleSubmit(onSubmit)}
                         extraClassname={cls.modal__form}
                     >
+                        <Input
+                            extraClassName={cls.modal__input}
+                            placeholder={"Sinf nomi"}
+                            name={"name"}
+                            register={register}
+                        />
                         <Select
                             extraClass={cls.modal__select}
                             title={"O'qituvchi"}
@@ -218,8 +239,9 @@ export const StudentsPage = memo(() => {
                             {
                                 schoolClassColors.map(item => {
                                     return (
-                                        <div>
+                                        <div className={cls.modal__inner}>
                                             <Radio
+                                                extraClasses={cls.modal__item}
                                                 onChange={() => setSelectColor(item.id)}
                                                 checked={selectColor === item.id}
                                                 name={"color"}
@@ -233,6 +255,7 @@ export const StudentsPage = memo(() => {
                             }
                         </div>
                         <Input
+                            extraClassName={cls.modal__input}
                             placeholder={"price"}
                             name={"price"}
                             register={register}

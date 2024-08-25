@@ -15,7 +15,7 @@ import {
     getFilteredStudents,
     getFilteredTeachers,
     getNewStudentsData
-} from "../../../../entities/students/model/selector/studentsSelector";
+} from "entities/students/model/selector/studentsSelector";
 import {useDispatch, useSelector} from "react-redux";
 import {Teachers} from "../../../../entities/teachers";
 import {fetchFilteredStudents, fetchNewStudentsData} from "../../../../entities/students/model/studentsThunk";
@@ -83,7 +83,6 @@ export const GroupCreatePage = () => {
 
 
     const onSelectStudentId = (id, subjectId) => {
-        let newId = id
         if (!selectedSubjectId) {
             setSelectedSubjectId(subjectId)
         } else {
@@ -92,20 +91,13 @@ export const GroupCreatePage = () => {
                 return null
             }
         }
-        if (!selectedStudents.length) {
-            setSelectedStudents([newId])
-        } else {
-            selectedStudents.filter(item => {
-                if (item !== newId) {
-                    if (newId) {
-                        setSelectedStudents(arr => [...arr, newId])
-                    }
-                } else {
-                    setSelectedStudents(selectedStudents.filter(item => item !== newId))
-                    newId = null
-                }
-            })
-        }
+        setSelectedStudents(prev => {
+            console.log(prev, "prev")
+            console.log(id, "id")
+            if (prev.filter(item => item === id)[0]){
+                return prev.filter(item => item !== id)
+            } else return [...prev, id]
+        })
     }
 
     useEffect(() => {
@@ -138,13 +130,13 @@ export const GroupCreatePage = () => {
         // dispatch(fetchFilteredStudents(userBranchId))
         request(`${API_URL}TimeTable/week_days`, "GET", null, headers())
             .then(res => {
-                console.log(res, "days")
+                // console.log(res, "days")
                 setWeekDays(res.map(item => ({...item, name: item.name_uz})))
             })
             .catch(err => console.log(err))
         request(`${API_URL}Group/course_types/`, "GET", null, headers())
             .then(res => {
-                console.log(res, "types")
+                // console.log(res, "types")
                 dispatch(getCurseTypes(res))
             })
             .catch(err => console.log(err))
@@ -190,6 +182,7 @@ export const GroupCreatePage = () => {
 
     const renderStudent = () => {
         return filteredStudents.map((item, index) => {
+            if (!item.subject_status) return null
             return (
                 <div
                     onClick={() => {
@@ -348,5 +341,3 @@ export const GroupCreatePage = () => {
     )
 }
 
-// getWeekDays selector yasash
-// weekDays thunk yasash

@@ -1,5 +1,9 @@
+import {getGroupProfileData} from "entities/profile/groupProfile";
 import {memo} from 'react';
 import classNames from "classnames";
+import {useSelector} from "react-redux";
+import {API_URL_DOC} from "shared/api/base";
+import {Button} from "shared/ui/button";
 
 import {Table} from "shared/ui/table";
 import {Input} from "shared/ui/input";
@@ -7,76 +11,18 @@ import {Input} from "shared/ui/input";
 import cls from "./classProfileStudentsList.module.sass";
 import defaultUser from "shared/assets/images/user_image.png";
 
-const list = [
-    {
-        img: defaultUser,
-        fullName: "Mahmud Yo`Ldoshev",
-        parentTel: "+998909773176",
-        tel: "+998909773176",
-        money: "-10000",
-        checked: true,
-        deleted: true
-    },
-    {
-        img: defaultUser,
-        fullName: "Mahmud Yo`Ldoshev",
-        parentTel: "+998909773176",
-        tel: "+998909773176",
-        money: "50000",
-        checked: true,
-        deleted: true
-    },
-    {
-        img: defaultUser,
-        fullName: "Mahmud Yo`Ldoshev",
-        parentTel: "+998909773176",
-        tel: "+998909773176",
-        money: "295 000",
-        checked: true,
-        deleted: true
-    },
-    {
-        img: defaultUser,
-        fullName: "Mahmud Yo`Ldoshev",
-        parentTel: "+998909773176",
-        tel: "+998909773176",
-        money: "295 000",
-        checked: true,
-        deleted: true
-    },
-    {
-        img: defaultUser,
-        fullName: "Mahmud Yo`Ldoshev",
-        parentTel: "+998909773176",
-        tel: "+998909773176",
-        money: "295 000",
-        checked: true,
-        deleted: true
-    },
-    {
-        img: defaultUser,
-        fullName: "Mahmud Yo`Ldoshev",
-        parentTel: "+998909773176",
-        tel: "+998909773176",
-        money: "295 000",
-        checked: true,
-        deleted: true
-    }
-
-
-]
-
 export const ClassProfileStudentsList = memo(() => {
 
+    const data = useSelector(getGroupProfileData)
     const renderStudentsList = () => {
-        return list.map(item =>
+        return data?.students?.map(item =>
             <tr>
                 <td>
-                    <img src={item.img} alt=""/>
+                    <img src={item?.user?.profile_img ? API_URL_DOC + item?.user?.profile_img : defaultUser} alt=""/>
                 </td>
-                <td>{item.fullName}</td>
-                <td>{item.tel}</td>
-                <td>{item.parentTel}</td>
+                <td>{item?.user?.name} {item?.user?.surname}</td>
+                <td>{item?.user?.phone}</td>
+                <td>{item?.parents_number}</td>
                 <td>
                     <div
                         className={classNames(cls.studentsList__status, {
@@ -109,7 +55,14 @@ export const ClassProfileStudentsList = memo(() => {
 
     return (
         <div className={cls.studentsList}>
-            <h1>O’quvchilar ro’yxati</h1>
+            <div className={cls.btns}>
+                <h1>O’quvchilar ro’yxati</h1>
+                <div className={cls.btns__inner}>
+                    <Button>Move</Button>
+                    <Button>Add</Button>
+                    <i className={classNames("fas fa-edit", cls.studentsList__icon)}/>
+                </div>
+            </div>
             <div className={cls.studentsList__container}>
                 <Table>
                     <thead>

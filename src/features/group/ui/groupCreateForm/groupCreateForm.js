@@ -7,6 +7,7 @@ import {
     getCurseLevelData,
     getCurseTypesData
 } from "entities/students";
+import {useTheme} from "shared/lib/hooks/useTheme";
 import {Modal} from "shared/ui/modal";
 import {Form} from "shared/ui/form";
 import {Input} from "shared/ui/input";
@@ -32,6 +33,7 @@ export const GroupCreateForm = memo((props) => {
     } = useForm()
     const {request} = useHttp()
 
+    const {theme} = useTheme()
     const curseTypesData = useSelector(getCurseTypesData)
     const curseLevelData = useSelector(getCurseLevelData)
     const userBranchId = useSelector(getUserBranchId)
@@ -46,6 +48,7 @@ export const GroupCreateForm = memo((props) => {
             subject: selectedSubjectId,
             branch: userBranchId,
             time_table: selectedTime,
+            create_type: theme === "app_center_theme" ? "center" : "school",
             system: 1
         }
         request(`${API_URL}Group/groups/create/`, "POST", JSON.stringify(res), headers())
@@ -78,14 +81,17 @@ export const GroupCreateForm = memo((props) => {
                             name={"course_types"}
                             // onChangeOption={setSelectedCurseType}
                         />
-                        <Select
-                            extraClassName={cls.createGroupFormItem}
-                            title={"Kurs darajasi"}
-                            options={curseLevelData}
-                            register={register}
-                            name={"level"}
-                            // onChangeOption={setSelectedCurseLevel}
-                        />
+                        {
+                            curseLevelData.length ? <Select
+                                extraClassName={cls.createGroupFormItem}
+                                title={"Kurs darajasi"}
+                                options={curseLevelData}
+                                register={register}
+                                name={"level"}
+                                // onChangeOption={setSelectedCurseLevel}
+                            /> : null
+                        }
+
                         <Select
                             extraClassName={cls.createGroupFormItem}
                             title={"Kurs tili"}

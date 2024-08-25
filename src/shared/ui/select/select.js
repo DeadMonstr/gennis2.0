@@ -80,10 +80,14 @@ export const Select = React.memo(({
                 {...register(name, {
                     value: selectOption,
                     defaultValue: selectOption,
-                    onChange: (e) => setSelectOption(e.target.value)
+                    onChange: onChangeOption ? (e) => {
+                        setSelectOption(e.target.value)
+                        setIsChanged(true)
+                    } : (e) => setSelectOption(e.target.value)
+
                 })}
             >
-                {title ? <option value={""}>{title}</option> : <option value={""} disabled>Tanlang</option>}
+                {title ? <option value={""} disabled>{title}</option> : <option value={""} disabled>Tanlang</option>}
                 {renderedOptions}
             </select>
             {status === "error" ? <span className={cls.label__error}>Error</span> : null}

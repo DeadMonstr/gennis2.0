@@ -82,10 +82,10 @@ export const AppRouter = () => {
                     />
 
 
-                    <Route
-                        path={"classProfile"}
-                        element={<ClassProfilePage/>}
-                    />
+                    {/*<Route*/}
+                    {/*    path={"classProfile"}*/}
+                    {/*    element={<ClassProfilePage/>}*/}
+                    {/*/>*/}
 
                     <Route
                         path={"molasses"}

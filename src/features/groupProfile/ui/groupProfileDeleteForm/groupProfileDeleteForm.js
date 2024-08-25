@@ -1,15 +1,23 @@
 import {getGroupsListData} from "entities/groups";
+import {
+    getFilteredGroups,
+    getGroupProfileFilteredStudents,
+    getReasons
+} from "entities/profile/groupProfile/model/groupProfileSelector";
+import {fetchFilteredGroups, moveGroup} from "entities/profile/groupProfile/model/groupProfileThunk";
 import {getTeachers} from "entities/teachers";
 import React, {memo, useCallback, useState} from 'react';
 import classNames from "classnames";
 import {useForm} from "react-hook-form";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
-import {getGroupProfileData} from "entities/profile/groupProfile";
+import {changeGroupProfile, getGroupProfileData} from "entities/profile/groupProfile";
 import {
     amountService,
     amountTypes
 } from "entities/profile/studentProfile";
+import {useParams} from "react-router";
+import {useTheme} from "shared/lib/hooks/useTheme";
 import {EditableCard} from "shared/ui/editableCard";
 import {Modal} from "shared/ui/modal";
 import {Form} from "shared/ui/form";
@@ -17,6 +25,7 @@ import {Button} from "shared/ui/button";
 import {Input} from "shared/ui/input";
 import {Radio} from "shared/ui/radio";
 import {Select} from "shared/ui/select";
+import {Switch} from "shared/ui/switch";
 import {Table} from "shared/ui/table";
 
 import cls from "./groupProfileDeleteForm.module.sass";
@@ -27,6 +36,17 @@ import money from "shared/assets/images/Money.png";
 
 const listPretcent = [-1, 34.8, 70.4]
 
+const deleteTypeList = [
+    {
+        id: "deleted",
+        name: "O'chirilganlar"
+    },
+    {
+        id: "new_students",
+        name: "Yangi o'quvchilar"
+    }
+]
+
 export const GroupProfileDeleteForm = memo(() => {
 
     const {
@@ -34,22 +54,61 @@ export const GroupProfileDeleteForm = memo(() => {
         handleSubmit
     } = useForm()
 
+    const {theme} = useTheme()
+    const {id} = useParams()
+    const dispatch = useDispatch()
     const data = useSelector(getGroupProfileData)
+    const students = useSelector(getGroupProfileFilteredStudents)
     const teachers = useSelector(getTeachers)
-    const groups = useSelector(getGroupsListData)
+    const groups = useSelector(getFilteredGroups)
+    const reasons = useSelector(getReasons)
 
     const [active, setActive] = useState(false)
     const [activeModal, setActiveModal] = useState("")
     const [select, setSelect] = useState([])
+    const [selectDeleteId, setSelectDeleteId] = useState(null)
+    const [selectOpt, setSelectOpt] = useState(null)
+    const [selectOptId, setSelectOptId] = useState(null)
     const [activeService, setActiveService] = useState(amountService[0])
     const [activePaymentType, setActivePaymentType] = useState(0)
+    const [selectedId, setSelectedId] = useState([])
 
     const onSubmitDelete = (data) => {
         console.log(data, "delete data")
+        const res = {
+            ...data,
+            students: [selectDeleteId],
+            update_method: "remove_students"
+        }
+        dispatch(changeGroupProfile({
+            id,
+            data: res,
+            group_type: theme === "app_center_theme" ? "center" : "school"
+        }))
     }
 
-    const onSubmitAdd = (data) => {
+    const onSubmitMove = (data) => {
         console.log(data, "data add")
+        const res = {
+            ...data,
+            students: select
+        }
+        dispatch(moveGroup({id, res}))
+    }
+
+    const onSubmitAddStudents = () => {
+        dispatch(changeGroupProfile({
+            data: {
+                students: selectedId,
+                update_method: "add_students"
+            },
+            id,
+            group_type: theme === "app_center_theme" ? "center" : "school"
+        }))
+    }
+
+    const onFilterGroups = (id) => {
+        dispatch(fetchFilteredGroups({id, group_id: data?.id}))
     }
 
     const renderStudents = () => {
@@ -93,13 +152,57 @@ export const GroupProfileDeleteForm = memo(() => {
                                 />
                                 <i
                                     className={classNames("fas fa-trash-alt", cls.delete__icon)}
-                                    onClick={() => setActiveModal("deleteModal")}
+                                    onClick={() => {
+                                        setActiveModal("deleteModal")
+                                        setSelectDeleteId(item?.id)
+                                    }}
                                 />
                             </div>
                         </td>
                         :
                         null
                 }
+            </tr>
+        )
+    }
+
+    const renderStudentsData = () => {
+        return students?.map(item =>
+            <tr>
+                <td>
+                    <img src={defaultUserImg} alt=""/>
+                </td>
+                <td>{item?.user?.name}</td>
+                <td>{item?.user?.surname}</td>
+                <td>
+                    {
+                        item?.subject?.map(i =>
+                            <div className={cls.addModal__subject}>
+                                {i?.name?.slice(0, 16)}
+                            </div>
+                        )
+                    }
+                </td>
+                <td>
+                    <div className={cls.check}>
+                        <Input
+                            extraClassName={cls.check__input}
+                            type={"checkbox"}
+                            onChange={() => setSelectedId(prev => {
+                                if (prev.filter(i => i === item.id)[0]) {
+                                    return prev.filter(i => i !== item.id)
+                                } else return [...prev, item.id]
+                            })}
+                        />
+                        <div className={classNames(cls.status, {
+                            [cls.active]: item?.extra_info?.status
+                        })}>
+                            <div className={classNames(cls.status__inner, {
+                                [cls.active]: item?.extra_info?.status
+                            })}/>
+                        </div>
+                    </div>
+                </td>
             </tr>
         )
     }
@@ -120,6 +223,9 @@ export const GroupProfileDeleteForm = memo(() => {
 
     const renderAmountService = renderAmountServiceTypes()
     const render = renderStudents()
+    const renderStudent = renderStudentsData()
+
+    console.log(selectOpt, "selectOpt")
 
     return (
         <>
@@ -132,12 +238,20 @@ export const GroupProfileDeleteForm = memo(() => {
                     <h1>O’quvchilar</h1>
                     {
                         active ?
-                            <Button
-                                extraClass={cls.students__btn}
-                                onClick={() => setActiveModal("addModal")}
-                            >
-                                Add
-                            </Button> : null
+                            <div className={cls.students__wrapper}>
+                                <Button
+                                    extraClass={cls.students__btn}
+                                    onClick={() => setActiveModal("changeModal")}
+                                >
+                                    Move
+                                </Button>
+                                <Button
+                                    extraClass={cls.students__btn}
+                                    onClick={() => setActiveModal("addModal")}
+                                >
+                                    Add
+                                </Button>
+                            </div> : null
                     }
                 </div>
                 <div className={cls.students__list}>
@@ -161,43 +275,70 @@ export const GroupProfileDeleteForm = memo(() => {
                 >
                     <Select
                         extraClass={cls.deleteForm__select}
-                        title={"Lorem"}
+                        options={deleteTypeList}
+                        title={"O'chirish uslubi"}
+                        onChangeOption={setSelectOpt}
                         register={register}
-                        name={"lorem"}
+                        name={"delete_type"}
+                        required
                     />
-                    <Input
-                        extraClassName={cls.deleteForm__input}
-                        placeholder={"Sabab"}
-                        register={register}
-                        name={"reason"}
-                    />
+                    {
+                        selectOpt === "deleted" ?
+                            <Select
+                                extraClass={cls.deleteForm__select}
+                                options={reasons}
+                                title={"Sabablar"}
+                                onChangeOption={setSelectOptId}
+                                register={register}
+                                name={"group_reason"}
+                                required
+                            /> : null
+                    }
+                    {
+                        reasons?.filter(item =>
+                            item?.id === +selectOptId)[0]?.name === "Boshqa" ||
+                        selectOpt !== "deleted" ? <Input
+                            extraClassName={cls.deleteForm__input}
+                            placeholder={"Sabab"}
+                            register={register}
+                            name={"comment"}
+                            required
+                        /> : null
+                    }
                     <Button extraClass={cls.deleteForm__btn}>Add</Button>
                 </Form>
             </Modal>
             <Modal
                 extraClass={cls.deleteForm}
-                active={activeModal === "addModal"}
+                active={activeModal === "changeModal"}
                 setActive={setActiveModal}
             >
                 <h1>Boshqa guruhga qo’shish</h1>
                 <Form
                     extraClassname={cls.deleteForm__form}
-                    onSubmit={handleSubmit(onSubmitAdd)}
+                    onSubmit={handleSubmit(onSubmitMove)}
                     typeSubmit={""}
                 >
                     <Select
                         extraClass={cls.deleteForm__select}
                         options={teachers}
                         title={"Teacher"}
-                        register={register}
-                        name={"teacher"}
+                        onChangeOption={onFilterGroups}
+                        // register={register}
+                        // name={"teacher"}
                     />
                     <Select
                         extraClass={cls.deleteForm__select}
                         options={groups}
                         title={"Group"}
                         register={register}
-                        name={"group"}
+                        name={"to_group_id"}
+                    />
+                    <Input
+                        extraClassName={cls.deleteForm__input}
+                        placeholder={"Sabab"}
+                        register={register}
+                        name={"reason"}
                     />
                     <Button extraClass={cls.deleteForm__btn}>Add</Button>
                 </Form>
@@ -300,6 +441,39 @@ export const GroupProfileDeleteForm = memo(() => {
                         }
                     </div>
                 </div>
+            </Modal>
+            <Modal
+                active={activeModal === "addModal"}
+                setActive={setActiveModal}
+                extraClass={cls.addModal}
+            >
+                <Input
+                    placeholder={"Search"}
+                    // onChange={(e) => setSearchValue(e.target.value)}
+                    // defaultValue={searchValue}
+                />
+                <div className={cls.addModal__container}>
+                    <Table>
+                        <thead>
+                        <tr>
+                            <th/>
+                            <th>Ism</th>
+                            <th>Familya</th>
+                            <th>Fanlar</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {renderStudent}
+                        </tbody>
+                    </Table>
+                </div>
+                <Button
+                    extraClass={cls.addModal__btn}
+                    onClick={onSubmitAddStudents}
+                >
+                    Add
+                </Button>
             </Modal>
         </>
     )

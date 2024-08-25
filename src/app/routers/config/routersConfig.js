@@ -1,3 +1,4 @@
+import {ClassProfilePage} from "pages/School";
 import {
     getDirectorRouteStudents,
     getRouteUserProfile,
@@ -34,8 +35,13 @@ import {
     getRouteCreateGroup,
     getEmployerSalaryInsideSource,
     getEmployerSalary,
+<<<<<<< HEAD
     getTeacherSalary, getInkasatsiya,
     getGroupHistory,
+=======
+    getTeacherSalary,
+    getRouteClassProfile
+>>>>>>> origin/null
 } from "shared/const/routers";
 
 
@@ -199,6 +205,10 @@ export const routersConfig = [
     {
         path: "groups/:id/groupInfo/:id",
         element: <GroupProfilePage/>,
+    },
+    {
+        path: getRouteClassProfile(":id"),
+        element: <ClassProfilePage/>
     },
     {
         path: "calendar",
