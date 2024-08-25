@@ -17,7 +17,9 @@ import {
     StudentProfileTotalAmount,
     StudentProfileGroupsHistory,
     StudentProfileTotalAttendance,
-    StudentProfileChangeInfo
+    StudentProfileChangeInfo,
+    StudentProfileContract,
+    StudentProfileAttendanceAll
 } from "entities/profile/studentProfile";
 import {
     fetchStudentProfileData,
@@ -39,15 +41,19 @@ export const StudentProfilePage = () => {
     const userData = useSelector(getUserData)
     const student_id = userData?.id
     const branch_id = userData?.user?.branch.id
-    // const group_id = userData?.group.length === 1 ? Number(userData.group[0].id) : userData?.group.map(item => Number(item.id));
     const group_id = userData?.group
     const [active, setActive] = useState(false)
     const [activeModal, setActiveModal] = useState("")
+    const [actives,setActives] = useState(false)
     const [newImage, setNewImage] = useState("")
 
     useEffect(() => {
         dispatch(fetchStudentProfileData(id))
     }, [id])
+
+    // if (!userData || !userData.user) {
+    //     return <div>Loading...</div>;
+    // }
 
     const onSubmitData = (data) => {
         const res = {
@@ -59,14 +65,12 @@ export const StudentProfilePage = () => {
     }
 
     const onSubmitImage = (data) => {
-        // formData.append("profile_img", data)
         console.log(data, "file profile-page")
         dispatch(changeStudentProfileImage({id: userData?.user?.id, data}))
     }
 
     console.log(userData, "student ")
     console.log(selectedGroup, "branc id")
-
 
     return (
         <div
@@ -104,6 +108,10 @@ export const StudentProfilePage = () => {
                     [cls.active]: active
                 })}
             >
+                <StudentProfileContract
+                    setActive={setActive}
+                    active={active}
+                />
                 <StudentProfileTotalAmount
                     active={active}
                     setActive={setActive}
@@ -129,6 +137,11 @@ export const StudentProfilePage = () => {
                     setActive={setActive}
                     selectedGroup={selectedGroup}
                     selectedGroupName={selectedGroupName}
+                />
+                <StudentProfileAttendanceAll
+                    active={active}
+                    setActive={setActive}
+
                 />
             </div>
             <ImageCrop

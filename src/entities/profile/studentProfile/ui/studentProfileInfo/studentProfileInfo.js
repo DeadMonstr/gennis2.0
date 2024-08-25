@@ -1,19 +1,13 @@
-import {memo} from 'react';
+import React, {memo} from 'react';
 
 import {EditableCard} from "shared/ui/editableCard";
 
 import cls from "./studentProfileInfo.module.sass";
 import defaultUserImg from "shared/assets/images/user_image.png";
+import time from "../../../../../shared/assets/images/oclock.png";
 
-export const StudentProfileInfo = memo((props) => {
+export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal, newImage}) => {
 
-    const {
-        setActive,
-        data,
-        active,
-        setActiveModal,
-        newImage
-    } = props
 
     return (
         <EditableCard
@@ -30,6 +24,10 @@ export const StudentProfileInfo = memo((props) => {
                     src={data?.profile_img ?? defaultUserImg}
                     alt=""
                 />
+                <div onClick={() => setActive("contract")} className={cls.subject__edit}>
+                    <i style={{fontSize: 20+"px"}} className={"fa-solid fa-file-contract"}></i>
+                    <p>Shartnoma</p>
+                </div>
                 <h1>{data?.username}</h1>
                 <h2 className={cls.info__role}>Student</h2>
             </div>

@@ -17,17 +17,17 @@ import {Pagination} from "features/pagination";
 
 import cls from "./students.module.sass"
 import {getSearchValue} from "features/searchInput";
-import {Modal} from "../../../../shared/ui/modal";
-import {Form} from "../../../../shared/ui/form";
-import {Select} from "../../../../shared/ui/select";
-import {fetchTeachersData, getTeachers} from "../../../../entities/teachers";
+import {Modal} from "shared/ui/modal";
+import {Form} from "shared/ui/form";
+import {Select} from "shared/ui/select";
+import {fetchTeachersData, getTeachers} from "entities/teachers";
 import {useForm} from "react-hook-form";
 import {fetchSubjectsAndLanguages} from "../../../registerPage";
-import {getSchoolStudents} from "../../../../entities/students/model/selector/studentsSelector";
-import {createSchoolClass, fetchSchoolStudents} from "../../../../entities/students/model/studentsThunk";
-import {Radio} from "../../../../shared/ui/radio";
+import {getSchoolStudents} from "entities/students/model/selector/studentsSelector";
+import {createSchoolClass, fetchSchoolStudents} from "entities/students/model/studentsThunk";
+import {Radio} from "shared/ui/radio";
 import {getUserBranchId} from "../../../profilePage";
-import {Input} from "../../../../shared/ui/input";
+import {Input} from "shared/ui/input";
 
 
 const studentsFilter = [

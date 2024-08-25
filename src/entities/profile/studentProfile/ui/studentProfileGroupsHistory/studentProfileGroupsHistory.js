@@ -58,7 +58,6 @@ export const StudentProfileGroupsHistory = memo(({active, setActive, selectedSub
         return getHistorys.map(history => (
             <tr key={history.id}>
                 <td/>
-                <td>{history.group.id}</td>
                 <td>{history.group.name}</td>
                 <td>{history.joined_day}</td>
                 <td>{history.left_day}</td>

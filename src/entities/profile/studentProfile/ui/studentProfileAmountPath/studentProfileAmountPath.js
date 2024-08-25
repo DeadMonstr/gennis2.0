@@ -1,37 +1,53 @@
-import React, {memo, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import classNames from "classnames";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 
 import {EditableCard} from "shared/ui/editableCard";
 import {Select} from "shared/ui/select";
 import {Table} from "shared/ui/table";
 import {getBooksData} from "../../model/selectors/booksSelector";
 import {getPaymentData} from "../../model/selectors/paymentSelector";
-
 import cls from "./studentProfileAmountPath.module.sass";
 import inTo from "shared/assets/images/inTo.png";
 import outTo from "shared/assets/images/out.png";
+import {getPaymentList, studentPaymentListThunk} from "features/studentPayment";
 
 export const StudentProfileAmountPath = memo(({active, setActive}) => {
 
     const paymentList = useSelector(getPaymentData)
+    const pathArray = window.location.pathname.split('/');
+    const lastId = pathArray[pathArray.length - 1];
     const booksList = useSelector(getBooksData)
-
+    const getTotalAmountData = useSelector(getPaymentList)
+    const paymentLists = getTotalAmountData.payments
+    const dispatch = useDispatch()
     const [activeState, setActiveState] = useState("")
 
+
+    useEffect(() => {
+        dispatch(studentPaymentListThunk(lastId))
+    }, [dispatch])
+
+    console.log(getTotalAmountData, "payment")
+
     const renderInData = () => {
-        return paymentList?.map(item =>
+        return paymentLists?.map(item =>
             <tr>
-                <td>{item.type}</td>
-                <td>{item.payment}</td>
-                <td>{item.date}</td>
+                <td>
+                    {
+                        item.status === true ? <td>To'lov</td> : <td>Chegirma</td>
+                    }
+
+                </td>
+                <td>{item.payment_sum}</td>
+                <td>{item.added_data}</td>
                 <td>
                     <div
                         className={classNames(cls.inner, {
-                            [cls.active]: item?.paymentType
+                            [cls.active]: item?.payment_type.name
                         })}
                     >
-                        {item?.paymentType}
+                        {item?.payment_type.name}
                     </div>
                 </td>
                 <td></td>
@@ -97,12 +113,6 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                     activeState ?
                         <div className={cls.table}>
                             <div className={cls.table__header}>
-                                <Select
-                                    title={"Yil"}
-                                />
-                                <Select
-                                    title={"Oy"}
-                                />
                             </div>
                             <div className={cls.table__content}>
                                 {

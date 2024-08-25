@@ -2,16 +2,30 @@ import {createSlice} from "@reduxjs/toolkit";
 import {
     studentPaymentThunk,
     studentCharityThunk,
+    studentDiscountThunk,
     studentGroupHistoryThunk,
-    studentTotalAddendanceThunk
+    studentTotalAddendanceThunk,
+    studentProfileTotalAmountThunk,
+    studentProfileAttendanceDataThunk,
+    studentProfileAttendanceDataPostThunk,
+    studentProfileAttendanceAll,
+    studentProfileAttendanceAllDataThunk, studentProfileAttendanceAllDataPostThunk, studentPaymentListThunk
 } from "./studentPaymentThunk";
 
 
 const initialState = {
     payment: [],
     charities: [],
+    discount: [],
     groupHistory: [],
     attendance: [],
+    totalAmount: [],
+    attendanceData: [],
+    attendanceDatas: [],
+    attendanceAllData: [],
+    allAttendance: [],
+    allAttendanceDatas: [],
+    paymentList: [],
     loading: false,
     error: null
 }
@@ -48,6 +62,20 @@ const studentPaymentSlice = createSlice({
             })
 
 
+
+            .addCase(studentDiscountThunk.pending, (state) => {
+               state.loading = true
+           })
+            .addCase(studentDiscountThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.discount = action.payload
+            })
+            .addCase(studentDiscountThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
+
+
             .addCase(studentGroupHistoryThunk.pending, (state) => {
                state.loading = true
            })
@@ -70,6 +98,104 @@ const studentPaymentSlice = createSlice({
                 state.attendance = action.payload
             })
             .addCase(studentTotalAddendanceThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
+
+
+
+            .addCase(studentProfileTotalAmountThunk.pending, (state) => {
+               state.loading = true
+           })
+            .addCase(studentProfileTotalAmountThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.totalAmount = action.payload
+            })
+            .addCase(studentProfileTotalAmountThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
+
+
+
+            .addCase(studentProfileAttendanceDataThunk.pending, (state) => {
+               state.loading = true
+           })
+            .addCase(studentProfileAttendanceDataThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.attendanceData = action.payload
+            })
+            .addCase(studentProfileAttendanceDataThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
+
+
+
+            .addCase(studentProfileAttendanceDataPostThunk.pending, (state) => {
+               state.loading = true
+           })
+            .addCase(studentProfileAttendanceDataPostThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.attendanceDatas = action.payload
+            })
+            .addCase(studentProfileAttendanceDataPostThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
+
+
+
+            .addCase(studentProfileAttendanceAll.pending, (state) => {
+               state.loading = true
+           })
+            .addCase(studentProfileAttendanceAll.fulfilled, (state, action) => {
+                state.loading = false;
+                state.allAttendance = action.payload
+            })
+            .addCase(studentProfileAttendanceAll.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
+
+
+
+            .addCase(studentProfileAttendanceAllDataThunk.pending, (state) => {
+               state.loading = true
+           })
+            .addCase(studentProfileAttendanceAllDataThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.attendanceAllData = action.payload
+            })
+            .addCase(studentProfileAttendanceAllDataThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
+
+
+
+            .addCase(studentProfileAttendanceAllDataPostThunk.pending, (state) => {
+               state.loading = true
+           })
+            .addCase(studentProfileAttendanceAllDataPostThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.allAttendanceDatas = action.payload
+            })
+            .addCase(studentProfileAttendanceAllDataPostThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
+
+
+
+            .addCase(studentPaymentListThunk.pending, (state) => {
+               state.loading = true
+           })
+            .addCase(studentPaymentListThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.paymentList = action.payload
+            })
+            .addCase(studentPaymentListThunk.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message
             })
