@@ -9,12 +9,12 @@ import {useParams} from "react-router-dom";
 
 const filter = [
     {name: 'teachersSalary', label: "teacher salary"},
-    {name: 'studentsDiscounts', label: "student discount"},
+    // {name: 'studentsDiscounts', label: "student discount"},
     {name: 'employeesSalary', label: "employer salary"},
-    {name: 'debtStudents', label: "debt student"},
+    // {name: 'debtStudents', label: "debt student"},
     {name: 'overhead', label: "overhead"},
     {name: 'studentsPayments', label: "student payment"},
-    {name: 'bookPayment', label: "book payment"},
+    // {name: 'bookPayment', label: "book payment"},
     {name: 'capital', label: "capital"},
 ]
 

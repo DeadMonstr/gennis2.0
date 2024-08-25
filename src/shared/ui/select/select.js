@@ -44,7 +44,7 @@ export const Select = React.memo(({
 
             //
             const value = item[keyValue] || item.value || item.id || item.name || item
-            const key = item.name || item?.number || `${item.user?.name} ${item.user?.surname}` || item
+            const key = item.name || item?.number || item.days || item.user &&`${item.user?.name} ${item.user?.surname}` || item
             //
             // if (!item.length)
             return (

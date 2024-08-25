@@ -30,6 +30,8 @@ import {EmployerSalaryPage} from "../index";
 import {TeacherSalaryPage} from "../index";
 import {StudentSalary} from "./accountingPages/studentSalary";
 import {Link} from "../../../shared/ui/link";
+import {AdditionalCosts} from "./accountingPages/additionalCosts";
+import {Capital} from "./accountingPages/capital";
 
 
 const number = [
@@ -94,8 +96,8 @@ export const AccountingPageMain = memo(() => {
                 <Route path={"studentsPayments"} element={<StudentSalary locationId={locationId}/>}/>
                 <Route path={"teachersSalary"} element={<TeacherSalaryPage path={"teachersSalary"} locationId={locationId}/>}/>
                 <Route path={"employeesSalary"} element={<EmployerSalaryPage setPage={setPage} path={"employeesSalary"} locationId={locationId}/>}/>
-                <Route path={"overhead"} element={<AccountingAdditionalCosts path={"overhead"} locationId={locationId}/>}/>
-                <Route path={"capital"} element={<AccountingCapitalCosts path={"capital"} locationId={locationId}/>}/>
+                <Route path={"overhead"} element={<AdditionalCosts path={"overhead"} locationId={locationId}/>}/>
+                <Route path={"capital"} element={<Capital path={"capital"} locationId={locationId}/>}/>
 
 
                 {/*<Route path={"studentsDiscounts"} element={<StudentsDiscount path={"studentsDiscounts"} locationId={locationId}/>}/>*/}

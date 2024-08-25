@@ -27,3 +27,11 @@ export {getStudentPaymentes , getLoadingStudent , getDeletedStudent} from "./mod
 export {default as employerSlice} from "./model/slice/employerSalary"
 
 export {default as teacher} from "./model/slice/teacher"
+
+export {default as overHeadSlice} from "./model/slice/additionalCosts"
+
+export {getOverHeadType , getOverHeadLoading} from "./model/selector/additionalCosts"
+
+
+
+export {default as capitalSlice} from "./model/slice/capital"

@@ -36,12 +36,12 @@ export const EmployerSalaryPage = memo(({setPage}) => {
     }, [deleted])
     const search = useSelector(getSearchValue)
     let PageSize = useMemo(() => 50, [])
+
+    const [changingData, setChangingData] = useState({})
+    const getCapitalType = useSelector(getCapitalTypes)
+
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
-    const [changingData, setChangingData] = useState({})
-
-
-    const getCapitalType = useSelector(getCapitalTypes)
     console.log(getCapitalType, "type")
 
 
@@ -51,18 +51,18 @@ export const EmployerSalaryPage = memo(({setPage}) => {
         return Number(salary).toLocaleString();
     };
 
-    const searchedUsers = useMemo(() => {
-        const filteredHeroes = getSalary?.slice()
-        setCurrentPage(1)
-
-
-        if (!search) return filteredHeroes
-
-        return filteredHeroes.filter(item =>
-            item.name?.toLowerCase().includes(search.toLowerCase())
-        )
-
-    }, [getSalary, getDeletedEmployerSalary, setCurrentPage, search])
+    // const searchedUsers = useMemo(() => {
+    //     const filteredHeroes = getSalary?.slice()
+    //     setCurrentPage(1)
+    //
+    //
+    //     if (!search) return filteredHeroes
+    //
+    //     return filteredHeroes.filter(item =>
+    //         item.name?.toLowerCase().includes(search.toLowerCase())
+    //     )
+    //
+    // }, [getSalary, getDeletedEmployerSalary, setCurrentPage, search])
 
 
     const onDelete = (data) => {
@@ -118,7 +118,7 @@ export const EmployerSalaryPage = memo(({setPage}) => {
                     changingData={changingData}
                     sum2={sum2}
                     formatSalary={formatSalary}
-                    filteredSalary={currentTableData}
+                    filteredSalary={getSalary}
                     setChangingData={setChangingData}
                     changePayment={changePayment}
                     activeDelete={activeDelete}
@@ -130,17 +130,17 @@ export const EmployerSalaryPage = memo(({setPage}) => {
                 />
             }
 
-            <Pagination
-                setCurrentTableData={setCurrentTableData}
-                users={searchedUsers}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-                pageSize={PageSize}
-                onPageChange={page => {
-                    setCurrentPage(page)
-                }}
-                type={"custom"}
-            />
+            {/*<Pagination*/}
+            {/*    setCurrentTableData={setCurrentTableData}*/}
+            {/*    users={searchedUsers}*/}
+            {/*    setCurrentPage={setCurrentPage}*/}
+            {/*    currentPage={currentPage}*/}
+            {/*    pageSize={PageSize}*/}
+            {/*    onPageChange={page => {*/}
+            {/*        setCurrentPage(page)*/}
+            {/*    }}*/}
+            {/*    type={"custom"}*/}
+            {/*/>*/}
         </div>
     );
 })

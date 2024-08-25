@@ -1,11 +1,12 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {changePaymentType, getTeacherSalary} from "../thunk/teacherSalarythunk";
+import {changePaymentType, getDeletedTeacherSalary, getTeacherSalary} from "../thunk/teacherSalarythunk";
 
 
 const initialState = {
     teacherSalary: [],
     loading: false,
-    error: false
+    error: false,
+    deletedSalary: []
 }
 
 const teacherSalary = createSlice({
@@ -50,6 +51,19 @@ const teacherSalary = createSlice({
                 state.error = false
             })
             .addCase(getTeacherSalary.rejected , state => {
+                state.error = true
+                state.loading = false
+            })
+            .addCase(getDeletedTeacherSalary.pending, state => {
+                state.loading = false
+                state.error = false
+            })
+            .addCase(getDeletedTeacherSalary.fulfilled, (state, action) => {
+                state.deletedSalary = action.payload
+                state.loading = false
+                state.error = false
+            })
+            .addCase(getDeletedTeacherSalary.rejected , state => {
                 state.error = true
                 state.loading = false
             })

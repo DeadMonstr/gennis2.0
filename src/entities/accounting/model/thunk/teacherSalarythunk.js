@@ -5,7 +5,15 @@ export const getTeacherSalary = createAsyncThunk(
     "teacherSalary/getTeacherSalary",
     async () => {
         const {request} =useHttp()
-        return await request(`${API_URL}Teachers/teacher-salary-list/` , "GET" , null , headers())
+        return await request(`${API_URL}Teachers/teacher-salary-list/?status=False` , "GET" , null , headers())
+    }
+)
+
+export const getDeletedTeacherSalary = createAsyncThunk(
+    "teacherSalary/getDeletedTeacherSalary",
+    async () => {
+        const {request} =useHttp()
+        return await request(`${API_URL}Teachers/teacher-salary-list/?status=True` , "GET" , null , headers())
     }
 )
 

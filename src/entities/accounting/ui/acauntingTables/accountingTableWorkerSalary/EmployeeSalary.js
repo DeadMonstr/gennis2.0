@@ -2,14 +2,13 @@ import {Table} from "../../../../../shared/ui/table";
 import {Button} from "../../../../../shared/ui/button";
 import cls from "./empSalary.module.sass"
 import {Modal} from "../../../../../shared/ui/modal";
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 
-export const EmployeeSalary = ({ filteredSalary, sum2 , activeDeleted  , formatSalary , onChange, changePayment, setChangePayment, deleted ,setChangingData, onDeleteModal}) => {
-import {onDeleteEmployerSalary} from "../../../model/slice/employerSalary";
-import {API_URL, headers, useHttp} from "shared/api/base";
-import {useDispatch} from "react-redux";
 import {Select} from "shared/ui/select";
 import {useNavigate} from "react-router";
+import {Pagination} from "../../../../../features/pagination";
+import {useSelector} from "react-redux";
+import {getSearchValue} from "../../../../../features/searchInput";
 
 export const EmployeeSalary = ({
                                    changingData,
@@ -26,7 +25,22 @@ export const EmployeeSalary = ({
                                    onDelete
                                }) => {
     const navigate = useNavigate()
+    const search = useSelector(getSearchValue)
+    let PageSize = useMemo(() => 50, [])
+    const [currentTableData, setCurrentTableData] = useState([])
+    const [currentPage, setCurrentPage] = useState(1);
 
+    const searchedUsers = useMemo(() => {
+        const filteredHeroes = filteredSalary?.slice()
+        setCurrentPage(1)
+
+
+        if (!search) return filteredHeroes
+
+        return filteredHeroes.filter(item =>
+            item.name?.toLowerCase().includes(search.toLowerCase())
+        )
+    }, [filteredSalary, setCurrentPage, search])
     const onDeleteModal = (data) => {
         setActiveDelete(true)
         console.log(data)
@@ -40,7 +54,7 @@ export const EmployeeSalary = ({
     }
 
     const renderFilteredSalary = () => {
-        return filteredSalary.map((item, i) => (
+        return currentTableData.map((item, i) => (
             <>
                 <tbody>
                 <tr>
@@ -102,55 +116,69 @@ export const EmployeeSalary = ({
     }
     const render2 = renderFilteredSalary()
     return (
-        <div className={cls.empSalary}>
-            <div style={{
-                // textAlign: "right",
-                display: "flex",
-                justifyContent: "flex-end"
-            }}>
+        <>
+            <div className={cls.empSalary}>
                 <div style={{
-                    alignSelf: "flex-end",
-                    fontSize: "2rem",
-                    color: "#22C55E",
-                    padding: "1rem 2rem 1rem 1rem",
-                    borderRadius: "5px",
-                    marginBottom: "10px"
-                }}>Total : {formatSalary(sum2)} sum
+                    // textAlign: "right",
+                    display: "flex",
+                    justifyContent: "flex-end"
+                }}>
+                    <div style={{
+                        alignSelf: "flex-end",
+                        fontSize: "2rem",
+                        color: "#22C55E",
+                        padding: "1rem 2rem 1rem 1rem",
+                        borderRadius: "5px",
+                        marginBottom: "10px"
+                    }}>Total : {formatSalary(sum2)} sum
+                    </div>
                 </div>
-            </div>
-            <Table>
-                <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Ism Familiya</th>
-                    <th>Oylik</th>
-                    <th>Sana</th>
-                    <th>Kasb</th>
-                    <th>To'lov turi</th>
-                    <th>O'chirish</th>
-                </tr>
-                </thead>
-                {render2}
-            </Table>
-            <Modal active={activeDelete} setActive={setActiveDelete}>
-                <div className={cls.modalHeader}> {changingData.name} {changingData.surname}'ning <br/> oyligini
-                    o'chirmoqchimisz
-                </div>
-                <div className={cls.deletemodal}>
-                    <Button type={"danger"} onClick={onDelete}>Xa</Button>
-                    <Button onClick={() => setActiveDelete(!activeDelete)}>Yo'q</Button>
-                </div>
-            </Modal>
-            <Modal active={changePayment} setActive={setChangePayment}>
+                <Table>
+                    <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Ism Familiya</th>
+                        <th>Oylik</th>
+                        <th>Sana</th>
+                        <th>Kasb</th>
+                        <th>To'lov turi</th>
+                        <th>O'chirish</th>
+                    </tr>
+                    </thead>
+                    {render2}
+                </Table>
 
-                <h2>To'lov turini uzgartirish</h2>
-                <div className={cls.changeType}>
-                    <Select title={changingData.payment_types} options={getCapitalType}
-                            onChangeOption={(value) => onChange(value)}/>
-                    {/*<Button onClick={onChange}>Tastiqlash</Button>*/}
-                </div>
-            </Modal>
-        </div>
+                <Modal active={activeDelete} setActive={setActiveDelete}>
+                    <div className={cls.modalHeader}> {changingData.name} {changingData.surname}'ning <br/> oyligini
+                        o'chirmoqchimisz
+                    </div>
+                    <div className={cls.deletemodal}>
+                        <Button type={"danger"} onClick={onDelete}>Xa</Button>
+                        <Button onClick={() => setActiveDelete(!activeDelete)}>Yo'q</Button>
+                    </div>
+                </Modal>
+                <Modal active={changePayment} setActive={setChangePayment}>
+
+                    <h2>To'lov turini uzgartirish</h2>
+                    <div className={cls.changeType}>
+                        <Select title={changingData.payment_types} options={getCapitalType}
+                                onChangeOption={(value) => onChange(value)}/>
+                        {/*<Button onClick={onChange}>Tastiqlash</Button>*/}
+                    </div>
+                </Modal>
+            </div>
+            <Pagination
+                setCurrentTableData={setCurrentTableData}
+                users={searchedUsers}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                pageSize={PageSize}
+                onPageChange={page => {
+                    setCurrentPage(page)
+                }}
+                type={"custom"}
+            />
+        </>
     );
 };
 

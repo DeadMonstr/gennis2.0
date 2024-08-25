@@ -17,8 +17,17 @@ import {Pagination} from "features/pagination";
 
 import cls from "./students.module.sass"
 import {getSearchValue} from "features/searchInput";
-
-
+import {useForm} from "react-hook-form";
+import {getSchoolStudents} from "../../../../entities/students/model/selector/studentsSelector";
+import {fetchTeachersData, getTeachers} from "../../../../entities/teachers";
+import {getUserBranchId} from "../../../profilePage";
+import {createSchoolClass, fetchSchoolStudents} from "../../../../entities/students/model/studentsThunk";
+import {fetchSubjectsAndLanguages} from "../../../registerPage";
+import {Modal} from "../../../../shared/ui/modal";
+import {Select} from "../../../../shared/ui/select";
+import {Input} from "../../../../shared/ui/input";
+import {Form} from "../../../../shared/ui/form";
+import {Radio} from "../../../../shared/ui/radio";
 const studentsFilter = [
     {name: "newStudents", label: "New Students"},
     {name: "studying", label: "Studying Students"},
