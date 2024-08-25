@@ -1,30 +1,19 @@
-import {Table} from "shared/ui/table";
-import {Button} from "shared/ui/button";
-import {Modal} from "../../../../../shared/ui/modal";
-import React, {useMemo, useState} from "react";
 import cls from "../accountingTableWorkerSalary/empSalary.module.sass";
-import {Select} from "../../../../../shared/ui/select";
+import {Table} from "../../../../../shared/ui/table";
+import {Modal} from "../../../../../shared/ui/modal";
+import {Button} from "../../../../../shared/ui/button";
 import {Pagination} from "../../../../../features/pagination";
+import React, {useMemo, useState} from "react";
 import {useSelector} from "react-redux";
 import {getSearchValue} from "../../../../../features/searchInput";
 
-
-export const StudentsPayments = ({
-                                     studentData,
-                                     changingData,
-                                     setChangingData,
-                                     onDelete,
-                                     deleted,
-                                     activeDelete,
-                                     setActiveDelete
-                                 }) => {
-
+export const DeletedStudentPayment = ({deletedStudent  , }) => {
     const search = useSelector(getSearchValue)
     let PageSize = useMemo(() => 50, [])
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const searchedUsers = useMemo(() => {
-        const filteredHeroes = studentData?.slice()
+        const filteredHeroes = deletedStudent?.slice()
         setCurrentPage(1)
 
 
@@ -33,18 +22,13 @@ export const StudentsPayments = ({
         return filteredHeroes.filter(item =>
             item.name?.toLowerCase().includes(search.toLowerCase())
         )
-    }, [studentData, setCurrentPage, search])
+    }, [deletedStudent, setCurrentPage, search])
+
     const formatSalary = (payment_sum) => {
         return Number(payment_sum).toLocaleString();
     };
-    const sum2 = studentData.reduce((a, c) => a + parseFloat(c.payment_sum || 0), 0);
-
-
-
-    const onDeleteModal = (data) => {
-        setActiveDelete(true)
-    }
-    const renderStudents = () => {
+    const sum2 = deletedStudent.reduce((a, c) => a + parseFloat(c.payment_sum || 0), 0);
+    const renderDeletedStudents = () => {
         return currentTableData.map((item, i) => (
             <tr>
                 <td>{i + 1}</td>
@@ -60,27 +44,6 @@ export const StudentsPayments = ({
                         textTransform: "capitalize",
                         cursor: "pointer"
                     }}>{item?.payment_type?.name}</div>
-                </td>
-                <td>
-                    <div>
-                        <Button
-                            onClick={() => {
-                                onDeleteModal({
-                                    id: item.id,
-                                    name: item?.student?.user?.name,
-                                    surname: item?.student?.user?.surname
-                                })
-                                setChangingData({
-                                    id: item.id,
-                                    name: item?.student?.user?.name,
-                                    surname: item?.student?.user?.surname
-                                })
-                            }
-                            }
-                            type={"delete"}
-                            children={<i className={"fa fa-times"} style={{color: "white"}}/>}
-                        />
-                    </div>
                 </td>
             </tr>
         ))
@@ -114,23 +77,14 @@ export const StudentsPayments = ({
                         <th>To'lov</th>
                         <th>Sana</th>
                         <th>To'lov turi</th>
-                        <th>Ochirich</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {renderStudents()}
+                    {renderDeletedStudents()}
                     {/*{deleted ? renderDeletedStudents() : renderStudents()}*/}
                     </tbody>
                 </Table>
-                <Modal active={activeDelete} setActive={setActiveDelete}>
-                    <div className={cls.modalHeader}>{changingData.name} {changingData.surname}'ning <br/> to'lovlarini
-                        o'chirmoqchimisz
-                    </div>
-                    <div className={cls.deletemodal}>
-                        <Button type={"danger"} onClick={onDelete}>Xa</Button>
-                        <Button onClick={() => setActiveDelete(!activeDelete)}>Yo'q</Button>
-                    </div>
-                </Modal>
+
                 {/*<Modal active={changePayment} setActive={setChangePayment}>*/}
                 {/*    <h2>To'lov turini uzgartirish</h2>*/}
                 {/*    <div className={cls.changeType}>*/}
@@ -158,4 +112,3 @@ export const StudentsPayments = ({
     );
 };
 
-// onDelete(item.id)

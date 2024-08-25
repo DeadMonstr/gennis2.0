@@ -16,3 +16,11 @@ export const getDeletedEmpSalary  = createAsyncThunk(
         return await request(`${API_URL}Users/salaries-deleted/` , "GET" , null , headers())
     }
 )
+
+// export const changeEmployerPayment = createAsyncThunk(
+//     "employerSlice/changeEmployerPayment",
+//     async ({id , obj}) => {
+//         const {request} = useHttp()
+//         return await
+//     }
+// )

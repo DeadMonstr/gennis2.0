@@ -15,6 +15,9 @@ const employerSlice = createSlice({
         onDeleteEmployerSalary: (state, action) => {
             state.employerSalary = state.employerSalary.filter(item => item.id !== action.payload.id)
         },
+        changePaymentType: (state, action) => {
+            state.employerSalary = state.employerSalary.filter(item => item.id !== action.payload.id)
+        },
 
     },
     extraReducers: builder =>
@@ -46,7 +49,8 @@ const employerSlice = createSlice({
                 state.error = true
                 state.loading = false
             })
+
 })
 
-export const {onDeleteEmployerSalary} = employerSlice.actions
+export const {onDeleteEmployerSalary, changePaymentType} = employerSlice.actions
 export default  employerSlice.reducer

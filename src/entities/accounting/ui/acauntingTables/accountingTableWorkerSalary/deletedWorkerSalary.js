@@ -1,10 +1,30 @@
 import cls from "./empSalary.module.sass";
-import React from "react";
+import React, {useMemo, useState} from "react";
 import {Table} from "../../../../../shared/ui/table";
+import {useSelector} from "react-redux";
+import {getSearchValue} from "../../../../../features/searchInput";
+import {Pagination} from "../../../../../features/pagination";
 
-export const DeletedWorkerSalary = ({filteredDeletedSalary , formatSalary , sum2 , onChange}) => {
+export const DeletedWorkerSalary = ({filteredDeletedSalary, formatSalary, sum2, onChange}) => {
+
+    const search = useSelector(getSearchValue)
+    let PageSize = useMemo(() => 50, [])
+    const [currentTableData, setCurrentTableData] = useState([])
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const searchedUsers = useMemo(() => {
+        const filteredHeroes = filteredDeletedSalary?.slice()
+        setCurrentPage(1)
+
+
+        if (!search) return filteredHeroes
+
+        return filteredHeroes.filter(item =>
+            item.name?.toLowerCase().includes(search.toLowerCase())
+        )
+    }, [filteredDeletedSalary, setCurrentPage, search])
     const renderFilteredDeletedSalary = () => {
-        return filteredDeletedSalary?.map((item, i) => (
+        return currentTableData?.map((item, i) => (
             <>
                 <tbody>
                 <tr>
@@ -22,37 +42,50 @@ export const DeletedWorkerSalary = ({filteredDeletedSalary , formatSalary , sum2
         ))
     }
     return (
-        <div className={cls.empSalary}>
-            <div style={{
-                // textAlign: "right",
-                display: "flex",
-                justifyContent: "flex-end"
-            }}>
+        <>
+            <div className={cls.empSalary}>
                 <div style={{
-                    alignSelf: "flex-end",
-                    fontSize: "2rem",
-                    color: "#22C55E",
-                    padding: "1rem 2rem 1rem 1rem",
-                    borderRadius: "5px",
-                    marginBottom: "10px"
+                    // textAlign: "right",
+                    display: "flex",
+                    justifyContent: "flex-end"
                 }}>
-                    Total :{formatSalary(sum2)}
+                    <div style={{
+                        alignSelf: "flex-end",
+                        fontSize: "2rem",
+                        color: "#22C55E",
+                        padding: "1rem 2rem 1rem 1rem",
+                        borderRadius: "5px",
+                        marginBottom: "10px"
+                    }}>
+                        Total :{formatSalary(sum2)}
+                    </div>
                 </div>
+                <Table>
+                    <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Ism Familiya</th>
+                        <th>Oylik</th>
+                        <th>Sana</th>
+                        <th>Kasb</th>
+                        <th>To'lov turi</th>
+                    </tr>
+                    </thead>
+                    {renderFilteredDeletedSalary()}
+                </Table>
             </div>
-            <Table>
-                <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Ism Familiya</th>
-                    <th>Oylik</th>
-                    <th>Sana</th>
-                    <th>Kasb</th>
-                    <th>To'lov turi</th>
-                </tr>
-                </thead>
-                {renderFilteredDeletedSalary()}
-            </Table>
-        </div>
+            <Pagination
+                setCurrentTableData={setCurrentTableData}
+                users={searchedUsers}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                pageSize={PageSize}
+                onPageChange={page => {
+                    setCurrentPage(page)
+                }}
+                type={"custom"}
+            />
+        </>
     );
 };
 

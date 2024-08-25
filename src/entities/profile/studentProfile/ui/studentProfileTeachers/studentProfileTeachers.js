@@ -2,9 +2,9 @@ import React, {memo, useCallback} from 'react';
 import {EditableCard} from "shared/ui/editableCard";
 import cls from "./studentProfileTeachers.module.sass";
 import defaultUserImage from "shared/assets/images/user_image.png";
-import {API_URL_IMG} from "../../../../../shared/api/base";
+import {API_URL_DOC} from "../../../../../shared/api/base";
 export const StudentProfileTeachers = memo(({data}) => {
-    const API_URL_IMAGE = `${API_URL_IMG}`;
+    const API_URL_IMAGE = `${API_URL_DOC}`;
     const renderGroupTeachers = useCallback(() => {
         const teachers = Array.isArray(data)
             ? data.flatMap(group => group.teacher || [])
