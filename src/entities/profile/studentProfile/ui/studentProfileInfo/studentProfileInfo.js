@@ -2,7 +2,7 @@ import React, {memo} from 'react';
 import {EditableCard} from "shared/ui/editableCard";
 import cls from "./studentProfileInfo.module.sass";
 import defaultUserImg from "shared/assets/images/user_image.png";
-import {API_URL_IMG} from "../../../../../shared/api/base";
+import {API_URL_DOC} from "../../../../../shared/api/base";
 import {Button} from "../../../../../shared/ui/button";
 
 export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal, newImage, contract}) => {
@@ -42,7 +42,7 @@ export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal
                             <Button onClick={() => setActive("contract")}>Qo'shish</Button>
                         ) : (
                             contract.contract.map((item, index) =>
-                                <a key={index} href={`${API_URL_IMG}${item.url}`} target="_blank" rel="noopener noreferrer">
+                                <a key={index} href={`${API_URL_DOC}${item.url}`} target="_blank" rel="noopener noreferrer">
                                     Yuklab olish
                                 </a>
                             )
