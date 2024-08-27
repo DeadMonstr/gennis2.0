@@ -35,6 +35,7 @@ export const Header = () => {
     const [deletedId, setDeletedId] = useState(0);
     localStorage.setItem("lenght", selected.length)
 
+
     useEffect(() => {
         if (locationHistory.length >= 5) {
             setLocationHistory(arr => {

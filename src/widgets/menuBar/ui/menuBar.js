@@ -7,7 +7,7 @@ import { getUsername } from "pages/loginPage";
 import { Link } from "shared/ui/link";
 import { ThemeContext } from "shared/lib/context/themeContext";
 import { menuConfig } from "../model/consts/menuConfig";
-import { getUserPermission } from "../../../pages/profilePage";
+import {getUserBranchId, getUserPermission} from "pages/profilePage";
 import cls from "./menuBar.module.sass";
 import defaultUserImage from "shared/assets/images/user_image.png";
 
@@ -17,17 +17,18 @@ export const Menubar = () => {
     const { theme } = useContext(ThemeContext);
     const username = useSelector(getUsername);
     const userPermissions = useSelector(getUserPermission);
-    const location = 1;
+    // const location = 1;
+    const location = useSelector(getUserBranchId)
     const [activeMenu, setActiveMenu] = useState("home");
     const [isDirector, setIsDirector] = useState(false);
 
-    useEffect(() => {
-        if (userPermissions) {
-            const directorRole = userPermissions[1].jobs.some(job => job.director || job.manager === true);
-            console.log(directorRole)
-            setIsDirector(directorRole);
-        }
-    }, [userPermissions]);
+    // useEffect(() => {
+    //     if (userPermissions) {
+    //         const directorRole = userPermissions[1].jobs.some(job => job.director || job.manager === true);
+    //         console.log(directorRole)
+    //         setIsDirector(directorRole);
+    //     }
+    // }, [userPermissions]);
 
     useEffect(() => {
         menuConfig.map(item => {

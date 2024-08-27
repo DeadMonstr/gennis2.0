@@ -61,5 +61,5 @@ export const RequireAuth = ({roles, children}) => {
 
     if (refreshLoading) {
         return <DefaultPageLoader/>
-    } else return children
+    } else return <Outlet/>
 };

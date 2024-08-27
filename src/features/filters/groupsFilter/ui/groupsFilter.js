@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {API_URL, headers, useHttp} from "shared/api/base";
 
 import {Modal} from "shared/ui/modal";
 import {Input} from "shared/ui/input";
@@ -7,19 +8,32 @@ import {Switch} from "shared/ui/switch";
 
 import cls from "../../filters.module.sass";
 
-export const GroupsFilter = React.memo(({active, setActive, activePage , setActiveSwitch , activeSwitch}) => {
+export const GroupsFilter = React.memo(({active, setActive}) => {
+
+    const {request} = useHttp()
 
     const [selectedFrom, setSelectedFrom] = useState()
     const [selectedTo, setSelectedTo] = useState()
     const [selectedSubject, setSelectedSubject] = useState()
     const [selectedTeacher, setSelectedTeacher] = useState()
     const [selectedType, setSelectedType] = useState()
+    const [activeSwitch, setActiveSwitch] = useState(false)
 
-
-
-    const onChangeSwitch =() =>{
-        setActiveSwitch(!activeSwitch)
-    }
+    useEffect(() => {
+        if (selectedSubject || selectedTeacher || selectedType || selectedTo || selectedFrom || (!activeSwitch || activeSwitch)) {
+            const res = {
+                from: selectedFrom,
+                to: selectedTo,
+                subject: selectedSubject,
+                teacher: selectedTeacher,
+                curse_type: selectedType,
+                deleted: activeSwitch,
+            }
+            // request(`${API_URL}`, "POST", JSON.stringify(res), headers())
+            //     .then(res => console.log(res, "filtered"))
+            //     .catch(err => console.log(err))
+        }
+    }, [selectedFrom, selectedTo, selectedType, selectedTeacher, selectedSubject, activeSwitch])
 
     return (
         <Modal
@@ -65,7 +79,7 @@ export const GroupsFilter = React.memo(({active, setActive, activePage , setActi
 
                     <div className={cls.filter__switch}>
                         <p>O’chirilgan</p>
-                        <Switch  activeSwitch={activeSwitch} onChangeSwitch={() => onChangeSwitch()}/>
+                        <Switch activeSwitch={activeSwitch} onChangeSwitch={setActiveSwitch}/>
                     </div>
 
                 </div>

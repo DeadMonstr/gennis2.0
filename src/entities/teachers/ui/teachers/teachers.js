@@ -8,9 +8,9 @@ import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 import {Input} from "../../../../shared/ui/input";
 
 
-export const Teachers = memo(({data,loading}) => {
+export const Teachers = memo(({data, setSelect, select}) => {
     const [checkbox, setCheckbox] = useState(false)
-    const [select, setSelect] = useState()
+    const [selectId, setSelectId] = useState()
     const loadingDef = useSelector(getTeacherLoading)
     const checkBoxChange = (id) => {
         setCheckbox(id)
@@ -18,16 +18,16 @@ export const Teachers = memo(({data,loading}) => {
 
 
     const renderTeacher = useCallback(() => {
-        if(data && data.length) {
-            return data?.map((item, i) => (
-                <tr key={i}>
-                    <td>{i + 1}</td>
-                    <Link to={`teacherProfile/${item.id}`}>
-                        <td>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
-                    </Link>
-                </tr>
-            ))
-        }
+        // if(data && data.length) {
+        //     return data?.map((item, i) => (
+        //         <tr key={i}>
+        //             <td>{i + 1}</td>
+        //             <Link to={`teacherProfile/${item.id}`}>
+        //                 <td>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
+        //             </Link>
+        //         </tr>
+        //     ))
+        // }
         if (data && data.length) {
             return data?.map((item, i) => {
                 // console.log(select.includes(item.id))
@@ -38,12 +38,14 @@ export const Teachers = memo(({data,loading}) => {
                             <td>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
                         </Link>
 
-                        <td>{item.user.username}</td>
+                        <td>{item?.user?.username}</td>
                         <td>{item.user.phone}</td>
                         <td>{item.user.age}</td>
                         <td>
                             <div
-                                className={item.subject.length ? cls.teacher__language : null}>{item.subject.name}</div>
+                                className={item.subject.length ? cls.teacher__language : null}>{item.subject.map(item =>
+                                <p>{item.name}</p>
+                            )}</div>
                         </td>
                         <td>
                             {item?.extra_info?.status ? <div className={cls.teacher__inner}>
@@ -54,9 +56,12 @@ export const Teachers = memo(({data,loading}) => {
                                     type={"radio"}
                                     name={"radio"}
                                     extraClassName={cls.teacher__input}
-                                    onChange={() => setSelect(item.id)}
-                                    value={select.includes(item.id)}
-                                    checked={select.includes(item.id)}
+                                    onChange={() => {
+                                        setSelect(item.id)
+                                        setSelectId(item.id)
+                                    }}
+                                    value={selectId === item.id}
+                                    checked={selectId === item.id}
                                 />
                             </div> : null}
                         </td>
@@ -73,7 +78,7 @@ export const Teachers = memo(({data,loading}) => {
 
         }
 
-    }, [data])
+    }, [data, selectId])
 
 
 

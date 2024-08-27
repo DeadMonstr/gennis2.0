@@ -1,10 +1,120 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {API_URL, headers, useHttp} from "shared/api/base";
-// http://192.168.0.105:8000/Group/groups/profile/{id}/
+
+
 export const fetchGroupProfile = createAsyncThunk(
     "groupProfileSlice/fetchGroupProfile",
-    (id) => {
+    ({id, group_type}) => {
         const {request} = useHttp()
         return request(`${API_URL}Group/groups/profile/${id}/`, "GET", null, headers())
     }
 )
+
+export const fetchGroupProfileTimeTable = createAsyncThunk(
+    "groupProfileSlice/fetchGroupProfileTimeTable",
+    ({group_id}) => {
+        const {request} = useHttp()
+        return request(`${API_URL}TimeTable/GrouptimeTableList/${group_id}`, "GET", null, headers())
+    }
+)
+
+export const changeGroupProfile = createAsyncThunk(
+    "groupProfileSlice/changeGroupProfile",
+    ({data, group_type, status, id}) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Group/groups/profile/${id}/`, "PATCH", JSON.stringify({
+            ...data,
+            group_type,
+            status
+        }), headers())
+    }
+)
+
+export const deleteGroupProfile = createAsyncThunk(
+    "groupProfileSlice/deleteGroupProfile",
+    ({id}) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Group/groups/delete/${id}/`, "POST", null, headers())
+    }
+)
+
+export const fetchFilteredTeachers = createAsyncThunk(
+    "groupProfileSlice/fetchFilteredTeachers",
+    ({branch_id, subject_id}) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Teachers/teachers-for-subject/${branch_id}/${subject_id}/`, "GET", null, headers())
+    }
+)
+
+export const fetchReasons = createAsyncThunk(
+    "groupProfileSlice/fetchReasons",
+    () => {
+        const {request} = useHttp()
+        return request(`${API_URL}Group/group_reason/`, "GET", null, headers())
+    }
+)
+
+export const fetchFilteredStudents = createAsyncThunk(
+    "groupProfileSlice/fetchFilteredStudents",
+    ({branch_id, subject_id}) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Students/students_for_subject/${branch_id}/${subject_id}/`, "GET", null, headers())
+    }
+)
+
+export const fetchFilteredStudentsAndTeachers = createAsyncThunk(
+    "groupProfileSlice/fetchFilteredStudentsAndTeachers",
+    ({branch_id, subject_id, res}) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Group/filtered_teachers_students/${branch_id}/${subject_id}/`, "POST", JSON.stringify(res), headers())
+    }
+)
+
+export const fetchFilteredGroups = createAsyncThunk(
+    "groupProfileSlice/fetchFilteredGroups",
+    ({id, group_id}) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Group/groups_for_teacher/${id}/${group_id}/`, "GET", null, headers())
+    }
+)
+
+export const moveGroup = createAsyncThunk(
+    "groupProfileSlice/moveGroup",
+    ({id, res}) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Group/groups/move-to-group/${id}/`, "POST", JSON.stringify(res), headers())
+    }
+)
+
+export const fetchWeekDays = createAsyncThunk(
+    "groupProfileSlice/fetchWeekDays",
+    () => {
+        const {request} = useHttp()
+        return request(`${API_URL}TimeTable/week_days/`, "GET", null, headers())
+    }
+)
+
+export const changeWeekDays = createAsyncThunk(
+    "groupProfileSlice/changeWeekDays",
+    ({id, res}) => {
+        const {request} = useHttp()
+        return request(`${API_URL}TimeTable/GrouptimeTableUpdate/${id}/`, "PATCH", JSON.stringify(res), headers())
+    }
+)
+
+export const createWeekDays = createAsyncThunk(
+    "groupProfileSlice/changeWeekDays",
+    ({id, res}) => {
+        const {request} = useHttp()
+        return request(`${API_URL}TimeTable/GrouptimeTableList/${id}/`, "POST", JSON.stringify(res), headers())
+    }
+)
+
+export const deleteWeekDays = createAsyncThunk(
+    "groupProfileSlice/deleteWeekDays",
+    ({id}) => {
+        const {request} = useHttp()
+        return request(`${API_URL}TimeTable/time_table_delete/${id}/`, "DELETE", null, headers())
+    }
+)
+

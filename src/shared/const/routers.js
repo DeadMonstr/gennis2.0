@@ -57,3 +57,4 @@ export const getInkasatsiya = (id) => `inkasatsiya/${id}/*`
 
 
 export const getGroupHistory = (id) => `students/:id/profile/:id/history/${id}`
+export const getRouteClassProfile = (id) => `groups/:id/classProfile/${id}`

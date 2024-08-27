@@ -1,5 +1,13 @@
-import React, {memo, useState} from 'react';
-import {useSelector} from "react-redux";
+import classNames from "classnames";
+import {getGroupProfileFilteredTeachers} from "entities/profile/groupProfile/model/groupProfileSelector";
+import {changeGroupProfile, fetchFilteredTeachers} from "entities/profile/groupProfile/model/groupProfileThunk";
+import {getTeachers} from "entities/teachers";
+import {getUserBranchId} from "pages/profilePage";
+import {getUserSystemId} from "pages/profilePage/model/selector/userProfileSelector";
+import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router";
+import {useTheme} from "shared/lib/hooks/useTheme";
 
 import {EditableCard} from "shared/ui/editableCard";
 import {Input} from "shared/ui/input";
@@ -11,59 +19,73 @@ import {getGroupProfileData} from "entities/profile/groupProfile";
 import cls from "./groupProfileModalTeachers.module.sass";
 import defaultUserImg from "shared/assets/images/user_image.png";
 
-const data = [
-    {
-        name: "Mahmud",
-        surname: "Yo`Ldoshev",
-        subjects: ["Ingliz Tili"],
-        status: false
-    },
-    {
-        name: "Mahmud",
-        surname: "Yo`Ldoshev",
-        subjects: ["Ingliz Tili"],
-        status: true
-    },
-    {
-        name: "Mahmud",
-        surname: "Yo`Ldoshev",
-        subjects: ["Ingliz Tili"],
-        status: false
-    },
-    {
-        name: "Mahmud",
-        surname: "Yo`Ldoshev",
-        subjects: ["Ingliz Tili"],
-        status: true
-    }
-]
-
 export const GroupProfileModalTeachers = memo(() => {
 
+    const userSystemId = useSelector(getUserSystemId)
+    const dispatch = useDispatch()
+    const {id} = useParams()
+    const {theme} = useTheme()
     const profileData = useSelector(getGroupProfileData)
-    const [active, setActive] = useState(false)
+    const teachers = useSelector(getGroupProfileFilteredTeachers)
 
-    const renderTeachers = () => {
-        return data.map(item =>
+    const [active, setActive] = useState(false)
+    const [searchValue, setSearchValue] = useState("")
+
+    const onChangeTeacher = (teacherId) => {
+        dispatch(changeGroupProfile({
+            data: {teacher: [teacherId]},
+            id: id,
+            group_type: userSystemId === 1 ? "center" : "school"
+        }))
+    }
+
+    const searched = useMemo(() => {
+        console.log(teachers, "teachers")
+        const filteredSlice = teachers?.slice()
+
+        return filteredSlice?.filter(item =>
+            item?.user?.name?.toLowerCase().includes(searchValue?.toLowerCase()) ||
+            item?.user?.surname?.toLowerCase().includes(searchValue?.toLowerCase())
+        )
+    }, [teachers, searchValue])
+
+    const renderTeachers = useCallback(() => {
+        return searched?.map(item =>
             <tr>
                 <td>
                     <img src={defaultUserImg} alt=""/>
                 </td>
-                <td>{item.name}</td>
-                <td>{item.surname}</td>
+                <td>{item?.user?.name}</td>
+                <td>{item?.user?.surname}</td>
                 <td>
-                    {
-                        item.subjects.map(i =>
-                            <div className={cls.teachersModal__subject}>{i}</div>
-                        )
-                    }
+                    <div className={cls.teachersModal__wrapper}>
+                        {
+                            item?.subject?.map(i =>
+                                <div className={cls.teachersModal__subject}>
+                                    {i?.name?.slice(0, 16)}
+                                </div>
+                            )
+                        }
+                    </div>
                 </td>
                 <td>
-                    <Switch activeSwitch={item.status}/>
+                    <div className={cls.check}>
+                        <Switch
+                            activeSwitch={profileData?.teacher[0]?.id === item?.id}
+                            onChangeSwitch={() => onChangeTeacher(item?.id)}
+                        />
+                        <div className={classNames(cls.status, {
+                            [cls.active]: item?.extra_info?.status
+                        })}>
+                            <div className={classNames(cls.status__inner, {
+                                [cls.active]: item?.extra_info?.status
+                            })}/>
+                        </div>
+                    </div>
                 </td>
             </tr>
         )
-    }
+    }, [searched])
 
     const render = renderTeachers()
 
@@ -94,10 +116,13 @@ export const GroupProfileModalTeachers = memo(() => {
                             </span>
                         </h2>
                     </div>
-                    <div className={cls.teacher__share}>
-                        <p>O’qituvchi ulushi:</p>
-                        <p className={cls.teacher__money}>{profileData?.teacher_salary}</p>
-                    </div>
+                    {
+                        profileData?.teacher_salary ? <div className={cls.teacher__share}>
+                            <p>O’qituvchi ulushi:</p>
+                            <p className={cls.teacher__money}>{profileData?.teacher_salary}</p>
+                        </div> : null
+                    }
+
                 </div>
             </EditableCard>
             <Modal
@@ -107,8 +132,10 @@ export const GroupProfileModalTeachers = memo(() => {
             >
                 <Input
                     placeholder={"Search"}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    defaultValue={searchValue}
                 />
-                <div>
+                <div className={cls.teachersModal__container}>
                     <Table>
                         <thead>
                         <tr>

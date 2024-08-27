@@ -43,7 +43,6 @@ export const GroupTimeTableForm = memo((props) => {
     const [timeCounter, setTimeCounter] = useState([1])
 
     const onSubmit = (data) => {
-
         let arr = Object.entries(data).sort()
         const res = timeCounter.map((item, index) =>
             ({
@@ -56,8 +55,7 @@ export const GroupTimeTableForm = memo((props) => {
         )
         dispatch(getFilteredStudentsStatus())
         setSelectTime(res)
-        console.log("hello" , res)
-        request(`${API_URL}Students/api/filter_students_subject/${userBranchId}/`, "POST", JSON.stringify(res), headers())
+        request(`${API_URL}Students/api/filter_students_subject/?branch=${userBranchId}`, "POST", JSON.stringify(res), headers())
             .then(res => {
                 // console.log(res, "timeTable")
                 dispatch(getFilteredStudentsData(res))

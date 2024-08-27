@@ -4,7 +4,12 @@ export {GroupProfileStatistics} from "./ui/groupProfileStatistics/groupProfileSt
 export {GroupProfileAttendance} from "./ui/groupProfileAttendance/groupProfileAttendance";
 export {GroupProfileSubjectList} from "./ui/groupProfileSubjectList/groupProfileSubjectList";
 export {GroupProfileMore} from "./ui/groupProfileMore/groupProfileMore";
+export {GroupProfileRating} from "./ui/groupProfileRating/groupProfileRating";
 
-export {fetchGroupProfile} from "./model/groupProfileThunk";
-export {default as groupProfile} from "./model/groupProfileSlice";
+export {
+    fetchGroupProfile,
+    changeGroupProfile,
+    deleteGroupProfile
+} from "./model/groupProfileThunk";
+export {default as groupProfileSlice} from "./model/groupProfileSlice";
 export {getGroupProfileData, getGroupProfileLoading} from "./model/groupProfileSelector";

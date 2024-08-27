@@ -3,3 +3,4 @@ export {GroupProfileStudents} from "./ui/groupProfileStudents/groupProfileStuden
 export {GroupProfileTimeForm} from "./ui/groupProfileTimeForm/groupProfileTimeForm";
 export {GroupProfileAttendanceForm} from "./ui/groupProfileAttendanceForm/groupProfileAttendanceForm";
 export {GroupProfileInfoForm} from "./ui/groupProfileInfoForm/groupProfileInfoForm";
+export {GroupProfileDeleteForm} from "./ui/groupProfileDeleteForm/groupProfileDeleteForm";

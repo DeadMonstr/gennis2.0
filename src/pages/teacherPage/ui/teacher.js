@@ -1,3 +1,4 @@
+import {getUserBranchId} from "pages/profilePage";
 import React, {useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {TeacherFilter} from "features/filters/teacherFilter";
@@ -21,13 +22,14 @@ export const TeachersPage = () => {
     const loading = useSelector(getTeacherLoading)
     const search = useSelector(getSearchValue)
     const teachersData = useSelector(getTeachers)
+    const userBranchId = useSelector(getUserBranchId)
 
     const dispatch = useDispatch()
 
 
     useEffect(() =>{
-        dispatch(fetchTeachersData())
-    } ,[dispatch])
+        dispatch(fetchTeachersData({userBranchId}))
+    } ,[])
     console.log(teachersData , "teach")
 
 

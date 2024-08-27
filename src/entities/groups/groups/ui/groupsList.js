@@ -1,4 +1,7 @@
+import {getUserBranchId} from "pages/profilePage";
+import {getUserSystemId} from "pages/profilePage/model/selector/userProfileSelector";
 import React from 'react';
+import {useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 
 import {Table} from "shared/ui/table";
@@ -28,14 +31,14 @@ export const GroupsList = React.memo(({currentTableData}) => {
                 {
                     currentTableData?.map((item, i) => {
                         return (
-                            <tr onClick={() => navigate(`groupInfo/${item.id}`)}>
+                            <tr onClick={() => navigate(`groupInfo/${item?.id}`)}>
                                 <td>{i + 1}</td>
                                 <td>{item?.name}</td>
                                 <td>{item?.name} {item?.surname}</td>
                                 <td>{item?.subject?.name}</td>
                                 <td>{item?.course_types?.name}</td>
                                 <td>{item?.price}</td>
-                                <td>{item?.status ? <div><div/></div> : null }</td>
+                                <td>{item?.status ?<div><div/></div> : <div className={cls.red}><div className={cls.red__inner}/></div> }</td>
                             </tr>
                         )
                     })
