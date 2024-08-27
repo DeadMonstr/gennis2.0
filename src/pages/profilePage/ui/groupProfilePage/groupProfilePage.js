@@ -8,7 +8,7 @@ import {
 } from "entities/profile/groupProfile/model/groupProfileThunk";
 import {fetchRoomsData} from "entities/rooms";
 import {fetchClassColors, fetchClassNumberList} from "entities/students";
-import {getUserBranchId, getUserSystemId} from "pages/profilePage/model/selector/userProfileSelector";
+import {getUserBranchId, getUserSystemId} from "entities/profile/userProfile/model/userProfileSelector";
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import classNames from "classnames";

@@ -28,9 +28,9 @@ import {roomDeleteSlice} from "features/roomDeleteModal/model";
 import {roomsImageAddSlice} from "features/roomImageAddModal/model";
 import {
     studentProfile,
-    teacherProfileData,
-    userProfile
+    teacherProfileData
 } from "pages/profilePage";
+import {userProfileSlice} from "entities/profile/userProfile"
 import {flowsSlice} from "entities/flows";
 import {teacherParseSlice} from "entities/teachers";
 import {employerParseSlice} from "../entities/profile/employerProfile";
@@ -120,7 +120,7 @@ export const store = configureStore({
         postBranch,
         getBranchSlice,
         // timeTableSchool,
-        userProfile,
+        userProfileSlice,
         vacancyWorkerPermissionSlice,
         teacherSalarySlice,
         employerSalarySlice,

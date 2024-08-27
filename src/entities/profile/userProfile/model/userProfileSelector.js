@@ -1,19 +1,19 @@
 
 export const getUserSalaryData = (state) =>
-    state.userProfile.salaryData
+    state.userProfileSlice.salaryData
 
 export const getUserSalaryInnerData = (state) =>
-    state.userProfile.salaryInnerData
+    state.userProfileSlice.salaryInnerData
 
 export const getUserProfileData = (state) =>
-    state.userProfile.userData
+    state.userProfileSlice.userData
 
 export const getUserBranchId = (state) =>
-    state.userProfile.userBranchId
+    state.userProfileSlice.userBranchId
 
 export const getUserSystemId = (state) =>
-    state.userProfile.userSystemId
+    state.userProfileSlice.userSystemId
 
 
 export const getUserPermission = (state) =>
-    state.userProfile.userPermissions
+    state.userProfileSlice.userPermissions

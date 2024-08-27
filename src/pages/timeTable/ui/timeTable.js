@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {DndContext} from "@dnd-kit/core"
 import {useDispatch, useSelector} from "react-redux";
 
-import {getUserBranchId} from "pages/profilePage";
+import {getUserBranchId} from "entities/profile/userProfile";
 import {fetchSubjectsAndLanguages} from "pages/registerPage";
 import {
     TimeTableScheduleList,

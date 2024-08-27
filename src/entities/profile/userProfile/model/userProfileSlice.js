@@ -4,7 +4,7 @@ import {
     fetchUserProfileData,
     changeUserProfileData,
     changeUserProfileImage
-} from "../thunk/userProfileThunk";
+} from "entities/profile/userProfile/model/userProfileThunk";
 
 const initialState = {
     userBranchId: null,

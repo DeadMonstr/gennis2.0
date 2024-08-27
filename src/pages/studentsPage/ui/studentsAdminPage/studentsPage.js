@@ -22,7 +22,7 @@ import {getSearchValue} from "features/searchInput";
 import {useForm} from "react-hook-form";
 import {getSchoolStudents} from "../../../../entities/students/model/selector/studentsSelector";
 import {fetchTeachersData, getTeachers} from "../../../../entities/teachers";
-import {getUserBranchId} from "../../../profilePage";
+import {getUserBranchId} from "entities/profile/userProfile";
 import {createSchoolClass, fetchSchoolStudents} from "../../../../entities/students/model/studentsThunk";
 import {fetchSubjectsAndLanguages} from "../../../registerPage";
 import {Modal} from "../../../../shared/ui/modal";

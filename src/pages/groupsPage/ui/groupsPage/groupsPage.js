@@ -1,4 +1,4 @@
-import {getUserBranchId} from "pages/profilePage";
+import {getUserBranchId} from "entities/profile/userProfile";
 import React, {useEffect, useMemo, useState} from "react";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";

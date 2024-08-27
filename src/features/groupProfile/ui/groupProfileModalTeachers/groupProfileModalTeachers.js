@@ -3,7 +3,7 @@ import {getGroupProfileFilteredTeachers} from "entities/profile/groupProfile/mod
 import {changeGroupProfile, fetchFilteredTeachers} from "entities/profile/groupProfile/model/groupProfileThunk";
 import {getTeachers} from "entities/teachers";
 import {getUserBranchId} from "pages/profilePage";
-import {getUserSystemId} from "pages/profilePage/model/selector/userProfileSelector";
+import {getUserSystemId} from "entities/profile/userProfile/model/userProfileSelector";
 import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";

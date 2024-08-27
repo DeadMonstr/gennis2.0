@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 
 import {Menubar} from "widgets/menuBar";
 import {Header} from "widgets/header";
-import {fetchUserProfileData} from "pages/profilePage";
+import {fetchUserProfileData} from "entities/profile/userProfile";
 import {getUserId, getUserRefreshLoading} from "pages/loginPage";
 
 

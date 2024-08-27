@@ -7,7 +7,7 @@ import { getUsername } from "pages/loginPage";
 import { Link } from "shared/ui/link";
 import { ThemeContext } from "shared/lib/context/themeContext";
 import { menuConfig } from "../model/consts/menuConfig";
-import {getUserBranchId, getUserPermission} from "pages/profilePage";
+import {getUserBranchId, getUserPermission} from "entities/profile/userProfile";
 import cls from "./menuBar.module.sass";
 import defaultUserImage from "shared/assets/images/user_image.png";
 

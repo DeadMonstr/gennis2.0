@@ -15,8 +15,8 @@ import {
     getUserSalaryData,
     getUserSalaryInnerData,
     getUserProfileData
-} from "../../model/selector/userProfileSelector";
-import {changeUserProfileData, changeUserProfileImage, fetchUserProfileData} from "../../model/thunk/userProfileThunk";
+} from "entities/profile/userProfile/model/userProfileSelector";
+import {changeUserProfileData, changeUserProfileImage, fetchUserProfileData} from "entities/profile/userProfile/model/userProfileThunk";
 
 import cls from "./userProfilePage.module.sass";
 import {ImageCrop} from "../../../../features/imageCrop";

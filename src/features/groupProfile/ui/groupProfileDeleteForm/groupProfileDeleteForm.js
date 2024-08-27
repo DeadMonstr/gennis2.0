@@ -7,7 +7,7 @@ import {
 import {fetchFilteredGroups, moveGroup} from "entities/profile/groupProfile/model/groupProfileThunk";
 import {getFilteredTeachers} from "entities/students";
 import {getTeachers} from "entities/teachers";
-import {getUserSystemId} from "pages/profilePage/model/selector/userProfileSelector";
+import {getUserSystemId} from "entities/profile/userProfile/model/userProfileSelector";
 import React, {memo, useCallback, useState} from 'react';
 import classNames from "classnames";
 import {useForm} from "react-hook-form";

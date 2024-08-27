@@ -2,7 +2,7 @@ import React, {memo} from 'react';
 import {useForm} from "react-hook-form";
 import {useSelector} from "react-redux";
 
-import {getUserBranchId} from "pages/profilePage";
+import {getUserBranchId} from "entities/profile/userProfile";
 import {
     getCurseLevelData,
     getCurseTypesData
