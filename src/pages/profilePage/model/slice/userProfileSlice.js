@@ -213,7 +213,7 @@ const userProfileSlice = createSlice({
                 console.log(action.payload)
                 state.userData = action.payload.user
                 state.userBranchId = action.payload.user.branch.id
-                state.userSystemId = action.payload.user.branch.location.system.id
+                // state.userSystemId = action.payload.user.branch.location.system.id
                 state.userPermissions = action.payload.permissions
                 state.loading = false
                 state.error = null

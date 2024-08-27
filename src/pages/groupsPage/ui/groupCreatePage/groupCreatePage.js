@@ -1,3 +1,5 @@
+import {useNavigate} from "react-router";
+import {useTheme} from "shared/lib/hooks/useTheme";
 import {Button} from "shared/ui/button";
 
 import {Select} from "shared/ui/select";
@@ -61,6 +63,9 @@ const peoples = [
 export const GroupCreatePage = () => {
 
     const {request} = useHttp()
+    // const {theme} = useTheme()
+    const theme = localStorage.getItem("theme")
+    const navigation = useNavigate()
     const {register, handleSubmit} = useForm()
     const userBranchId = useSelector(getUserBranchId)
     const roomsData = useSelector(getRoomsData);
@@ -79,7 +84,11 @@ export const GroupCreatePage = () => {
     const [activeModal, setActiveModal] = useState("")
 
 
-
+    useEffect(() => {
+        if (theme === "app_school_theme") {
+            navigation(-1)
+        }
+    }, [theme])
 
 
     const onSelectStudentId = (id, subjectId) => {

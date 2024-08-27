@@ -10,16 +10,7 @@ import cls from "./groupsList.module.sass";
 
 export const GroupsList = React.memo(({currentTableData}) => {
 
-    const userSystemId = useSelector(getUserSystemId)
     const navigate = useNavigate()
-
-    console.log(userSystemId)
-
-    const onNavigate = (id) => {
-        navigate(
-            userSystemId === 1 ? `groupInfo/${id}` : `classProfile/${id}`
-        )
-    }
 
     return (
         <>
@@ -40,7 +31,7 @@ export const GroupsList = React.memo(({currentTableData}) => {
                 {
                     currentTableData?.map((item, i) => {
                         return (
-                            <tr onClick={() => onNavigate(item.id)}>
+                            <tr onClick={() => navigate(`groupInfo/${item?.id}`)}>
                                 <td>{i + 1}</td>
                                 <td>{item?.name}</td>
                                 <td>{item?.name} {item?.surname}</td>

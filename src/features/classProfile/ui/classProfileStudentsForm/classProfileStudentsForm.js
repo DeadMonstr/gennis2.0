@@ -1,16 +1,18 @@
-import {getGroupProfileData} from "entities/profile/groupProfile";
 import React, {memo, useState} from 'react';
 import classNames from "classnames";
 import {useForm} from "react-hook-form";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+
+import {deleteGroupProfile, getGroupProfileData} from "entities/profile/groupProfile";
 import {API_URL_DOC} from "shared/api/base";
+import defaultUserImg from "shared/assets/images/user_image.png";
 import {Button} from "shared/ui/button";
 import {Form} from "shared/ui/form";
 import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
-
 import {Table} from "shared/ui/table";
 import {Input} from "shared/ui/input";
+import {YesNo} from "shared/ui/yesNoModal";
 
 import cls from "./classProfileStudentsForm.module.sass";
 import defaultUser from "shared/assets/images/user_image.png";
@@ -21,13 +23,25 @@ export const ClassProfileStudentsForm = memo(() => {
         register,
         handleSubmit
     } = useForm()
+    const dispatch = useDispatch()
     const data = useSelector(getGroupProfileData)
 
     const [active, setActive] = useState(false)
     const [activeModal, setActiveModal] = useState("")
+    const [deleteId, setDeleteId] = useState(null)
+    const [selectedId, setSelectedId] = useState([])
+    const [selectedMoveId, setSelectedMoveId] = useState([])
 
     const onSubmitMove = (data) => {
         console.log(data, "data")
+    }
+
+    const onSubmitDelete = () => {
+        dispatch(deleteGroupProfile({id: deleteId?.id}))
+    }
+
+    const onSubmitAdd = (data) => {
+        console.log(data, "data add")
     }
 
     const renderStudentsList = () => {
@@ -55,7 +69,12 @@ export const ClassProfileStudentsForm = memo(() => {
                             <Input
                                 extraClassName={cls.studentsList__input}
                                 type={"checkbox"}
-                                defaultValue={item.checked}
+                                // defaultValue={item.checked}
+                                onChange={() => setSelectedMoveId(prev => {
+                                    if (prev.filter(i => i === item.id)[0]) {
+                                        return prev.filter(i => i !== item.id)
+                                    } else return [...prev, item.id]
+                                })}
                             />
                         </td>
                         <td>
@@ -66,7 +85,7 @@ export const ClassProfileStudentsForm = memo(() => {
                             {/*/>*/}
                             <i
                                 className={classNames("fas fa-trash", cls.studentsList__delete)}
-                                onClick={() => setActiveModal("delete")}
+                                onClick={() => setDeleteId(item)}
                             />
                         </td>
                     </> : null
@@ -75,7 +94,41 @@ export const ClassProfileStudentsForm = memo(() => {
         )
     }
 
+    const renderStudentsData = () => {
+        return data?.students?.map(item =>
+            <tr>
+                <td>
+                    <img src={defaultUserImg} alt=""/>
+                </td>
+                <td>{item?.user?.name}</td>
+                <td>{item?.user?.surname}</td>
+                <td>{item?.user?.phone}</td>
+                <td>
+                    <div className={cls.check}>
+                        <Input
+                            extraClassName={cls.check__input}
+                            type={"checkbox"}
+                            onChange={() => setSelectedId(prev => {
+                                if (prev.filter(i => i === item.id)[0]) {
+                                    return prev.filter(i => i !== item.id)
+                                } else return [...prev, item.id]
+                            })}
+                        />
+                        {/*<div className={classNames(cls.status, {*/}
+                        {/*    [cls.active]: item?.extra_info?.status*/}
+                        {/*})}>*/}
+                        {/*    <div className={classNames(cls.status__inner, {*/}
+                        {/*        [cls.active]: item?.extra_info?.status*/}
+                        {/*    })}/>*/}
+                        {/*</div>*/}
+                    </div>
+                </td>
+            </tr>
+        )
+    }
+
     const render = renderStudentsList()
+    const renderStudent = renderStudentsData()
 
     return (
         <>
@@ -84,11 +137,17 @@ export const ClassProfileStudentsForm = memo(() => {
                     <h1>O’quvchilar ro’yxati</h1>
                     <div className={cls.btns__inner}>
                         <Button
+                            disabled={selectedMoveId.length === 0}
+                            type={selectedMoveId.length === 0 ? "disabled" : ""}
                             onClick={() => setActiveModal("change")}
                         >
                             Move
                         </Button>
-                        <Button>Add</Button>
+                        <Button
+                            onClick={() => setActiveModal("add")}
+                        >
+                            Add
+                        </Button>
                         <i
                             className={classNames("fas fa-edit", cls.studentsList__icon)}
                             onClick={() => setActive(!active)}
@@ -134,25 +193,58 @@ export const ClassProfileStudentsForm = memo(() => {
                         // options={teachers}
                         title={"Color"}
                         // onChangeOption={onFilterGroups}
-                        // register={register}
-                        // name={"teacher"}
+                        register={register}
+                        name={"color"}
                     />
                     <Select
                         extraClass={cls.deleteForm__select}
                         // options={groups}
                         title={"Class"}
-                        // register={register}
-                        // name={"to_group_id"}
+                        register={register}
+                        name={"class"}
                     />
-                    {/*<Input*/}
-                    {/*    extraClassName={cls.deleteForm__input}*/}
-                    {/*    placeholder={"Sabab"}*/}
-                    {/*    register={register}*/}
-                    {/*    name={"reason"}*/}
-                    {/*/>*/}
                     <Button extraClass={cls.deleteForm__btn}>Add</Button>
                 </Form>
             </Modal>
+            <Modal
+                active={activeModal === "add"}
+                setActive={setActiveModal}
+                extraClass={cls.addModal}
+            >
+                <Input
+                    placeholder={"Search"}
+                    // onChange={(e) => setSearchValue(e.target.value)}
+                    // defaultValue={searchValue}
+                />
+                <div className={cls.addModal__container}>
+                    <Table>
+                        <thead>
+                        <tr>
+                            <th/>
+                            <th>Ism</th>
+                            <th>Familya</th>
+                            <th>Tel</th>
+                            <th/>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {renderStudent}
+                        </tbody>
+                    </Table>
+                </div>
+                <Button
+                    extraClass={cls.addModal__btn}
+                    onClick={onSubmitAdd}
+                >
+                    Add
+                </Button>
+            </Modal>
+            <YesNo
+                activeDelete={deleteId}
+                setActiveDelete={setDeleteId}
+                changingData={deleteId?.user}
+                onDelete={onSubmitDelete}
+            />
         </>
     )
 })

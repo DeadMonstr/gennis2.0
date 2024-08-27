@@ -60,6 +60,7 @@ export const GroupProfileTimeForm = memo(() => {
     const [active, setActive] = useState("")
     const [counter, setCounter] = useState([])
     const [timeCounter, setTimeCounter] = useState([])
+    const [isChanged, setIsChanged] = useState([])
 
     // useEffect(() => {
     //     if (timeData) setCounter([timeData.length ? timeData.length + 1 : 1])
@@ -173,6 +174,7 @@ export const GroupProfileTimeForm = memo(() => {
                                 const roomName = `room${index + 1}`
                                 const startName = `start_time${index + 1}`
                                 const endName = `end_time${index + 1}`
+                                const changedName = `changed${index}`
 
                                 setValue(startName, item?.start_time)
                                 setValue(endName, item?.end_time)
@@ -187,6 +189,12 @@ export const GroupProfileTimeForm = memo(() => {
                                             options={weekData}
                                             name={dayName}
                                             defaultValue={item?.week?.id}
+                                            // onChangeOption={(value) => {
+                                            //     if (value === item?.week?.id) {
+                                            //         setIsChanged(prev =>
+                                            //             prev.filter(i => i.id === changedName ? {id: changedName, status: false}: i))
+                                            //     }
+                                            // }}
                                         />
                                         <Select
                                             title={"Xonalar"}

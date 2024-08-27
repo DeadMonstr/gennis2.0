@@ -130,7 +130,7 @@ export const StudentsPage = memo(() => {
     // Radio tanlangan holatga qarab tegishli dispatch funksiyasini chaqirish
     useEffect(() =>{
         if (selectedRadio === "newStudents") {
-            dispatch(fetchOnlyNewStudentsData())
+            // dispatch(fetchOnlyNewStudentsData())
         } else if (selectedRadio === "studying") {
             dispatch(fetchOnlyStudyingStudentsData())
         }

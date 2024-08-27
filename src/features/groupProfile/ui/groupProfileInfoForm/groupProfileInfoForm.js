@@ -1,3 +1,4 @@
+import {getSchoolClassColors, getSchoolClassNumbers} from "entities/students";
 import React, {memo, useEffect, useState} from 'react';
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
@@ -14,6 +15,7 @@ import {EditableCard} from "shared/ui/editableCard";
 import {Form} from "shared/ui/form";
 import {Input} from "shared/ui/input";
 import {Modal} from "shared/ui/modal";
+import {Radio} from "shared/ui/radio";
 import {Select} from "shared/ui/select";
 import {getLanguagesData} from "pages/registerPage";
 import {Switch} from "shared/ui/switch";
@@ -37,15 +39,22 @@ export const GroupProfileInfoForm = memo(() => {
     const dispatch = useDispatch()
     const data = useSelector(getGroupProfileData)
     const languages = useSelector(getLanguagesData)
+    const schoolClassNumbers = useSelector(getSchoolClassNumbers)
+    const schoolClassColors = useSelector(getSchoolClassColors)
 
     const [active, setActive] = useState(false)
+    const [selectColor, setSelectColor] = useState()
     const [activeSwitch, setActiveSwitch] = useState(data?.status ?? false)
 
     const onSubmitChange = (data) => {
         console.log(data, "data change")
+        const res = {
+            ...data,
+            color: selectColor
+        }
         dispatch(changeGroupProfile({
             status: activeSwitch,
-            data,
+            data: res,
             id,
             group_type: theme === "app_center_theme" ? "center" : "school"
         }))
@@ -88,8 +97,13 @@ export const GroupProfileInfoForm = memo(() => {
                     }
                 </span></p>
                     <p className={cls.info__hoverName}>{data?.language?.name}</p>
-                    <p>Kurs turi: <span>{data?.course_types?.name}</span></p>
-                    <p>Level: <span>{data?.level?.name}</span></p>
+                    {
+                        data?.course_types?.name ? <p>Kurs turi: <span>{data?.course_types?.name}</span></p> : null
+                    }
+                    {
+                        data?.level?.name ? <p>Level: <span>{data?.level?.name}</span></p> : null
+                    }
+
                     <p>Guruh narxi: <span>{data?.price}</span></p>
                     <p>Studentlar soni: <span>{data?.students.length}</span></p>
                     <div className={cls.info__addInfo}>
@@ -154,6 +168,34 @@ export const GroupProfileInfoForm = memo(() => {
                         defaultValue={data?.language?.id}
                         required
                     />
+                    <Select
+                        extraClass={cls.form__select}
+                        options={schoolClassNumbers}
+                        title={"Sinf rangi"}
+                        register={register}
+                        name={"class_number"}
+                        // defaultValue={data?.language?.id}
+                        required
+                    />
+                    <div className={cls.form__radios}>
+                        {
+                            schoolClassColors.map(item => {
+                                return (
+                                    <div className={cls.form__inner}>
+                                        <Radio
+                                            extraClasses={cls.form__item}
+                                            onChange={() => setSelectColor(item.id)}
+                                            checked={selectColor === item.id}
+                                            name={"color"}
+                                        />
+                                        {
+                                            item.name
+                                        }
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
                     <div className={cls.form__switch}>
                         <p>Guruh statusi: </p>
                         <Switch

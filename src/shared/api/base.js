@@ -1,7 +1,7 @@
 
 
 
-export const API_URL_DOC = `http://192.168.0.112:8000`
+export const API_URL_DOC = `http://192.168.182.135:8000`
 export const API_URL = `${API_URL_DOC}/`
 export const CLASSROOM_API_URL = `http://localhost:3000/`
 export const CLASSROOM_API_URL_DOC = `http://192.168.68.116:8000/`

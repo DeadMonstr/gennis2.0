@@ -1,24 +1,24 @@
 
 export const getGroupProfileData = (state) =>
-    state.groupProfile.data
+    state.groupProfileSlice.data
 
 export const getGroupProfileLoading = (state) =>
-    state.groupProfile.loading
+    state.groupProfileSlice.loading
 
 export const getGroupProfileFilteredTeachers = (state) =>
-    state.groupProfile.filteredTeachers
+    state.groupProfileSlice.filteredTeachers
 
 export const getGroupProfileFilteredStudents = (state) =>
-    state.groupProfile.filteredStudents
+    state.groupProfileSlice.filteredStudents
 
 export const getReasons = (state) =>
-    state.groupProfile.reasons
+    state.groupProfileSlice.reasons
 
 export const getTimeTable = (state) =>
-    state.groupProfile.timeTable
+    state.groupProfileSlice.timeTable
 
 export const getFilteredGroups = (state) =>
-    state.groupProfile.filteredGroups
+    state.groupProfileSlice.filteredGroups
 
 export const getWeekDays = (state) =>
-    state.groupProfile.weekDays
+    state.groupProfileSlice.weekDays
