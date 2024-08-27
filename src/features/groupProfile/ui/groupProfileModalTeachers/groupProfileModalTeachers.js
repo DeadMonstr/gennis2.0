@@ -3,6 +3,7 @@ import {getGroupProfileFilteredTeachers} from "entities/profile/groupProfile/mod
 import {changeGroupProfile, fetchFilteredTeachers} from "entities/profile/groupProfile/model/groupProfileThunk";
 import {getTeachers} from "entities/teachers";
 import {getUserBranchId} from "pages/profilePage";
+import {getUserSystemId} from "pages/profilePage/model/selector/userProfileSelector";
 import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";
@@ -20,6 +21,7 @@ import defaultUserImg from "shared/assets/images/user_image.png";
 
 export const GroupProfileModalTeachers = memo(() => {
 
+    const userSystemId = useSelector(getUserSystemId)
     const dispatch = useDispatch()
     const {id} = useParams()
     const {theme} = useTheme()
@@ -33,7 +35,7 @@ export const GroupProfileModalTeachers = memo(() => {
         dispatch(changeGroupProfile({
             data: {teacher: [teacherId]},
             id: id,
-            group_type: theme === "app_center_theme" ? "center" : "school"
+            group_type: userSystemId === 1 ? "center" : "school"
         }))
     }
 
@@ -56,13 +58,15 @@ export const GroupProfileModalTeachers = memo(() => {
                 <td>{item?.user?.name}</td>
                 <td>{item?.user?.surname}</td>
                 <td>
-                    {
-                        item?.subject?.map(i =>
-                            <div className={cls.teachersModal__subject}>
-                                {i?.name?.slice(0, 16)}
-                            </div>
-                        )
-                    }
+                    <div className={cls.teachersModal__wrapper}>
+                        {
+                            item?.subject?.map(i =>
+                                <div className={cls.teachersModal__subject}>
+                                    {i?.name?.slice(0, 16)}
+                                </div>
+                            )
+                        }
+                    </div>
                 </td>
                 <td>
                     <div className={cls.check}>
@@ -112,10 +116,13 @@ export const GroupProfileModalTeachers = memo(() => {
                             </span>
                         </h2>
                     </div>
-                    <div className={cls.teacher__share}>
-                        <p>O’qituvchi ulushi:</p>
-                        <p className={cls.teacher__money}>{profileData?.teacher_salary}</p>
-                    </div>
+                    {
+                        profileData?.teacher_salary ? <div className={cls.teacher__share}>
+                            <p>O’qituvchi ulushi:</p>
+                            <p className={cls.teacher__money}>{profileData?.teacher_salary}</p>
+                        </div> : null
+                    }
+
                 </div>
             </EditableCard>
             <Modal

@@ -6,7 +6,7 @@ import {
     fetchGroupProfile,
     fetchReasons,
     fetchFilteredStudents,
-    fetchFilteredTeachers, fetchFilteredGroups, fetchWeekDays, createWeekDays
+    fetchFilteredTeachers, fetchFilteredGroups, fetchWeekDays, createWeekDays, moveGroup
 } from "./groupProfileThunk";
 
 const initialState = {
@@ -18,6 +18,7 @@ const initialState = {
     weekDays: null,
     reasons: null,
     loading: false,
+    studentsLoading: false,
     error: null
 }
 
@@ -50,6 +51,19 @@ const groupProfileSlice = createSlice({
                 state.error = null
             })
             .addCase(changeGroupProfile.rejected, (state, action) => {
+                state.loading = false
+                state.error = "error"
+            })
+            .addCase(moveGroup.pending, state => {
+                state.loading = true
+                state.error = "error"
+            })
+            .addCase(moveGroup.fulfilled, (state, action) => {
+                state.data = action.payload.data
+                state.error = action.payload.errors
+                state.loading = false
+            })
+            .addCase(moveGroup.rejected, (state, action) => {
                 state.loading = false
                 state.error = "error"
             })

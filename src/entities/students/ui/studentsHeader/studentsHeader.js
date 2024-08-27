@@ -22,8 +22,7 @@ export const StudentsHeader = ({
                                    onClick
                                }) => {
 
-<<<<<<< HEAD
-=======
+
     const {theme} = useTheme()
 
     const renderCreateBtn = useCallback(() => {
@@ -46,8 +45,6 @@ export const StudentsHeader = ({
                 </Button>
             </Link>
     }, [theme])
-
->>>>>>> origin/null
 
     return (
         <div className={cls.mainContainer}>

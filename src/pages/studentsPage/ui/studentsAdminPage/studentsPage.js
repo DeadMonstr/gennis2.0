@@ -124,21 +124,24 @@ export const StudentsPage = memo(() => {
         dispatch(createSchoolClass({res}))
         // setSelectStudents([])
     }
-<<<<<<< HEAD
+
+    // useEffect(() =>{
+    //     dispatch(fetchOnlyNewStudentsData())
+    // } , [])
+
     // Radio tanlangan holatga qarab tegishli dispatch funksiyasini chaqirish
     useEffect(() =>{
         if (selectedRadio === "newStudents") {
-            dispatch(fetchOnlyNewStudentsData())
+            // dispatch(fetchOnlyNewStudentsData())
         } else if (selectedRadio === "studying") {
             dispatch(fetchOnlyStudyingStudentsData())
         }
     } , [dispatch, selectedRadio])
 
-=======
+
     // useEffect(() =>{
     //     dispatch(fetchOnlyNewStudentsData())
     // } , [])
->>>>>>> origin/null
 
     const handleChange = (value) => {
         setSelectedRadio(value);

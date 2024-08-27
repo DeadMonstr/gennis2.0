@@ -35,13 +35,11 @@ import {
     getRouteCreateGroup,
     getEmployerSalaryInsideSource,
     getEmployerSalary,
-<<<<<<< HEAD
+
     getTeacherSalary, getInkasatsiya,
     getGroupHistory,
-=======
-    getTeacherSalary,
-    getRouteClassProfile
->>>>>>> origin/null
+    getRouteClassProfile,
+
 } from "shared/const/routers";
 
 

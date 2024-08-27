@@ -11,5 +11,5 @@ export {
     changeGroupProfile,
     deleteGroupProfile
 } from "./model/groupProfileThunk";
-export {default as groupProfile} from "./model/groupProfileSlice";
+export {default as groupProfileSlice} from "./model/groupProfileSlice";
 export {getGroupProfileData, getGroupProfileLoading} from "./model/groupProfileSelector";

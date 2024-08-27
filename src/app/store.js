@@ -1,6 +1,6 @@
 
 import {configureStore} from "@reduxjs/toolkit";
-import {groupProfile} from "entities/profile/groupProfile";
+import {groupProfileSlice} from "entities/profile/groupProfile";
 import {search} from "features/searchInput";
 import {registerUser} from "pages/registerPage";
 import {loginSlice} from "pages/loginPage";
@@ -8,15 +8,15 @@ import {filteredTeachers} from "features/filters/teacherFilter";
 import {filteredStudents} from "features/filters/studentsFilter";
 import {filteredEmployees} from "features/filters/employeesFilter";
 import {filteredGroups} from "features/filters/groupsFilter";
-import {filteredRooms} from "features/filters/roomsFilter";
+import {filteredRoomsSlice} from "features/filters/roomsFilter";
 import {deletedGroups, groups} from "entities/groups/index";
-import {user} from "entities/user";
+// import {user} from "entities/user";
 import {studentProfilePayment} from "entities/profile/studentProfile";
 import {studentProfileBooks} from "entities/profile/studentProfile";
 import {studentProfileRating} from "entities/profile/studentProfile";
 import {roomsAddSlice} from "pages/roomsPage";
 import {studentsDirectorSlice} from "pages/studentsPage"
-import {timeTable} from "pages/timeTableListPage";
+import {timeTableListSlice} from "pages/timeTableListPage";
 import {homeSlice} from "entities/home";
 import {teachers} from "entities/teachers"
 import {newStudents} from "../entities/students";
@@ -39,7 +39,7 @@ import {vacancyPageParseSlice} from "../features/vacancyModals/vacancyPageAdd";
 import {vacancyWorkPageSlice} from "../features/vacancyModals/vacancyWorkPage/model";
 import {vacancyWorkerPermissionSlice} from "../features/vacancyModals/vacancyWorkerPermission";
 import {roomImageSlice} from "features/roomImagePareModal";
-import {timeTableSchool} from "pages/timeTable"
+// import {timeTableSchool} from "pages/timeTable"
 import {
     accountingSlice,
     capitalSlice,
@@ -65,6 +65,7 @@ import {calendarSlice} from "pages/calendarPage";
 import {vacancyWorkerSoucre, userSetPermissionSlice} from "../entities/vacancy/ui/vacancyWorkerList";
 import {vacancyWorkerSlice} from "../features/vacancyWorkerList";
 import {studentPaymentSlice} from "../features/studentPayment";
+import {inkasatsiyaSlice} from "../entities/inkasatsiya";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -85,20 +86,20 @@ export const store = configureStore({
         filteredStudents,
         filteredEmployees,
         filteredGroups,
-        filteredRooms,
+        filteredRoomsSlice,
         groups,
         studentProfilePayment,
         studentProfileBooks,
         studentProfileRating,
         studentsDirectorSlice,
         deletedGroups,
-        user,
+        // user,
         newStudents,
         employers,
         teachers,
         homeSlice,
         studentProfile,
-        timeTable,
+        timeTableListSlice,
         roomsAddSlice,
         roomsSlice,
         roomssSlice,
@@ -119,7 +120,7 @@ export const store = configureStore({
         systemSlice,
         postBranch,
         getBranchSlice,
-        timeTableSchool,
+        // timeTableSchool,
         userProfile,
         vacancyWorkerPermissionSlice,
         teacherSalarySlice,
@@ -140,9 +141,10 @@ export const store = configureStore({
         userSetPermissionSlice,
         vacancyWorkerSlice,
         studentPaymentSlice,
-        groupProfile,
+        groupProfileSlice,
         overHeadSlice,
-        capitalSlice
+        capitalSlice,
+        inkasatsiyaSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

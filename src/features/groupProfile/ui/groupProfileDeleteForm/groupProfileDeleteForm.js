@@ -1,11 +1,13 @@
 import {getGroupsListData} from "entities/groups";
 import {
     getFilteredGroups,
-    getGroupProfileFilteredStudents,
+    getGroupProfileFilteredStudents, getGroupProfileFilteredTeachers,
     getReasons
 } from "entities/profile/groupProfile/model/groupProfileSelector";
 import {fetchFilteredGroups, moveGroup} from "entities/profile/groupProfile/model/groupProfileThunk";
+import {getFilteredTeachers} from "entities/students";
 import {getTeachers} from "entities/teachers";
+import {getUserSystemId} from "pages/profilePage/model/selector/userProfileSelector";
 import React, {memo, useCallback, useState} from 'react';
 import classNames from "classnames";
 import {useForm} from "react-hook-form";
@@ -57,9 +59,10 @@ export const GroupProfileDeleteForm = memo(() => {
     const {theme} = useTheme()
     const {id} = useParams()
     const dispatch = useDispatch()
+    const userSystemId = useSelector(getUserSystemId)
     const data = useSelector(getGroupProfileData)
     const students = useSelector(getGroupProfileFilteredStudents)
-    const teachers = useSelector(getTeachers)
+    const teachers = useSelector(getGroupProfileFilteredTeachers)
     const groups = useSelector(getFilteredGroups)
     const reasons = useSelector(getReasons)
 
@@ -74,7 +77,6 @@ export const GroupProfileDeleteForm = memo(() => {
     const [selectedId, setSelectedId] = useState([])
 
     const onSubmitDelete = (data) => {
-        console.log(data, "delete data")
         const res = {
             ...data,
             students: [selectDeleteId],
@@ -83,7 +85,7 @@ export const GroupProfileDeleteForm = memo(() => {
         dispatch(changeGroupProfile({
             id,
             data: res,
-            group_type: theme === "app_center_theme" ? "center" : "school"
+            group_type: userSystemId === 1 ? "center" : "school"
         }))
     }
 
@@ -103,7 +105,7 @@ export const GroupProfileDeleteForm = memo(() => {
                 update_method: "add_students"
             },
             id,
-            group_type: theme === "app_center_theme" ? "center" : "school"
+            group_type: userSystemId === 1 ? "center" : "school"
         }))
     }
 
@@ -240,6 +242,8 @@ export const GroupProfileDeleteForm = memo(() => {
                         active ?
                             <div className={cls.students__wrapper}>
                                 <Button
+                                    disabled={select.length === 0}
+                                    type={select.length === 0 ? "disabled" : ""}
                                     extraClass={cls.students__btn}
                                     onClick={() => setActiveModal("changeModal")}
                                 >

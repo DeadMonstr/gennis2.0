@@ -1,39 +1,43 @@
-
-
 export const menuConfig = [
     {
         to: "home",
         name: "Bosh Sahifa",
         icon: "fa-home",
+        system: [1, 2]
     },
     {
         to: "taskManager",
         name: "Task Manager",
         icon: "fa-tasks",
-        location: true
+        location: true,
+        system: [1, 2]
     },
     {
         to: "studentDirector",
         name: "O'quvchilar",
         icon: "fa-user-graduate",
+        system: [1, 2]
     },
     {
         to: "students",
         name: "O'quvchilar",
         icon: "fa-user-graduate",
-        location: true
+        location: true,
+        system: [1, 2]
     },
     {
         to: "groups",
         name: "Gruppalar",
         icon: "fa-users",
-        location: true
+        location: true,
+        system: [1, 2]
     },
     {
         to: "teacher",
         name: "O'qituvchilar",
         icon: "fa-user-tie",
-        location: true
+        location: true,
+        system: [1, 2]
     },
     {
         to: "vacancyPage",

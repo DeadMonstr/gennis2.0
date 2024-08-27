@@ -109,8 +109,12 @@ export const GroupsPage = () => {
                         />
                     </>
             }
-            <GroupsFilter activeSwitch={activeSwitch} setActiveSwitch={setActiveSwitch} setActive={setActive}
-                          active={active}/>
+            <GroupsFilter
+                // activeSwitch={activeSwitch}
+                // setActiveSwitch={setActiveSwitch}
+                setActive={setActive}
+                active={active}
+            />
         </div>
     )
 }

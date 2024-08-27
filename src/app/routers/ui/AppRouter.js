@@ -51,74 +51,74 @@ export const AppRouter = () => {
                 />
 
 
-                {/*<Route element={<RequireAuth/>}>*/}
+                <Route element={<RequireAuth/>}>
 
-                <Route path={"platform/*"} element={<Layout/>}>
+                    <Route path={"platform/*"} element={<Layout/>}>
 
-                    {
-                        routersConfig.map(item =>
-                            <Route
-                                key={item.name}
-                                path={item.path}
-                                element={
-                                    // <Route element={}>
-                                    //     {item.element}
-                                    // </Route>
-                                    <RequireAuth>
-                                        {item.element}
-                                    </RequireAuth>
-                                    // item.element
-                                }
-                            />
-                        )
-                    }
+                        {
+                            routersConfig.map(item =>
+                                <Route
+                                    key={item.name}
+                                    path={item.path}
+                                    element={
+                                        // <Route element={}>
+                                        //     {item.element}
+                                        // </Route>
+                                        // <RequireAuth>
+                                        //     {item.element}
+                                        // </RequireAuth>
+                                        item.element
+                                    }
+                                />
+                            )
+                        }
 
-                    {/*<RequireAuth>*/}
-                    {/*    <Route path={"students/:id/createGroup"} element={<CreateGroup/>} />*/}
-                    {/*</RequireAuth>*/}
-                    <Route
-                        path={"profile"}
-                        element={<StudentProfilePage/>}
-                    />
-
-
-                    {/*<Route*/}
-                    {/*    path={"classProfile"}*/}
-                    {/*    element={<ClassProfilePage/>}*/}
-                    {/*/>*/}
-
-                    <Route
-                        path={"molasses"}
-                        element={<ClassMolassesPage/>}
-                    />
-                    <Route
-                        path={"flowsProfile"}
-                        element={<FlowProfileNavigators/>}
-                    />
-
-                    <Route
-                        path={"flows/flow-list"}
-                        element={<FlowListPage/>}
-                    />
-                    <Route
-                        path={"classColorAdd"}
-                        element={<ClassAddColorPage/>}
-                    />
-
-                    {/*<Route*/}
-                    {/*    path={"calendar"}*/}
-                    {/*    element={<CalendarPage/>}*/}
-                    {/*/>*/}
+                        {/*<RequireAuth>*/}
+                        {/*    <Route path={"students/:id/createGroup"} element={<CreateGroup/>} />*/}
+                        {/*</RequireAuth>*/}
+                        <Route
+                            path={"profile"}
+                            element={<StudentProfilePage/>}
+                        />
 
 
-                    <Route
-                        index
-                        element={<Navigate to={"home"}/>}
-                    />
+                        {/*<Route*/}
+                        {/*    path={"classProfile"}*/}
+                        {/*    element={<ClassProfilePage/>}*/}
+                        {/*/>*/}
+
+                        <Route
+                            path={"molasses"}
+                            element={<ClassMolassesPage/>}
+                        />
+                        <Route
+                            path={"flowsProfile"}
+                            element={<FlowProfileNavigators/>}
+                        />
+
+                        <Route
+                            path={"flows/flow-list"}
+                            element={<FlowListPage/>}
+                        />
+                        <Route
+                            path={"classColorAdd"}
+                            element={<ClassAddColorPage/>}
+                        />
+
+                        {/*<Route*/}
+                        {/*    path={"calendar"}*/}
+                        {/*    element={<CalendarPage/>}*/}
+                        {/*/>*/}
+
+
+                        <Route
+                            index
+                            element={<Navigate to={"home"}/>}
+                        />
+
+                    </Route>
 
                 </Route>
-
-                {/*</Route>*/}
 
                 <Route
                     path={"*"}
