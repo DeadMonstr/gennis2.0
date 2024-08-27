@@ -41,3 +41,9 @@ export const getMessageDelete = (state) =>
 
 export const getDeletedList = (state) =>
     state.studentPaymentSlice?.getDeletedList
+
+export const getPaymentDates = (state) =>
+    state.studentPaymentSlice?.getPaymentDates
+
+export const getDatasWithPost = (state) =>
+    state.studentPaymentSlice?.getDateWithPost

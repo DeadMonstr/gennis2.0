@@ -149,3 +149,22 @@ export const studentPaymentListDeleteGetThunk =  createAsyncThunk(
         return await request(`${API_URL}Students/student_payment/${id}/?status=True`, "GET", null, headers())
     }
 )
+
+
+export const studentPaymentDataThunk = createAsyncThunk(
+    'studentPaymentSlice/studentPaymentDataThunk',
+    async (id) => {
+        const {request} = useHttp();
+        return await request(`${API_URL}Students/payment_datas/${id}`, "GET", null, headers())
+    }
+)
+
+export const studentPaymentDataPostThunk = createAsyncThunk(
+    'studentPaymentSlice/studentPaymentDataPostThunk',
+    async ({lastId, data}) => {
+        const {request} = useHttp();
+        const response = await request(`${API_URL}Students/payment_datas/${lastId}/`, "POST", JSON.stringify(data), headers());
+
+        return response
+    }
+);

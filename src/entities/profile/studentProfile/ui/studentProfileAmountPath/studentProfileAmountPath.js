@@ -12,13 +12,14 @@ import {
     getPaymentList,
     getMessageDelete,
     getDeletedList,
+    getDatasWithPost,
     studentPaymentListThunk,
     studentPaymenListDelete,
     studentPaymentListDeleteGetThunk
 } from "features/studentPayment";
 import {Button} from "shared/ui/button";
-import {WarningModal} from "shared/ui/warning";
 import {YesNo} from "../../../../../shared/ui/yesNoModal/yesNo";
+import {StudentPaymentDates} from "../../../../../features/studentPaymentDates";
 
 export const StudentProfileAmountPath = memo(({active, setActive}) => {
     const pathArray = window.location.pathname.split('/');
@@ -27,6 +28,7 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
     const getTotalAmountData = useSelector(getPaymentList);
     const getDeleteMes = useSelector(getMessageDelete);
     const getDeletedLists = useSelector(getDeletedList);
+    const getPaymentLists = useSelector(getDatasWithPost);
     const paymentLists = getTotalAmountData.payments;
     const dispatch = useDispatch();
     const [activeState, setActiveState] = useState("");
@@ -73,9 +75,9 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
         }
     }, [lastId, dispatch, change]);
 
-
+    console.log(getPaymentLists, "paymentsa")
     const renderInData = () => {
-        const listToRender = change ? getDeletedLists.payments : paymentLists;
+        const listToRender = change ? getDeletedLists.payments : getPaymentLists;
         return listToRender?.map(item =>
             <tr key={item.id} onClick={() => setSelectedSalary(item.id)}>
                 <td>
@@ -164,6 +166,8 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                                 <Button children={change ? "Amaldagi" : "O'chirilganlar"}
                                         extraClass={change ? cls.buttonDel2 : cls.buttonDel}
                                         onClick={() => setChange(!change)}/>
+                                {change ? null : <StudentPaymentDates/>}
+
                             </div>
                             <div className={cls.table__content}>
                                 {

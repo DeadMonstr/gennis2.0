@@ -35,3 +35,6 @@ export const getSchoolClassColors = (state) =>
 
 export const getSchoolStudents = (state) =>
     state.newStudents?.schoolStudents
+
+export const getStudentsWithBranch = (state) =>
+    state.newStudents?.branchStudents

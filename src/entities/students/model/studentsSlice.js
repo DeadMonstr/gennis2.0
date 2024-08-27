@@ -4,8 +4,10 @@ import {
     fetchClassColors,
     fetchClassNumberList,
     fetchFilteredStudents,
-    fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData,
-    fetchSchoolStudents
+    fetchOnlyNewStudentsData,
+    fetchOnlyStudyingStudentsData,
+    fetchSchoolStudents,
+    fetchStudentsWithBranchThunk
 } from "./studentsThunk";
 
 
@@ -22,7 +24,8 @@ const initialState = {
     studyingStudents: [],
     newStudentsStatus: "idle",
     studyingStudentsStatus: "idle",
-    deletedStudents: []
+    deletedStudents: [],
+    branchStudents: []
 }
 
 export const studentsSlice = createSlice({
@@ -60,6 +63,7 @@ export const studentsSlice = createSlice({
             })
 
 
+
             .addCase(fetchOnlyStudyingStudentsData.pending, state => {
                 state.studyingStudentsStatus = "loading"
             })
@@ -71,6 +75,7 @@ export const studentsSlice = createSlice({
             .addCase(fetchOnlyStudyingStudentsData.rejected, (state, action) => {
                 state.studyingStudents = "error"
             })
+
 
 
             .addCase(fetchFilteredStudents.pending, state => {
@@ -86,6 +91,9 @@ export const studentsSlice = createSlice({
                 state.loading = false
                 state.error = action.payload ?? null
             })
+
+
+
             .addCase(fetchClassNumberList.pending, state => {
                 state.loading = true
                 state.error = null
@@ -99,6 +107,9 @@ export const studentsSlice = createSlice({
                 state.loading = false
                 state.error = action.payload ?? null
             })
+
+
+
             .addCase(fetchClassColors.pending, state => {
                 state.loading = true
                 state.error = null
@@ -112,6 +123,9 @@ export const studentsSlice = createSlice({
                 state.loading = false
                 state.error = action.payload ?? null
             })
+
+
+
             .addCase(fetchSchoolStudents.pending, state => {
                 state.loading = true
                 state.error = null
@@ -122,6 +136,21 @@ export const studentsSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchSchoolStudents.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload ?? null
+            })
+
+
+            .addCase(fetchStudentsWithBranchThunk.pending, state => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(fetchStudentsWithBranchThunk.fulfilled, (state, action) => {
+                state.branchStudents = action.payload
+                state.loading = false
+                state.error = null
+            })
+            .addCase(fetchStudentsWithBranchThunk.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload ?? null
             })

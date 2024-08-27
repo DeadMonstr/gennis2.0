@@ -29,7 +29,7 @@ export const fetchLocationsForSystemsThunk = createAsyncThunk(
             const response = await request(
                 `${API_URL}Location/location_for_system/`,
                 "POST",
-                JSON.stringify({ systems: selectedSystemIds }),
+                JSON.stringify({ systems: [selectedSystemIds] }),
                 headers()
             );
             console.log(selectedSystemIds)

@@ -15,7 +15,9 @@ import {
     studentContractThunk,
     studentContractUploadThunk,
     studentPaymenListDelete,
-    studentPaymentListDeleteGetThunk
+    studentPaymentListDeleteGetThunk,
+    studentPaymentDataThunk,
+    studentPaymentDataPostThunk
 } from "./studentPaymentThunk";
 
 
@@ -36,6 +38,8 @@ const initialState = {
     contractFile: [],
     deleteList: [],
     getDeletedList: [],
+    getPaymentDates: [],
+    getDateWithPost: [],
     loading: false,
     error: null
 }
@@ -262,6 +266,34 @@ const studentPaymentSlice = createSlice({
                 state.getDeletedList = action.payload;
             })
             .addCase(studentPaymentListDeleteGetThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+
+
+
+            .addCase(studentPaymentDataThunk.pending, (state) => {
+               state.loading = true
+           })
+            .addCase(studentPaymentDataThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.getPaymentDates = action.payload;
+            })
+            .addCase(studentPaymentDataThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+
+
+
+            .addCase(studentPaymentDataPostThunk.pending, (state) => {
+               state.loading = true
+           })
+            .addCase(studentPaymentDataPostThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.getDateWithPost = action.payload;
+            })
+            .addCase(studentPaymentDataPostThunk.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
             });

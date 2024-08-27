@@ -15,7 +15,9 @@ export {
     studentContractThunk,
     studentContractUploadThunk,
     studentPaymenListDelete,
-    studentPaymentListDeleteGetThunk
+    studentPaymentListDeleteGetThunk,
+    studentPaymentDataThunk,
+    studentPaymentDataPostThunk
 } from './model/studentPaymentThunk'
 export {
     getGroupHistory,
@@ -30,5 +32,7 @@ export {
     getPaymentList,
     getStudentContract,
     getMessageDelete,
-    getDeletedList
+    getDeletedList,
+    getPaymentDates,
+    getDatasWithPost
 } from './model/selectors/selectors'

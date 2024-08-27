@@ -48,8 +48,8 @@ export const StudentsHeader = ({
                     }
                     <Button type={"filter"} extraClass={cls.noneBackground}>Add group</Button>
                 </div>
-                {branches.length >= 1 ? <Select options={branches} onChangeOption={() => setSelected}
-                                                defaultValue={branches[0].name}/> : null}
+                {/*{branches.length >= 1 ? <Select options={branches} onChangeOption={() => setSelected}*/}
+                {/*                                defaultValue={branches[0].name}/> : null}*/}
             </div>
             <div className={cls.mainContainer_filterPanelBox}>
                 <Button
