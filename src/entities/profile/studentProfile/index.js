@@ -4,13 +4,14 @@ export {StudentProfileRating} from "./ui/studentProfileRating/studentProfileRati
 export {StudentProfileReward} from "./ui/studentProfileReward/studentProfileReward";
 export {StudentProfileSubjects} from "./ui/studentProfileSubjects/studentProfileSubjects";
 export {StudentProfileAttendance} from "./ui/studentProfileAttendance/studentProfileAttendance";
-
 export {StudentProfileTotalAmount} from "./ui/studentProfileTotalAmount/studentProfileTotalAmount";
 export {StudentProfileAmountPath} from "./ui/studentProfileAmountPath/studentProfileAmountPath";
 export {StudentProfileTotalRating} from "./ui/studentProfileTotalRating/studentProfileTotalRating";
 export {StudentProfileGroupsHistory} from "./ui/studentProfileGroupsHistory/studentProfileGroupsHistory";
 export {StudentProfileTotalAttendance} from "./ui/studentProfileTotalAttendance/studentProfileTotalAttendance";
 export {StudentProfileChangeInfo} from "./ui/studentProfileChangeInfo/studentProfileChangeInfo";
+export {StudentProfileContract} from "./ui/studentProfileContract/studentProfileContract"
+export {StudentProfileAttendanceAll} from "./ui/studentProfileAttendanceAll/studentAttendanceAll";
 
 export {amountService, amountTypes} from "./model/consts/amountConsts";
 

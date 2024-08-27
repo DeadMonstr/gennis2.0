@@ -1,14 +1,13 @@
 
 
 export const getNewStudentsData = (state) =>
-    state.newStudents?.newStudents
+    state.newStudents?.newStudentes;
 
 export const getNewStudentsLoading = (state) =>
-    state.newStudents?.newStudentsStatus
-
+    state.newStudents?.newStudentsStatus;
 
 export const getStudyingStudents = (state) =>
-    state.newStudents?.studyingStudents
+    state.newStudents?.studyingStudents;
 
 export const getFilteredStudents = (state) =>
     state.newStudents?.filteredStudents
@@ -36,3 +35,6 @@ export const getSchoolClassColors = (state) =>
 
 export const getSchoolStudents = (state) =>
     state.newStudents?.schoolStudents
+
+export const getStudentsWithBranch = (state) =>
+    state.newStudents?.branchStudents

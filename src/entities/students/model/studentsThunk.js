@@ -67,3 +67,13 @@ export const createSchoolClass = createAsyncThunk(
     }
 )
 
+
+export const fetchNewStudentsDataWithBranch = createAsyncThunk(
+    'studentsSlice/fetchNewStudentsDataWithBranch',
+    async (id) => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Students/new-registered-students/?branch=${id}`, "GET", null, headers())
+    }
+)
+
+

@@ -2,6 +2,8 @@
 import {configureStore} from "@reduxjs/toolkit";
 import {groupProfileSlice} from "entities/profile/groupProfile";
 import {search} from "features/searchInput";
+import {groupProfile} from "entities/profile/groupProfile";
+import {searchSlice} from "features/searchInput";
 import {registerUser} from "pages/registerPage";
 import {loginSlice} from "pages/loginPage";
 import {filteredTeachers} from "features/filters/teacherFilter";
@@ -78,7 +80,7 @@ const stringMiddleware = () => (next) => (action) => {
 
 export const store = configureStore({
     reducer: {
-        search,
+        searchSlice,
         registerUser,
         loginSlice,
         filteredTeachers,

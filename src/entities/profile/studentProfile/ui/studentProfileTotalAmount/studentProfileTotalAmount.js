@@ -15,20 +15,21 @@ import money from "shared/assets/images/Money.png";
 import creditCard from "shared/assets/images/CreditCard.png";
 import bank from "shared/assets/images/Bank.png";
 import {useDispatch} from "react-redux";
-import {studentPaymentThunk, studentCharityThunk} from "features/studentPayment";
+import {studentPaymentThunk, studentCharityThunk, studentDiscountThunk, studentPaymentListThunk} from "features/studentPayment";
 
 
 const listPretcent = [-1, 34.8, 70.4]
 
 export const StudentProfileTotalAmount = memo(({active, setActive, student_id, branch_id, group_id}) => {
 
-    const {register, handleSubmit} = useForm()
+    const {register, handleSubmit, reset} = useForm()
 
     const [activeService, setActiveService] = useState(amountService[0])
     const [activePaymentType, setActivePaymentType] = useState(0)
     const [option, setOption] = useState(0)
     const [paymentSum, setPaymentSum] = useState(0)
     const [charitysum, setCharitySum] = useState(0)
+    const [discount, setDiscount] = useState(0)
     const [data, setData] = useState({})
     const [checkModalStatus, setCheckModalStatus] = useState(false)
     const [payment, setPayment] = useState(1)
@@ -39,11 +40,16 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
             student: student_id,
             payment_type: payment,
             payment_sum: paymentSum,
-            status: true,
+            status: false,
             branch: branch_id,
             ...data
         };
-        dispatch(studentPaymentThunk(newPayment))
+        dispatch(studentPaymentThunk(newPayment));
+        dispatch(studentPaymentListThunk(student_id))
+        reset({
+            amount: '',
+        });
+        setPaymentSum(0);
     };
 
     const handleAddCharity = (data) => {
@@ -53,8 +59,32 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
             charity_sum: charitysum,
             ...data
         };
-        dispatch(studentCharityThunk(newCharity))
-    }
+        dispatch(studentCharityThunk(newCharity));
+        dispatch(studentPaymentListThunk(student_id))
+
+        reset({
+            amount: '',
+        });
+        setCharitySum(0);
+    };
+
+    const handleAddDiscount = (data) => {
+        const newDiscount = {
+            student: student_id,
+            payment_type: 1,
+            payment_sum: discount,
+            status: true,
+            branch: branch_id,
+            ...data
+        };
+
+        dispatch(studentDiscountThunk(newDiscount));
+        dispatch(studentPaymentListThunk(student_id))
+        reset({
+            amount: '',
+        });
+        setDiscount(0);
+    };
 
     const onSubmitPassword = (data) => {
         console.log(data)
@@ -141,6 +171,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                                             defaultValue={paymentSum}
                                             onChange={(e) => setPaymentSum(e.target.value)}
                                             type={"number"}
+
                                         />
 
                                     </div>
@@ -168,14 +199,14 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                                     </div>
                                 </Form>
                                 :
-                                <Form onSubmit={handleSubmit(handleAddPayment)}>
+                                <Form onSubmit={handleSubmit(handleAddDiscount)}>
                                     <div className={cls.form__inner}>
                                         <p>{activeService} miqdori</p>
                                         <Input
-                                            register={register}
-                                            name={"amount"}
+                                            {...register("amount")}
                                             placeholder={"Summa"}
                                             type={"number"}
+                                            onChange={(e) => setDiscount(e.target.value)}
                                         />
                                     </div>
                                 </Form>

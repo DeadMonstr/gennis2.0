@@ -1,25 +1,30 @@
-import React, {memo, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
+import {useSelector, useDispatch} from "react-redux";
+import {fetchOnlyNewStudentsData, getNewStudentsData, getStudentsWithBranch} from "entities/students";
 import {useNavigate} from "react-router";
-
-import {StudentsFilter} from "features/filters/studentsFilter";
+import {Input} from "shared/ui/input";
+import cls from "entities/students/ui/newStudents/newStudents.module.sass";
 import {Table} from "shared/ui/table";
+import {StudentsFilter} from "features/filters/studentsFilter";
 
-import cls from "./newStudents.module.sass";
-import {Input} from "../../../../shared/ui/input";
+export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) => {
 
-
-export const NewStudents = memo(({currentTableData, theme, setSelectStudents}) => {
     const [active, setActive] = useState(false);
     const navigation = useNavigate()
+    const dispatch =  useDispatch()
+    const getNewSt = useSelector(getStudentsWithBranch)
+
+    useEffect(() => {
+        dispatch(fetchOnlyNewStudentsData())
+    }, [dispatch])
 
 
     const renderStudents = () => {
-        if (currentTableData && currentTableData.length) {
-            console.log(currentTableData)
-            return currentTableData?.map((item, i) => {
+        if (getNewSt && getNewSt.length)
+            return getNewSt?.map((item, i) => {
                 return (
                     <tr
-                        // onClick={() => navigation(`profile/${item.id}`)}
+                        onClick={() => navigation(`profile/${item.id}`)}
                     >
                         <td>{i + 1}</td>
                         <td>{item.user?.surname} {item.user?.name}</td>
@@ -38,12 +43,11 @@ export const NewStudents = memo(({currentTableData, theme, setSelectStudents}) =
                                         return [...prev, item.id]
                                     }
                                 })}
-                            /> : null
+                            />: null
                         }
                     </tr>
                 )
             });
-        }
     };
 
     const render = renderStudents()

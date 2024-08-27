@@ -10,6 +10,8 @@ export const StudentProfileTeachers = memo(({data}) => {
             ? data.flatMap(group => group.teacher || [])
             : (data?.teacher ? data.teacher : []);
 
+
+
         return teachers.map((item, index) => (
             <div key={index} className={cls.items__inner}>
                 {!item.user?.profile_img ? <img src={defaultUserImage}/> :
@@ -17,7 +19,7 @@ export const StudentProfileTeachers = memo(({data}) => {
                 }
 
                 <h3>{item.user?.name} {item.user?.surname}</h3>
-                <p>{item.subject}</p>
+                <p>{item.subject[0]?.name}</p>
             </div>
         ));
     }, [data]);

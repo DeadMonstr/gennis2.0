@@ -8,36 +8,6 @@ import cls from "./studentProfileGroupsHistory.module.sass";
 import {studentGroupHistoryThunk} from "../../../../../features/studentPayment";
 import {getGroupHistory} from "../../../../../features/studentPayment";
 
-const list = [
-    {
-        groupName: "Eb19103",
-        addedDate: "2024-04-16",
-        exitedDate: "2024-04-16",
-        reason: "",
-        studentFullName: "ShoxistaYusupova"
-    },
-    {
-        groupName: "Eb19103",
-        addedDate: "2024-04-16",
-        exitedDate: "2024-04-16",
-        reason: "",
-        studentFullName: "ShoxistaYusupova"
-    },
-    {
-        groupName: "Eb19103",
-        addedDate: "2024-04-16",
-        exitedDate: "2024-04-16",
-        reason: "",
-        studentFullName: "ShoxistaYusupova"
-    },
-    {
-        groupName: "Eb19103",
-        addedDate: "2024-04-16",
-        exitedDate: "2024-04-16",
-        reason: "",
-        studentFullName: "ShoxistaYusupova"
-    }
-]
 
 export const StudentProfileGroupsHistory = memo(({active, setActive, selectedSubject}) => {
 
@@ -48,7 +18,7 @@ export const StudentProfileGroupsHistory = memo(({active, setActive, selectedSub
 
     useEffect(() => {
         dispatch(studentGroupHistoryThunk(selectedSubject))
-    }, [selectedSubject, dispatch])
+    }, [selectedSubject])
 
     const renderGroupsHistory = useCallback(() => {
         if (!Array.isArray(getHistorys)) {
@@ -58,7 +28,6 @@ export const StudentProfileGroupsHistory = memo(({active, setActive, selectedSub
         return getHistorys.map(history => (
             <tr key={history.id}>
                 <td/>
-                <td>{history.group.id}</td>
                 <td>{history.group.name}</td>
                 <td>{history.joined_day}</td>
                 <td>{history.left_day}</td>

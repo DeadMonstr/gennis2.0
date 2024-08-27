@@ -28,6 +28,7 @@ import {FlowListPage} from "pages/FlowListPage";
 import {ClassAddColorPage, ClassPage} from "pages/classPage";
 import {TimeTable} from "pages/timeTable";
 import {CalendarPage} from "pages/calendarPage";
+import {StudentsDirectorPage} from "../../../pages/studentsPage";
 
 
 export const AppRouter = () => {
@@ -52,6 +53,8 @@ export const AppRouter = () => {
 
 
                 <Route element={<RequireAuth/>}>
+
+                {/*<Route element={<RequireAuth/>}>*/}
 
                     <Route path={"platform/*"} element={<Layout/>}>
 
@@ -81,6 +84,10 @@ export const AppRouter = () => {
                             element={<StudentProfilePage/>}
                         />
 
+                    <Route
+                        path={"locations-overview"}
+                        element={<StudentsDirectorPage/>}
+                    />
 
                         {/*<Route*/}
                         {/*    path={"classProfile"}*/}

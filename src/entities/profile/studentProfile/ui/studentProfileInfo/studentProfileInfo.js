@@ -1,19 +1,11 @@
-import {memo} from 'react';
-
+import React, {memo} from 'react';
 import {EditableCard} from "shared/ui/editableCard";
-
 import cls from "./studentProfileInfo.module.sass";
 import defaultUserImg from "shared/assets/images/user_image.png";
+import {API_URL_DOC} from "../../../../../shared/api/base";
+import {Button} from "../../../../../shared/ui/button";
 
-export const StudentProfileInfo = memo((props) => {
-
-    const {
-        setActive,
-        data,
-        active,
-        setActiveModal,
-        newImage
-    } = props
+export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal, newImage, contract}) => {
 
     return (
         <EditableCard
@@ -30,6 +22,10 @@ export const StudentProfileInfo = memo((props) => {
                     src={data?.profile_img ?? defaultUserImg}
                     alt=""
                 />
+                <div onClick={() => setActive("contract")} className={cls.subject__edit}>
+                    <i style={{fontSize: 20+"px"}} className={"fa-solid fa-file-contract"}></i>
+                    <p>Shartnoma</p>
+                </div>
                 <h1>{data?.username}</h1>
                 <h2 className={cls.info__role}>Student</h2>
             </div>
@@ -40,6 +36,19 @@ export const StudentProfileInfo = memo((props) => {
                 <p>Telefon raqami: <span>{data?.phone}</span></p>
                 <p>Yoshi: <span>{data?.age}</span></p>
                 <p>Tug'ilgan sana: <span>{data?.birth_date}</span></p>
+                <p>Shartnoma: <span>
+                    {
+                        !contract || !contract.contract || contract.contract.length === 0 ? (
+                            <Button onClick={() => setActive("contract")}>Qo'shish</Button>
+                        ) : (
+                            contract.contract.map((item, index) =>
+                                <a key={index} href={`${API_URL_DOC}${item.url}`} target="_blank" rel="noopener noreferrer">
+                                    Yuklab olish
+                                </a>
+                            )
+                        )
+                    }
+                </span></p>
                 <div className={cls.info__addInfo}>
                     <i className="fas fa-plus"/>
                 </div>
@@ -55,19 +64,6 @@ export const StudentProfileInfo = memo((props) => {
                     <p>$ 390.000</p>
                 </div>
             </EditableCard>
-            {/*<Link to={"/platform/teacherSalaryPage"}>*/}
-            {/*    <EditableCard*/}
-            {/*        extraClass={cls.info__balance}*/}
-            {/*    >*/}
-            {/*        <h2>Balans</h2>*/}
-            {/*        <p>Summa</p>*/}
-            {/*        <div className={cls.info__money}>*/}
-            {/*            <h2>$ 570.000</h2>*/}
-            {/*            <p>$ 390.000</p>*/}
-            {/*        </div>*/}
-            {/*    </EditableCard>*/}
-            {/*</Link>*/}
-
         </EditableCard>
-    )
-})
+    );
+});

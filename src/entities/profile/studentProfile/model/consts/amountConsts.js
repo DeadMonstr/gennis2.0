@@ -5,14 +5,17 @@ import bank from "shared/assets/images/Bank.png";
 
 export const amountTypes = [
     {
+        id: 1,
         name: "cash",
         image: money
     },
     {
+        id: 2,
         name: "click",
         image: creditCard
     },
     {
+        id: 3,
         name: "bank",
         image: bank
     }
