@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -9,13 +9,13 @@ import {
     fetchClassColors,
     fetchClassNumberList,
     getSchoolClassNumbers,
-    getSchoolClassColors
+    getSchoolClassColors, getStudentsWithBranch, StudentsListDirector
 } from "entities/students";
 import { StudentsHeader } from "entities/students";
 import { StudentsFilter } from "features/filters/studentsFilter";
 import { fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData , getNewStudentsData, getNewStudentsLoading, getStudyingStudents} from "entities/students";
 import { Pagination } from "features/pagination";
-
+import {useNavigate} from "react-router";
 import cls from "./students.module.sass";
 import { getSearchValue } from "features/searchInput";
 import { Modal } from "shared/ui/modal";
@@ -29,6 +29,7 @@ import { createSchoolClass, fetchSchoolStudents } from "entities/students/model/
 import { Radio } from "shared/ui/radio";
 import { getUserBranchId } from "../../../profilePage";
 import { Input } from "shared/ui/input";
+import {getStudentsListDirector} from "../../model/selectors/studentsListDirector";
 
 const studentsFilter = [
     { name: "newStudents", label: "New Students" },
@@ -46,16 +47,15 @@ export const StudentsPage = memo(() => {
     const dispatch = useDispatch();
     const __THEME__ = localStorage.getItem("theme");
     const { register, handleSubmit } = useForm();
-
+    const navigation = useNavigate()
     const studyingStudents = useSelector(getStudyingStudents);
     const newStudentsLoading = useSelector(getNewStudentsLoading);
-    const newStudents = useSelector(__THEME__ ? getSchoolStudents : getNewStudentsData);
+    const newStudents = useSelector(__THEME__ ? getSchoolStudents : getStudentsWithBranch);
     const schoolClassNumbers = useSelector(getSchoolClassNumbers);
     const schoolClassColors = useSelector(getSchoolClassColors);
     const teachers = useSelector(getTeachers);
     const userBranchId = useSelector(getUserBranchId);
     const languages = useSelector(state => state.registerUser.languages);
-
     const [selectColor, setSelectColor] = useState();
     const [selectTeacher, setSelectTeacher] = useState();
     const [selectStudents, setSelectStudents] = useState([]);
@@ -65,7 +65,8 @@ export const StudentsPage = memo(() => {
     const [selected, setSelected] = useState([]);
     const [currentTableData, setCurrentTableData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-
+    const lenghts = localStorage.getItem("lenght")
+    const data = useSelector(getStudentsListDirector)
     const search = useSelector(getSearchValue);
     let PageSize = useMemo(() => 20, []);
 
@@ -96,6 +97,13 @@ export const StudentsPage = memo(() => {
         dispatch(fetchTeachersData());
         dispatch(fetchSubjectsAndLanguages());
     }, [dispatch, __THEME__]);
+
+    // useEffect(() => {
+    //     if (lenghts > 1)
+    //     {
+    //         navigation(`/platform/locations-overview`)
+    //     }
+    // })
 
     const onSubmit = (data) => {
         const res = {
@@ -144,85 +152,86 @@ export const StudentsPage = memo(() => {
 
     return (
         <>
-            <StudentsHeader
-                selected={selected}
-                setSelected={setSelected}
-                branches={branches}
-                active={active}
-                setActive={setActive}
-                onChange={handleChange}
-                selectedRadio={selectedRadio}
-                setSelectedRadio={setSelectedRadio}
-                peoples={studentsFilter}
-                theme={__THEME__ === "app_school_theme"}
-                onClick={setActiveModal}
-            />
 
-            <div className={cls.tableMain}>
-                {renderStudents()}
-            </div>
-
-            <Pagination
-                setCurrentTableData={setCurrentTableData}
-                users={searchedUsers}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-                pageSize={PageSize}
-                onPageChange={page => {
-                    setCurrentPage(page);
-                }}
-                type={"custom"}
-            />
-
-            <StudentsFilter active={active} setActive={setActive} activePage={selectedRadio} />
-
-            <Modal active={activeModal} setActive={setActiveModal}>
-                <div className={cls.modal}>
-                    <h1>Sinf yaratish</h1>
-                    <Form
-                        onSubmit={handleSubmit(onSubmit)}
-                        extraClassname={cls.modal__form}
-                    >
-                        <Select
-                            extraClass={cls.modal__select}
-                            title={"O'qituvchi"}
-                            options={teachers}
-                            onChangeOption={setSelectTeacher}
+                        <StudentsHeader
+                            selected={selected}
+                            setSelected={setSelected}
+                            branches={branches}
+                            active={active}
+                            setActive={setActive}
+                            onChange={handleChange}
+                            selectedRadio={selectedRadio}
+                            setSelectedRadio={setSelectedRadio}
+                            peoples={studentsFilter}
+                            theme={__THEME__ === "app_school_theme"}
+                            onClick={setActiveModal}
                         />
-                        <Select
-                            extraClass={cls.modal__select}
-                            title={"Til"}
-                            options={languages}
-                            register={register}
-                            name={"language"}
-                        />
-                        <Select
-                            extraClass={cls.modal__select}
-                            title={"Sinf raqami"}
-                            options={schoolClassNumbers}
-                            register={register}
-                            name={"class_number"}
-                        />
-                        <div className={cls.modal__radios}>
-                            {schoolClassColors.map(item => (
-                                <div key={item.id}>
-                                    <Radio
-                                        onChange={() => setSelectColor(item.id)}
-                                        checked={selectColor === item.id}
-                                        name={"color"}
-                                    />
-                                    {item.name}
-                                </div>
-                            ))}
+
+                        <div className={cls.tableMain}>
+                            {renderStudents()}
                         </div>
-                        <Input
-                            placeholder={"price"}
-                            name={"price"}
-                            register={register}
+
+                        <Pagination
+                            setCurrentTableData={setCurrentTableData}
+                            users={searchedUsers}
+                            setCurrentPage={setCurrentPage}
+                            currentPage={currentPage}
+                            pageSize={PageSize}
+                            onPageChange={page => {
+                                setCurrentPage(page);
+                            }}
+                            type={"custom"}
                         />
-                    </Form>
-                </div>
-            </Modal>
+
+                        <StudentsFilter active={active} setActive={setActive} activePage={selectedRadio} />
+
+                        <Modal active={activeModal} setActive={setActiveModal}>
+                            <div className={cls.modal}>
+                                <h1>Sinf yaratish</h1>
+                                <Form
+                                    onSubmit={handleSubmit(onSubmit)}
+                                    extraClassname={cls.modal__form}
+                                >
+                                    <Select
+                                        extraClass={cls.modal__select}
+                                        title={"O'qituvchi"}
+                                        options={teachers}
+                                        onChangeOption={setSelectTeacher}
+                                    />
+                                    <Select
+                                        extraClass={cls.modal__select}
+                                        title={"Til"}
+                                        options={languages}
+                                        register={register}
+                                        name={"language"}
+                                    />
+                                    <Select
+                                        extraClass={cls.modal__select}
+                                        title={"Sinf raqami"}
+                                        options={schoolClassNumbers}
+                                        register={register}
+                                        name={"class_number"}
+                                    />
+                                    <div className={cls.modal__radios}>
+                                        {schoolClassColors.map(item => (
+                                            <div key={item.id}>
+                                                <Radio
+                                                    onChange={() => setSelectColor(item.id)}
+                                                    checked={selectColor === item.id}
+                                                    name={"color"}
+                                                />
+                                                {item.name}
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <Input
+                                        placeholder={"price"}
+                                        name={"price"}
+                                        register={register}
+                                    />
+                                </Form>
+                            </div>
+                        </Modal>
         </>
     );
 });

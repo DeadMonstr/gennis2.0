@@ -168,3 +168,20 @@ export const studentPaymentDataPostThunk = createAsyncThunk(
         return response
     }
 );
+
+export const studentPaymentTypeChangeThunk = createAsyncThunk(
+    'studentPaymentSlice/studentPaymentTypeChangeThunk',
+    async ({id, data}) => {
+        const {request} = useHttp();
+        return await request(`${API_URL}Students/student_payment_update/${id}/`, "PATCH", JSON.stringify(data), headers())
+    }
+)
+
+
+export const studentBookOrderListThunk = createAsyncThunk(
+    'studentPaymentSlice/studentBookOrderListThunk',
+    async (id) => {
+        const {request} = useHttp();
+        return await request(`${API_URL}Books/book_order_list/?student_id=${id}/`, "GET", null, headers())
+    }
+)

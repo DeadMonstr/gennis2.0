@@ -1,6 +1,6 @@
 import React, {memo, useEffect, useState} from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import {fetchOnlyNewStudentsData, getNewStudentsData} from "entities/students";
+import {fetchOnlyNewStudentsData, getNewStudentsData, getStudentsWithBranch} from "entities/students";
 import {useNavigate} from "react-router";
 import {Input} from "shared/ui/input";
 import cls from "entities/students/ui/newStudents/newStudents.module.sass";
@@ -12,7 +12,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
     const [active, setActive] = useState(false);
     const navigation = useNavigate()
     const dispatch =  useDispatch()
-    const getNewSt = useSelector(getNewStudentsData)
+    const getNewSt = useSelector(getStudentsWithBranch)
 
     useEffect(() => {
         dispatch(fetchOnlyNewStudentsData())

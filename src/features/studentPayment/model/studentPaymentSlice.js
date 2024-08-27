@@ -17,7 +17,10 @@ import {
     studentPaymenListDelete,
     studentPaymentListDeleteGetThunk,
     studentPaymentDataThunk,
-    studentPaymentDataPostThunk
+    studentPaymentDataPostThunk,
+    studentPaymentTypeChangeThunk,
+    studentBookOrderListThunk
+
 } from "./studentPaymentThunk";
 
 
@@ -40,6 +43,8 @@ const initialState = {
     getDeletedList: [],
     getPaymentDates: [],
     getDateWithPost: [],
+    paymentType: [],
+    booksList: [],
     loading: false,
     error: null
 }
@@ -294,6 +299,34 @@ const studentPaymentSlice = createSlice({
                 state.getDateWithPost = action.payload;
             })
             .addCase(studentPaymentDataPostThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+
+
+
+            .addCase(studentPaymentTypeChangeThunk.pending, (state) => {
+               state.loading = true
+           })
+            .addCase(studentPaymentTypeChangeThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.paymentType = action.payload;
+            })
+            .addCase(studentPaymentTypeChangeThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+
+
+
+            .addCase(studentBookOrderListThunk.pending, (state) => {
+               state.loading = true
+           })
+            .addCase(studentBookOrderListThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.booksList = action.payload;
+            })
+            .addCase(studentBookOrderListThunk.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
             });

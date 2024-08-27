@@ -12,11 +12,11 @@ export const menuConfig = [
         icon: "fa-tasks",
         location: true
     },
-    {
-        to: "studentDirector",
-        name: "O'quvchilar",
-        icon: "fa-user-graduate",
-    },
+    // {
+    //     to: "studentDirector",
+    //     name: "O'quvchilar",
+    //     icon: "fa-user-graduate",
+    // },
     {
         to: "students",
         name: "O'quvchilar",

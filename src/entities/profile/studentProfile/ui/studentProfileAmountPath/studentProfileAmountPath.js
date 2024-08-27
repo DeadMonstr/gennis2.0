@@ -15,7 +15,7 @@ import {
     getDatasWithPost,
     studentPaymentListThunk,
     studentPaymenListDelete,
-    studentPaymentListDeleteGetThunk
+    studentPaymentListDeleteGetThunk, StudentPaymentEditModal, studentBookOrderListThunk, getBookPaymentsList
 } from "features/studentPayment";
 import {Button} from "shared/ui/button";
 import {YesNo} from "../../../../../shared/ui/yesNoModal/yesNo";
@@ -25,17 +25,19 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
     const pathArray = window.location.pathname.split('/');
     const lastId = pathArray[pathArray.length - 1];
     const booksList = useSelector(getBooksData);
+    const bookPaymnetList = booksList.bookorders;
     const getTotalAmountData = useSelector(getPaymentList);
-    const getDeleteMes = useSelector(getMessageDelete);
     const getDeletedLists = useSelector(getDeletedList);
     const getPaymentLists = useSelector(getDatasWithPost);
-    const paymentLists = getTotalAmountData.payments;
+    const getBookPayments = useSelector(getBookPaymentsList);
     const dispatch = useDispatch();
     const [activeState, setActiveState] = useState("");
     const [selectedSalary, setSelectedSalary] = useState(null);
     const [portal, setPortal] = useState(false);
+    const [modal, setModal] = useState(false);
     const [change, setChange] = useState(false);
     const [alerts, setAlerts] = useState([]);
+
     const showAlert = (type, message) => {
         const newAlert = {id: Date.now(), type, message};
         setAlerts([...alerts, newAlert]);
@@ -52,16 +54,16 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
             setAlerts(alerts => alerts.filter(alert => alert.id !== id));
         }, 1500);
     };
+
     const handleDelete = () => {
         dispatch(studentPaymenListDelete(selectedSalary)).then((action) => {
             if (action.type.endsWith('fulfilled')) {
-                showAlert('success', "Muvofaqqiyatli o'chirildi")
-                dispatch(studentPaymentListThunk(lastId))
+                showAlert('success', "Muvofaqqiyatli o'chirildi");
+                dispatch(studentPaymentListThunk(lastId));
             } else {
-                console.log("O'chirishda xatolik", action.error)
-                showAlert('error', "Internet yoki serverda xatolik")
+                console.log("O'chirishda xatolik", action.error);
+                showAlert('error', "Internet yoki serverda xatolik");
             }
-
 
             setPortal(false);
         });
@@ -73,9 +75,14 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
         } else {
             dispatch(studentPaymentListDeleteGetThunk(lastId));
         }
-    }, [lastId, dispatch, change]);
+    }, [lastId, change]);
 
-    console.log(getPaymentLists, "paymentsa")
+    useEffect(() => {
+        dispatch(studentBookOrderListThunk(lastId));
+    }, [lastId, dispatch]);
+
+    console.log(getBookPayments, "books");
+
     const renderInData = () => {
         const listToRender = change ? getDeletedLists.payments : getPaymentLists;
         return listToRender?.map(item =>
@@ -86,10 +93,10 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                 <td>{item.payment_sum}</td>
                 <td>{item.added_data}</td>
                 <td>
-                    <div
-                        className={classNames(cls.inner, {
-                            [cls.active]: item?.payment_type.name
-                        })}
+                    <div onClick={() => setModal(!modal)}
+                         className={classNames(cls.inner, {
+                             [cls.active]: item?.payment_type.name
+                         })}
                     >
                         {item?.payment_type.name}
                     </div>
@@ -106,7 +113,13 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
     };
 
     const renderOutData = () => {
-        return booksList?.map(item =>
+        if (!bookPaymnetList || bookPaymnetList.length === 0) {
+            return <div style={{width: 232+"%", display: 'flex', alignItems: "center", justifyContent: "center"}}>
+                <h1 style={{alignSelf: "center", marginLeft: 20+"rem", marginTop: 12+"rem", color: "#dddddd"}}>Kitob sotib olinmagan</h1>
+            </div>
+        }
+
+        return bookPaymnetList.map(item =>
             <tr key={item.id}>
                 <td>{item.type}</td>
                 <td>{item.payment}</td>
@@ -167,7 +180,6 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                                         extraClass={change ? cls.buttonDel2 : cls.buttonDel}
                                         onClick={() => setChange(!change)}/>
                                 {change ? null : <StudentPaymentDates/>}
-
                             </div>
                             <div className={cls.table__content}>
                                 {
@@ -206,6 +218,12 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                 )}
             </div>
             <Alert alerts={alerts} hideAlert={hideAlert}/>
+            <StudentPaymentEditModal
+                portal={modal}
+                setPortal={() => setModal(false)}
+                paymentId={selectedSalary}
+                studentId={lastId}
+            />
         </EditableCard>
     );
 });

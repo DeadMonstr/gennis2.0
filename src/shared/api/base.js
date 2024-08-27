@@ -1,4 +1,4 @@
-export const API_URL_DOC = `http://192.168.0.103:8000`
+export const API_URL_DOC = `http://192.168.182.135:8000`
 // export const API_URL_DOC = `https://gennis.avotra.ru/`
 export const API_URL = `${API_URL_DOC}/`  // api have
 export const CLASSROOM_API_URL = `http://localhost:3000/`

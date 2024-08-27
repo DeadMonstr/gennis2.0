@@ -17,8 +17,12 @@ export {
     studentPaymenListDelete,
     studentPaymentListDeleteGetThunk,
     studentPaymentDataThunk,
-    studentPaymentDataPostThunk
+    studentPaymentDataPostThunk,
+    studentPaymentTypeChangeThunk,
+    studentBookOrderListThunk
 } from './model/studentPaymentThunk'
+
+export {StudentPaymentEditModal} from './ui/studentPaymentEditModal/studentPaymentEditModal'
 export {
     getGroupHistory,
     getTotalAttendance,
@@ -34,5 +38,6 @@ export {
     getMessageDelete,
     getDeletedList,
     getPaymentDates,
-    getDatasWithPost
+    getDatasWithPost,
+    getBookPaymentsList
 } from './model/selectors/selectors'

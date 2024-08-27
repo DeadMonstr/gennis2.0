@@ -41,7 +41,6 @@ export const Select = React.memo(({
         }
     }, [selectOption, onChangeOption, isChanged]);
 
-    // Bu yerda setValue ni foydalanib branchId ni uzatamiz
     useEffect(() => {
         if (branchId && setValue) {
             setValue(branchId);

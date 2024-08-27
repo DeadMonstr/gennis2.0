@@ -7,7 +7,7 @@ import {
     fetchOnlyNewStudentsData,
     fetchOnlyStudyingStudentsData,
     fetchSchoolStudents,
-    fetchStudentsWithBranchThunk
+    fetchNewStudentsDataWithBranch
 } from "./studentsThunk";
 
 
@@ -141,16 +141,16 @@ export const studentsSlice = createSlice({
             })
 
 
-            .addCase(fetchStudentsWithBranchThunk.pending, state => {
+            .addCase(fetchNewStudentsDataWithBranch.pending, state => {
                 state.loading = true
                 state.error = null
             })
-            .addCase(fetchStudentsWithBranchThunk.fulfilled, (state, action) => {
+            .addCase(fetchNewStudentsDataWithBranch.fulfilled, (state, action) => {
                 state.branchStudents = action.payload
                 state.loading = false
                 state.error = null
             })
-            .addCase(fetchStudentsWithBranchThunk.rejected, (state, action) => {
+            .addCase(fetchNewStudentsDataWithBranch.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload ?? null
             })

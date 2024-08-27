@@ -25,7 +25,7 @@ export const StudentProfileTotalAttendance = memo(({active, setActive, selectedG
 
     useEffect(() => {
         dispatch(studentTotalAddendanceThunk({id: selectedGroup, lastId}));
-    }, [selectedGroup, lastId, dispatch]);
+    }, [selectedGroup, lastId]);
 
 
 

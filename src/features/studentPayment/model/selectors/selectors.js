@@ -47,3 +47,6 @@ export const getPaymentDates = (state) =>
 
 export const getDatasWithPost = (state) =>
     state.studentPaymentSlice?.getDateWithPost
+
+export const getBookPaymentsList = (state) =>
+    state.studentPaymentSlice?.booksList

@@ -23,7 +23,7 @@ export const StudentProfileSubjects = memo(({ setActive, data, onSelectSubject }
 
         return subjects?.map(item =>
             <div onClick={() => {
-                setActive("groupsHistory");
+
                 onSelectSubject(item.id)
             }} key={item?.id} className={cls.item}>
                 <div className={cls.item__inner}>
@@ -55,6 +55,7 @@ export const StudentProfileSubjects = memo(({ setActive, data, onSelectSubject }
     return (
         <EditableCard
             extraClass={cls.subject}
+            onClick={() => setActive("groupsHistory")}
         >
             <div className={cls.subject__edit}>
                 <img src={time} alt="" />

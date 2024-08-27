@@ -88,11 +88,11 @@ export const routersConfig = [
         path: getRouteTaskManager(":id"),
         element: null,
     },
-    {
-        name: "O'quvchilar",
-        path: getDirectorRouteStudents(),
-        element: <StudentsDirectorPage/>,
-    },
+    // {
+    //     name: "O'quvchilar",
+    //     path: getDirectorRouteStudents(),
+    //     element: <StudentsDirectorPage/>,
+    // },
     {
         name: " O'quvchilar",
         path: getRouteStudents(":id"),

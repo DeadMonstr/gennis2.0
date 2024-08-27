@@ -1,16 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {
-    getAttendanceData,
-    studentProfileAttendanceDataPostThunk,
-    studentProfileAttendanceDataThunk
-} from "../../../studentPayment";
+import {getPaymentDates, studentPaymentDataThunk, studentPaymentDataPostThunk} from "../../studentPayment";
 import {Select} from "shared/ui/select";
-import {Button} from "shared/ui/button";
 
-export const StudentAttendanceData = ({groupId}) => {
+export const StudentPaymentDates = () => {
     const dispatch = useDispatch();
-    const attendanceData = useSelector(getAttendanceData);
+    const paymentDate = useSelector(getPaymentDates);
+    const date = paymentDate.payments_by_year;
     const [years, setYears] = useState([]);
     const [months, setMonths] = useState([]);
     const [selectedYear, setSelectedYear] = useState("");
@@ -19,16 +15,14 @@ export const StudentAttendanceData = ({groupId}) => {
     const lastId = pathArray[pathArray.length - 1];
 
     useEffect(() => {
-        if (groupId) {
-            dispatch(studentProfileAttendanceDataThunk({id: groupId, lastId}));
-        }
-    }, [groupId, lastId]);
+        dispatch(studentPaymentDataThunk(lastId));
+    }, [lastId, dispatch]);
 
     useEffect(() => {
-        if (attendanceData) {
-            const yearsOptions = Object.keys(attendanceData).map(year => ({
-                value: year,
-                name: year
+        if (date) {
+            const yearsOptions = date.map(year => ({
+                value: year.name,
+                name: year.name
             }));
 
             setYears(yearsOptions);
@@ -40,34 +34,36 @@ export const StudentAttendanceData = ({groupId}) => {
                 setSelectedYear(currentYear);
                 handleYearChange(currentYear);
 
-                if (attendanceData[currentYear]?.includes(Number(currentMonth))) {
+                if (date.find(y => y.name.toString() === currentYear)?.months.includes(Number(currentMonth))) {
                     setSelectedMonth(currentMonth);
                 }
             }
         }
-    }, [attendanceData]);
+    }, [date]);
 
     useEffect(() => {
-        if (selectedMonth && selectedYear)
-            dispatch(studentProfileAttendanceDataPostThunk({
-                groupId,
+        if (selectedMonth && selectedYear) {
+            dispatch(studentPaymentDataPostThunk({
                 lastId,
                 data: {year: +selectedYear, month: +selectedMonth}
-            }))
-    }, [selectedYear, selectedMonth])
+            }));
+        }
+    }, [selectedYear, selectedMonth]);
 
     const handleYearChange = (selectedYear) => {
         setSelectedYear(selectedYear);
-        const monthsOptions = attendanceData[selectedYear]?.map(month => ({
+        const selectedYearData = date.find(y => y.name.toString() === selectedYear);
+        const monthsOptions = selectedYearData?.months.map(month => ({
             value: month,
             name: month
         })) || [];
 
         setMonths(monthsOptions);
 
-
         if (monthsOptions.length > 0 && monthsOptions.find(m => m.value === Number(selectedMonth))) {
             setSelectedMonth(selectedMonth);
+        } else {
+            setSelectedMonth(monthsOptions[0]?.value.toString());
         }
     };
 
@@ -77,7 +73,7 @@ export const StudentAttendanceData = ({groupId}) => {
             month: Number(month),
         };
 
-        dispatch(studentProfileAttendanceDataPostThunk({groupId, lastId, data}));
+        dispatch(studentPaymentDataPostThunk({id: lastId, data}));
     };
 
     return (

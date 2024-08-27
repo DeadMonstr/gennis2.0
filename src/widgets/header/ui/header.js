@@ -14,7 +14,12 @@ import {selectBranch, selectLocations} from "../../../entities/vacancy/ui/vacanc
 import cls from './header.module.sass';
 import logo from 'shared/assets/images/logo.svg';
 import {Select} from "../../../shared/ui/select";
-import {fetchStudentsWithBranchThunk, getStudentsWithBranch} from "../../../entities/students";
+import {
+    fetchOnlyNewStudentsData,
+    fetchOnlyStudyingStudentsData,
+    fetchNewStudentsDataWithBranch,
+    getStudentsWithBranch
+} from "../../../entities/students";
 
 export const Header = () => {
     const dispatch = useDispatch();
@@ -26,6 +31,10 @@ export const Header = () => {
     const students = useSelector(getStudentsWithBranch)
     const isBranch = Array.isArray(branches) ? branches : [branches]
     const [branchId, setBranchId] = useState("")
+    const [selected, setSelected] = useState([]);
+    const [deletedId, setDeletedId] = useState(0);
+    localStorage.setItem("lenght", selected.length)
+
     useEffect(() => {
         if (locationHistory.length >= 5) {
             setLocationHistory(arr => {
@@ -37,8 +46,7 @@ export const Header = () => {
         }
     }, [pathname]);
 
-    const [selected, setSelected] = useState([]);
-    const [deletedId, setDeletedId] = useState(0);
+
 
     useEffect(() => {
         dispatch(getLocations(selected));
@@ -53,6 +61,7 @@ export const Header = () => {
             setValueData(searchParams.get('search'));
         }
     }, []);
+
 
     useEffect(() => {
         if (valueData) {
@@ -71,14 +80,11 @@ export const Header = () => {
     }, [pathname, search]);
 
     useEffect(() => {
-        if (branchId)
-        {
-            dispatch(fetchStudentsWithBranchThunk(branchId))
+        if (branchId) {
+            dispatch(fetchNewStudentsDataWithBranch(branchId));
         }
+    }, [branchId, dispatch]);
 
-    }, [branchId, dispatch])
-
-    console.log(students, "seefd")
     function fetchSearchData() {
         const checkedValue =
             typeof valueData === 'string' ? valueData : searchParams.get('search');
@@ -135,7 +141,6 @@ export const Header = () => {
                         </div>
                     ))}
                 </div>
-
             </div>
         </header>
     );
