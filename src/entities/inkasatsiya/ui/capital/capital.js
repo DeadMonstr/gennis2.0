@@ -1,6 +1,6 @@
 import {Table} from "../../../../shared/ui/table";
 
-export const Capital = ({capital}) => {
+export const Capital = ({capital , extraClass}) => {
     const renderTable = () => {
         return capital?.capitals?.capital_data?.map((item, i) => (
             <tr>
@@ -14,7 +14,7 @@ export const Capital = ({capital}) => {
     }
     const render = renderTable()
     return (
-        <div>
+        <div className={extraClass}>
             <Table>
                 <thead>
                 <tr>

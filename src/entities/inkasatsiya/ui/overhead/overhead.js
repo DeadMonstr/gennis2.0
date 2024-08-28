@@ -1,6 +1,6 @@
 import {Table} from "../../../../shared/ui/table";
 
-export const Overhead = ({overhead}) => {
+export const Overhead = ({overhead , extraClass}) => {
 
     const renderTable = () => {
         return overhead?.overheads?.overhead_data?.map((item , i) => (
@@ -17,7 +17,7 @@ export const Overhead = ({overhead}) => {
 
     const render = renderTable()
     return (
-        <div>
+        <div className={extraClass}>
 
             <Table>
                 <thead>

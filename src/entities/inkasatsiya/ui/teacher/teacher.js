@@ -1,16 +1,14 @@
 import {Table} from "../../../../shared/ui/table";
 
-
-export const Student = ({students , extraClass}) => {
-
+export const Teacher = ({teacher , extraClass}) => {
 
     const renderTable = () => {
-        return students?.students?.student_data?.map((item, i) => (
+        return teacher?.teachers?.teacher_data?.map((item , i) => (
             <tr>
-                <td>{i + 1}</td>
-                <td>{item.name}  {item.surname}</td>
+                <td>{i +1}</td>
+                <td>{item.name} {item.surname}</td>
                 <td>{item.payment_type_name}</td>
-                <td>{item.payment_sum}</td>
+                <td>{item.salary}</td>
                 <td>{item.date}</td>
             </tr>
         ))
@@ -26,7 +24,7 @@ export const Student = ({students , extraClass}) => {
                     <th>No</th>
                     <th>Ism Familiya</th>
                     <th>To'lov turi</th>
-                    <th>To'lov</th>
+                    <th>Oylik</th>
                     <th>Sana</th>
                 </tr>
                 </thead>

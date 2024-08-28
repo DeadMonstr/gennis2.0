@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {accountingThunk} from "../thunk/accountingThunk";
 
 
 const pages = [
@@ -46,7 +47,10 @@ const pages = [
 
 
 const initialState = {
-    pages: pages
+    pages: pages,
+    loading: false,
+    error: false,
+    encashment: []
 }
 
 const accountingSlice = createSlice({
@@ -62,11 +66,25 @@ const accountingSlice = createSlice({
             })
         },
     },
-    extraReducers: builder => {
-    }
+    extraReducers: builder =>
+        builder
+            .addCase(accountingThunk.pending, state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(accountingThunk.fulfilled, (state, action) => {
+                state.encashment = action.payload.payments
+
+                console.log(action.payload, "load")
+                state.loading = false
+                state.error = false
+            })
+            .addCase(accountingThunk.rejected, state => {
+                state.error = true
+                state.loading = false
+            })
+
 })
-
-
 
 export const {onChangeAccountingPage} = accountingSlice.actions
 export default accountingSlice.reducer
