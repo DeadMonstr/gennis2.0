@@ -7,22 +7,26 @@ import {Select} from "../../../shared/ui/select";
 import {useDropzone} from "react-dropzone";
 
 export const AddCategoryModal = memo(({
-                                   setActiveModal,
-                                   activeModal,
-                                   register,
-                                   handleSubmit,
-                                   onClick,
-                                   changeItem,
-                                   setChangedImages,
-                                   options,
-                                   setSelectPayment
-                               }) => {
+                                          setActiveModal,
+                                          activeModal,
+                                          register,
+                                          handleSubmit,
+                                          onClick,
+                                          changeItem,
+                                          setChangedImages,
+                                          options,
+                                          setSelectPayment,
+                                          capital,
+                                          setSelectedCapital,
+                                          branches,
+                                          setSelectedBranches
+                                      }) => {
 
 
     return (
         <Modal setActive={setActiveModal} active={activeModal}>
             <h1>Add</h1>
-            <div style={{display: "flex", gap: "1rem", padding: "2rem"}}>
+            <div style={{display: "flex", gap: "1rem", padding: "2rem", alignItems: "center"}}>
                 <ImageDrop2
                     status={activeModal}
                     image={changeItem?.images}
@@ -31,12 +35,12 @@ export const AddCategoryModal = memo(({
                 />
                 <Form extraClassname={cls.form} onSubmit={handleSubmit(onClick)}>
                     <Input register={register} name={"name"}/>
-                    <Select/>
-                    <Select/>
+                    <Select options={capital} onChangeOption={setSelectedCapital}/>
+                    <Select options={branches} onChangeOption={setSelectedBranches}/>
                     <Input register={register} name={"id_number"} type={"number"}/>
                     <Input register={register} name={"price"} type={"number"}/>
                     <Input register={register} name={"total_down_cost"} type={"number"}/>
-                    <Input register={register} name={"term"} type={"date"}/>
+                    <Input register={register} name={"term"} type={"number"}/>
                     <Input register={register} name={"curriculum_hours"}/>
                     <Select options={options} onChangeOption={setSelectPayment}/>
                 </Form>
@@ -97,7 +101,15 @@ const ImageDrop2 = ({index, setChangedImages, image, status}) => {
 }
 
 
-export const EditModal = memo(({register, handleSubmit, onClick, editModal, setEditModal, changeItem, setChangedImages}) => {
+export const EditModal = memo(({
+                                   register,
+                                   handleSubmit,
+                                   onClick,
+                                   editModal,
+                                   setEditModal,
+                                   changeItem,
+                                   setChangedImages
+                               }) => {
 
     return (
         <Modal setActive={setEditModal} active={editModal}>

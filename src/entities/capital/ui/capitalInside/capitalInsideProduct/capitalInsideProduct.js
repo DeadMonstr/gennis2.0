@@ -1,29 +1,22 @@
 import cls from "./capitalInsideProduct.module.sass"
 import {Button} from "shared/ui/button";
 import {memo} from "react";
+import {API_URL_IMG} from "../../../../../shared/api/base";
 
 
-export const CapitalInsideProduct = memo(({capitalData , addModal , setAddModal}) => {
+export const CapitalInsideProduct = memo(({capitalData, addModal, setAddModal}) => {
 
 
-    // const capitalDataRender = () => {
-    //     return (
-    //         <div className={cls.capitalBox}>
-    //             <div className={cls.capitalBox_img}>
-    //                 <img src={capitalData.capitalImg} alt=""/>
-    //             </div>
-    //
-    //             <div className={cls.capitalBoxInfo}>
-    //                 <ul>
-    //                     <li>{capitalData.capitalProduct.name}</li>
-    //                     <li>{capitalData.capitalProduct.number}</li>
-    //                 </ul>
-    //             </div>
-    //         </div>
-    //     )
-    // }
-    //
-    // const render = capitalDataRender()
+    const capitalDataRender = () => {
+        return capitalData.map((item, i) => (
+            <div>
+                <img src={API_URL_IMG + item.img} alt=""/>
+                <h2>{item.name}</h2>
+            </div>
+        ))
+    }
+
+    const render = capitalDataRender()
 
 
     return (
@@ -40,14 +33,15 @@ export const CapitalInsideProduct = memo(({capitalData , addModal , setAddModal}
                     </span>
                     <div>
                         <Button type={"danger"} children={"O’chirilganlar"}/>
-                        <Button onClick={() => setAddModal(!addModal)} extraClass={cls.btn} type={"editPlus"} children={<i className={"fa fa-plus"}/>}/>
+                        <Button onClick={() => setAddModal(!addModal)} extraClass={cls.btn} type={"editPlus"}
+                                children={<i className={"fa fa-plus"}/>}/>
 
                     </div>
                 </div>
             </div>
             <div className={cls.product__wraper}>
 
-                {/*{render}*/}
+                {render}
 
             </div>
         </div>

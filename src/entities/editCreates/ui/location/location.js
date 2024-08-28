@@ -33,8 +33,6 @@ export const Location = () => {
     const {request} = useHttp()
     useEffect(() => {
         dispatch(getSystemId())
-    }, [])
-    useEffect(() => {
         dispatch(getLocationThunk())
     }, [])
 
