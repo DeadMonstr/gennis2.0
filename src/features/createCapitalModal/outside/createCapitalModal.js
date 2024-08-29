@@ -26,8 +26,8 @@ export const CreateCapitalModal = ({
 
                     />
                     <Form extraClassname={cls.form} onSubmit={handleSubmit(onClick)}>
-                        <Input required register={register} name={"name"}/>
-                        <Input required register={register} name={"id_number"}/>
+                        <Input required register={register} name={"name"} placeholder={"Name"}/>
+                        <Input required register={register} name={"id_number"} placeholder={"Id number"}/>
                     </Form>
                 </div>
             </Modal>
