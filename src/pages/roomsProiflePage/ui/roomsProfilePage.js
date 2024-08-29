@@ -12,9 +12,9 @@ import { RoomDeleteModal } from 'features/roomDeleteModal';
 import { RoomImageAddModal } from 'features/roomImageAddModal';
 import { fetchRoomImages } from 'features/roomImagePareModal/model/roomImageParseModalThunk';
 import { getRoomImage } from 'features/roomImagePareModal/model';
-import { API_URL } from "../../../shared/api/base";
-import { RoomImageParseModal } from "../../../features/roomImagePareModal";
-import {DefaultLoader, DefaultPageLoader} from "../../../shared/ui/defaultLoader";
+import { API_URL } from "shared/api/base";
+import { RoomImageParseModal } from "features/roomImagePareModal";
+import {DefaultLoader, DefaultPageLoader} from "shared/ui/defaultLoader";
 
 export const RoomsProfilePage = () => {
     const [switchStates, setSwitchStates] = useState({});

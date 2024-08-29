@@ -26,7 +26,7 @@ import {FlowsPage} from "pages/flowsPage";
 import {FlowProfileNavigators} from "entities/flowsProfile";
 import {FlowListPage} from "pages/FlowListPage";
 import {ClassAddColorPage, ClassPage} from "pages/classPage";
-import {TimeTable} from "pages/timeTable";
+import {T} from "pages/timeTable";
 import {CalendarPage} from "pages/calendarPage";
 import {StudentsDirectorPage} from "pages/studentsPage";
 

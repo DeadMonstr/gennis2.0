@@ -57,7 +57,7 @@ import {
 import {teacherSalarySlice} from "../entities/teacherSalary";
 import {employerSalarySlice} from "../entities/employerSalary";
 import {giveEmployerSalarySlice} from "../pages/giveSalaryPage";
-import {giveEmployerSalarySlices} from "../features/giveEmployerSalary";
+import {giveEmployerSalarySlices} from "features/giveEmployerSalary";
 import {giveTeacherSalarySlices} from "../features/giveSalary/giveSalary";
 import {teacherSalaryDeleteSlice} from "../features/salaryEdits";
 import {employerSalaryDeleteSlice} from "../features/salaryEdits";
@@ -66,6 +66,8 @@ import {vacancyWorkerSoucre, userSetPermissionSlice} from "../entities/vacancy/u
 import {vacancyWorkerSlice} from "../features/vacancyWorkerList";
 import {studentPaymentSlice} from "../features/studentPayment";
 import {inkasatsiyaSlice} from "../entities/inkasatsiya";
+import {timeTableTuronSlice} from "pages/timeTable"
+import {alertSlice} from "features/alert"
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -131,6 +133,7 @@ export const store = configureStore({
         getLocationSlice,
         postEducation,
         getEducation,
+        timeTableTuronSlice,
         studentSlice,
         employerSlice,
         teacher,
@@ -144,7 +147,8 @@ export const store = configureStore({
         groupProfileSlice,
         overHeadSlice,
         capitalSlice,
-        inkasatsiyaSlice
+        inkasatsiyaSlice,
+        alertSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(
