@@ -16,6 +16,7 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
     const [surname, setSurname] = useState('');
     const [phone, setNumber] = useState('')
     const [age, setAge] = useState('')
+
     useEffect(() => {
         if (teacherID)
         {
@@ -43,7 +44,9 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
                 onClose()
             })
     }
+
     if (!isOpen) return null
+
     return (
         <Modal
             active={isOpen}

@@ -26,7 +26,7 @@ import {FlowsPage} from "pages/flowsPage";
 import {FlowProfileNavigators} from "entities/flowsProfile";
 import {FlowListPage} from "pages/FlowListPage";
 import {ClassAddColorPage, ClassPage} from "pages/classPage";
-import {TimeTable} from "pages/timeTable";
+import {T} from "pages/timeTable";
 import {CalendarPage} from "pages/calendarPage";
 
 
@@ -64,10 +64,10 @@ export const AppRouter = () => {
                                     // <Route element={}>
                                     //     {item.element}
                                     // </Route>
-                                    <RequireAuth>
-                                        {item.element}
-                                    </RequireAuth>
-                                    // item.element
+                                    // <RequireAuth>
+                                    //     {item.element}
+                                    // </RequireAuth>
+                                    item.element
                                 }
                             />
                         )

@@ -57,6 +57,7 @@ export const VacancyPage = () => {
                     onClick={() => setActive(true)}
                 >
                     Filter
+
                 </Button>
             </div>
             <div className={cls.mainContainer_buttonPanelBox}>

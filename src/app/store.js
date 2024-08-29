@@ -39,7 +39,6 @@ import {vacancyPageParseSlice} from "../features/vacancyModals/vacancyPageAdd";
 import {vacancyWorkPageSlice} from "../features/vacancyModals/vacancyWorkPage/model";
 import {vacancyWorkerPermissionSlice} from "../features/vacancyModals/vacancyWorkerPermission";
 import {roomImageSlice} from "features/roomImagePareModal";
-import {timeTableSchool} from "pages/timeTable"
 import {accountingSlice, studentSlice} from "../entities/accounting";
 import {postBranch, postEducation, postSystem} from "../entities/creates";
 import {
@@ -50,7 +49,7 @@ import {
 import {teacherSalarySlice} from "../entities/teacherSalary";
 import {employerSalarySlice} from "../entities/employerSalary";
 import {giveEmployerSalarySlice} from "../pages/giveSalaryPage";
-import {giveEmployerSalarySlices} from "../features/giveEmployerSalary";
+import {giveEmployerSalarySlices} from "features/giveEmployerSalary";
 import {giveTeacherSalarySlices} from "../features/giveSalary/giveSalary";
 import {teacherSalaryDeleteSlice} from "../features/salaryEdits";
 import {employerSalaryDeleteSlice} from "../features/salaryEdits";
@@ -58,6 +57,8 @@ import {calendarSlice} from "pages/calendarPage";
 import {vacancyWorkerSoucre, userSetPermissionSlice} from "../entities/vacancy/ui/vacancyWorkerList";
 import {vacancyWorkerSlice} from "../features/vacancyWorkerList";
 import {studentPaymentSlice} from "../features/studentPayment";
+import {timeTableTuronSlice} from "pages/timeTable"
+import {alertSlice} from "features/alert"
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -112,7 +113,6 @@ export const store = configureStore({
         systemSlice,
         postBranch,
         getBranchSlice,
-        timeTableSchool,
         userProfile,
         vacancyWorkerPermissionSlice,
         teacherSalarySlice,
@@ -123,6 +123,7 @@ export const store = configureStore({
         getLocationSlice,
         postEducation,
         getEducation,
+        timeTableTuronSlice,
         studentSlice,
         giveTeacherSalarySlices,
         teacherSalaryDeleteSlice,
@@ -131,7 +132,8 @@ export const store = configureStore({
         userSetPermissionSlice,
         vacancyWorkerSlice,
         studentPaymentSlice,
-        groupProfile
+        groupProfile,
+        alertSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

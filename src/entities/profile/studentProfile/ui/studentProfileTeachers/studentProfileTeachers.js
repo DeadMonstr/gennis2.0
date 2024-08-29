@@ -5,7 +5,7 @@ import {EditableCard} from "shared/ui/editableCard";
 import cls from "./studentProfileTeachers.module.sass"
 import defaultUserImage from "shared/assets/images/user_image.png";
 
-export const StudentProfileTeachers = memo(() => {
+export const StudentProfileTeachers = () => {
     return (
         <EditableCard
             extraClass={cls.teacher}
@@ -39,4 +39,4 @@ export const StudentProfileTeachers = memo(() => {
             </div>
         </EditableCard>
     );
-})
+}

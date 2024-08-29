@@ -1,18 +1,18 @@
 import React, {useState} from 'react';
 import { Table } from "shared/ui/table";
 import cls from './vacancyWorkerList.module.sass';
-import {VacancyWorkerEdit} from "../../../../../features/vacancyModals/vacancyWorkerEdit";
+import {VacancyWorkerEdit} from "features/vacancyModals/vacancyWorkerEdit";
 import workerImg from "shared/assets/images/workerImg.svg"
 import workerSetting from 'shared/assets/icons/setting.svg'
 import {useSelector} from "react-redux";
-import {API_URL_IMG} from "../../../../../shared/api/base";
+import {API_URL_DOC} from "shared/api/base";
 
 export const VacancyWorkerList = ({ currentTableData, currentPage, PageSize, editMode, onEditClick }) => {
     const [actives, setActives] = useState(false)
     const workerData = useSelector(state => state.vacancyWorkerSlice.workerData);
     const safeData = Array.isArray(workerData) ? workerData : [workerData];
     const [selectedWorkerId, setSelectedWorkerId] = useState(null);
-    const API_URL_IMAGE = `${API_URL_IMG}`;
+    const API_URL_IMAGE = `${API_URL_DOC}`;
     const handleDeleteClick = (id) => {
         setActives(true);
         setSelectedWorkerId(id);

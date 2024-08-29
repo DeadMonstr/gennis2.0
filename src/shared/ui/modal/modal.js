@@ -6,7 +6,7 @@ import {useTheme} from "../../lib/hooks/useTheme";
 import cls from "./modal.module.sass";
 import close from "shared/assets/icons/cross.svg";
 
-export const Modal = memo(({children, active, setActive, extraClass}) => {
+export const Modal = memo(({children, active, setActive, extraClass,type="simple"}) => {
 
     const {theme} = useTheme()
 
@@ -20,21 +20,40 @@ export const Modal = memo(({children, active, setActive, extraClass}) => {
 
     if (active) {
 
+        if (type === "simple") {
+            return (
+
+
+                createPortal(
+                    <div
+                        className={classNames(cls.modal, "outClose", [theme])}
+                        onClick={(e) => onClick(e.target)}
+                    >
+                        <div className={classNames(cls.modal__inner, extraClass)}>
+                            <img
+                                className={classNames(cls.modal__close, "innerClose")}
+                                onClick={(e) => onClick(e.target)}
+                                src={close}
+                                alt=""
+                            />
+                            {children}
+                        </div>
+                    </div>
+                    ,
+                    document.body
+                )
+            );
+        }
+
+
+
         return (
             createPortal(
                 <div
                     className={classNames(cls.modal, "outClose", [theme])}
                     onClick={(e) => onClick(e.target)}
                 >
-                    <div className={classNames(cls.modal__inner, extraClass)}>
-                        <img
-                            className={classNames(cls.modal__close, "innerClose")}
-                            onClick={(e) => onClick(e.target)}
-                            src={close}
-                            alt=""
-                        />
-                        {children}
-                    </div>
+                    {children}
                 </div>,
                 document.body
             )

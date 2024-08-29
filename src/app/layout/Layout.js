@@ -9,7 +9,8 @@ import {fetchUserProfileData} from "pages/profilePage";
 import {getUserId, getUserRefreshLoading} from "pages/loginPage";
 
 
-import cls from "app/layout/Layout.module.sass"
+import cls from "./Layout.module.sass"
+import {Alert} from "features/alert";
 
 
 export const Layout = () => {
@@ -28,6 +29,7 @@ export const Layout = () => {
 
     return (
         <>
+            <Alert/>
             <Menubar/>
             <main className={cls.main}>
                 <Header/>

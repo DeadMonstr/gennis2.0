@@ -30,24 +30,8 @@ export const Login = () => {
     const [error, setError] = useState(false)
     const dispatch = useDispatch()
 
-    const [alerts, setAlerts] = useState([]);
     const navigate = useNavigate()
-    const showAlert = (type, message) => {
-        const newAlert = {id: Date.now(), type, message};
-        setAlerts([...alerts, newAlert]);
-        setTimeout(() => {
-            hideAlert(newAlert.id);
-        }, 5000);
-    };
 
-    const hideAlert = (id) => {
-        setAlerts(alerts => alerts.map(alert =>
-            alert.id === id ? {...alert, hide: true} : alert
-        ));
-        setTimeout(() => {
-            setAlerts(alerts => alerts.filter(alert => alert.id !== id));
-        }, 500);
-    };
 
     const onClick = (e) => {
 
@@ -84,12 +68,10 @@ export const Login = () => {
             .then(res => {
                 dispatch(getUserData(res))
                 navigate("/platform")
-                console.log(res, "res")
                 setLoading(false)
             })
             .catch(err => {
-                showAlert("error", "loginda hatolik")
-                console.log(err)
+
                 setLoading(true)
                 setError(true)
                 setValue("username" , "")
@@ -102,7 +84,7 @@ export const Login = () => {
     return (
         <div className={cls.container}>
 
-            <Alert alerts={alerts} hideAlert={hideAlert}/>
+            {/*<Alert data={alerts} />*/}
             <div className={cls.login__logo}>
                 <img src={gennisImg} alt=""/>
             </div>

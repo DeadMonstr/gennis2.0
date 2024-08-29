@@ -21,13 +21,13 @@ export const Menubar = () => {
     const [activeMenu, setActiveMenu] = useState("home");
     const [isDirector, setIsDirector] = useState(false);
 
-    useEffect(() => {
-        if (userPermissions) {
-            const directorRole = userPermissions[1].jobs.some(job => job.director || job.manager === true);
-            console.log(directorRole)
-            setIsDirector(directorRole);
-        }
-    }, [userPermissions]);
+    // useEffect(() => {
+    //     if (userPermissions) {
+    //         const directorRole = userPermissions[1].jobs.some(job => job.director || job.manager === true);
+    //         console.log(directorRole)
+    //         setIsDirector(directorRole);
+    //     }
+    // }, [userPermissions]);
 
     useEffect(() => {
         menuConfig.map(item => {

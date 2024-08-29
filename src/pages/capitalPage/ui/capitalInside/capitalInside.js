@@ -11,7 +11,7 @@ import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 import {Modal} from "../../../../shared/ui/modal";
 import {Form} from "../../../../shared/ui/form";
 import {Input} from "../../../../shared/ui/input";
-import {Button} from "../../../../shared/ui/button";
+import {Button} from "shared/ui/button";
 import {useDropzone} from "react-dropzone";
 import {useForm} from "react-hook-form";
 import {getOnDemandLazySlides} from "react-slick/lib/utils/innerSliderUtils";

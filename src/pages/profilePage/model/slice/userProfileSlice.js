@@ -13,7 +13,7 @@ const initialState = {
     salaryData: [
         {
             id: 1,
-            salary: 3000,
+            salary: 10000000000,
             theRest: 1000,
             received: 2000,
             month: "may"
