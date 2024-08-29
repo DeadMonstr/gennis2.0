@@ -50,7 +50,7 @@ const initialState = {
     pages: pages,
     loading: false,
     error: false,
-    encashment: []
+    encashment: [],
 }
 
 const accountingSlice = createSlice({
@@ -74,7 +74,6 @@ const accountingSlice = createSlice({
             })
             .addCase(accountingThunk.fulfilled, (state, action) => {
                 state.encashment = action.payload.payments
-
                 console.log(action.payload, "load")
                 state.loading = false
                 state.error = false

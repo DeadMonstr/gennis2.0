@@ -11,11 +11,11 @@ export const AccountingCapitalCosts = ({capitalData  ,setChangingData  , setActi
     }
 
     const renderCapitalData = () => {
-        return capitalData.map((item , i) => (
+        return capitalData?.map((item , i) => (
             <tr>
                 <td>{i + 1}</td>
                 <td>{item?.name}</td>
-                <td>{item.price}</td>
+                <td>{item?.price}</td>
                 <td>{item?.added_date}</td>
                 <td>{item.payment_type?.name}</td>
                 <td>

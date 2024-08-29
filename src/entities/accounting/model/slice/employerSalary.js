@@ -30,7 +30,6 @@ const employerSlice = createSlice({
                 state.employerSalary = action.payload.usersalarylists
                 state.loading = false
                 state.error = false
-                console.log(action.payload , "salary")
             })
             .addCase(getEmpSalary.rejected , (state , action) => {
                 state.loading = false

@@ -25,7 +25,7 @@ export const Alert = ({data}) => {
 
     return (
         <div className={cls.alerts}>
-            {alerts.map((alert) => (
+            {alerts?.map((alert) => (
                 <div key={alert.id} className={`${cls.alert} ${cls[alert.type]} ${alert.hide ? cls.hide : cls.show}`}>
                     <p>{alert.message}</p>
                     <i className="fa-solid fa-xmark" onClick={() => hideAlert(alert.id)}></i>
