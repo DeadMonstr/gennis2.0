@@ -8,6 +8,7 @@ import {DeletedTeachers, Teachers} from "entities/teachers";
 import {Button} from "shared/ui/button";
 import cls from "./teacher.module.sass";
 import {getTeachers} from "../../../entities/teachers";
+import {getTeachersWithFilter} from "entities/teachers";
 import {getTeacherLoading} from "entities/teachers";
 import {fetchTeachersData} from "../../../entities/teachers";
 import {DefaultLoader} from "../../../shared/ui/defaultLoader";
@@ -83,7 +84,7 @@ export const TeachersPage = () => {
                     :
                     <Teachers
                         loading={getTeacherLoading}
-                        data={currentTableData}
+                        data={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
                         // data={currentTableData}
                     />}
             </div>

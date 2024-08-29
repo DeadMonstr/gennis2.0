@@ -38,3 +38,10 @@ export const getSchoolStudents = (state) =>
 
 export const getStudentsWithBranch = (state) =>
     state.newStudents?.branchStudents
+
+export const getStudyingStudentsWithBranch = (state) =>
+    state.newStudents?.branchStStudents
+
+export const getStudyingStudentsLoading = (state) =>
+    state.newStudents?.branchStStudentsLoading
+

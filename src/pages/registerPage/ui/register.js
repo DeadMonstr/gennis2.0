@@ -51,7 +51,7 @@ export const Register = () => {
 
     useEffect(() => {
         dispatch(fetchSubjectsAndLanguages());
-    }, [dispatch]);
+    }, []);
 
     useEffect(() => {
         if (userSystemId === 2 || theme === "app_school_theme") {

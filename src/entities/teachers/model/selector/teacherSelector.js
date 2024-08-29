@@ -5,3 +5,6 @@ export const getTeachers = (state) =>
 
 export const getTeacherLoading = (state) =>
     state.teachers.loading
+
+export const getTeachersWithFilter = (state) =>
+    state.teachers.teachersDataWithFilter

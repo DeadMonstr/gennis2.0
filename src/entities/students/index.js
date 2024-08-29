@@ -11,7 +11,7 @@ export {
 } from "./model/studentsSlice"
 
 export {fetchNewStudentsData, fetchClassNumberList, fetchClassColors} from "./model/studentsThunk"
-export {fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData, fetchNewStudentsDataWithBranch} from "./model/studentsThunk"
+export {fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData, fetchNewStudentsDataWithBranch, fetchStudyingStudentsDataWithBranch} from "./model/studentsThunk"
 export {
     getNewStudentsData,
     getStudyingStudents,
@@ -24,7 +24,9 @@ export {
     getFilteredErrors,
     getNewStudentsLoading,
     getSchoolClassNumbers,
-    getStudentsWithBranch
+    getStudentsWithBranch,
+    getStudyingStudentsWithBranch,
+    getStudyingStudentsLoading
 
 } from "./model/selector/studentsSelector"
 

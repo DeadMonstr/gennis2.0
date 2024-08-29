@@ -20,7 +20,8 @@ export const Input = React.memo(({
                                      disabled,
                                      extraValues,
                                      checkboxTitle,
-                                     checked
+                                     checked,
+                                     onBlur
                                  }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [silk, setSilk] = useState("");
@@ -92,6 +93,7 @@ export const Input = React.memo(({
                     required={required}
                     placeholder={placeholder}
                     onChange={onChange}
+                    onBlur={onBlur}
                     checked={checked}
                     {...extraValues}
                 />

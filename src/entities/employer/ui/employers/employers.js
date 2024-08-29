@@ -3,7 +3,7 @@ import {Table} from "shared/ui/table";
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
-import {getEmployerLoading} from "../../model/selector/employersSelector";
+import {getEmployerDataWithFilter, getEmployerLoading} from "../../model/selector/employersSelector";
 import {useSelector} from "react-redux";
 
 
@@ -12,7 +12,7 @@ export const Employers = ({currentTableData, loading}) => {
     const [clickedCheckbox, setClickedCheckbox] = useState([])
     const loadingDef = useSelector(getEmployerLoading)
     const [removeClickedCheckbox , setRemovedClickedCheckbox] = useState([])
-
+    const filteredEmployer = useSelector(getEmployerDataWithFilter)
     const checkedItem = (id) => {
         const filteredCheckbox = clickedCheckbox.filter(item => item !== id)
         setClickedCheckbox([...filteredCheckbox , id])
@@ -26,7 +26,24 @@ export const Employers = ({currentTableData, loading}) => {
 
 
     const renderEmployers = () => {
-        return currentTableData?.map((item, i) => {
+
+        if (loadingDef) {
+            return (
+                <tr>
+                    <td colSpan="6">Yuklanmoqda...</td>
+                </tr>
+            )
+        }
+        const employerToRender = filteredEmployer && filteredEmployer.length > 0 ? filteredEmployer : currentTableData
+
+        if (!employerToRender || employerToRender.length === 0)
+        {
+            return (
+                <DefaultPageLoader/>
+            )
+        }
+
+        return employerToRender?.map((item, i) => {
             return (
                 <tr>
                     <td>{i + 1}</td>
@@ -61,6 +78,9 @@ export const Employers = ({currentTableData, loading}) => {
             )
         })
     }
+
+    const renderData = renderEmployers()
+
     return (
         <div className={cls.employer}>
             <div className={cls.table}>
@@ -79,7 +99,7 @@ export const Employers = ({currentTableData, loading}) => {
                         loadingDef ? <DefaultPageLoader/>
                             :
                             <tbody>
-                            {renderEmployers()}
+                            {renderData}
                             </tbody>
                     }
 

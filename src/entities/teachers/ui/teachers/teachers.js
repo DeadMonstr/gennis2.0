@@ -6,83 +6,78 @@ import {getTeacherLoading} from "../../model/selector/teacherSelector";
 import {useSelector} from "react-redux";
 import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 import {Input} from "../../../../shared/ui/input";
-
+import{getTeachersWithFilter} from "../../model/selector/teacherSelector";
 
 export const Teachers = memo(({data, setSelect, select}) => {
     const [checkbox, setCheckbox] = useState(false)
     const [selectId, setSelectId] = useState()
     const loadingDef = useSelector(getTeacherLoading)
+    const filteredTeachersData = useSelector(getTeachersWithFilter)
+
+    const renderTeachers = () => {
+        if (loadingDef) {
+            return (
+                <tr>
+                    <td colSpan="6">Yuklanmoqda</td>
+                </tr>
+            )
+        }
+        const teachersToRender = filteredTeachersData && filteredTeachersData.length > 0 ? filteredTeachersData : data
+
+        if (!teachersToRender || teachersToRender.length === 0){
+            return (
+                <DefaultPageLoader/>
+            )
+        }
+
+        return teachersToRender?.map((item, i) => {
+            return (
+                <tr key={i}>
+                    <td>{i + 1}</td>
+                    <Link to={`teacherProfile/${item.id}`}>
+                        <td>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
+                    </Link>
+
+                    <td>{item?.user?.username}</td>
+                    <td>{item.user.phone}</td>
+                    <td>{item.user.age}</td>
+                    <td>
+                        <div
+                            className={item.subject.length ? cls.teacher__language : null}>{item.subject.map(item =>
+                            <p>{item.name}</p>
+                        )}</div>
+                    </td>
+                    <td>
+                        {item?.extra_info?.status ? <div className={cls.teacher__inner}>
+                            <div className={cls.status}>
+                                <div className={cls.status__inner}/>
+                            </div>
+                            <Input
+                                type={"radio"}
+                                name={"radio"}
+                                extraClassName={cls.teacher__input}
+                                onChange={() => {
+                                    setSelect(item.id)
+                                    setSelectId(item.id)
+                                }}
+                                value={selectId === item.id}
+                                checked={selectId === item.id}
+                            />
+                        </div> : null}
+                    </td>
+                </tr>
+            )
+        })
+
+    }
+
+
+
     const checkBoxChange = (id) => {
         setCheckbox(id)
     }
 
-
-    const renderTeacher = useCallback(() => {
-        // if(data && data.length) {
-        //     return data?.map((item, i) => (
-        //         <tr key={i}>
-        //             <td>{i + 1}</td>
-        //             <Link to={`teacherProfile/${item.id}`}>
-        //                 <td>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
-        //             </Link>
-        //         </tr>
-        //     ))
-        // }
-        if (data && data.length) {
-            return data?.map((item, i) => {
-                // console.log(select.includes(item.id))
-                return (
-                    <tr key={i}>
-                        <td>{i + 1}</td>
-                        <Link to={`teacherProfile/${item.id}`}>
-                            <td>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
-                        </Link>
-
-                        <td>{item?.user?.username}</td>
-                        <td>{item.user.phone}</td>
-                        <td>{item.user.age}</td>
-                        <td>
-                            <div
-                                className={item.subject.length ? cls.teacher__language : null}>{item.subject.map(item =>
-                                <p>{item.name}</p>
-                            )}</div>
-                        </td>
-                        <td>
-                            {item?.extra_info?.status ? <div className={cls.teacher__inner}>
-                                <div className={cls.status}>
-                                    <div className={cls.status__inner}/>
-                                </div>
-                                <Input
-                                    type={"radio"}
-                                    name={"radio"}
-                                    extraClassName={cls.teacher__input}
-                                    onChange={() => {
-                                        setSelect(item.id)
-                                        setSelectId(item.id)
-                                    }}
-                                    value={selectId === item.id}
-                                    checked={selectId === item.id}
-                                />
-                            </div> : null}
-                        </td>
-                    </tr>
-                )
-            })
-                //     <td>{item.user.username}</td>
-                //     <td>{item.user.phone}</td>
-                //     <td>{item.user.age}</td>
-                //     <td><div className={item.subject ? cls.teacher__language : null}>{item.subject.name}</div></td>
-                //
-                //
-                // </tr>
-
-        }
-
-    }, [data, selectId])
-
-
-
-    const renderedData = renderTeacher()
+    const renderedData = renderTeachers()
     return (
         <div className={cls.teacher}>
 
@@ -99,13 +94,9 @@ export const Teachers = memo(({data, setSelect, select}) => {
                         <th>Status</th>
                     </tr>
                     </thead>
-                    {
-                        loadingDef ? <DefaultPageLoader/>
-                            :
                             <tbody>
                             {renderedData}
                             </tbody>
-                    }
 
                 </Table>
             </div>

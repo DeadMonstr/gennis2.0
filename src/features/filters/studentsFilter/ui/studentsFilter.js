@@ -1,12 +1,16 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from "classnames";
-import {Modal} from "shared/ui/modal";
-import {Input} from "shared/ui/input";
-import {Select} from "shared/ui/select";
-import {Radio} from "shared/ui/radio";
-import {Switch} from "shared/ui/switch";
-
+import { Modal } from "shared/ui/modal";
+import { Input } from "shared/ui/input";
+import { Select } from "shared/ui/select";
+import { Radio } from "shared/ui/radio";
+import { Switch } from "shared/ui/switch";
+import { getLanguagesData, getSubjectsData } from "pages/registerPage";
 import cls from "../../filters.module.sass";
+import { fetchSubjectsAndLanguages } from "../../../../pages/registerPage";
+import { useDispatch, useSelector } from "react-redux";
+import {fetchNewStudentsDataWithBranch, fetchStudyingStudentsDataWithBranch} from "entities/students";
+import {getStudyingStudentsWithBranch} from "entities/students";
 
 const statusList = [
     {
@@ -24,42 +28,77 @@ const statusList = [
         label: "Qizil",
         extra: cls.red
     }
-
 ]
 
-export const StudentsFilter = React.memo(({active, setActive, activePage, setData}) => {
+export const StudentsFilter = React.memo(({ active, setActive, activePage, setData }) => {
 
-    const [selectedAgeFrom, setSelectedAgeFrom] = useState()
-    const [selectedAgeTo, setSelectedAgeTo] = useState()
-    const [selectedSubject, setSelectedSubject] = useState()
-    const [selectedLanguage, setSelectedLanguage] = useState()
-    const [selectedClass, setSelectedClass] = useState()
-    const [selectedStatus, setSelectedStatus] = useState()
+    const [selectedAgeFrom, setSelectedAgeFrom] = useState("")
+    const [selectedAgeTo, setSelectedAgeTo] = useState("")
+    const [selectedSubject, setSelectedSubject] = useState("")
+    const [selectedLang, setSelectedLanguage] = useState("")
+    const [selectedClass, setSelectedClass] = useState("")
+    const [selectedStatus, setSelectedStatus] = useState("")
+    const getStStudents = useSelector(getStudyingStudentsWithBranch)
+    const dispatch = useDispatch()
+    const languages = useSelector(getLanguagesData)
+    const subjects = useSelector(getSubjectsData)
 
-    const [filterData, setFilterData] = useState({})
-
-    const onChange = (status) => {
-        setSelectedStatus(status)
-        setFilterData({
-            ageFrom: selectedAgeFrom,
-            ageTo: selectedAgeTo,
-            subject: selectedSubject,
-            language: selectedLanguage,
-            class: selectedClass
-        })
+    const onSelectSubject = (value) => {
+        setSelectedSubject(value);
+        const selectedSubjectData = subjects.find(subj => subj.id === Number(value));
+        const subjectId = selectedSubjectData.id;
+        {
+            activePage === "studying"
+                ?
+                dispatch(fetchStudyingStudentsDataWithBranch({subjId: subjectId}))
+                :
+                dispatch(fetchNewStudentsDataWithBranch({ subjId: subjectId }));
+        }
+        setActive(false)
     }
 
-    // useEffect(() => {
-    //     if (selectedStatus !== "") {
-    //         setData({
-    //             ageFrom: selectedAgeFrom,
-    //             ageTo: selectedAgeTo,
-    //             subject: selectedSubject,
-    //             language: selectedLanguage,
-    //             class: selectedClass
-    //         })
-    //     }
-    // }, [selectedStatus, setData])
+    const onSelectLanguage = (value) => {
+        setSelectedLanguage(value);
+        const selectedLanguageData = languages.find(lang => lang.id === Number(value));
+        const languageId = selectedLanguageData.id
+        {
+            activePage === "studying"
+            ?
+                dispatch(fetchStudyingStudentsDataWithBranch({langId: languageId}))
+                :
+                dispatch(fetchNewStudentsDataWithBranch({langId: languageId}))
+        }
+        setActive(false)
+
+    }
+
+    const handleAgeFromBlur = (e) => {
+        setSelectedAgeFrom(e.target.value);
+        {
+            activePage === "studying"
+            ?
+                dispatch(fetchStudyingStudentsDataWithBranch({ fromAge: e.target.value, untilAge: selectedAgeTo }))
+                :
+                dispatch(fetchNewStudentsDataWithBranch({ fromAge: e.target.value, untilAge: selectedAgeTo }))
+        }
+
+    }
+
+    const handleAgeToBlur = (e) => {
+        setSelectedAgeTo(e.target.value);
+        {
+            activePage === "studying"
+            ?
+                dispatch(fetchStudyingStudentsDataWithBranch({ fromAge: selectedAgeFrom, untilAge: e.target.value }))
+            :
+            dispatch(fetchNewStudentsDataWithBranch({ fromAge: selectedAgeFrom, untilAge: e.target.value }));
+        }
+
+    }
+
+    useEffect(() => {
+        dispatch(fetchSubjectsAndLanguages());
+    }, []);
 
     return (
         <Modal
@@ -72,8 +111,9 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, setDat
                     {
                         activePage !== "deleted" ? <Select
                             title={"Fan"}
+                            options={subjects}
                             extraClass={cls.filter__select}
-                            onChangeOption={setSelectedSubject}
+                            onChangeOption={(value) => onSelectSubject(value)}
                         /> : null
                     }
 
@@ -90,50 +130,32 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, setDat
                             type={"number"}
                             extraClassName={cls.filter__input}
                             placeholder={"Yosh (От)"}
-                            onChange={setSelectedAgeFrom}
-                            value={selectedAgeFrom}
+                            onChange={(e) => setSelectedAgeFrom(e.target.value)}
+                            onBlur={handleAgeFromBlur}
+                            defaultValue={selectedAgeFrom}
                         />
                         <Input
                             type={"number"}
                             extraClassName={cls.filter__input}
                             placeholder={"Yosh (До)"}
-                            onChange={setSelectedAgeTo}
-                            value={selectedAgeTo}
+                            onChange={(e) => setSelectedAgeTo(e.target.value)}
+                            onBlur={handleAgeToBlur}
+                            defaultValue={selectedAgeTo}
                         />
                     </div>
                     <Select
                         title={"Til"}
+                        options={languages}
                         extraClass={cls.filter__select}
-                        onChangeOption={setSelectedLanguage}
+                        onChangeOption={(value) => onSelectLanguage(value)}
                     />
-                    {
-                        activePage === "studying" ? <div className={cls.filter__status}>
-                            {
-                                statusList.map(item => {
-                                    return (
-                                        <div className={cls.filter__inner}>
-                                            <Radio
-                                                extraClasses={classNames(cls.filter__radio, item.extra)}
-                                                onChange={onChange}
-                                                name={"status"}
-                                                value={item.name}
-                                                checked={item.name === selectedStatus}
-                                            >
-                                                {item.label}
-                                            </Radio>
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div> : null
-                    }
                     <div className={cls.filter__switch}>
                         <p>O’chirilgan</p>
-                        <Switch disabled/>
+                        <Switch disabled />
                     </div>
                     <div className={cls.filter__switch}>
                         <p>Filterlangan</p>
-                        <Switch/>
+                        <Switch />
                     </div>
                 </div>
             </div>
