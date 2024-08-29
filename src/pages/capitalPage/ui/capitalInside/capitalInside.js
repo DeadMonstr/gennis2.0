@@ -55,6 +55,7 @@ export const CapitalInside = memo(() => {
         dispatch(getCapitalInfo(id))
         dispatch(getInsideCategory())
         dispatch(getCapitalDataThunk())
+
         dispatch(getPaymentType())
         dispatch(getBranchThunk())
     }, [])
@@ -112,6 +113,7 @@ export const CapitalInside = memo(() => {
 
         setActiveModal(false)
         dispatch(createInsideCategory({data , changedImages , selectPayment , capitalSelect , selectedBranches}));
+        dispatch(getInsideCategory())
     };
     const onChange = (data) => {
         setEditModal(!editModal)
