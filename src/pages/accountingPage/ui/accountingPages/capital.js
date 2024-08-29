@@ -22,7 +22,8 @@ import {
 } from "entities/accounting/ui/acauntingTables/accountingTableCapitalCosts/capitalDeleted";
 
 import cls from "../accountingPageMain.module.sass"
-import {YesNo} from "shared/ui/yesNoModal/yesNo";
+import {YesNo} from "shared/ui/yesNoModal";
+import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 
 export const Capital = () => {
     const capitalList = useSelector(getCapitalList)
@@ -49,22 +50,7 @@ export const Capital = () => {
         dispatch(getMonthDay())
         dispatch(capitalDeletedListThunk())
     }, [deleted])
-    // const showAlert = (type, message) => {
-    //     const newAlert = {id: Date.now(), type, message};
-    //     setAlerts([...alerts, newAlert]);
-    //     setTimeout(() => {
-    //         hideAlert(newAlert.id);
-    //     }, 1000);
-    // };
-    //
-    // const hideAlert = (id) => {
-    //     setAlerts(alerts => alerts.map(alert =>
-    //         alert.id === id ? {...alert, hide: true} : alert
-    //     ));
-    //     setTimeout(() => {
-    //         setAlerts(alerts => alerts.filter(alert => alert.id !== id));
-    //     }, 200);
-    // };
+
 
 
     const onAdd = (data) => {
@@ -82,7 +68,11 @@ export const Capital = () => {
             .then(res => {
                 console.log(res)
                 setActiveModal(false)
-                // showAlert("success" , "muvaffaqiyatlik qo'shildi")
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: res.msg
+                }))
                 dispatch(capitalListThunk())
                 setValue("name" , "")
                 setValue("price" , "")
@@ -99,7 +89,11 @@ export const Capital = () => {
                 dispatch(onDeleteCapital({id: id}))
                 console.log(res)
                 setActiveDelete(false)
-                // showAlert("success", `${changingData.name} ${res.msg}`)
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: res.msg
+                }))
             })
             .catch(err => {
                 console.log(err)
@@ -108,7 +102,6 @@ export const Capital = () => {
     return (
         <div className={cls.overhead}>
             <CapitalHeader deleted={deleted} setDeleted={setDeleted} setActive={setActiveModal}/>
-            {/*<Alert alerts={alerts} hideAlert={hideAlert}/>*/}
             {deleted ? <CapitalDeleted deleted={capitalDeletedList}/> : <AccountingCapitalCosts changingData={changingData} activeDelete={activeDelete}
                                                       setActiveDelete={setActiveDelete}
                                                       setChangingData={setChangingData}

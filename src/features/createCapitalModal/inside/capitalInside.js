@@ -16,8 +16,6 @@ export const AddCategoryModal = memo(({
                                           setChangedImages,
                                           options,
                                           setSelectPayment,
-                                          capital,
-                                          setSelectedCapital,
                                           branches,
                                           setSelectedBranches
                                       }) => {
@@ -34,15 +32,14 @@ export const AddCategoryModal = memo(({
 
                 />
                 <Form extraClassname={cls.form} onSubmit={handleSubmit(onClick)}>
-                    <Input register={register} name={"name"}/>
-                    <Select options={capital} onChangeOption={setSelectedCapital}/>
-                    <Select options={branches} onChangeOption={setSelectedBranches}/>
-                    <Input register={register} name={"id_number"} type={"number"}/>
-                    <Input register={register} name={"price"} type={"number"}/>
-                    <Input register={register} name={"total_down_cost"} type={"number"}/>
-                    <Input register={register} name={"term"} type={"number"}/>
-                    <Input register={register} name={"curriculum_hours"}/>
-                    <Select options={options} onChangeOption={setSelectPayment}/>
+                    <Input register={register} required name={"name"} placeholder={"Nomi"}/>
+                    <Select options={branches} onChangeOption={setSelectedBranches} title={ "Branch ni tanlang"}/>
+                    <Input register={register} required name={"id_number"} type={"number"} placeholder={"Raqami"}/>
+                    <Input register={register} required name={"price"} type={"number"} placeholder={"Narxi"}/>
+                    <Input register={register} required name={"total_down_cost"} type={"number"} placeholder={"Jami umumiy xarajat"}/>
+                    <Input register={register} required name={"term"} type={"number"} placeholder={"Muddati (yil)"}/>
+                    <Input register={register} required name={"curriculum_hours"} placeholder={"Sanasi"} type={"number"}/>
+                    <Select options={options} onChangeOption={setSelectPayment} title={"To'lov turi"}/>
                 </Form>
             </div>
 
@@ -72,7 +69,7 @@ const ImageDrop2 = ({index, setChangedImages, image, status}) => {
                 : status ? <>
                     <i className="far fa-image"/>
                     <input
-
+                        name={"file"}
                         type="file"
                         {...getInputProps()}
                     />

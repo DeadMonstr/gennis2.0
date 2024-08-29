@@ -105,16 +105,6 @@ export const AccountingAdditionalCosts = ({
                 }}
                 type={"custom"}
             />
-
-            <Modal active={activeDelete} setActive={setActiveDelete}>
-                <div className={cls.modalHeader}>{changingData.name} ni <br/>
-                    o'chirmoqchimisz
-                </div>
-                <div className={cls.deletemodal}>
-                    <Button type={"danger"} onClick={onDelete}> Xa</Button>
-                    <Button onClick={() => setActiveDelete(!activeDelete)}>Yo'q</Button>
-                </div>
-            </Modal>
         </>
     );
 };

@@ -17,6 +17,8 @@ import {getCapitalTypes} from "../../../../entities/capital";
 import {
     DeletedWorkerSalary
 } from "../../../../entities/accounting/ui/acauntingTables/accountingTableWorkerSalary/deletedWorkerSalary";
+import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
+import {YesNo} from "../../../../shared/ui/yesNoModal";
 
 export const EmployerSalaryPage = memo(({setPage}) => {
     const dispatch = useDispatch()
@@ -42,9 +44,6 @@ export const EmployerSalaryPage = memo(({setPage}) => {
 
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
-    console.log(getCapitalType, "type")
-
-
     const sum1 = getDeletedEmployerSalary.reduce((a, c) => a + parseFloat(c.salary || 0), 0);
     const sum2 = getSalary.reduce((a, c) => a + parseFloat(c.salary || 0), 0);
     const formatSalary = (salary) => {
@@ -66,13 +65,17 @@ export const EmployerSalaryPage = memo(({setPage}) => {
 
 
     const onDelete = (data) => {
-        console.log(changingData, 'changing')
         const {id} = changingData
         request(`${API_URL}Users/salaries/delete/${id}/`, "DELETE", JSON.stringify(id), headers())
             .then(res => {
                 console.log(res)
                 setActiveDelete(!activeDelete)
                 dispatch(onDeleteEmployerSalary({id: id}))
+                dispatch(onAddAlertOptions({
+                    status: true,
+                    msg: res.msg,
+                    type: "success"
+                }))
 
             })
             .catch(err => {
@@ -126,10 +129,11 @@ export const EmployerSalaryPage = memo(({setPage}) => {
                     setChangePayment={setChangePayment}
                     getCapitalType={getCapitalType}
                     onChange={onChange}
-                    onDelete={onDelete}
-                />
-            }
 
+                />
+
+            }
+            <YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>
             {/*<Pagination*/}
             {/*    setCurrentTableData={setCurrentTableData}*/}
             {/*    users={searchedUsers}*/}

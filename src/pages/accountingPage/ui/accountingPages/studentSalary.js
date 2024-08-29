@@ -1,3 +1,6 @@
+
+
+
 import {Pagination} from "features/pagination";
 import React, {useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
@@ -12,13 +15,12 @@ import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import {
     DeletedStudentPayment
 } from "entities/accounting/ui/acauntingTables/accountingTableStudent/deletedStudentPayment";
+import {onAddAlertOptions, onDeleteAlert} from "../../../../features/alert/model/slice/alertSlice";
+import {YesNo} from "../../../../shared/ui/yesNoModal";
 
 
 
 export const StudentSalary = () => {
-
-
-
     const {request} = useHttp()
     const [deleted, setDeleted] = useState(false)
     const dispatch = useDispatch()
@@ -30,7 +32,7 @@ export const StudentSalary = () => {
     useEffect(() => {
         dispatch(getStudentPayment())
         dispatch(getDeletedPayment())
-    }, [deleted])
+    }, [])
 
 
 
@@ -39,9 +41,13 @@ export const StudentSalary = () => {
         const {id} = changingData
         request(`${API_URL}Students/student_payment_delete/${id}/`, "DELETE", JSON.stringify({id}), headers())
             .then(res => {
-                console.log(res)
                 dispatch(onDeleteStudents({id: id}))
                 setActiveDelete(false)
+                dispatch(onAddAlertOptions({
+                    status: true,
+                    type: "success",
+                    msg: res.msg
+                }))
             })
             .catch(err => {
                 console.log(err)
@@ -66,7 +72,6 @@ export const StudentSalary = () => {
                 />
 
                 : <StudentsPayments
-                    onDelete={onDelete}
                     studentData={studentData}
                     deleted={deleted}
                     setActiveDelete={setActiveDelete}
@@ -76,6 +81,7 @@ export const StudentSalary = () => {
                 />
 
             }
+            <YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>
 
         </div>
     );

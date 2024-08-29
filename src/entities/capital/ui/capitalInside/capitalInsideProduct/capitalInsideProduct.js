@@ -8,17 +8,17 @@ export const CapitalInsideProduct = memo(({capitalData, addModal, setAddModal}) 
 
 
     const capitalDataRender = () => {
-        return capitalData.map((item, i) => (
+        return capitalData?.map((item, i) => (
             <div className={cls.box}>
                 <img src={def} alt=""/>
                 <div className={cls.box_item}>
-                    <h2>Nomi : {item.name}</h2>
+                    <h2>Nomi : {item?.name}</h2>
                     <ul>
-                        <li>Raqami : {item.id_number}</li>
-                        <li>Narxi : {item.price}</li>
-                        <li>Muddati : {item.term} yil</li>
-                        <li>Sana : {item.date}</li>
-                        <li>To'lov turi : {item.payment_type.name}</li>
+                        <li>Raqami : {item?.id_number}</li>
+                        <li>Narxi : {item?.price}</li>
+                        <li>Muddati : {item?.term} yil</li>
+                        <li>Sana : {item?.date}</li>
+                        <li>To'lov turi : {item?.payment_type?.name}</li>
                     </ul>
                 </div>
             </div>
