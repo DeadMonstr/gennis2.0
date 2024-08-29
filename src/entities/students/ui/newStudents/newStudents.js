@@ -1,6 +1,6 @@
 import React, {memo, useEffect, useState} from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import {fetchOnlyNewStudentsData, getNewStudentsData, getStudentsWithBranch} from "entities/students";
+import {fetchOnlyNewStudentsData, getNewStudentsData, getStudentsWithBranch, getNewStudentsWithSubject} from "entities/students";
 import {useNavigate} from "react-router";
 import {Input} from "shared/ui/input";
 import cls from "entities/students/ui/newStudents/newStudents.module.sass";
@@ -13,14 +13,47 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
     const navigation = useNavigate()
     const dispatch =  useDispatch()
     const getNewSt = useSelector(getStudentsWithBranch)
+    // const getNewStDef = useSelector(getNewStudentsData)
+    // const getSubjNewSt = useSelector(getNewStudentsWithSubject)
 
     useEffect(() => {
         dispatch(fetchOnlyNewStudentsData())
-    }, [dispatch])
+    }, [])
 
 
     const renderStudents = () => {
-        if (getNewSt && getNewSt.length)
+        if (!getNewSt || getNewSt.length === 0)
+        {
+           return currentTableData?.map((item,i) => {
+               return (
+                   <tr
+                       onClick={() => navigation(`profile/${item.id}`)}
+                   >
+                       <td>{i + 1}</td>
+                       <td>{item.user?.surname} {item.user?.name}</td>
+                       <td>{item.user?.age}</td>
+                       <td>{item.user?.phone}</td>
+                       <td>{item.user?.language?.name}</td>
+                       <td>{
+                           !item.group[0]?.name || item.group === 0 ? "Guruhi hali yo'q" : item.group[0]?.name
+                       }</td>
+                       <td>{item.user?.registered_date}</td>
+                       {
+                           theme ? <Input
+                               type={"checkbox"}
+                               onChange={() => setSelectStudents(prev => {
+                                   if (prev.filter(i => i === item.id)[0]) {
+                                       return prev.filter(i => i !== item.id)
+                                   } else {
+                                       return [...prev, item.id]
+                                   }
+                               })}
+                           />: null
+                       }
+                   </tr>
+               )
+           })
+        }else {
             return getNewSt?.map((item, i) => {
                 return (
                     <tr
@@ -47,7 +80,9 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                         }
                     </tr>
                 )
-            });
+            })
+        }
+
     };
 
     const render = renderStudents()

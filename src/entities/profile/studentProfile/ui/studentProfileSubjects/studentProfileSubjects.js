@@ -2,28 +2,30 @@ import React, { memo, useCallback } from 'react';
 import classNames from "classnames";
 
 import { EditableCard } from "shared/ui/editableCard";
-
+import {useNavigate} from "react-router";
 import cls from "./studentProfileSubjects.module.sass";
 import time from "shared/assets/images/oclock.png";
 
 export const StudentProfileSubjects = memo(({ setActive, data, onSelectSubject }) => {
-
+    const navigation = useNavigate()
     const renderSubjects = useCallback(() => {
         const subjects = Array.isArray(data)
             ? data.flatMap(group => ({
                 ...group.subject,
-                price: group.price
+                price: group.price,
+                groupId: group.id
             }))
             : (data?.subject ? [{
                 ...data.subject,
-                price: data.price
+                price: data.price,
+                groupId: data.id
             }] : []);
 
         console.log(subjects, "subjects")
 
         return subjects?.map(item =>
             <div onClick={() => {
-
+                navigation(`/platform/groups/1/groupInfo/${item.groupId}`)
                 onSelectSubject(item.id)
             }} key={item?.id} className={cls.item}>
                 <div className={cls.item__inner}>

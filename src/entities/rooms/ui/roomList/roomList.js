@@ -5,11 +5,17 @@ import { SkeletonCard } from "shared/ui/roomsSkeleton/roomsSkeleton";
 import Icon from "shared/assets/images/room_image.svg";
 import {Link} from "../../../../shared/ui/link";
 import {DefaultLoader} from "../../../../shared/ui/defaultLoader";
+import {useDispatch, useSelector} from "react-redux";
+import {getFilteredRooms} from "../../../../features/filters/roomsFilter";
 
 export const RoomsList = ({ currentTableData }) => {
     const [loading, setLoading] = useState(true);
     const [switchStates, setSwitchStates] = useState({});
+    const dispatch = useDispatch()
+    const getFilteredRoom = useSelector(getFilteredRooms)
+    const filteredRoom = getFilteredRoom?.rooms
 
+    console.log(getFilteredRoom, "filterlangan")
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false);
@@ -53,8 +59,17 @@ export const RoomsList = ({ currentTableData }) => {
         }));
     };
 
+    const roomsToRender = filteredRoom && filteredRoom.length > 0 ? filteredRoom : currentTableData
 
-    return currentTableData.map((item, index) => (
+    if (!roomsToRender || roomsToRender.length === 0)
+    {
+        return (
+            <DefaultLoader/>
+        )
+    }
+
+
+    return roomsToRender?.map((item, index) => (
         <>
             {!item.deleted && (
                 <Link extraClass={cls.extraStyle} to={`roomsProfilePage/${item.id}`}>

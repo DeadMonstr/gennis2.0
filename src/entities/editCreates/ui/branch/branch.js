@@ -48,7 +48,7 @@ export const Branch = () => {
         setValue("number", "");
     }
     const renderBranch = () => {
-        return getName && [...getName].sort(compareById).map(item => (
+            return getName && [...getName].sort(compareById).map(item => (
             <div className={cls.locationsBox}>
                 <div className={cls.locationHeader}>
                     <h2>{item?.name}</h2>

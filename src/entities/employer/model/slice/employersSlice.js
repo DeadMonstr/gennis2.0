@@ -1,9 +1,10 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {fetchEmployersData} from "./employersThunk";
+import {fetchEmployersData, fetchEmployersDataWithFilter} from "./employersThunk";
 
 const initialState = {
     employersData: [],
     deletedEmployers: [],
+    employerDataWithFilter: [],
     loading: false,
     error: null
 }
@@ -18,9 +19,18 @@ export const employersSlice = createSlice({
             .addCase(fetchEmployersData.fulfilled, (state, action) => {
                 state.loading = false
                 state.employersData = action.payload
-                console.log(action.payload, "employeers")
             })
             .addCase(fetchEmployersData.rejected, (state) => state.employersData = 'error')
+
+
+
+            .addCase(fetchEmployersDataWithFilter.pending, (state) => {state.loading = true})
+            .addCase(fetchEmployersDataWithFilter.fulfilled, (state, action) => {
+                state.loading = false
+                state.employerDataWithFilter = action.payload
+            })
+            .addCase(fetchEmployersDataWithFilter.rejected, (state) => state.error = 'error')
+
     }
 })
 export default employersSlice.reducer

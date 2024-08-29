@@ -42,7 +42,7 @@ export const Register = () => {
 
     useEffect(() => {
         dispatch(fetchSubjectsAndLanguages());
-    }, [dispatch]);
+    }, []);
 
     useEffect(() => {
         if (username) {

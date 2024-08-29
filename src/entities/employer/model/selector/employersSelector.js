@@ -7,3 +7,6 @@ export const getDeletedEmployersData = (state) =>
 
 export const getEmployerLoading = (state) =>
     state.employers?.loading
+
+export const getEmployerDataWithFilter = (state) =>
+    state.employers?.employerDataWithFilter

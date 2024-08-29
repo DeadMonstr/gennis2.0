@@ -28,7 +28,7 @@ export const RoomDeleteModal = ({ isOpen, onClose, roomId }) => {
                     <h2>Are you sure delete this card</h2>
                 </div>
                 <div className={cls.deleteButtons}>
-                    <Link to={`/platform/rooms`}>
+                    <Link to={`/platform/rooms/1`}>
                         <Button extraClass={cls.deleteButton} children={"Delete"} onClick={handleDelete}/>
                     </Link>
 

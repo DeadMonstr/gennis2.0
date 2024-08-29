@@ -17,7 +17,7 @@ export const EmployerSalaryList = ({ currentTableData, currentPage, PageSize }) 
                         :
                         <>
                             <td>{(currentPage - 1) * PageSize + index + 1}</td>
-                            <Link to={`giveSalaryPage/${item.id}/${item.permission.id}`}>
+                            <Link to={`giveSalaryPage/${item.id}/${item.permission}`}>
                             <td>{item.total_salary}</td>
                             </Link>
                             <td>{item.taken_salary}</td>

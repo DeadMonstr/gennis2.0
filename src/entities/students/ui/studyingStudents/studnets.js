@@ -1,25 +1,48 @@
-import {useNavigate} from "react-router";
-
-import {Table} from "shared/ui/table";
-
+import { useNavigate } from "react-router";
+import { Table } from "shared/ui/table";
 import cls from "./studnets.module.sass";
+import { useSelector } from "react-redux";
+import { getStudyingStudentsWithBranch, getStudyingStudentsLoading } from "../../model/selector/studentsSelector";
+import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 
-export const Students = ({currentTableData}) => {
-
-    const navigation = useNavigate()
+export const Students = ({ currentTableData }) => {
+    const getStStudents = useSelector(getStudyingStudentsWithBranch);
+    const loadingDef = useSelector(getStudyingStudentsLoading);
+    const navigation = useNavigate();
 
     const renderStudents = () => {
-        return currentTableData?.map((item, i) => (
-            <tr onClick={() => navigation(`profile/${item.id}`)}>
+        if (loadingDef) {
+            return (
+                <tr>
+                    <td colSpan="6">Yuklanmoqda...</td>
+                </tr>
+            );
+        }
+
+        const studentsToRender = getStStudents && getStStudents.length > 0 ? getStStudents : currentTableData;
+
+        if (!studentsToRender || studentsToRender.length === 0) {
+            return (
+               <DefaultPageLoader/>
+            );
+        }
+
+        return studentsToRender.map((item, i) => (
+            <tr key={item.id} onClick={() => navigation(`profile/${item.id}`)}>
                 <td>{i + 1}</td>
                 <td>{item.user.name} {item.user.surname}</td>
                 <td>{item.user.age}</td>
                 <td>{item.user.phone}</td>
-                <td>{item.user.group}</td>
-                <td><div style={{color: '#FF3B30'}}>{item.total_payment_month}</div></td>
+                <td>{item.group[0]?.name}</td>
+                <td>
+                    <div style={{ width: "fit-content", border: `2px solid ${item.color}`, color: `${item.color}`, padding: "1.5rem", borderRadius: "10px" }}>
+                        {item.debt}
+                    </div>
+                </td>
             </tr>
-        ))
-    }
+        ));
+    };
+
     return (
         <div className={cls.students}>
             <div className={cls.table}>
@@ -40,5 +63,5 @@ export const Students = ({currentTableData}) => {
                 </Table>
             </div>
         </div>
-    )
-}
+    );
+};

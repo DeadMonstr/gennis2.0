@@ -48,7 +48,7 @@ export const Rooms = () => {
             <div className={cls.mainContainer_buttonPanelBox}>
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}>
                     {/*<RequirePermission permission={true}>*/}
-                        <Button onClick={() => setActive(true)}>Add room</Button>
+                        <Button onClick={() => setActive(true)}>Xona qo'shish</Button>
                     {/*</RequirePermission>*/}
                 </div>
                 <Select value={selected} onChange={handleChange} />

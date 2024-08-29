@@ -13,7 +13,7 @@ import {
 } from "entities/students";
 import { StudentsHeader } from "entities/students";
 import { StudentsFilter } from "features/filters/studentsFilter";
-import { fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData , getNewStudentsData, getNewStudentsLoading, getStudyingStudents} from "entities/students";
+import { fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData , getNewStudentsData, getNewStudentsLoading, getStudyingStudents, getNewStudentsWithSubject} from "entities/students";
 import { Pagination } from "features/pagination";
 import {useNavigate} from "react-router";
 import cls from "./students.module.sass";
@@ -49,8 +49,7 @@ export const StudentsPage = memo(() => {
     const { register, handleSubmit } = useForm();
     const navigation = useNavigate()
     const studyingStudents = useSelector(getStudyingStudents);
-    const newStudentsLoading = useSelector(getNewStudentsLoading);
-    const newStudents = useSelector(__THEME__ ? getSchoolStudents : getStudentsWithBranch);
+    const newStudents = useSelector( getNewStudentsData);
     const schoolClassNumbers = useSelector(getSchoolClassNumbers);
     const schoolClassColors = useSelector(getSchoolClassColors);
     const teachers = useSelector(getTeachers);
@@ -68,7 +67,7 @@ export const StudentsPage = memo(() => {
     const lenghts = localStorage.getItem("lenght")
     const data = useSelector(getStudentsListDirector)
     const search = useSelector(getSearchValue);
-    let PageSize = useMemo(() => 20, []);
+    let PageSize = useMemo(() => 50, []);
 
     const searchedUsers = useMemo(() => {
         const filteredStudents = selectedRadio === "newStudents"
@@ -83,6 +82,8 @@ export const StudentsPage = memo(() => {
             item.name?.toLowerCase().includes(search.toLowerCase())
         );
     }, [newStudents, studyingStudents, search, selectedRadio]);
+
+    console.log(selectedRadio, "radio")
 
     useEffect(() => {
         setCurrentTableData(searchedUsers);
@@ -125,7 +126,7 @@ export const StudentsPage = memo(() => {
         }
     }, [dispatch, selectedRadio]);
 
-    console.log(newStudents, "newSt")
+    console.log(currentTableData, "newSt")
 
     const handleChange = (value) => {
         setSelectedRadio(value);
@@ -135,16 +136,16 @@ export const StudentsPage = memo(() => {
         switch (selectedRadio) {
             case "newStudents":
                 return (
-                    // <Misol/>
                     <NewStudents
                         theme={__THEME__ === "app_school_theme"}
                         setSelectStudents={setSelectStudents}
+                        currentTableData={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
                     />
                 );
             case "deletedStudents":
-                return <DeletedStudents currentTableData={currentTableData} />;
+                return <DeletedStudents currentTableData={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)} />;
             case "studying":
-                return <Students currentTableData={currentTableData} />;
+                return <Students currentTableData={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)} />;
             default:
                 return null;
         }
