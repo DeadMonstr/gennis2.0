@@ -20,7 +20,11 @@ export const employersSlice = createSlice({
                 state.loading = false
                 state.employersData = action.payload
             })
-            .addCase(fetchEmployersData.rejected, (state) => state.employersData = 'error')
+            .addCase(fetchEmployersData.rejected, (state) => {
+            state.loading = false;
+            state.error = 'error';
+        })
+
 
 
 
@@ -29,7 +33,10 @@ export const employersSlice = createSlice({
                 state.loading = false
                 state.employerDataWithFilter = action.payload
             })
-            .addCase(fetchEmployersDataWithFilter.rejected, (state) => state.error = 'error')
+            .addCase(fetchEmployersDataWithFilter.rejected, (state) => {
+                state.loading = false;
+                state.error = 'error';
+            })
 
     }
 })

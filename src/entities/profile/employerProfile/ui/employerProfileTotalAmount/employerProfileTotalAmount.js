@@ -15,6 +15,7 @@ import money from "shared/assets/images/Money.png";
 import creditCard from "shared/assets/images/CreditCard.png";
 import bank from "shared/assets/images/Bank.png";
 import {fetchEmployerSalaryThunk, getSalaryInsideSource} from "pages/giveSalaryPage";
+import {onAddAlertOptions} from "../../../../../features/alert/model/slice/alertSlice";
 
 const listPretcent = [-1, 34.8, 70.4]
 
@@ -46,8 +47,18 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
             const action = await dispatch(giveEmployerSalaryThunk(newSalary));
             if (giveEmployerSalaryThunk.fulfilled.match(action)) {
                 dispatch(addSalary(action.payload));
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: "Oylik muvofaqqiyatli to'landi"
+                }))
             } else {
                 console.error("Thunk failed with error: ", action.payload);
+                dispatch(onAddAlertOptions({
+                    type: "error",
+                    status: true,
+                    msg: "Internet yoki serverda xatolik qayta urinib ko'ring"
+                }))
             }
         } catch (error) {
             console.error("An error occurred:", error);

@@ -6,6 +6,7 @@ import {Input} from "shared/ui/input";
 import {getTeacherId} from "../../../../entities/teachers";
 import cls from './teacherEdit.module.sass'
 import {Button} from "../../../../shared/ui/button";
+import {onAddAlertOptions} from "../../../alert/model/slice/alertSlice";
 
 export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
     const dispatch = useDispatch();
@@ -41,6 +42,11 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
         dispatch(editTeacherThunk({id: (teacherID.id), updateTeacher}))
             .then(() => {
                 onUpdate(updateTeacher)
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: "Ma'lumot muvofaqqiyatli o'zgartirildi"
+                }))
                 onClose()
             })
     }

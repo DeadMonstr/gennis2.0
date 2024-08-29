@@ -16,13 +16,13 @@ import {useForm} from "react-hook-form";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {AccountingCapitalCosts} from "entities/accounting";
 import {onDeleteCapital} from "entities/accounting/model/slice/capital";
-import {Alert} from "shared/ui/alert";
+
 import {
     CapitalDeleted
 } from "entities/accounting/ui/acauntingTables/accountingTableCapitalCosts/capitalDeleted";
 
 import cls from "../accountingPageMain.module.sass"
-import {YesNo} from "../../../../shared/ui/yesNoModal/yesNo";
+import {YesNo} from "shared/ui/yesNoModal/yesNo";
 
 export const Capital = () => {
     const capitalList = useSelector(getCapitalList)
@@ -35,7 +35,7 @@ export const Capital = () => {
     const [radio, setRadio] = useState({})
     const [changingData, setChangingData] = useState({})
     const [activeDelete, setActiveDelete] = useState(false)
-    const [alerts, setAlerts] = useState([])
+    // const [alerts, setAlerts] = useState([])
     const [deleted, setDeleted] = useState(false)
 
     const {register, setValue, handleSubmit} = useForm()
@@ -49,22 +49,22 @@ export const Capital = () => {
         dispatch(getMonthDay())
         dispatch(capitalDeletedListThunk())
     }, [deleted])
-    const showAlert = (type, message) => {
-        const newAlert = {id: Date.now(), type, message};
-        setAlerts([...alerts, newAlert]);
-        setTimeout(() => {
-            hideAlert(newAlert.id);
-        }, 1000);
-    };
-
-    const hideAlert = (id) => {
-        setAlerts(alerts => alerts.map(alert =>
-            alert.id === id ? {...alert, hide: true} : alert
-        ));
-        setTimeout(() => {
-            setAlerts(alerts => alerts.filter(alert => alert.id !== id));
-        }, 200);
-    };
+    // const showAlert = (type, message) => {
+    //     const newAlert = {id: Date.now(), type, message};
+    //     setAlerts([...alerts, newAlert]);
+    //     setTimeout(() => {
+    //         hideAlert(newAlert.id);
+    //     }, 1000);
+    // };
+    //
+    // const hideAlert = (id) => {
+    //     setAlerts(alerts => alerts.map(alert =>
+    //         alert.id === id ? {...alert, hide: true} : alert
+    //     ));
+    //     setTimeout(() => {
+    //         setAlerts(alerts => alerts.filter(alert => alert.id !== id));
+    //     }, 200);
+    // };
 
 
     const onAdd = (data) => {
@@ -82,7 +82,7 @@ export const Capital = () => {
             .then(res => {
                 console.log(res)
                 setActiveModal(false)
-                showAlert("success" , "muvaffaqiyatlik qo'shildi")
+                // showAlert("success" , "muvaffaqiyatlik qo'shildi")
                 dispatch(capitalListThunk())
                 setValue("name" , "")
                 setValue("price" , "")
@@ -99,7 +99,7 @@ export const Capital = () => {
                 dispatch(onDeleteCapital({id: id}))
                 console.log(res)
                 setActiveDelete(false)
-                showAlert("success", `${changingData.name} ${res.msg}`)
+                // showAlert("success", `${changingData.name} ${res.msg}`)
             })
             .catch(err => {
                 console.log(err)
@@ -108,7 +108,7 @@ export const Capital = () => {
     return (
         <div className={cls.overhead}>
             <CapitalHeader deleted={deleted} setDeleted={setDeleted} setActive={setActiveModal}/>
-            <Alert alerts={alerts} hideAlert={hideAlert}/>
+            {/*<Alert alerts={alerts} hideAlert={hideAlert}/>*/}
             {deleted ? <CapitalDeleted deleted={capitalDeletedList}/> : <AccountingCapitalCosts changingData={changingData} activeDelete={activeDelete}
                                                       setActiveDelete={setActiveDelete}
                                                       setChangingData={setChangingData}

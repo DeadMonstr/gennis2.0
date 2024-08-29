@@ -28,7 +28,6 @@ import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 import {
     AdditionalCostsDeleted
 } from "../../../../entities/accounting/ui/acauntingTables/accountingTableAdditionalCosts/additionalCostsDeleted";
-import {Alert} from "../../../../shared/ui/alert";
 
 export const AdditionalCosts = () => {
     const [activeModal, setActiveModal] = useState(false)
@@ -49,7 +48,7 @@ export const AdditionalCosts = () => {
     const [changingData, setChangingData] = useState({})
     const [deleted, setDeleted] = useState(false)
     const overheadDeletedList = useSelector(getOverHeadDeletedList)
-    const [alerts, setAlerts] = useState([])
+    // const [alerts, setAlerts] = useState([])
     useEffect(() => {
         dispatch(getOverheadType())
         dispatch(getPaymentType())
@@ -62,22 +61,22 @@ export const AdditionalCosts = () => {
     }, [deleted])
 
 
-    const showAlert = (type, message) => {
-        const newAlert = {id: Date.now(), type, message};
-        setAlerts([...alerts, newAlert]);
-        setTimeout(() => {
-            hideAlert(newAlert.id);
-        }, 1000);
-    };
-
-    const hideAlert = (id) => {
-        setAlerts(alerts => alerts.map(alert =>
-            alert.id === id ? {...alert, hide: true} : alert
-        ));
-        setTimeout(() => {
-            setAlerts(alerts => alerts.filter(alert => alert.id !== id));
-        }, 200);
-    };
+    // const showAlert = (type, message) => {
+    //     const newAlert = {id: Date.now(), type, message};
+    //     setAlerts([...alerts, newAlert]);
+    //     setTimeout(() => {
+    //         hideAlert(newAlert.id);
+    //     }, 1000);
+    // };
+    //
+    // const hideAlert = (id) => {
+    //     setAlerts(alerts => alerts.map(alert =>
+    //         alert.id === id ? {...alert, hide: true} : alert
+    //     ));
+    //     setTimeout(() => {
+    //         setAlerts(alerts => alerts.filter(alert => alert.id !== id));
+    //     }, 200);
+    // };
 
 
     const onClick = () => {
@@ -134,7 +133,7 @@ export const AdditionalCosts = () => {
                 dispatch(onDeleteOverhead({id: id}))
                 // dispatch(overHeadList())
                 setActiveDelete(false)
-                showAlert("success", `${changingData.name} ${res.msg}`)
+                // showAlert("success", `${changingData.name} ${res.msg}`)
             })
             .catch(err => {
                 console.log(err)
@@ -151,7 +150,7 @@ export const AdditionalCosts = () => {
 
             <OverHeadHeader formatSalary={formatSalary} sum={sum1} deleted={deleted} sum2={sum2} onClick={onClick}
                             setDeleted={setDeleted}/>
-            <Alert alerts={alerts} hideAlert={hideAlert}/>
+            {/*<Alert alerts={alerts} hideAlert={hideAlert}/>*/}
 
             {deleted ? <AdditionalCostsDeleted
                     overheadDeletedList={overheadDeletedList}

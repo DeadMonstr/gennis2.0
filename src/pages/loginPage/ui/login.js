@@ -6,7 +6,6 @@ import {set, useForm} from "react-hook-form";
 import {Button} from "shared/ui/button";
 import {Input} from "shared/ui/input";
 import {MiniLoader} from "shared/ui/miniLoader";
-import {Alert} from "shared/ui/alert";
 import cls from "./login.module.sass"
 import gennisImg from "shared/assets/images/logo.svg"
 import loginAside from "shared/assets/images/login-page-4468581-3783954 1.svg"

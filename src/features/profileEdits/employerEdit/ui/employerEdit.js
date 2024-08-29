@@ -19,10 +19,10 @@ export const EmployerEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
     useEffect(() => {
         if (employerID)
         {
-            setName(employerID?.name)
-            setSurname(employerID?.surname)
-            setNumber(employerID?.phone)
-            setAge(employerID?.age)
+            setName(employerID?.user?.name)
+            setSurname(employerID?.user?.surname)
+            setNumber(employerID?.user?.phone)
+            setAge(employerID?.user?.age)
         }
     }, [employerID])
 

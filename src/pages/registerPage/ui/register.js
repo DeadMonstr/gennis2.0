@@ -6,14 +6,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import {useTheme} from "shared/lib/hooks/useTheme";
 import { fetchSubjectsAndLanguages, registerUser, registerTeacher, registerEmployer } from "../model/registerThunk";
 import cls from "./register.module.sass";
+import { fetchVacancyData, getVacancyJobs } from "features/vacancyModals/vacancyPageAdd";
 import { Button } from "shared/ui/button";
 import bg__img from 'shared/assets/images/reg__bg.svg';
 import { Input } from 'shared/ui/input';
 import { Textarea } from "shared/ui/textArea";
 import { Select } from "shared/ui/select";
 import { MiniLoader } from "shared/ui/miniLoader";
-import { Alert } from "shared/ui/alert";
 import { API_URL, useHttp, headers } from "shared/api/base";
+import {onAddAlertOptions} from "../../../features/alert/model/slice/alertSlice";
 
 const userstype = {
     types: [
@@ -24,6 +25,13 @@ const userstype = {
 };
 
 export const Register = () => {
+    const jobsData = useSelector(getVacancyJobs)
+    const jobOptions = jobsData?.jobs?.map(job => ({
+        id: job.group.id,
+        name: job.group.name
+    })) || [];
+
+
     const { register, handleSubmit, watch, setValue, reset } = useForm();
     const registerType = watch("registerType", "student");
     const username = watch("username", "");
@@ -47,11 +55,14 @@ export const Register = () => {
     const subjects = useSelector(state => state.registerUser.subjects) || [];
     const languages = useSelector(state => state.registerUser.languages) || [];
 
-    const [alerts, setAlerts] = useState([]);
-
+    console.log(selectedProfession, "option")
     useEffect(() => {
         dispatch(fetchSubjectsAndLanguages());
     }, []);
+
+    useEffect(() => {
+        dispatch(fetchVacancyData())
+    }, [])
 
     useEffect(() => {
         if (userSystemId === 2 || theme === "app_school_theme") {
@@ -100,26 +111,9 @@ export const Register = () => {
         }
     }, [username]);
 
-    const showAlert = (type, message) => {
-        const newAlert = { id: Date.now(), type, message };
-        setAlerts([...alerts, newAlert]);
-        setTimeout(() => {
-            hideAlert(newAlert.id);
-        }, 5000);
-    };
-
-    const hideAlert = (id) => {
-        setAlerts(alerts => alerts.map(alert =>
-            alert.id === id ? { ...alert, hide: true } : alert
-        ));
-        setTimeout(() => {
-            setAlerts(alerts => alerts.filter(alert => alert.id !== id));
-        }, 500);
-    };
 
     const onSubmit = (data) => {
         if (!isUsernameAvailable) {
-            showAlert('error', 'Please choose a different username');
             return;
         }
 
@@ -153,7 +147,7 @@ export const Register = () => {
                 class_number: selectedClass,
             };
             console.log(res, "res student")
-            // registerAction = registerUser(res);
+            registerAction = registerUser(res);
         } else if (registerType === 'teacher') {
             res = {
                 ...res,
@@ -163,23 +157,25 @@ export const Register = () => {
                 toifa: selected
             };
             console.log(res, "res teacher")
-            console.log(res.user.resume[0], "res teacher resume")
-            console.log(res.user.resume["0"], "res teacher resume 2")
-            // registerAction = registerTeacher(res);
+            registerAction = registerTeacher(res);
         } else if (registerType === 'employer') {
             res2 = {
                 ...res2,
-                profession: selectedProfession,
+                profession: Number(selectedProfession),
             };
             console.log(res, "res employer")
-            // registerAction = registerEmployer(res2);
+            registerAction = registerEmployer(res2);
         }
 
         if (registerAction) {
             dispatch(registerAction).then((action) => {
                 setLoading(false);
                 if (action.type.endsWith('fulfilled')) {
-                    showAlert('success', 'Registration successful!');
+                    dispatch(onAddAlertOptions({
+                        type: "success",
+                        status: true,
+                        msg: "Student muvofaqqiyatli qo'shildi"
+                    }))
                     reset();
                     setSelectedLang(1);
                     setSelectedSubject(1);
@@ -189,7 +185,11 @@ export const Register = () => {
                     setIsUsernameAvailable(true);
                 } else {
                     console.error('Registration error:', action.error);
-                    showAlert('error', 'Registration failed. Please try again.');
+                    dispatch(onAddAlertOptions({
+                        type: "error",
+                        status: true,
+                        msg: "Internet yoki serverda xatolik qayta urinib ko'ring"
+                    }))
                     setError(true);
                 }
             });
@@ -297,11 +297,7 @@ export const Register = () => {
                             extraClass={cls.extraClasses}
                             name={"profession"}
                             onChangeOption={setSelectedProfession}
-                            options={[
-                                { id: 1, value: "farrosh", name: "farrosh" },
-                                { id: 2, value: "elektrik", name: "elektrik" },
-                                { id: 3, value: "qorovul", name: "qorovul" }
-                            ]}
+                            options={jobOptions}
                         />
                     </>
                 );
@@ -312,7 +308,7 @@ export const Register = () => {
 
     return (
         <div className={cls.login}>
-            <Alert alerts={alerts} hideAlert={hideAlert} />
+            {/*<Alert alerts={alerts} hideAlert={hideAlert} />*/}
             <div className={cls.selection}>
                 <Select
                     defaultValue="User Type"

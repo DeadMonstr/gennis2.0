@@ -20,7 +20,9 @@ export const vacancyPageParseSlice = createSlice({
                 state.vacanciesData = action.payload
                 console.log(action.payload, "jobs")
             })
-            .addCase(fetchVacancyData.rejected, (state) => state.vacanciesData = 'error')
+            .addCase(fetchVacancyData.rejected, (state) => {
+                state.vacanciesData = 'error'
+            })
 })
 
 export default vacancyPageParseSlice.reducer
