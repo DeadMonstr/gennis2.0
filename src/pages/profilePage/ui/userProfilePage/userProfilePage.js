@@ -2,25 +2,26 @@ import {useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import {useParams} from "react-router";
+import classNames from "classnames";
 
+import {ChangeInfoForm} from "widgets/changeInfoForm";
 import {Pagination} from "features/pagination";
 import {getSearchValue} from "features/searchInput";
+import {ImageCrop} from "features/imageCrop";
 import {
     UserProfileChange,
     UserProfileInfo,
     UserProfileSalaryList,
-    UserProfileSalaryListInner
-} from "entities/profile/userProfile";
-import {
-    getUserSalaryData,
+    UserProfileSalaryListInner,
     getUserSalaryInnerData,
-    getUserProfileData
-} from "../../model/selector/userProfileSelector";
-import {changeUserProfileData, changeUserProfileImage, fetchUserProfileData} from "../../model/thunk/userProfileThunk";
+    getUserSalaryData,
+    getUserProfileData,
+    changeUserProfileImage,
+    changeUserProfileData,
+    fetchUserProfileData
+} from "entities/profile/userProfile";
 
 import cls from "./userProfilePage.module.sass";
-import {ImageCrop} from "../../../../features/imageCrop";
-import classNames from "classnames";
 
 export const UserProfilePage = () => {
 
@@ -30,15 +31,37 @@ export const UserProfilePage = () => {
 
     const {id} = useParams()
     const dispatch = useDispatch()
-    const {
-        register,
-        handleSubmit,
-        setValue
-    } = useForm()
     const userData = useSelector(getUserProfileData)
     const salaryData = useSelector(getUserSalaryData)
     const salaryInnerData = useSelector(getUserSalaryInnerData)
     const search = useSelector(getSearchValue)
+    const data = useMemo(() => [
+        {
+            name: "name",
+            placeholder: "Ism",
+            defaultValue: userData?.name
+        },
+        {
+            name: "surname",
+            placeholder: "Familiya",
+            defaultValue: userData?.surname
+        },
+        {
+            name: "father_name",
+            placeholder: "Otasinig ismi",
+            defaultValue: userData?.father_name
+        },
+        {
+            name: "phone",
+            placeholder: "Telefon raqami",
+            defaultValue: userData?.phone
+        },
+        {
+            name: "birth_date",
+            placeholder: "Tug'ilgan sana",
+            defaultValue: userData?.birth_date
+        }
+    ], [userData])
 
     const [activeModal, setActiveModal] = useState("")
     const [activeList, setActiveList] = useState(false)
@@ -60,13 +83,12 @@ export const UserProfilePage = () => {
     }, [salaryData, setCurrentPage, search, activeList])
 
     const onSubmitChangeInfo = (data) => {
-        console.log(data, 'data')
         dispatch(changeUserProfileData({id, data}))
+        dispatch()
         setCurrentStatus(true)
     }
 
     const onSubmitChangeImage = (data) => {
-        console.log(data, "image")
         dispatch(changeUserProfileImage({id, data}))
         setCurrentStatus(true)
     }
@@ -107,17 +129,24 @@ export const UserProfilePage = () => {
                     }}
                 />
             </div>
-            <UserProfileChange
-                setActive={setActiveModal}
+            <ChangeInfoForm
                 active={currentStatus ? false : activeModal === "changeInfo"}
-                onSubmit={handleSubmit(onSubmitChangeInfo)}
-                register={register}
-                setValue={setValue}
-                data={userData}
+                setActive={setActiveModal}
+                onSubmit={onSubmitChangeInfo}
+                data={data}
             />
+            {/*<UserProfileChange*/}
+            {/*    setActive={setActiveModal}*/}
+            {/*    active={currentStatus ? false : activeModal === "changeInfo"}*/}
+            {/*    onSubmit={handleSubmit(onSubmitChangeInfo)}*/}
+            {/*    register={register}*/}
+            {/*    setValue={setValue}*/}
+            {/*    data={userData}*/}
+            {/*/>*/}
             <ImageCrop
                 setActive={setActiveModal}
                 active={currentStatus ? false : activeModal === "changeImage"}
+                currentImage={userData?.profile_img}
                 setNewImage={onSubmitChangeImage}
             />
         </div>

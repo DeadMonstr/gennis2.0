@@ -2,6 +2,7 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {API_URL, headers, useHttp} from "shared/api/base";
 
 
+
 export const fetchNewStudentsData = createAsyncThunk(
     "studentsSlice/fetchNewStudentsData",
      async (id) =>{
@@ -66,4 +67,31 @@ export const createSchoolClass = createAsyncThunk(
         return await request(`${API_URL}Group/groups/create/?branch=${res.branch}`, "POST", JSON.stringify(res), headers())
     }
 )
+
+
+
+export const fetchNewStudentsDataWithBranch = createAsyncThunk(
+    'studentsSlice/fetchNewStudentsDataWithBranch',
+    async ({id, subjId, fromAge, untilAge, langId}) => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Students/new-registered-students/?branch=${id}&subject=${subjId}&age=${fromAge}-${untilAge}&language=${langId}`, "GET", null, headers())
+    }
+)
+
+export const fetchStudyingStudentsDataWithBranch = createAsyncThunk(
+    'studentsSlice/fetchStudyingStudentsDataWithBranch',
+    async ({id, subjId, fromAge, untilAge, langId}) => {
+        const {request} = useHttp();
+        return await request(`${API_URL}Students/active-students/?branch=${id}&subject=${subjId}&age=${fromAge}-${untilAge}&language=${langId}`, "GET", null, headers())
+    }
+)
+
+// export const fetchNewStudentsDataWithSubject = createAsyncThunk(
+//     'studentsSlice/fetchNewStudentsDataWithSubject',
+//     async (id) => {
+//         const {request} = useHttp()
+//         return await request(`${API_URL}Students/new-registered-students/?subject=${id}`, "GET", null, headers())
+//     }
+// )
+
 

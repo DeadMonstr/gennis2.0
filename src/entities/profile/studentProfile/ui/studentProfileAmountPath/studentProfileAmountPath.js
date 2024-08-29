@@ -1,56 +1,135 @@
-import React, {memo, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import classNames from "classnames";
-import {useSelector} from "react-redux";
-
+import {useSelector, useDispatch} from "react-redux";
+import {Alert} from "shared/ui/alert";
 import {EditableCard} from "shared/ui/editableCard";
-import {Select} from "shared/ui/select";
 import {Table} from "shared/ui/table";
 import {getBooksData} from "../../model/selectors/booksSelector";
-import {getPaymentData} from "../../model/selectors/paymentSelector";
-
 import cls from "./studentProfileAmountPath.module.sass";
 import inTo from "shared/assets/images/inTo.png";
 import outTo from "shared/assets/images/out.png";
+import {
+    getPaymentList,
+    getMessageDelete,
+    getDeletedList,
+    getDatasWithPost,
+    studentPaymentListThunk,
+    studentPaymenListDelete,
+    studentPaymentListDeleteGetThunk, StudentPaymentEditModal, studentBookOrderListThunk, getBookPaymentsList
+} from "features/studentPayment";
+import {Button} from "shared/ui/button";
+import {YesNo} from "../../../../../shared/ui/yesNoModal/yesNo";
+import {StudentPaymentDates} from "../../../../../features/studentPaymentDates";
 
 export const StudentProfileAmountPath = memo(({active, setActive}) => {
+    const pathArray = window.location.pathname.split('/');
+    const lastId = pathArray[pathArray.length - 1];
+    const booksList = useSelector(getBooksData);
+    const bookPaymnetList = booksList.bookorders;
+    const getTotalAmountData = useSelector(getPaymentList);
+    const getDeletedLists = useSelector(getDeletedList);
+    const getPaymentLists = useSelector(getDatasWithPost);
+    const getBookPayments = useSelector(getBookPaymentsList);
+    const dispatch = useDispatch();
+    const [activeState, setActiveState] = useState("");
+    const [selectedSalary, setSelectedSalary] = useState(null);
+    const [portal, setPortal] = useState(false);
+    const [modal, setModal] = useState(false);
+    const [change, setChange] = useState(false);
+    const [alerts, setAlerts] = useState([]);
 
-    const paymentList = useSelector(getPaymentData)
-    const booksList = useSelector(getBooksData)
+    const showAlert = (type, message) => {
+        const newAlert = {id: Date.now(), type, message};
+        setAlerts([...alerts, newAlert]);
+        setTimeout(() => {
+            hideAlert(newAlert.id);
+        }, 2000);
+    };
 
-    const [activeState, setActiveState] = useState("")
+    const hideAlert = (id) => {
+        setAlerts(alerts => alerts.map(alert =>
+            alert.id === id ? {...alert, hide: true} : alert
+        ));
+        setTimeout(() => {
+            setAlerts(alerts => alerts.filter(alert => alert.id !== id));
+        }, 1500);
+    };
+
+    const handleDelete = () => {
+        dispatch(studentPaymenListDelete(selectedSalary)).then((action) => {
+            if (action.type.endsWith('fulfilled')) {
+                showAlert('success', "Muvofaqqiyatli o'chirildi");
+                dispatch(studentPaymentListThunk(lastId));
+            } else {
+                console.log("O'chirishda xatolik", action.error);
+                showAlert('error', "Internet yoki serverda xatolik");
+            }
+
+            setPortal(false);
+        });
+    };
+
+    useEffect(() => {
+        if (!change) {
+            dispatch(studentPaymentListThunk(lastId));
+        } else {
+            dispatch(studentPaymentListDeleteGetThunk(lastId));
+        }
+    }, [lastId, change]);
+
+    useEffect(() => {
+        dispatch(studentBookOrderListThunk(lastId));
+    }, [lastId, dispatch]);
+
+    console.log(getBookPayments, "books");
 
     const renderInData = () => {
-        return paymentList?.map(item =>
-            <tr>
-                <td>{item.type}</td>
-                <td>{item.payment}</td>
-                <td>{item.date}</td>
+        const listToRender = change ? getDeletedLists.payments : getPaymentLists;
+        return listToRender?.map(item =>
+            <tr key={item.id} onClick={() => setSelectedSalary(item.id)}>
                 <td>
-                    <div
-                        className={classNames(cls.inner, {
-                            [cls.active]: item?.paymentType
-                        })}
+                    {item.status === false ? <td>To'lov</td> : <td>Chegirma</td>}
+                </td>
+                <td>{item.payment_sum}</td>
+                <td>{item.added_data}</td>
+                <td>
+                    <div onClick={() => setModal(!modal)}
+                         className={classNames(cls.inner, {
+                             [cls.active]: item?.payment_type.name
+                         })}
                     >
-                        {item?.paymentType}
+                        {item?.payment_type.name}
                     </div>
                 </td>
-                <td></td>
+                {!change && (
+                    <td>
+                        <Button onClick={() => setPortal(!portal)} type={"delete"}>
+                            <i style={{color: "white"}} className={"fa-solid fa-xmark"}></i>
+                        </Button>
+                    </td>
+                )}
             </tr>
-        )
-    }
+        );
+    };
 
     const renderOutData = () => {
-        return booksList?.map(item =>
-            <tr>
+        if (!bookPaymnetList || bookPaymnetList.length === 0) {
+            return <div style={{width: 232+"%", display: 'flex', alignItems: "center", justifyContent: "center"}}>
+                <h1 style={{alignSelf: "center", marginLeft: 20+"rem", marginTop: 12+"rem", color: "#dddddd"}}>Kitob sotib olinmagan</h1>
+            </div>
+        }
+
+        return bookPaymnetList.map(item =>
+            <tr key={item.id}>
                 <td>{item.type}</td>
                 <td>{item.payment}</td>
                 <td>{item.date}</td>
             </tr>
-        )
-    }
+        );
+    };
 
-    const renderIn = renderInData()
-    const renderOut = renderOutData()
+    const renderIn = renderInData();
+    const renderOut = renderOutData();
 
     return (
         <EditableCard
@@ -97,12 +176,10 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                     activeState ?
                         <div className={cls.table}>
                             <div className={cls.table__header}>
-                                <Select
-                                    title={"Yil"}
-                                />
-                                <Select
-                                    title={"Oy"}
-                                />
+                                <Button children={change ? "Amaldagi" : "O'chirilganlar"}
+                                        extraClass={change ? cls.buttonDel2 : cls.buttonDel}
+                                        onClick={() => setChange(!change)}/>
+                                {change ? null : <StudentPaymentDates/>}
                             </div>
                             <div className={cls.table__content}>
                                 {
@@ -113,7 +190,7 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                                             <th>To’lov</th>
                                             <th>Sana</th>
                                             <th>To’lov turi</th>
-                                            <th>O’chirish</th>
+                                            {!change && <th>O’chirish</th>}
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -136,7 +213,17 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                         </div>
                         : null
                 }
+                {!change && (
+                    <YesNo onDelete={handleDelete} activeDelete={portal} setActiveDelete={() => setPortal(!portal)}/>
+                )}
             </div>
+            <Alert alerts={alerts} hideAlert={hideAlert}/>
+            <StudentPaymentEditModal
+                portal={modal}
+                setPortal={() => setModal(false)}
+                paymentId={selectedSalary}
+                studentId={lastId}
+            />
         </EditableCard>
-    )
-})
+    );
+});

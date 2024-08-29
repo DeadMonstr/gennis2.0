@@ -1,2 +1,6 @@
-export {TimeTable} from "./ui/timeTable";
-export {default as timeTableSchool} from "./model/slice/timeTableSlice";
+
+export {default as timeTableTuronSlice} from "./model/slice/timeTableTuronSlice"
+export {TimeTableTuronPage} from "./ui/TimeTableTuronPage/TimeTableTuronPage"
+
+
+

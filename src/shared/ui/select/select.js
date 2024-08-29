@@ -13,40 +13,45 @@ export const Select = React.memo(({
                                       status,
                                       extraClass,
                                       register,
-                                      name
+                                      name,
+                                      setValue // Bu funksiyani props orqali uzatamiz
+
                                   }) => {
 
-    const [selectOption, setSelectOption] = useState("")
-    const [optionsData, setOptionsData] = useState([])
-    const [isChanged, setIsChanged] = useState(false)
+    const [selectOption, setSelectOption] = useState("");
+    const [optionsData, setOptionsData] = useState([]);
+    const [isChanged, setIsChanged] = useState(false);
+    const [branchId, setBranchId] = useState("");
 
     useEffect(() => {
-        setOptionsData(options)
-    }, [options])
+        setOptionsData(options);
+    }, [options]);
 
     useEffect(() => {
         if (defaultValue) {
-            setSelectOption(defaultValue)
+            setSelectOption(defaultValue);
         }
-    }, [defaultValue])
+    }, [defaultValue]);
 
     useEffect(() => {
         if (isChanged) {
-            if (!selectOption) return
-            onChangeOption(selectOption)
-            setIsChanged(false)
+            if (!selectOption) return;
+            onChangeOption(selectOption);
+            setIsChanged(false);
         }
-    }, [selectOption, onChangeOption, isChanged])
+    }, [selectOption, onChangeOption, isChanged]);
 
+    useEffect(() => {
+        if (branchId && setValue) {
+            setValue(branchId);
+        }
+    }, [branchId, setValue]);
 
     const renderOptionsOfSelect = useCallback(() => {
         return optionsData?.map((item, index) => {
+            const value = item[keyValue] || item.value || item.id || item.name || item;
+            const key = item.name || item?.number || item.days || item.user && `${item.user?.name} ${item.user?.surname}` || item;
 
-            //
-            const value = item[keyValue] || item.value || item.id || item.name || item
-            const key = item.name || item?.number || item.days || item.user &&`${item.user?.name} ${item.user?.surname}` || item
-            //
-            // if (!item.length)
             return (
                 <option
                     disabled={item.disabled}
@@ -55,36 +60,32 @@ export const Select = React.memo(({
                 >
                     {key}
                 </option>
-
             )
+        });
+    }, [optionsData, keyValue]);
 
-        })
-    }, [optionsData, keyValue])
-
-    const renderedOptions = renderOptionsOfSelect()
+    const renderedOptions = renderOptionsOfSelect();
 
     return register ? (
         <label className={classNames(cls.label, extraClass)}>
             <select
-
                 disabled={status === "disabled"}
                 className={classNames(cls.label__inner, extraClass, {
                     [cls.error]: status === "error"
                 })}
                 required={required}
                 value={selectOption}
-                // onChange={(e) => {
-                //     setSelectOption(e.target.value)
-                //     setIsChanged(true)
-                // }}
                 {...register(name, {
                     value: selectOption,
                     defaultValue: selectOption,
                     onChange: onChangeOption ? (e) => {
                         setSelectOption(e.target.value)
                         setIsChanged(true)
-                    } : (e) => setSelectOption(e.target.value)
-
+                        setBranchId(e.target.value);
+                    } : (e) => {
+                        setSelectOption(e.target.value)
+                        setBranchId(e.target.value);
+                    }
                 })}
             >
                 {title ? <option value={""} disabled>{title}</option> : <option value={""} disabled>Tanlang</option>}
@@ -95,7 +96,6 @@ export const Select = React.memo(({
     ) : (
         <label className={classNames(cls.label, extraClass)}>
             <select
-
                 disabled={status === "disabled"}
                 className={classNames(cls.label__inner, extraClass, {
                     [cls.error]: status === "error"
@@ -103,8 +103,9 @@ export const Select = React.memo(({
                 required={required}
                 value={selectOption}
                 onChange={(e) => {
-                    setSelectOption(e.target.value)
-                    setIsChanged(true)
+                    setBranchId(e.target.value);
+                    setSelectOption(e.target.value);
+                    setIsChanged(true);
                 }}
             >
                 {title ? <option value={""}>{title}</option> : <option value={""} disabled>Tanlang</option>}
@@ -113,4 +114,4 @@ export const Select = React.memo(({
             {status === "error" ? <span className={cls.label__error}>Error</span> : null}
         </label>
     )
-})
+});

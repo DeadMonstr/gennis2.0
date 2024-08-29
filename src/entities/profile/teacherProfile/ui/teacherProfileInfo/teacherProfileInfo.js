@@ -32,7 +32,6 @@ export const TeacherProfileInfo = memo(({active,setActive,setActiveModal, newIma
         }
 
     } ,[dispatch, id])
-    console.log(teacherId, "data user")
 
     const handleUpdateTeacher = (updateTeacher) => {
         setLocalTeacherData((prevData) => ({

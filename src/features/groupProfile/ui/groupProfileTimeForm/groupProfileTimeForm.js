@@ -2,7 +2,7 @@ import classNames from "classnames";
 import {getTimeTable, getWeekDays} from "entities/profile/groupProfile/model/groupProfileSelector";
 import {changeWeekDays, createWeekDays, deleteWeekDays} from "entities/profile/groupProfile/model/groupProfileThunk";
 import {getRoomsData} from "entities/rooms";
-import {getUserBranchId} from "pages/profilePage";
+import {getUserBranchId} from "entities/profile/userProfile";
 import React, {memo, useEffect, useState} from 'react';
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";

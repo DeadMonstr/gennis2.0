@@ -6,16 +6,33 @@ import {Select} from "shared/ui/select";
 import {Switch} from "shared/ui/switch";
 
 import cls from "../../filters.module.sass";
+import {fetchEmployersDataWithFilter} from "../../../../entities/employer";
+import {useDispatch} from "react-redux";
+import {fetchFilteredRooms} from "../model/filterRoomsThunk";
 
 export const RoomsFilter = React.memo(({active, setActive, activeSwitch, setActiveSwitch}) => {
 
-    const [selectedFrom, setSelectedFrom] = useState()
-    const [selectedTo, setSelectedTo] = useState()
+    const [selectedSeatFrom, setSelectedSeatFrom] = useState()
+    const [selectedSeatTo, setSelectedSeatTo] = useState()
     const [selectedTeacher, setSelectedTeacher] = useState()
+    const dispatch = useDispatch()
 
     const onChangeSwtich = () => {
         setActiveSwitch(!activeSwitch)
     }
+
+    const handleSeatFromBlur = (e) => {
+        setSelectedSeatFrom(e.target.value);
+        dispatch(fetchFilteredRooms({ seatFromId: e.target.value, seatUntilId: selectedSeatTo }))
+
+
+    }
+
+    const handleSeatToBlur = (e) => {
+        setSelectedSeatTo(e.target.value);
+        dispatch(fetchFilteredRooms({ seatFromId: selectedSeatFrom, seatUntilId: e.target.value }))
+    }
+
     return (
         <Modal
             active={active}
@@ -36,15 +53,17 @@ export const RoomsFilter = React.memo(({active, setActive, activeSwitch, setActi
                             type={"number"}
                             extraClassName={cls.filter__input}
                             placeholder={"O’rindiqlar soni (От)"}
-                            onChange={setSelectedFrom}
-                            value={selectedFrom}
+                            onChange={(e) => setSelectedSeatFrom(e.target.value)}
+                            defaultValue={selectedSeatFrom}
+                            onBlur={handleSeatFromBlur}
                         />
                         <Input
                             type={"number"}
                             extraClassName={cls.filter__input}
                             placeholder={"O’rindiqlar soni (До)"}
-                            onChange={setSelectedTo}
-                            value={selectedTo}
+                            onChange={(e) => setSelectedSeatTo(e.target.value)}
+                            defaultValue={selectedSeatTo}
+                            onBlur={handleSeatToBlur}
                         />
                     </div>
 
@@ -52,7 +71,7 @@ export const RoomsFilter = React.memo(({active, setActive, activeSwitch, setActi
 
                     <div className={cls.filter__switch}>
                         <p>Doska</p>
-                        <Switch onChangeSwitch={() => onChangeSwtich()} activeSwitch={activeSwitch}/>
+                        <Switch onChangeSwitch={() => onChangeSwtich} activeSwitch={activeSwitch}/>
                     </div>
 
                 </div>

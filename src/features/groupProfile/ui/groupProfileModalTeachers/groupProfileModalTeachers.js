@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import {getGroupProfileFilteredTeachers} from "entities/profile/groupProfile/model/groupProfileSelector";
 import {changeGroupProfile, fetchFilteredTeachers} from "entities/profile/groupProfile/model/groupProfileThunk";
-import {getTeachers} from "entities/teachers";
-import {getUserBranchId} from "pages/profilePage";
-import {getUserSystemId} from "pages/profilePage/model/selector/userProfileSelector";
+import {fetchTeachersData, getTeachers} from "entities/teachers";
+import {getUserBranchId} from "entities/profile/userProfile";
+import {getUserSystemId} from "entities/profile/userProfile/model/userProfileSelector";
 import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";
@@ -22,14 +22,30 @@ import defaultUserImg from "shared/assets/images/user_image.png";
 export const GroupProfileModalTeachers = memo(() => {
 
     const userSystemId = useSelector(getUserSystemId)
+    const userBranchId = useSelector(getUserBranchId)
     const dispatch = useDispatch()
     const {id} = useParams()
     const {theme} = useTheme()
     const profileData = useSelector(getGroupProfileData)
-    const teachers = useSelector(getGroupProfileFilteredTeachers)
+    const centerTeachers = useSelector(getGroupProfileFilteredTeachers)
+    const schoolTeachers = useSelector(getTeachers)
+
+    useEffect(() => {
+        if (userBranchId)
+            dispatch(fetchTeachersData({userBranchId}))
+    }, [userBranchId])
+
+    useEffect(() => {
+        if (userSystemId === 2) {
+            setCurrentTeachersData(schoolTeachers)
+        } else {
+            setCurrentTeachersData(centerTeachers)
+        }
+    }, [theme, userSystemId, centerTeachers, schoolTeachers])
 
     const [active, setActive] = useState(false)
     const [searchValue, setSearchValue] = useState("")
+    const [currentTeachersData, setCurrentTeachersData] = useState([])
 
     const onChangeTeacher = (teacherId) => {
         dispatch(changeGroupProfile({
@@ -40,14 +56,13 @@ export const GroupProfileModalTeachers = memo(() => {
     }
 
     const searched = useMemo(() => {
-        console.log(teachers, "teachers")
-        const filteredSlice = teachers?.slice()
+        const filteredSlice = currentTeachersData?.slice()
 
         return filteredSlice?.filter(item =>
             item?.user?.name?.toLowerCase().includes(searchValue?.toLowerCase()) ||
             item?.user?.surname?.toLowerCase().includes(searchValue?.toLowerCase())
         )
-    }, [teachers, searchValue])
+    }, [currentTeachersData, searchValue])
 
     const renderTeachers = useCallback(() => {
         return searched?.map(item =>

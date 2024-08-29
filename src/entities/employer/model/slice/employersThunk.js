@@ -9,3 +9,12 @@ export const fetchEmployersData = createAsyncThunk(
         return request(`${API_URL}Users/employeers/`,"GET", null, headers())
     }
 )
+
+export const fetchEmployersDataWithFilter = createAsyncThunk(
+    "employersSlice/fetchEmployersDataWithFilter",
+    async ({jobId, fromAgeId, untilageId, langId}) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Users/employeers/?job=${jobId}&age=${fromAgeId}-${untilageId}&language=${langId}`,"GET", null, headers())
+    }
+)
+

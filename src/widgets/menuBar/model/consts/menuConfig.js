@@ -18,6 +18,11 @@ export const menuConfig = [
         icon: "fa-user-graduate",
         system: [1, 2]
     },
+    // {
+    //     to: "studentDirector",
+    //     name: "O'quvchilar",
+    //     icon: "fa-user-graduate",
+    // },
     {
         to: "students",
         name: "O'quvchilar",

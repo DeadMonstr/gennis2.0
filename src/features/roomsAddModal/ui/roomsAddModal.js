@@ -1,18 +1,29 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { roomsAddThunk } from 'pages/roomsPage/model/roomsAddThunk';
-import { Modal } from 'shared/ui/modal';
-import { Input } from 'shared/ui/input';
-import { Button } from 'shared/ui/button';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {roomsAddThunk} from 'pages/roomsPage/model/roomsAddThunk';
+import {Modal} from 'shared/ui/modal';
+import {Input} from 'shared/ui/input';
+import {Button} from 'shared/ui/button';
 import cls from './roomsAddModal.module.sass';
 import {addRoom} from "pages/roomsPage/model/roomsAddSlice";
+import {getBranchThunk, getLocations} from "entities/editCreates";
+import {Select} from "shared/ui/select";
+import {value} from "lodash/seq";
+import {fetchRoomsData} from "../../../entities/rooms";
 
-export const RoomModal = ({ isOpen, onClose }) => {
+export const RoomModal = ({isOpen, onClose}) => {
     const [groupName, setGroupName] = useState('');
     const [seatCount, setSeatCount] = useState('');
     const [electronicBoard, setElectronicBoard] = useState(false);
     const [branch, setBranch] = useState(1);
     const dispatch = useDispatch();
+    const getBranches = useSelector(getLocations)
+
+    const onSelectBranch = (value) => {
+        setBranch(value);
+        const selectedBranchData = getBranches.find(branch => branch.id === Number(value))
+        const branchId = selectedBranchData.id
+    }
 
     const handleAddRoom = () => {
         const newRoom = {
@@ -25,22 +36,27 @@ export const RoomModal = ({ isOpen, onClose }) => {
 
         dispatch(roomsAddThunk(newRoom)).then((action) => {
             if (roomsAddThunk.fulfilled.match(action)) {
-                dispatch(addRoom(action.payload)); // Dispatch the action to add the room to the state
-                onClose();
+                dispatch(addRoom(action.payload));
             }
         });
+        dispatch(fetchRoomsData());
+        onClose();
     };
+
+    useEffect(() => {
+        dispatch(getBranchThunk())
+    }, [])
 
     if (!isOpen) return null;
 
     return (
         <Modal active={isOpen} setActive={onClose}>
             <div className={cls.filter}>
-                <h1>Add room</h1>
+                <h1>Xona qo'shish</h1>
                 <div>
                     <div>
                         <Input
-                            title={"Group name"}
+                            title={"Xona nomi"}
                             type={"text"}
                             value={groupName}
                             onChange={(e) => setGroupName(e.target.value)}
@@ -48,7 +64,7 @@ export const RoomModal = ({ isOpen, onClose }) => {
                     </div>
                     <div>
                         <Input
-                            title={"Count sitter"}
+                            title={"O'rindiqlar soni"}
                             type={"number"}
                             value={seatCount}
                             onChange={(e) => setSeatCount(e.target.value)}
@@ -56,18 +72,18 @@ export const RoomModal = ({ isOpen, onClose }) => {
                     </div>
                     <div>
                         <Input
-                            title={"Electronic Board"}
+                            title={"Elektron doska (bor/yo'q)"}
                             type={"checkbox"}
                             checked={electronicBoard}
                             onChange={(e) => setElectronicBoard(e.target.checked)}
                         />
                     </div>
                     <div>
-                        <Input
+                        <Select
                             title={"Branch"}
-                            type={"number"}
-                            value={branch}
-                            onChange={(e) => setBranch(parseInt(e.target.value, 10))}
+                            extraClass={cls.filter__select}
+                            options={getBranches}
+                            onChangeOption={onSelectBranch}
                         />
                     </div>
                     <div className={cls.filter__switch}>

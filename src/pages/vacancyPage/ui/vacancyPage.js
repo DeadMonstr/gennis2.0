@@ -8,7 +8,7 @@ import { vacancyPageList } from "entities/vacancy/model";
 import { VacancyPageEdit } from "features/vacancyModals/vacancyPageEdit";
 import { VacancyAdd } from "entities/vacancy/ui/vacancyAdd";
 import {useDispatch, useSelector} from "react-redux";
-import {getVacancyJobs, fetchVacancyData} from "../../../features/vacancyModals/vacancyPageAdd";
+import {getVacancyJobs, fetchVacancyData} from "features/vacancyModals/vacancyPageAdd";
 
 
 export const VacancyPage = () => {
@@ -57,6 +57,7 @@ export const VacancyPage = () => {
                     onClick={() => setActive(true)}
                 >
                     Filter
+
                 </Button>
             </div>
             <div className={cls.mainContainer_buttonPanelBox}>

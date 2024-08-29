@@ -1,5 +1,5 @@
+import React, {memo, useEffect, useMemo, useState} from "react";
 import {user} from "entities/user";
-import {memo, useCallback, useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 import {
@@ -8,42 +8,52 @@ import {
     NewStudents,
     Students,
     fetchClassColors,
-    fetchClassNumberList, getSchoolClassNumbers, getSchoolClassColors
+    fetchClassNumberList,
+    getSchoolClassNumbers,
+    getSchoolClassColors, getStudentsWithBranch, StudentsListDirector
 } from "entities/students";
 import {StudentsHeader} from "entities/students";
 import {StudentsFilter} from "features/filters/studentsFilter";
-import {fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData} from "entities/students";
-import {getNewStudentsData, getStudyingStudents, getNewStudentsLoading} from "entities/students";
+import {
+    fetchOnlyNewStudentsData,
+    fetchOnlyStudyingStudentsData,
+    getNewStudentsData,
+    getNewStudentsLoading,
+    getStudyingStudents
+} from "entities/students";
 import {Pagination} from "features/pagination";
+import {useNavigate} from "react-router";
+import {Modal} from "shared/ui/modal";
+import {Form} from "shared/ui/form";
+import {Select} from "shared/ui/select";
+import {fetchTeachersData, getTeachers} from "entities/teachers";
+import {useForm} from "react-hook-form";
+import {fetchSubjectsAndLanguages} from "pages/registerPage";
+import {getSchoolStudents} from "entities/students/model/selector/studentsSelector";
+import {createSchoolClass, fetchSchoolStudents} from "entities/students/model/studentsThunk";
+import {Radio} from "shared/ui/radio";
+import {Input} from "shared/ui/input";
+import {getStudentsListDirector} from "../../model/selectors/studentsListDirector";
+
 import {useTheme} from "shared/lib/hooks/useTheme";
 
 import cls from "./students.module.sass"
 import {getSearchValue} from "features/searchInput";
-import {useForm} from "react-hook-form";
-import {getSchoolStudents} from "../../../../entities/students/model/selector/studentsSelector";
-import {fetchTeachersData, getTeachers} from "../../../../entities/teachers";
-import {getUserBranchId} from "../../../profilePage";
-import {createSchoolClass, fetchSchoolStudents} from "../../../../entities/students/model/studentsThunk";
-import {fetchSubjectsAndLanguages} from "../../../registerPage";
-import {Modal} from "../../../../shared/ui/modal";
-import {Select} from "../../../../shared/ui/select";
-import {Input} from "../../../../shared/ui/input";
-import {Form} from "../../../../shared/ui/form";
-import {Radio} from "../../../../shared/ui/radio";
+import {getUserBranchId, getUserSystemId} from "entities/profile/userProfile";
+
 const studentsFilter = [
     {name: "newStudents", label: "New Students"},
     {name: "studying", label: "Studying Students"},
     {name: "deletedStudents", label: "Deleted Students"},
-]
-
+];
 
 const branches = [
     {name: "chirhciq"},
     {name: "gazalkent"},
     {name: "xo'jakent"},
-]
+];
 
-export const StudentsPage = memo(() => {
+export const StudentsPage = () => {
 
     // let newStudents
     const dispatch = useDispatch()
@@ -61,6 +71,7 @@ export const StudentsPage = memo(() => {
     const schoolClassColors = useSelector(getSchoolClassColors)
     const teachers = useSelector(getTeachers)
     const userBranchId = useSelector(getUserBranchId)
+    const userSystemId = useSelector(getUserSystemId)
     const languages = useSelector(state => state.registerUser.languages)
 
     const [selectColor, setSelectColor] = useState()
@@ -70,45 +81,53 @@ export const StudentsPage = memo(() => {
     const [activeModal, setActiveModal] = useState(false)
     const newStudentsLoading = useSelector(getNewStudentsLoading)
     const [active, setActive] = useState(false)
+    const __THEME__ = localStorage.getItem("theme");
+    const navigation = useNavigate()
     const [selectedRadio, setSelectedRadio] = useState(studentsFilter[0].name);
-    const [selected, setSelected] = useState([])
-
-    const search = useSelector(getSearchValue)
-    let PageSize = useMemo(() => 50, [])
-    const [currentTableData, setCurrentTableData] = useState([])
+    const [selected, setSelected] = useState([]);
+    const [currentTableData, setCurrentTableData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-
-    console.log(newStudents, "data")
+    const lenghts = localStorage.getItem("lenght")
+    const data = useSelector(getStudentsListDirector)
+    const search = useSelector(getSearchValue);
+    let PageSize = useMemo(() => 20, []);
 
     const searchedUsers = useMemo(() => {
-        const filteredHeroes = newStudents ? newStudents?.slice() : []
+        const filteredStudents = selectedRadio === "newStudents"
+            ? newStudents?.slice()
+            : studyingStudents?.slice();
+        // const filteredStudents = newStudents ? newStudents?.slice() : []
+        console.log(filteredStudents, "filtered")
         setCurrentPage(1)
 
-        console.log(search, true)
 
-        if (!search) return filteredHeroes
+        if (!search) return filteredStudents;
 
-        return filteredHeroes.filter(item =>
+        return filteredStudents.filter(item =>
             item.name?.toLowerCase().includes(search.toLowerCase())
         )
-    }, [newStudents, setCurrentPage, search, theme])
+    }, [newStudents, studyingStudents, search])
 
-    useEffect(() =>{
+    useEffect(() => {
         if (userBranchId) {
             dispatch(fetchTeachersData({userBranchId}))
             dispatch(fetchSubjectsAndLanguages())
         }
     } , [userBranchId])
 
+    // useEffect(() => {
+    //     setCurrentTableData(searchedUsers);
+    // }, [searchedUsers]);
+
     useEffect(() => {
-        if (theme === "app_school_theme" && userBranchId) {
+        if (userSystemId === 2 && userBranchId) {
             dispatch(fetchSchoolStudents({userBranchId}))
             dispatch(fetchClassColors())
             dispatch(fetchClassNumberList())
         } else {
             // dispatch(fetchNewStudentsData())
         }
-    }, [theme, userBranchId])
+    }, [userSystemId, userBranchId])
 
     const onSubmit = (data) => {
         const res = {
@@ -124,11 +143,9 @@ export const StudentsPage = memo(() => {
         dispatch(createSchoolClass({res}))
         // setSelectStudents([])
     }
-
     // useEffect(() =>{
     //     dispatch(fetchOnlyNewStudentsData())
     // } , [])
-
     // Radio tanlangan holatga qarab tegishli dispatch funksiyasini chaqirish
     useEffect(() =>{
         if (selectedRadio === "newStudents") {
@@ -139,15 +156,19 @@ export const StudentsPage = memo(() => {
     } , [dispatch, selectedRadio])
 
 
-    // useEffect(() =>{
-    //     dispatch(fetchOnlyNewStudentsData())
-    // } , [])
-
     const handleChange = (value) => {
         setSelectedRadio(value);
     };
     const renderStudents = () => {
         switch (selectedRadio) {
+            // case "newStudents":
+            //     return (
+            //         // <Misol/>
+            //         <NewStudents
+            //             theme={__THEME__ === "app_school_theme"}
+            //             setSelectStudents={setSelectStudents}
+            //         />
+            //     );
             case "newStudents" :
                 // return <NewStudents currentTableData={newStudents}/>
                 return <NewStudents
@@ -157,20 +178,19 @@ export const StudentsPage = memo(() => {
                     // setSelectId={}
                 />
             case "deletedStudents":
-                return <DeletedStudents currentTableData={currentTableData}/>
-            case "studying" :
-                return <Students currentTableData={studyingStudents}/>
-            // case "deletedStudents":
-            //     return <DeletedStudents currentTableData={currentTableData}/>
-
+                return <DeletedStudents currentTableData={currentTableData}/>;
+            case "studying":
+                return <Students currentTableData={currentTableData}/>;
+            default:
+                return null;
         }
-    }
-
+    };
 
     const renderNewStudents = renderStudents()
 
     return (
         <>
+
 
             <StudentsHeader
                 selected={selected}
@@ -182,10 +202,13 @@ export const StudentsPage = memo(() => {
                 selectedRadio={selectedRadio}
                 setSelectedRadio={setSelectedRadio}
                 peoples={studentsFilter}
-                theme={theme === "app_school_theme"}
+                theme={__THEME__ === "app_school_theme"}
                 onClick={setActiveModal}
             />
 
+            {/*<div className={cls.tableMain}>*/}
+            {/*    {renderStudents()}*/}
+            {/*</div>*/}
             <div className={cls.tableMain}>
                 {renderNewStudents}
             </div>
@@ -198,7 +221,8 @@ export const StudentsPage = memo(() => {
                 onPageChange={page => {
                     setCurrentPage(page)
                 }}
-                type={"custom"}/>
+                type={"custom"}
+            />
 
 
             <StudentsFilter active={active} setActive={setActive} activePage={selectedRadio}/>
@@ -268,4 +292,4 @@ export const StudentsPage = memo(() => {
             </Modal>
         </>
     )
-})
+}

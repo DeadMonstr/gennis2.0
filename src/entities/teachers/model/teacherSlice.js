@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {fetchTeachersData} from "./teacherThunk";
+import {fetchTeachersData, fetchTeachersDataWithFilter} from "./teacherThunk";
 
 
 
@@ -7,6 +7,7 @@ const initialState = {
     teachersData: [],
     teacherStatus: "idle",
     deletedTeachers: [],
+    teachersDataWithFilter: [],
     loading: false
 }
 
@@ -25,6 +26,20 @@ export const teachersSlice = createSlice({
                 state.loading = false
             })
             .addCase(fetchTeachersData.rejected , (state , action) =>{
+                state.teachers = "error"
+            })
+
+
+
+            .addCase(fetchTeachersDataWithFilter.pending , state =>{
+                state.loading = true
+            })
+            .addCase(fetchTeachersDataWithFilter.fulfilled , (state , action) =>{
+                state.teachersDataWithFilter = action.payload
+                console.log(action.payload , "teacher")
+                state.loading = false
+            })
+            .addCase(fetchTeachersDataWithFilter.rejected , (state , action) =>{
                 state.teachers = "error"
             })
     }

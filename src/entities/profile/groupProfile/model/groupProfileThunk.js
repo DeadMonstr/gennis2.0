@@ -117,4 +117,21 @@ export const deleteWeekDays = createAsyncThunk(
         return request(`${API_URL}TimeTable/time_table_delete/${id}/`, "DELETE", null, headers())
     }
 )
+// filtered_students_for_class_time_table/
+
+export const filteredStudents = createAsyncThunk(
+    "groupProfileSlice/filteredStudents",
+    ({userBranchId, group_id, res}) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Group/filtered_students_for_class_time_table/?branch=${userBranchId}&group=${group_id}`, "POST", JSON.stringify(res), headers())
+    }
+)
+
+export const moveToClass = createAsyncThunk(
+    "groupProfileSlice/moveToClass",
+    ({userBranchId, id, res}) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Group/filtered_students_move_to_class/?branch=${userBranchId}&group=${id}`, "POST", JSON.stringify(res), headers())
+    }
+)
 

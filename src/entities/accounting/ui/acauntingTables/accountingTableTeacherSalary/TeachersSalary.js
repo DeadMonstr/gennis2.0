@@ -1,7 +1,7 @@
 import React, {useMemo, useState} from 'react';
 import {Table} from "../../../../../shared/ui/table";
 import {Button} from "../../../../../shared/ui/button";
-import {color} from "framer-motion";
+// import {color} from "framer-motion";
 import cls from "../accountingTableWorkerSalary/empSalary.module.sass";
 import {Modal} from "../../../../../shared/ui/modal";
 import {Pagination} from "../../../../../features/pagination";

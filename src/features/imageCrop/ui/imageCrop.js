@@ -22,6 +22,7 @@ export const ImageCrop = memo((props) => {
     const {
         setActive,
         active,
+        currentImage,
         setNewImage
     } = props
 
@@ -51,9 +52,11 @@ export const ImageCrop = memo((props) => {
     const [aspect, setAspect] = useState(null)
     const [scale, setScale] = useState(1)
     const [rotate, setRotate] = useState(0)
-    const [imgSrc, setImgSrc] = useState()
+    const [imgSrc, setImgSrc] = useState(currentImage)
     const imgRef = useRef(null)
     const previewCanvasRef = useRef(null)
+
+    console.log(URL.revokeObjectURL(currentImage), "revoke")
 
 
     function onImageLoad(e) {
@@ -179,6 +182,8 @@ export const ImageCrop = memo((props) => {
         transform: `scale(${scale}) rotate(${rotate}deg)`
     }), [scale, rotate])
 
+    console.log(imgSrc, "src")
+
 
     return (
         <Modal
@@ -212,7 +217,7 @@ export const ImageCrop = memo((props) => {
                         disabled={!imgSrc?.path}
                     />
                     <div className={cls.changeImage__dropzone}>
-                        {!imgSrc?.path && (
+                        {(!imgSrc?.path && !currentImage) && (
                             <div
                                 {...getRootProps()}
                                 className={classNames(cls.changeImage__drop, {
@@ -226,7 +231,7 @@ export const ImageCrop = memo((props) => {
                                 <i className={classNames("far fa-images", cls.changeImage__icon)}/>
                             </div>
                         )}
-                        {!!imgSrc?.path && (
+                        {(!!imgSrc?.path || currentImage) && (
                             <ReactCrop
                                 crop={crop}
                                 onChange={(_, percentCrop) => setCrop(percentCrop)}
@@ -238,7 +243,10 @@ export const ImageCrop = memo((props) => {
                                     className={cls.changeImage__img}
                                     ref={imgRef}
                                     alt="Crop me"
-                                    src={URL.createObjectURL(imgSrc)}
+                                    src={
+                                        currentImage ? currentImage :
+                                            URL.createObjectURL(imgSrc)
+                                    }
                                     style={imageStyle}
                                     onLoad={onImageLoad}
                                 />

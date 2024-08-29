@@ -77,6 +77,8 @@ import {AccountingBooks} from "entities/accounting";
 import {CalendarPage} from "pages/calendarPage";
 import {TimeTable} from "pages/timeTable";
 import {StudentProfileGroupsHistory} from "../../../entities/profile/studentProfile";
+import {TimeTableTuronPage} from "pages/timeTable";
+// import {TimeTable} from "pages/timeTable";
 // import {RoomsProfilePage} from "pages/profilePage";
 
 
@@ -92,11 +94,11 @@ export const routersConfig = [
         path: getRouteTaskManager(":id"),
         element: null,
     },
-    {
-        name: "O'quvchilar",
-        path: getDirectorRouteStudents(),
-        element: <StudentsDirectorPage/>,
-    },
+    // {
+    //     name: "O'quvchilar",
+    //     path: getDirectorRouteStudents(),
+    //     element: <StudentsDirectorPage/>,
+    // },
     {
         name: " O'quvchilar",
         path: getRouteStudents(":id"),
@@ -214,7 +216,7 @@ export const routersConfig = [
     },
     {
         path: "time",
-        element: <TimeTable/>,
+        element: <TimeTableTuronPage/>,
     },
     {
         name: "Rooms Profile",

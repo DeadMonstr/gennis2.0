@@ -1,13 +1,15 @@
-
+@import "app/styles/abstracts/variables"
 .path
   width: 100%
-  height: 100%
+  height: 80%
   display: none
   font-size: 1.6rem
   justify-content: space-between
 
   &.active
     display: flex
+    height: 95rem !important
+    overflow: auto
 
   &__container
     height: 40%
@@ -17,7 +19,7 @@
     justify-content: space-between
 
     &.active
-      height: 90%
+      height: 60%
 
     h1
       align-self: flex-start
@@ -57,7 +59,12 @@
       &__header
         display: flex
         justify-content: flex-end
+        align-items: end
+        height: 12rem
         gap: 2rem
+      &__content
+        overflow: auto
+
 
       .inner
         width: fit-content
@@ -67,5 +74,10 @@
           background-color: #DCFCE7
           border: .1rem solid #86EFAC
           border-radius: 5rem
-
+.buttonDel
+  background: $paymetns-color-red
+  &:active
+    cursor: pointer
+.buttonDel2
+  background: $gennis-back-color
 

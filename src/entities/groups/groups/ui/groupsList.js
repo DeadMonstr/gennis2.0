@@ -1,5 +1,5 @@
 import {getUserBranchId} from "pages/profilePage";
-import {getUserSystemId} from "pages/profilePage/model/selector/userProfileSelector";
+import {getUserSystemId} from "entities/profile/userProfile/model/userProfileSelector";
 import React from 'react';
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router";

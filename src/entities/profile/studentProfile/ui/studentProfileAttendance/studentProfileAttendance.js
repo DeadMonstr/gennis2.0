@@ -7,27 +7,27 @@ import {useSelector} from "react-redux";
 import {getGroupHistory} from "../../../../../features/studentPayment";
 
 export const StudentProfileAttendance = memo(({setActive, data, onSelectGroup, onSelectGroupName}) => {
-    const getGroupHistories = useSelector(getGroupHistory)
-    const getHistorys = getGroupHistories.studenthistorygroup
+    // const getGroupHistories = useSelector(getGroupHistory)
+    // const getHistorys = getGroupHistories.studenthistorygroup
 
     const renderSubjects = useCallback(() => {
-        if (!Array.isArray(getHistorys))
+        if (!Array.isArray(data))
         {
             return null
         }
 
-        return getHistorys?.map(item =>
+        return data?.map(item =>
 
             <div
                 onClick={() => {
                     setActive("totalAttendance");
-                    onSelectGroup(item.group.id)
-                    onSelectGroupName(item.group.name)
+                    onSelectGroup(item.id)
+                    onSelectGroupName(item.name)
                 }}
                 key={item?.id}
                 className={cls.item}
             >
-                <h2>{item?.group.subject.name}</h2>
+                <h2>{item?.subject.name}</h2>
                 <div className={cls.item__action}>
                     <p>Kelmagan</p>
                     <div className={cls.item__progress}>
@@ -64,6 +64,7 @@ export const StudentProfileAttendance = memo(({setActive, data, onSelectGroup, o
     return (
         <EditableCard
             extraClass={cls.attendance}
+            onClick={() => setActive("allAttendance")}
 
         >
             <div className={cls.attendance__title}>

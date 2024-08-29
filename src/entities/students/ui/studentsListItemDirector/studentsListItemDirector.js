@@ -15,20 +15,20 @@ export const StudentsListItemDirector = memo(({title, data}) => {
                     {item.name}
                     <span>{item.label}</span>
                 </h2>
-                {/*{*/}
-                {/*    item.branches.map(branch =>*/}
-                {/*        <Link to={`../students/${branch.id}`}>*/}
-                {/*            <h2*/}
-                {/*                className={classNames(cls.studentsListItem__inner, {*/}
-                {/*                    [cls.eval]: (i + 1) % 2 === 0*/}
-                {/*                })}*/}
-                {/*            >*/}
-                {/*                {branch.name}*/}
-                {/*                <span>{branch.count}</span>*/}
-                {/*            </h2>*/}
-                {/*        </Link>*/}
-                {/*    )*/}
-                {/*}*/}
+                {
+                    item?.branches?.map(branch =>
+                        <Link to={`../students/${branch?.id}`}>
+                            <h2
+                                className={classNames(cls.studentsListItem__inner, {
+                                    [cls.eval]: (i + 1) % 2 === 0
+                                })}
+                            >
+                                {branch?.name}
+                                <span>{branch?.count}</span>
+                            </h2>
+                        </Link>
+                    )
+                }
             </div>
         )
     }

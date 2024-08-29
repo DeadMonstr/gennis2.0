@@ -4,11 +4,16 @@ import {
     getGroupProfileFilteredStudents, getGroupProfileFilteredTeachers,
     getReasons
 } from "entities/profile/groupProfile/model/groupProfileSelector";
-import {fetchFilteredGroups, moveGroup} from "entities/profile/groupProfile/model/groupProfileThunk";
+import {
+    fetchFilteredGroups,
+    filteredStudents,
+    moveGroup,
+    moveToClass
+} from "entities/profile/groupProfile/model/groupProfileThunk";
 import {getFilteredTeachers} from "entities/students";
-import {getTeachers} from "entities/teachers";
-import {getUserSystemId} from "pages/profilePage/model/selector/userProfileSelector";
-import React, {memo, useCallback, useState} from 'react';
+import {fetchTeachersData, getTeachers} from "entities/teachers";
+import {getUserBranchId, getUserSystemId} from "entities/profile/userProfile/model/userProfileSelector";
+import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import classNames from "classnames";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
@@ -60,11 +65,24 @@ export const GroupProfileDeleteForm = memo(() => {
     const {id} = useParams()
     const dispatch = useDispatch()
     const userSystemId = useSelector(getUserSystemId)
+    const userBranchId = useSelector(getUserBranchId)
     const data = useSelector(getGroupProfileData)
     const students = useSelector(getGroupProfileFilteredStudents)
     const teachers = useSelector(getGroupProfileFilteredTeachers)
+    const schoolTeachers = useSelector(getTeachers)
     const groups = useSelector(getFilteredGroups)
     const reasons = useSelector(getReasons)
+
+    useEffect(() => {
+        if (data && userBranchId) {
+            dispatch(filteredStudents({
+                userBranchId,
+                group_id: data?.id,
+                res: {ignore_students: data?.students.map(item => item.id)}
+            }))
+            dispatch(fetchTeachersData({userBranchId}))
+        }
+    }, [data, userBranchId])
 
     const [active, setActive] = useState(false)
     const [activeModal, setActiveModal] = useState("")
@@ -75,6 +93,18 @@ export const GroupProfileDeleteForm = memo(() => {
     const [activeService, setActiveService] = useState(amountService[0])
     const [activePaymentType, setActivePaymentType] = useState(0)
     const [selectedId, setSelectedId] = useState([])
+
+    const [searchValue, setSearchValue] = useState("")
+    const [currentTeachersData, setCurrentTeachersData] = useState([])
+
+    const searched = useMemo(() => {
+        const filteredSlice = students?.slice()
+
+        return filteredSlice?.filter(item =>
+            item?.user?.name?.toLowerCase().includes(searchValue?.toLowerCase()) ||
+            item?.user?.surname?.toLowerCase().includes(searchValue?.toLowerCase())
+        )
+    }, [students, searchValue])
 
     const onSubmitDelete = (data) => {
         const res = {
@@ -90,12 +120,19 @@ export const GroupProfileDeleteForm = memo(() => {
     }
 
     const onSubmitMove = (data) => {
-        console.log(data, "data add")
-        const res = {
-            ...data,
-            students: select
+        if (theme === "app_school_theme") {
+            const res = {
+                ...data,
+                students: select
+            }
+            dispatch(moveToClass({userBranchId, id, res}))
+        } else {
+            const res = {
+                ...data,
+                students: select
+            }
+            dispatch(moveGroup({id, res}))
         }
-        dispatch(moveGroup({id, res}))
     }
 
     const onSubmitAddStudents = () => {
@@ -169,7 +206,7 @@ export const GroupProfileDeleteForm = memo(() => {
     }
 
     const renderStudentsData = () => {
-        return students?.map(item =>
+        return searched?.map(item =>
             <tr>
                 <td>
                     <img src={defaultUserImg} alt=""/>
@@ -177,13 +214,18 @@ export const GroupProfileDeleteForm = memo(() => {
                 <td>{item?.user?.name}</td>
                 <td>{item?.user?.surname}</td>
                 <td>
+                    {/*{*/}
+                    {/*    item?.subject?.map(i =>*/}
+                    {/*        <div className={cls.addModal__subject}>*/}
+                    {/*            {i?.name?.slice(0, 16)}*/}
+                    {/*        </div>*/}
+                    {/*    )*/}
+                    {/*}*/}
                     {
-                        item?.subject?.map(i =>
-                            <div className={cls.addModal__subject}>
-                                {i?.name?.slice(0, 16)}
-                            </div>
-                        )
+                        item?.subject.length ?
+                            <div className={cls.addModal__subject}>{item?.subject[0]?.name}</div> : null
                     }
+
                 </td>
                 <td>
                     <div className={cls.check}>
@@ -226,8 +268,6 @@ export const GroupProfileDeleteForm = memo(() => {
     const renderAmountService = renderAmountServiceTypes()
     const render = renderStudents()
     const renderStudent = renderStudentsData()
-
-    console.log(selectOpt, "selectOpt")
 
     return (
         <>
@@ -325,7 +365,7 @@ export const GroupProfileDeleteForm = memo(() => {
                 >
                     <Select
                         extraClass={cls.deleteForm__select}
-                        options={teachers}
+                        options={userSystemId === 1 ? teachers : schoolTeachers}
                         title={"Teacher"}
                         onChangeOption={onFilterGroups}
                         // register={register}
@@ -453,8 +493,8 @@ export const GroupProfileDeleteForm = memo(() => {
             >
                 <Input
                     placeholder={"Search"}
-                    // onChange={(e) => setSearchValue(e.target.value)}
-                    // defaultValue={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    defaultValue={searchValue}
                 />
                 <div className={cls.addModal__container}>
                     <Table>

@@ -1,7 +1,7 @@
 
 import {configureStore} from "@reduxjs/toolkit";
 import {groupProfileSlice} from "entities/profile/groupProfile";
-import {search} from "features/searchInput";
+import {searchSlice} from "features/searchInput";
 import {registerUser} from "pages/registerPage";
 import {loginSlice} from "pages/loginPage";
 import {filteredTeachers} from "features/filters/teacherFilter";
@@ -28,9 +28,9 @@ import {roomDeleteSlice} from "features/roomDeleteModal/model";
 import {roomsImageAddSlice} from "features/roomImageAddModal/model";
 import {
     studentProfile,
-    teacherProfileData,
-    userProfile
+    teacherProfileData
 } from "pages/profilePage";
+import {userProfileSlice} from "entities/profile/userProfile"
 import {flowsSlice} from "entities/flows";
 import {teacherParseSlice} from "entities/teachers";
 import {employerParseSlice} from "../entities/profile/employerProfile";
@@ -57,7 +57,7 @@ import {
 import {teacherSalarySlice} from "../entities/teacherSalary";
 import {employerSalarySlice} from "../entities/employerSalary";
 import {giveEmployerSalarySlice} from "../pages/giveSalaryPage";
-import {giveEmployerSalarySlices} from "../features/giveEmployerSalary";
+import {giveEmployerSalarySlices} from "features/giveEmployerSalary";
 import {giveTeacherSalarySlices} from "../features/giveSalary/giveSalary";
 import {teacherSalaryDeleteSlice} from "../features/salaryEdits";
 import {employerSalaryDeleteSlice} from "../features/salaryEdits";
@@ -66,6 +66,8 @@ import {vacancyWorkerSoucre, userSetPermissionSlice} from "../entities/vacancy/u
 import {vacancyWorkerSlice} from "../features/vacancyWorkerList";
 import {studentPaymentSlice} from "../features/studentPayment";
 import {inkasatsiyaSlice} from "../entities/inkasatsiya";
+import {timeTableTuronSlice} from "pages/timeTable"
+import {alertSlice} from "features/alert"
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -79,7 +81,7 @@ const stringMiddleware = () => (next) => (action) => {
 
 export const store = configureStore({
     reducer: {
-        search,
+        searchSlice,
         registerUser,
         loginSlice,
         filteredTeachers,
@@ -121,7 +123,7 @@ export const store = configureStore({
         postBranch,
         getBranchSlice,
         // timeTableSchool,
-        userProfile,
+        userProfileSlice,
         vacancyWorkerPermissionSlice,
         teacherSalarySlice,
         employerSalarySlice,
@@ -131,6 +133,7 @@ export const store = configureStore({
         getLocationSlice,
         postEducation,
         getEducation,
+        timeTableTuronSlice,
         studentSlice,
         employerSlice,
         teacher,
@@ -144,7 +147,8 @@ export const store = configureStore({
         groupProfileSlice,
         overHeadSlice,
         capitalSlice,
-        inkasatsiyaSlice
+        inkasatsiyaSlice,
+        alertSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

@@ -4,7 +4,7 @@ import {
     fetchUserProfileData,
     changeUserProfileData,
     changeUserProfileImage
-} from "../thunk/userProfileThunk";
+} from "entities/profile/userProfile/model/userProfileThunk";
 
 const initialState = {
     userBranchId: null,
@@ -14,7 +14,7 @@ const initialState = {
     salaryData: [
         {
             id: 1,
-            salary: 3000,
+            salary: 10000000000,
             theRest: 1000,
             received: 2000,
             month: "may"

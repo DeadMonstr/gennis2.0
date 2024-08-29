@@ -26,8 +26,8 @@ import {API_URL, headers, headersImg, useHttp} from "shared/api/base";
 
 
 import {AddCategoryModal, EditModal} from "features/createCapitalModal";
-import {getBranchThunk, getLocations} from "entities/editCreates";
-
+import {getBranchThunk, getLocations} from "../../../../entities/editCreates";
+import {getLocationThunk} from "../../../../entities/creates/model/createThunk/createBranchThunk";
 
 const capitalType = [
     {name: "category", label: "Category"},
@@ -62,9 +62,11 @@ export const CapitalInside = memo(() => {
     const branches = useSelector(getLocations)
 
 
+
     const [changeItem, setChangeItem] = useState({})
     const [changedImages, setChangedImages] = useState([])
     const [selectPayment, setSelectPayment] = useState()
+    const [capitalSelect , setSelectedCapital] = useState([])
 
 
     const [activeMenu, setActiveMenu] = useState(capitalType[0].name)

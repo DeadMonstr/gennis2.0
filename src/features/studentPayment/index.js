@@ -1,3 +1,43 @@
 export {default as studentPaymentSlice} from './model/studentPaymentSlice'
-export {studentPaymentThunk, studentCharityThunk, studentGroupHistoryThunk, studentTotalAddendanceThunk} from './model/studentPaymentThunk'
-export {getGroupHistory, getTotalAttendance} from './model/selectors/selectors'
+export {
+    studentPaymentThunk,
+    studentCharityThunk,
+    studentDiscountThunk,
+    studentGroupHistoryThunk,
+    studentTotalAddendanceThunk,
+    studentProfileTotalAmountThunk,
+    studentProfileAttendanceDataThunk,
+    studentProfileAttendanceDataPostThunk,
+    studentProfileAttendanceAll,
+    studentProfileAttendanceAllDataThunk,
+    studentProfileAttendanceAllDataPostThunk,
+    studentPaymentListThunk,
+    studentContractThunk,
+    studentContractUploadThunk,
+    studentPaymenListDelete,
+    studentPaymentListDeleteGetThunk,
+    studentPaymentDataThunk,
+    studentPaymentDataPostThunk,
+    studentPaymentTypeChangeThunk,
+    studentBookOrderListThunk
+} from './model/studentPaymentThunk'
+
+export {StudentPaymentEditModal} from './ui/studentPaymentEditModal/studentPaymentEditModal'
+export {
+    getGroupHistory,
+    getTotalAttendance,
+    getTotalAmount,
+    getAttendanceData,
+    getAttendanceDatas,
+    getAttendanceLoading,
+    getAllAttendances,
+    getAllAttendancesData,
+    getAllAttendanceDatas,
+    getPaymentList,
+    getStudentContract,
+    getMessageDelete,
+    getDeletedList,
+    getPaymentDates,
+    getDatasWithPost,
+    getBookPaymentsList
+} from './model/selectors/selectors'

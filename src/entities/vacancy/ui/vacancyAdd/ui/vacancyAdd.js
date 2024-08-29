@@ -15,9 +15,6 @@ export const VacancyAdd = React.memo(({ active, setActive }) => {
     const dispatch = useDispatch();
     const vacancySystemData = useSelector(getVacancyJobs);
 
-    useEffect(() => {
-        dispatch(fetchVacancyData());
-    }, [dispatch]);
 
     const handleAdd = () => {
         const newVacancy = {
@@ -32,6 +29,10 @@ export const VacancyAdd = React.memo(({ active, setActive }) => {
                 console.error('Failed to add vacancy:', action.error);
             }
         });
+
+        dispatch(fetchVacancyData())
+
+        setActive(false)
     };
 
     return (
