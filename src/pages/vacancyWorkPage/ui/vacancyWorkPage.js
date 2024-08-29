@@ -11,10 +11,10 @@ import {VacancyWorkerList} from "entities/vacancy/ui/vacancyWorkerList";
 import {VacancyWorkerPermission} from "../../../features/vacancyModals/vacancyWorkerPermission";
 import {useSelector, useDispatch} from "react-redux";
 import {getWorkerId} from "../../../features/vacancyModals/vacancyWorkPage/model";
-import {getUserProfileData} from "../../profilePage/model/selector/userProfileSelector";
+import {getUserProfileData} from "entities/profile/userProfile/model/userProfileSelector";
 import {fetchUserProfileData} from "../../profilePage";
 import {useParams} from "react-router-dom";
-import {getUserPermission} from "../../profilePage";
+import {getUserPermission} from "entities/profile/userProfile";
 import {vacancyWorkerListThunk} from "../../../features/vacancyWorkerList";
 
 export const VacancyWorkPage = () => {

@@ -22,7 +22,6 @@ export const RequireAuth = ({roles, children}) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        console.log(refresh_token)
         // dispatch(fetchUserData(refresh_token))
         dispatch(userRefreshData({refresh: refresh_token}))
         // request(`${API_URL}Api/token/refresh/`, "POST", JSON.stringify({refresh: refresh_token}))

@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import {useContext, useState} from "react";
 import classNames from "classnames";
 import {Button} from "shared/ui/button";
-import {motion} from "framer-motion";
+// import {motion} from "framer-motion";
 import headerImg from "shared/assets/images/logo.svg"
 import {Context} from "pages/homePage/ui/homePage";
 
@@ -81,7 +81,7 @@ export const HomeHeader = ({status, setStatus}) => {
                     arr?.map((item, i) => {
                         if (item.type === "link") {
                             return (
-                                <motion.li
+                                <li
                                     className={classNames(cls.header__item, {
                                         [cls.active]: activeItem === item.name
                                     })}
@@ -95,11 +95,11 @@ export const HomeHeader = ({status, setStatus}) => {
                                     >
                                         {item.title}
                                     </Link>
-                                </motion.li>
+                                </li>
                             )
                         }
                         return (
-                            <motion.li
+                            <li
                                 className={classNames(cls.header__item, {
                                     [cls.active]: activeItem === item.name
                                 })}
@@ -110,7 +110,7 @@ export const HomeHeader = ({status, setStatus}) => {
                                 }}
                             >
                                 {item.title}
-                            </motion.li>
+                            </li>
                         )
                     })
                 }

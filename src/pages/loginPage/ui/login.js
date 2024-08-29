@@ -29,6 +29,7 @@ export const Login = () => {
 
     const [error, setError] = useState(false)
     const dispatch = useDispatch()
+
     const navigate = useNavigate()
 
 
@@ -67,12 +68,10 @@ export const Login = () => {
             .then(res => {
                 dispatch(getUserData(res))
                 navigate("/platform")
-                console.log(res, "res")
                 setLoading(false)
             })
             .catch(err => {
 
-                console.log(err)
                 setLoading(true)
                 setError(true)
                 setValue("username" , "")

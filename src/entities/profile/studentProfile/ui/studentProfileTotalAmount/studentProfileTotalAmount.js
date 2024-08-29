@@ -222,13 +222,13 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                 >
                     <div className={cls.amount__modal}>
                         <h1>Parol</h1>
-                        <Input
-                            placeholder={"Parol"}
-                            type={"password"}
-                            register={register}
-                            name={"password"}
-                            required
-                        />
+                        {/*<Input*/}
+                        {/*    placeholder={"Parol"}*/}
+                        {/*    type={"password"}*/}
+                        {/*    register={register}*/}
+                        {/*    name={"password"}*/}
+                        {/*    required*/}
+                        {/*/>*/}
                     </div>
                 </Form>
             </Modal>

@@ -1,5 +1,5 @@
 import {getUserBranchId} from "pages/profilePage";
-import {getUserSystemId} from "pages/profilePage/model/selector/userProfileSelector";
+import {getUserSystemId} from "entities/profile/userProfile/model/userProfileSelector";
 import React from 'react';
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router";
@@ -38,7 +38,14 @@ export const GroupsList = React.memo(({currentTableData}) => {
                                 <td>{item?.subject?.name}</td>
                                 <td>{item?.course_types?.name}</td>
                                 <td>{item?.price}</td>
+
+                                <td>{item?.status ? <div><div/></div> : null }</td>
+
                                 <td>{item?.status ?<div><div/></div> : <div className={cls.red}><div className={cls.red__inner}/></div> }</td>
+
+
+                                <td>{item?.status ?<div><div/></div> : <div className={cls.red}><div className={cls.red__inner}/></div> }</td>
+
                             </tr>
                         )
                     })

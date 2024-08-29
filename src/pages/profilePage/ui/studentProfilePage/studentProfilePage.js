@@ -23,7 +23,8 @@ import {
 } from "entities/profile/studentProfile";
 import {
     fetchStudentProfileData,
-    changeStudentProfileData, changeStudentProfileImage
+    changeStudentProfileData,
+    changeStudentProfileImage
 } from "../../model/thunk/studentProfileThunk";
 import {getUserData} from "../../model/selector/studentProfileSelector";
 

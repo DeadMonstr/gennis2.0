@@ -1,4 +1,3 @@
-import {getSchoolClassColors, getSchoolClassNumbers} from "entities/students";
 import React, {memo, useEffect, useState} from 'react';
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
@@ -9,6 +8,7 @@ import {
     changeGroupProfile,
     deleteGroupProfile
 } from "entities/profile/groupProfile";
+import {getSchoolClassColors, getSchoolClassNumbers} from "entities/students";
 import {useTheme} from "shared/lib/hooks/useTheme";
 import {Button} from "shared/ui/button";
 import {EditableCard} from "shared/ui/editableCard";
@@ -69,6 +69,7 @@ export const GroupProfileInfoForm = memo(() => {
         setValue("name", data?.name)
         setValue("price", data?.price)
         setValue("language", data?.language?.id)
+        setValue("class_number", data?.class_number?.id)
     }, [])
 
     return (
@@ -102,6 +103,9 @@ export const GroupProfileInfoForm = memo(() => {
                     }
                     {
                         data?.level?.name ? <p>Level: <span>{data?.level?.name}</span></p> : null
+                    }
+                    {
+                        data?.class_number?.number ? <p>Sinf raqami: <span>{data?.class_number?.number}</span></p> : null
                     }
 
                     <p>Guruh narxi: <span>{data?.price}</span></p>
@@ -174,7 +178,7 @@ export const GroupProfileInfoForm = memo(() => {
                         title={"Sinf rangi"}
                         register={register}
                         name={"class_number"}
-                        // defaultValue={data?.language?.id}
+                        defaultValue={data?.class_number?.id}
                         required
                     />
                     <div className={cls.form__radios}>

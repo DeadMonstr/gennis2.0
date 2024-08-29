@@ -4,16 +4,24 @@ import {Routes, Route, useNavigate} from "react-router";
 import {getCapitalInfo, getCapitalTypes, getInsideCategory} from "entities/capital";
 import {useCallback, useEffect, useState} from "react";
 import {getPaymentType} from "entities/capital/model/thunk/capitalThunk";
-import {onChangeAccountingPage} from "../../../entities/accounting/model/slice/accountingSlice";
+import {onChangeAccountingPage} from "entities/accounting/model/slice/accountingSlice";
 import {useParams} from "react-router-dom";
+import {inkasatsiyaThunk} from "entities/inkasatsiya/model/inkasatsiyaThunk";
+import {Student} from "entities/inkasatsiya/ui/students/student";
+import {getInkasatsiya} from "entities/inkasatsiya/model/inkasatsiyaSelector";
+import {Overhead} from "entities/inkasatsiya/ui/overhead/overhead";
+import {Capital} from "entities/inkasatsiya/ui/capital/capital";
+import {Teacher} from "entities/inkasatsiya/ui/teacher/teacher";
+import {Employer} from "entities/inkasatsiya/ui/employer/employer";
+import cls from "./inkasatsiya.module.module.sass"
 
 const filter = [
-    {name: 'teachersSalary', label: "teacher salary"},
-    // {name: 'studentsDiscounts', label: "student discount"},
-    {name: 'employeesSalary', label: "employer salary"},
-    // {name: 'debtStudents', label: "debt student"},
-    {name: 'overhead', label: "overhead"},
     {name: 'studentsPayments', label: "student payment"},
+    // {name: 'studentsDiscounts', label: "student discount"},
+    {name: 'teachersSalary', label: "teacher salary"},
+    // {name: 'debtStudents', label: "debt student"},
+    {name: 'employeesSalary', label: "employer salary"},
+    {name: 'overhead', label: "overhead"},
     // {name: 'bookPayment', label: "book payment"},
     {name: 'capital', label: "capital"},
 ]
@@ -21,12 +29,54 @@ const filter = [
 export const Inkasatsiya = () => {
     const dispatch = useDispatch()
     const paymentType = useSelector(getCapitalTypes)
-    const [activeMenu, setActiveMenu] = useState(filter)
+    const [activeMenu, setActiveMenu] = useState(filter[0].name)
     const navigate = useNavigate()
     let {locationId} = useParams()
+    const [to, setTo] = useState([])
+    const [ot, setOt] = useState([])
+    const student = useSelector(getInkasatsiya)
+    const [radio, setSelectedRadio] = useState([])
+
+
     useEffect(() => {
+        if (to.length && ot.length && radio > 0) {
+            const res = {
+                do: to,
+                ot: ot,
+                payment_type: radio,
+                branch: 1
+            }
+            dispatch(inkasatsiyaThunk(res))
+        }
+
         dispatch(getPaymentType())
-    }, [])
+
+    }, [to, ot, radio])
+
+
+    const totalMoney = () => {
+        switch (activeMenu) {
+            case "studentsPayments" :
+                return (
+                    <h2>o'quvchilarning umimiy to'lovi : {student?.students?.student_total_payment ? student?.students?.student_total_payment : 0 } </h2>
+                )
+            case "teachersSalary" :
+                return (
+                    <h2>O'qituvchilarning umumiy to'lovi : {student?.teachers?.teacher_total_salary ? student?.teachers?.teacher_total_salary : 0} </h2>
+                )
+            case "employeesSalary" :
+                return (
+                    <h2>Ishchilarning umumiy to'lovi : {student?.workers?.worker_total_salary ? student?.workers?.worker_total_salary : 0} </h2>
+                )
+            case "overhead" :
+                return (
+                    <h2>overheadning umumiy to'lovi : {student?.overheads?.total_overhead_payment ? student?.overheads?.total_overhead_payment : 0} </h2>
+                )
+            case "capital" :
+                return <h2>capitalning umumiy to'lovi : {student?.capitals?.total_capital ? student?.capitals?.total_capital : 0}</h2>
+        }
+
+    }
 
     const setPage = useCallback((value) => {
         console.log(value)
@@ -35,23 +85,35 @@ export const Inkasatsiya = () => {
     }, [])
     return (
         <div style={{display: "flex", flexDirection: "column", gap: "2rem", padding: "2rem"}}>
-            <AccountingHeader paymentType={paymentType}/>
+
+            {student.overall ? <div className={cls.overalMain}>Umumiy : {student.overall}</div> : null}
+            <div className={cls.overal}>
+                {totalMoney()}
+                <div style={{alignSelf: "flex-end"}}>
+                    <AccountingHeader activeMenu={activeMenu} paymentType={paymentType} to={to} setTo={setTo} ot={ot}
+                                      setOt={setOt} setSelectedRadio={setSelectedRadio} radio={radio}/>
+                </div>
+
+            </div>
+
+
+
             <AccountingFilter activeMenu={activeMenu} setActive={setActiveMenu} setPage={setPage} filter={filter}/>
             <Routes>
-                {/*<Route path={"teachersSalary"}*/}
-                {/*       element={<TeachersSalary path={"teachersSalary"} locationId={locationId}/>}/>*/}
+                <Route path={"teachersSalary"}
+                       element={<Teacher extraClass={cls.table} teacher={student} path={"teachersSalary"} locationId={locationId}/>}/>
                 {/*<Route path={"studentsDiscounts"}*/}
                 {/*       element={<StudentsDiscount path={"studentsDiscounts"} locationId={locationId}/>}/>*/}
-                {/*<Route path={"employeesSalary"}*/}
-                {/*       element={<EmployerSalaryPage path={"employeesSalary"} loc ationId={locationId}/>}/>*/}
+                <Route path={"employeesSalary"}
+                       element={<Employer extraClass={cls.table} path={"employeesSalary"} workers={student} locationId={locationId}/>}/>
                 {/*<Route path={"debtStudents"} element={<DebtStudents path={"debtStudents"} locationId={locationId}/>}/>*/}
-                {/*<Route path={"overhead"}*/}
-                {/*       element={<AccountingAdditionalCosts path={"overhead"} locationId={locationId}/>}/>*/}
-                {/*<Route path={"studentsPayments"}*/}
-                {/*       element={<StudentsPayments onDelete={onDelete} studentData={studentData}*/}
-                {/*                                  locationId={locationId}/>}/>*/}
+                <Route path={"overhead"}
+                       element={<Overhead extraClass={cls.table} overhead={student} path={"overhead"} locationId={locationId}/>}/>
+                <Route path={"studentsPayments"}
+                       element={<Student extraClass={cls.table} students={student} locationId={locationId}/>}/>
                 {/*<Route path={"bookPayment"} element={<AccountingBooks path={"bookPayment"} locationId={locationId}/>}/>*/}
-                {/*<Route path={"capital"} element={<AccountingCapitalCosts path={"capital"} locationId={locationId}/>}/>*/}
+                <Route path={"capital"}
+                       element={<Capital extraClass={cls.table} capital={student} path={"capital"} locationId={locationId}/>}/>
                 {/*<Route path={"debtStudents"} element={<DebtStudents/>}/>*/}
             </Routes>
 

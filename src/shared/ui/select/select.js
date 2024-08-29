@@ -78,10 +78,13 @@ export const Select = React.memo(({
                 {...register(name, {
                     value: selectOption,
                     defaultValue: selectOption,
-                    onChange: (e) => {
+                    onChange: onChangeOption ? (e) => {
+                        setSelectOption(e.target.value)
+                        setIsChanged(true)
                         setBranchId(e.target.value);
-                        setSelectOption(e.target.value);
-                        setIsChanged(true);
+                    } : (e) => {
+                        setSelectOption(e.target.value)
+                        setBranchId(e.target.value);
                     }
                 })}
             >

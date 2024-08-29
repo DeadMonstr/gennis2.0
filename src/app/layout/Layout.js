@@ -2,14 +2,13 @@ import React, {useEffect} from 'react';
 import {Outlet} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 
-
 import {Menubar} from "widgets/menuBar";
 import {Header} from "widgets/header";
-import {fetchUserProfileData} from "pages/profilePage";
-import {getUserId, getUserRefreshLoading} from "pages/loginPage";
+import {fetchUserProfileData} from "entities/profile/userProfile";
+import {getUserId, getUserRefreshLoading} from "pages/loginPage"
 
-
-import cls from "app/layout/Layout.module.sass"
+import cls from "./Layout.module.sass"
+import {Alert} from "features/alert";
 
 
 export const Layout = () => {
@@ -28,6 +27,7 @@ export const Layout = () => {
 
     return (
         <>
+            <Alert/>
             <Menubar/>
             <main className={cls.main}>
                 <Header/>
@@ -39,3 +39,5 @@ export const Layout = () => {
         </>
     );
 };
+
+export default Layout;

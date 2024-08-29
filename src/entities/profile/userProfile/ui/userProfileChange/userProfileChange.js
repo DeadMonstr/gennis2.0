@@ -1,4 +1,5 @@
-import {memo, useEffect, useMemo} from 'react';
+import {memo, useEffect, useMemo, useState} from 'react';
+import {Button} from "shared/ui/button";
 
 import {Form} from "shared/ui/form";
 import {Modal} from "shared/ui/modal";
@@ -17,6 +18,8 @@ export const UserProfileChange = memo((props) => {
         data
     } = props
 
+    const [activeType, setActiveType] = useState(false)
+
     let name = useMemo(() => data?.name, [data])
     let surname = useMemo(() => data?.surname, [data])
     let fatherName = useMemo(() => data?.father_name, [data])
@@ -31,49 +34,104 @@ export const UserProfileChange = memo((props) => {
         setValue("phone", phone)
     }, [data])
 
+    const renderForm = () => {
+        switch (activeType) {
+            case false:
+                return (
+                    <>
+                        <Input
+                            extraClassName={cls.change__input}
+                            register={register}
+                            name={"name"}
+                            placeholder={"Ism"}
+                            required
+                        />
+                        <Input
+                            extraClassName={cls.change__input}
+                            register={register}
+                            name={"surname"}
+                            placeholder={"Familiya"}
+                            required
+                        />
+                        <Input
+                            extraClassName={cls.change__input}
+                            register={register}
+                            name={"father_name"}
+                            placeholder={"Otasining ismi"}
+                            required
+                        />
+                        <Input
+                            extraClassName={cls.change__input}
+                            register={register}
+                            name={"birth_date"}
+                            placeholder={"Tug'ilgan sana"}
+                            type={"date"}
+                            required
+                        />
+                        <Input
+                            extraClassName={cls.change__input}
+                            register={register}
+                            name={"phone"}
+                            placeholder={"Telefon raqami"}
+                            type={"number"}
+                            required
+                        />
+                    </>
+                )
+            case true:
+                return (
+                    <>
+                        <Input
+                            extraClassName={cls.change__input}
+                            register={register}
+                            name={"password"}
+                            placeholder={"Parol"}
+                            type={"password"}
+                            required
+                        />
+                        <Input
+                            extraClassName={cls.change__input}
+                            register={register}
+                            name={"confirm_password"}
+                            placeholder={"Parolni tasdiqlang"}
+                            type={"password"}
+                            required
+                        />
+                    </>
+                )
+        }
+    }
+
+    const render = renderForm()
+
     return (
         <Modal
             active={active}
             setActive={setActive}
         >
             <div className={cls.change}>
-                <h1>Change</h1>
+                <div className={cls.change__header}>
+                    <h1>Malumotni o'zgartirish</h1>
+                    {/*<Button*/}
+                    {/*    onClick={() => setActiveType("info")}*/}
+                    {/*    extraClass={cls.change__btn}*/}
+                    {/*    type={activeType === "info" ? "simple" : "simple-add"}*/}
+                    {/*>*/}
+                    {/*    Info*/}
+                    {/*</Button>*/}
+                    <Button
+                        onClick={() => setActiveType(!activeType)}
+                        extraClass={cls.change__btn}
+                        type={activeType ? "simple" : "simple-add"}
+                    >
+                        Password
+                    </Button>
+                </div>
                 <Form
                     onSubmit={onSubmit}
                     // typeSubmit={""}
                 >
-                    <Input
-                        register={register}
-                        name={"name"}
-                        placeholder={"Ism"}
-                        required
-                    />
-                    <Input
-                        register={register}
-                        name={"surname"}
-                        placeholder={"Familiya"}
-                        required
-                    />
-                    <Input
-                        register={register}
-                        name={"father_name"}
-                        placeholder={"Otasining ismi"}
-                        required
-                    />
-                    <Input
-                        register={register}
-                        name={"birth_date"}
-                        placeholder={"Tug'ilgan sana"}
-                        type={"date"}
-                        required
-                    />
-                    <Input
-                        register={register}
-                        name={"phone"}
-                        placeholder={"Telefon raqami"}
-                        type={"number"}
-                        required
-                    />
+                    {render}
                 </Form>
             </div>
         </Modal>

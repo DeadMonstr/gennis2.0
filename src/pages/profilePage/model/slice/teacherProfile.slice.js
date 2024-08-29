@@ -15,6 +15,8 @@ const TeacherProfileSlice = createSlice({
     extraReducers: builder =>
         builder
             .addCase(fetchTeacherProfileData.pending, state => {
+
+
                 state.loading = true
                 state.error = null
             })

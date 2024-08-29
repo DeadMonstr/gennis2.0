@@ -1,14 +1,15 @@
-import {useNavigate} from "react-router";
-import {useTheme} from "shared/lib/hooks/useTheme";
-import {Button} from "shared/ui/button";
-
-import {Select} from "shared/ui/select";
-import {Radio} from "shared/ui/radio";
-
-import {Table} from "shared/ui/table";
-import {Modal} from "shared/ui/modal";
-import {Input} from "shared/ui/input";
 import React, {memo, useCallback, useEffect, useState} from "react";
+import {useNavigate} from "react-router";
+import {useDispatch, useSelector} from "react-redux";
+import {useForm} from "react-hook-form";
+
+import {fetchSubjectsAndLanguages} from "pages/registerPage";
+import {getUserBranchId} from "entities/profile/userProfile/model/userProfileSelector";
+import {
+    GroupCreateForm,
+    GroupAddForm, GroupTimeTableForm
+} from "features/group";
+import {AnimatedMulti, location} from "features/workerSelect";
 import {
     getCurseLevelData,
     getCurseTypesData,
@@ -18,37 +19,37 @@ import {
     getFilteredTeachers,
     getNewStudentsData
 } from "entities/students/model/selector/studentsSelector";
-import {useDispatch, useSelector} from "react-redux";
-import {Teachers} from "../../../../entities/teachers";
-import {fetchFilteredStudents, fetchNewStudentsData} from "../../../../entities/students/model/studentsThunk";
-import {Form} from "shared/ui/form";
-import {Textarea} from "shared/ui/textArea";
-import {SearchInput} from "shared/ui/searchInput";
-import {fetchTeachersData} from "../../../../entities/teachers";
-import {getTeachers} from "../../../../entities/teachers";
-import {AnimatedMulti, location} from "../../../../features/workerSelect";
-import {EditableCard} from "../../../../shared/ui/editableCard";
-import {getUserBranchId} from "pages/profilePage/model/selector/userProfileSelector";
-import {API_URL, headers, useHttp} from "shared/api/base";
-import {getRoomsData} from "../../../../entities/rooms/model/selectors/roomsSelectors";
-import {fetchRoomsData} from "../../../../entities/rooms/model/roomsThunk";
-import {useForm} from "react-hook-form";
+import {
+    fetchFilteredStudents,
+    fetchNewStudentsData
+} from "entities/students/model/studentsThunk";
 import {
     getCurseLevel,
     getCurseTypes,
     getFilteredStudentsData,
     getFilteredStudentsStatus
-} from "../../../../entities/students/model/studentsSlice";
-import {compareArraysAsSet} from "@testing-library/jest-dom/dist/utils";
-import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
-import {MiniLoader} from "../../../../shared/ui/miniLoader";
-import {fetchSubjectsAndLanguages} from "../../../registerPage/model/registerThunk";
+} from "entities/students/model/studentsSlice";
+import {Teachers} from "entities/teachers";
+import {fetchTeachersData} from "entities/teachers";
+import {getTeachers} from "entities/teachers";
+import {useTheme} from "shared/lib/hooks/useTheme";
+import {getRoomsData} from "entities/rooms/model/selectors/roomsSelectors";
+import {fetchRoomsData} from "entities/rooms/model/roomsThunk";
+import {Button} from "shared/ui/button";
+import {Select} from "shared/ui/select";
+import {Radio} from "shared/ui/radio";
+import {Table} from "shared/ui/table";
+import {Modal} from "shared/ui/modal";
+import {Input} from "shared/ui/input";
+import {Form} from "shared/ui/form";
+import {Textarea} from "shared/ui/textArea";
+import {SearchInput} from "shared/ui/searchInput";
+import {EditableCard} from "shared/ui/editableCard";
+import {API_URL, headers, useHttp} from "shared/api/base";
+import {DefaultPageLoader} from "shared/ui/defaultLoader";
+import {MiniLoader} from "shared/ui/miniLoader";
 
 import cls from "./groupCreatePage.module.sass";
-import {
-    GroupCreateForm,
-    GroupAddForm, GroupTimeTableForm
-} from "features/group";
 
 
 const branches = [
@@ -85,9 +86,10 @@ export const GroupCreatePage = () => {
 
 
     useEffect(() => {
-        if (theme === "app_school_theme") {
+        // console.log(theme, "theme")
+        // if (theme === "app_school_theme") {
             navigation(-1)
-        }
+        // }
     }, [theme])
 
 
