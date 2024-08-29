@@ -6,6 +6,7 @@ import {Input} from "shared/ui/input";
 import cls from "entities/students/ui/newStudents/newStudents.module.sass";
 import {Table} from "shared/ui/table";
 import {StudentsFilter} from "features/filters/studentsFilter";
+import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 
 export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) => {
 
@@ -13,6 +14,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
     const navigation = useNavigate()
     const dispatch =  useDispatch()
     const getNewSt = useSelector(getStudentsWithBranch)
+
     // const getNewStDef = useSelector(getNewStudentsData)
     // const getSubjNewSt = useSelector(getNewStudentsWithSubject)
 
@@ -22,9 +24,15 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
 
 
     const renderStudents = () => {
-        if (!getNewSt || getNewSt.length === 0)
+
+        const studentToRender = getNewSt && getNewSt.length > 0 ? getNewSt : currentTableData
+        if (!studentToRender || studentToRender.length === 0)
         {
-           return currentTableData?.map((item,i) => {
+            return (
+                <DefaultPageLoader/>
+            )
+        }
+           return studentToRender?.map((item,i) => {
                return (
                    <tr
                        onClick={() => navigation(`profile/${item.id}`)}
@@ -35,7 +43,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                        <td>{item.user?.phone}</td>
                        <td>{item.user?.language?.name}</td>
                        <td>{
-                           !item.group[0]?.name || item.group === 0 ? "Guruhi hali yo'q" : item.group[0]?.name
+                           !item.subject[0]?.name || item.subject === 0 ? "Fani hali tanlanmagan" : item.subject[0]?.name
                        }</td>
                        <td>{item.user?.registered_date}</td>
                        {
@@ -53,37 +61,8 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                    </tr>
                )
            })
-        }else {
-            return getNewSt?.map((item, i) => {
-                return (
-                    <tr
-                        onClick={() => navigation(`profile/${item.id}`)}
-                    >
-                        <td>{i + 1}</td>
-                        <td>{item.user?.surname} {item.user?.name}</td>
-                        <td>{item.user?.age}</td>
-                        <td>{item.user?.phone}</td>
-                        <td>{item.user?.language?.name}</td>
-                        <td>{item.group}</td>
-                        <td>{item.user?.registered_date}</td>
-                        {
-                            theme ? <Input
-                                type={"checkbox"}
-                                onChange={() => setSelectStudents(prev => {
-                                    if (prev.filter(i => i === item.id)[0]) {
-                                        return prev.filter(i => i !== item.id)
-                                    } else {
-                                        return [...prev, item.id]
-                                    }
-                                })}
-                            />: null
-                        }
-                    </tr>
-                )
-            })
         }
 
-    };
 
     const render = renderStudents()
 
@@ -98,7 +77,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                         <th>Age</th>
                         <th>Telefon numer</th>
                         <th>Til</th>
-                        <th>Guruh</th>
+                        <th>Fani</th>
                         <th>Reg. sana</th>
                         {
                             theme ? <th/> : null

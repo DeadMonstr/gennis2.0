@@ -8,6 +8,7 @@ import {DeletedTeachers, Teachers} from "entities/teachers";
 import {Button} from "shared/ui/button";
 import cls from "./teacher.module.sass";
 import {getTeachers} from "../../../entities/teachers";
+import {useTheme} from "../../../shared/lib/hooks/useTheme";
 import {getTeachersWithFilter} from "entities/teachers";
 import {getTeacherLoading} from "entities/teachers";
 import {fetchTeachersData} from "../../../entities/teachers";
@@ -20,6 +21,7 @@ const branches = [
     {name: "chirchiq2"},
 ]
 export const TeachersPage = () => {
+    const {theme} = useTheme()
     const loading = useSelector(getTeacherLoading)
     const search = useSelector(getSearchValue)
     const teachersData = useSelector(getTeachers)
@@ -31,7 +33,7 @@ export const TeachersPage = () => {
     useEffect(() =>{
         dispatch(fetchTeachersData({userBranchId}))
     } ,[])
-    console.log(teachersData , "teach")
+
 
 
 
@@ -83,6 +85,7 @@ export const TeachersPage = () => {
                     />
                     :
                     <Teachers
+                        theme={ theme === "app_school_theme"}
                         loading={getTeacherLoading}
                         data={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
                         // data={currentTableData}

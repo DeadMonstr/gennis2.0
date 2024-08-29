@@ -1,37 +1,47 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
-import {Modal} from "shared/ui/modal";
-import {Input} from "shared/ui/input";
-import {Select} from "shared/ui/select";
-import {Switch} from "shared/ui/switch";
+import { Modal } from "shared/ui/modal";
+import { Input } from "shared/ui/input";
+import { Select } from "shared/ui/select";
+import { Switch } from "shared/ui/switch";
 
 import cls from "../../filters.module.sass";
-import {fetchEmployersDataWithFilter} from "../../../../entities/employer";
-import {useDispatch} from "react-redux";
-import {fetchFilteredRooms} from "../model/filterRoomsThunk";
+import { useDispatch } from "react-redux";
+import { fetchFilteredRooms } from "../model/filterRoomsThunk";
 
-export const RoomsFilter = React.memo(({active, setActive, activeSwitch, setActiveSwitch}) => {
+export const RoomsFilter = React.memo(({ active, setActive, activeSwitch, setActiveSwitch }) => {
 
-    const [selectedSeatFrom, setSelectedSeatFrom] = useState()
-    const [selectedSeatTo, setSelectedSeatTo] = useState()
-    const [selectedTeacher, setSelectedTeacher] = useState()
-    const dispatch = useDispatch()
+    const [selectedSeatFrom, setSelectedSeatFrom] = useState();
+    const [selectedSeatTo, setSelectedSeatTo] = useState();
+    const [selectedTeacher, setSelectedTeacher] = useState();
+    const [switchOn, setSwitchOn] = useState(true);
+    const dispatch = useDispatch();
 
-    const onChangeSwtich = () => {
-        setActiveSwitch(!activeSwitch)
-    }
+    const onChangeSwitch = () => {
+        const newSwitchState = !switchOn;
+        setSwitchOn(newSwitchState);
+        dispatch(fetchFilteredRooms({
+            boardCond: newSwitchState ? "True" : "False"
+        }));
+    };
 
     const handleSeatFromBlur = (e) => {
         setSelectedSeatFrom(e.target.value);
-        dispatch(fetchFilteredRooms({ seatFromId: e.target.value, seatUntilId: selectedSeatTo }))
-
-
-    }
+        dispatch(fetchFilteredRooms({
+            seatFromId: e.target.value,
+            seatUntilId: selectedSeatTo,
+        }));
+    };
 
     const handleSeatToBlur = (e) => {
         setSelectedSeatTo(e.target.value);
-        dispatch(fetchFilteredRooms({ seatFromId: selectedSeatFrom, seatUntilId: e.target.value }))
-    }
+        dispatch(fetchFilteredRooms({
+            seatFromId: selectedSeatFrom,
+            seatUntilId: e.target.value,
+        }));
+    };
+
+
 
     return (
         <Modal
@@ -67,15 +77,13 @@ export const RoomsFilter = React.memo(({active, setActive, activeSwitch, setActi
                         />
                     </div>
 
-
-
                     <div className={cls.filter__switch}>
                         <p>Doska</p>
-                        <Switch onChangeSwitch={() => onChangeSwtich} activeSwitch={activeSwitch}/>
+                        <Switch onChangeSwitch={onChangeSwitch} activeSwitch={switchOn} />
                     </div>
 
                 </div>
             </div>
         </Modal>
     );
-})
+});

@@ -30,6 +30,7 @@ import { Radio } from "shared/ui/radio";
 import { getUserBranchId } from "../../../profilePage";
 import { Input } from "shared/ui/input";
 import {getStudentsListDirector} from "../../model/selectors/studentsListDirector";
+import {useTheme} from "shared/lib/hooks/useTheme";
 
 const studentsFilter = [
     { name: "newStudents", label: "New Students" },
@@ -45,6 +46,7 @@ const branches = [
 
 export const StudentsPage = memo(() => {
     const dispatch = useDispatch();
+    const {theme} = useTheme()
     const __THEME__ = localStorage.getItem("theme");
     const { register, handleSubmit } = useForm();
     const navigation = useNavigate()
@@ -64,8 +66,6 @@ export const StudentsPage = memo(() => {
     const [selected, setSelected] = useState([]);
     const [currentTableData, setCurrentTableData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const lenghts = localStorage.getItem("lenght")
-    const data = useSelector(getStudentsListDirector)
     const search = useSelector(getSearchValue);
     let PageSize = useMemo(() => 50, []);
 
@@ -85,9 +85,6 @@ export const StudentsPage = memo(() => {
 
     console.log(selectedRadio, "radio")
 
-    useEffect(() => {
-        setCurrentTableData(searchedUsers);
-    }, [searchedUsers]);
 
     useEffect(() => {
         if (__THEME__) {
@@ -137,7 +134,7 @@ export const StudentsPage = memo(() => {
             case "newStudents":
                 return (
                     <NewStudents
-                        theme={__THEME__ === "app_school_theme"}
+                        theme={ theme === "app_school_theme"}
                         setSelectStudents={setSelectStudents}
                         currentTableData={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
                     />

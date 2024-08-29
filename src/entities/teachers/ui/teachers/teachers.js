@@ -8,11 +8,15 @@ import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 import {Input} from "../../../../shared/ui/input";
 import{getTeachersWithFilter} from "../../model/selector/teacherSelector";
 
-export const Teachers = memo(({data, setSelect, select}) => {
+import {useNavigate} from "react-router";
+
+export const Teachers = memo(({data, setSelect, select, theme}) => {
+    const navigation = useNavigate()
     const [checkbox, setCheckbox] = useState(false)
     const [selectId, setSelectId] = useState()
     const loadingDef = useSelector(getTeacherLoading)
     const filteredTeachersData = useSelector(getTeachersWithFilter)
+    const [editMode, setEditMode] = useState(false)
 
     const renderTeachers = () => {
         if (loadingDef) {
@@ -32,12 +36,10 @@ export const Teachers = memo(({data, setSelect, select}) => {
 
         return teachersToRender?.map((item, i) => {
             return (
-                <tr key={i}>
-                    <td>{i + 1}</td>
-                    <Link to={`teacherProfile/${item.id}`}>
-                        <td>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
-                    </Link>
 
+                <tr key={i}>
+                    <td >{i + 1}</td>
+                        <td onClick={() => navigation(`teacherProfile/${item.id}`)}>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
                     <td>{item?.user?.username}</td>
                     <td>{item.user.phone}</td>
                     <td>{item.user.age}</td>
@@ -100,7 +102,6 @@ export const Teachers = memo(({data, setSelect, select}) => {
 
                 </Table>
             </div>
-
 
         </div>
     )
