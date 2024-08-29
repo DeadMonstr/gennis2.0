@@ -1,14 +1,3 @@
-import {getTimeTable} from "entities/profile/groupProfile/model/groupProfileSelector";
-import {
-    fetchFilteredStudents,
-    fetchFilteredStudentsAndTeachers,
-    fetchFilteredTeachers,
-    fetchGroupProfileTimeTable,
-    fetchReasons, fetchWeekDays
-} from "entities/profile/groupProfile/model/groupProfileThunk";
-import {fetchRoomsData} from "entities/rooms";
-import {fetchClassColors, fetchClassNumberList} from "entities/students";
-import {getUserBranchId, getUserSystemId} from "entities/profile/userProfile/model/userProfileSelector";
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import classNames from "classnames";
@@ -32,11 +21,22 @@ import {
     getGroupProfileData,
     getGroupProfileLoading, GroupProfileRating
 } from "entities/profile/groupProfile";
+import {getTimeTable} from "entities/profile/groupProfile";
+import {
+    fetchFilteredStudents,
+    fetchFilteredStudentsAndTeachers,
+    fetchFilteredTeachers,
+    fetchGroupProfileTimeTable,
+    fetchReasons,
+    fetchWeekDays
+} from "entities/profile/groupProfile";
+import {fetchRoomsData} from "entities/rooms";
+import {fetchClassColors, fetchClassNumberList} from "entities/students";
+import {getUserBranchId, getUserSystemId} from "entities/profile/userProfile";
 import {fetchTeachersData} from "entities/teachers";
 import {fetchGroupsData} from "entities/groups";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import {fetchSubjectsAndLanguages} from "pages/registerPage";
-
 
 import cls from "./groupProfilePage.module.sass";
 

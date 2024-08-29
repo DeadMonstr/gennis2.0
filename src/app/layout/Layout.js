@@ -2,12 +2,10 @@ import React, {useEffect} from 'react';
 import {Outlet} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 
-
 import {Menubar} from "widgets/menuBar";
 import {Header} from "widgets/header";
 import {fetchUserProfileData} from "entities/profile/userProfile";
-import {getUserId, getUserRefreshLoading} from "pages/loginPage";
-
+import {getUserId, getUserRefreshLoading} from "pages/loginPage"
 
 import cls from "app/layout/Layout.module.sass"
 

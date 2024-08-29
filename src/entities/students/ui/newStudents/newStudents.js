@@ -20,14 +20,16 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
 
 
     const renderStudents = () => {
-        if (getNewSt && getNewSt.length)
-            return getNewSt?.map((item, i) => {
+        if (currentTableData && currentTableData.length)
+            return currentTableData?.map((item, i) => {
                 return (
-                    <tr
-                        onClick={() => navigation(`profile/${item.id}`)}
-                    >
+                    <tr>
                         <td>{i + 1}</td>
-                        <td>{item.user?.surname} {item.user?.name}</td>
+                        <td
+                            onClick={() => navigation(`profile/${item.id}`)}
+                        >
+                            {item.user?.surname} {item.user?.name}
+                        </td>
                         <td>{item.user?.age}</td>
                         <td>{item.user?.phone}</td>
                         <td>{item.user?.language?.name}</td>

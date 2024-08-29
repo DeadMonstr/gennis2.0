@@ -1,6 +1,9 @@
+import {getUserSystemId} from "entities/profile/userProfile";
+import {fetchClassNumberList, getSchoolClassNumbers} from "entities/students";
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import {useTheme} from "shared/lib/hooks/useTheme";
 import { fetchSubjectsAndLanguages, registerUser, registerTeacher, registerEmployer } from "../model/registerThunk";
 import cls from "./register.module.sass";
 import { Button } from "shared/ui/button";
@@ -24,12 +27,18 @@ export const Register = () => {
     const { register, handleSubmit, watch, setValue, reset } = useForm();
     const registerType = watch("registerType", "student");
     const username = watch("username", "");
+    const {theme} = useTheme()
+    const userSystemId = useSelector(getUserSystemId);
+    const classNumbers = useSelector(getSchoolClassNumbers)
     const dispatch = useDispatch();
     const [error, setError] = useState(false);
     const [selectedLang, setSelectedLang] = useState(1);
     const [selectedSubject, setSelectedSubject] = useState(1);
     const [selectedTime, setSelectedTime] = useState(1);
     const [selectedProfession, setSelectedProfession] = useState(1);
+    const [selectedClass, setSelectedClass] = useState()
+    const [selectedClassType, setSelectedClassType] = useState()
+    const [selected, setSelected] = useState()
     const [loading, setLoading] = useState(false);
 
     const [usernameMessage, setUsernameMessage] = useState('');
@@ -43,6 +52,12 @@ export const Register = () => {
     useEffect(() => {
         dispatch(fetchSubjectsAndLanguages());
     }, [dispatch]);
+
+    useEffect(() => {
+        if (userSystemId === 2 || theme === "app_school_theme") {
+            dispatch(fetchClassNumberList())
+        }
+    }, [])
 
     useEffect(() => {
         if (username) {
@@ -135,21 +150,29 @@ export const Register = () => {
                 ...res,
                 shift: selectedTime === 1 ? "1 smen" : selectedTime === 2 ? "2 smen" : "hamma vaqt",
                 parents_number: data.parents_phone,
+                class_number: selectedClass,
             };
-            registerAction = registerUser(res);
+            console.log(res, "res student")
+            // registerAction = registerUser(res);
         } else if (registerType === 'teacher') {
             res = {
                 ...res,
                 total_students: 1212,
                 color: "red",
+                class_type: selectedClassType,
+                toifa: selected
             };
-            registerAction = registerTeacher(res);
+            console.log(res, "res teacher")
+            console.log(res.user.resume[0], "res teacher resume")
+            console.log(res.user.resume["0"], "res teacher resume 2")
+            // registerAction = registerTeacher(res);
         } else if (registerType === 'employer') {
             res2 = {
                 ...res2,
                 profession: selectedProfession,
             };
-            registerAction = registerEmployer(res2);
+            console.log(res, "res employer")
+            // registerAction = registerEmployer(res2);
         }
 
         if (registerAction) {
@@ -202,6 +225,17 @@ export const Register = () => {
                                 { id: 3, name: "hamma vaqt" }
                             ]}
                         />
+                        {
+                            (theme === "app_school_theme" || userSystemId === 2) && (
+                                <Select
+                                    extraClass={cls.extraClasses}
+                                    title={"Sinf"}
+                                    name={"class_number"}
+                                    onChangeOption={setSelectedClass}
+                                    options={classNumbers}
+                                />
+                            )
+                        }
                     </>
                 );
             case 'teacher':
@@ -219,6 +253,35 @@ export const Register = () => {
                             onChangeOption={setSelectedSubject}
                             options={subjects.map(subj => ({ id: subj.id, name: subj.name }))}
                         />
+                        {
+                            (theme === "app_school_theme" || userSystemId === 2) && (
+                                <>
+                                    <Select
+                                        extraClass={cls.extraClasses}
+                                        name={"toifa"}
+                                        options={[]}
+                                        onChangeOption={setSelected}
+                                        title={"Toifa"}
+                                    />
+                                    <Select
+                                        extraClass={cls.extraClasses}
+                                        name={"class_type"}
+                                        options={[]}
+                                        onChangeOption={setSelectedClassType}
+                                        title={"Sinf turi"}
+                                    />
+                                    <div className={cls.resume}>
+                                        <h2 style={{textAlign: "left", fontSize: "2rem"}}>Resume</h2>
+                                        <Input
+                                            type={"file"}
+                                            name={"resume"}
+                                            register={register}
+                                            extraClassName={cls.resume__input}
+                                        />
+                                    </div>
+                                </>
+                            )
+                        }
                     </>
                 );
             case 'employer':

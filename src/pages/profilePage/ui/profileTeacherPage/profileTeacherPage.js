@@ -1,13 +1,15 @@
 import React, {createContext, useEffect, useState} from 'react';
 import classNames from "classnames";
-import {TeacherProfileInfo, TeacherProfileTeachersGroup} from "entities/profile/teacherProfile";
-import {TeacherEdit} from "features/profileEdits/teacherEdit";
-import cls from "./profileTeacherPage.module.sass"
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";
-import {fetchTeacherId, getTeacherId, changeTeacherProfileImage} from "../../../../entities/teachers";
-import {ImageCrop} from "../../../../features/imageCrop";
+
+import {TeacherProfileInfo, TeacherProfileTeachersGroup} from "entities/profile/teacherProfile";
+import {TeacherEdit} from "features/profileEdits/teacherEdit";
+import {fetchTeacherId, getTeacherId, changeTeacherProfileImage} from "entities/teachers";
+import {ImageCrop} from "features/imageCrop";
 import {changeStudentProfileImage} from "../../model/thunk/studentProfileThunk";
+
+import cls from "./profileTeacherPage.module.sass"
 export const ContextStuPro = createContext(null)
 
 export const ProfileTeacherPage = () => {

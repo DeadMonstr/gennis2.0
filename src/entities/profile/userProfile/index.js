@@ -3,7 +3,11 @@ export {UserProfileSalaryList} from "./ui/userProfileSalaryList/userProfileSalar
 export {UserProfileChange} from "./ui/userProfileChange/userProfileChange";
 export {UserProfileSalaryListInner} from "./ui/userProfileSalaryListInner/userProfileSalaryListInner";
 export {default as userProfileSlice} from "./model/userProfileSlice";
-export {fetchUserProfileData} from "./model/userProfileThunk";
+export {
+    fetchUserProfileData,
+    changeUserProfileData,
+    changeUserProfileImage
+} from "./model/userProfileThunk";
 export {
     getUserBranchId,
     getUserPermission,

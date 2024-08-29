@@ -9,7 +9,22 @@ export {GroupProfileRating} from "./ui/groupProfileRating/groupProfileRating";
 export {
     fetchGroupProfile,
     changeGroupProfile,
-    deleteGroupProfile
+    deleteGroupProfile,
+    createWeekDays,
+    fetchFilteredTeachers,
+    changeWeekDays,
+    deleteWeekDays,
+    fetchFilteredGroups,
+    fetchFilteredStudents,
+    fetchFilteredStudentsAndTeachers,
+    fetchGroupProfileTimeTable,
+    moveGroup,
+    fetchReasons,
+    fetchWeekDays
 } from "./model/groupProfileThunk";
 export {default as groupProfileSlice} from "./model/groupProfileSlice";
-export {getGroupProfileData, getGroupProfileLoading} from "./model/groupProfileSelector";
+export {
+    getGroupProfileData,
+    getGroupProfileLoading,
+    getTimeTable
+} from "./model/groupProfileSelector";

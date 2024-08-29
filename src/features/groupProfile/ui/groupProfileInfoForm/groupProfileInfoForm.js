@@ -69,6 +69,7 @@ export const GroupProfileInfoForm = memo(() => {
         setValue("name", data?.name)
         setValue("price", data?.price)
         setValue("language", data?.language?.id)
+        setValue("class_number", data?.class_number?.id)
     }, [])
 
     return (
