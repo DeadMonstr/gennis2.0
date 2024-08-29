@@ -39,7 +39,7 @@ import {useTheme} from "shared/lib/hooks/useTheme";
 
 import cls from "./students.module.sass"
 import {getSearchValue} from "features/searchInput";
-import {getUserBranchId} from "entities/profile/userProfile";
+import {getUserBranchId, getUserSystemId} from "entities/profile/userProfile";
 
 const studentsFilter = [
     {name: "newStudents", label: "New Students"},
@@ -71,6 +71,7 @@ export const StudentsPage = () => {
     const schoolClassColors = useSelector(getSchoolClassColors)
     const teachers = useSelector(getTeachers)
     const userBranchId = useSelector(getUserBranchId)
+    const userSystemId = useSelector(getUserSystemId)
     const languages = useSelector(state => state.registerUser.languages)
 
     const [selectColor, setSelectColor] = useState()
@@ -92,10 +93,11 @@ export const StudentsPage = () => {
     let PageSize = useMemo(() => 20, []);
 
     const searchedUsers = useMemo(() => {
-        // const filteredStudents = selectedRadio === "newStudents"
-        //     ? newStudents?.slice()
-        //     : studyingStudents?.slice();
-        const filteredStudents = newStudents ? newStudents?.slice() : []
+        const filteredStudents = selectedRadio === "newStudents"
+            ? newStudents?.slice()
+            : studyingStudents?.slice();
+        // const filteredStudents = newStudents ? newStudents?.slice() : []
+        console.log(filteredStudents, "filtered")
         setCurrentPage(1)
 
 
@@ -104,7 +106,7 @@ export const StudentsPage = () => {
         return filteredStudents.filter(item =>
             item.name?.toLowerCase().includes(search.toLowerCase())
         )
-    }, [newStudents, setCurrentPage, search, theme])
+    }, [newStudents, studyingStudents, search])
 
     useEffect(() => {
         if (userBranchId) {
@@ -113,19 +115,19 @@ export const StudentsPage = () => {
         }
     } , [userBranchId])
 
-    useEffect(() => {
-        setCurrentTableData(searchedUsers);
-    }, [searchedUsers]);
+    // useEffect(() => {
+    //     setCurrentTableData(searchedUsers);
+    // }, [searchedUsers]);
 
     useEffect(() => {
-        if (theme === "app_school_theme" && userBranchId) {
+        if (userSystemId === 2 && userBranchId) {
             dispatch(fetchSchoolStudents({userBranchId}))
             dispatch(fetchClassColors())
             dispatch(fetchClassNumberList())
         } else {
             // dispatch(fetchNewStudentsData())
         }
-    }, [theme, userBranchId])
+    }, [userSystemId, userBranchId])
 
     const onSubmit = (data) => {
         const res = {
@@ -219,7 +221,8 @@ export const StudentsPage = () => {
                 onPageChange={page => {
                     setCurrentPage(page)
                 }}
-                type={"custom"}/>
+                type={"custom"}
+            />
 
 
             <StudentsFilter active={active} setActive={setActive} activePage={selectedRadio}/>

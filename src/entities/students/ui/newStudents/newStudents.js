@@ -23,6 +23,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
 
     const renderStudents = () => {
         if (!getNewSt || getNewSt.length === 0) {
+            console.log(false, currentTableData)
             return currentTableData?.map((item, i) => {
                 return (
                     <tr
@@ -53,6 +54,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                 )
             })
         } else {
+            console.log(true)
             return getNewSt?.map((item, i) => {
                 return (
                     <tr
