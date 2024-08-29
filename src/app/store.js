@@ -65,6 +65,7 @@ import {calendarSlice} from "pages/calendarPage";
 import {vacancyWorkerSoucre, userSetPermissionSlice} from "../entities/vacancy/ui/vacancyWorkerList";
 import {vacancyWorkerSlice} from "../features/vacancyWorkerList";
 import {studentPaymentSlice} from "../features/studentPayment";
+import {inkasatsiyaSlice} from "../entities/inkasatsiya";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -142,7 +143,8 @@ export const store = configureStore({
         studentPaymentSlice,
         groupProfileSlice,
         overHeadSlice,
-        capitalSlice
+        capitalSlice,
+        inkasatsiyaSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

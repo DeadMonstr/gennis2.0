@@ -98,7 +98,6 @@ export const StudentsPage = () => {
         const filteredStudents = newStudents ? newStudents?.slice() : []
         setCurrentPage(1)
 
-        setCurrentPage(1);
 
         if (!search) return filteredStudents;
 
@@ -112,76 +111,48 @@ export const StudentsPage = () => {
             dispatch(fetchTeachersData({userBranchId}))
             dispatch(fetchSubjectsAndLanguages())
         }
-    }, [userBranchId])
-    //     );
-    // }, [newStudents, studyingStudents, search, selectedRadio]);
+    } , [userBranchId])
 
-    // useEffect(() => {
-    //     if (theme === "app_school_theme" && userBranchId) {
-    //         dispatch(fetchSchoolStudents({userBranchId}))
-    //         dispatch(fetchClassColors())
-    //         dispatch(fetchClassNumberList())
-    //     } else {
-    // dispatch(fetchNewStudentsData())
     useEffect(() => {
         setCurrentTableData(searchedUsers);
     }, [searchedUsers]);
 
     useEffect(() => {
-        if (__THEME__ === "app_school_theme" && userBranchId) {
-            dispatch(fetchSchoolStudents({userBranchId}));
-            dispatch(fetchClassNumberList())
+        if (theme === "app_school_theme" && userBranchId) {
+            dispatch(fetchSchoolStudents({userBranchId}))
             dispatch(fetchClassColors())
+            dispatch(fetchClassNumberList())
+        } else {
+            // dispatch(fetchNewStudentsData())
         }
     }, [theme, userBranchId])
-    //     dispatch(fetchClassColors());
-    //     dispatch(fetchClassNumberList());
-    //     dispatch(fetchTeachersData());
-    //     dispatch(fetchSubjectsAndLanguages());
-    // }, [dispatch, __THEME__]);
-
-    // useEffect(() => {
-    //     if (lenghts > 1)
-    //     {
-    //         navigation(`/platform/locations-overview`)
-    //     }
-    // })
 
     const onSubmit = (data) => {
-        console.log(data)
         const res = {
             ...data,
             teacher: [+selectTeacher],
             students: selectStudents,
             color: selectColor,
             branch: userBranchId,
-            create_type: __THEME__ === "app_school_theme" ? "school" : "center",
-        };
-        dispatch(createSchoolClass({res}));
-    };
-
-    // useEffect(() => {
-    //         create_type: theme === "app_school_theme" ? "school" : "center",
-    //         system: 2
-    //     }
-    //     console.log(res, "res")
-    //     dispatch(createSchoolClass({res}))
-    //     // setSelectStudents([])
-    // }
+            create_type: theme === "app_school_theme" ? "school" : "center",
+            system: 2
+        }
+        console.log(res, "res")
+        dispatch(createSchoolClass({res}))
+        // setSelectStudents([])
+    }
     // useEffect(() =>{
     //     dispatch(fetchOnlyNewStudentsData())
     // } , [])
     // Radio tanlangan holatga qarab tegishli dispatch funksiyasini chaqirish
-    useEffect(() => {
+    useEffect(() =>{
         if (selectedRadio === "newStudents") {
-            dispatch(fetchOnlyNewStudentsData());
             // dispatch(fetchOnlyNewStudentsData())
         } else if (selectedRadio === "studying") {
-            dispatch(fetchOnlyStudyingStudentsData());
+            dispatch(fetchOnlyStudyingStudentsData())
         }
-    }, [dispatch, selectedRadio]);
+    } , [dispatch, selectedRadio])
 
-    console.log(newStudents, "newSt")
 
     const handleChange = (value) => {
         setSelectedRadio(value);
@@ -250,17 +221,6 @@ export const StudentsPage = () => {
                 }}
                 type={"custom"}/>
 
-            {/*<Pagination*/}
-            {/*    setCurrentTableData={setCurrentTableData}*/}
-            {/*    users={searchedUsers}*/}
-            {/*    setCurrentPage={setCurrentPage}*/}
-            {/*    currentPage={currentPage}*/}
-            {/*    pageSize={PageSize}*/}
-            {/*    onPageChange={page => {*/}
-            {/*        setCurrentPage(page);*/}
-            {/*    }}*/}
-            {/*    type={"custom"}*/}
-            {/*/>*/}
 
             <StudentsFilter active={active} setActive={setActive} activePage={selectedRadio}/>
             <Modal
@@ -327,56 +287,6 @@ export const StudentsPage = () => {
                     </Form>
                 </div>
             </Modal>
-            {/*<StudentsFilter active={active} setActive={setActive} activePage={selectedRadio}/>*/}
-
-            {/*<Modal active={activeModal} setActive={setActiveModal}>*/}
-            {/*    <div className={cls.modal}>*/}
-            {/*        <h1>Sinf yaratish</h1>*/}
-            {/*        <Form*/}
-            {/*            onSubmit={handleSubmit(onSubmit)}*/}
-            {/*            extraClassname={cls.modal__form}*/}
-            {/*        >*/}
-            {/*            <Select*/}
-            {/*                extraClass={cls.modal__select}*/}
-            {/*                title={"O'qituvchi"}*/}
-            {/*                options={teachers}*/}
-            {/*                onChangeOption={setSelectTeacher}*/}
-            {/*            />*/}
-            {/*            <Select*/}
-            {/*                extraClass={cls.modal__select}*/}
-            {/*                title={"Til"}*/}
-            {/*                options={languages}*/}
-            {/*                register={register}*/}
-            {/*                name={"language"}*/}
-            {/*            />*/}
-            {/*            <Select*/}
-            {/*                extraClass={cls.modal__select}*/}
-            {/*                title={"Sinf raqami"}*/}
-            {/*                options={schoolClassNumbers}*/}
-            {/*                register={register}*/}
-            {/*                name={"class_number"}*/}
-            {/*            />*/}
-            {/*            <div className={cls.modal__radios}>*/}
-            {/*                {schoolClassColors.map(item => (*/}
-            {/*                    <div key={item.id}>*/}
-            {/*                        <Radio*/}
-            {/*                            onChange={() => setSelectColor(item.id)}*/}
-            {/*                            checked={selectColor === item.id}*/}
-            {/*                            name={"color"}*/}
-            {/*                        />*/}
-            {/*                        {item.name}*/}
-            {/*                    </div>*/}
-            {/*                ))}*/}
-            {/*            </div>*/}
-            {/*            <Input*/}
-            {/*                placeholder={"price"}*/}
-            {/*                name={"price"}*/}
-            {/*                register={register}*/}
-            {/*            />*/}
-            {/*        </Form>*/}
-            {/*    </div>*/}
-            {/*</Modal>*/}
-
         </>
     )
 }

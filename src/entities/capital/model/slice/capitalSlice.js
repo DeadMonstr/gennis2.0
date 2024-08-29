@@ -40,7 +40,6 @@ export const CapitalSlice = createSlice({
                 state.loading = false
                 state.capitalsData = action.payload?.capitalcategorys
                 state.capitalPermission = action.payload?.permissions
-                console.log(action.payload , "capital")
             })
             .addCase(getCapitalDataThunk.rejected , (state, action) => {
                 state.error = action.payload ?? null
@@ -64,7 +63,6 @@ export const CapitalSlice = createSlice({
             })
             .addCase(getCapitalInfo.fulfilled , (state, action) =>{
                 state.capitalCategoryInfo = action.payload.capitalcategory
-                console.log(action.payload , "capital info")
                 state.loading = false
                 state.error = null
             })
@@ -78,8 +76,6 @@ export const CapitalSlice = createSlice({
             })
             .addCase(changeCapitalInfoThunk.fulfilled , (state, action) =>{
                 state.capitalCategoryInfo = action.payload
-
-                console.log(action.payload , "capital info")
                 state.loading = false
                 state.error = null
             })
@@ -87,26 +83,16 @@ export const CapitalSlice = createSlice({
                 state.loading = false
                 state.error = action.payload ?? null
             })
-            .addCase(createInsideCategory.pending , state => {
-                state.loading= true
-                state.error = null
-            })
-            .addCase(createInsideCategory.fulfilled , (state  ,action) => {
-                state.loading = false
-                state.capitalInsideCategory = action.payload
-                state.error = null
-            })
-            .addCase(createInsideCategory.rejected, (state, action) =>{
-                state.error = action.payload ?? null
-                state.loading = false
-            })
+
+
+
             .addCase(getInsideCategory.pending , state => {
                 state.loading = true
                 state.error = null
             })
             .addCase(getInsideCategory.fulfilled , (state, action) =>{
                 state.capitalInsideCategory = action.payload.capitals
-                console.log(action.payload , "capital inside info")
+                console.log(action.payload , "payload")
                 state.loading = false
                 state.error = null
             })
@@ -114,6 +100,9 @@ export const CapitalSlice = createSlice({
                 state.loading = false
                 state.error = action.payload ?? null
             })
+
+
+
             .addCase(getPaymentType.pending , state => {
                 state.loading = true
                 state.error = false
@@ -122,7 +111,6 @@ export const CapitalSlice = createSlice({
                 state.paymentTypes = action.payload.paymenttypes
                 state.loading = false
                 state.error = false
-                console.log(action.payload , "action")
             })
             .addCase(getPaymentType.rejected , (state , action) => {
                 state.loading = false

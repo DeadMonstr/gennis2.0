@@ -32,13 +32,9 @@ import {StudentSalary} from "./accountingPages/studentSalary";
 import {Link} from "../../../shared/ui/link";
 import {AdditionalCosts} from "./accountingPages/additionalCosts";
 import {Capital} from "./accountingPages/capital";
+import {getEncashment} from "../../../entities/accounting/model/selector/accountingSelector";
+import {accountingThunk} from "../../../entities/accounting/model/thunk/accountingThunk";
 
-
-const number = [
-    {number: '123232', name: "cash"},
-    {number: '-123232', name: "bank"},
-    {number: '1232312', name: "click"},
-];
 
 
 export const AccountingPageMain = memo(() => {
@@ -48,11 +44,16 @@ export const AccountingPageMain = memo(() => {
     const dispatch = useDispatch()
     const {request} = useHttp()
 
+    const encashment = useSelector(getEncashment)
     const {id} = useParams()
 
+    useEffect(() => {
+        dispatch(accountingThunk())
+    } , [])
     const setPage = useCallback((e) => {
         console.log(e)
         dispatch(onChangeAccountingPage({value: e}))
+
         navigate(`./${e}`)
     }, [])
 
@@ -65,12 +66,12 @@ export const AccountingPageMain = memo(() => {
                 <div className={cls.accounting__wrapper}>
                     <div className={cls.wrapper__filter}>
                         <Button type={"filter"} status={"filter"}>Filter</Button>
-                        <Select options={getAccountingPage} onChangeOption={setPage}/>
+                        <Select options={getAccountingPage} onChangeOption={setPage} />
                     </div>
                     <div className={cls.wrapper__middle}>
                         <div className={cls.middle__box}>
-                            {number.map(item => (
-                                <div>{item.name}: {item.number}</div>
+                            {encashment.map(item => (
+                                <div>{item.payment_type}: {item.overall}</div>
                             ))}
                         </div>
                         <div className={cls.typeExpenses}>
@@ -94,8 +95,10 @@ export const AccountingPageMain = memo(() => {
 
             <Routes>
                 <Route path={"studentsPayments"} element={<StudentSalary locationId={locationId}/>}/>
-                <Route path={"teachersSalary"} element={<TeacherSalaryPage path={"teachersSalary"} locationId={locationId}/>}/>
-                <Route path={"employeesSalary"} element={<EmployerSalaryPage setPage={setPage} path={"employeesSalary"} locationId={locationId}/>}/>
+                <Route path={"teachersSalary"}
+                       element={<TeacherSalaryPage path={"teachersSalary"} locationId={locationId}/>}/>
+                <Route path={"employeesSalary"} element={<EmployerSalaryPage setPage={setPage} path={"employeesSalary"}
+                                                                             locationId={locationId}/>}/>
                 <Route path={"overhead"} element={<AdditionalCosts path={"overhead"} locationId={locationId}/>}/>
                 <Route path={"capital"} element={<Capital path={"capital"} locationId={locationId}/>}/>
 

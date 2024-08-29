@@ -8,3 +8,5 @@ export const getStudentsData =(state) =>
     state.studentSlice?.studentsData
 
 
+export const getEncashment = (state) =>
+    state.accountingSlice.encashment

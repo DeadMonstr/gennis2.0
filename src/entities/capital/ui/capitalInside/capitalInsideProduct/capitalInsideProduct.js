@@ -1,29 +1,31 @@
 import cls from "./capitalInsideProduct.module.sass"
 import {Button} from "shared/ui/button";
 import {memo} from "react";
+import {API_URL_IMG} from "shared/api/base";
+import def from "shared/assets/images/defaultImg.svg"
+
+export const CapitalInsideProduct = memo(({capitalData, addModal, setAddModal}) => {
 
 
-export const CapitalInsideProduct = memo(({capitalData , addModal , setAddModal}) => {
+    const capitalDataRender = () => {
+        return capitalData.map((item, i) => (
+            <div className={cls.box}>
+                <img src={def} alt=""/>
+                <div className={cls.box_item}>
+                    <h2>Nomi : {item.name}</h2>
+                    <ul>
+                        <li>Raqami : {item.id_number}</li>
+                        <li>Narxi : {item.price}</li>
+                        <li>Muddati : {item.term} yil</li>
+                        <li>Sana : {item.date}</li>
+                        <li>To'lov turi : {item.payment_type.name}</li>
+                    </ul>
+                </div>
+            </div>
+        ))
+    }
 
-
-    // const capitalDataRender = () => {
-    //     return (
-    //         <div className={cls.capitalBox}>
-    //             <div className={cls.capitalBox_img}>
-    //                 <img src={capitalData.capitalImg} alt=""/>
-    //             </div>
-    //
-    //             <div className={cls.capitalBoxInfo}>
-    //                 <ul>
-    //                     <li>{capitalData.capitalProduct.name}</li>
-    //                     <li>{capitalData.capitalProduct.number}</li>
-    //                 </ul>
-    //             </div>
-    //         </div>
-    //     )
-    // }
-    //
-    // const render = capitalDataRender()
+    const render = capitalDataRender()
 
 
     return (
@@ -36,18 +38,19 @@ export const CapitalInsideProduct = memo(({capitalData , addModal , setAddModal}
 
                 <div className={cls.product__header_right}>
                     <span>
-                        Jami (Down Cost): 278
+                        Jami (Down Cost): {capitalData?.length}
                     </span>
                     <div>
                         <Button type={"danger"} children={"O’chirilganlar"}/>
-                        <Button onClick={() => setAddModal(!addModal)} extraClass={cls.btn} type={"editPlus"} children={<i className={"fa fa-plus"}/>}/>
+                        <Button onClick={() => setAddModal(!addModal)} extraClass={cls.btn} type={"editPlus"}
+                                children={<i className={"fa fa-plus"}/>}/>
 
                     </div>
                 </div>
             </div>
-            <div className={cls.product__wraper}>
+            <div className={cls.product__wrapper}>
 
-                {/*{render}*/}
+                {render}
 
             </div>
         </div>

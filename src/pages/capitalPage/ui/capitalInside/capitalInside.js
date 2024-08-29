@@ -5,7 +5,7 @@ import {
     CapitalInsideHeader,
     CapitalInsideProduct,
     CapitalInsideSecond,
-    getCapitalData,
+    getCapitalData, getCapitalDataThunk,
     getCapitalInside, getCapitalTypes, getInsideCategory
 } from "entities/capital";
 
@@ -31,6 +31,8 @@ import {API_URL, headers, useHttp} from "../../../../shared/api/base";
 import {Select} from "../../../../shared/ui/select";
 
 import {AddCategoryModal, EditModal} from "features/createCapitalModal";
+import {getBranchThunk, getLocations} from "../../../../entities/editCreates";
+import {getLocationThunk} from "../../../../entities/creates/model/createThunk/createBranchThunk";
 
 const capitalType = [
     {name: "category", label: "Category"},
@@ -40,32 +42,35 @@ const capitalType = [
 
 export const CapitalInside = memo(() => {
 
+    const dispatch = useDispatch()
     const {register, setValue, handleSubmit} = useForm()
     const {id} = useParams()
     const {request} = useHttp()
     const navigation = useNavigate()
     const capitalInside = useSelector(getCapitalInside)
 
-
     const paymentType = useSelector(getCapitalTypes)
-    useEffect
-    (() => {
+
+    useEffect(() => {
         dispatch(getCapitalInfo(id))
         dispatch(getInsideCategory())
+        dispatch(getCapitalDataThunk())
+
         dispatch(getPaymentType())
+        dispatch(getBranchThunk())
     }, [])
-
-    console.log(paymentType , "log")
-    const dispatch = useDispatch()
-
+    console.log(capitalInside , "log")
     const getCapitalInsideData = useSelector(getCapitalInsideInfo)
 
     const loading = useSelector(getLoading)
+    const branches = useSelector(getLocations)
+
 
 
     const [changeItem, setChangeItem] = useState({})
     const [changedImages, setChangedImages] = useState([])
     const [selectPayment, setSelectPayment] = useState()
+    const [capitalSelect , setSelectedCapital] = useState([])
 
 
     const [activeMenu, setActiveMenu] = useState(capitalType[0].name)
@@ -73,6 +78,8 @@ export const CapitalInside = memo(() => {
     const [activeModal, setActiveModal] = useState(false)
 
     const [editModal, setEditModal] = useState(false)
+    const capital = useSelector(getCapitalData)
+    const [ selectedBranches ,setSelectedBranches] =useState([])
     const onDelete = () => {
         console.log(id)
         navigation(-2)
@@ -95,39 +102,20 @@ export const CapitalInside = memo(() => {
                                      setEditModal={() => setEditModal(!editModal)}
                                      capitalData={getCapitalInsideData}/>
                 <CapitalInsideProduct addModal={activeModal} setAddModal={setActiveModal}
-                                      capitalData={getCapitalInsideData}/>
+                                      capitalData={capitalInside}/>
             </>
         )
     }
 
 
-    // const onClick = (data) => {
-    //     // console.log(selectPayment,data, "data")
-    //     // console.log(changedImages)
-    //     const res = {
-    //         ...data,
-    //         img: changedImages,
-    //         payment_type: 1
-    //     }
-    //     console.log(res , "res")
-    //     dispatch(createInsideCategory(res))
-    //
-    // }
 
-    console.log(selectPayment, "hello")
     const onClick = (data) => {
-        const res = {
-            ...data,
-            img: changedImages,
 
-            branch: 1,
-            category: 1
-        };
-        console.log(res, "res");
-        dispatch(createInsideCategory(res));
+        setActiveModal(false)
+        dispatch(createInsideCategory({data , changedImages , selectPayment , capitalSelect , selectedBranches}));
+        dispatch(getInsideCategory())
     };
     const onChange = (data) => {
-        console.log(data)
         setEditModal(!editModal)
         dispatch(changeCapitalInfoThunk({data, id: id}))
         setValue("name", "")
@@ -154,7 +142,11 @@ export const CapitalInside = memo(() => {
                 setActiveModal={setActiveModal}
                 setChangedImages={setChangedImages}
                 changeItem={changeItem}
+                capital={capital}
+                setSelectedCapital={setSelectedCapital}
                 options={paymentType}
+                branches={branches}
+                setSelectedBranches={setSelectedBranches}
             />
             <EditModal register={register} handleSubmit={handleSubmit} onClick={onChange} editModal={editModal}
                        setEditModal={setEditModal} setChangedImages={setChangedImages} changeItem={changeItem}/>
