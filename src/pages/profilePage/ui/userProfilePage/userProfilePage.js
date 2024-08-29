@@ -84,6 +84,7 @@ export const UserProfilePage = () => {
 
     const onSubmitChangeInfo = (data) => {
         dispatch(changeUserProfileData({id, data}))
+        dispatch()
         setCurrentStatus(true)
     }
 
