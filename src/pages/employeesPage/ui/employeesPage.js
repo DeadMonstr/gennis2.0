@@ -31,7 +31,7 @@ export const EmployerPage = () => {
         if (!search) return filteredRooms;
 
         return filteredRooms.filter(item =>
-            item.name?.toLowerCase().includes(search.toLowerCase())
+            item.user?.name?.toLowerCase().includes(search.toLowerCase())
         );
     }, [employersData, search]);
 
@@ -39,7 +39,7 @@ export const EmployerPage = () => {
       <div className={cls.employer}>
         <div className={cls.employer__header}>
             <Button onClick={() => setActiveModal(!activeFilter)} status={"filter"} type={"filter"}>Filter</Button>
-            <Select/>
+            {/*<Select/>*/}
         </div>
           {activeSwitch ? <DeletedEmployers/> : <Employers currentTableData={searchedEmployers.slice((currentPage - 1) * PageSize, currentPage * PageSize)} />}
           <EmployeesFilter activeSwitch={activeSwitch} setActiveSwitch={setActiveSwitch} active={activeFilter} setActive={setActiveModal}/>

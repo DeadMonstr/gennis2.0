@@ -51,7 +51,7 @@ export const Rooms = () => {
                         <Button onClick={() => setActive(true)}>Xona qo'shish</Button>
                     {/*</RequirePermission>*/}
                 </div>
-                <Select value={selected} onChange={handleChange} />
+                {/*<Select value={selected} onChange={handleChange} />*/}
             </div>
             <div className={cls.mainContainer_filterPanelBox}>
                 <Button

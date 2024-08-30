@@ -17,9 +17,11 @@ import {StudentsFilter} from "features/filters/studentsFilter";
 import {
     fetchOnlyNewStudentsData,
     fetchOnlyStudyingStudentsData,
+    fetchOnlyDeletedStudentsData,
     getNewStudentsData,
     getNewStudentsLoading,
-    getStudyingStudents
+    getStudyingStudents,
+    getOnlyDeletedStudents
 } from "entities/students";
 import {Pagination} from "features/pagination";
 import {useNavigate} from "react-router";
@@ -59,6 +61,7 @@ export const StudentsPage = memo(() => {
     const navigation = useNavigate()
     const studyingStudents = useSelector(getStudyingStudents);
     const newStudents = useSelector( getNewStudentsData);
+    const deletedStudents = useSelector(getOnlyDeletedStudents)
     const schoolClassNumbers = useSelector(getSchoolClassNumbers);
     const schoolClassColors = useSelector(getSchoolClassColors);
     const teachers = useSelector(getTeachers);
@@ -78,18 +81,32 @@ export const StudentsPage = memo(() => {
     let PageSize = useMemo(() => 50, []);
 
     const searchedUsers = useMemo(() => {
-        const filteredStudents = selectedRadio === "newStudents"
-            ? newStudents?.slice()
-            : studyingStudents?.slice();
+        let filteredStudents = [];
+        switch (selectedRadio) {
+            case "newStudents":
+                filteredStudents = newStudents?.slice();
+                break;
+            case "studying":
+                filteredStudents = studyingStudents?.slice();
+                break;
+            case "deletedStudents":
+                filteredStudents = deletedStudents?.slice();
+                break;
+            default:
+                filteredStudents = [];
+        }
 
         setCurrentPage(1);
 
         if (!search) return filteredStudents;
 
         return filteredStudents.filter(item =>
-            item.name?.toLowerCase().includes(search.toLowerCase())
-        )
-    }, [newStudents, studyingStudents, search])
+            (item.user?.name?.toLowerCase().includes(search.toLowerCase()) ||
+              item.user?.surname?.toLowerCase().includes(search.toLowerCase()) ||
+                item?.student?.user?.name.toLowerCase().includes(search.toLowerCase()) ||
+                item?.student?.user?.surname.toLowerCase().includes(search.toLowerCase()))
+        );
+    }, [newStudents, studyingStudents, deletedStudents, search, selectedRadio]);
 
     useEffect(() => {
         if (userBranchId) {
@@ -122,23 +139,25 @@ export const StudentsPage = memo(() => {
             create_type: theme === "app_school_theme" ? "school" : "center",
             system: 2
         }
-        console.log(res, "res")
         dispatch(createSchoolClass({res}))
-        // setSelectStudents([])
     }
-    // useEffect(() =>{
-    //     dispatch(fetchOnlyNewStudentsData())
-    // } , [])
-    // Radio tanlangan holatga qarab tegishli dispatch funksiyasini chaqirish
-    useEffect(() =>{
-        if (selectedRadio === "newStudents") {
-            dispatch(fetchOnlyNewStudentsData());
-        } else if (selectedRadio === "studying") {
-            dispatch(fetchOnlyStudyingStudentsData());
+
+    useEffect(() => {
+        switch (selectedRadio) {
+            case "newStudents":
+                dispatch(fetchOnlyNewStudentsData());
+                break;
+            case "studying":
+                dispatch(fetchOnlyStudyingStudentsData());
+                break;
+            case "deletedStudents":
+                dispatch(fetchOnlyDeletedStudentsData());
+                break;
+            default:
+                break;
         }
     }, [dispatch, selectedRadio]);
 
-    console.log(currentTableData, "newSt")
 
     const handleChange = (value) => {
         setSelectedRadio(value);

@@ -6,6 +6,7 @@ import {useNavigate} from "react-router";
 import {Table} from "shared/ui/table";
 
 import cls from "./deletedStudents.module.sass";
+import {DefaultLoader} from "shared/ui/defaultLoader";
 
 
 
@@ -29,19 +30,24 @@ export const DeletedStudents = ({currentTableData}) => {
 
 
     const renderDeletedStudents = () => {
-        console.log(currentTableData)
 
+        if (!currentTableData || currentTableData.length === 0)
+        {
+            return (
+                <DefaultLoader/>
+            )
+        }
         return currentTableData.map((item,  i) =>{
             switch (activeMenu) {
                 case ("all"): {
                     return(
                         <tr  onClick={() => navigation(`profile/${item.id}`)}>
                             <td>{i + 1}</td>
-                            <td>{item.name} {item.surname}</td>
-                            <td>{item.age}</td>
-                            <td>{item.number}</td>
+                            <td>{item?.student?.user?.name} {item.student?.user?.surname}</td>
+                            <td>{item.student?.user?.age}</td>
+                            <td>{item.student?.user?.phone}</td>
                             <td>{item.group}</td>
-                            <td>{item.reg_date}</td>
+                            <td>{item.student?.user?.registered_date}</td>
                             <td>{item.deletedDate}</td>
                             <td>{item.reason}</td>
                         </tr>

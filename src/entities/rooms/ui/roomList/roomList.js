@@ -15,7 +15,6 @@ export const RoomsList = ({ currentTableData }) => {
     const getFilteredRoom = useSelector(getFilteredRooms)
     const filteredRoom = getFilteredRoom?.rooms
 
-    console.log(getFilteredRoom, "filterlangan")
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false);

@@ -1,4 +1,4 @@
-import {getUserBranchId} from "entities/profile/userProfile";
+import {getUserBranchId} from "../../../entities/profile/userProfile";
 import React, {useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {TeacherFilter} from "features/filters/teacherFilter";
@@ -55,8 +55,10 @@ export const TeachersPage = () => {
         if (!search) return  filteredHeroes
 
         return filteredHeroes.filter(item =>
-            item.name?.toLowerCase().includes(search.toLowerCase())
-        )
+            (item?.user?.name?.toLowerCase().includes(search.toLowerCase()) ||
+                item?.user?.surname?.toLowerCase().includes(search.toLowerCase()))
+        );
+
     }, [teachersData, setCurrentPage, search])
 
     return (

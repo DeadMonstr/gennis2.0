@@ -18,7 +18,7 @@ export const TeacherSalaryList = ({ currentTableData, currentPage, PageSize }) =
         return safeData.map((item, index) => (
             <tr key={index + 1}>
                 <td>{(currentPage - 1) * PageSize + index + 1}</td>
-                    <td onClick={navigation(`giveTeacherSalaryPage/${item?.id}`)}>{item?.total_salary}</td>
+                    <td onClick={() => navigation(`giveTeacherSalaryPage/${item?.id}`)}>{item?.total_salary}</td>
                 <td>{item?.taken_salary}</td>
                 <td>{item?.remaining_salary}</td>
                 <td>{item?.month_date}</td>

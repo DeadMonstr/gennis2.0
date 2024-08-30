@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {editEmployerThunk} from "../../../../entities/profile/employerProfile";
+import {editEmployerThunk, fetchEmployerId} from "../../../../entities/profile/employerProfile";
 import {Modal} from "shared/ui/modal";
 import {Input} from "shared/ui/input";
 import {getEmployerId} from "../../../../entities/profile/employerProfile";
 import cls from './employerEdit.module.sass'
 import {Button} from "../../../../shared/ui/button";
+import {onAddAlertOptions} from "../../../alert/model/slice/alertSlice";
 
 export const EmployerEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
     const dispatch = useDispatch();
@@ -36,9 +37,15 @@ export const EmployerEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
 
 
         };
-        dispatch(editEmployerThunk({id: (employerID.id), updateEmployer}))
+        dispatch(editEmployerThunk({id: (employerID.user?.id), updateEmployer}))
             .then(() => {
-                onUpdate(updateEmployer)
+                // onUpdate(updateEmployer)
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: "Ma'lumot muvofaqqiyatli o'zgartirildi"
+                }))
+                dispatch(fetchEmployerId(employerID.id))
                 onClose()
             })
     }

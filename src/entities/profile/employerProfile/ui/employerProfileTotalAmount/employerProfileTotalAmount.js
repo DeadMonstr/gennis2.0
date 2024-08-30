@@ -33,7 +33,7 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
 
     const handleAddSalary = async () => {
         const newSalary = {
-            salary: salary,
+            salary: Number(salary),
             comment: comment,
             deleted: false,
             user_salary: salary_id,
