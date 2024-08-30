@@ -115,21 +115,6 @@ export const EmployeeSalary = ({
     return (
         <>
             <div className={cls.empSalary}>
-                <div style={{
-                    // textAlign: "right",
-                    display: "flex",
-                    justifyContent: "flex-end"
-                }}>
-                    <div style={{
-                        alignSelf: "flex-end",
-                        fontSize: "2rem",
-                        color: "#22C55E",
-                        padding: "1rem 2rem 1rem 1rem",
-                        borderRadius: "5px",
-                        marginBottom: "10px"
-                    }}>Total : {formatSalary(sum2)} sum
-                    </div>
-                </div>
                 <Table>
                     <thead>
                     <tr>

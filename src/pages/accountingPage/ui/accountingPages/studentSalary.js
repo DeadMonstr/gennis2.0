@@ -15,8 +15,8 @@ import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import {
     DeletedStudentPayment
 } from "entities/accounting/ui/acauntingTables/accountingTableStudent/deletedStudentPayment";
-import {onAddAlertOptions, onDeleteAlert} from "../../../../features/alert/model/slice/alertSlice";
-import {YesNo} from "../../../../shared/ui/yesNoModal";
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
+import {YesNo} from "shared/ui/yesNoModal";
 
 
 
@@ -35,6 +35,11 @@ export const StudentSalary = () => {
     }, [])
 
 
+    const formatSalary = (payment_sum) => {
+        return Number(payment_sum).toLocaleString();
+    };
+    const sum2 = deletedStudentPayment.reduce((a, c) => a + parseFloat(c.payment_sum || 0), 0);
+    const sum1 = studentData.reduce((a, c) => a + parseFloat(c.payment_sum || 0), 0);
 
     const onDelete = () => {
         console.log("bosilvoti")
@@ -56,22 +61,28 @@ export const StudentSalary = () => {
 
     return loading ? <DefaultPageLoader/> : (
         <div>
-            <div style={{display: "flex", gap: "2rem"}}>
-                <Button type={"simple__add"}>
-                    Archive
-                </Button>
-                <Button type={"danger"} onClick={() => setDeleted(!deleted)}>
-                    Deleted
-                </Button>
+            <div style={{display: "flex", gap: "2rem" ,alignItems: "center" ,justifyContent: "space-between"}}>
+                <div style={{display: "flex" , gap: "2rem"}}>
+
+                    <Button onClick={() => setDeleted(!deleted)} type={deleted ? "danger" : "filter"}>
+                        O'chirilganlar
+                    </Button>
+                    <Button type={"filter"}>
+                        Archive
+                    </Button>
+                </div>
+                <div style={{color: "rgb(34, 197, 94)" , fontSize: "2.2rem" , textAlign: "end" }}>Total : {formatSalary(deleted ? sum2 : sum1)}</div>
             </div>
             {deleted ?
 
                 <DeletedStudentPayment
+                    formatSalary={formatSalary}
                     deletedStudent={deletedStudentPayment}
 
                 />
 
                 : <StudentsPayments
+                    formatSalary={formatSalary}
                     studentData={studentData}
                     deleted={deleted}
                     setActiveDelete={setActiveDelete}

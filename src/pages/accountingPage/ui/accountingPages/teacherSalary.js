@@ -4,8 +4,6 @@ import {getDeletedTeachersSalaryData, getTeacherSalaryData} from "entities/accou
 import {onDeleteTeacherSalary, onChangePayment} from "entities/accounting/model/slice/teacher";
 import React, {useEffect, useMemo, useState} from "react";
 import {Button} from "shared/ui/button";
-import {Pagination} from "features/pagination";
-import {getSearchValue} from "features/searchInput";
 import cls from "../accountingPageMain.module.sass";
 import {Select} from "shared/ui/select";
 import {Modal} from "shared/ui/modal";
@@ -14,14 +12,13 @@ import {getPaymentType} from "entities/capital/model/thunk/capitalThunk";
 import {
     getDeletedTeacherSalary,
     getTeacherSalary
-} from "../../../../entities/accounting/model/thunk/teacherSalarythunk";
-import {API_URL, headers, useHttp} from "../../../../shared/api/base";
+} from "entities/accounting/model/thunk/teacherSalarythunk";
+import {API_URL, headers, useHttp} from "shared/api/base";
 import {
     DeletedTeacherSalary
-} from "../../../../entities/accounting/ui/acauntingTables/accountingTableTeacherSalary/deletedTeacherSalary";
-import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
-import {YesNo} from "../../../../shared/ui/yesNoModal";
-
+} from "entities/accounting/ui/acauntingTables/accountingTableTeacherSalary/deletedTeacherSalary";
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
+import {YesNo} from "shared/ui/yesNoModal";
 
 export const TeacherSalaryPage = () => {
 
@@ -63,11 +60,16 @@ export const TeacherSalaryPage = () => {
             })
 
     }
-    // const onChangeType = (id) =>{
-    //     console.log(id)
-    //     dispatch(onChangePayment({id : id}))
-    // }
 
+
+    const formatSalary = (salary) => {
+        return Number(salary).toLocaleString();
+    };
+
+
+    const sum1 = getDeletedTeachersSalary.reduce((a, c) => a + parseFloat(c.salary || 0), 0);
+
+    const sum2 = teacherSalary.reduce((a, c) => a + parseFloat(c.salary || 0), 0);
 
     const onChangeType = (selectedValue) => {
         dispatch(onChangePayment({
@@ -78,13 +80,17 @@ export const TeacherSalaryPage = () => {
     };
     return (
         <div>
-            <div style={{display: "flex", gap: "2rem"}}>
-                <Button type={"simple__add"}>
-                    Archive
-                </Button>
-                <Button type={"danger"} onClick={() => setDeleted(!deleted)}>
-                    Deleted
-                </Button>
+            <div style={{display: "flex", gap: "2rem" ,alignItems: "center" ,justifyContent: "space-between"}}>
+                <div style={{display: "flex" , gap: "2rem"}}>
+
+                    <Button onClick={() => setDeleted(!deleted)} type={deleted ? "danger" : "filter"}>
+                        O'chirilganlar
+                    </Button>
+                    <Button type={"filter"}>
+                        Archive
+                    </Button>
+                </div>
+                <div style={{color: "rgb(34, 197, 94)" , fontSize: "2.2rem" , textAlign: "end" }}>Total : {formatSalary(deleted ? sum1 : sum2)}</div>
             </div>
 
             {deleted ?

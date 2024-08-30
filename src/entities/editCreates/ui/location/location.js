@@ -15,6 +15,7 @@ import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import {API_URL, headers, useHttp} from "../../../../shared/api/base";
 import {onDeleteBranch} from "../../../creates/model/createSlice/branchCreateSlice";
 import {EducationCreate, LocationCreate} from "../../../creates";
+import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 
 
 export const Location = () => {
@@ -25,8 +26,9 @@ export const Location = () => {
     const getName = useSelector(getLocation)
     const loading = useSelector(getLoading)
     const dispatch = useDispatch()
-    const [active , setActive] = useState(false)
+    const [active, setActive] = useState(false)
     const [select, setSelect] = useState([])
+    const [activeDel  ,setActiveDel] = useState(false)
 
     const systemId = useSelector(getSystemIdSelector)
 
@@ -50,16 +52,25 @@ export const Location = () => {
     }
 
 
-
     const onDelete = () => {
         console.log(isChange.id, "hello")
         request(`${API_URL}Location/location_delete/${isChange.id}/`, "DELETE", JSON.stringify({id: isChange.id}), headers())
+            .then(res => {
+                console.log(res)
+                setActiveLocationModal(!activeLocationModal)
+                dispatch(onDeleteBranch({id: isChange.id}))
+                setActiveDel(!activeDel)
+                dispatch(onAddAlertOptions({
+                    status: true,
+                    type: "success",
+                    msg: res.msg
+                }))
+            })
             .catch(err => {
                 console.log(err)
             })
 
-        setActiveLocationModal(!activeLocationModal)
-        dispatch(onDeleteBranch({id: isChange.id}))
+
         // dispatch(getLocationThunk())
     }
     const renderLocation = () => {
@@ -100,9 +111,19 @@ export const Location = () => {
 
             <i onClick={() => setActive(!active)} className={classNames("fa fa-plus", cls.plus)}></i>
 
-            <ModalLocation options={systemId} onDelete={onDelete} setSelect={setSelect} onChange={onChange}
-                           handleSubmit={handleSubmit} register={register} activeModal={activeLocationModal}
-                           setActive={setActiveLocationModal}/>
+            <ModalLocation
+                options={systemId}
+                onDelete={onDelete}
+                setSelect={setSelect}
+                onChange={onChange}
+                handleSubmit={handleSubmit}
+                register={register}
+                activeModal={activeLocationModal}
+                setActive={setActiveLocationModal}
+                setActiveDel={setActiveDel}
+                activeDel={activeDel}
+
+            />
             <LocationCreate loading={loading} setActive={setActive} active={active}/>
         </div>
     );

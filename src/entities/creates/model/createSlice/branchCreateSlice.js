@@ -27,7 +27,6 @@ const postCreateBranch = createSlice({
                 state.name = action.payload
                 state.loading = false
                 state.error = false
-                console.log(action.payload , "yedi")
             })
             .addCase(createBranchThunk.rejected , (state , action) => {
                 state.error = true
@@ -41,7 +40,6 @@ const postCreateBranch = createSlice({
                 state.locationId = action.payload.locations
                 state.loading = false
                 state.error = false
-                console.log(action.payload , "oldiu")
             })
             .addCase(getLocationThunk.rejected , (state , action) => {
                 state.error = true

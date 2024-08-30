@@ -26,7 +26,6 @@ export const DeletedTeacherSalary = ({deletedTeacher, setChangePayment, setChang
         return Number(salary).toLocaleString();
     };
 
-    const sum1 = currentTableData.reduce((a, c) => a + parseFloat(c.salary || 0), 0);
 
     const renderTeacherDeleted = () => {
         return currentTableData.map((item, index) => (
@@ -82,21 +81,6 @@ export const DeletedTeacherSalary = ({deletedTeacher, setChangePayment, setChang
     return (
         <>
             <div>
-                <div style={{
-                    // textAlign: "right",
-                    display: "flex",
-                    justifyContent: "flex-end"
-                }}>
-
-                    <div style={{
-                        color: "#22C55E",
-                        fontSize: "2rem",
-                        marginBottom: "10px"
-                    }}>
-                        {/*Total : {deleted ? formatSalary(sum2) : formatSalary(sum1)} sum*/}
-                        Total : {formatSalary(sum1)} sum
-                    </div>
-                </div>
                 <div style={{height: "calc(100vh - 43rem)", overflow: "auto"}}>
 
                     <Table>

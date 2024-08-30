@@ -34,7 +34,7 @@ import {AdditionalCosts} from "./accountingPages/additionalCosts";
 import {Capital} from "./accountingPages/capital";
 import {getEncashment} from "../../../entities/accounting/model/selector/accountingSelector";
 import {accountingThunk} from "../../../entities/accounting/model/thunk/accountingThunk";
-
+import {AccountingFilter} from "../../../features/filters/accountingFilter/accountingFilter";
 
 
 export const AccountingPageMain = memo(() => {
@@ -43,20 +43,23 @@ export const AccountingPageMain = memo(() => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {request} = useHttp()
+    const [active, setActive] = useState(false)
 
     const encashment = useSelector(getEncashment)
     const {id} = useParams()
 
     useEffect(() => {
         dispatch(accountingThunk())
-    } , [])
+    }, [])
     const setPage = useCallback((e) => {
         console.log(e)
         dispatch(onChangeAccountingPage({value: e}))
         navigate(`./${e}`)
     }, [navigate])
 
-
+    const formatSalary = (payment_sum) => {
+        return Number(payment_sum).toLocaleString();
+    };
     // const renderTable = renderTables()
     return (
         <div className={cls.accountingMain}>
@@ -64,13 +67,13 @@ export const AccountingPageMain = memo(() => {
             <div className={cls.accounting}>
                 <div className={cls.accounting__wrapper}>
                     <div className={cls.wrapper__filter}>
-                        <Button type={"filter"} status={"filter"}>Filter</Button>
+                        <Button type={"filter"} status={"filter"} onClick={() => setActive(!active)}>Filter</Button>
                         <Select options={getAccountingPage} onChangeOption={setPage}/>
                     </div>
                     <div className={cls.wrapper__middle}>
                         <div className={cls.middle__box}>
                             {encashment.map(item => (
-                                <div>{item.payment_type}: {item.overall}</div>
+                                <div>{item.payment_type}: {formatSalary(item.overall)}</div>
                             ))}
                         </div>
                         <div className={cls.typeExpenses}>
@@ -94,7 +97,8 @@ export const AccountingPageMain = memo(() => {
 
             <Routes>
                 <Route path={"studentsPayments"} element={<StudentSalary locationId={locationId}/>}/>
-                <Route path={"teachersSalary"} element={<TeacherSalaryPage path={"teachersSalary"} locationId={locationId}/>}/>
+                <Route path={"teachersSalary"}
+                       element={<TeacherSalaryPage path={"teachersSalary"} locationId={locationId}/>}/>
                 <Route path={"employeesSalary"} element={<EmployerSalaryPage setPage={setPage} path={"employeesSalary"}
                                                                              locationId={locationId}/>}/>
                 <Route path={"overhead"} element={<AdditionalCosts path={"overhead"} locationId={locationId}/>}/>
@@ -108,7 +112,7 @@ export const AccountingPageMain = memo(() => {
 
                 {/*<Route path={"debtStudents"} element={<DebtStudents/>}/>*/}
             </Routes>
-
+            <AccountingFilter setActive={setActive} active={active}/>
         </div>
     );
 });

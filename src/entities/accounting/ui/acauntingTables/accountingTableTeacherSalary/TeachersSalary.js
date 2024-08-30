@@ -40,7 +40,7 @@ export const TeachersSalary = ({
         return Number(salary).toLocaleString();
     };
 
-    const sum1 = currentTableData.reduce((a, c) => a + parseFloat(c.salary || 0), 0);
+
     const onDeleteModal = (data) => {
         setActiveDelete(true)
 
@@ -158,21 +158,7 @@ export const TeachersSalary = ({
     const render = renderTeacherSalary()
     return (
         <>
-            <div style={{
-                // textAlign: "right",
-                display: "flex",
-                justifyContent: "flex-end"
-            }}>
 
-                <div style={{
-                    color: "#22C55E",
-                    fontSize: "2rem",
-                    marginBottom: "10px"
-                }}>
-                    {/*Total : {deleted ? formatSalary(sum2) : formatSalary(sum1)} sum*/}
-                    Total : {formatSalary(sum1)} sum
-                </div>
-            </div>
             <div style={{height: "calc(100vh - 43rem)", overflow: "auto"}}>
 
                 <Table>
