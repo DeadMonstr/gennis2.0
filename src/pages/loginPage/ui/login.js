@@ -101,7 +101,7 @@ export const Login = () => {
                             login
                         </h1>
                         {error && error ?
-                            <div className={cls.login__error}>Username yoki Parol notug'ri !</div> : null}
+                            <div className={cls.login__error}>Username yoki Parol noto'g'ri !</div> : null}
                         <div className={cls.box__form}>
                             <form onSubmit={handleSubmit(onClick)}>
                                 {loading ?

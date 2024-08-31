@@ -32,7 +32,7 @@ export const studentGroupHistoryThunk = createAsyncThunk(
     'studentPaymentSlice/studentGroupHistoryThunk',
     async (id) => {
         const {request} = useHttp();
-        return await request(`${API_URL}Students/student_history_groups/${id}`, "GET", null, headers())
+        return await request(`${API_URL}Students/student_history_groups/${id}/`, "GET", null, headers())
     }
 )
 
@@ -155,7 +155,7 @@ export const studentPaymentDataThunk = createAsyncThunk(
     'studentPaymentSlice/studentPaymentDataThunk',
     async (id) => {
         const {request} = useHttp();
-        return await request(`${API_URL}Students/payment_datas/${id}`, "GET", null, headers())
+        return await request(`${API_URL}Students/payment_datas/${id}/`, "GET", null, headers())
     }
 )
 

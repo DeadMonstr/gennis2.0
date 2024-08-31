@@ -52,7 +52,7 @@ export const AppRouter = () => {
                 />
 
 
-                {/*<Route element={<RequireAuth/>}>*/}
+                <Route element={<RequireAuth/>}>
 
                 <Route path={"platform/*"} element={<Layout/>}>
 
@@ -123,7 +123,7 @@ export const AppRouter = () => {
 
                 </Route>
 
-                {/*</Route>*/}
+                </Route>
 
                 <Route
                     path={"*"}

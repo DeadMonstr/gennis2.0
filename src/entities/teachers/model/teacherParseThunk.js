@@ -5,7 +5,7 @@ export const fetchTeacherId = createAsyncThunk(
     "teacherParseSlice/fetchTeacherId",
     async (id) => {
         const {request} = useHttp();
-        return await request(`${API_URL}Teachers/teachers/${id}`, "GET", null, headers())
+        return await request(`${API_URL}Teachers/teachers/${id}/`, "GET", null, headers())
     }
 )
 

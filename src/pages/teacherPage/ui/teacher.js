@@ -26,7 +26,7 @@ export const TeachersPage = () => {
     const search = useSelector(getSearchValue)
     const teachersData = useSelector(getTeachers)
     const userBranchId = useSelector(getUserBranchId)
-
+    const filteredTeachersData = useSelector(getTeachersWithFilter)
     const dispatch = useDispatch()
 
 
@@ -36,12 +36,7 @@ export const TeachersPage = () => {
 
 
 
-
-
-
-
-
-    let PageSize = useMemo(() => 50, [])
+    let PageSize = useMemo(() => 30, [])
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [selected, setSelected] = useState()
@@ -49,7 +44,7 @@ export const TeachersPage = () => {
     const [activeSwitch, setActiveSwitch] = useState(false)
 
     const searchedUsers = useMemo(() => {
-        const filteredHeroes = teachersData.slice()
+        const filteredHeroes =!filteredTeachersData || filteredTeachersData.length === 0 ? teachersData.slice() : filteredTeachersData.slice()
         setCurrentPage(1)
 
         if (!search) return  filteredHeroes
@@ -59,7 +54,7 @@ export const TeachersPage = () => {
                 item?.user?.surname?.toLowerCase().includes(search.toLowerCase()))
         );
 
-    }, [teachersData, setCurrentPage, search])
+    }, [teachersData, filteredTeachersData, setCurrentPage, search])
 
     return (
         <div className={cls.teacher}>

@@ -44,38 +44,40 @@ export const Employers = ({currentTableData, loading}) => {
         }
 
         return employerToRender?.map((item, i) => {
-            return (
-                <tr>
-                    <td>{i + 1}</td>
-                    <Link to={`employerProfile/${item?.id}`}>
-                        <td>{item?.user.name} {item?.user.surname}</td>
-                    </Link>
-                    <td>{item?.user.phone}</td>
-                    <td>{item?.user.age}</td>
-                    <td>{item?.group.name}</td>
-                    <td>
-                        {item.status ?
-                            <div
-                                onClick={() => setClickedCheckbox(arr => {
-                                    if (clickedCheckbox.includes(item?.user.id)){
-                                        return [...arr.filter(i => i !== item?.user.id)]
-                                    }else return [...arr , item?.user.id]
-                                })}
-                                className={clickedCheckbox.includes(item?.user.id)
-                                    ?
-                                    cls.checkbox__checked : cls.checkbox__minus
-                                }>
-                                {clickedCheckbox.includes(item?.user.id) ?
-                                    <i className={"fa fa-check"}/> :
-                                    <i className={"fa fa-minus"}/>
-                                }
-                            </div>
-                            :
-                            null
-                        }
-                    </td>
-                </tr>
-            )
+            if (typeof item === "object" && !Array.isArray(item)) {
+                return (
+                    <tr>
+                        <td>{i + 1}</td>
+                        <Link to={`employerProfile/${item?.id}`}>
+                            <td>{item?.user.name} {item?.user.surname}</td>
+                        </Link>
+                        <td>{item?.user.phone}</td>
+                        <td>{item?.user.age}</td>
+                        <td>{item?.group.name}</td>
+                        <td>
+                            {item.status ?
+                                <div
+                                    onClick={() => setClickedCheckbox(arr => {
+                                        if (clickedCheckbox.includes(item?.user.id)) {
+                                            return [...arr.filter(i => i !== item?.user.id)]
+                                        } else return [...arr, item?.user.id]
+                                    })}
+                                    className={clickedCheckbox.includes(item?.user.id)
+                                        ?
+                                        cls.checkbox__checked : cls.checkbox__minus
+                                    }>
+                                    {clickedCheckbox.includes(item?.user.id) ?
+                                        <i className={"fa fa-check"}/> :
+                                        <i className={"fa fa-minus"}/>
+                                    }
+                                </div>
+                                :
+                                null
+                            }
+                        </td>
+                    </tr>
+                )
+            }
         })
     }
 

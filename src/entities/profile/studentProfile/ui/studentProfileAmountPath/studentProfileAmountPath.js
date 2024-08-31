@@ -19,6 +19,7 @@ import {
 import {Button} from "shared/ui/button";
 import {YesNo} from "../../../../../shared/ui/yesNoModal/yesNo";
 import {StudentPaymentDates} from "../../../../../features/studentPaymentDates";
+import {onAddAlertOptions} from "../../../../../features/alert/model/slice/alertSlice";
 
 export const StudentProfileAmountPath = memo(({active, setActive}) => {
     const pathArray = window.location.pathname.split('/');
@@ -37,19 +38,29 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
     const [change, setChange] = useState(false);
 
 
-    // const handleDelete = () => {
-    //     dispatch(studentPaymenListDelete(selectedSalary)).then((action) => {
-    //         if (action.type.endsWith('fulfilled')) {
-    //             showAlert('success', "Muvofaqqiyatli o'chirildi");
-    //             dispatch(studentPaymentListThunk(lastId));
-    //         } else {
-    //             console.log("O'chirishda xatolik", action.error);
-    //             showAlert('error', "Internet yoki serverda xatolik");
-    //         }
-    //
-    //         setPortal(false);
-    //     });
-    // };
+    const handleDelete = () => {
+        dispatch(studentPaymenListDelete(selectedSalary)).then((action) => {
+            if (action.type.endsWith('fulfilled')) {
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: "To'lov muvoffaqqiyatli o'chirildi"
+                }))
+                dispatch(studentPaymentListThunk(lastId));
+            }
+
+            else {
+                console.log("O'chirishda xatolik", action.error);
+                dispatch(onAddAlertOptions({
+                    tpye: "error",
+                    status: true,
+                    msg: "Server yoki internetda xatolik"
+                }))
+            }
+            setPortal(false);
+        });
+
+    };
 
     useEffect(() => {
         if (!change) {
@@ -59,11 +70,11 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
         }
     }, [lastId, change]);
 
+
     useEffect(() => {
         dispatch(studentBookOrderListThunk(lastId));
     }, [lastId, dispatch]);
 
-    console.log(getBookPayments, "books");
 
     const renderInData = () => {
         const listToRender = change ? getDeletedLists.payments : getPaymentLists;
@@ -197,7 +208,7 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                 }
                 {!change && (
                     <YesNo
-                        // onDelete={handleDelete}
+                        onDelete={handleDelete}
                         activeDelete={portal} setActiveDelete={() => setPortal(!portal)}/>
                 )}
             </div>

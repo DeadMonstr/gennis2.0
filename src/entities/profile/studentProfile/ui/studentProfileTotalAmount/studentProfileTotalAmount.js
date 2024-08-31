@@ -55,7 +55,6 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                 }))
 
         setPaymentSum(0);
-        console.log(response)
         return await response
 
 
@@ -78,7 +77,6 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                 }))
 
         setCharitySum(0);
-        console.log(response, "res")
         return response
         // dispatch(studentCharityThunk(newCharity));
         // dispatch(studentPaymentListThunk(student_id))
