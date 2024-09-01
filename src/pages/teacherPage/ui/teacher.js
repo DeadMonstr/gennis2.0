@@ -13,6 +13,7 @@ import {getTeachersWithFilter} from "entities/teachers";
 import {getTeacherLoading} from "entities/teachers";
 import {fetchTeachersData} from "../../../entities/teachers";
 import {DefaultLoader} from "../../../shared/ui/defaultLoader";
+import {MultiPage} from "../../../widgets/multiPage/ui/MultiPage/MultiPage";
 
 
 const branches = [
@@ -56,58 +57,69 @@ export const TeachersPage = () => {
 
     }, [teachersData, filteredTeachersData, setCurrentPage, search])
 
+    const types = [
+        {
+            name: "O'qituvchilar",
+            type: "teachers"
+        }
+    ]
+
     return (
-        <div className={cls.teacher}>
+        <MultiPage types={types}>
+            <div className={cls.teacher}>
 
-            <div className={cls.teacher__filter}>
-                <Button
-                    status={"filter"}
-                    extraClass={cls.extraCutClassFilter}
-                    onClick={() => setActive(!active)}
-                    type={"filter"}
-                >
-                    Filter
-                </Button>
-                <Button type={"login"} status={"timeTable"}>
-                    time table
-                </Button>
+                <div className={cls.teacher__filter}>
+                    <Button
+                        status={"filter"}
+                        extraClass={cls.extraCutClassFilter}
+                        onClick={() => setActive(!active)}
+                        type={"filter"}
+                    >
+                        Filter
+                    </Button>
+                    <Button type={"login"} status={"timeTable"}>
+                        time table
+                    </Button>
+                </div>
+                <div className={cls.table}>
+
+                    <h2>{activeSwitch ? "Deleted Teachers" : "Teachers"}</h2>
+                    {activeSwitch ?
+                        <DeletedTeachers
+                            data={teachersData}
+                            // data={searchedUsers}
+                        />
+                        :
+                        <Teachers
+                            theme={ theme === "app_school_theme"}
+                            loading={getTeacherLoading}
+                            data={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
+                            // data={currentTableData}
+                        />}
+                </div>
+
+                <Pagination
+                    setCurrentTableData={setCurrentTableData}
+                    users={searchedUsers}
+                    search={search}
+                    setCurrentPage={setCurrentPage}
+                    currentPage={currentPage}
+                    pageSize={PageSize}
+                    onPageChange={page => {
+                        setCurrentPage(page)
+                    }}
+                    type={"custom"}
+                />
+
+                <TeacherFilter
+                    activeSwitch={activeSwitch}
+                    setActiveSwitch={setActiveSwitch}
+                    setActive={setActive}
+                    active={active}
+                />
             </div>
-                    <div className={cls.table}>
 
-                <h2>{activeSwitch ? "Deleted Teachers" : "Teachers"}</h2>
-                {activeSwitch ?
-                    <DeletedTeachers
-                        data={teachersData}
-                        // data={searchedUsers}
-                    />
-                    :
-                    <Teachers
-                        theme={ theme === "app_school_theme"}
-                        loading={getTeacherLoading}
-                        data={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
-                        // data={currentTableData}
-                    />}
-            </div>
+        </MultiPage>
 
-            <Pagination
-                setCurrentTableData={setCurrentTableData}
-                users={searchedUsers}
-                search={search}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-                pageSize={PageSize}
-                onPageChange={page => {
-                    setCurrentPage(page)
-                }}
-                type={"custom"}
-            />
-
-            <TeacherFilter
-                activeSwitch={activeSwitch}
-                setActiveSwitch={setActiveSwitch}
-                setActive={setActive}
-                active={active}
-            />
-        </div>
     )
 }

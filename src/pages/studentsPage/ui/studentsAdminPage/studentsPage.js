@@ -43,7 +43,7 @@ import {getUserBranchId, getUserSystemId} from "entities/profile/userProfile";
 import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
 import {getSelectedLocations} from "features/locations";
 import {getSelectedLocationsByIds} from "features/locations/model/selector/locationsSelector";
-import {useSearchParams} from "react-router-dom";
+import {useParams, useSearchParams} from "react-router-dom";
 import {getBranch} from "../../../../features/branchSwitcher";
 
 const studentsFilter = [
@@ -67,6 +67,7 @@ export const StudentsPage = () => {
 
     const dispatch = useDispatch()
     const {theme} = useTheme()
+    const {"*": id} = useParams()
     const __THEME__ = localStorage.getItem("theme");
     const { register, handleSubmit } = useForm();
     const navigation = useNavigate()
@@ -75,8 +76,7 @@ export const StudentsPage = () => {
     const deletedStudents = useSelector(getOnlyDeletedStudents)
     const schoolClassNumbers = useSelector(getSchoolClassNumbers);
     const schoolClassColors = useSelector(getSchoolClassColors);
-    const branch = useSelector(getBranch)
-    const userBranchId = branch?.id
+    const userBranchId = id
     const teachers = useSelector(getTeachers);
     const userSystemId = useSelector(getUserSystemId)
     const languages = useSelector(state => state.registerUser.languages);
@@ -92,6 +92,7 @@ export const StudentsPage = () => {
     const search = useSelector(getSearchValue);
     let PageSize = useMemo(() => 50, []);
 
+    console.log(id, "idsd")
     const searchedUsers = useMemo(() => {
         let filteredStudents = [];
         switch (selectedRadio) {
@@ -150,6 +151,7 @@ export const StudentsPage = () => {
     }
 
     useEffect(() => {
+        if (!userBranchId) return ;
         switch (selectedRadio) {
             case "new_students":
                 dispatch(fetchOnlyNewStudentsData(userBranchId));
@@ -163,7 +165,7 @@ export const StudentsPage = () => {
             default:
                 break;
         }
-    },[dispatch, selectedRadio, userBranchId]);
+    },[dispatch, selectedRadio,userBranchId]);
 
     useEffect(() => {
 
