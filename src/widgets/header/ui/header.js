@@ -18,7 +18,7 @@ import {
     fetchOnlyNewStudentsData,
     fetchOnlyStudyingStudentsData,
     fetchNewStudentsDataWithBranch,
-    getStudentsWithBranch, fetchStudyingStudentsDataWithBranch
+    getStudentsWithBranch,
 } from "../../../entities/students";
 
 export const Header = () => {
@@ -80,12 +80,12 @@ export const Header = () => {
         }
     }, [pathname, search]);
 
-    useEffect(() => {
-        if (branchId) {
-            dispatch(fetchNewStudentsDataWithBranch({id: branchId}));
-            dispatch(fetchStudyingStudentsDataWithBranch({id: branchId}))
-        }
-    }, [branchId]);
+    // useEffect(() => {
+    //     if (branchId) {
+    //         dispatch(fetchNewStudentsDataWithBranch({id: branchId}));
+    //         dispatch(fetchStudyingStudentsDataWithBranch({id: branchId}))
+    //     }
+    // }, [branchId]);
 
     function fetchSearchData() {
         const checkedValue =

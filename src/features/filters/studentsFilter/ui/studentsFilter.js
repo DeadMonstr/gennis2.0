@@ -48,7 +48,7 @@ export const StudentsFilter = React.memo(({ active, setActive, activePage, setDa
         const selectedSubjectData = subjects.find(subj => subj.id === Number(value));
         const subjectId = selectedSubjectData.id;
         {
-            activePage === "studying"
+            activePage === "studying_students"
                 ?
                 dispatch(fetchStudyingStudentsDataWithBranch({subjId: subjectId}))
                 :
@@ -62,7 +62,7 @@ export const StudentsFilter = React.memo(({ active, setActive, activePage, setDa
         const selectedLanguageData = languages.find(lang => lang.id === Number(value));
         const languageId = selectedLanguageData.id
         {
-            activePage === "studying"
+            activePage === "studying_students"
             ?
                 dispatch(fetchStudyingStudentsDataWithBranch({langId: languageId}))
                 :
@@ -75,7 +75,7 @@ export const StudentsFilter = React.memo(({ active, setActive, activePage, setDa
     const handleAgeFromBlur = (e) => {
         setSelectedAgeFrom(e.target.value);
         {
-            activePage === "studying"
+            activePage === "studying_students"
             ?
                 dispatch(fetchStudyingStudentsDataWithBranch({ fromAge: e.target.value, untilAge: selectedAgeTo }))
                 :
@@ -87,7 +87,7 @@ export const StudentsFilter = React.memo(({ active, setActive, activePage, setDa
     const handleAgeToBlur = (e) => {
         setSelectedAgeTo(e.target.value);
         {
-            activePage === "studying"
+            activePage === "studying_students"
             ?
                 dispatch(fetchStudyingStudentsDataWithBranch({ fromAge: selectedAgeFrom, untilAge: e.target.value }))
             :

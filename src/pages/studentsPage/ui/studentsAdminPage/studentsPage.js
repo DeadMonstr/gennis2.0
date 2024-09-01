@@ -42,9 +42,9 @@ import {getSearchValue} from "features/searchInput";
 import {getUserBranchId, getUserSystemId} from "entities/profile/userProfile";
 
 const studentsFilter = [
-    {name: "newStudents", label: "New Students"},
-    {name: "studying", label: "Studying Students"},
-    {name: "deletedStudents", label: "Deleted Students"},
+    {name: "new_students", label: "New Students"},
+    {name: "studying_students", label: "Studying Students"},
+    {name: "deleted_students", label: "Deleted Students"},
 ];
 
 const branches = [
@@ -83,13 +83,13 @@ export const StudentsPage = memo(() => {
     const searchedUsers = useMemo(() => {
         let filteredStudents = [];
         switch (selectedRadio) {
-            case "newStudents":
+            case "new_students":
                 filteredStudents = newStudents?.slice();
                 break;
-            case "studying":
+            case "studying_students":
                 filteredStudents = studyingStudents?.slice();
                 break;
-            case "deletedStudents":
+            case "deleted_students":
                 filteredStudents = deletedStudents?.slice();
                 break;
             default:
@@ -144,13 +144,13 @@ export const StudentsPage = memo(() => {
 
     useEffect(() => {
         switch (selectedRadio) {
-            case "newStudents":
+            case "new_students":
                 dispatch(fetchOnlyNewStudentsData());
                 break;
-            case "studying":
+            case "studying_students":
                 dispatch(fetchOnlyStudyingStudentsData());
                 break;
-            case "deletedStudents":
+            case "deleted_students":
                 dispatch(fetchOnlyDeletedStudentsData());
                 break;
             default:
@@ -165,7 +165,7 @@ export const StudentsPage = memo(() => {
 
     const renderStudents = () => {
         switch (selectedRadio) {
-            case "newStudents":
+            case "new_students":
                 return (
                     <NewStudents
                         theme={ theme === "app_school_theme"}
@@ -173,9 +173,9 @@ export const StudentsPage = memo(() => {
                         currentTableData={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
                     />
                 );
-            case "deletedStudents":
+            case "deleted_students":
                 return <DeletedStudents currentTableData={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)} />;
-            case "studying":
+            case "studying_students":
                 return <Students currentTableData={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)} />;
             default:
                 return null;

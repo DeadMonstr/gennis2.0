@@ -60,7 +60,7 @@ export const EmployerSalaryPage = () => {
             </div>
             <div className={cls.mainContainer_tablePanelBox}>
                 <EmployerSalaryList
-                    currentTableData={employerSalaries?.usersalary}
+                    currentTableData={employerSalaries}
                     currentPage={currentPage}
                     PageSize={PageSize}
                 />

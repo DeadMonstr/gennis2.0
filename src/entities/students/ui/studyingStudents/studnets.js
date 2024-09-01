@@ -27,9 +27,8 @@ export const Students = ({ currentTableData }) => {
             );
         }
 
-        return studentsToRender.map((item, i) => {
-            if (typeof item === "object" && !Array.isArray(item))
-            {
+        return studentsToRender?.map((item, i) => {
+
                 return (
                     <tr key={item.id} onClick={() => navigation(`profile/${item.id}`)}>
                         <td>{i + 1}</td>
@@ -44,7 +43,7 @@ export const Students = ({ currentTableData }) => {
                         </td>
                     </tr>
                 )
-            }
+
             // console.log(item.color, i)
             // return (
             //

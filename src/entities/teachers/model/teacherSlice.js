@@ -22,7 +22,6 @@ export const teachersSlice = createSlice({
             })
             .addCase(fetchTeachersData.fulfilled , (state , action) =>{
                 state.teachersData = action.payload
-                console.log(action.payload , "teacher")
                 state.loading = false
             })
             .addCase(fetchTeachersData.rejected , (state , action) =>{
@@ -36,7 +35,6 @@ export const teachersSlice = createSlice({
             })
             .addCase(fetchTeachersDataWithFilter.fulfilled , (state , action) =>{
                 state.teachersDataWithFilter = action.payload
-                console.log(action.payload , "teacher")
                 state.loading = false
             })
             .addCase(fetchTeachersDataWithFilter.rejected , (state , action) =>{

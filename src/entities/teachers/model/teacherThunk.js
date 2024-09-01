@@ -6,14 +6,14 @@ export const fetchTeachersData = createAsyncThunk(
     "teachersSlice/fetchTeachersData",
     async ({userBranchId}) =>{
         const {request} = useHttp()
-        return await request(`${API_URL}Teachers/teachers/?branch=${userBranchId}` , "GET" , null , headers())
+        return await request(`${API_URL}Teachers/teachers/` , "GET" , null , headers())
     }
 )
 export const fetchTeachersDataWithFilter = createAsyncThunk(
     "teachersSlice/fetchTeachersDataWithFilter",
     async ({userBranchId, fromAge, untilAge, subjId, langId}) =>{
         const {request} = useHttp()
-        return await request(`${API_URL}Teachers/teachers/?branch=${userBranchId}&subject=${subjId}&age=${fromAge}-${untilAge}&language=${langId}` , "GET" , null , headers())
+        return await request(`${API_URL}Teachers/teachers/?subject=${subjId}&age=${fromAge}-${untilAge}&language=${langId}` , "GET" , null , headers())
     }
 )
 

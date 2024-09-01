@@ -80,26 +80,20 @@ export const createSchoolClass = createAsyncThunk(
 
 export const fetchNewStudentsDataWithBranch = createAsyncThunk(
     'studentsSlice/fetchNewStudentsDataWithBranch',
-    async ({id, subjId, fromAge, untilAge, langId}) => {
+    async ({subjId, fromAge, untilAge, langId}) => {
         const {request} = useHttp()
-        return await request(`${API_URL}Students/new-registered-students/?branch=${id}&subject=${subjId}&age=${fromAge}-${untilAge}&language=${langId}`, "GET", null, headers())
+        return await request(`${API_URL}Students/new-registered-students/?subject=${subjId}&age=${fromAge}-${untilAge}&language=${langId}`, "GET", null, headers())
     }
 )
 
 export const fetchStudyingStudentsDataWithBranch = createAsyncThunk(
     'studentsSlice/fetchStudyingStudentsDataWithBranch',
-    async ({id, subjId, fromAge, untilAge, langId}) => {
+    async ({subjId, fromAge, untilAge, langId}) => {
         const {request} = useHttp();
-        return await request(`${API_URL}Students/active-students/?branch=${id}&subject=${subjId}&age=${fromAge}-${untilAge}&language=${langId}`, "GET", null, headers())
+        return await request(`${API_URL}Students/active-students/?subject=${subjId}&age=${fromAge}-${untilAge}&language=${langId}`, "GET", null, headers())
     }
 )
 
-// export const fetchNewStudentsDataWithSubject = createAsyncThunk(
-//     'studentsSlice/fetchNewStudentsDataWithSubject',
-//     async (id) => {
-//         const {request} = useHttp()
-//         return await request(`${API_URL}Students/new-registered-students/?subject=${id}`, "GET", null, headers())
-//     }
-// )
+
 
 
