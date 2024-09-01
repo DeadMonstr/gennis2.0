@@ -40,6 +40,10 @@ import {useTheme} from "shared/lib/hooks/useTheme";
 import cls from "./students.module.sass"
 import {getSearchValue} from "features/searchInput";
 import {getUserBranchId, getUserSystemId} from "entities/profile/userProfile";
+import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
+import {getSelectedLocations} from "features/locations";
+import {getSelectedLocationsByIds} from "features/locations/model/selector/locationsSelector";
+import {useSearchParams} from "react-router-dom";
 
 const studentsFilter = [
     {name: "new_students", label: "New Students"},
@@ -53,8 +57,14 @@ const branches = [
     {name: "xo'jakent"},
 ];
 
-export const StudentsPage = memo(() => {
-    const dispatch = useDispatch();
+export const StudentsPage = () => {
+
+    // let newStudents
+
+    const [searchParams] = useSearchParams();
+
+
+    const dispatch = useDispatch()
     const {theme} = useTheme()
     const __THEME__ = localStorage.getItem("theme");
     const { register, handleSubmit } = useForm();
@@ -115,17 +125,12 @@ export const StudentsPage = memo(() => {
         }
     } , [userBranchId])
 
-    // useEffect(() => {
-    //     setCurrentTableData(searchedUsers);
-    // }, [searchedUsers]);
 
     useEffect(() => {
         if (userSystemId === 2 && userBranchId) {
             dispatch(fetchSchoolStudents({userBranchId}))
             dispatch(fetchClassColors())
             dispatch(fetchClassNumberList())
-        } else {
-            // dispatch(fetchNewStudentsData())
         }
     }, [userSystemId, userBranchId])
 
@@ -156,7 +161,23 @@ export const StudentsPage = memo(() => {
             default:
                 break;
         }
-    }, [dispatch, selectedRadio]);
+    },[dispatch, selectedRadio]);
+
+    useEffect(() => {
+
+        const type = searchParams.get("type")
+
+
+        if (type) {
+            setSelectedRadio(type)
+        }
+    },[searchParams])
+
+
+
+
+
+
 
 
     const handleChange = (value) => {
@@ -184,11 +205,33 @@ export const StudentsPage = memo(() => {
 
     const renderNewStudents = renderStudents()
 
+
+
+    const types = [
+        {
+            name: "Yangi o'quvchilar",
+            type: "new_students"
+        },
+        {
+            name: "O'chirilgan o'quvchilar",
+            type: "deleted_students"
+        },
+        {
+            name: "O'qiyotgan o'quvchilar",
+            type: "studying_students"
+        },
+        {
+            name: "O'qiyotgan o'quvchilar",
+            type: "new_teacher"
+        }
+    ]
+
+
+
     return (
-        <>
-
-
+        <MultiPage types={types} >
             <StudentsHeader
+
                 selected={selected}
                 setSelected={setSelected}
                 branches={branches}
@@ -202,9 +245,6 @@ export const StudentsPage = memo(() => {
                 onClick={setActiveModal}
             />
 
-            {/*<div className={cls.tableMain}>*/}
-            {/*    {renderStudents()}*/}
-            {/*</div>*/}
             <div className={cls.tableMain}>
                 {renderNewStudents}
             </div>
@@ -286,6 +326,6 @@ export const StudentsPage = memo(() => {
                     </Form>
                 </div>
             </Modal>
-        </>
-    );
-});
+        </MultiPage>
+    )
+}

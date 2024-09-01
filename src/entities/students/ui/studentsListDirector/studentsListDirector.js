@@ -9,8 +9,8 @@ export const StudentsListDirector = memo(({data}) => {
     const renderStudents = () => {
         return data.map(item =>
             <StudentsListItemDirector
-                title={item.title}
-                data={item.locations}
+                title={item.name}
+                data={item.list}
             />
         )
     }

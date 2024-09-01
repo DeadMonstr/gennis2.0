@@ -2,7 +2,7 @@ export const getRouteMain = () => 'home';
 export const getRouteTaskManager = (id) => `taskManager/${id}`;
 // export const getRouteNewStudents = (id) => `newStudents`;
 // export const getRouteDeletedStudents = (id) => `deletedStudents`;
-export const getRouteStudents = (id) => `students/${id}`;
+export const getRouteStudents = (id) => `students/*`;
 export const getDirectorRouteStudents = () => `locations-overview`;
 export const getRouteGroups = (id) => `groups/${id}`;
 // export const getRouteDeletedGroups = (id) => `deletedGroups`;

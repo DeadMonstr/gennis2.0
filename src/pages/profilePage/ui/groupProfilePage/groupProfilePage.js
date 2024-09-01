@@ -98,11 +98,11 @@ export const GroupProfilePage = () => {
                 ignore_students: data?.students.map(item => item.id),
                 ignore_teacher: data?.teacher.map(item => item.id)[0]
             }
-            // dispatch(fetchFilteredStudentsAndTeachers({
-            //     branch_id: branchId,
-            //     subject_id: data?.subject?.id,
-            //     res
-            // }))
+            dispatch(fetchFilteredStudentsAndTeachers({
+                branch_id: branchId,
+                subject_id: data?.subject?.id,
+                res
+            }))
         }
 
     }, [branchId, data, timeTable])

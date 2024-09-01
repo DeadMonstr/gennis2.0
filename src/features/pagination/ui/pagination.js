@@ -20,7 +20,6 @@ export const Pagination = React.memo((props) => {
         setCurrentTableData(() => {
             const firstPageIndex = (currentPage - 1) * pageSize;
             const lastPageIndex = firstPageIndex + pageSize;
-
             return users.slice(firstPageIndex, lastPageIndex);
         })
     }, [pageSize, currentPage, users, setCurrentTableData])

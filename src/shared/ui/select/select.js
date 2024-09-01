@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import classNames from "classnames";
 
 import cls from "./select.module.sass"
+import {value} from "lodash/seq";
 
 export const Select = React.memo(({
                                       options,
@@ -21,15 +22,19 @@ export const Select = React.memo(({
     const [selectOption, setSelectOption] = useState("");
     const [optionsData, setOptionsData] = useState([]);
     const [isChanged, setIsChanged] = useState(false);
-    const [branchId, setBranchId] = useState("");
 
     useEffect(() => {
         setOptionsData(options);
     }, [options]);
 
     useEffect(() => {
+
         if (defaultValue) {
-            setSelectOption(defaultValue);
+            if (defaultValue === "clear") {
+                setSelectOption("");
+            } else {
+                setSelectOption(defaultValue);
+            }
         }
     }, [defaultValue]);
 
@@ -41,11 +46,6 @@ export const Select = React.memo(({
         }
     }, [selectOption, onChangeOption, isChanged]);
 
-    useEffect(() => {
-        if (branchId && setValue) {
-            setValue(branchId);
-        }
-    }, [branchId, setValue]);
 
     const renderOptionsOfSelect = useCallback(() => {
         return optionsData?.map((item, index) => {
@@ -64,6 +64,7 @@ export const Select = React.memo(({
         });
     }, [optionsData, keyValue]);
 
+
     const renderedOptions = renderOptionsOfSelect();
 
     return register ? (
@@ -81,10 +82,8 @@ export const Select = React.memo(({
                     onChange: onChangeOption ? (e) => {
                         setSelectOption(e.target.value)
                         setIsChanged(true)
-                        setBranchId(e.target.value);
                     } : (e) => {
                         setSelectOption(e.target.value)
-                        setBranchId(e.target.value);
                     }
                 })}
             >
@@ -103,7 +102,6 @@ export const Select = React.memo(({
                 required={required}
                 value={selectOption}
                 onChange={(e) => {
-                    setBranchId(e.target.value);
                     setSelectOption(e.target.value);
                     setIsChanged(true);
                 }}

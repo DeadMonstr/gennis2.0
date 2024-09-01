@@ -45,23 +45,41 @@ export const changeCapitalInfoThunk = createAsyncThunk(
 
 export const getInsideCategory = createAsyncThunk(
     "capitalSlice/getInsideCategory",
-    async (id) => {
+    async () => {
         const {request} = useHttp()
-        return await request(`${API_URL}Capital/capital/${id}/`, "GET", null, headers())
+        return await request(`${API_URL}Capital/capital_list/`, "GET", null, headers())
     }
 )
 
 
+// export const createInsideCategory = createAsyncThunk(
+//     "changeCapitalInfo/createInsideCategory",
+//     async (obj) => {
+//         const {request} = useHttp()
+//         // const formData = new FormData
+//         // formData.append("name" , data.name)
+//         // formData.append("id_number" , data.id_number)
+//         // formData.append("price" , data.price)
+//         // formData.append("total_down_cost" , data.total_down_cost)
+//         // formData.append("term" , data.term)
+//         // formData.append("curriculum_hours" , data.curriculum_hours)
+//         // formData.append("payment_type" , selectPayment)
+//         // formData.append("category" , data.category)
+//         // formData.append("branchSwitcher" , data.branchSwitcher)
+//         return await request(`${API_URL}Capital/capital_create/` , "POST" , JSON.stringify(obj) , headersImg())
+//     }
+// )
+
 
 export const createInsideCategory = createAsyncThunk(
     "changeCapitalInfo/createInsideCategory",
-    async ({data, changedImages , selectPayment  , selectedBranches , id}) => {
+    async ({data, changedImages , selectPayment , capitalSelect , selectedBranches}) => {
         const {request} = useHttp();
 
         const formData = new FormData()
         formData.append("name" , data.name)
         formData.append("img" , changedImages)
-        formData.append("category" , id)
+        formData.append("category" , capitalSelect)
         formData.append("branch" , selectedBranches)
         formData.append("id_number" , data.id_number)
         formData.append("price" , data.price)
@@ -69,6 +87,18 @@ export const createInsideCategory = createAsyncThunk(
         formData.append('term' , data.term)
         formData.append("curriculum_hours" , data.curriculum_hours)
         formData.append("payment_type" , selectPayment)
+        // const formData = new FormData();
+        // formData.append("name", data.name);
+        // formData.append("id_number", data.id_number);
+        // formData.append("price", data.price);
+        // formData.append("total_down_cost", data.total_down_cost);
+        // formData.append("term", data.term);
+        // formData.append("curriculum_hours", data.curriculum_hours);
+        // formData.append("payment_type", data.payment_type);
+        // formData.append("category", data.category);
+        // formData.append("branchSwitcher", data.branchSwitcher);
+        // formData.append("img", data.img); // Agar img fayl bo'lsa, uni `File` yoki `Blob` obyekti bilan yuboring
+
         return await request(`${API_URL}Capital/capital_create/`, "POST", formData, headersImg());
     }
 );

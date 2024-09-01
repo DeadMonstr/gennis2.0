@@ -69,6 +69,10 @@ import {schoolTeacherDaySlice} from "../features/teacherModals";
 import {inkasatsiyaSlice} from "../entities/inkasatsiya";
 import {timeTableTuronSlice} from "pages/timeTable"
 import {alertSlice} from "features/alert"
+import {locationsSlice} from "features/locations"
+import {themeSwitcherSlice} from "features/themeSwitcher"
+import {branchSwitcherSlice} from "features/branchSwitcher"
+import {multiPageSlice} from "widgets/multiPage"
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -150,7 +154,11 @@ export const store = configureStore({
         capitalSlice,
         inkasatsiyaSlice,
         alertSlice,
-        schoolTeacherDaySlice
+        schoolTeacherDaySlice,
+        locationsSlice,
+        themeSwitcherSlice,
+        branchSwitcherSlice,
+        multiPageSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

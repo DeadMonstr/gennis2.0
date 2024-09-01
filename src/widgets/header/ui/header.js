@@ -1,39 +1,59 @@
-import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router';
-import { getLocations } from 'pages/studentsPage';
-import { BreadCrumbs } from 'features/breadCrumbs';
-import { SearchPlatformInput, getSearchStr } from 'features/searchInput';
-import GetLocation from 'features/location/getLocation';
-import { ThemeSwitcher } from 'features/themeSwitcher';
-import { useDebounce } from 'shared/lib/hooks/useDebounce';
-import { Button } from 'shared/ui/button';
-import {selectBranch, selectLocations} from "../../../entities/vacancy/ui/vacancyWorkerList";
+import React, {useEffect, useState} from 'react';
+import {useSearchParams} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {useLocation, useNavigate} from 'react-router';
+import {SearchPlatformInput, getSearchStr} from 'features/searchInput';
+import {getLocations, getSelectedLocations, Location} from 'features/locations';
+import {getSystem, ThemeSwitcher} from 'features/themeSwitcher';
+import {useDebounce} from 'shared/lib/hooks/useDebounce';
+import {Button} from 'shared/ui/button';
+import {selectBranch, selectLocations} from "entities/vacancy/ui/vacancyWorkerList";
 
-import cls from './header.module.sass';
-import logo from 'shared/assets/images/logo.svg';
-import {Select} from "../../../shared/ui/select";
+
+import {Select} from "shared/ui/select";
 import {
     fetchOnlyNewStudentsData,
     fetchOnlyStudyingStudentsData,
     fetchNewStudentsDataWithBranch,
-    getStudentsWithBranch,
-} from "../../../entities/students";
+    getStudentsWithBranch, fetchStudyingStudentsDataWithBranch
+} from "entities/students";
+
+
+
+
+import cls from './header.module.sass';
+import logo from 'shared/assets/images/logo.svg';
+import {deleteSelectedLocations} from "features/locations";
+import {BranchSwitcher,onDeleteBranch} from "features/branchSwitcher";
+
+
+
 
 export const Header = () => {
+
+
     const dispatch = useDispatch();
-    const { pathname, search } = useLocation();
+
+    const {pathname, search} = useLocation();
+
     const navigate = useNavigate();
+
     const [locationHistory, setLocationHistory] = useState([]);
-    const locations = useSelector(selectLocations);
-    const branches = useSelector(selectBranch)
-    const students = useSelector(getStudentsWithBranch)
-    const isBranch = Array.isArray(branches) ? branches : [branches]
-    const [branchId, setBranchId] = useState("")
-    const [selected, setSelected] = useState([]);
-    const [deletedId, setDeletedId] = useState(0);
-    localStorage.setItem("lenght", selected.length)
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [valueData, setValueData] = useState(null);
+    const debouncedFetchData = useDebounce(fetchSearchData, 500);
+
+    const selectedLocations = useSelector(getSelectedLocations)
+    const locations = useSelector(getLocations)
+    const system = useSelector(getSystem)
+
+
+    useEffect(() => {
+        if (searchParams.get('search')) {
+            setValueData(searchParams.get('search'));
+        }
+    }, []);
 
 
     useEffect(() => {
@@ -47,75 +67,64 @@ export const Header = () => {
         }
     }, [pathname]);
 
+    useEffect(() => {
+            if (valueData) {
+                debouncedFetchData();
+            } else {
+                setSearchParams({});
+            }
+        }, [valueData]);
+
 
 
     useEffect(() => {
-        dispatch(getLocations(selected));
-    }, [selected]);
-
-    const [searchParams, setSearchParams] = useSearchParams();
-    const [valueData, setValueData] = useState(null);
-    const debouncedFetchData = useDebounce(fetchSearchData, 500);
-
-    useEffect(() => {
-        if (searchParams.get('search')) {
-            setValueData(searchParams.get('search'));
-        }
-    }, []);
-
-
-    useEffect(() => {
-        if (valueData) {
-            debouncedFetchData();
-        } else {
-            setSearchParams({});
-        }
-    }, [valueData]);
-
-    useEffect(() => {
-        if (!searchParams.get('search')) {
+        console.log(searchParams.get("type"))
+        if (!searchParams.get('search') && !searchParams.get('type') ) {
             setSearchParams({});
             setValueData(null);
             dispatch(getSearchStr(''));
         }
     }, [pathname, search]);
 
-    // useEffect(() => {
-    //     if (branchId) {
-    //         dispatch(fetchNewStudentsDataWithBranch({id: branchId}));
-    //         dispatch(fetchStudyingStudentsDataWithBranch({id: branchId}))
-    //     }
-    // }, [branchId]);
 
     function fetchSearchData() {
-        const checkedValue =
-            typeof valueData === 'string' ? valueData : searchParams.get('search');
+        const checkedValue = typeof valueData === 'string' ? valueData : searchParams.get('search');
         setSearchParams({
             search: checkedValue
         });
         dispatch(getSearchStr(checkedValue));
     }
 
+    const onDelete = (id) => {
+        dispatch(deleteSelectedLocations(id))
+    }
+
+    // useEffect(() => {
+    //     if (selectedLocations.length < 1) {
+    //         dispatch(onDeleteBranch())
+    //     }
+    // },[selectedLocations])
+
+
     return (
         <header className={cls.header}>
             <div className={cls.header__top}>
-                <img className={cls.header__logo} src={logo} alt="" />
+                <img className={cls.header__logo} src={logo} alt=""/>
                 <SearchPlatformInput
                     defaultSearch={valueData ?? searchParams.get('search')}
                     onSearch={setValueData}
                 />
                 <div className={cls.inner}>
-                    <ThemeSwitcher />
-                    <GetLocation
-                        getItem={setSelected}
-                        deletedId={deletedId}
-                        locations={locations}
-                    />
-                    <Select onChangeOption={() => setBranchId}
-                            options={isBranch} setValue={setBranchId}/>
+                    <ThemeSwitcher/>
+                    <Location systemId={system.id}/>
+                    {
+                        selectedLocations.length  < 2 ?
+                        <BranchSwitcher location={selectedLocations[0]}/> : null
+                    }
                 </div>
             </div>
             <div className={cls.header__bottom}>
+
                 <Button
                     onClick={() => {
                         if (locationHistory.length) {
@@ -129,14 +138,15 @@ export const Header = () => {
                     extraClass={cls.header__back}
                     type={"simple-add"}
                 >
-                    <i className="fas fa-arrow-left-long" />
+                    <i className="fas fa-arrow-left-long"/>
                     Orqaga
                 </Button>
+
                 <div className={cls.header__selected}>
-                    {selected.map(item => (
+                    {locations.length > 1 && selectedLocations.map(item => (
                         <div className={cls.header__item} key={item.id}>
                             <i
-                                onClick={() => setDeletedId(item.id)}
+                                onClick={() => onDelete(item.id)}
                                 className="fa fa-times"
                             />
                             <p>{item.name}</p>
