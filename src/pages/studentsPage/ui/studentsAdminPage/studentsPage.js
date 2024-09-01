@@ -67,6 +67,9 @@ export const StudentsPage = () => {
 
     const [searchParams] = useSearchParams();
 
+    const {"*": id} = useParams()
+
+
 
     const dispatch = useDispatch()
     const {theme} = useTheme()
@@ -169,23 +172,25 @@ export const StudentsPage = () => {
 
     // Radio tanlangan holatga qarab tegishli dispatch funksiyasini chaqirish
 
-    console.log(branchQuery())
 
     useEffect(() => {
+        if (!id) return;
+
         if (selectedRadio === "newStudents") {
-            // dispatch(fetchOnlyNewStudentsData())
+            dispatch(fetchOnlyNewStudentsData())
         } else if (selectedRadio === "studying") {
             dispatch(fetchOnlyStudyingStudentsData())
         }
-    }, [dispatch, selectedRadio])
+    }, [dispatch, selectedRadio,id])
 
 
     const handleChange = (value) => {
         setSelectedRadio(value);
     };
     const renderStudents = () => {
-        switch (selectedRadio) {
 
+
+        switch (selectedRadio) {
             case "newStudents" :
                 return <NewStudents
                     currentTableData={currentTableData}
@@ -227,7 +232,7 @@ export const StudentsPage = () => {
 
 
     return (
-        <MultiPage types={types} >
+        <MultiPage types={types} page={"students"} >
             <StudentsHeader
 
                 selected={selected}

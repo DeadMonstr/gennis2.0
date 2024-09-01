@@ -13,7 +13,7 @@ import {onChangedPage,onChangedOldPage} from "../../model/slice/multiPageSlice";
 import {getMultiChangePage, getMultiPageData,getMultiOldPage} from "../../model/selector/multiPageSelector";
 import {fetchMultiPageDataThunk} from "../../model/thunk/multiPageThunk";
 import {getBranch} from "features/branchSwitcher";
-export const MultiPage = ({types, children,page}) => {
+export const MultiPage = ({types,children,page}) => {
 
 
     const dispatch = useDispatch()
