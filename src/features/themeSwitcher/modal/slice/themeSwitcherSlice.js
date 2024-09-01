@@ -54,7 +54,7 @@ const themeSwitcherSlice = createSlice({
 
                         const localSystem = JSON.parse(localStorage.getItem("selectedSystem"))
 
-                        if (!localSystem && !localSystem.id) {
+                        if (!localSystem && !localSystem?.id) {
                             state.system = {
                                 id: item.id,
                                 type: "center"

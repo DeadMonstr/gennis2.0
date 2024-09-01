@@ -95,6 +95,7 @@ export const StudentsPage = () => {
     const newStudentsLoading = useSelector(getNewStudentsLoading)
     const [active, setActive] = useState(false)
     const __THEME__ = localStorage.getItem("theme");
+    const localSystem = JSON.parse(localStorage.getItem(""))
     const navigation = useNavigate()
     const [selectedRadio, setSelectedRadio] = useState(studentsFilter[0].name);
     const [selected, setSelected] = useState([]);
@@ -143,7 +144,7 @@ export const StudentsPage = () => {
             color: selectColor,
             branch: userBranchId,
             create_type: theme === "app_school_theme" ? "school" : "center",
-            system: 2
+            system: theme === "app_school_theme" ? 2 : 1
         }
         dispatch(createSchoolClass({res}))
         dispatch(onAddAlertOptions({
