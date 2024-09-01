@@ -18,10 +18,13 @@ const branchSwitcherSlice = createSlice({
     reducers: {
         onChangeBranch: (state, action) => {
             state.branch = state.branches.filter(item => item.id === +action.payload)[0]
+
+            localStorage.setItem("selectedBranch", JSON.stringify(state.branch))
         },
         onDeleteBranch: (state) => {
             state.branch = {}
             state.branches = []
+            localStorage.removeItem("selectedBranch")
         }
     },
     extraReducers: builder =>
@@ -35,6 +38,7 @@ const branchSwitcherSlice = createSlice({
 
                 state.branches = action.payload
                 state.branch = action.payload[0]
+                localStorage.setItem("selectedBranch",  JSON.stringify(state.branch))
 
                 state.loading = false
                 state.error = null
