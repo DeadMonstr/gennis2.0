@@ -15,8 +15,8 @@ export const BreadCrumbs = ({defaultLink}) => {
     // let uniqueCrumbsStory = useMemo(() => [...new Set(crumbsStory)], [crumbsStory])
 
     useEffect(() => {
-        // if (locationHistory !== location.pathname) {
-        //     setLocationHistory(location.pathname)
+        // if (locationHistory !== changeLocations.pathname) {
+        //     setLocationHistory(changeLocations.pathname)
             setCrumbsData(
                 location.pathname.split('/')
                     .filter(crumb => crumb !== "")

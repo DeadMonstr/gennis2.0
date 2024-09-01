@@ -16,9 +16,6 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
     // const getNewStDef = useSelector(getNewStudentsData)
     // const getSubjNewSt = useSelector(getNewStudentsWithSubject)
 
-    useEffect(() => {
-        dispatch(fetchOnlyNewStudentsData())
-    }, [])
 
 
     const renderStudents = () => {

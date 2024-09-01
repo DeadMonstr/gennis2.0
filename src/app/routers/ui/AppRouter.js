@@ -28,7 +28,6 @@ import {FlowListPage} from "pages/FlowListPage";
 import {ClassAddColorPage, ClassPage} from "pages/classPage";
 // import {T} from "pages/timeTable";
 import {CalendarPage} from "pages/calendarPage";
-import {StudentsDirectorPage} from "pages/studentsPage";
 
 
 export const AppRouter = () => {
@@ -74,18 +73,13 @@ export const AppRouter = () => {
                             )
                         }
 
-                        {/*<RequireAuth>*/}
-                        {/*    <Route path={"students/:id/createGroup"} element={<CreateGroup/>} />*/}
-                        {/*</RequireAuth>*/}
-                        <Route
-                            path={"profile"}
-                            element={<StudentProfilePage/>}
-                        />
-
-                        <Route
-                            path={"locations-overview"}
-                            element={<StudentsDirectorPage/>}
-                        />
+                    {/*<RequireAuth>*/}
+                    {/*    <Route path={"students/:id/createGroup"} element={<CreateGroup/>} />*/}
+                    {/*</RequireAuth>*/}
+                    <Route
+                        path={"profile"}
+                        element={<StudentProfilePage/>}
+                    />
 
                         {/*<Route*/}
                         {/*    path={"classProfile"}*/}

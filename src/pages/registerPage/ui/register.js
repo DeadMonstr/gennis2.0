@@ -47,7 +47,6 @@ export const Register = () => {
     const subjects = useSelector(state => state.registerUser.subjects) || [];
     const languages = useSelector(state => state.registerUser.languages) || [];
 
-    const [alerts, setAlerts] = useState([]);
 
     useEffect(() => {
         dispatch(fetchSubjectsAndLanguages());
@@ -100,22 +99,7 @@ export const Register = () => {
         }
     }, [username]);
 
-    // const showAlert = (type, message) => {
-    //     const newAlert = { id: Date.now(), type, message };
-    //     setAlerts([...alerts, newAlert]);
-    //     setTimeout(() => {
-    //         hideAlert(newAlert.id);
-    //     }, 5000);
-    // };
-    //
-    // const hideAlert = (id) => {
-    //     setAlerts(alerts => alerts.map(alert =>
-    //         alert.id === id ? { ...alert, hide: true } : alert
-    //     ));
-    //     setTimeout(() => {
-    //         setAlerts(alerts => alerts.filter(alert => alert.id !== id));
-    //     }, 500);
-    // };
+
 
     const onSubmit = (data) => {
         if (!isUsernameAvailable) {
@@ -312,7 +296,6 @@ export const Register = () => {
 
     return (
         <div className={cls.login}>
-            {/*<Alert alerts={alerts} hideAlert={hideAlert} />*/}
             <div className={cls.selection}>
                 <Select
                     defaultValue="User Type"

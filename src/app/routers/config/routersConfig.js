@@ -35,7 +35,6 @@ import {
     getRouteCreateGroup,
     getEmployerSalaryInsideSource,
     getEmployerSalary,
-
     getTeacherSalary, getInkasatsiya,
     getGroupHistory,
     getRouteClassProfile,
@@ -100,8 +99,8 @@ export const routersConfig = [
     //     element: <StudentsDirectorPage/>,
     // },
     {
-        name: " O'quvchilar",
-        path: getRouteStudents(":id"),
+        name: "O'quvchilar",
+        path: getRouteStudents(),
         element: <StudentsPage/>
     },
     {

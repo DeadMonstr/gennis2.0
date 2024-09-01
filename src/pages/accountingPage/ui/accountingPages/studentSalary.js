@@ -30,6 +30,8 @@ export const StudentSalary = () => {
     useEffect(() => {
         dispatch(getStudentPayment())
         dispatch(getDeletedPayment())
+        console.log("keldiiii")
+
     }, [deleted])
 
 

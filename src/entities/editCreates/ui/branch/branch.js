@@ -70,7 +70,7 @@ export const Branch = () => {
                     {/*<h2>{item?.phone_number}</h2>*/}
                     <span>
                             {item.location_text}
-                        {/*{item.location?.name}*/}
+                        {/*{item.changeLocations?.name}*/}
                     </span>
                 </div>
             </div>

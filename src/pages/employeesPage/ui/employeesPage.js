@@ -4,11 +4,11 @@ import {Select} from "shared/ui/select";
 import {DeletedEmployers, Employers} from "entities/employer";
 import React, {useEffect, useMemo, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {fetchEmployersData} from "../../../entities/employer/model/slice/employersThunk";
-import {getEmployersData} from "../../../entities/employer/model/selector/employersSelector";
+import {fetchEmployersData} from "entities/employer/model/slice/employersThunk";
+import {getEmployersData} from "entities/employer/model/selector/employersSelector";
 import {EmployeesFilter} from "features/filters/employeesFilter";
-import {getSearchValue} from "../../../features/searchInput";
-import {Pagination} from "../../../features/pagination";
+import {getSearchValue} from "features/searchInput";
+import {Pagination} from "features/pagination";
 
 export const EmployerPage = () => {
     const dispatch = useDispatch()

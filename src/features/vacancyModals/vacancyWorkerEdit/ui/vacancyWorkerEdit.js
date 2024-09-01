@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Modal } from "shared/ui/modal";
-import { EditableCard } from "../../../../shared/ui/editableCard";
+import { EditableCard } from "shared/ui/editableCard";
 import { AnimatedMulti } from "../../../workerSelect";
-import { Button } from "../../../../shared/ui/button";
 import { useSelector, useDispatch } from "react-redux";
 import cls from "./vacancyWorkerEdit.module.sass";
-import { getVacancySource, vacancyWorkerGetThunk } from "../../../../entities/vacancy/ui/vacancyWorkerList";
-import { Form } from "../../../../shared/ui/form";
+import { getVacancySource, vacancyWorkerGetThunk } from "entities/vacancy/ui/vacancyWorkerList";
+import { Form } from "shared/ui/form";
 import { useForm } from "react-hook-form";
-import { userSetPermissionThunk, fetchLocationsForSystemsThunk, fetLocationsForBranchesThunk} from "../../../../entities/vacancy/ui/vacancyWorkerList";
+import { userSetPermissionThunk} from "entities/vacancy/ui/vacancyWorkerList";
 
 
 export const VacancyWorkerEdit = React.memo(({ active, setActive, user_id }) => {
@@ -53,14 +52,14 @@ export const VacancyWorkerEdit = React.memo(({ active, setActive, user_id }) => 
         setSelectedSystems(selectedSystems);
 
         const selectedSystemIds = selectedSystems.map(system => system.value);
-        dispatch(fetchLocationsForSystemsThunk(selectedSystemIds));
+        // dispatch(fetchLocationsForSystemsThunk(selectedSystemIds));
     };
 
     const handleLocationChange = (selectedLocations) => {
         setSelectedLocations(selectedLocations);
 
         const selectedLocationIds = selectedLocations.map(location => location.value);
-        dispatch(fetLocationsForBranchesThunk(selectedLocationIds));
+        // dispatch(fetLocationsForBranchesThunk(selectedLocationIds));
     };
 
     const safeData = Array.isArray(locations) ? locations : [locations];

@@ -13,6 +13,10 @@ export const GroupsList = React.memo(({currentTableData}) => {
     const navigate = useNavigate()
     const userSystemId = useSelector(getUserSystemId)
 
+
+
+
+
     return (
         <>
 

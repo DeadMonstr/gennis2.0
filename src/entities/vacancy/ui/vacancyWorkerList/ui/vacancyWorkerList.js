@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import { Table } from "shared/ui/table";
 import cls from './vacancyWorkerList.module.sass';
-import {VacancyWorkerEdit} from "../../../../../features/vacancyModals/vacancyWorkerEdit";
+import {VacancyWorkerEdit} from "features/vacancyModals/vacancyWorkerEdit";
 import workerImg from "shared/assets/images/workerImg.svg"
 import workerSetting from 'shared/assets/icons/setting.svg'
 import {useSelector} from "react-redux";
-import {headersImg} from "../../../../../shared/api/base";
+import {headersImg} from "shared/api/base";
 
 export const VacancyWorkerList = ({ currentTableData, currentPage, PageSize, editMode, onEditClick }) => {
     const [actives, setActives] = useState(false)

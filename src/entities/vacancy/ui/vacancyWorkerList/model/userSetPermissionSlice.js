@@ -26,28 +26,7 @@ export const userSetPermissionSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
             })
-            .addCase(fetchLocationsForSystemsThunk.pending, (state) => {
-                state.loading = true;
-            })
-            .addCase(fetchLocationsForSystemsThunk.fulfilled, (state, action) => {
-                state.loading = false;
-                state.locations = action.payload;
-            })
-            .addCase(fetchLocationsForSystemsThunk.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload;
-            })
-            .addCase(fetLocationsForBranchesThunk.pending, (state) => {
-                state.loading = true;
-            })
-            .addCase(fetLocationsForBranchesThunk.fulfilled, (state, action) => {
-                state.loading = false;
-                state.branches  = action.payload;
-            })
-            .addCase(fetLocationsForBranchesThunk.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload;
-            });
+          
     }
 });
 

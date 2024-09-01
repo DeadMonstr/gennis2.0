@@ -69,6 +69,10 @@ import {studentPaymentSlice} from "../features/studentPayment";
 import {inkasatsiyaSlice} from "../entities/inkasatsiya";
 import {timeTableTuronSlice} from "pages/timeTable"
 import {alertSlice} from "features/alert"
+import {locationsSlice} from "features/locations"
+import {themeSwitcherSlice} from "features/themeSwitcher"
+import {branchSwitcherSlice} from "features/branchSwitcher"
+import {multiPageSlice} from "widgets/multiPage"
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -149,6 +153,10 @@ export const store = configureStore({
         overHeadSlice,
         capitalSlice,
         inkasatsiyaSlice,
+        locationsSlice,
+        themeSwitcherSlice,
+        branchSwitcherSlice,
+        multiPageSlice,
         alertSlice,
         flowsProfileSlice
     },

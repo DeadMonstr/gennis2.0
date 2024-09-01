@@ -65,7 +65,7 @@ export const getInsideCategory = createAsyncThunk(
 //         // formData.append("curriculum_hours" , data.curriculum_hours)
 //         // formData.append("payment_type" , selectPayment)
 //         // formData.append("category" , data.category)
-//         // formData.append("branch" , data.branch)
+//         // formData.append("branchSwitcher" , data.branchSwitcher)
 //         return await request(`${API_URL}Capital/capital_create/` , "POST" , JSON.stringify(obj) , headersImg())
 //     }
 // )
@@ -96,7 +96,7 @@ export const createInsideCategory = createAsyncThunk(
         // formData.append("curriculum_hours", data.curriculum_hours);
         // formData.append("payment_type", data.payment_type);
         // formData.append("category", data.category);
-        // formData.append("branch", data.branch);
+        // formData.append("branchSwitcher", data.branchSwitcher);
         // formData.append("img", data.img); // Agar img fayl bo'lsa, uni `File` yoki `Blob` obyekti bilan yuboring
 
         return await request(`${API_URL}Capital/capital_create/`, "POST", formData, headersImg());

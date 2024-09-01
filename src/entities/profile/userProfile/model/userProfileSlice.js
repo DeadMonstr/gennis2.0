@@ -222,9 +222,9 @@ const userProfileSlice = createSlice({
             })
             .addCase(fetchUserProfileData.fulfilled, (state, action) => {
                 console.log(action.payload)
-                state.userData = action.payload.user
-                state.userBranchId = action.payload.branch.id
-                state.userSystemId = action.payload.branch.location.system.id
+                state.userData = action.payload
+                state.userBranchId = action.payload.branch?.id
+                // state.userSystemId = action.payload.user.branchSwitcher.changeLocations.system.id
                 state.userPermissions = action.payload.permissions
                 state.loading = false
                 state.error = null
