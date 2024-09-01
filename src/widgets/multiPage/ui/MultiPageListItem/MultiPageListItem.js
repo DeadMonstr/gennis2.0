@@ -4,9 +4,13 @@ import {Link} from "shared/ui/link";
 
 import cls from "./MultiPageListItem.module.sass";
 import {useNavigate} from "react-router";
+import {useDispatch} from "react-redux";
+import {onChangeBranch} from "features/branchSwitcher";
 
 const MultiPageListItem = ({data, title, item: type,isType}) => {
 
+
+    const dispatch = useDispatch()
 
     const renderData = () => {
         return data.map((item, i) =>
@@ -25,6 +29,9 @@ const MultiPageListItem = ({data, title, item: type,isType}) => {
                             to={{
                                 pathname: `${branch?.id}`,
                                 search: isType ? `type=${type.type}` : null,
+                            }}
+                            onClick={() => {
+                                dispatch(onChangeBranch(branch?.id))
                             }}
                             relative="path"
                         >
