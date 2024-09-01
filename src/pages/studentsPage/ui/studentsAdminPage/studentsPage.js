@@ -152,7 +152,7 @@ export const StudentsPage = () => {
     useEffect(() => {
         switch (selectedRadio) {
             case "new_students":
-                dispatch(fetchOnlyNewStudentsData());
+                dispatch(fetchOnlyNewStudentsData(userBranchId));
                 break;
             case "studying_students":
                 dispatch(fetchOnlyStudyingStudentsData());
@@ -221,10 +221,6 @@ export const StudentsPage = () => {
         {
             name: "O'qiyotgan o'quvchilar",
             type: "studying_students"
-        },
-        {
-            name: "O'qiyotgan o'quvchilar",
-            type: "new_teacher"
         }
     ]
 
