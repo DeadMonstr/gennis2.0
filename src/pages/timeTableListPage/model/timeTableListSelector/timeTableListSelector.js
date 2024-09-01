@@ -1,7 +1,7 @@
 
 
 export const getTimeTableData = (state) =>
-    state.timeTable.data
+    state.timeTableListSlice.data
 
 export const getTimeTableLoading = (state) =>
-    state.timeTable.loading
+    state.timeTableListSlice.loading

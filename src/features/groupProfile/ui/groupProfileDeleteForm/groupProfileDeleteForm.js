@@ -13,6 +13,7 @@ import {
 import {getFilteredTeachers} from "entities/students";
 import {fetchTeachersData, getTeachers} from "entities/teachers";
 import {getUserBranchId, getUserSystemId} from "entities/profile/userProfile/model/userProfileSelector";
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import classNames from "classnames";
 import {useForm} from "react-hook-form";
@@ -106,9 +107,11 @@ export const GroupProfileDeleteForm = memo(() => {
         )
     }, [students, searchValue])
 
-    const onSubmitDelete = (data) => {
+    const onSubmitDelete = (dataForm) => {
+        const place = userSystemId === 1 ? "guruh" : "sinf"
+        const selectedStudent = data?.students?.filter(item => item.id === selectDeleteId)[0]?.user
         const res = {
-            ...data,
+            ...dataForm,
             students: [selectDeleteId],
             update_method: "remove_students"
         }
@@ -117,25 +120,39 @@ export const GroupProfileDeleteForm = memo(() => {
             data: res,
             group_type: userSystemId === 1 ? "center" : "school"
         }))
+        dispatch(onAddAlertOptions({
+            type: "success",
+            status: true,
+            msg: `${selectedStudent?.name} ${selectedStudent?.surname} ${place}dan o'chirildi`
+        }))
     }
 
     const onSubmitMove = (data) => {
-        if (theme === "app_school_theme") {
+        let msg;
+        if (theme === "app_school_theme" || userSystemId === 2) {
             const res = {
                 ...data,
                 students: select
             }
             dispatch(moveToClass({userBranchId, id, res}))
+            msg= `O'quvchilar boshqa sinfga o'tqazildi`
         } else {
             const res = {
                 ...data,
                 students: select
             }
             dispatch(moveGroup({id, res}))
+            msg = `O'quvchilar boshqa guruhga o'tqazildi`
         }
+        dispatch(onAddAlertOptions({
+            type: "success",
+            status: true,
+            msg: msg
+        }))
     }
 
     const onSubmitAddStudents = () => {
+        const place = userSystemId === 1 ? "guruh" : "sinf"
         dispatch(changeGroupProfile({
             data: {
                 students: selectedId,
@@ -143,6 +160,12 @@ export const GroupProfileDeleteForm = memo(() => {
             },
             id,
             group_type: userSystemId === 1 ? "center" : "school"
+            // group_type: "center"
+        }))
+        dispatch(onAddAlertOptions({
+            type: "success",
+            status: true,
+            msg: `O'quvchilar ${place}ga qo'shildi`
         }))
     }
 

@@ -47,6 +47,10 @@ export const ImageCrop = memo((props) => {
         )
     }
 
+    useEffect(() => {
+        setImgSrc(currentImage)
+    }, [currentImage])
+
 
     const [completedCrop, setCompletedCrop] = useState()
     const [aspect, setAspect] = useState(null)
@@ -56,7 +60,10 @@ export const ImageCrop = memo((props) => {
     const imgRef = useRef(null)
     const previewCanvasRef = useRef(null)
 
-    console.log(URL.revokeObjectURL(currentImage), "revoke")
+    // console.log(URL.revokeObjectURL(currentImage), "revoke")
+
+    console.log(imgSrc, "imgSrc")
+    console.log(typeof imgSrc, "type imgSrc")
 
 
     function onImageLoad(e) {
@@ -217,7 +224,7 @@ export const ImageCrop = memo((props) => {
                         disabled={!imgSrc?.path}
                     />
                     <div className={cls.changeImage__dropzone}>
-                        {(!imgSrc?.path && !currentImage) && (
+                        {(!imgSrc?.path || !imgSrc) && (
                             <div
                                 {...getRootProps()}
                                 className={classNames(cls.changeImage__drop, {
@@ -231,7 +238,7 @@ export const ImageCrop = memo((props) => {
                                 <i className={classNames("far fa-images", cls.changeImage__icon)}/>
                             </div>
                         )}
-                        {(!!imgSrc?.path || currentImage) && (
+                        {(!!imgSrc?.path) && (
                             <ReactCrop
                                 crop={crop}
                                 onChange={(_, percentCrop) => setCrop(percentCrop)}
@@ -244,8 +251,8 @@ export const ImageCrop = memo((props) => {
                                     ref={imgRef}
                                     alt="Crop me"
                                     src={
-                                        currentImage ? currentImage :
-                                            URL.createObjectURL(imgSrc)
+                                        !!imgSrc ? typeof imgSrc === "string" ? imgSrc :
+                                            URL.createObjectURL(imgSrc) : null
                                     }
                                     style={imageStyle}
                                     onLoad={onImageLoad}

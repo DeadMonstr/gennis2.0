@@ -1,3 +1,5 @@
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
+import {ClassAddForm} from "features/classProfile";
 import React, {memo, useEffect, useMemo, useState} from "react";
 import {user} from "entities/user";
 import {useDispatch, useSelector} from "react-redux";
@@ -23,6 +25,7 @@ import {
 } from "entities/students";
 import {Pagination} from "features/pagination";
 import {useNavigate} from "react-router";
+import {Button} from "shared/ui/button";
 import {Modal} from "shared/ui/modal";
 import {Form} from "shared/ui/form";
 import {Select} from "shared/ui/select";
@@ -78,7 +81,8 @@ export const StudentsPage = () => {
     const [selectTeacher, setSelectTeacher] = useState()
     const [selectStudents, setSelectStudents] = useState([])
 
-    const [activeModal, setActiveModal] = useState(false)
+    const [activeModal, setActiveModal] = useState("")
+    const [createStatus, setCreateStatus] = useState(false)
     const newStudentsLoading = useSelector(getNewStudentsLoading)
     const [active, setActive] = useState(false)
     const __THEME__ = localStorage.getItem("theme");
@@ -113,7 +117,13 @@ export const StudentsPage = () => {
             dispatch(fetchTeachersData({userBranchId}))
             dispatch(fetchSubjectsAndLanguages())
         }
-    } , [userBranchId])
+    }, [userBranchId])
+
+    // useEffect(() => {
+    //     if (createStatus) {
+    //         setCreateStatus(false)
+    //     }
+    // }, [createStatus])
 
     // useEffect(() => {
     //     setCurrentTableData(searchedUsers);
@@ -141,19 +151,25 @@ export const StudentsPage = () => {
         }
         console.log(res, "res")
         dispatch(createSchoolClass({res}))
+        dispatch(onAddAlertOptions({
+            type: "success",
+            status: true,
+            msg: `Sinf yaratildi`
+        }))
+        setCreateStatus(true)
         // setSelectStudents([])
     }
     // useEffect(() =>{
     //     dispatch(fetchOnlyNewStudentsData())
     // } , [])
     // Radio tanlangan holatga qarab tegishli dispatch funksiyasini chaqirish
-    useEffect(() =>{
+    useEffect(() => {
         if (selectedRadio === "newStudents") {
             // dispatch(fetchOnlyNewStudentsData())
         } else if (selectedRadio === "studying") {
             dispatch(fetchOnlyStudyingStudentsData())
         }
-    } , [dispatch, selectedRadio])
+    }, [dispatch, selectedRadio])
 
 
     const handleChange = (value) => {
@@ -227,7 +243,7 @@ export const StudentsPage = () => {
 
             <StudentsFilter active={active} setActive={setActive} activePage={selectedRadio}/>
             <Modal
-                active={activeModal}
+                active={createStatus ? false : activeModal === "create"}
                 setActive={setActiveModal}
             >
                 <div className={cls.modal}>
@@ -290,6 +306,27 @@ export const StudentsPage = () => {
                     </Form>
                 </div>
             </Modal>
+            <ClassAddForm
+                setActive={setActiveModal}
+                active={activeModal === "add"}
+            />
+            {/*<Modal*/}
+            {/*    */}
+            {/*>*/}
+            {/*    <Form*/}
+            {/*        typeSubmit={""}*/}
+            {/*        extraClassname={cls.addModal}*/}
+            {/*        onSubmit={handleSubmit(onSubmit)}*/}
+            {/*    >*/}
+            {/*        <h2>Add Class</h2>*/}
+            {/*        <Select*/}
+            {/*            title={"Classes"}*/}
+            {/*            register={register}*/}
+            {/*            name={"class"}*/}
+            {/*        />*/}
+            {/*        <Button>Tekshirmoq</Button>*/}
+            {/*    </Form>*/}
+            {/*</Modal>*/}
         </>
     )
 }

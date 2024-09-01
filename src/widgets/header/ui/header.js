@@ -19,7 +19,7 @@ import {
     fetchOnlyStudyingStudentsData,
     fetchNewStudentsDataWithBranch,
     getStudentsWithBranch, fetchStudyingStudentsDataWithBranch
-} from "../../../entities/students";
+} from "entities/students";
 
 export const Header = () => {
     const dispatch = useDispatch();
@@ -28,7 +28,7 @@ export const Header = () => {
     const [locationHistory, setLocationHistory] = useState([]);
     const locations = useSelector(selectLocations);
     const branches = useSelector(selectBranch)
-    const students = useSelector(getStudentsWithBranch)
+    // const students = useSelector(getStudentsWithBranch)
     const isBranch = Array.isArray(branches) ? branches : [branches]
     const [branchId, setBranchId] = useState("")
     const [selected, setSelected] = useState([]);

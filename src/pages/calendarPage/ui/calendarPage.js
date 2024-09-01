@@ -69,7 +69,7 @@ export const CalendarPage = () => {
                 onDelete={(someFunc) => someFunc([{}])}
                 isChanged={isChanged}
                 setIsChanged={setIsChanged}
-                onSubmitDelete={onSubmitDelete}
+                // onSubmitDelete={onSubmitDelete}
             />
             <CalendarAdd
                 active={active?.finishValue || active?.length}

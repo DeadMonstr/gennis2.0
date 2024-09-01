@@ -40,13 +40,9 @@ export const GroupsPage = () => {
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
 
-    console.log(data, "data")
-
     const searchedUsers = useMemo(() => {
         const filteredHeroes = data?.slice()
         setCurrentPage(1)
-
-        console.log(search, true)
 
         if (!search) return filteredHeroes
 

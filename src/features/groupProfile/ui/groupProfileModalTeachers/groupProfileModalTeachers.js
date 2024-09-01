@@ -4,6 +4,7 @@ import {changeGroupProfile, fetchFilteredTeachers} from "entities/profile/groupP
 import {fetchTeachersData, getTeachers} from "entities/teachers";
 import {getUserBranchId} from "entities/profile/userProfile";
 import {getUserSystemId} from "entities/profile/userProfile/model/userProfileSelector";
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";
@@ -35,7 +36,11 @@ export const GroupProfileModalTeachers = memo(() => {
             dispatch(fetchTeachersData({userBranchId}))
     }, [userBranchId])
 
+    const [currentTeachersData, setCurrentTeachersData] = useState([])
+
     useEffect(() => {
+        console.log(schoolTeachers, "schoolTeachers")
+        console.log(centerTeachers, "centerTeachers")
         if (userSystemId === 2) {
             setCurrentTeachersData(schoolTeachers)
         } else {
@@ -45,13 +50,19 @@ export const GroupProfileModalTeachers = memo(() => {
 
     const [active, setActive] = useState(false)
     const [searchValue, setSearchValue] = useState("")
-    const [currentTeachersData, setCurrentTeachersData] = useState([])
+
+    console.log(currentTeachersData, "currentTeachersData")
 
     const onChangeTeacher = (teacherId) => {
         dispatch(changeGroupProfile({
             data: {teacher: [teacherId]},
             id: id,
             group_type: userSystemId === 1 ? "center" : "school"
+        }))
+        dispatch(onAddAlertOptions({
+            type: "success",
+            status: true,
+            msg: `Guruhni o'qituvchisi o'zgardi`
         }))
     }
 
@@ -89,13 +100,13 @@ export const GroupProfileModalTeachers = memo(() => {
                             activeSwitch={profileData?.teacher[0]?.id === item?.id}
                             onChangeSwitch={() => onChangeTeacher(item?.id)}
                         />
-                        <div className={classNames(cls.status, {
-                            [cls.active]: item?.extra_info?.status
-                        })}>
-                            <div className={classNames(cls.status__inner, {
-                                [cls.active]: item?.extra_info?.status
-                            })}/>
-                        </div>
+                        {/*<div className={classNames(cls.status, {*/}
+                        {/*    [cls.active]: item?.extra_info?.status*/}
+                        {/*})}>*/}
+                        {/*    <div className={classNames(cls.status__inner, {*/}
+                        {/*        [cls.active]: item?.extra_info?.status*/}
+                        {/*    })}/>*/}
+                        {/*</div>*/}
                     </div>
                 </td>
             </tr>

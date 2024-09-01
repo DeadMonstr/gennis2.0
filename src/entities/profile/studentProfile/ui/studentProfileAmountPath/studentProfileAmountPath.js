@@ -1,7 +1,7 @@
 import React, {memo, useEffect, useState} from 'react';
 import classNames from "classnames";
 import {useSelector, useDispatch} from "react-redux";
-import {Alert} from "shared/ui/alert";
+// import {Alert} from "shared/ui/alert";
 import {EditableCard} from "shared/ui/editableCard";
 import {Table} from "shared/ui/table";
 import {getBooksData} from "../../model/selectors/booksSelector";
@@ -18,8 +18,8 @@ import {
     studentPaymentListDeleteGetThunk, StudentPaymentEditModal, studentBookOrderListThunk, getBookPaymentsList
 } from "features/studentPayment";
 import {Button} from "shared/ui/button";
-import {YesNo} from "../../../../../shared/ui/yesNoModal/yesNo";
-import {StudentPaymentDates} from "../../../../../features/studentPaymentDates";
+import {YesNo} from "shared/ui/yesNoModal/yesNo";
+import {StudentPaymentDates} from "features/studentPaymentDates";
 
 export const StudentProfileAmountPath = memo(({active, setActive}) => {
     const pathArray = window.location.pathname.split('/');
@@ -38,31 +38,31 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
     const [change, setChange] = useState(false);
     const [alerts, setAlerts] = useState([]);
 
-    const showAlert = (type, message) => {
-        const newAlert = {id: Date.now(), type, message};
-        setAlerts([...alerts, newAlert]);
-        setTimeout(() => {
-            hideAlert(newAlert.id);
-        }, 2000);
-    };
-
-    const hideAlert = (id) => {
-        setAlerts(alerts => alerts.map(alert =>
-            alert.id === id ? {...alert, hide: true} : alert
-        ));
-        setTimeout(() => {
-            setAlerts(alerts => alerts.filter(alert => alert.id !== id));
-        }, 1500);
-    };
+    // const showAlert = (type, message) => {
+    //     const newAlert = {id: Date.now(), type, message};
+    //     setAlerts([...alerts, newAlert]);
+    //     setTimeout(() => {
+    //         hideAlert(newAlert.id);
+    //     }, 2000);
+    // };
+    //
+    // const hideAlert = (id) => {
+    //     setAlerts(alerts => alerts.map(alert =>
+    //         alert.id === id ? {...alert, hide: true} : alert
+    //     ));
+    //     setTimeout(() => {
+    //         setAlerts(alerts => alerts.filter(alert => alert.id !== id));
+    //     }, 1500);
+    // };
 
     const handleDelete = () => {
         dispatch(studentPaymenListDelete(selectedSalary)).then((action) => {
             if (action.type.endsWith('fulfilled')) {
-                showAlert('success', "Muvofaqqiyatli o'chirildi");
+                // showAlert('success', "Muvofaqqiyatli o'chirildi");
                 dispatch(studentPaymentListThunk(lastId));
             } else {
                 console.log("O'chirishda xatolik", action.error);
-                showAlert('error', "Internet yoki serverda xatolik");
+                // showAlert('error', "Internet yoki serverda xatolik");
             }
 
             setPortal(false);
@@ -217,7 +217,7 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                     <YesNo onDelete={handleDelete} activeDelete={portal} setActiveDelete={() => setPortal(!portal)}/>
                 )}
             </div>
-            <Alert alerts={alerts} hideAlert={hideAlert}/>
+            {/*<Alert alerts={alerts} hideAlert={hideAlert}/>*/}
             <StudentPaymentEditModal
                 portal={modal}
                 setPortal={() => setModal(false)}

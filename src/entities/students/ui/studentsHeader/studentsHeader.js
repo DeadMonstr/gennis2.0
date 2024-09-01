@@ -30,7 +30,7 @@ export const StudentsHeader = ({
             <Button
                 type={"filter"}
                 extraClass={cls.extraCutClass}
-                onClick={() => onClick(true)}
+                onClick={() => onClick("create")}
             >
                 Create group
             </Button>
@@ -50,7 +50,16 @@ export const StudentsHeader = ({
             <div className={cls.mainContainer_buttonPanelBox}>
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}>
                     {renderCreateBtn()}
-                    <Button type={"filter"} extraClass={cls.noneBackground}>Add group</Button>
+                    {
+                        theme === "app_school_theme" ? <Button
+                            onClick={() => onClick("add")}
+                            type={"filter"}
+                            extraClass={cls.noneBackground}
+                        >
+                            Add group
+                        </Button> : null
+                    }
+
                 </div>
                 {/*{branches.length >= 1 ? <Select options={branches} onChangeOption={() => setSelected}*/}
                 {/*                                defaultValue={branches[0].name}/> : null}*/}

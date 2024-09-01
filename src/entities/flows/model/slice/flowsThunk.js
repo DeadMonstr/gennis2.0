@@ -4,7 +4,7 @@ import {API_URL, headers, useHttp} from "shared/api/base";
 
 export const fetchFlows = createAsyncThunk(
     "flowsSlice/fetchFlows",
-    async (id) => {
+    async () => {
         const {request} = useHttp()
         return await request(`${API_URL}Flow/flow-list/` , "GET", null , headers())
     }
@@ -14,8 +14,8 @@ export const fetchFlows = createAsyncThunk(
 
 export const flowListThunk = createAsyncThunk(
     "flowsSlice/flowListThunk",
-    async (data) =>{
+    async ({data}) =>{
         const {request} = useHttp()
-        return await request(`${API_URL}/Flow/flow-list-create/` , "GET" , null , headers())
+        return await request(`${API_URL}Flow/flow-list-create/` , "POST" , JSON.stringify(data) , headers())
     }
 )

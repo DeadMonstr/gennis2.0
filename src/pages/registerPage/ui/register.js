@@ -12,7 +12,7 @@ import { Input } from 'shared/ui/input';
 import { Textarea } from "shared/ui/textArea";
 import { Select } from "shared/ui/select";
 import { MiniLoader } from "shared/ui/miniLoader";
-import { Alert } from "shared/ui/alert";
+// import { Alert } from "shared/ui/alert";
 import { API_URL, useHttp, headers } from "shared/api/base";
 
 const userstype = {
@@ -100,26 +100,26 @@ export const Register = () => {
         }
     }, [username]);
 
-    const showAlert = (type, message) => {
-        const newAlert = { id: Date.now(), type, message };
-        setAlerts([...alerts, newAlert]);
-        setTimeout(() => {
-            hideAlert(newAlert.id);
-        }, 5000);
-    };
-
-    const hideAlert = (id) => {
-        setAlerts(alerts => alerts.map(alert =>
-            alert.id === id ? { ...alert, hide: true } : alert
-        ));
-        setTimeout(() => {
-            setAlerts(alerts => alerts.filter(alert => alert.id !== id));
-        }, 500);
-    };
+    // const showAlert = (type, message) => {
+    //     const newAlert = { id: Date.now(), type, message };
+    //     setAlerts([...alerts, newAlert]);
+    //     setTimeout(() => {
+    //         hideAlert(newAlert.id);
+    //     }, 5000);
+    // };
+    //
+    // const hideAlert = (id) => {
+    //     setAlerts(alerts => alerts.map(alert =>
+    //         alert.id === id ? { ...alert, hide: true } : alert
+    //     ));
+    //     setTimeout(() => {
+    //         setAlerts(alerts => alerts.filter(alert => alert.id !== id));
+    //     }, 500);
+    // };
 
     const onSubmit = (data) => {
         if (!isUsernameAvailable) {
-            showAlert('error', 'Please choose a different username');
+            // showAlert('error', 'Please choose a different username');
             return;
         }
 
@@ -153,7 +153,7 @@ export const Register = () => {
                 class_number: selectedClass,
             };
             console.log(res, "res student")
-            // registerAction = registerUser(res);
+            registerAction = registerUser(res);
         } else if (registerType === 'teacher') {
             res = {
                 ...res,
@@ -165,21 +165,21 @@ export const Register = () => {
             console.log(res, "res teacher")
             console.log(res.user.resume[0], "res teacher resume")
             console.log(res.user.resume["0"], "res teacher resume 2")
-            // registerAction = registerTeacher(res);
+            registerAction = registerTeacher(res);
         } else if (registerType === 'employer') {
             res2 = {
                 ...res2,
                 profession: selectedProfession,
             };
             console.log(res, "res employer")
-            // registerAction = registerEmployer(res2);
+            registerAction = registerEmployer(res2);
         }
 
         if (registerAction) {
             dispatch(registerAction).then((action) => {
                 setLoading(false);
                 if (action.type.endsWith('fulfilled')) {
-                    showAlert('success', 'Registration successful!');
+                    // showAlert('success', 'Registration successful!');
                     reset();
                     setSelectedLang(1);
                     setSelectedSubject(1);
@@ -189,7 +189,7 @@ export const Register = () => {
                     setIsUsernameAvailable(true);
                 } else {
                     console.error('Registration error:', action.error);
-                    showAlert('error', 'Registration failed. Please try again.');
+                    // showAlert('error', 'Registration failed. Please try again.');
                     setError(true);
                 }
             });
@@ -312,7 +312,7 @@ export const Register = () => {
 
     return (
         <div className={cls.login}>
-            <Alert alerts={alerts} hideAlert={hideAlert} />
+            {/*<Alert alerts={alerts} hideAlert={hideAlert} />*/}
             <div className={cls.selection}>
                 <Select
                     defaultValue="User Type"
