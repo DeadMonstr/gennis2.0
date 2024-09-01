@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {API_URL, headers, useHttp} from "shared/api/base";
+import {API_URL, branchQuery, headers, useHttp} from "shared/api/base";
 
 
 
@@ -15,7 +15,7 @@ export const fetchOnlyNewStudentsData = createAsyncThunk(
     'studentsSlice/fetchOnlyNewStudentsData',
     async () => {
         const {request} = useHttp()
-        return await request(`${API_URL}Students/new-registered-students/`, "GET", null, headers())
+        return await request(`${API_URL}Students/new-registered-students/?${branchQuery()}`, "GET", null, headers())
     }
 )
 
