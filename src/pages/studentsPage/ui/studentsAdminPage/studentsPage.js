@@ -44,6 +44,7 @@ import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
 import {getSelectedLocations} from "features/locations";
 import {getSelectedLocationsByIds} from "features/locations/model/selector/locationsSelector";
 import {useSearchParams} from "react-router-dom";
+import {getBranch} from "../../../../features/branchSwitcher";
 
 const studentsFilter = [
     {name: "new_students", label: "New Students"},
@@ -74,8 +75,9 @@ export const StudentsPage = () => {
     const deletedStudents = useSelector(getOnlyDeletedStudents)
     const schoolClassNumbers = useSelector(getSchoolClassNumbers);
     const schoolClassColors = useSelector(getSchoolClassColors);
+    const branch = useSelector(getBranch)
+    const userBranchId = branch?.id
     const teachers = useSelector(getTeachers);
-    const userBranchId = useSelector(getUserBranchId);
     const userSystemId = useSelector(getUserSystemId)
     const languages = useSelector(state => state.registerUser.languages);
     const [selectColor, setSelectColor] = useState();
@@ -161,7 +163,7 @@ export const StudentsPage = () => {
             default:
                 break;
         }
-    },[dispatch, selectedRadio]);
+    },[dispatch, selectedRadio, userBranchId]);
 
     useEffect(() => {
 

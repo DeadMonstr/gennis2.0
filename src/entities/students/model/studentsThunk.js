@@ -13,9 +13,9 @@ export const fetchNewStudentsData = createAsyncThunk(
 
 export const fetchOnlyNewStudentsData = createAsyncThunk(
     'studentsSlice/fetchOnlyNewStudentsData',
-    async () => {
+    async (id) => {
         const {request} = useHttp()
-        return await request(`${API_URL}Students/new-registered-students/`, "GET", null, headers())
+        return await request(`${API_URL}Students/new-registered-students/?branch${id}`, "GET", null, headers())
     }
 )
 
