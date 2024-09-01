@@ -13,6 +13,9 @@ export const fetchThemeSwitcherSystemsThunk = createAsyncThunk(
                 headers()
             );
 
+
+
+
             return response;
         } catch (error) {
             return rejectWithValue(error.message);
