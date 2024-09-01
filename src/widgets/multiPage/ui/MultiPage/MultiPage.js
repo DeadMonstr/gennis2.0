@@ -9,11 +9,11 @@ import {MultiPageList} from "../MultiPageList/MultiPageList";
 import cls from "./MultiPage.module.sass"
 import {Routes} from "react-router-dom";
 import {Route, useNavigate} from "react-router";
-import {onChangedPage} from "../../model/slice/multiPageSlice";
-import {getMultiChangePage, getMultiPageData} from "../../model/selector/multiPageSelector";
+import {onChangedPage,onChangedOldPage} from "../../model/slice/multiPageSlice";
+import {getMultiChangePage, getMultiPageData,getMultiOldPage} from "../../model/selector/multiPageSelector";
 import {fetchMultiPageDataThunk} from "../../model/thunk/multiPageThunk";
 import {getBranch} from "features/branchSwitcher";
-export const MultiPage = ({types, children}) => {
+export const MultiPage = ({types, children,page}) => {
 
 
     const dispatch = useDispatch()
@@ -22,21 +22,24 @@ export const MultiPage = ({types, children}) => {
     const branch = useSelector(getBranch)
     const data = useSelector(getMultiPageData)
     const changedPage = useSelector(getMultiChangePage)
+    const oldPage = useSelector(getMultiOldPage)
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (locations.length > 1 && !changedPage) {
+        console.log(locations.length > 1 && !changedPage && page !== oldPage)
+        if (locations.length > 1  && page !== oldPage) {
             navigate(".", { relative: "path" })
             const data = {
                 types,
                 locations
             }
             dispatch(onChangedPage(true))
+            dispatch(onChangedOldPage(page))
             dispatch(fetchMultiPageDataThunk(data))
         } else if (locations.length < 2 && changedPage) {
             dispatch(onChangedPage(false))
         }
-    }, [locations.length, types,changedPage])
+    }, [locations.length, types,page,oldPage])
 
 
 

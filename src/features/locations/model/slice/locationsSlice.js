@@ -50,7 +50,6 @@ const locationsSlice = createSlice({
 
         clearSelectedLocations: (state) => {
             state.selectedLocations = []
-            localStorage.removeItem("selectedLocations")
         }
     },
     extraReducers: builder =>

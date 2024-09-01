@@ -4,7 +4,7 @@ export const getRouteTaskManager = (id) => `taskManager/${id}`;
 // export const getRouteDeletedStudents = (id) => `deletedStudents`;
 export const getRouteStudents = (id) => `students/*`;
 export const getDirectorRouteStudents = () => `locations-overview`;
-export const getRouteGroups = (id) => `groups/${id}`;
+export const getRouteGroups = (id) => `groups/*`;
 // export const getRouteDeletedGroups = (id) => `deletedGroups`;
 export const getRouteRegister = () => `register`;
 export const getRouteTeacher = (id) => `teacher/${id}`;
