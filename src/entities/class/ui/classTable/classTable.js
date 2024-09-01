@@ -6,10 +6,10 @@ import {useForm} from "react-hook-form";
 import cls from "./classTable.module.sass"
 
 export const ClassType = [
-    {className: "1-sinf" , id:1},
-    {className: "2-sinf" , id:2},
-    {className: "3-sinf" , id:3},
-    {className: "4-sinf" , id:4},
+    {className: "1-sinf", id: 1},
+    {className: "2-sinf", id: 2},
+    {className: "3-sinf", id: 3},
+    {className: "4-sinf", id: 4},
 ]
 
 
@@ -31,10 +31,12 @@ export const ClassTable = () => {
     const {register, handleSubmit, setValue} = useForm()
 
 
-
-const onChangeClass = ()=> {
+    const onChangeClass = () => {
         setEditClass(!editClass)
-}
+    }
+
+
+
     return (
         <div>
             <Table>

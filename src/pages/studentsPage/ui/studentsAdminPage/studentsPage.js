@@ -22,7 +22,7 @@ import {
     getStudyingStudents
 } from "entities/students";
 import {Pagination} from "features/pagination";
-import {useNavigate} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {Modal} from "shared/ui/modal";
 import {Form} from "shared/ui/form";
 import {Select} from "shared/ui/select";
@@ -40,6 +40,10 @@ import {useTheme} from "shared/lib/hooks/useTheme";
 import cls from "./students.module.sass"
 import {getSearchValue} from "features/searchInput";
 import {getUserBranchId, getUserSystemId} from "entities/profile/userProfile";
+import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
+import {getSelectedLocations} from "features/locations";
+import {getSelectedLocationsByIds} from "features/locations/model/selector/locationsSelector";
+import {useSearchParams} from "react-router-dom";
 
 const studentsFilter = [
     {name: "newStudents", label: "New Students"},
@@ -56,6 +60,10 @@ const branches = [
 export const StudentsPage = () => {
 
     // let newStudents
+
+    const [searchParams] = useSearchParams();
+
+
     const dispatch = useDispatch()
     const {theme} = useTheme()
     const {register, handleSubmit} = useForm()
@@ -87,17 +95,15 @@ export const StudentsPage = () => {
     const [selected, setSelected] = useState([]);
     const [currentTableData, setCurrentTableData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const lenghts = localStorage.getItem("lenght")
-    const data = useSelector(getStudentsListDirector)
     const search = useSelector(getSearchValue);
+
     let PageSize = useMemo(() => 20, []);
 
     const searchedUsers = useMemo(() => {
         const filteredStudents = selectedRadio === "newStudents"
             ? newStudents?.slice()
             : studyingStudents?.slice();
-        // const filteredStudents = newStudents ? newStudents?.slice() : []
-        console.log(filteredStudents, "filtered")
+        // const filteredStudents = newStudents ?  newStudents?.slice(): []
         setCurrentPage(1)
 
 
@@ -113,19 +119,14 @@ export const StudentsPage = () => {
             dispatch(fetchTeachersData({userBranchId}))
             dispatch(fetchSubjectsAndLanguages())
         }
-    } , [userBranchId])
+    }, [userBranchId])
 
-    // useEffect(() => {
-    //     setCurrentTableData(searchedUsers);
-    // }, [searchedUsers]);
 
     useEffect(() => {
         if (userSystemId === 2 && userBranchId) {
             dispatch(fetchSchoolStudents({userBranchId}))
             dispatch(fetchClassColors())
             dispatch(fetchClassNumberList())
-        } else {
-            // dispatch(fetchNewStudentsData())
         }
     }, [userSystemId, userBranchId])
 
@@ -139,21 +140,31 @@ export const StudentsPage = () => {
             create_type: theme === "app_school_theme" ? "school" : "center",
             system: 2
         }
-        console.log(res, "res")
         dispatch(createSchoolClass({res}))
-        // setSelectStudents([])
     }
-    // useEffect(() =>{
-    //     dispatch(fetchOnlyNewStudentsData())
-    // } , [])
+
+    useEffect(() => {
+
+        const type = searchParams.get("type")
+
+
+        if (type) {
+            setSelectedRadio(type)
+        }
+    },[searchParams])
+
+
     // Radio tanlangan holatga qarab tegishli dispatch funksiyasini chaqirish
-    useEffect(() =>{
+
+
+
+    useEffect(() => {
         if (selectedRadio === "newStudents") {
             // dispatch(fetchOnlyNewStudentsData())
         } else if (selectedRadio === "studying") {
             dispatch(fetchOnlyStudyingStudentsData())
         }
-    } , [dispatch, selectedRadio])
+    }, [dispatch, selectedRadio])
 
 
     const handleChange = (value) => {
@@ -161,21 +172,12 @@ export const StudentsPage = () => {
     };
     const renderStudents = () => {
         switch (selectedRadio) {
-            // case "newStudents":
-            //     return (
-            //         // <Misol/>
-            //         <NewStudents
-            //             theme={__THEME__ === "app_school_theme"}
-            //             setSelectStudents={setSelectStudents}
-            //         />
-            //     );
+
             case "newStudents" :
-                // return <NewStudents currentTableData={newStudents}/>
                 return <NewStudents
                     currentTableData={currentTableData}
                     theme={theme === "app_school_theme"}
                     setSelectStudents={setSelectStudents}
-                    // setSelectId={}
                 />
             case "deletedStudents":
                 return <DeletedStudents currentTableData={currentTableData}/>;
@@ -188,11 +190,33 @@ export const StudentsPage = () => {
 
     const renderNewStudents = renderStudents()
 
+
+
+    const types = [
+        {
+            name: "Yangi o'quvchilar",
+            type: "new_students"
+        },
+        {
+            name: "O'chirilgan o'quvchilar",
+            type: "deleted_students"
+        },
+        {
+            name: "O'qiyotgan o'quvchilar",
+            type: "studying_students"
+        },
+        {
+            name: "O'qiyotgan o'quvchilar",
+            type: "new_teacher"
+        }
+    ]
+
+
+
     return (
-        <>
-
-
+        <MultiPage types={types} >
             <StudentsHeader
+
                 selected={selected}
                 setSelected={setSelected}
                 branches={branches}
@@ -206,9 +230,6 @@ export const StudentsPage = () => {
                 onClick={setActiveModal}
             />
 
-            {/*<div className={cls.tableMain}>*/}
-            {/*    {renderStudents()}*/}
-            {/*</div>*/}
             <div className={cls.tableMain}>
                 {renderNewStudents}
             </div>
@@ -290,6 +311,6 @@ export const StudentsPage = () => {
                     </Form>
                 </div>
             </Modal>
-        </>
+        </MultiPage>
     )
 }

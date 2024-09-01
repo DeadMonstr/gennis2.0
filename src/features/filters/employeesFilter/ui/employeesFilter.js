@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchVacancyData, getVacancyJobs } from "../../../vacancyModals/vacancyPageAdd";
 import {fetchEmployersDataWithFilter} from "entities/employer";
 import {fetchSubjectsAndLanguages, getLanguagesData} from "pages/registerPage";
-import {fetchTeachersDataWithFilter} from "../../../../entities/teachers/model/teacherThunk";
 
 export const EmployeesFilter = React.memo(({ active, setActive, activePage, activeSwitch, setActiveSwitch }) => {
     const dispatch = useDispatch();
@@ -20,11 +19,12 @@ export const EmployeesFilter = React.memo(({ active, setActive, activePage, acti
     const [selectedLanguage, setSelectedLanguage] = useState();
     const jobsData = useSelector(getVacancyJobs);
     const languages = useSelector(getLanguagesData)
-
+    //
     const jobOptions = jobsData?.jobs?.map(job => ({
         id: job.group.id,
         name: job.group.name
     }));
+
 
 
     const onSelectJob = (value) => {
@@ -58,7 +58,6 @@ export const EmployeesFilter = React.memo(({ active, setActive, activePage, acti
     useEffect(() => {
         dispatch(fetchVacancyData());
     }, []);
-
     useEffect(() => {
         dispatch(fetchSubjectsAndLanguages());
     }, []);

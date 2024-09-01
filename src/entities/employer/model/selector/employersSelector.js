@@ -1,12 +1,12 @@
 
-export const getEmployersData = (state) =>
+export const getEmployersData = state =>
     state.employers?.employersData
 
-export const getDeletedEmployersData = (state) =>
+export const getDeletedEmployersData = state =>
     state.employers?.deletedEmployers
 
-export const getEmployerLoading = (state) =>
+export const getEmployerLoading = state =>
     state.employers?.loading
 
-export const getEmployerDataWithFilter = (state) =>
+export const getEmployerDataWithFilter = state =>
     state.employers?.employerDataWithFilter

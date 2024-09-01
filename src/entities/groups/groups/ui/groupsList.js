@@ -12,12 +12,16 @@ export const GroupsList = React.memo(({currentTableData}) => {
 
     const navigate = useNavigate()
 
+
+
+
+
     return (
         <>
 
             <Table extraClass={cls.table__head}>
                 <thead>
-                <tr>
+                 <tr>
                     <th>No</th>
                     <th>Guruh Nomi</th>
                     <th>Full name</th>
@@ -55,3 +59,21 @@ export const GroupsList = React.memo(({currentTableData}) => {
         </>
     );
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
