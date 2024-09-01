@@ -44,6 +44,7 @@ import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
 import {getSelectedLocations} from "features/locations";
 import {getSelectedLocationsByIds} from "features/locations/model/selector/locationsSelector";
 import {useSearchParams} from "react-router-dom";
+import {branchQuery} from "shared/api/base";
 
 const studentsFilter = [
     {name: "newStudents", label: "New Students"},
@@ -156,7 +157,7 @@ export const StudentsPage = () => {
 
     // Radio tanlangan holatga qarab tegishli dispatch funksiyasini chaqirish
 
-
+    console.log(branchQuery())
 
     useEffect(() => {
         if (selectedRadio === "newStudents") {
