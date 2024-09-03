@@ -149,7 +149,7 @@ export const StudentsPage = () => {
             teacher: [+selectTeacher],
             students: selectStudents,
             color: selectColor,
-            // branch: userBranchId,
+            branch: userBranchId,
             create_type: "school",
             system: 2
         }

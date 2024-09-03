@@ -15,8 +15,6 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
     const dispatch =  useDispatch()
     const getNewSt = useSelector(getStudentsWithBranch)
 
-    // const getNewStDef = useSelector(getNewStudentsData)
-    // const getSubjNewSt = useSelector(getNewStudentsWithSubject)
 
 
 

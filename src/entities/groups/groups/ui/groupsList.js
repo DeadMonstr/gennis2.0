@@ -87,42 +87,6 @@ export const GroupsList = React.memo(({currentTableData}) => {
                 </thead>
                 <tbody>
                 {render}
-                {
-                    currentTableData?.map((item, i) => {
-                        return (
-                            <tr onClick={() => navigate(`groupInfo/${item?.id}`)}>
-                                <td>{i + 1}</td>
-                                <td>{item?.name}</td>
-                                {
-                                    userSystem === 1 ? <>
-                                            <td>{item?.name} {item?.surname}</td>
-                                            <td>{item?.subject?.name}</td>
-                                            <td>{item?.course_types?.name}</td>
-                                            <td>{item?.price}</td>
-                                        </> :
-                                        // null
-                                        <>
-                                            <td>{`${item?.teacher[0]?.user?.surname} ${item?.teacher[0]?.user?.name}`}</td>
-                                            <td>{item?.students?.length}</td>
-                                            <td>{`${item?.class_number?.number}-${item?.color?.name}`}</td>
-                                        </>
-                                }
-
-                                {/*<td>{item?.status ? <div><div/></div> : null }</td>*/}
-
-                                {/*<td>{item?.status ?<div><div/></div> : <div className={cls.red}><div className={cls.red__inner}/></div> }</td>*/}
-
-
-                                <td>{item?.status ? <div>
-                                    <div/>
-                                </div> : <div className={cls.red}>
-                                    <div className={cls.red__inner}/>
-                                </div>}</td>
-
-                            </tr>
-                        )
-                    })
-                }
                 </tbody>
             </Table>
         </>

@@ -9,7 +9,7 @@ import {Radio} from "shared/ui/radio";
 import {Select} from "shared/ui/select";
 import {Form} from "shared/ui/form";
 import {Modal} from "shared/ui/modal";
-
+import {useTheme} from "shared/lib/hooks/useTheme";
 import cls from "./studentProfileTotalAmount.module.sass";
 import money from "shared/assets/images/Money.png";
 import creditCard from "shared/assets/images/CreditCard.png";
@@ -36,6 +36,8 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     const [checkModalStatus, setCheckModalStatus] = useState(false)
     const [payment, setPayment] = useState(1)
     const dispatch = useDispatch()
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
+    const {theme} = useTheme()
     const {request} = useHttp()
     const handleAddPayment = async  (data) => {
         const newPayment = {
@@ -162,6 +164,11 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                         activeService === "To'lov"
                             ?
                             <>
+                            {
+                                (theme === "app_school_theme" || userSystem?.id === 2) && (
+                                    <Select extraClass={cls.monthSelect} title={"Oyni tanlang"}/>
+                                )
+                            }
                                 <div className={cls.items}>
                                     {
                                         amountTypes.map((item, index) =>
