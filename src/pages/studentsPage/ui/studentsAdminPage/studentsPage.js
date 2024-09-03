@@ -30,7 +30,7 @@ import {Form} from "shared/ui/form";
 import {Select} from "shared/ui/select";
 import {fetchTeachersData, getTeachers} from "entities/teachers";
 import {useForm} from "react-hook-form";
-import {fetchSubjectsAndLanguages} from "pages/registerPage";
+import {fetchLanguages} from "pages/registerPage";
 import {getSchoolStudents} from "entities/students/model/selector/studentsSelector";
 import {createSchoolClass, fetchSchoolStudents} from "entities/students/model/studentsThunk";
 import {Radio} from "shared/ui/radio";
@@ -92,7 +92,6 @@ export const StudentsPage = () => {
     const search = useSelector(getSearchValue);
     let PageSize = useMemo(() => 50, []);
 
-    console.log(id, "idsd")
     const searchedUsers = useMemo(() => {
         let filteredStudents = [];
         switch (selectedRadio) {
@@ -124,7 +123,7 @@ export const StudentsPage = () => {
     useEffect(() => {
         if (userBranchId) {
             dispatch(fetchTeachersData({userBranchId}))
-            dispatch(fetchSubjectsAndLanguages())
+            dispatch(fetchLanguages())
         }
     } , [userBranchId])
 
@@ -229,7 +228,7 @@ export const StudentsPage = () => {
 
 
     return (
-        <MultiPage types={types} >
+        <MultiPage types={types} page={"students"}>
             <StudentsHeader
 
                 selected={selected}

@@ -9,6 +9,8 @@ import {getEmployersData} from "entities/employer/model/selector/employersSelect
 import {EmployeesFilter} from "features/filters/employeesFilter";
 import {getSearchValue} from "features/searchInput";
 import {Pagination} from "features/pagination";
+import {MultiPage} from "../../../widgets/multiPage/ui/MultiPage/MultiPage";
+import {useParams} from "react-router-dom";
 
 export const EmployerPage = () => {
 
@@ -19,10 +21,12 @@ export const EmployerPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [activeSwitch , setActiveSwitch] = useState(false)
     const search = useSelector(getSearchValue);
+    const {"*": id} = useParams()
+    const userBranchId = id
 
     useEffect(() => {
-        dispatch(fetchEmployersData())
-    }, [])
+        dispatch(fetchEmployersData(userBranchId))
+    }, [userBranchId])
 
     const searchedEmployers = useMemo(() => {
         const filteredRooms = employersData?.filter(item => !item.deleted) || [];
@@ -35,25 +39,34 @@ export const EmployerPage = () => {
         );
     }, [employersData, search]);
 
+     const types = [
+         {
+             name: "Ishchilar",
+             type: "worker"
+         }
+     ]
   return(
-      <div className={cls.employer}>
-        <div className={cls.employer__header}>
-            <Button onClick={() => setActiveModal(!activeFilter)} status={"filter"} type={"filter"}>Filter</Button>
-            {/*<Select/>*/}
-        </div>
-          {activeSwitch ? <DeletedEmployers/> : <Employers currentTableData={searchedEmployers.slice((currentPage - 1) * PageSize, currentPage * PageSize)} />}
-          <EmployeesFilter activeSwitch={activeSwitch} setActiveSwitch={setActiveSwitch} active={activeFilter} setActive={setActiveModal}/>
-          <Pagination
-              setCurrentTableData={() => {}}
-              search={search}
-              users={searchedEmployers}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              pageSize={PageSize}
-              onPageChange={(page) => {
-                  setCurrentPage(page);
-              }}
-          />
-      </div>
+      <MultiPage types={types} page={"worker"}>
+          <div className={cls.employer}>
+              <div className={cls.employer__header}>
+                  <Button onClick={() => setActiveModal(!activeFilter)} status={"filter"} type={"filter"}>Filter</Button>
+                  {/*<Select/>*/}
+              </div>
+              {activeSwitch ? <DeletedEmployers/> : <Employers currentTableData={searchedEmployers.slice((currentPage - 1) * PageSize, currentPage * PageSize)} />}
+              <EmployeesFilter activeSwitch={activeSwitch} setActiveSwitch={setActiveSwitch} active={activeFilter} setActive={setActiveModal}/>
+              <Pagination
+                  setCurrentTableData={() => {}}
+                  search={search}
+                  users={searchedEmployers}
+                  setCurrentPage={setCurrentPage}
+                  currentPage={currentPage}
+                  pageSize={PageSize}
+                  onPageChange={(page) => {
+                      setCurrentPage(page);
+                  }}
+              />
+          </div>
+      </MultiPage>
+
   )
 }

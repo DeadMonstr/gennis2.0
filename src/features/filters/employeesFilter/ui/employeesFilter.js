@@ -9,7 +9,7 @@ import cls from "../../filters.module.sass";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVacancyData, getVacancyJobs } from "../../../vacancyModals/vacancyPageAdd";
 import { fetchEmployersDataWithFilter } from "entities/employer";
-import { fetchSubjectsAndLanguages, getLanguagesData } from "pages/registerPage";
+import { fetchLanguages, getLanguagesData } from "pages/registerPage";
 
 export const EmployeesFilter = React.memo(({ active, setActive, activeSwitch, setActiveSwitch }) => {
     const dispatch = useDispatch();
@@ -67,7 +67,7 @@ export const EmployeesFilter = React.memo(({ active, setActive, activeSwitch, se
     }, [dispatch]);
 
     useEffect(() => {
-        dispatch(fetchSubjectsAndLanguages());
+        dispatch(fetchLanguages());
     }, [dispatch]);
 
     return (

@@ -10,7 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getUserBranchId} from "../../../../entities/profile/userProfile";
 import {fetchTeachersData, getTeachers} from "../../../../entities/teachers";
 import {fetchGroupsDataWithFilter, fetchGroupTypeThunk, getGroupTypes} from "../../../../entities/groups";
-import {fetchSubjectsAndLanguages, getSubjectsData} from "../../../../pages/registerPage";
+import {fetchSubjects, getSubjectsData} from "pages/registerPage";
 import {fetchTeachersDataWithFilter} from "../../../../entities/teachers/model/teacherThunk";
 
 export const GroupsFilter = React.memo(({active, setActive}) => {
@@ -30,7 +30,7 @@ export const GroupsFilter = React.memo(({active, setActive}) => {
     },[])
 
     useEffect(() => {
-        dispatch(fetchSubjectsAndLanguages());
+        dispatch(fetchSubjects());
     }, []);
 
     useEffect(() => {

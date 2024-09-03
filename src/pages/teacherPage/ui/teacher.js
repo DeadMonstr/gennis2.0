@@ -14,6 +14,7 @@ import {getTeacherLoading} from "entities/teachers";
 import {fetchTeachersData} from "../../../entities/teachers";
 import {DefaultLoader} from "../../../shared/ui/defaultLoader";
 import {MultiPage} from "../../../widgets/multiPage/ui/MultiPage/MultiPage";
+import {useParams} from "react-router-dom";
 
 
 const branches = [
@@ -26,14 +27,16 @@ export const TeachersPage = () => {
     const loading = useSelector(getTeacherLoading)
     const search = useSelector(getSearchValue)
     const teachersData = useSelector(getTeachers)
-    const userBranchId = useSelector(getUserBranchId)
     const filteredTeachersData = useSelector(getTeachersWithFilter)
     const dispatch = useDispatch()
+    const {"*": id} = useParams()
+    const userBranchId = id
 
 
     useEffect(() =>{
+        if (!userBranchId) return;
         dispatch(fetchTeachersData({userBranchId}))
-    } ,[])
+    } ,[dispatch,userBranchId])
 
 
 
@@ -65,7 +68,7 @@ export const TeachersPage = () => {
     ]
 
     return (
-        <MultiPage types={types}>
+        <MultiPage types={types} page={"teachers"}>
             <div className={cls.teacher}>
 
                 <div className={cls.teacher__filter}>

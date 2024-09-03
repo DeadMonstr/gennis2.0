@@ -7,7 +7,7 @@ import { Radio } from "shared/ui/radio";
 import { Switch } from "shared/ui/switch";
 import { getLanguagesData, getSubjectsData } from "pages/registerPage";
 import cls from "../../filters.module.sass";
-import { fetchSubjectsAndLanguages } from "../../../../pages/registerPage";
+import { fetchLanguages, fetchSubjects } from "pages/registerPage";
 import { useDispatch, useSelector } from "react-redux";
 import {fetchNewStudentsDataWithBranch, fetchStudyingStudentsDataWithBranch} from "entities/students";
 import {getStudyingStudentsWithBranch} from "entities/students";
@@ -97,8 +97,11 @@ export const StudentsFilter = React.memo(({ active, setActive, activePage, setDa
     }
 
     useEffect(() => {
-        dispatch(fetchSubjectsAndLanguages());
-    }, []);
+        dispatch(fetchSubjects());
+    }, [dispatch]);
+    useEffect(() => {
+        dispatch(fetchLanguages())
+    }, [dispatch])
 
     return (
         <Modal

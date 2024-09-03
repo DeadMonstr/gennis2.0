@@ -3,7 +3,7 @@ import {useNavigate} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 
-import {fetchSubjectsAndLanguages} from "pages/registerPage";
+import {fetchLanguages, fetchSubjects} from "pages/registerPage";
 import {getUserBranchId} from "entities/profile/userProfile/model/userProfileSelector";
 import {
     GroupCreateForm,
@@ -151,7 +151,7 @@ export const GroupCreatePage = () => {
                 dispatch(getCurseTypes(res))
             })
             .catch(err => console.log(err))
-        dispatch(fetchSubjectsAndLanguages())
+        dispatch(fetchLanguages())
     }, [userBranchId])
 
     const renterGroups = (data) => {

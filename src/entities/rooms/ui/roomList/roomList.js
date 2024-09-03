@@ -13,7 +13,7 @@ export const RoomsList = ({ currentTableData }) => {
     const [switchStates, setSwitchStates] = useState({});
     const dispatch = useDispatch()
     const getFilteredRoom = useSelector(getFilteredRooms)
-    const filteredRoom = getFilteredRoom?.rooms
+
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -58,7 +58,7 @@ export const RoomsList = ({ currentTableData }) => {
         }));
     };
 
-    const roomsToRender = filteredRoom && filteredRoom.length > 0 ? filteredRoom : currentTableData
+    const roomsToRender = getFilteredRoom && getFilteredRoom.length > 0 ? getFilteredRoom : currentTableData
 
     if (!roomsToRender || roomsToRender.length === 0)
     {
