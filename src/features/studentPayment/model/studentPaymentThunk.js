@@ -185,3 +185,11 @@ export const studentBookOrderListThunk = createAsyncThunk(
         return await request(`${API_URL}Books/book_order_list/?student_id=${id}/`, "GET", null, headers())
     }
 )
+
+export const getMonthDataThunk = createAsyncThunk(
+    'studentPaymentSlice/getMonthData',
+    async (id) => {
+        const {request} = useHttp();
+        return await request(`${API_URL}Students/get_datas/${id}/`, "GET", null, headers())
+    }
+)

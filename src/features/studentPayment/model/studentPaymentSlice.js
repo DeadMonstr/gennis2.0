@@ -19,7 +19,8 @@ import {
     studentPaymentDataThunk,
     studentPaymentDataPostThunk,
     studentPaymentTypeChangeThunk,
-    studentBookOrderListThunk
+    studentBookOrderListThunk,
+    getMonthDataThunk
 
 } from "./studentPaymentThunk";
 
@@ -45,6 +46,7 @@ const initialState = {
     getDateWithPost: [],
     paymentType: [],
     booksList: [],
+    getMonthData: [],
     loading: false,
     error: null
 }
@@ -327,6 +329,20 @@ const studentPaymentSlice = createSlice({
                 state.booksList = action.payload;
             })
             .addCase(studentBookOrderListThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+
+
+
+            .addCase(getMonthDataThunk.pending, (state) => {
+               state.loading = true
+           })
+            .addCase(getMonthDataThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.getMonthData = action.payload;
+            })
+            .addCase(getMonthDataThunk.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
             });

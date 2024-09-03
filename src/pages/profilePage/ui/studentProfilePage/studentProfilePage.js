@@ -70,8 +70,6 @@ export const StudentProfilePage = () => {
         dispatch(changeStudentProfileImage({id: userData?.user?.id, data}))
     }
 
-    console.log(userData, "student ")
-    console.log(selectedGroup, "branc id")
 
     return (
         <div

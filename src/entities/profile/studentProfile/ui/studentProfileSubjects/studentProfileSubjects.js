@@ -13,11 +13,13 @@ export const StudentProfileSubjects = memo(({ setActive, data, onSelectSubject }
             ? data.flatMap(group => ({
                 ...group.subject,
                 price: group.price,
+                name: group.name,
                 groupId: group.id
             }))
             : (data?.subject ? [{
                 ...data.subject,
                 price: data.price,
+                name: data.name,
                 groupId: data.id
             }] : []);
 
