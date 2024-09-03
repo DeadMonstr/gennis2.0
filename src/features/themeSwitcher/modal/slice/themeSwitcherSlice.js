@@ -76,7 +76,7 @@ const themeSwitcherSlice = createSlice({
                 //     }
                 // })
                 if (action.payload.length < 2) {
-                    if (action.payload[0].id === 1) {
+                    if (action.payload[0]?.id === 1) {
                         state.system =  {
                             ...action.payload[0],
                             type: "center"
@@ -89,8 +89,8 @@ const themeSwitcherSlice = createSlice({
                     }
 
                     localStorage.setItem("selectedSystem", JSON.stringify({
-                        id: action.payload[0].id,
-                        type: action.payload[0].type
+                        id: action.payload[0]?.id,
+                        type: action.payload[0]?.type
                     }))
                 }
 

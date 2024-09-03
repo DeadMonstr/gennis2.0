@@ -22,12 +22,14 @@ export const ClassModal = ({
                                editClass,
                                setEditClass,
                                changeInfo,
-                               edit
+                               edit,
+                               setSelectedSubject,
+                               selectedSubject
                            }) => {
 
 
     const [subject, setSubject] = useState([])
-    const [selectedSubject, setSelectedSubject] = useState([])
+
     const [selected, setSelected] = useState([])
     const [deletedId, setDeletedId] = useState(0)
 
@@ -50,7 +52,11 @@ export const ClassModal = ({
             setSelected(selectedSubject.filter(item => item.id !== +deletedId))
         }
     }, [deletedId])
-
+    //
+    // console.log(subject, "subject")
+    // console.log(selectedSubject, "selectedSubject")
+    console.log(deletedId , "deletedId")
+    console.log(selected , "selected")
 
     const onChangeSelect = (id) => {
         const filteredSubjects = subject.filter(item => item.id === +id)
@@ -86,7 +92,6 @@ export const ClassModal = ({
                 <div>
                     <Form extraClassname={cls.extraClassForm} onSubmit={handleSubmit(createClass)}>
                         <Input placeholder={"sinf nomi"} name={"name"} register={register}/>
-
                     </Form>
                 </div>
             </Modal>
@@ -95,11 +100,11 @@ export const ClassModal = ({
                 <h2>Ma’lumotlarni o’zgartirish</h2>
                 <div>
                     <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>
-                        <Select extraClass={cls.select}/>
+                        <Input name={"curriculum_hours"} register={register} type={"number"}/>
                         <Select onChangeOption={onChangeSelect} options={subject}/>
 
                         <div className={cls.selectBox}>
-                            {selected.map(item => {
+                            {selected?.map(item => {
                                 return (
                                     <div className={cls.subjectSelect}>
                                         <i onClick={() => setDeletedId(item.id)} className={"fa fa-times"}/>
@@ -108,9 +113,11 @@ export const ClassModal = ({
                                 )
                             })}
                         </div>
-
-                        <Button extraClass={cls.btn}>O'zgartirish</Button>
+                        <Button>
+                            Tastiqlash
+                        </Button>
                     </Form>
+
                 </div>
             </Modal>
 
@@ -119,7 +126,17 @@ export const ClassModal = ({
 }
 
 
-export const ColorModal = ({createColor, setCreateColor, handleSubmit, addColor , register , color , setColor , active , setActive}) => {
+export const ColorModal = ({
+                               createColor,
+                               setCreateColor,
+                               handleSubmit,
+                               addColor,
+                               register,
+                               color,
+                               setColor,
+                               active,
+                               setActive
+                           }) => {
 
     return (
         <>
@@ -133,7 +150,8 @@ export const ColorModal = ({createColor, setCreateColor, handleSubmit, addColor 
                                 <h2>Tanlangan rang :</h2>
                                 <div className={cls.modalBox} style={{background: color}}></div>
                             </div>
-                            <HexColorPicker style={{width: "22rem", height: "15rem"}} color={color} onChange={setColor}/>
+                            <HexColorPicker style={{width: "22rem", height: "15rem"}} color={color}
+                                            onChange={setColor}/>
                             {/*<div style={{display: "flex" , flexWrap: "wrap",width: "30rem"}}>*/}
                             {/*    /!*<Button onClick={() => setColor("#c6ad23")}>Choose gold</Button>*!/*/}
                             {/*    <Button onClick={() => setColor("#22C55E")}>Choose green</Button>*/}

@@ -8,11 +8,13 @@ import {classData, classItems, classTypeNumber} from "../../../entities/class/mo
 import {classItem, getClassTypeNumber, getClassTypes} from "../../../entities/class/model/thunk/classThunk";
 import {Button} from "../../../shared/ui/button";
 import {API_URL, headers, useHttp} from "../../../shared/api/base";
+import {fetchSubjects, getSubjectsData} from "../../registerPage";
 
 export const ClassPage = ({setEdit, edit, activeEdit, setActiveEdit , activeMenu , setActiveMenu , classes}) => {
 
     const {request} = useHttp()
     const [selectBox , setSelectBox] = useState([])
+    const selectOptions = useSelector(getSubjectsData)
 
 
     const dispatch = useDispatch()
@@ -21,6 +23,7 @@ export const ClassPage = ({setEdit, edit, activeEdit, setActiveEdit , activeMenu
 
     useEffect(() => {
         dispatch(classItem())
+        dispatch(fetchSubjects())
         // dispatch(getClassTypeNumber())
     }, [])
 
@@ -29,7 +32,7 @@ export const ClassPage = ({setEdit, edit, activeEdit, setActiveEdit , activeMenu
         <>
          <ClassFilter classesType={classes} setActiveEdit={setActiveEdit} edit={edit} setEdit={setEdit}
                                              active={activeMenu} setActive={setActiveMenu}/>
-            <ClassTable active={activeMenu} classType={classType} selectBox={selectBox} setSelectBox={setSelectBox} edit={edit}/>
+            <ClassTable selectOptions={selectOptions} active={activeMenu} classType={classType} selectBox={selectBox} setSelectBox={setSelectBox} edit={edit}/>
             {/*<Button onClick={onClick}>Tastiqlash</Button>*/}
         </>
     )

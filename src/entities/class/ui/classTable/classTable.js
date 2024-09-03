@@ -8,37 +8,37 @@ import {API_URL, headers, useHttp} from "../../../../shared/api/base";
 import {useDispatch} from "react-redux";
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 
-export const ClassType = [
-    {className: "1-sinf", id: 1},
-    {className: "2-sinf", id: 2},
-    {className: "3-sinf", id: 3},
-    {className: "4312-sinf", id: 4},
-]
 
 
-const selectOptions = () => [
-    {name: "dsad1", label: "dsads", id: 1},
-    {name: "dsad2", label: "dsads", id: 2},
-    {name: "dsad3", label: "dsads", id: 3},
-    {name: "dsa423d4", label: "dsads", id: 4},
-    {name: "dsa423d4", label: "dsads", id: 5},
-    {name: "ds432ad4", label: "dsads", id: 6},
-    {name: "dsad43213", label: "dsads", id: 7},
-    {name: "dsad312321", label: "dsads", id: 8},
-    {name: "dsa423423d4", label: "dsads", id: 9},
-]
 
 
-export const ClassTable = ({edit, classType, active}) => {
+
+export const ClassTable = ({edit, classType, active , selectOptions}) => {
     const [editClass, setEditClass] = useState(false)
     const [clickedCheckbox, setClickedCheckbox] = useState([])
     const {register, handleSubmit, setValue} = useForm()
     const {request} = useHttp()
     const dispatch = useDispatch()
+    const [selectedSubject, setSelectedSubject] = useState([])
 
 
-    const onChangeClass = () => {
-        setEditClass(!editClass)
+
+    const onChangeClass = (data) => {
+
+
+        const res = {
+            subject: selectedSubject.name,
+            ...data
+        }
+        const id = editClass
+        console.log(res, id, "hello")
+
+        // request(`${API_URL}Class/class_number_update/${id}/`, "PATCH", JSON.stringify(data), headers())
+        //     .then(res => {
+        //         console.log(res)
+        //         setValue("curriculum_hours" , "")
+        //         setEditClass(!editClass)
+        //     })
     }
 
     const onChange = (e) => {
@@ -75,8 +75,15 @@ export const ClassTable = ({edit, classType, active}) => {
                 <td style={{width: "3rem"}}>
                     {item.status ?
                         (
-                            <div className={cls.checkbox__checked}>
-                                <i className={`fa fa-check ${cls.check}`}/>
+                            <div className={cls.items}>
+                                <div className={cls.checkbox__checked}>
+                                    <i className={`fa fa-check ${cls.check}`}/>
+
+                                </div>
+                                <i
+                                    onClick={() => setEditClass(item.id)}
+                                    className={"fa fa-pen"}
+                                />
                             </div>
                         )
                         : (<div className={cls.items}>
@@ -134,7 +141,8 @@ export const ClassTable = ({edit, classType, active}) => {
                 </Table> : null}
 
 
-            <ClassModal changeInfo={onChangeClass} selectOptions={selectOptions} extraClassForm={cls.extraClassForm}
+            <ClassModal selectedSubject={selectedSubject} setSelectedSubject={setSelectedSubject}
+                        changeInfo={onChangeClass} selectOptions={selectOptions} extraClassForm={cls.extraClassForm}
                         extraClassSelect={cls.select} extraClassBtn={cls.btn} editClass={editClass}
                         setEditClass={setEditClass} register={register} handleSubmit={handleSubmit}/>
         </div>

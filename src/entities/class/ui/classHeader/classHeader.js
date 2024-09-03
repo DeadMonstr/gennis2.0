@@ -107,9 +107,10 @@ export const ClassHeader = ({
             </div>
 
 
-            <ClassModal edit={edit} handleSubmit={handleSubmit} register={register} onClick={editClassName}
+            <ClassModal
+                edit={edit} handleSubmit={handleSubmit} register={register} onClick={editClassName}
                         createClass={createClass} activeEdit={activeEdit}
-                        setActiveEdit={setActiveEdit} addClass={addClass} setAddClass={setAddClass}/>
+                        setActiveEdit={setActiveEdit} addClass={addClass} setAddClass={setAddClass} />
 
             <ColorModal color={color} setColor={setColor} active={activeColor} setActive={setActiveColor}
                         createColor={createColorModal} setCreateColor={setCreateColor} handleSubmit={handleSubmit}
