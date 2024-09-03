@@ -28,7 +28,7 @@ export const Register = () => {
     const registerType = watch("registerType", "student");
     const username = watch("username", "");
     const {theme} = useTheme()
-    const userSystemId = useSelector(getUserSystemId);
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
     const classNumbers = useSelector(getSchoolClassNumbers)
     const dispatch = useDispatch();
     const [error, setError] = useState(false);
@@ -53,7 +53,7 @@ export const Register = () => {
     }, []);
 
     useEffect(() => {
-        if (userSystemId === 2 || theme === "app_school_theme") {
+        if (userSystem?.id === 2 || theme === "app_school_theme") {
             dispatch(fetchClassNumberList())
         }
     }, [])
@@ -210,7 +210,7 @@ export const Register = () => {
                             ]}
                         />
                         {
-                            (theme === "app_school_theme" || userSystemId === 2) && (
+                            (theme === "app_school_theme" || userSystem?.id === 2) && (
                                 <Select
                                     extraClass={cls.extraClasses}
                                     title={"Sinf"}
@@ -238,7 +238,7 @@ export const Register = () => {
                             options={subjects.map(subj => ({ id: subj.id, name: subj.name }))}
                         />
                         {
-                            (theme === "app_school_theme" || userSystemId === 2) && (
+                            (theme === "app_school_theme" || userSystem?.id === 2) && (
                                 <>
                                     <Select
                                         extraClass={cls.extraClasses}

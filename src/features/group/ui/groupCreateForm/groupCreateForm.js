@@ -39,7 +39,7 @@ export const GroupCreateForm = memo((props) => {
     const curseTypesData = useSelector(getCurseTypesData)
     const curseLevelData = useSelector(getCurseLevelData)
     const userBranchId = useSelector(getUserBranchId)
-    const languages = useSelector(state => state.registerUser.languages)
+    const languages = useSelector(state => state.registerUser)
 
     const [createStatus, setCreateStatus] = useState(false)
 

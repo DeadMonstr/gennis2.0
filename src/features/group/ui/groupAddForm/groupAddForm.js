@@ -13,6 +13,7 @@ import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import React, {memo, useEffect, useMemo, useState} from 'react';
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
+import {API_URL, headers, useHttp} from "shared/api/base";
 import defaultUserImg from "shared/assets/images/user_image.png";
 import {Input} from "shared/ui/input";
 import {MiniLoader} from "shared/ui/miniLoader";
@@ -32,6 +33,7 @@ export const GroupAddForm = memo((props) => {
         active
     } = props
 
+    const {request} = useHttp()
     const dispatch = useDispatch()
     const {
         register,
@@ -55,22 +57,41 @@ export const GroupAddForm = memo((props) => {
     }
 
     const onSubmitAddStudents = () => {
-        // const place = userSystemId === 1 ? "guruh" : "sinf"
-        dispatch(changeGroupProfile({
-            data: {
-                students: selectedId,
-                update_method: "add_students"
-            },
-            id: data?.id,
+        const res = {
+            students: selectedId,
+            update_method: "add_students",
             group_type: "center"
-            // group_type: "center"
-        }))
+        }
+        // const place = userSystemId === 1 ? "guruh" : "sinf"
+        request(`${API_URL}Group/groups/profile/${data?.id}/`, "PATCH", JSON.stringify(res), headers())
+            .then(res => {
+                console.log(res, "res group")
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: `O'quvchilar guruhga qo'shildi`
+                }))
+            })
+            .catch(err => {
+                console.log(err)
+                dispatch(onAddAlertOptions({
+                    type: "error",
+                    status: true,
+                    msg: "xatolik yuz berdi (outside groupAdd)"
+                }))
+            })
+        // dispatch(changeGroupProfile({
+        //     data: {
+        //         students: selectedId,
+        //         update_method: "add_students",
+        //         group_type: "center"
+        //     },
+        //     id: data?.id,
+        //
+        //     // group_type: "center"
+        // }))
 
-        dispatch(onAddAlertOptions({
-            type: "success",
-            status: true,
-            msg: `O'quvchilar guruhga qo'shildi`
-        }))
+
     }
 
     useEffect(() => {

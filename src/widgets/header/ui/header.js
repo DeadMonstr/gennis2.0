@@ -144,12 +144,12 @@ export const Header = () => {
 
                 <div className={cls.header__selected}>
                     {locations.length > 1 && selectedLocations.map(item => (
-                        <div className={cls.header__item} key={item.id}>
+                        <div className={cls.header__item} key={item?.id}>
                             <i
-                                onClick={() => onDelete(item.id)}
+                                onClick={() => onDelete(item?.id)}
                                 className="fa fa-times"
                             />
-                            <p>{item.name}</p>
+                            <p>{item?.name}</p>
                         </div>
                     ))}
                 </div>

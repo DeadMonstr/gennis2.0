@@ -65,7 +65,7 @@ export const GroupProfileDeleteForm = memo(() => {
     const {theme} = useTheme()
     const {id} = useParams()
     const dispatch = useDispatch()
-    const userSystemId = useSelector(getUserSystemId)
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
     const userBranchId = useSelector(getUserBranchId)
     const data = useSelector(getGroupProfileData)
     const students = useSelector(getGroupProfileFilteredStudents)
@@ -108,7 +108,7 @@ export const GroupProfileDeleteForm = memo(() => {
     }, [students, searchValue])
 
     const onSubmitDelete = (dataForm) => {
-        const place = userSystemId === 1 ? "guruh" : "sinf"
+        const place = userSystem?.id === 1 ? "guruh" : "sinf"
         const selectedStudent = data?.students?.filter(item => item.id === selectDeleteId)[0]?.user
         const res = {
             ...dataForm,
@@ -118,7 +118,7 @@ export const GroupProfileDeleteForm = memo(() => {
         dispatch(changeGroupProfile({
             id,
             data: res,
-            group_type: userSystemId === 1 ? "center" : "school"
+            group_type: userSystem?.id === 1 ? "center" : "school"
         }))
         dispatch(onAddAlertOptions({
             type: "success",
@@ -129,7 +129,7 @@ export const GroupProfileDeleteForm = memo(() => {
 
     const onSubmitMove = (data) => {
         let msg;
-        if (theme === "app_school_theme" || userSystemId === 2) {
+        if (theme === "app_school_theme" || userSystem?.id === 2) {
             const res = {
                 ...data,
                 students: select
@@ -152,14 +152,14 @@ export const GroupProfileDeleteForm = memo(() => {
     }
 
     const onSubmitAddStudents = () => {
-        const place = userSystemId === 1 ? "guruh" : "sinf"
+        const place = userSystem?.id === 1 ? "guruh" : "sinf"
         dispatch(changeGroupProfile({
             data: {
                 students: selectedId,
                 update_method: "add_students"
             },
             id,
-            group_type: userSystemId === 1 ? "center" : "school"
+            group_type: userSystem?.id === 1 ? "center" : "school"
             // group_type: "center"
         }))
         dispatch(onAddAlertOptions({
@@ -388,7 +388,7 @@ export const GroupProfileDeleteForm = memo(() => {
                 >
                     <Select
                         extraClass={cls.deleteForm__select}
-                        options={userSystemId === 1 ? teachers : schoolTeachers}
+                        options={userSystem?.id === 1 ? teachers : schoolTeachers}
                         title={"Teacher"}
                         onChangeOption={onFilterGroups}
                         // register={register}

@@ -43,7 +43,7 @@ export const GroupProfileInfoForm = memo(() => {
     const data = useSelector(getGroupProfileData)
     const nextLesson = useSelector(getGroupProfileNextLsData)
     const languages = useSelector(getLanguagesData)
-    const userSystemId = useSelector(getUserSystemId)
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
     const schoolClassNumbers = useSelector(getSchoolClassNumbers)
     const schoolClassColors = useSelector(getSchoolClassColors)
 
@@ -72,7 +72,7 @@ export const GroupProfileInfoForm = memo(() => {
     const onDelete = () => {
         dispatch(deleteGroupProfile({
             id,
-            res: {type: userSystemId === 1 ? "center" : "school"}
+            res: {type: userSystem?.id === 1 ? "center" : "school"}
         }))
         navigate(-2)
     }
@@ -81,7 +81,7 @@ export const GroupProfileInfoForm = memo(() => {
         setValue("name", data?.name)
         setValue("price", data?.price)
         setValue("language", data?.language?.id)
-        if (userSystemId === 2) {
+        if (userSystem?.id === 2) {
             setValue("class_number", data?.class_number?.id)
         }
     }, [])
@@ -193,7 +193,7 @@ export const GroupProfileInfoForm = memo(() => {
                         required
                     />
                     {
-                        userSystemId === 2 ? <>
+                        userSystem?.id === 2 ? <>
                             <Select
                                 extraClass={cls.form__select}
                                 options={schoolClassNumbers}

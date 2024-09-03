@@ -120,7 +120,7 @@ export const GroupCreatePage = () => {
         if (selectedSubjectId) {
             request(`${API_URL}Subjects/level-for-subject/${selectedSubjectId}/`, "GET", null, headers())
                 .then(res => {
-                    console.log(res)
+                    // console.log(res)
                     dispatch(getCurseLevel(res))
                 })
                 .catch(err => console.log(err))

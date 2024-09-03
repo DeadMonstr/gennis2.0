@@ -5,6 +5,6 @@ export const fetchRoomsData = createAsyncThunk(
     'roomsSlice/fetchRoomsData',
     async () => {
         const { request } = useHttp();
-        return await request(`${API_URL}Rooms/rooms`, 'GET', null, headers())
+        return await request(`${API_URL}Rooms/rooms/?deleted=False`, 'GET', null, headers())
     }
 );

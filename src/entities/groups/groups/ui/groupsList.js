@@ -11,7 +11,7 @@ import cls from "./groupsList.module.sass";
 export const GroupsList = React.memo(({currentTableData}) => {
 
     const navigate = useNavigate()
-    const userSystemId = useSelector(getUserSystemId)
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
 
 
 
@@ -23,7 +23,7 @@ export const GroupsList = React.memo(({currentTableData}) => {
             <Table extraClass={cls.table__head}>
                 <thead>
                 {
-                    userSystemId === 1 ? <tr>
+                    userSystem === 1 ? <tr>
                         <th>No</th>
                         <th>Guruh Nomi</th>
                         <th>Full name</th>
@@ -50,7 +50,7 @@ export const GroupsList = React.memo(({currentTableData}) => {
                                 <td>{i + 1}</td>
                                 <td>{item?.name}</td>
                                 {
-                                    userSystemId === 1 ? <>
+                                    userSystem === 1 ? <>
                                             <td>{item?.name} {item?.surname}</td>
                                             <td>{item?.subject?.name}</td>
                                             <td>{item?.course_types?.name}</td>

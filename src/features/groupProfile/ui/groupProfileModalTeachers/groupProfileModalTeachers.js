@@ -5,6 +5,7 @@ import {fetchTeachersData, getTeachers} from "entities/teachers";
 import {getUserBranchId} from "entities/profile/userProfile";
 import {getUserSystemId} from "entities/profile/userProfile/model/userProfileSelector";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
+import {system} from "features/workerSelect";
 import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";
@@ -22,7 +23,7 @@ import defaultUserImg from "shared/assets/images/user_image.png";
 
 export const GroupProfileModalTeachers = memo(() => {
 
-    const userSystemId = useSelector(getUserSystemId)
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
     const userBranchId = useSelector(getUserBranchId)
     const dispatch = useDispatch()
     const {id} = useParams()
@@ -41,12 +42,12 @@ export const GroupProfileModalTeachers = memo(() => {
     useEffect(() => {
         console.log(schoolTeachers, "schoolTeachers")
         console.log(centerTeachers, "centerTeachers")
-        if (userSystemId === 2) {
+        if (userSystem?.id === 2) {
             setCurrentTeachersData(schoolTeachers)
         } else {
             setCurrentTeachersData(centerTeachers)
         }
-    }, [theme, userSystemId, centerTeachers, schoolTeachers])
+    }, [theme, userSystem, centerTeachers, schoolTeachers])
 
     const [active, setActive] = useState(false)
     const [searchValue, setSearchValue] = useState("")
@@ -57,7 +58,7 @@ export const GroupProfileModalTeachers = memo(() => {
         dispatch(changeGroupProfile({
             data: {teacher: [teacherId]},
             id: id,
-            group_type: userSystemId === 1 ? "center" : "school"
+            group_type: userSystem?.id === 1 ? "center" : "school"
         }))
         dispatch(onAddAlertOptions({
             type: "success",

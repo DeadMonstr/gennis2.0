@@ -46,7 +46,7 @@ export const getCreateEducation = (id) => `createEducation/${id}`
 export const getLocations = (id) => `location/${id}`
 export const getBranch = (id) => `branches/${id}`
 
-export const getRouteCreateGroup = () => `students/:id/createGroup`
+export const getRouteCreateGroup = () => `students/createGroup`
 
 export const getEducation = (id) => `education/${id}`
 

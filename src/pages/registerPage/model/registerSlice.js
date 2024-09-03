@@ -15,7 +15,7 @@ export const userSlice = createSlice({
         builder
             .addCase(fetchSubjectsAndLanguages.fulfilled, (state, action) => {
                 state.subjects = action.payload.subjects;
-                state.languages = action.payload.languages;
+                state.languages = action.payload;
                 console.log(action);
             })
             .addCase(registerUser.pending, (state) => {
