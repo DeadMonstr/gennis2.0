@@ -14,6 +14,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
     const navigation = useNavigate()
     const dispatch =  useDispatch()
     const getNewSt = useSelector(getStudentsWithBranch)
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
 
 
 
@@ -35,11 +36,18 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                        <td>{i + 1}</td>
                        <td>{item.user?.surname} {item.user?.name}</td>
                        <td>{item.user?.age}</td>
-                       <td>{item.user?.phone}</td>
                        <td>{item.user?.language?.name}</td>
-                       <td>{
-                           !item.subject[0]?.name || item.subject === 0 ? "Fani hali tanlanmagan" : item.subject[0]?.name
-                       }</td>
+                       {
+                           userSystem?.id === 2 ? <>
+                               <td>{item?.group[0]?.name}</td>
+                           </> : <>
+                               <td>{item.user?.phone}</td>
+                               <td>{
+                                   !item.subject[0]?.name || item.subject === 0 ? "Fani hali tanlanmagan" : item.subject[0]?.name
+                               }</td>
+                           </>
+                       }
+
                        <td>{item.user?.registered_date}</td>
                        {
                            theme ? <Input
@@ -70,9 +78,14 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                         <th>№</th>
                         <th>Full name</th>
                         <th>Age</th>
-                        <th>Telefon numer</th>
                         <th>Til</th>
-                        <th>Fani</th>
+                        {
+                            userSystem?.id === 2 ? <th>Sinf</th> : <>
+                                <th>Telefon numer</th>
+                                <th>Fani</th>
+                            </>
+                        }
+
                         <th>Reg. sana</th>
                         {
                             theme ? <th/> : null

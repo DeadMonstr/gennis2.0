@@ -135,7 +135,7 @@ export const studentsSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchClassColors.fulfilled, (state, action) => {
-                state.schoolClassColors = action.payload.classcolors
+                state.schoolClassColors = action.payload
                 state.loading = false
                 state.error = null
             })
