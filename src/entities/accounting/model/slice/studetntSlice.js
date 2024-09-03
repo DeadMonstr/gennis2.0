@@ -22,7 +22,7 @@ const studentSlice = createSlice({
                 state.error = false
             })
             .addCase(getStudentPayment.fulfilled ,(state, action) =>{
-                state.studentsData = action.payload.branches
+                state.studentsData = action.payload
                 state.loading = false
                 state.error = false
             } )
@@ -35,7 +35,7 @@ const studentSlice = createSlice({
                 state.error = false
             })
             .addCase(getDeletedPayment.fulfilled, (state, action) => {
-                state.deletedStudentsPayment = action.payload.branches
+                state.deletedStudentsPayment = action.payload
                 state.loading = false
                 state.error = false
             })

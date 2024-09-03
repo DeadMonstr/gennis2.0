@@ -1,3 +1,4 @@
+
 import {useDispatch, useSelector} from "react-redux";
 import {getCapitalList, getDeletedCapitalList} from "entities/accounting/model/selector/capital";
 import React, {useEffect, useState} from "react";
@@ -36,9 +37,6 @@ export const Capital = ({deleted , setDeleted }) => {
     const [radio, setRadio] = useState({})
     const [changingData, setChangingData] = useState({})
     const [activeDelete, setActiveDelete] = useState(false)
-    // const [alerts, setAlerts] = useState([])
-    const [deleted, setDeleted] = useState(false)
-
     const {register, setValue, handleSubmit} = useForm()
 
     const monthDay = useSelector(getMonthDays)
@@ -108,14 +106,13 @@ export const Capital = ({deleted , setDeleted }) => {
         <div className={cls.overhead}>
             <CapitalHeader deleted={deleted} setDeleted={setDeleted} setActive={setActiveModal} sum1={sum1} sum2={sum2} formatSalary={formatSalary}/>
             {deleted ? <CapitalDeleted deleted={capitalDeletedList}/> : <AccountingCapitalCosts changingData={changingData} activeDelete={activeDelete}
-                                                      setActiveDelete={setActiveDelete}
-                                                      setChangingData={setChangingData}
-                                                      onDelete={onDelete} capitalData={capitalList}/>}
+                                                                                                setActiveDelete={setActiveDelete}
+                                                                                                setChangingData={setChangingData}
+                                                                                                onDelete={onDelete} capitalData={capitalList}/>}
             <CapitalModal radioSelect={radio} setRadio={setRadio} register={register} onAdd={onAdd}
                           handleSubmit={handleSubmit} monthDay={monthDay} setMonth={setMonth} setDay={setDay} day={day}
                           month={month} setActive={setActiveModal} activeModal={activeModal} radio={paymentType}/>
-        <YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>
+            <YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>
         </div>
     );
 };
-
