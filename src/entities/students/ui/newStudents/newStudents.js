@@ -41,7 +41,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                        <td>{item.user?.language?.name}</td>
                        {
                            userSystem?.id === 2 ? <>
-                               <td>{item?.group[0]?.name}</td>
+                               <td>{item?.class_number}</td>
                            </> : <>
                                <td>{item.user?.phone}</td>
                                <td>{

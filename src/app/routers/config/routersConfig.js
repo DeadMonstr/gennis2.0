@@ -207,7 +207,7 @@ export const routersConfig = [
         element: <GroupCreatePage/>,
     },
     {
-        path: "groups/:id/groupInfo/:id",
+        path: "groups/groupInfo/:id",
         element: <GroupProfilePage/>,
     },
     {
