@@ -9,3 +9,7 @@ export {ClassColorAddFilter} from "./ui/classColorAdd/classColorAddFilter/classC
 
 
 export {ClassColorAddTable} from "./ui/classColorAdd/classColorAddTable/classColorAddTable"
+
+
+
+export {default as classSlice} from "./model/slice/classSlice"

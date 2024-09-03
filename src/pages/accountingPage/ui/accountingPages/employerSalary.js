@@ -20,10 +20,9 @@ import {
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 import {YesNo} from "../../../../shared/ui/yesNoModal";
 
-export const EmployerSalaryPage = memo(({setPage}) => {
+export const EmployerSalaryPage = memo(({deleted , setDeleted }) => {
     const dispatch = useDispatch()
     const [changePayment, setChangePayment] = useState(false)
-    const [deleted, setDeleted] = useState(false)
     const [archive, setArchive] = useState(false)
     const getSalary = useSelector(getEmployerSalary)
     const getDeletedEmployerSalary = useSelector(getDeletedEmployer)
@@ -104,22 +103,40 @@ export const EmployerSalaryPage = memo(({setPage}) => {
 
     return loading ? <DefaultPageLoader/> : (
         <div>
-            <div style={{display: "flex"}}>
-                <Button type={"danger"} onClick={() => setDeleted(!deleted)}>
-                    Deleted
-                </Button>
-                <Button onClick={() => setArchive(!archive)} type={"simple__add"}>
-                    Arxiv
-                </Button>
+            {/*<div style={{display: "flex"}}>*/}
+            {/*    <Button type={"danger"} onClick={() => setDeleted(!deleted)}>*/}
+            {/*        Deleted*/}
+            {/*    </Button>*/}
+            {/*    <Button onClick={() => setArchive(!archive)} type={"simple__add"}>*/}
+            {/*        Arxiv*/}
+            {/*    </Button>*/}
+            {/*    <div style={{*/}
+            {/*        // textAlign: "right",*/}
+            {/*        display: "flex",*/}
+            {/*        justifyContent: "flex-end"*/}
+            {/*    }}>*/}
+            {/*        <div style={{*/}
+            {/*            alignSelf: "flex-end",*/}
+            {/*            fontSize: "2rem",*/}
+            {/*            color: "#22C55E",*/}
+            {/*            padding: "1rem 2rem 1rem 1rem",*/}
+            {/*            borderRadius: "5px",*/}
+            {/*            marginBottom: "10px"*/}
+            {/*        }}>Total : {formatSalary(sum2)} */}
+            {/*        </div>*/}
+            {/*    </div>*/}
+
+            {/*</div>*/}
+            <div style={{display: "flex", gap: "2rem" ,alignItems: "center" ,justifyContent: "flex-end" , marginBottom: "3rem"}}>
+
+                <div style={{color: "rgb(34, 197, 94)" , fontSize: "2.2rem" , textAlign: "end" }}>Total : {formatSalary(deleted ? sum1 : sum2)}</div>
             </div>
 
             {deleted ? <DeletedWorkerSalary
-                    sum2={sum1}
                     filteredDeletedSalary={getDeletedEmployerSalary}
                     formatSalary={formatSalary}/> :
                 <EmployeeSalary
                     changingData={changingData}
-                    sum2={sum2}
                     formatSalary={formatSalary}
                     filteredSalary={getSalary}
                     setChangingData={setChangingData}

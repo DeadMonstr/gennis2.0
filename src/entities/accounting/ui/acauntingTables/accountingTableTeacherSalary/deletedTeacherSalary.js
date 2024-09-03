@@ -26,7 +26,6 @@ export const DeletedTeacherSalary = ({deletedTeacher, setChangePayment, setChang
         return Number(salary).toLocaleString();
     };
 
-    const sum1 = currentTableData.reduce((a, c) => a + parseFloat(c.salary || 0), 0);
 
     const renderTeacherDeleted = () => {
         return currentTableData.map((item, index) => (
@@ -35,10 +34,10 @@ export const DeletedTeacherSalary = ({deletedTeacher, setChangePayment, setChang
                 <tbody>
                 <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{item.teacher.user.name} {item.teacher.user.surname}</td>
-                    <td>{item.salary}</td>
-                    <td>{item.comment}</td>
-                    <td>{item.date}</td>
+                    <td>{item?.teacher?.user?.name} {item?.teacher?.user?.surname}</td>
+                    <td>{item?.salary}</td>
+                    <td>{item?.comment}</td>
+                    <td>{item?.date}</td>
                     {/*<td*/}
                     {/*    onClick={() => {*/}
                     {/*        setChangingData({*/}
@@ -57,9 +56,9 @@ export const DeletedTeacherSalary = ({deletedTeacher, setChangePayment, setChang
                     {/*<td>{item.date}</td>*/}
                     <td onClick={() => {
                         setChangingData({
-                            id: item.id,
+                            id: item?.id,
                             // payment_types: item.payment_types?.name,
-                            payment_types: item.payment_types,
+                            payment_types: item?.payment_types,
                             // userId: item.user.id,
                         })
                         // setChangePayment(!changePayment)
@@ -71,7 +70,7 @@ export const DeletedTeacherSalary = ({deletedTeacher, setChangePayment, setChang
                             borderRadius: "15px",
                             textTransform: "capitalize",
                             cursor: "pointer"
-                        }}>{item.payment.name}</div>
+                        }}>{item?.payment?.name}</div>
                     </td>
 
                 </tr>
@@ -82,21 +81,6 @@ export const DeletedTeacherSalary = ({deletedTeacher, setChangePayment, setChang
     return (
         <>
             <div>
-                <div style={{
-                    // textAlign: "right",
-                    display: "flex",
-                    justifyContent: "flex-end"
-                }}>
-
-                    <div style={{
-                        color: "#22C55E",
-                        fontSize: "2rem",
-                        marginBottom: "10px"
-                    }}>
-                        {/*Total : {deleted ? formatSalary(sum2) : formatSalary(sum1)} sum*/}
-                        Total : {formatSalary(sum1)} sum
-                    </div>
-                </div>
                 <div style={{height: "calc(100vh - 43rem)", overflow: "auto"}}>
 
                     <Table>

@@ -5,7 +5,7 @@ import {
     getCapitalInfo,
     changeCapitalInfoThunk,
     getInsideCategory,
-    getPaymentType, createInsideCategory
+    getPaymentType, createInsideCategory, getCapitalCategory
 } from "../thunk/capitalThunk";
 
 
@@ -17,7 +17,8 @@ const initialState = {
     capitalPermission: [],
     capitalCategoryInfo: [],
     capitalInsideCategory: [],
-    paymentTypes: []
+    paymentTypes: [],
+    capitalCategory: []
 
 }
 
@@ -40,8 +41,8 @@ export const CapitalSlice = createSlice({
             })
             .addCase(getCapitalDataThunk.fulfilled , (state, action) => {
                 state.loading = false
-                state.capitalsData = action.payload?.capitalcategorys
-                state.capitalPermission = action.payload?.permissions
+                state.capitalsData = action.payload
+                // state.capitalPermission = action.payload?.permissions
             })
             .addCase(getCapitalDataThunk.rejected , (state, action) => {
                 state.error = action.payload ?? null
@@ -70,7 +71,7 @@ export const CapitalSlice = createSlice({
                 state.error = null
             })
             .addCase(getCapitalInfo.fulfilled , (state, action) =>{
-                state.capitalCategoryInfo = action.payload.capitalcategory
+                state.capitalCategoryInfo = action.payload
                 state.loading = false
                 state.error = null
             })
@@ -105,7 +106,7 @@ export const CapitalSlice = createSlice({
                 state.error = null
             })
             .addCase(getInsideCategory.fulfilled , (state, action) =>{
-                state.capitalInsideCategory = action.payload.capital
+                state.capitalInsideCategory = action.payload
                 state.loading = false
                 state.error = null
             })
@@ -140,13 +141,31 @@ export const CapitalSlice = createSlice({
                 state.error = false
             })
             .addCase(getPaymentType.fulfilled , (state , action) => {
-                state.paymentTypes = action.payload.paymenttypes
+                state.paymentTypes = action.payload
                 state.loading = false
                 state.error = false
             })
             .addCase(getPaymentType.rejected , (state , action) => {
                 state.loading = false
                 state.loading = true
+            })
+
+
+
+
+            .addCase(getCapitalCategory.pending , state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(getCapitalCategory.fulfilled , (state, action) => {
+                state.capitalCategory = action.payload
+                state.loading = false
+                state.error = false
+
+            })
+            .addCase(getCapitalCategory.rejected , state => {
+                state.error = true
+                state.loading = false
             })
 })
 

@@ -40,7 +40,7 @@ export const TeachersSalary = ({
         return Number(salary).toLocaleString();
     };
 
-    const sum1 = currentTableData.reduce((a, c) => a + parseFloat(c.salary || 0), 0);
+
     const onDeleteModal = (data) => {
         setActiveDelete(true)
 
@@ -99,19 +99,19 @@ export const TeachersSalary = ({
     // }
 
     const renderTeacherSalary = () => {
-        return currentTableData.map((item, index) => (
+        return currentTableData?.map((item, index) => (
             <tbody>
             <tr key={item.id}>
                 <td>{index + 1}</td>
-                <td>{item.teacher.user.name} {item.teacher.user.surname}</td>
-                <td>{item.salary}</td>
-                <td>{item.comment}</td>
-                <td>{item.date}</td>
+                <td>{item?.teacher?.user?.name} {item?.teacher?.user?.surname}</td>
+                <td>{item?.salary}</td>
+                <td>{item?.comment}</td>
+                <td>{item?.date}</td>
                 <td
                     onClick={() => {
                         setChangingData({
-                            id: item.id,
-                            payment: item.payment
+                            id: item?.id,
+                            payment: item?.payment
                         });
                         setChangePayment(true);
                     }}
@@ -123,21 +123,21 @@ export const TeachersSalary = ({
                         borderRadius: "15px",
                         textTransform: "capitalize",
                         cursor: "pointer"
-                    }}>{item.payment.name}</div>
+                    }}>{item?.payment?.name}</div>
                 </td>
                 <td>
                     <div>
                         <Button
                             onClick={() => {
                                 onDeleteModal({
-                                    id: item.id,
-                                    name: item.teacher.user.name,
-                                    surname: item.teacher.user.surname
+                                    id: item?.id,
+                                    name: item?.teacher?.user?.name,
+                                    surname: item?.teacher?.user?.surname
                                 })
                                 setChangingData({
-                                    id: item.id,
-                                    name: item.teacher.user.name,
-                                    surname: item.teacher.user.surname
+                                    id: item?.id,
+                                    name: item?.teacher?.user?.name,
+                                    surname: item?.teacher?.user?.surname
                                 })
                             }
                         }
@@ -158,21 +158,7 @@ export const TeachersSalary = ({
     const render = renderTeacherSalary()
     return (
         <>
-            <div style={{
-                // textAlign: "right",
-                display: "flex",
-                justifyContent: "flex-end"
-            }}>
 
-                <div style={{
-                    color: "#22C55E",
-                    fontSize: "2rem",
-                    marginBottom: "10px"
-                }}>
-                    {/*Total : {deleted ? formatSalary(sum2) : formatSalary(sum1)} sum*/}
-                    Total : {formatSalary(sum1)} sum
-                </div>
-            </div>
             <div style={{height: "calc(100vh - 43rem)", overflow: "auto"}}>
 
                 <Table>

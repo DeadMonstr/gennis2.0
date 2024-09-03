@@ -25,7 +25,7 @@ export const overHeadSlice = createSlice({
                 state.error = false
             })
             .addCase(overHeadList.fulfilled, (state, action) => {
-                state.overHeadList = action.payload.overheads
+                state.overHeadList = action.payload
                 state.loading = false
                 state.error = false
             })
@@ -38,7 +38,7 @@ export const overHeadSlice = createSlice({
                 state.error = false
             })
             .addCase(overHeadDeletedList.fulfilled, (state, action) => {
-                state.overHeadDeletedLists = action.payload.overheads
+                state.overHeadDeletedLists = action.payload
                 state.loading = false
                 state.error = false
             })
@@ -51,7 +51,7 @@ export const overHeadSlice = createSlice({
                 state.error = false
             })
             .addCase(getOverheadType.fulfilled, (state, action) => {
-                state.overHeadType = action.payload.overheads
+                state.overHeadType = action.payload
                 state.loading = false
                 state.error = false
             })

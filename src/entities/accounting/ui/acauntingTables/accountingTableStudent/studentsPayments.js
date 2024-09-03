@@ -16,7 +16,8 @@ export const StudentsPayments = ({
                                      onDelete,
                                      deleted,
                                      activeDelete,
-                                     setActiveDelete
+                                     setActiveDelete,
+                                     formatSalary
                                  }) => {
 
     const search = useSelector(getSearchValue)
@@ -34,10 +35,8 @@ export const StudentsPayments = ({
             item.name?.toLowerCase().includes(search.toLowerCase())
         )
     }, [studentData, setCurrentPage, search])
-    const formatSalary = (payment_sum) => {
-        return Number(payment_sum).toLocaleString();
-    };
-    const sum2 = studentData.reduce((a, c) => a + parseFloat(c.payment_sum || 0), 0);
+
+
 
 
 
@@ -88,24 +87,7 @@ export const StudentsPayments = ({
     return (
         <>
             <div className={cls.empSalary}>
-                <div style={{
-                    // textAlign: "right",
-                    display: "flex",
-                    justifyContent: "flex-end"
-                }}>
 
-                    <div style={{
-                        alignSelf: "flex-end",
-                        fontSize: "2rem",
-                        color: "#22C55E",
-                        padding: "1rem 2rem 1rem 1rem",
-                        borderRadius: "5px",
-                        marginBottom: "10px"
-                    }}>
-                        {/*Total : {deleted ? formatSalary(sum1) : formatSalary(sum2)} sum*/}
-                        Total : {formatSalary(sum2)} sum
-                    </div>
-                </div>
                 <Table>
                     <thead>
                     <tr>

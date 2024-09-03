@@ -16,6 +16,7 @@ import {Form} from "../../../../shared/ui/form";
 import {Input} from "../../../../shared/ui/input";
 import {Modal} from "../../../../shared/ui/modal";
 import {postCreateSystemThunk} from "../../../creates/model/createThunk/createThunk";
+import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 
 export const System = () => {
     const {register, handleSubmit, setValue} = useForm();
@@ -27,6 +28,7 @@ export const System = () => {
     const [active, setActive] = useState(false)
     const loading = useSelector(getLoading)
     const {request} = useHttp()
+    const [activeDel , setActiveDel] = useState(false)
     console.log(getName, "name")
     useEffect(() => {
         dispatch(getSystemThunk());
@@ -55,11 +57,20 @@ export const System = () => {
     const onDelete = () => {
         console.log(isChange.id, "hello")
         request(`${API_URL}System/systems/delete/${isChange.id}/`, "DELETE", JSON.stringify({id: isChange.id}), headers())
+            .then(res => {
+                setActiveLocationModal(!activeLocationModal)
+                setActiveDel(!activeDel)
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    msg:res.msg,
+                    status: true
+                }))
+                dispatch(onDeleteCapitalReducer({id: isChange.id}))
+            })
             .catch(err => {
                 console.log(err)
             })
-        setActiveLocationModal(!activeLocationModal)
-        dispatch(onDeleteCapitalReducer({id: isChange.id}))
+
 
     }
     const renderSystem = () => {
@@ -104,6 +115,9 @@ export const System = () => {
                     activeModal={activeLocationModal}
                     setActive={setActiveLocationModal}
                     onDelete={onDelete}
+                    activeDel={activeDel}
+                    setActiveDel={setActiveDel}
+
                 />
             </div>
             <Modal active={active} setActive={setActive}>

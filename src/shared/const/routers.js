@@ -60,6 +60,7 @@ export const getInkasatsiya = (id) => `inkasatsiya/${id}/*`
 
 export const getGroupHistory = (id) => `students/profile/:id/history/${id}`
 
-export const getRouteClassProfile = (id) => `groups/classProfile/${id}`
+export const getRouteClassProfile = (id) => `groups/:id/classProfile/${id}`
+export const getCapitalCategoryProfile = (id) => `capital/:id/capitalBoxProfile/:id/categoryProfile/${id}`
 
 

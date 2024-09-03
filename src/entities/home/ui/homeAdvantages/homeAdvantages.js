@@ -100,63 +100,63 @@ export const HomeAdvantages = () => {
 
     return (
         <div className={cls.advantages} ref={sectionRef}>
-            <Modal
-                active={changeStatus}
-                setActive={setChangeStatus}
-            >
-                <div
-                    className={cls.advantages__modal}
-                >
-                    <h1>Afzallikni o'zgartirish</h1>
-                    <form
-                        className={cls.wrapper}
-                        onSubmit={handleSubmit(onSubmit)}
-                    >
-                        <div className={cls.wrapper__container}>
-                            <div className={cls.wrapper__container_item}>
-                                <Input
-                                    required
-                                    register={register}
-                                    name={'advantageName'}
-                                    placeholder={'Title'}
-                                    value={changedItem?.name}
-                                    defaultValue={changedItem?.name}
-                                />
-                                <Textarea
-                                    required
-                                    cols="30"
-                                    rows="10"
-                                    {...register("advantageText", {
-                                        value: changedItem?.text
-                                    })}
-                                    placeholder={"Text"}
-                                />
-                            </div>
-                            <div
-                                className={cls.wrapper__container_item}
-                                {...getRootProps()}
-                            >
-                                {
-                                    changeImage?.path ? <img src={
-                                        URL.createObjectURL(changeImage)
-                                    } alt=""/> : changedItem?.img ?
-                                        <img src={changedItem?.img} alt=""/> : <>
-                                            <div className={cls.image}>
-                                                <i className="far fa-image"/>
-                                                <h2>Rasm tashlang</h2>
-                                            </div>
-                                            <input
-                                                type="file"
-                                                {...getInputProps()}
-                                            />
-                                        </>
-                                }
-                            </div>
-                        </div>
-                        <Button>O'zgartirish</Button>
-                    </form>
-                </div>
-            </Modal>
+            {/*<Modal*/}
+            {/*    active={changeStatus}*/}
+            {/*    setActive={setChangeStatus}*/}
+            {/*>*/}
+            {/*    <div*/}
+            {/*        className={cls.advantages__modal}*/}
+            {/*    >*/}
+            {/*        <h1>Afzallikni o'zgartirish</h1>*/}
+            {/*        <form*/}
+            {/*            className={cls.wrapper}*/}
+            {/*            onSubmit={handleSubmit(onSubmit)}*/}
+            {/*        >*/}
+            {/*            <div className={cls.wrapper__container}>*/}
+            {/*                <div className={cls.wrapper__container_item}>*/}
+            {/*                    <Input*/}
+            {/*                        required*/}
+            {/*                        register={register}*/}
+            {/*                        name={'advantageName'}*/}
+            {/*                        placeholder={'Title'}*/}
+            {/*                        value={changedItem?.name}*/}
+            {/*                        defaultValue={changedItem?.name}*/}
+            {/*                    />*/}
+            {/*                    <Textarea*/}
+            {/*                        required*/}
+            {/*                        cols="30"*/}
+            {/*                        rows="10"*/}
+            {/*                        {...register("advantageText", {*/}
+            {/*                            value: changedItem?.text*/}
+            {/*                        })}*/}
+            {/*                        placeholder={"Text"}*/}
+            {/*                    />*/}
+            {/*                </div>*/}
+            {/*                <div*/}
+            {/*                    className={cls.wrapper__container_item}*/}
+            {/*                    {...getRootProps()}*/}
+            {/*                >*/}
+            {/*                    {*/}
+            {/*                        changeImage?.path ? <img src={*/}
+            {/*                            URL.createObjectURL(changeImage)*/}
+            {/*                        } alt=""/> : changedItem?.img ?*/}
+            {/*                            <img src={changedItem?.img} alt=""/> : <>*/}
+            {/*                                <div className={cls.image}>*/}
+            {/*                                    <i className="far fa-image"/>*/}
+            {/*                                    <h2>Rasm tashlang</h2>*/}
+            {/*                                </div>*/}
+            {/*                                <input*/}
+            {/*                                    type="file"*/}
+            {/*                                    {...getInputProps()}*/}
+            {/*                                />*/}
+            {/*                            </>*/}
+            {/*                    }*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*            <Button>O'zgartirish</Button>*/}
+            {/*        </form>*/}
+            {/*    </div>*/}
+            {/*</Modal>*/}
             <div className={cls.advantages__wrapper}>
 
                 {advantages.sort(compareById).map((item) => {

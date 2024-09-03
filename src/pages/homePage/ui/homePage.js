@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
     Home,
@@ -13,9 +13,12 @@ import {
 } from "entities/home";
 
 import cls from "./homePage.module.sass"
+import WebSiteLoader from "shared/ui/webSiteLoader/webSiteloader";
+
 export const Context = React.createContext()
 
 export const HomePage = () => {
+    const [loading, setLoading] = useState(true)
 
     const [sectionTop, setSectionTop] = useState({
         home: null,
@@ -28,21 +31,37 @@ export const HomePage = () => {
     })
 
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false)
+        }, 6000)
+
+        return () => clearTimeout(timer)
+    }, [])
+
     return (
+
         <>
-            <Context.Provider value={{setSectionTop  ,sectionTop}}>
-                <div className={cls.homeMain}>
-                    <HomeHeader/>
-                    <Home/>
-                    <HomeAbout/>
-                    <Course/>
-                    <Results/>
-                    <HomeTeachers/>
-                    <HomeNews/>
-                    <HomeAdvantages/>
-                    <Contact/>
-                </div>
-            </Context.Provider>
+            {loading ? (
+                <WebSiteLoader/>
+
+            ) : (
+                <Context.Provider value={{setSectionTop, sectionTop}}>
+                    <div className={cls.homeMain}>
+                        <HomeHeader/>
+                        <Home/>
+                        <HomeAbout/>
+                        <Course/>
+                        <Results/>
+                        <HomeTeachers/>
+                        <HomeNews/>
+                        <HomeAdvantages/>
+                        <Contact/>
+                    </div>
+                </Context.Provider>
+            )
+            }
+
         </>
 
 

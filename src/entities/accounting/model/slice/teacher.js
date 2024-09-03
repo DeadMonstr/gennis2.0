@@ -46,7 +46,6 @@ const teacherSalary = createSlice({
             })
             .addCase(getTeacherSalary.fulfilled, (state, action) => {
                 state.teacherSalary = action.payload
-                console.log(action.payload , "log213")
                 state.loading = false
                 state.error = false
             })

@@ -3,13 +3,17 @@ import {Button} from "shared/ui/button";
 import {memo} from "react";
 import {API_URL_IMG} from "shared/api/base";
 import def from "shared/assets/images/defaultImg.svg"
+import {useNavigate} from "react-router";
 
 export const CapitalInsideProduct = memo(({capitalData, addModal, setAddModal}) => {
 
+    const navigation = useNavigate()
+
+    // const
 
     const capitalDataRender = () => {
         return capitalData?.map((item, i) => (
-            <div className={cls.box}>
+            <div onClick={() => navigation(`categoryProfile/${item.id}`)} className={cls.box}>
                 <img src={def} alt=""/>
                 <div className={cls.box_item}>
                     <h2>Nomi : {item?.name}</h2>

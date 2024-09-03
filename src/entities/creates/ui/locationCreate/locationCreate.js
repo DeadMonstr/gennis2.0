@@ -11,6 +11,8 @@ import {useCallback, useEffect, useState} from "react";
 import {getLocationThunk, getSystemId} from "../../model/createThunk/createBranchThunk";
 import {getSystemIdSelector} from "../../model/createSelector/locationSelector";
 import {Modal} from "../../../../shared/ui/modal";
+import {getSystemName} from "../../../editCreates";
+import {getSystemThunk} from "../../../editCreates/model/thunk/systemThunk";
 
 
 export const LocationCreate = ({active , setActive}) => {
@@ -19,12 +21,13 @@ export const LocationCreate = ({active , setActive}) => {
     const [select, setSelect] = useState([])
 
     const dispatch = useDispatch()
-    const systemId = useSelector(getSystemIdSelector)
+    const systemId = useSelector(getSystemName)
 
     useEffect(() => {
-        dispatch(getSystemId())
+        dispatch(getSystemThunk())
     }, [])
 
+    console.log(systemId , "sfwf")
 
     const onClick = (data) => {
         console.log(data)
@@ -48,11 +51,10 @@ export const LocationCreate = ({active , setActive}) => {
            <div className={cls.formMain}>
                <div className={cls.formBox}>
                    <h1 className={cls.formTitle}>Location</h1>
-                   <Form onSubmit={handleSubmit(onClick)} extraClassname={cls.form} typeSubmit={""}>
-                       <Input register={register} name={"name"} title={"Name"}/>
-                       <Input title={"Number"} register={register} name={"number"}/>
+                   <Form onSubmit={handleSubmit(onClick)} extraClassname={cls.form}>
+                       <Input register={register} name={"name"} placeholder={"Name"}/>
+                       <Input placeholder={"Number"} register={register} name={"number"}/>
                        <Select options={systemId} title={"System name"} onChangeOption={setSelect}/>
-                       <Button children={"create"}/>
                    </Form>
                </div>
            </div>

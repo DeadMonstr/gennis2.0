@@ -73,8 +73,7 @@ const accountingSlice = createSlice({
                 state.error = false
             })
             .addCase(accountingThunk.fulfilled, (state, action) => {
-                state.encashment = action.payload.payments
-                console.log(action.payload, "load")
+                state.encashment = action.payload
                 state.loading = false
                 state.error = false
             })

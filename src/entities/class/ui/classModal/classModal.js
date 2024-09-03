@@ -6,7 +6,7 @@ import {useForm} from "react-hook-form";
 import {Select} from "shared/ui/select";
 import cls from "../classTable/classTable.module.sass"
 import {useEffect, useState} from "react";
-
+import {HexColorPicker} from "react-colorful";
 
 export const ClassModal = ({
 
@@ -21,7 +21,8 @@ export const ClassModal = ({
                                handleSubmit,
                                editClass,
                                setEditClass,
-                               changeInfo
+                               changeInfo,
+                               edit
                            }) => {
 
 
@@ -48,7 +49,7 @@ export const ClassModal = ({
             setSelectedSubject(selectedSubject.filter(item => item.id !== +deletedId))
             setSelected(selectedSubject.filter(item => item.id !== +deletedId))
         }
-    })
+    }, [deletedId])
 
 
     const onChangeSelect = (id) => {
@@ -70,11 +71,11 @@ export const ClassModal = ({
     return (
         <>
             <Modal active={activeEdit} setActive={setActiveEdit}>
-                <h2>Oz’gartirish </h2>
+
+                <div className={cls.modalHeader}> {edit?.name} <span>ni o'zgartirish</span></div>
                 <div>
-                    <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(onClick)}>
-                        <Input name={"editClassName"} register={register}/>
-                        <Button extraClass={cls.btn}>Add</Button>
+                    <Form extraClassname={cls.extraClassForm} onSubmit={handleSubmit(onClick)}>
+                        <Input name={"name"} register={register} placeholder={"nomi"}/>
                     </Form>
                 </div>
             </Modal>
@@ -83,9 +84,9 @@ export const ClassModal = ({
             <Modal active={addClass} setActive={setAddClass}>
                 <h2>Sinf turi yaratish </h2>
                 <div>
-                    <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(createClass)}>
-                        <Input placeholder={"sinf nomi"} name={"addClass"} register={register}/>
-                        <Button extraClass={cls.btn}>Create</Button>
+                    <Form extraClassname={cls.extraClassForm} onSubmit={handleSubmit(createClass)}>
+                        <Input placeholder={"sinf nomi"} name={"name"} register={register}/>
+
                     </Form>
                 </div>
             </Modal>
@@ -113,6 +114,38 @@ export const ClassModal = ({
                 </div>
             </Modal>
 
+        </>
+    )
+}
+
+
+export const ColorModal = ({createColor, setCreateColor, handleSubmit, addColor , register , color , setColor , active , setActive}) => {
+
+    return (
+        <>
+            <Modal active={createColor} setActive={setCreateColor}>
+                <h2>Rang qo'shish</h2>
+                <div>
+                    <Form extraClassname={cls.extraClassForm} onSubmit={handleSubmit(addColor)}>
+                        <Input name={"name"} register={register}/>
+                        <div className={cls.changeColorItem}>
+                            <div className={cls.color}>
+                                <h2>Tanlangan rang :</h2>
+                                <div className={cls.modalBox} style={{background: color}}></div>
+                            </div>
+                            <HexColorPicker style={{width: "22rem", height: "15rem"}} color={color} onChange={setColor}/>
+                            {/*<div style={{display: "flex" , flexWrap: "wrap",width: "30rem"}}>*/}
+                            {/*    /!*<Button onClick={() => setColor("#c6ad23")}>Choose gold</Button>*!/*/}
+                            {/*    <Button onClick={() => setColor("#22C55E")}>Choose green</Button>*/}
+                            {/*    <Button onClick={() => setColor("#2563EB")}>Choose blue</Button>*/}
+                            {/*</div>*/}
+
+                        </div>
+
+                    </Form>
+                </div>
+
+            </Modal>
         </>
     )
 }
