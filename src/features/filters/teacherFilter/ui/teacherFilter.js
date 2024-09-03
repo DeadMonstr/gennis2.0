@@ -8,7 +8,7 @@ import {Switch} from "shared/ui/switch";
 import cls from "../../filters.module.sass";
 import {fetchNewStudentsDataWithBranch, fetchStudyingStudentsDataWithBranch} from "../../../../entities/students";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchSubjectsAndLanguages, getLanguagesData, getSubjectsData} from "../../../../pages/registerPage";
+import {fetchSubjects, fetchLanguages, getLanguagesData, getSubjectsData} from "../../../../pages/registerPage";
 import {fetchTeachersDataWithFilter} from "../../../../entities/teachers/model/teacherThunk";
 
 export const TeacherFilter = React.memo(({active, setActive, activePage , setActiveSwitch , activeSwitch}) => {
@@ -57,7 +57,11 @@ export const TeacherFilter = React.memo(({active, setActive, activePage , setAct
     }
 
     useEffect(() => {
-        dispatch(fetchSubjectsAndLanguages());
+        dispatch(fetchLanguages());
+    }, []);
+
+    useEffect(() => {
+        dispatch(fetchSubjects())
     }, []);
     return (
         <Modal

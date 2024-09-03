@@ -1,8 +1,13 @@
+import {getUserProfileLoading} from "entities/profile/userProfile/model/userProfileSelector";
+import {changeUserProfile, changingUserProfile} from "entities/profile/userProfile/model/userProfileSlice";
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import {useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import {useParams} from "react-router";
 import classNames from "classnames";
+import {API_URL, headers, headersImg, useHttp} from "shared/api/base";
+import {DefaultPageLoader} from "shared/ui/defaultLoader";
 
 import {ChangeInfoForm} from "widgets/changeInfoForm";
 import {Pagination} from "features/pagination";
@@ -30,8 +35,10 @@ export const UserProfilePage = () => {
     }, [])
 
     const {id} = useParams()
+    const {request} = useHttp()
     const dispatch = useDispatch()
     const userData = useSelector(getUserProfileData)
+    const userLoading = useSelector(getUserProfileLoading)
     const salaryData = useSelector(getUserSalaryData)
     const salaryInnerData = useSelector(getUserSalaryInnerData)
     const search = useSelector(getSearchValue)
@@ -83,15 +90,48 @@ export const UserProfilePage = () => {
     }, [salaryData, setCurrentPage, search, activeList])
 
     const onSubmitChangeInfo = (data) => {
-        dispatch(changeUserProfileData({id, data}))
-        setCurrentStatus(true)
+        dispatch(changingUserProfile())
+        request(`${API_URL}Users/users/update/${id}/`, "PATCH", JSON.stringify(data), headers())
+            .then(res => {
+                console.log(res, "data changed")
+                dispatch(changeUserProfile(res))
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: `Malumotlar o'zgardi`
+                }))
+                setCurrentStatus(true)
+            })
+            .catch(err => console.log(err))
+        // dispatch(changeUserProfileData({id, data}))
+
     }
 
     const onSubmitChangeImage = (data) => {
-        dispatch(changeUserProfileImage({id, data}))
-        setCurrentStatus(true)
+        dispatch(changingUserProfile())
+        const formData = new FormData
+        formData.append("profile_img", data)
+        request(`${API_URL}Users/users/update/${id}/`, "PATCH", formData, headersImg())
+            .then(res => {
+                console.log(res, "image changed")
+                dispatch(changeUserProfile(res))
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: `Rasm o'zgardi`
+                }))
+                setCurrentStatus(true)
+            })
+        // dispatch(changeUserProfileImage({id, data}))
+        // dispatch(onAddAlertOptions({
+        //     type: "success",
+        //     status: true,
+        //     msg: `Rasm o'zgardi`
+        // }))
+        // setCurrentStatus(true)
     }
 
+    if (userLoading) return <DefaultPageLoader/>
     return (
         <div className={cls.userProfilePage}>
             <UserProfileInfo

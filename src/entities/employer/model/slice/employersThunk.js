@@ -1,12 +1,12 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {API_URL, headers, useHttp} from "shared/api/base";
+import {API_URL, branchQuery, headers, useHttp} from "shared/api/base";
 
 
 export const fetchEmployersData = createAsyncThunk(
     "employersSlice/fetchEmployersData",
-    async (id) => {
+    async () => {
         const {request} = useHttp()
-        return request(`${API_URL}Users/employeers/`,"GET", null, headers())
+        return request(`${API_URL}Users/employeers/?${branchQuery()}`,"GET", null, headers())
     }
 )
 

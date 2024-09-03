@@ -6,11 +6,17 @@ import {
     fetchGroupProfile,
     fetchReasons,
     fetchFilteredStudents,
-    fetchFilteredTeachers, fetchFilteredGroups, fetchWeekDays, createWeekDays, moveGroup, filteredStudents
+    fetchFilteredTeachers,
+    fetchFilteredGroups,
+    fetchWeekDays,
+    createWeekDays,
+    moveGroup,
+    filteredStudents, fetchGroupProfileNextLesson
 } from "./groupProfileThunk";
 
 const initialState = {
     data: null,
+    nextLessonData: null,
     filteredTeachers: null,
     filteredStudents: null,
     filteredGroups: null,
@@ -25,7 +31,11 @@ const initialState = {
 const groupProfileSlice = createSlice({
     name: "groupProfileSlice",
     initialState,
-    reducers: {},
+    reducers: {
+        getNextLesson: (state, action) => {
+            state.nextLessonData = action.payload
+        },
+    },
     extraReducers: builder =>
         builder
             .addCase(fetchGroupProfile.pending, state => {
@@ -166,7 +176,7 @@ const groupProfileSlice = createSlice({
                 // state.error = null
             })
             .addCase(fetchWeekDays.fulfilled, (state, action) => {
-                state.weekDays = action.payload.map(item => ({...item, name: item.name_uz}))
+                state.weekDays = action.payload?.days?.map(item => ({...item, name: item.name_uz}))
                 // state.filteredStudents = action.payload.students
                 // state.loading = false
                 // state.error = null
@@ -180,6 +190,7 @@ const groupProfileSlice = createSlice({
                 // state.error = null
             })
             .addCase(createWeekDays.fulfilled, (state, action) => {
+                console.log(action.payload, "create")
                 state.weekDays = action.payload.map(item => ({...item, name: item.name_uz}))
                 // state.filteredStudents = action.payload.students
                 // state.loading = false
@@ -191,4 +202,5 @@ const groupProfileSlice = createSlice({
             })
 })
 
+export const {getNextLesson} = groupProfileSlice.actions
 export default groupProfileSlice.reducer

@@ -1,6 +1,6 @@
 import {getUserBranchId} from "entities/profile/userProfile";
 import React, {useEffect, useMemo, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
 import {GroupsList} from "entities/groups/groups/ui/groupsList";
@@ -28,20 +28,16 @@ export const GroupsPage = () => {
     const data = useSelector(getGroupsListData)
     const deletedGroupsData = useSelector(getDeletedGroupsData)
     const loading = useSelector(getGroupsLoading)
-    const userBranchId = useSelector(getUserBranchId)
-
+    const {"*": id} = useParams()
+    const userBranchId = id
     const [deletedGroups, setDeletedGroups] = useState([])
-
     const [active, setActive] = useState(false);
     const [activeSwitch, setActiveSwitch] = useState(false)
-
-
     const search = useSelector(getSearchValue)
     let PageSize = useMemo(() => 50, [])
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
 
-    console.log(data, "data")
 
     const searchedUsers = useMemo(() => {
         const filteredHeroes = data?.slice()
@@ -61,9 +57,17 @@ export const GroupsPage = () => {
     }, [deletedGroupsData])
 
     useEffect(() => {
-        if (userBranchId)
-            dispatch(fetchGroupsData({userBranchId}))
-    }, [userBranchId])
+        if (!userBranchId) return;
+
+            dispatch(fetchGroupsData(userBranchId))
+    }, [dispatch, userBranchId])
+
+    const types = [
+        {
+            name: "Guruhlar",
+            type: "groups"
+        }
+    ]
 
     return (
         <MultiPage types={[{

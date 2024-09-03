@@ -8,59 +8,67 @@ import { Switch } from "shared/ui/switch";
 import cls from "../../filters.module.sass";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVacancyData, getVacancyJobs } from "../../../vacancyModals/vacancyPageAdd";
-import {fetchEmployersDataWithFilter} from "entities/employer";
-import {fetchSubjectsAndLanguages, getLanguagesData} from "pages/registerPage";
+import { fetchEmployersDataWithFilter } from "entities/employer";
+import { fetchLanguages, getLanguagesData } from "pages/registerPage";
 
-export const EmployeesFilter = React.memo(({ active, setActive, activePage, activeSwitch, setActiveSwitch }) => {
+export const EmployeesFilter = React.memo(({ active, setActive, activeSwitch, setActiveSwitch }) => {
     const dispatch = useDispatch();
-    const [selectedAgeFrom, setSelectedAgeFrom] = useState();
-    const [selectedAgeTo, setSelectedAgeTo] = useState();
-    const [selectedJob, setSelectedJob] = useState();
-    const [selectedLanguage, setSelectedLanguage] = useState();
+    const [selectedAgeFrom, setSelectedAgeFrom] = useState('');
+    const [selectedAgeTo, setSelectedAgeTo] = useState('');
+    const [selectedJob, setSelectedJob] = useState('');
+    const [selectedLanguage, setSelectedLanguage] = useState('');
     const jobsData = useSelector(getVacancyJobs);
-    const languages = useSelector(getLanguagesData)
-    //
+    const languages = useSelector(getLanguagesData);
+
     const jobOptions = jobsData?.jobs?.map(job => ({
         id: job.group.id,
         name: job.group.name
-    }));
-
-
+    })) || [];
 
     const onSelectJob = (value) => {
         setSelectedJob(value);
         const selectedJobData = jobOptions.find(job => job.id === Number(value));
-        const jobsId = selectedJobData.id
-        dispatch(fetchEmployersDataWithFilter({jobId: jobsId}))
+        if (selectedJobData) {
+            const jobsId = selectedJobData.id;
+            dispatch(fetchEmployersDataWithFilter({ jobId: jobsId }));
+        }
     };
 
     const onSelectLanguage = (value) => {
         setSelectedLanguage(value);
         const selectedLanguageData = languages.find(lang => lang.id === Number(value));
-        const languageId = selectedLanguageData.id
-        dispatch(fetchEmployersDataWithFilter({langId: languageId}))
-        setActive(false)
-
-    }
+        if (selectedLanguageData) {
+            const languageId = selectedLanguageData.id;
+            dispatch(fetchEmployersDataWithFilter({ langId: languageId }));
+            setActive(false);
+        }
+    };
 
     const handleAgeFromBlur = (e) => {
-        setSelectedAgeFrom(e.target.value);
-        dispatch(fetchEmployersDataWithFilter({ fromAgeId: e.target.value, untilageId: selectedAgeTo }))
-
-
-    }
+        const value = e.target.value;
+        setSelectedAgeFrom(value);
+        dispatch(fetchEmployersDataWithFilter({
+            fromAgeId: value,
+            untilageId: selectedAgeTo,
+        }));
+    };
 
     const handleAgeToBlur = (e) => {
-        setSelectedAgeTo(e.target.value);
-        dispatch(fetchEmployersDataWithFilter({ fromAgeId: selectedAgeFrom, untilageId: e.target.value }))
-    }
+        const value = e.target.value;
+        setSelectedAgeTo(value);
+        dispatch(fetchEmployersDataWithFilter({
+            fromAgeId: selectedAgeFrom,
+            untilageId: value,
+        }));
+    };
 
     useEffect(() => {
         dispatch(fetchVacancyData());
-    }, []);
+    }, [dispatch]);
+
     useEffect(() => {
-        dispatch(fetchSubjectsAndLanguages());
-    }, []);
+        dispatch(fetchLanguages());
+    }, [dispatch]);
 
     return (
         <Modal
@@ -83,16 +91,16 @@ export const EmployeesFilter = React.memo(({ active, setActive, activePage, acti
                             type={"number"}
                             extraClassName={cls.filter__input}
                             placeholder={"Yosh (От)"}
+                            value={selectedAgeFrom}
                             onChange={(e) => setSelectedAgeFrom(e.target.value)}
-                            defaultValue={selectedAgeFrom}
                             onBlur={handleAgeFromBlur}
                         />
                         <Input
                             type={"number"}
                             extraClassName={cls.filter__input}
                             placeholder={"Yosh (До)"}
+                            value={selectedAgeTo}
                             onChange={(e) => setSelectedAgeTo(e.target.value)}
-                            defaultValue={selectedAgeTo}
                             onBlur={handleAgeToBlur}
                         />
                     </div>
@@ -106,7 +114,7 @@ export const EmployeesFilter = React.memo(({ active, setActive, activePage, acti
 
                     <div className={cls.filter__switch}>
                         <p>O’chirilgan</p>
-                        <Switch activeSwitch={activeSwitch} onChangeSwitch={setActiveSwitch} />
+                        <Switch activeSwitch={activeSwitch} onChangeSwitch={() => setActiveSwitch(prev => !prev)} />
                     </div>
 
                 </div>

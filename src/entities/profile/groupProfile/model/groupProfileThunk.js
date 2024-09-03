@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {API_URL, headers, useHttp} from "shared/api/base";
 
-
+// check-next-lesson-flow
 export const fetchGroupProfile = createAsyncThunk(
     "groupProfileSlice/fetchGroupProfile",
     ({id, group_type}) => {
@@ -32,9 +32,9 @@ export const changeGroupProfile = createAsyncThunk(
 
 export const deleteGroupProfile = createAsyncThunk(
     "groupProfileSlice/deleteGroupProfile",
-    ({id}) => {
+    ({id, res}) => {
         const {request} = useHttp()
-        return request(`${API_URL}Group/groups/delete/${id}/`, "POST", null, headers())
+        return request(`${API_URL}Group/groups/delete/${id}/`, "POST", JSON.stringify(res), headers())
     }
 )
 

@@ -22,7 +22,7 @@ export const EmployeeSalary = ({
                                    setActiveDelete,
                                    activeDelete,
                                    getCapitalType,
-                                   onDelete
+
                                }) => {
     const navigate = useNavigate()
     const search = useSelector(getSearchValue)
@@ -43,14 +43,11 @@ export const EmployeeSalary = ({
     }, [filteredSalary, setCurrentPage, search])
     const onDeleteModal = (data) => {
         setActiveDelete(true)
-        console.log(data)
-        console.log(changingData, "changing")
 
     }
 
     const changePaymentType = (data) => {
         setChangePayment(true)
-        console.log(data, 'data')
     }
 
     const renderFilteredSalary = () => {
@@ -148,15 +145,6 @@ export const EmployeeSalary = ({
                     {render2}
                 </Table>
 
-                <Modal active={activeDelete} setActive={setActiveDelete}>
-                    <div className={cls.modalHeader}> {changingData.name} {changingData.surname}'ning <br/> oyligini
-                        o'chirmoqchimisz
-                    </div>
-                    <div className={cls.deletemodal}>
-                        <Button type={"danger"} onClick={onDelete}>Xa</Button>
-                        <Button onClick={() => setActiveDelete(!activeDelete)}>Yo'q</Button>
-                    </div>
-                </Modal>
                 <Modal active={changePayment} setActive={setChangePayment}>
 
                     <h2>To'lov turini uzgartirish</h2>

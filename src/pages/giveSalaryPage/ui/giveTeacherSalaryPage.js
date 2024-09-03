@@ -72,7 +72,7 @@ export const GiveTeacherSalaryPage = () => {
             </div>
             <div className={cls.mainContainer_tablePanelBox}>
                         <GiveTeacherSalaryList
-                            user_id={permissionId}
+                                user_id={permissionId}
                             currentTableData={getSalaryGivesData?.teacher_salary}
                             currentPage={currentPage}
                             PageSize={PageSize}

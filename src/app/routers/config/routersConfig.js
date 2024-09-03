@@ -37,7 +37,7 @@ import {
     getEmployerSalary,
     getTeacherSalary, getInkasatsiya,
     getGroupHistory,
-    getRouteClassProfile,
+    getRouteClassProfile, getRouteCalendar,
 
 } from "shared/const/routers";
 
@@ -102,6 +102,11 @@ export const routersConfig = [
         name: "O'quvchilar",
         path: getRouteStudents(),
         element: <StudentsPage/>
+    },
+    {
+        name: "Kalendar",
+        path: getRouteCalendar(),
+        element: <CalendarPage/>
     },
     {
         name: "Gruppalar",

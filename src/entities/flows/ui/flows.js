@@ -1,44 +1,55 @@
+import {getUserBranchId} from "entities/profile/userProfile";
+import {getCurseLevel} from "entities/students/model/studentsSlice";
 import {Table} from "shared/ui/table";
 import cls from "pages/flowsPage/ui/flowsPage.module.sass";
 import {Button} from "shared/ui/button";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Modal} from "shared/ui/modal";
 import {Input} from "shared/ui/input";
 import {Select} from "shared/ui/select";
 import {Textarea} from "shared/ui/textArea";
 import {useForm} from "react-hook-form";
 import {Form} from "shared/ui/form";
-import {DefaultPageLoader} from "../../../shared/ui/defaultLoader";
-import {API_URL, useHttp} from "../../../shared/api/base";
-import {useDispatch} from "react-redux";
+import {DefaultPageLoader} from "shared/ui/defaultLoader";
+import {API_URL, headers, useHttp} from "shared/api/base";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 
 
-export const Flows = ({currentTableData, teacherData, loading}) => {
+export const Flows = ({currentTableData, teacherData, loading, levelData, getLevelData, setActive}) => {
 
     const navigate = useNavigate()
 
-    const {register, handleSubmit} = useForm()
+    const {
+        register,
+        handleSubmit,
+        setValue
+    } = useForm()
     const [activeFlow, setActiveFlow] = useState(false)
     const [addFlow, setAddFlow] = useState(false)
+    const branchId = useSelector(getUserBranchId)
+    const [selectedSubjects, setSelectedSubjects] = useState([])
     const dispatch = useDispatch()
     const {request} = useHttp()
 
     const [activeCheckbox, setActiveCheckBox] = useState(false)
 
     const createFlow = (data) => {
-
         const res = {
-            comment : data.comment,
+            ...data,
+            activity: activeCheckbox,
+            branch: branchId,
+            // subject: teacherData.filter(item => item.id === +data?.teacher)[0]?.subject[0]?.id
         }
-        // request(`${API_URL}Flow/flow-list-create/` , "POST" , JSON.stringify(res))
-            // .then(res => {
-                navigate("flow-list")
-                console.log(res , 'res')
-            // })
-
-
+        localStorage.setItem("flowData", JSON.stringify(res))
+        navigate("flow-list")
     }
+
+    useEffect(() => {
+        if (selectedSubjects) {
+            setValue("subject", selectedSubjects[0]?.id)
+        }
+    }, [selectedSubjects])
 
 
     const renderFlowData = () => {
@@ -46,9 +57,21 @@ export const Flows = ({currentTableData, teacherData, loading}) => {
             return (
                 <tr>
                     <td>{i + 1}</td>
-                    <td>{item.level.subject.name} / {item?.level.name}</td>
-                    <td>{item.teacher.total_students}</td>
-                    <td>{item.teacher.user.name}</td>
+                    <td
+                        onClick={() => navigate(`flowsProfile/${item?.id}`)}
+                    >
+                        {item?.subject?.name}
+                        {
+                            item?.level ? `/ ${item?.level?.name}` : null
+                        }
+                    </td>
+                    <td>{item?.students?.length}</td>
+                    <td>
+                        {
+                            `${item?.teacher?.user?.surname}   
+                            ${item?.teacher?.user?.name}`
+                        }
+                    </td>
                 </tr>
             )
         })
@@ -59,7 +82,12 @@ export const Flows = ({currentTableData, teacherData, loading}) => {
         <div className={cls.flowMain}>
             <div className={cls.flow__filter}>
                 <Button onClick={() => setActiveFlow(!activeFlow)} type={"simple"}>Create Flow</Button>
-                <Button type={"simple-add"} onClick={() => setAddFlow(!addFlow)}>Add Flow</Button>
+                <Button
+                    type={"simple-add"}
+                    onClick={() => setActive(true)}
+                >
+                    Add Flow
+                </Button>
             </div>
             <Table>
                 <thead>
@@ -70,7 +98,7 @@ export const Flows = ({currentTableData, teacherData, loading}) => {
                     <th>O'qituvchisi</th>
                 </tr>
                 </thead>
-                {loading ? <DefaultPageLoader/> :
+                {loading === "loading" ? <DefaultPageLoader/> :
                     <tbody>
                     {renderFlowData()}
                     </tbody>
@@ -78,30 +106,63 @@ export const Flows = ({currentTableData, teacherData, loading}) => {
             </Table>
 
 
-            <Modal active={activeFlow} setActive={setActiveFlow}>
+            <Modal
+                active={activeFlow}
+                setActive={setActiveFlow}
+                extraClass={cls.modal}
+            >
                 <h2>Create Flow</h2>
                 <div className={cls.flowModal}>
 
                     <div className={cls.flowModalHeader}>
-                        <h2>Activity</h2>
+                        <h3>Activity</h3>
                         <Input onChange={() => setActiveCheckBox(!activeCheckbox)} type={"checkbox"}/>
                     </div>
 
                     <div className={cls.flowModalForm}>
                         <Form typeSubmit={""} onSubmit={handleSubmit(createFlow)} action="">
+                            <Input
+                                placeholder={"Nomi"}
+                                register={register}
+                                name={"name"}
+                            />
                             {activeCheckbox ?
-                                <>
-                                    <Input
-                                        required
-                                        name={"flow_input"}
-                                        register={register}
-                                    />
-                                </>
+                                null
                                 :
                                 <>
-                                    <Select  title={"O'qituvchini tanlang"}/>
-                                    <Select  title={"Level"}/>
-                                    <Textarea required register={register} name={"comment"}/>
+                                    <Select
+                                        title={"O'qituvchini tanlang"}
+                                        options={teacherData}
+                                        onChangeOption={(e) => {
+                                            getLevelData(e)
+                                            setSelectedSubjects(teacherData.filter(item => item.id === +e)[0]?.subject)
+                                        }}
+                                        register={register}
+                                        name={"teacher"}
+                                    />
+                                    {
+                                        selectedSubjects.length ? <Select
+                                            title={"Fan"}
+                                            options={selectedSubjects}
+                                            register={register}
+                                            name={"subject"}
+                                            defaultValue={selectedSubjects[0]?.id}
+                                        /> : null
+                                    }
+                                    {
+                                        levelData.length ? <Select
+                                            title={"Level"}
+                                            options={levelData}
+                                            register={register}
+                                            name={"level"}
+                                        /> : null
+                                    }
+                                    <Textarea
+                                        placeholder={"Koment"}
+                                        required
+                                        register={register}
+                                        name={"comment"}
+                                    />
                                 </>
                             }
                             <Button>Next</Button>

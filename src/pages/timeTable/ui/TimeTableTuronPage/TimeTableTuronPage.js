@@ -33,7 +33,9 @@ import {
     getTimeTableTuronDay,
     getTimeTableTuronGroup,
     getTimeTableTuronHours,
-    getTimeTableTuronSubjects, getTimeTableTuronTeachers, getTimeTableTuronTeachersStatus,
+    getTimeTableTuronSubjects,
+    getTimeTableTuronTeachers,
+    getTimeTableTuronTeachersStatus,
     getTimeTableTuronType
 } from "pages/timeTable/model/selectors/timeTableTuronSelectors";
 import {API_URL, headers, useHttp} from "shared/api/base";

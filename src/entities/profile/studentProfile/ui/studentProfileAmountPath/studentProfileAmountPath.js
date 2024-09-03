@@ -1,7 +1,6 @@
 import React, {memo, useEffect, useState} from 'react';
 import classNames from "classnames";
 import {useSelector, useDispatch} from "react-redux";
-import {Alert} from "shared/ui/alert";
 import {EditableCard} from "shared/ui/editableCard";
 import {Table} from "shared/ui/table";
 import {getBooksData} from "../../model/selectors/booksSelector";
@@ -20,6 +19,7 @@ import {
 import {Button} from "shared/ui/button";
 import {YesNo} from "../../../../../shared/ui/yesNoModal/yesNo";
 import {StudentPaymentDates} from "../../../../../features/studentPaymentDates";
+import {onAddAlertOptions} from "../../../../../features/alert/model/slice/alertSlice";
 
 export const StudentProfileAmountPath = memo(({active, setActive}) => {
     const pathArray = window.location.pathname.split('/');
@@ -36,37 +36,30 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
     const [portal, setPortal] = useState(false);
     const [modal, setModal] = useState(false);
     const [change, setChange] = useState(false);
-    const [alerts, setAlerts] = useState([]);
 
-    const showAlert = (type, message) => {
-        const newAlert = {id: Date.now(), type, message};
-        setAlerts([...alerts, newAlert]);
-        setTimeout(() => {
-            hideAlert(newAlert.id);
-        }, 2000);
-    };
-
-    const hideAlert = (id) => {
-        setAlerts(alerts => alerts.map(alert =>
-            alert.id === id ? {...alert, hide: true} : alert
-        ));
-        setTimeout(() => {
-            setAlerts(alerts => alerts.filter(alert => alert.id !== id));
-        }, 1500);
-    };
 
     const handleDelete = () => {
         dispatch(studentPaymenListDelete(selectedSalary)).then((action) => {
             if (action.type.endsWith('fulfilled')) {
-                showAlert('success', "Muvofaqqiyatli o'chirildi");
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: "To'lov muvoffaqqiyatli o'chirildi"
+                }))
                 dispatch(studentPaymentListThunk(lastId));
-            } else {
-                console.log("O'chirishda xatolik", action.error);
-                showAlert('error', "Internet yoki serverda xatolik");
             }
 
+            else {
+                console.log("O'chirishda xatolik", action.error);
+                dispatch(onAddAlertOptions({
+                    tpye: "error",
+                    status: true,
+                    msg: "Server yoki internetda xatolik"
+                }))
+            }
             setPortal(false);
         });
+
     };
 
     useEffect(() => {
@@ -77,11 +70,11 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
         }
     }, [lastId, change]);
 
+
     useEffect(() => {
         dispatch(studentBookOrderListThunk(lastId));
     }, [lastId, dispatch]);
 
-    console.log(getBookPayments, "books");
 
     const renderInData = () => {
         const listToRender = change ? getDeletedLists.payments : getPaymentLists;
@@ -214,10 +207,11 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                         : null
                 }
                 {!change && (
-                    <YesNo onDelete={handleDelete} activeDelete={portal} setActiveDelete={() => setPortal(!portal)}/>
+                    <YesNo
+                        onDelete={handleDelete}
+                        activeDelete={portal} setActiveDelete={() => setPortal(!portal)}/>
                 )}
             </div>
-            <Alert alerts={alerts} hideAlert={hideAlert}/>
             <StudentPaymentEditModal
                 portal={modal}
                 setPortal={() => setModal(false)}

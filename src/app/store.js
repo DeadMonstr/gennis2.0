@@ -1,5 +1,6 @@
 
 import {configureStore} from "@reduxjs/toolkit";
+import {flowsProfileSlice} from "entities/flowsProfile";
 import {groupProfileSlice} from "entities/profile/groupProfile";
 import {searchSlice} from "features/searchInput";
 import {registerUser} from "pages/registerPage";
@@ -65,6 +66,7 @@ import {calendarSlice} from "pages/calendarPage";
 import {vacancyWorkerSoucre, userSetPermissionSlice} from "../entities/vacancy/ui/vacancyWorkerList";
 import {vacancyWorkerSlice} from "../features/vacancyWorkerList";
 import {studentPaymentSlice} from "../features/studentPayment";
+import {schoolTeacherDaySlice} from "../features/teacherModals";
 import {inkasatsiyaSlice} from "../entities/inkasatsiya";
 import {timeTableTuronSlice} from "pages/timeTable"
 import {alertSlice} from "features/alert"
@@ -153,10 +155,12 @@ export const store = configureStore({
         capitalSlice,
         inkasatsiyaSlice,
         alertSlice,
+        schoolTeacherDaySlice,
         locationsSlice,
         themeSwitcherSlice,
         branchSwitcherSlice,
-        multiPageSlice
+        multiPageSlice,
+        flowsProfileSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

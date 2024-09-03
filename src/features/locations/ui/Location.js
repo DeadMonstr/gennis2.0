@@ -45,7 +45,7 @@ export const Location = ({systemId}) => {
             if (localstorageLocs && localstorageLocs.length > 0) {
 
                 for (let i = 0; i < localstorageLocs?.length; i++) {
-                    dispatch(addSelectedLocations(localstorageLocs[i].id))
+                    dispatch(addSelectedLocations(localstorageLocs[i]?.id))
                 }
             }
         }

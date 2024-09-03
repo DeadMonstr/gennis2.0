@@ -95,8 +95,10 @@ export const Menubar = () => {
                 {renderedMenu}
             </ul>
             <div className={cls.menu__footer}>
-                <i className="fas fa-sign-out-alt"/>
-                <h2>Chiqish</h2>
+                <div className={cls.menu__}>
+                    <i className="fas fa-sign-out-alt"/>
+                    <h2>Chiqish</h2>
+                </div>
             </div>
         </nav>
     );

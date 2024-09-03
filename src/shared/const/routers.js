@@ -3,27 +3,28 @@ export const getRouteTaskManager = (id) => `taskManager/${id}`;
 // export const getRouteNewStudents = (id) => `newStudents`;
 // export const getRouteDeletedStudents = (id) => `deletedStudents`;
 export const getRouteStudents = (id) => `students/*`;
+export const getRouteCalendar = () => `calendar/*`;
 export const getDirectorRouteStudents = () => `locations-overview`;
 export const getRouteGroups = (id) => `groups/*`;
 // export const getRouteDeletedGroups = (id) => `deletedGroups`;
-export const getRouteRegister = () => `register`;
-export const getRouteTeacher = (id) => `teacher/${id}`;
+export const getRouteRegister = () => `register/*`;
+export const getRouteTeacher = (id) => `teacher/*`;
 // export const getRouteCreateGroup = () => `newStudents/createGroup`;
-export const getRouteRooms = (id) => `rooms/${id}`;
-export const getTeacherProfile = (id) => `teacher/:id/teacherProfile/${id}`;
+export const getRouteRooms = (id) => `rooms/*`;
+export const getTeacherProfile = (id) => `teacher/teacherProfile/${id}`;
 export const getVacancyPage = (id) => `vacancyPage/${id}`
-export const getVacancyWorkPage = (id) => `vacancyPage/:id/vacancyWorkPage/${id}`
-export const getRoomsProfilePage = (id) => `rooms/:id/roomsProfilePage/${id}`
-export const getProfile = (id) => `students/:id/profile/${id}`;
+export const getVacancyWorkPage = (id) => `vacancyPage/vacancyWorkPage/${id}`
+export const getRoomsProfilePage = (id) => `rooms/roomsProfilePage/${id}`
+export const getProfile = (id) => `students/profile/${id}`;
 export const getRouteTimePage = (id) => `timeList/${id}`
 export const getRouteUserProfile = (id) => `profile/${id}`
-export const getEmployerPage = (id) => `employer/${id}`
-export const getEmployerProfile = (id) => `employer/:id/employerProfile/${id}`;
+export const getEmployerPage = (id) => `employer/*`
+export const getEmployerProfile = (id) => `employer/employerProfile/${id}`;
 
-export const getTeacherSalary = (id) => `teacher/:id/teacherProfile/:id/teacherSalaryPage/${id}`
-export const getEmployerSalary = (id) => `employer/:id/employerProfile/:id/employerSalaryPage/${id}`
-export const getEmployerSalaryInsideSource = (id, permission) => `employer/:id/employerProfile/:id/employerSalaryPage/:id/giveSalaryPage/${id}/${permission}`
-export const getTeacherSalaryInsideSource = (id) => `teacher/:id/teacherProfile/:id/teacherSalaryPage/:id/giveTeacherSalaryPage/${id}`
+export const getTeacherSalary = (id) => `teacher/teacherProfile/teacherSalaryPage/${id}`
+export const getEmployerSalary = (id) => `employer/employerProfile/employerSalaryPage/${id}`
+export const getEmployerSalaryInsideSource = (id, permission) => `employer/employerProfile/employerSalaryPage/giveSalaryPage/${id}/${permission}`
+export const getTeacherSalaryInsideSource = (id) => `teacher/teacherProfile/teacherSalaryPage/giveTeacherSalaryPage/${id}`
 
 export const getClass = (id) => `class`
 
@@ -46,7 +47,7 @@ export const getCreateEducation = (id) => `createEducation/${id}`
 export const getLocations = (id) => `location/${id}`
 export const getBranch = (id) => `branches/${id}`
 
-export const getRouteCreateGroup = () => `students/:id/createGroup`
+export const getRouteCreateGroup = () => `students/createGroup`
 
 export const getEducation = (id) => `education/${id}`
 
@@ -57,8 +58,8 @@ export const getAccounting = (id) => `accounting/${id}/*`
 export const getInkasatsiya = (id) => `inkasatsiya/${id}/*`
 
 
-export const getGroupHistory = (id) => `students/:id/profile/:id/history/${id}`
+export const getGroupHistory = (id) => `students/profile/:id/history/${id}`
 
-export const getRouteClassProfile = (id) => `groups/:id/classProfile/${id}`
+export const getRouteClassProfile = (id) => `groups/classProfile/${id}`
 
 

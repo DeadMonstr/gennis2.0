@@ -1,21 +1,19 @@
 import React, {useMemo, useState, useEffect} from "react";
 import {Pagination} from "features/pagination";
-import {GroupsFilter} from "features/filters/groupsFilter";
 import {Button} from "shared/ui/button";
 import cls from "./vacancyWorkPage.module.sass";
 import {vacancyWorkList, vacancyWorkerList} from "entities/vacancy/model";
 import {VacancyPageEdit} from "features/vacancyModals/vacancyPageEdit";
 import {VacancyWorkList} from "entities/vacancy/ui/vacancyWorkList";
-import {Switch} from "../../../shared/ui/switch";
+import {Switch} from "shared/ui/switch";
 import {VacancyWorkerList} from "entities/vacancy/ui/vacancyWorkerList";
-import {VacancyWorkerPermission} from "../../../features/vacancyModals/vacancyWorkerPermission";
+import {VacancyWorkerPermission} from "features/vacancyModals/vacancyWorkerPermission";
 import {useSelector, useDispatch} from "react-redux";
-import {getWorkerId} from "../../../features/vacancyModals/vacancyWorkPage/model";
+import {getWorkerId} from "features/vacancyModals/vacancyWorkPage/model";
 import {getUserProfileData} from "entities/profile/userProfile/model/userProfileSelector";
-import {fetchUserProfileData} from "../../profilePage";
 import {useParams} from "react-router-dom";
 import {getUserPermission} from "entities/profile/userProfile";
-import {vacancyWorkerListThunk} from "../../../features/vacancyWorkerList";
+import {vacancyWorkerListThunk} from "features/vacancyWorkerList";
 
 export const VacancyWorkPage = () => {
     const [active, setActive] = useState(false);
@@ -45,11 +43,9 @@ export const VacancyWorkPage = () => {
             setIsDirector(user.job.includes("director"))
         }
     }, [user])
-
     useEffect(() => {
         setCurrentTableData(!activeSwitch ? vacancyWorkList : vacancyWorkerList);
     }, [activeSwitch]);
-
 
 
     const handleEditClick = (vacancy) => {

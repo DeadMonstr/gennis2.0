@@ -82,7 +82,7 @@ export const Inkasatsiya = () => {
         console.log(value)
         dispatch(onChangeAccountingPage({value: value}))
         navigate(`./${value}`)
-    }, [])
+    }, [navigate])
     return (
         <div style={{display: "flex", flexDirection: "column", gap: "2rem", padding: "2rem"}}>
 

@@ -21,7 +21,7 @@ export const StudentPaymentEditModal = ({ portal, setPortal, paymentId, studentI
         };
         dispatch(studentPaymentTypeChangeThunk({id: paymentId, data: requestData}));
 
-          dispatch(studentPaymentDataThunk(studentId))
+        dispatch(studentPaymentDataThunk(studentId))
         setPortal(false)
     };
 

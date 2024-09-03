@@ -10,6 +10,7 @@ import {getBranchThunk, getLocations} from "entities/editCreates";
 import {Select} from "shared/ui/select";
 import {value} from "lodash/seq";
 import {fetchRoomsData} from "../../../entities/rooms";
+import {onAddAlertOptions} from "../../alert/model/slice/alertSlice";
 
 export const RoomModal = ({isOpen, onClose}) => {
     const [groupName, setGroupName] = useState('');
@@ -39,6 +40,11 @@ export const RoomModal = ({isOpen, onClose}) => {
                 dispatch(addRoom(action.payload));
             }
         });
+        dispatch(onAddAlertOptions({
+            type: "success",
+            status: true,
+            msg: "Xona muvofaqqiyatli qo'shildi"
+        }))
         dispatch(fetchRoomsData());
         onClose();
     };
