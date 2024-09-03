@@ -16,6 +16,7 @@ import { API_URL, useHttp, headers } from "shared/api/base";
 import {onAddAlertOptions} from "../../../features/alert/model/slice/alertSlice";
 import {getLanguagesData, getSubjectsData} from "../model/registerSelector";
 import {Form} from "../../../shared/ui/form";
+import {branchQuery} from "shared/api/base";
 
 const userstype = {
     types: [
@@ -47,6 +48,7 @@ export const Register = () => {
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
     const classNumbers = useSelector(getSchoolClassNumbers)
     const languages = useSelector(getLanguagesData);
+    const branch = localStorage.getItem("selectedBranch")
     const subjects = useSelector(getSubjectsData)
     const dispatch = useDispatch();
     const [error, setError] = useState(false);
@@ -127,7 +129,7 @@ export const Register = () => {
                 ...data,
                 observer: true,
                 language: selectedLanguage?.id || "",
-                branch: 1,
+                branch: branch,
             },
             subject: [selectedSubjectData?.id || null],
         };
@@ -135,7 +137,7 @@ export const Register = () => {
             ...data,
             observer: true,
             language: selectedLanguage?.id || "",
-            branch: 1,
+            branch: branch,
         };
 
         let registerAction;
@@ -172,7 +174,7 @@ export const Register = () => {
                     dispatch(onAddAlertOptions({
                         type: "success",
                         status: true,
-                        msg: "Student muvofaqqiyatli qo'shildi"
+                        msg: `${registerType} muvofaqqiyatli qo'shildi`
                     }))
                     setSelectedLang(1);
                     setSelectedSubject(1);

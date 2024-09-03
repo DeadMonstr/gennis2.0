@@ -85,6 +85,7 @@ export const StudentProfilePage = () => {
                 contract={userData}
                 newImage={newImage}
             />
+
             <div
                 className={classNames(cls.profile__mainContent, {
                     [cls.active]: active
