@@ -1,4 +1,3 @@
-import {getUserSystemId} from "entities/profile/userProfile";
 import {fetchClassNumberList, getSchoolClassNumbers} from "entities/students";
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -44,6 +43,7 @@ export const Register = () => {
     const registerType = watch("registerType", "student");
     const username = watch("username", "");
     const {theme} = useTheme()
+
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
     const classNumbers = useSelector(getSchoolClassNumbers)
     const languages = useSelector(getLanguagesData);
@@ -72,7 +72,7 @@ export const Register = () => {
     }, [])
 
     useEffect(() => {
-        if (userSystemId?.id === 2 || theme === "app_school_theme") {
+        if (userSystem?.id === 2 || theme === "app_school_theme") {
             dispatch(fetchClassNumberList())
         }
     }, [])
@@ -219,7 +219,7 @@ export const Register = () => {
                             options={shift}
                         />
                         {
-                            (theme === "app_school_theme" || userSystemId?.id === 2) && (
+                            (theme === "app_school_theme" || userSystem?.id === 2) && (
                                 <Select
                                     extraClass={cls.extraClasses}
                                     title={"Sinf"}
