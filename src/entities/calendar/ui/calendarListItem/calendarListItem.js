@@ -197,6 +197,7 @@ export const CalendarListItem = memo((props) => {
     const renderCelebrateDays = useCallback(() => {
         return typesOfDays.map((item, index) => {
             // console.log(item.days,index, "days")
+            if (!item?.days?.length) return null
             return (
                 <div
                     className={cls.all}
@@ -227,9 +228,9 @@ export const CalendarListItem = memo((props) => {
                                     <i
                                         className={classNames("fas fa-trash", cls.item__icon)}
                                         onClick={() => {
-                                            console.log(item, "item")
-                                            console.log(item.days.map(item => item.day_id), "map")
-                                            onSubmitDelete(item.days.map(item => item.day_id))
+                                            // console.log(item, "item")
+                                            // console.log(item.days.map(item => item.day_id), "map")
+                                            onSubmitDelete(item.days.map(item => item.id))
                                         }}
                                     />
                             }

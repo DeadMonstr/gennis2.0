@@ -24,6 +24,14 @@ export const menuConfig = [
 
     },
     {
+        to: "calendar",
+        name: "Kalendar",
+        icon: "fas fa-calendar-times",
+        system: ["school"],
+        roles: [ROLES.director,ROLES.admin],
+
+    },
+    {
         to: "students",
         name: "O'quvchilar",
         icon: "fa-user-graduate",
