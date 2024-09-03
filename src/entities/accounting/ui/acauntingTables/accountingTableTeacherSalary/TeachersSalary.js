@@ -99,19 +99,19 @@ export const TeachersSalary = ({
     // }
 
     const renderTeacherSalary = () => {
-        return currentTableData.map((item, index) => (
+        return currentTableData?.map((item, index) => (
             <tbody>
             <tr key={item.id}>
                 <td>{index + 1}</td>
-                <td>{item.teacher.user.name} {item.teacher.user.surname}</td>
-                <td>{item.salary}</td>
-                <td>{item.comment}</td>
-                <td>{item.date}</td>
+                <td>{item?.teacher?.user?.name} {item?.teacher?.user?.surname}</td>
+                <td>{item?.salary}</td>
+                <td>{item?.comment}</td>
+                <td>{item?.date}</td>
                 <td
                     onClick={() => {
                         setChangingData({
-                            id: item.id,
-                            payment: item.payment
+                            id: item?.id,
+                            payment: item?.payment
                         });
                         setChangePayment(true);
                     }}
@@ -123,21 +123,21 @@ export const TeachersSalary = ({
                         borderRadius: "15px",
                         textTransform: "capitalize",
                         cursor: "pointer"
-                    }}>{item.payment.name}</div>
+                    }}>{item?.payment?.name}</div>
                 </td>
                 <td>
                     <div>
                         <Button
                             onClick={() => {
                                 onDeleteModal({
-                                    id: item.id,
-                                    name: item.teacher.user.name,
-                                    surname: item.teacher.user.surname
+                                    id: item?.id,
+                                    name: item?.teacher?.user?.name,
+                                    surname: item?.teacher?.user?.surname
                                 })
                                 setChangingData({
-                                    id: item.id,
-                                    name: item.teacher.user.name,
-                                    surname: item.teacher.user.surname
+                                    id: item?.id,
+                                    name: item?.teacher?.user?.name,
+                                    surname: item?.teacher?.user?.surname
                                 })
                             }
                         }

@@ -68,6 +68,7 @@ import {studentPaymentSlice} from "../features/studentPayment";
 import {inkasatsiyaSlice} from "../entities/inkasatsiya";
 import {timeTableTuronSlice} from "pages/timeTable"
 import {alertSlice} from "features/alert"
+import {classSlice} from "../entities/class";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -148,7 +149,8 @@ export const store = configureStore({
         overHeadSlice,
         capitalSlice,
         inkasatsiyaSlice,
-        alertSlice
+        alertSlice,
+        classSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

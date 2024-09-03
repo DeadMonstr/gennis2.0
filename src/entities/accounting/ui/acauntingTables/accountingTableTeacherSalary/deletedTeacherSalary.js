@@ -34,10 +34,10 @@ export const DeletedTeacherSalary = ({deletedTeacher, setChangePayment, setChang
                 <tbody>
                 <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{item.teacher.user.name} {item.teacher.user.surname}</td>
-                    <td>{item.salary}</td>
-                    <td>{item.comment}</td>
-                    <td>{item.date}</td>
+                    <td>{item?.teacher?.user?.name} {item?.teacher?.user?.surname}</td>
+                    <td>{item?.salary}</td>
+                    <td>{item?.comment}</td>
+                    <td>{item?.date}</td>
                     {/*<td*/}
                     {/*    onClick={() => {*/}
                     {/*        setChangingData({*/}
@@ -56,9 +56,9 @@ export const DeletedTeacherSalary = ({deletedTeacher, setChangePayment, setChang
                     {/*<td>{item.date}</td>*/}
                     <td onClick={() => {
                         setChangingData({
-                            id: item.id,
+                            id: item?.id,
                             // payment_types: item.payment_types?.name,
-                            payment_types: item.payment_types,
+                            payment_types: item?.payment_types,
                             // userId: item.user.id,
                         })
                         // setChangePayment(!changePayment)
@@ -70,7 +70,7 @@ export const DeletedTeacherSalary = ({deletedTeacher, setChangePayment, setChang
                             borderRadius: "15px",
                             textTransform: "capitalize",
                             cursor: "pointer"
-                        }}>{item.payment.name}</div>
+                        }}>{item?.payment?.name}</div>
                     </td>
 
                 </tr>

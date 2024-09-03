@@ -23,7 +23,7 @@ const getSystemSlice = createSlice({
                 state.error = false
             })
             .addCase(getSystemThunk.fulfilled, (state, action) => {
-                state.name = action.payload.systems
+                state.name = action.payload
                 state.loading = false
                 state.error = false
             })

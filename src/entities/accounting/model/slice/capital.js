@@ -24,7 +24,7 @@ export const capitalList = createSlice({
                 state.error = false
             })
             .addCase(capitalListThunk.fulfilled , (state, action) => {
-                state.capital = action.payload.old_capitals
+                state.capital = action.payload
                 state.loading = false
                 state.error =  false
             })
@@ -37,7 +37,7 @@ export const capitalList = createSlice({
                 state.error = false
             })
             .addCase(capitalDeletedListThunk.fulfilled , (state, action) => {
-                state.capitalDeleted = action.payload.old_capitals
+                state.capitalDeleted = action.payload
                 state.loading = false
                 state.error =  false
             })

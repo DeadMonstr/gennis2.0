@@ -44,6 +44,8 @@ export const AccountingPageMain = memo(() => {
     const dispatch = useDispatch()
     const {request} = useHttp()
     const [active, setActive] = useState(false)
+    const [activeDel, setActiveDel] = useState(false)
+
 
     const encashment = useSelector(getEncashment)
     const {id} = useParams()
@@ -52,7 +54,7 @@ export const AccountingPageMain = memo(() => {
         dispatch(accountingThunk())
     }, [])
     const setPage = useCallback((e) => {
-        console.log(e)
+
         dispatch(onChangeAccountingPage({value: e}))
         navigate(`./${e}`)
     }, [navigate])
@@ -96,13 +98,54 @@ export const AccountingPageMain = memo(() => {
             {/*{renderTable}*/}
 
             <Routes>
-                <Route path={"studentsPayments"} element={<StudentSalary locationId={locationId}/>}/>
-                <Route path={"teachersSalary"}
-                       element={<TeacherSalaryPage path={"teachersSalary"} locationId={locationId}/>}/>
-                <Route path={"employeesSalary"} element={<EmployerSalaryPage setPage={setPage} path={"employeesSalary"}
-                                                                             locationId={locationId}/>}/>
-                <Route path={"overhead"} element={<AdditionalCosts path={"overhead"} locationId={locationId}/>}/>
-                <Route path={"capital"} element={<Capital path={"capital"} locationId={locationId}/>}/>
+                <Route
+                    path={"studentsPayments"}
+                    element={
+                        <StudentSalary
+                            deleted={activeDel}
+                            setDeleted={setActiveDel}
+                            locationId={locationId}
+                        />
+                    }
+                />
+                <Route
+                    path={"teachersSalary"}
+                    element={<TeacherSalaryPage
+                        deleted={activeDel}
+                        setDeleted={setActiveDel}
+                        path={"teachersSalary"}
+                    />
+                    }
+                />
+                <Route
+                    path={"employeesSalary"}
+                    element={
+                        <EmployerSalaryPage
+                            deleted={activeDel}
+                            setDeleted={setActiveDel}
+                            path={"employeesSalary"}
+                        />
+                    }
+                />
+                <Route
+                    path={"overhead"}
+                    element={
+                        <AdditionalCosts
+                            path={"overhead"}
+                            deleted={activeDel}
+                            setDeleted={setActiveDel}
+                        />
+                    }
+                />
+                <Route path={"capital"}
+                       element={
+                           <Capital
+                               deleted={activeDel}
+                               setDeleted={setActiveDel}
+                               path={"capital"}
+                           />
+                       }
+                />
 
 
                 {/*<Route path={"studentsDiscounts"} element={<StudentsDiscount path={"studentsDiscounts"} locationId={locationId}/>}/>*/}
@@ -112,7 +155,7 @@ export const AccountingPageMain = memo(() => {
 
                 {/*<Route path={"debtStudents"} element={<DebtStudents/>}/>*/}
             </Routes>
-            <AccountingFilter setActive={setActive} active={active}/>
+            <AccountingFilter setActive={setActive} active={active} setActiveDel={setActiveDel} activeDel={activeDel}/>
         </div>
     );
 });

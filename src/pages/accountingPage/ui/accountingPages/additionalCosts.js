@@ -32,7 +32,7 @@ import {Alert} from "../../../../shared/ui/alert";
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 import {YesNo} from "../../../../shared/ui/yesNoModal";
 
-export const AdditionalCosts = () => {
+export const AdditionalCosts = ( {deleted , setDeleted}) => {
     const [activeModal, setActiveModal] = useState(false)
     const overHeadType = useSelector(getOverHeadType)
     const dispatch = useDispatch()
@@ -49,7 +49,6 @@ export const AdditionalCosts = () => {
     const overheadList = useSelector(getOverHeadList)
     const [activeDelete, setActiveDelete] = useState(false)
     const [changingData, setChangingData] = useState({})
-    const [deleted, setDeleted] = useState(false)
     const overheadDeletedList = useSelector(getOverHeadDeletedList)
     const [alerts, setAlerts] = useState([])
     useEffect(() => {

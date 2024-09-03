@@ -20,9 +20,8 @@ import {YesNo} from "shared/ui/yesNoModal";
 
 
 
-export const StudentSalary = () => {
+export const StudentSalary = ({deleted , setDeleted}) => {
     const {request} = useHttp()
-    const [deleted, setDeleted] = useState(false)
     const dispatch = useDispatch()
     const studentData = useSelector(getStudentPaymentes)
     const loading = useSelector(getLoadingStudent)
@@ -32,7 +31,7 @@ export const StudentSalary = () => {
     useEffect(() => {
         dispatch(getStudentPayment())
         dispatch(getDeletedPayment())
-    }, [])
+    }, [deleted])
 
 
     const formatSalary = (payment_sum) => {
@@ -63,15 +62,8 @@ export const StudentSalary = () => {
         <div>
             <div style={{display: "flex", gap: "2rem" ,alignItems: "center" ,justifyContent: "space-between"}}>
                 <div style={{display: "flex" , gap: "2rem"}}>
-
-                    <Button onClick={() => setDeleted(!deleted)} type={deleted ? "danger" : "filter"}>
-                        O'chirilganlar
-                    </Button>
-                    <Button type={"filter"}>
-                        Archive
-                    </Button>
                 </div>
-                <div style={{color: "rgb(34, 197, 94)" , fontSize: "2.2rem" , textAlign: "end" }}>Total : {formatSalary(deleted ? sum2 : sum1)}</div>
+                <div style={{color: "rgb(34, 197, 94)" , fontSize: "2.2rem" , textAlign: "end" , marginBottom: "3rem" }}>Total : {formatSalary(deleted ? sum2 : sum1)}</div>
             </div>
             {deleted ?
 

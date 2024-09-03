@@ -37,7 +37,7 @@ const postCreateBranch = createSlice({
                 state.error = false
             })
             .addCase(getLocationThunk.fulfilled , (state, action) => {
-                state.locationId = action.payload.locations
+                state.locationId = action.payload
                 state.loading = false
                 state.error = false
             })
@@ -54,7 +54,6 @@ const postCreateBranch = createSlice({
                     ...state.name.filter(item => item.id !== action.payload.id),
                     action.payload
                 ]
-                console.log(action.payload , "yedi")
                 state.loading = false
                 state.error = null
             })

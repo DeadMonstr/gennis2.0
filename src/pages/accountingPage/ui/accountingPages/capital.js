@@ -25,7 +25,7 @@ import cls from "../accountingPageMain.module.sass"
 import {YesNo} from "shared/ui/yesNoModal";
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 
-export const Capital = () => {
+export const Capital = ({deleted , setDeleted }) => {
     const capitalList = useSelector(getCapitalList)
     const capitalDeletedList = useSelector(getDeletedCapitalList)
     const dispatch = useDispatch()
@@ -36,9 +36,6 @@ export const Capital = () => {
     const [radio, setRadio] = useState({})
     const [changingData, setChangingData] = useState({})
     const [activeDelete, setActiveDelete] = useState(false)
-    const [alerts, setAlerts] = useState([])
-    const [deleted, setDeleted] = useState(false)
-
     const {register, setValue, handleSubmit} = useForm()
 
     const monthDay = useSelector(getMonthDays)
@@ -81,6 +78,11 @@ export const Capital = () => {
                 console.log(err)
             })
     }
+    const formatSalary = (salary) => {
+        return Number(salary).toLocaleString();
+    };
+    const sum1 = capitalList.reduce((a, c) => a + parseFloat(c.price || 0), 0);
+    const sum2 = capitalDeletedList.reduce((a, c) => a + parseFloat(c.price || 0), 0);
     const onDelete = () => {
         const {id} = changingData
         console.log(id, "log")
@@ -101,7 +103,7 @@ export const Capital = () => {
     }
     return (
         <div className={cls.overhead}>
-            <CapitalHeader deleted={deleted} setDeleted={setDeleted} setActive={setActiveModal}/>
+            <CapitalHeader deleted={deleted} setDeleted={setDeleted} setActive={setActiveModal} sum1={sum1} sum2={sum2} formatSalary={formatSalary}/>
             {deleted ? <CapitalDeleted deleted={capitalDeletedList}/> : <AccountingCapitalCosts changingData={changingData} activeDelete={activeDelete}
                                                       setActiveDelete={setActiveDelete}
                                                       setChangingData={setChangingData}

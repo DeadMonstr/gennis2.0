@@ -20,7 +20,7 @@ import {
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import {YesNo} from "shared/ui/yesNoModal";
 
-export const TeacherSalaryPage = () => {
+export const TeacherSalaryPage = ({deleted , setDeleted}) => {
 
     const dispatch = useDispatch()
     const teacherSalary = useSelector(getTeacherSalaryData)
@@ -32,7 +32,7 @@ export const TeacherSalaryPage = () => {
 
     const [activeDelete, setActiveDelete] = useState(false)
     const {request} = useHttp()
-    const [deleted, setDeleted] = useState(false)
+
 
     useEffect(() => {
         dispatch(getPaymentType())
@@ -66,7 +66,6 @@ export const TeacherSalaryPage = () => {
         return Number(salary).toLocaleString();
     };
 
-
     const sum1 = getDeletedTeachersSalary.reduce((a, c) => a + parseFloat(c.salary || 0), 0);
 
     const sum2 = teacherSalary.reduce((a, c) => a + parseFloat(c.salary || 0), 0);
@@ -80,16 +79,7 @@ export const TeacherSalaryPage = () => {
     };
     return (
         <div>
-            <div style={{display: "flex", gap: "2rem" ,alignItems: "center" ,justifyContent: "space-between"}}>
-                <div style={{display: "flex" , gap: "2rem"}}>
-
-                    <Button onClick={() => setDeleted(!deleted)} type={deleted ? "danger" : "filter"}>
-                        O'chirilganlar
-                    </Button>
-                    <Button type={"filter"}>
-                        Archive
-                    </Button>
-                </div>
+            <div style={{display: "flex", gap: "2rem" ,alignItems: "center" ,justifyContent: "flex-end"  ,marginBottom: "3rem"}}>
                 <div style={{color: "rgb(34, 197, 94)" , fontSize: "2.2rem" , textAlign: "end" }}>Total : {formatSalary(deleted ? sum1 : sum2)}</div>
             </div>
 

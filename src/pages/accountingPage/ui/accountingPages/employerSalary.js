@@ -20,10 +20,9 @@ import {
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 import {YesNo} from "../../../../shared/ui/yesNoModal";
 
-export const EmployerSalaryPage = memo(({setPage}) => {
+export const EmployerSalaryPage = memo(({deleted , setDeleted }) => {
     const dispatch = useDispatch()
     const [changePayment, setChangePayment] = useState(false)
-    const [deleted, setDeleted] = useState(false)
     const [archive, setArchive] = useState(false)
     const getSalary = useSelector(getEmployerSalary)
     const getDeletedEmployerSalary = useSelector(getDeletedEmployer)
@@ -128,16 +127,8 @@ export const EmployerSalaryPage = memo(({setPage}) => {
             {/*    </div>*/}
 
             {/*</div>*/}
-            <div style={{display: "flex", gap: "2rem" ,alignItems: "center" ,justifyContent: "space-between"}}>
-                <div style={{display: "flex" , gap: "2rem"}}>
+            <div style={{display: "flex", gap: "2rem" ,alignItems: "center" ,justifyContent: "flex-end" , marginBottom: "3rem"}}>
 
-                    <Button onClick={() => setDeleted(!deleted)} type={deleted ? "danger" : "filter"}>
-                        O'chirilganlar
-                    </Button>
-                    <Button type={"filter"}>
-                        Archive
-                    </Button>
-                </div>
                 <div style={{color: "rgb(34, 197, 94)" , fontSize: "2.2rem" , textAlign: "end" }}>Total : {formatSalary(deleted ? sum1 : sum2)}</div>
             </div>
 
