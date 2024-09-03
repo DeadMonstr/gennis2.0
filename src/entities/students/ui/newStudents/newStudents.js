@@ -31,10 +31,9 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
            return studentToRender?.map((item,i) => {
                return (
                    <tr
-                       onClick={() => navigation(`profile/${item.id}`)}
                    >
                        <td>{i + 1}</td>
-                       <td>{item.user?.surname} {item.user?.name}</td>
+                       <td  onClick={() => navigation(`profile/${item.id}`)}>{item.user?.surname} {item.user?.name}</td>
                        <td>{item.user?.age}</td>
                        <td>{item.user?.language?.name}</td>
                        {
