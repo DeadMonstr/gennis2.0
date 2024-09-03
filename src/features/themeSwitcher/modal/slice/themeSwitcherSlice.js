@@ -35,7 +35,7 @@ const themeSwitcherSlice = createSlice({
 
             localStorage.setItem("selectedSystem", JSON.stringify(filtered))
             state.system =  {
-                id: filtered.id,
+                id: filtered?.id,
                 type: action.payload
             }
 

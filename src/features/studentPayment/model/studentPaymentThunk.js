@@ -190,6 +190,6 @@ export const getMonthDataThunk = createAsyncThunk(
     'studentPaymentSlice/getMonthData',
     async (id) => {
         const {request} = useHttp();
-        return await request(`${API_URL}Students/get_datas/${id}/`, "GET", null, headers())
+        return await request(`${API_URL}Students/student_payment_month/${id}/`, "GET", null, headers())
     }
 )
