@@ -2,6 +2,7 @@ import {fetchClassNumberList, getSchoolClassNumbers} from "entities/students";
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import {useParams} from "react-router-dom";
 import {useTheme} from "shared/lib/hooks/useTheme";
 import { fetchLanguages, fetchSubjects, registerUser, registerTeacher, registerEmployer } from "../model/registerThunk";
 import cls from "./register.module.sass";
@@ -39,7 +40,14 @@ export const Register = () => {
     })) || [];
 
 
-    const { register, handleSubmit, watch, setValue, reset } = useForm();
+    const {
+        register,
+        handleSubmit,
+        watch,
+        setValue,
+        reset
+    } = useForm();
+    const {"*":id} = useParams()
     const registerType = watch("registerType", "student");
     const username = watch("username", "");
     const {theme} = useTheme()
@@ -65,6 +73,7 @@ export const Register = () => {
     useEffect(() => {
         dispatch(fetchLanguages());
         dispatch(fetchSubjects())
+        setValue("password", 12345678)
     }, []);
 
     useEffect(() => {
@@ -111,6 +120,8 @@ export const Register = () => {
         }
     }, [username]);
 
+    console.log(id, "branch")
+
 
     const onSubmit = (data) => {
         if (!isUsernameAvailable) {
@@ -127,25 +138,35 @@ export const Register = () => {
                 ...data,
                 observer: true,
                 language: selectedLanguage?.id || "",
-                branch: 1,
+                branch: id,
             },
-            subject: [selectedSubjectData?.id || null],
+            // subject: [selectedSubjectData?.id || null],
         };
         let res2 = {
             ...data,
             observer: true,
             language: selectedLanguage?.id || "",
-            branch: 1,
+            branch: id,
         };
 
         let registerAction;
 
         if (registerType === 'student') {
+            let result;
+            if (userSystem?.id === 2) {
+                result = {
+                    class_number: selectedClass
+                }
+            } else {
+                result = {
+                    subject: [selectedSubjectData?.id || null],
+                }
+            }
             res = {
                 ...res,
                 shift: selectedTimes?.id || "",
                 parents_number: data.parents_phone,
-                class_number: selectedClass,
+                ...result
             };
             registerAction = registerUser(res);
         } else if (registerType === 'teacher') {
@@ -200,26 +221,16 @@ export const Register = () => {
                     <>
                         <Select
                             extraClass={cls.extraClasses}
+                            title={"Til"}
                             name={"language"}
                             onChangeOption={setSelectedLang}
                             options={languages}
+                            defaultValue={1}
                         />
 
-                        <Select
-                            extraClass={cls.extraClasses}
-                            name={"subject_id"}
-                            onChangeOption={setSelectedSubject}
-                            options={subjects}
-                        />
 
-                        <Select
-                            extraClass={cls.extraClasses}
-                            name={"shift"}
-                            onChangeOption={setSelectedTime}
-                            options={shift}
-                        />
                         {
-                            (theme === "app_school_theme" || userSystem?.id === 2) && (
+                            (theme === "app_school_theme" || userSystem?.id === 2) ? (
                                 <Select
                                     extraClass={cls.extraClasses}
                                     title={"Sinf"}
@@ -227,6 +238,22 @@ export const Register = () => {
                                     onChangeOption={setSelectedClass}
                                     options={classNumbers}
                                 />
+                            ) : (
+                                <>
+                                    <Select
+                                        extraClass={cls.extraClasses}
+                                        name={"subject_id"}
+                                        onChangeOption={setSelectedSubject}
+                                        options={subjects}
+                                    />
+
+                                    <Select
+                                        extraClass={cls.extraClasses}
+                                        name={"shift"}
+                                        onChangeOption={setSelectedTime}
+                                        options={shift}
+                                    />
+                                </>
                             )
                         }
                     </>

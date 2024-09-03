@@ -149,11 +149,11 @@ export const StudentsPage = () => {
             teacher: [+selectTeacher],
             students: selectStudents,
             color: selectColor,
-            // branch: userBranchId,
+            branch: id,
             create_type: "school",
             system: 2
         }
-        request(`${API_URL}Group/groups/create/?branch=${userBranchId}`, "POST", JSON.stringify(res), headers())
+        request(`${API_URL}Group/groups/create/`, "POST", JSON.stringify(res), headers())
             .then(res => {
                 console.log(res, "res classAdd")
                 dispatch(onAddAlertOptions({

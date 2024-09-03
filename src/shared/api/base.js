@@ -26,6 +26,7 @@ export const headersImg = () => {
 
 export const branchQuery = () => {
     const branch = localStorage.getItem("selectedBranch")
+    console.log(branch, "branch")
     return `branch=${branch}`
 }
 
