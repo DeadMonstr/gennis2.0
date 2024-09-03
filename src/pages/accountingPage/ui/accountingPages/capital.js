@@ -16,7 +16,7 @@ import {useForm} from "react-hook-form";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {AccountingCapitalCosts} from "entities/accounting";
 import {onDeleteCapital} from "entities/accounting/model/slice/capital";
-import {Alert} from "shared/ui/alert";
+
 import {
     CapitalDeleted
 } from "entities/accounting/ui/acauntingTables/accountingTableCapitalCosts/capitalDeleted";
@@ -36,6 +36,9 @@ export const Capital = ({deleted , setDeleted }) => {
     const [radio, setRadio] = useState({})
     const [changingData, setChangingData] = useState({})
     const [activeDelete, setActiveDelete] = useState(false)
+    // const [alerts, setAlerts] = useState([])
+    const [deleted, setDeleted] = useState(false)
+
     const {register, setValue, handleSubmit} = useForm()
 
     const monthDay = useSelector(getMonthDays)

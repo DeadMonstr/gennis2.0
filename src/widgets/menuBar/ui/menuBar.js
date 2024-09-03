@@ -1,77 +1,78 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
-import { useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router";
+import {useCallback, useContext, useEffect, useState} from 'react';
+import {useSelector} from "react-redux";
+import {useLocation, useNavigate} from "react-router";
 import classNames from "classnames";
 
 import {getUserId, getUsername} from "pages/loginPage";
-import { Link } from "shared/ui/link";
-import { ThemeContext } from "shared/lib/context/themeContext";
-import { menuConfig } from "../model/consts/menuConfig";
-import {getUserBranchId, getUserPermission} from "entities/profile/userProfile";
+import {Link} from "shared/ui/link";
+import {ThemeContext} from "shared/lib/context/themeContext";
+import {menuConfig} from "../model/consts/menuConfig";
+import {getUserBranchId, getUserPermission, getUserProfileData} from "entities/profile/userProfile";
 import cls from "./menuBar.module.sass";
 import defaultUserImage from "shared/assets/images/user_image.png";
+import {NavLink} from "react-router-dom";
+import {getSystem} from "features/themeSwitcher";
+import {getSelectedLocations} from "features/locations";
+import {getBranch} from "features/branchSwitcher";
 
 export const Menubar = () => {
     const navigate = useNavigate();
-    const { pathname } = useLocation();
-    const { theme } = useContext(ThemeContext);
+    const {pathname} = useLocation();
+    const {theme} = useContext(ThemeContext);
     const username = useSelector(getUsername);
+
+
     const userPermissions = useSelector(getUserPermission);
-    // const location = 1;
+    const user = useSelector(getUserProfileData);
+
+
+    // const changeLocations = 1;
     const location = useSelector(getUserBranchId)
     const userId = useSelector(getUserId)
-    const [activeMenu, setActiveMenu] = useState("home");
-    const [isDirector, setIsDirector] = useState(false);
+    const system = useSelector(getSystem)
+    const selectedLocations = useSelector(getSelectedLocations)
+    const branch = useSelector(getBranch)
 
-    useEffect(() => {
-        if (userPermissions) {
-            const directorRole = userPermissions[1]?.jobs?.some(job => job?.director || job?.manager === true);
-            console.log(directorRole)
-            setIsDirector(directorRole);
-        }
-    }, [userPermissions]);
 
-    useEffect(() => {
-        menuConfig.map(item => {
-            if (pathname.includes(item.to)) {
-                setActiveMenu(item.to);
-            }
-        });
-    }, [pathname]);
+
+
+
+
 
     const renderMultipleMenu = useCallback(() => {
-        const filteredMenuConfig = menuConfig.filter(item => {
-            if (item.to === "vacancyPage" && !isDirector) {
-                return false;
-            }
-            return true;
-        });
 
-        return filteredMenuConfig.map((item, index) => {
-            const linkItem = item.location ? `/${location}` : "";
-            return (
-                <li
-                    key={index}
-                    className={classNames(cls.link, {
-                        [cls.active]: item.to === activeMenu
-                    })}
-                    onClick={() => {
-                        setActiveMenu(item.to);
-                        navigate(`${item.to}${linkItem}`);
-                    }}
-                >
-                    <Link
-                        to={`${item.to}${linkItem}`}
-                        extraClass={cls.link__href}
-                        activeClass={cls.active}
+        const linkId = selectedLocations?.length > 1 ? "" : `/${branch?.id}`
+
+
+        return menuConfig.map((item, index) => {
+
+            console.log(user, "absdjabsha")
+            if (!item?.system.includes(system.type)) return;
+            if ((typeof item.roles === "object" && user?.job.some(job => item.roles.includes(job))) || (typeof item.roles === "boolean" && item.roles)) {
+
+
+
+                return (
+                    <NavLink
+                        to={`${item.to}${linkId}`}
+                        key={index}
+                        className={({isActive}) =>
+                            isActive ? `${cls.link} ${cls.active}` : `${cls.link}`
+                        }
                     >
-                        <i className={`fas ${item.icon} icon-link`} />
+                    <span
+                        className={cls.link__href}
+                    >
+                        <i className={`fas ${item.icon} icon-link`}/>
                         <span className={cls.link__title}>{item.name}</span>
-                    </Link>
-                </li>
-            );
+                    </span>
+                    </NavLink>
+                );
+            }
+
+
         });
-    }, [theme, activeMenu, isDirector, location]);
+    }, [theme, selectedLocations, branch,user]);
 
     const renderedMenu = renderMultipleMenu();
 
@@ -94,8 +95,10 @@ export const Menubar = () => {
                 {renderedMenu}
             </ul>
             <div className={cls.menu__footer}>
-                <i className="fas fa-sign-out-alt" />
-                <h2>Chiqish</h2>
+                <div className={cls.menu__}>
+                    <i className="fas fa-sign-out-alt"/>
+                    <h2>Chiqish</h2>
+                </div>
             </div>
         </nav>
     );

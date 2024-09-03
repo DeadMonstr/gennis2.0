@@ -8,6 +8,9 @@ export const getUserSalaryInnerData = (state) =>
 export const getUserProfileData = (state) =>
     state.userProfileSlice.userData
 
+export const getUserProfileLoading = (state) =>
+    state.userProfileSlice.loading
+
 export const getUserBranchId = (state) =>
     state.userProfileSlice.userBranchId
 

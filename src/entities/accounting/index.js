@@ -14,24 +14,14 @@ export {EmployeeSalary} from "./ui/acauntingTables/accountingTableWorkerSalary/E
 export {TeachersSalary} from "./ui/acauntingTables/accountingTableTeacherSalary/TeachersSalary"
 
 
-
 export {getAccountingSelect , getStudentsData} from "./model/selector/accountingSelector"
+export {getEmployerSalary , getLoading , getDeletedEmployer} from "./model/selector/employerSalary"
+export {getStudentPaymentes , getLoadingStudent , getDeletedStudent} from "./model/selector/student"
+export {getOverHeadType , getOverHeadLoading} from "./model/selector/additionalCosts"
 
 export {default as accountingSlice} from "./model/slice/accountingSlice"
 export {default as studentSlice} from "./model/slice/studetntSlice"
-
-
-export {getEmployerSalary , getLoading , getDeletedEmployer} from "./model/selector/employerSalary"
-
-export {getStudentPaymentes , getLoadingStudent , getDeletedStudent} from "./model/selector/student"
 export {default as employerSlice} from "./model/slice/employerSalary"
-
 export {default as teacher} from "./model/slice/teacher"
-
 export {default as overHeadSlice} from "./model/slice/additionalCosts"
-
-export {getOverHeadType , getOverHeadLoading} from "./model/selector/additionalCosts"
-
-
-
 export {default as capitalSlice} from "./model/slice/capital"

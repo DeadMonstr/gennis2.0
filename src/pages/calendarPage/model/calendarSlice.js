@@ -46,14 +46,14 @@ const calendarSlice = createSlice({
                         month_number: i.month_number,
                         month_name: i.month_name,
                         days: i.days.map(inner => {
-                            if (action.payload.filter(iI => iI.day_id === inner.id)[0]) {
+                            if (action.payload.filter(iI => iI.id === inner.id)[0]) {
                                 return {
-                                    id: action.payload.filter(iI => iI.day_id === inner.id)[0]?.day_id,
-                                    day_number: action.payload.filter(iI => iI.day_id === inner.id)[0]?.day_number,
-                                    day_name: action.payload.filter(iI => iI.day_id === inner.id)[0]?.day_name,
+                                    id: action.payload.filter(iI => iI.id === inner.id)[0]?.id,
+                                    day_number: action.payload.filter(iI => iI.id === inner.id)[0]?.day_number,
+                                    day_name: action.payload.filter(iI => iI.id === inner.id)[0]?.day_name,
                                     type_id: {
-                                        type: action.payload.filter(iI => iI.day_id === inner.id)[0]?.type_name,
-                                        color: action.payload.filter(iI => iI.day_id === inner.id)[0]?.type_color
+                                        type: action.payload.filter(iI => iI.id === inner.id)[0]?.type_name,
+                                        color: action.payload.filter(iI => iI.id === inner.id)[0]?.type_color
                                     }
                                 }
                             } else return inner
@@ -64,7 +64,7 @@ const calendarSlice = createSlice({
                                     return {
                                         color: inner.color,
                                         type: inner.type,
-                                        days: inner.days.map(iI => action.payload.filter(ii => iI.id === ii.day_id)[0] ? null : iI)
+                                        days: inner.days.map(iI => action.payload.filter(ii => iI.id === ii.id)[0] ? null : iI)
                                             .filter(iI => iI)
                                     }
                                 }),
@@ -94,8 +94,33 @@ const calendarSlice = createSlice({
                     months: item.months.map(i => ({
                         month_number: i.month_number,
                         month_name: i.month_name,
-                        days: i.days,
-                        types: i.types.filter(item => item.color !== action.payload[0]?.type_color)
+                        days: i.days.map(inner => {
+                            if (action.payload.filter(iI => iI.id === inner.id)[0]) {
+                                return {
+                                    id: action.payload.filter(iI => iI.id === inner.id)[0]?.id,
+                                    day_number: action.payload.filter(iI => iI.id === inner.id)[0]?.day_number,
+                                    day_name: action.payload.filter(iI => iI.id === inner.id)[0]?.day_name,
+                                    type_id: {
+                                        type: action.payload.filter(iI => iI.id === inner.id)[0]?.type_name,
+                                        color: action.payload.filter(iI => iI.id === inner.id)[0]?.type_color
+                                    }
+                                }
+                            } else return inner
+                        }),
+                            // .sort(compareById),
+                        types: i.types.map(item => ({
+                            color: item.color,
+                            type: item.type,
+                            days: item.days.map(iI => {
+                                if (action.payload.filter(ii => ii.id === iI.id)[0]) {
+                                    return null
+                                } else return iI
+                            }).filter(item => item)
+                            // if (action.payload.filter(inner => inner.day_id === i.month_number)[0]) {
+                            //     return action.payload.filter(inner => inner.month === i.month_number)[0]
+                            // } else return item
+                            // item.color !== action.payload[0]?.type_color
+                        }))
                     }))
                 }))
                 state.innerLoading = false

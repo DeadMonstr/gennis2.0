@@ -1,108 +1,135 @@
+import {ROLES} from "shared/const/roles";
+
 export const menuConfig = [
     {
         to: "home",
         name: "Bosh Sahifa",
         icon: "fa-home",
-        system: [1, 2]
+        system: ["center","school"],
+        roles: true
+    },
+    {
+        to: "register",
+        name: "Registratsiya",
+        icon: "fa-edit",
+        system: ["center","school"],
+        roles: true
     },
     {
         to: "taskManager",
         name: "Task Manager",
         icon: "fa-tasks",
-        location: true,
-        system: [1, 2]
+        system: ["center","school"],
+        roles: [ROLES.director,ROLES.admin],
+
     },
     {
-        to: "studentDirector",
-        name: "O'quvchilar",
-        icon: "fa-user-graduate",
-        system: [1, 2]
+        to: "calendar",
+        name: "Kalendar",
+        icon: "fas fa-calendar-times",
+        system: ["school"],
+        roles: [ROLES.director,ROLES.admin],
+
     },
-    // {
-    //     to: "studentDirector",
-    //     name: "O'quvchilar",
-    //     icon: "fa-user-graduate",
-    // },
     {
         to: "students",
         name: "O'quvchilar",
         icon: "fa-user-graduate",
-        location: true,
-        system: [1, 2]
+        system: ["center","school"],
+        roles: [ROLES.admin,ROLES.director,ROLES.programmer]
     },
     {
         to: "groups",
         name: "Gruppalar",
         icon: "fa-users",
-        location: true,
-        system: [1, 2]
+        system: ["center","school"],
+        roles: [ROLES.admin,ROLES.director,ROLES.programmer]
+
     },
     {
         to: "teacher",
         name: "O'qituvchilar",
         icon: "fa-user-tie",
-        location: true,
-        system: [1, 2]
+        system: ["center","school"],
+        roles: [ROLES.admin,ROLES.director,ROLES.programmer]
+
     },
     {
         to: "vacancyPage",
         name: "Vakansiyalar",
-        icon: "fa-tasks",
-        location: true, // Bu element director uchun filtrlanadi
+        icon: "fa-tasks", // Bu element director uchun filtrlanadi
+        system: ["center","school"],
+        roles: [ROLES.director,ROLES.programmer]
     },
     {
         to: "timeList",
         name: "Time List",
         icon: "fa-clock",
-        location: true
+        system: ["center","school"],
+
+        roles: [ROLES.admin,ROLES.director,ROLES.programmer]
+
     },
     {
         to: "employer",
         name: "Employers",
         icon: "fa-user-graduate",
-        location: true
+        system: ["center","school"],
+
+        roles: [ROLES.admin,ROLES.director,ROLES.programmer]
+
     },
     {
         to: "flows",
         name: "Flows",
         icon: "fa-user-graduate",
-        location: true
+        system: ["school"],
+
+        roles: [ROLES.admin,ROLES.director,ROLES.programmer]
+
     },
     {
         to: "class",
         name: "Class",
         icon: "fa-user-graduate",
-        roles: [],
-        isMenu: true,
+        system: ["school"],
+
+        roles: [ROLES.admin,ROLES.director,ROLES.programmer]
     },
     {
         to: "contract",
         name: "Contract",
         icon: "fa-file-contract",
-        roles: [],
-        isMenu: true
+        system: ["center","school"],
+
+        roles: [ROLES.admin,ROLES.director,ROLES.programmer]
+
     },
     {
         to: "capital",
         name: "Capital",
         icon: "fa-book",
-        isMenu: true
+        system: ["center","school"],
+
+        roles: [ROLES.admin,ROLES.director,ROLES.programmer,ROLES.accountant]
+
     },
     {
         to: "accounting",
         name: "Bugalteriya",
         icon: "fa-calculator",
-        isMenu: true
+        system: ["center","school"],
+
+        roles: [ROLES.admin,ROLES.director,ROLES.programmer]
+
     },
     {
         to: "rooms",
         name: "Honalar",
         icon: "fa-door-closed",
-        location: true
+        system: ["center","school"],
+        roles: [ROLES.admin,ROLES.director,ROLES.programmer]
+
     },
-    {
-        to: "register",
-        name: "Registratsiya",
-        icon: "fa-edit"
-    }
+
 ];

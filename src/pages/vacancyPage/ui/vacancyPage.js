@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from "react";
 import { Pagination } from "features/pagination";
-import { GroupsFilter } from "features/filters/groupsFilter";
+
 import { Button } from "shared/ui/button";
 import cls from "./vacancyPage.module.sass";
 import { VacancyList } from "entities/vacancy/ui/vacancyList";
@@ -9,26 +9,45 @@ import { VacancyPageEdit } from "features/vacancyModals/vacancyPageEdit";
 import { VacancyAdd } from "entities/vacancy/ui/vacancyAdd";
 import {useDispatch, useSelector} from "react-redux";
 import {getVacancyJobs, fetchVacancyData} from "features/vacancyModals/vacancyPageAdd";
+import {getSearchValue} from "../../../features/searchInput";
 
 
 export const VacancyPage = () => {
     const [active, setActive] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [modalActive, setModalActive] = useState(false);
+    const search = useSelector(getSearchValue)
+    let PageSize = useMemo(() => 10, [])
+    const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
-    const [search, setSearch] = useState("");
-    const [currentTableData, setCurrentTableData] = useState([]);
     const [modal, setModal] = useState(false);
     const [currentEditingVacancy, setCurrentEditingVacancy] = useState(null);
     const dispatch = useDispatch()
     const getVacancyData = useSelector(getVacancyJobs)
+    const getVacancy = getVacancyData?.jobs
 
-    const PageSize = useMemo(() => 20, []);
+
+    const searchedUsers = useMemo(() => {
+        if (!getVacancy) return [];
+
+        const filteredHeroes = getVacancy.slice();
+        setCurrentPage(1);
+
+        if (!search) return filteredHeroes;
+
+        return filteredHeroes.filter(item =>
+            (item?.group?.name?.toLowerCase().includes(search.toLowerCase()) ||
+                item?.system_id?.name?.toLowerCase().includes(search.toLowerCase()))
+        );
+
+    }, [getVacancy, setCurrentPage, search]);
 
 
     useEffect(() => {
         dispatch(fetchVacancyData())
     }, [dispatch])
+
+    console.log(getVacancyData, "data")
 
     const handleEditClick = (vacancy) => {
         setCurrentEditingVacancy(vacancy);
@@ -51,14 +70,6 @@ export const VacancyPage = () => {
     return (
         <div className={cls.deletedGroups}>
             <div className={cls.mainContainer_filterPanelBox}>
-                <Button
-                    type={"filter"}
-                    extraClass={cls.extraCutClassFilter}
-                    onClick={() => setActive(true)}
-                >
-                    Filter
-
-                </Button>
             </div>
             <div className={cls.mainContainer_buttonPanelBox}>
                 <div></div>
@@ -79,23 +90,24 @@ export const VacancyPage = () => {
             </div>
             <div className={cls.mainContainer_tablePanelBox}>
                 <VacancyList
-                    currentTableData={getVacancyData}
-                    currentPage={currentPage}
-                    PageSize={PageSize}
+                    currentTableData={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
+
                     editMode={!editMode}
                     onEditClick={handleEditClick}
                 />
             </div>
             <Pagination
                 setCurrentTableData={setCurrentTableData}
-                users={vacancyPageList}
+                users={searchedUsers}
                 search={search}
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
                 pageSize={PageSize}
-                onPageChange={page => setCurrentPage(page)}
+                onPageChange={page => {
+                    setCurrentPage(page)
+                }}
+                type={"custom"}
             />
-            {/*<GroupsFilter setActive={setActive} active={active} />*/}
             <VacancyPageEdit
                 setModal={setModal}
                 modal={modal}

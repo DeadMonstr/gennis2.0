@@ -13,7 +13,7 @@ import {
     getOverheadType,
     overHeadDeletedList,
     overHeadList
-} from "../../../../entities/accounting/model/thunk/additionalCosts";
+} from "entities/accounting/model/thunk/additionalCosts";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {getCapitalTypes} from "entities/capital";
 import {Radio} from "shared/ui/radio";
@@ -22,13 +22,12 @@ import {useForm} from "react-hook-form";
 import {
     getMonthDays, getOverHeadDeletedList,
     getOverHeadList,
-} from "../../../../entities/accounting/model/selector/additionalCosts";
-import {onDeleteOverhead} from "../../../../entities/accounting/model/slice/additionalCosts";
-import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
+} from "entities/accounting/model/selector/additionalCosts";
+import {onDeleteOverhead} from "entities/accounting/model/slice/additionalCosts";
+import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import {
     AdditionalCostsDeleted
-} from "../../../../entities/accounting/ui/acauntingTables/accountingTableAdditionalCosts/additionalCostsDeleted";
-import {Alert} from "../../../../shared/ui/alert";
+} from "entities/accounting/ui/acauntingTables/accountingTableAdditionalCosts/additionalCostsDeleted";
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 import {YesNo} from "../../../../shared/ui/yesNoModal";
 
@@ -50,7 +49,7 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
     const [activeDelete, setActiveDelete] = useState(false)
     const [changingData, setChangingData] = useState({})
     const overheadDeletedList = useSelector(getOverHeadDeletedList)
-    const [alerts, setAlerts] = useState([])
+    // const [alerts, setAlerts] = useState([])
     useEffect(() => {
         dispatch(getOverheadType())
         dispatch(getPaymentType())
@@ -124,6 +123,7 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
                 dispatch(onDeleteOverhead({id: id}))
                 // dispatch(overHeadList())
                 setActiveDelete(false)
+                // showAlert("success", `${changingData.name} ${res.msg}`)
                 dispatch(onAddAlertOptions({
                     type: "success",
                     status: true,

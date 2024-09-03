@@ -15,6 +15,7 @@ import money from "shared/assets/images/Money.png";
 import creditCard from "shared/assets/images/CreditCard.png";
 import bank from "shared/assets/images/Bank.png";
 import {fetchTeacherSalaryIdThunk, fetchTeacherSalaryThunk, getTeacherSalaries} from "../../../../teacherSalary";
+import {onAddAlertOptions} from "../../../../../features/alert/model/slice/alertSlice";
 
 const listPretcent = [-1, 34.8, 70.4]
 
@@ -48,8 +49,18 @@ export const TeacherProfileTotalAmount = memo(({active, setActive, salary_id, us
             const action = await dispatch(giveTeacherSalaryThunk(newSalary));
             if (giveTeacherSalaryThunk.fulfilled.match(action)) {
                 dispatch(addSalary(action.payload));
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: "Oylik muvofaqqiyatli to'landi"
+                }))
             } else {
                 console.error("Thunk failed with error: ", action.payload);
+                dispatch(onAddAlertOptions({
+                    type: "error",
+                    status: true,
+                    msg: "Internet yoki serverda xatolik, qayta urinib ko'ring"
+                }))
             }
         } catch (error) {
             console.error("An error occurred:", error);

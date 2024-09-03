@@ -9,6 +9,7 @@ import {Link} from "shared/ui/link";
 import {fetchTeacherSalaryIdThunk} from "../../../../entities/teacherSalary";
 import {employerSalaryDeleteThunk} from "../../model/employerSalaryDeleteThunk";
 import {fetchEmployerSalaryThunk} from "../../../../pages/giveSalaryPage";
+import {onAddAlertOptions} from "../../../alert/model/slice/alertSlice";
 
 export const EmployerSalaryDeleteModal = ({ isOpen, onClose, id, user_id }) => {
 
@@ -16,6 +17,11 @@ export const EmployerSalaryDeleteModal = ({ isOpen, onClose, id, user_id }) => {
 
     const handleDelete = () => {
         dispatch(employerSalaryDeleteThunk(id)).then(() => {
+            dispatch(onAddAlertOptions({
+                type: "success",
+                status: true,
+                msg: "Oylik muvofaqqiyatli o'chirildi"
+            }))
             onClose();
             dispatch(fetchEmployerSalaryThunk(user_id))
         });

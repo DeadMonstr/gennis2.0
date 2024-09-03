@@ -27,22 +27,27 @@ export const Students = ({ currentTableData }) => {
             );
         }
 
-        return studentsToRender.map((item, i) => {
-            console.log(item.color, i)
-            return (
-                <tr key={item.id} onClick={() => navigation(`profile/${item.id}`)}>
-                    <td>{i + 1}</td>
-                    <td>{item.user.name} {item.user.surname}</td>
-                    <td>{item.user.age}</td>
-                    <td>{item.user.phone}</td>
-                    <td>{item.group[0]?.name}</td>
-                    <td>
-                        <div style={{ width: "fit-content", border: `2px solid ${item.color}`, color: `${item.color}`, padding: "1.5rem", borderRadius: "10px" }}>
-                            {item.debt}
-                        </div>
-                    </td>
-                </tr>
-            )
+        return studentsToRender?.map((item, i) => {
+
+                return (
+                    <tr key={item.id} onClick={() => navigation(`profile/${item.id}`)}>
+                        <td>{i + 1}</td>
+                        <td>{item.user.name} {item.user.surname}</td>
+                        <td>{item.user.age}</td>
+                        <td>{item.user.phone}</td>
+                        <td>{item.group[0]?.name}</td>
+                        <td>
+                            <div style={{ width: "fit-content", border: `2px solid ${item.color}`, color: `${item.color}`, padding: "1.5rem", borderRadius: "10px" }}>
+                                {item.debt}
+                            </div>
+                        </td>
+                    </tr>
+                )
+
+            // console.log(item.color, i)
+            // return (
+            //
+            // )
         });
     };
 

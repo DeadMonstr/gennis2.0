@@ -110,7 +110,9 @@ export const flowsSlice = createSlice({
                 state.flowsStatus = "loading"
             })
             .addCase(fetchFlows.fulfilled, (state, action) => {
-                state.flows = action.payload.results
+                state.flows = action.payload
+                // state.flows = action.payload.results
+                state.flowsStatus = "success"
                 console.log(action.payload, "flow")
             })
             .addCase(fetchFlows.rejected, (state, action) => {
@@ -122,6 +124,7 @@ export const flowsSlice = createSlice({
             })
             .addCase(flowListThunk.fulfilled , (state , action) => {
                 state.flowList = action.payload
+                state.flowsStatus = "success"
                 console.log(action.payload , "flow list")
             })
             .addCase(flowListThunk.rejected , (state , action) => {

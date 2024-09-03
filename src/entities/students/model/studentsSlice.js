@@ -7,7 +7,9 @@ import {
     fetchOnlyNewStudentsData,
     fetchOnlyStudyingStudentsData,
     fetchSchoolStudents,
-    fetchNewStudentsDataWithBranch, fetchStudyingStudentsDataWithBranch,
+    fetchNewStudentsDataWithBranch,
+    fetchStudyingStudentsDataWithBranch,
+    fetchOnlyDeletedStudentsData
 } from "./studentsThunk";
 
 
@@ -22,12 +24,14 @@ const initialState = {
     schoolStudents: [],
     newStudentes: [],
     studyingStudents: [],
+    deletedStudents: [],
     newStudentsStatus: "idle",
     studyingStudentsStatus: "idle",
-    deletedStudents: [],
     branchStudents: [],
     branchStStudents: [],
-    branchStStudentsLoading: false
+    branchStStudentsLoading: false,
+    loading: false,
+    error: null
 }
 
 export const studentsSlice = createSlice({
@@ -48,7 +52,10 @@ export const studentsSlice = createSlice({
         },
         getCurseLevel: (state, action) => {
             state.filteredCurseLevel = action.payload
-        }
+        },
+        stopFilteredStudentsLoading: (state) => {
+            state.newStudentsStatus = "idle"
+        },
     },
     extraReducers: builder =>
         builder
@@ -57,7 +64,6 @@ export const studentsSlice = createSlice({
             })
             .addCase(fetchOnlyNewStudentsData.fulfilled, (state, action) => {
                 state.newStudentes = action.payload
-                console.log(state.newStudentes, "new")
                 state.newStudentsStatus = "success"
             })
             .addCase(fetchOnlyNewStudentsData.rejected, (state, action) => {
@@ -71,11 +77,23 @@ export const studentsSlice = createSlice({
             })
             .addCase(fetchOnlyStudyingStudentsData.fulfilled, (state, action) => {
                 state.studyingStudents = action.payload
-                console.log(action.payload, "studying")
                 state.studyingStudentsStatus = "success"
             })
             .addCase(fetchOnlyStudyingStudentsData.rejected, (state, action) => {
                 state.studyingStudents = "error"
+            })
+
+
+
+            .addCase(fetchOnlyDeletedStudentsData.pending, state => {
+                state.loading = "loading"
+            })
+            .addCase(fetchOnlyDeletedStudentsData.fulfilled, (state, action) => {
+                state.deletedStudents = action.payload
+                state.loading = false
+            })
+            .addCase(fetchOnlyDeletedStudentsData.rejected, (state, action) => {
+                state.error = action.error.message
             })
 
 
@@ -101,7 +119,7 @@ export const studentsSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchClassNumberList.fulfilled, (state, action) => {
-                state.schoolClassNumbers = action.payload?.classnumbers
+                state.schoolClassNumbers = action.payload
                 state.loading = false
                 state.error = null
             })
@@ -117,7 +135,7 @@ export const studentsSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchClassColors.fulfilled, (state, action) => {
-                state.schoolClassColors = action.payload.classcolors
+                state.schoolClassColors = action.payload
                 state.loading = false
                 state.error = null
             })
@@ -180,5 +198,6 @@ export const {
     getFilteredStudentsData,
     getFilteredStudentsStatus,
     getCurseTypes,
-    getCurseLevel
+    getCurseLevel,
+    stopFilteredStudentsLoading
 } = studentsSlice.actions

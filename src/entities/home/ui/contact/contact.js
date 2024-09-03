@@ -417,7 +417,7 @@ export const Contact = () => {
                             {/*</div>*/}
                             {/*<div className={cls.contact__locations__box_locations}>*/}
                             {/*    <h2>Manzil</h2>*/}
-                            {/*    <span>{selectedItem?.location}</span>*/}
+                            {/*    <span>{selectedItem?.changeLocations}</span>*/}
                             {/*</div>*/}
                             {renderInfo()}
                         </div>

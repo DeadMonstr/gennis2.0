@@ -25,35 +25,18 @@ export const CalendarListItem = memo((props) => {
         onSubmitDelete
     } = props
 
-    // console.log(data, "data")
-
     const contentHeight = useRef()
     const weeksCount = useMemo(() =>
         ["1week", "2week", "3week", "4week", "5week", "6week"], [])
 
-    /// important
-    // data
     const [totalWeeksCount, setTotalWeeksCount] = useState([])
-    // hoverActive
     const [demoActive, setDemoActive] = useState([])
-    // selectActive
     const [trueActive, setTrueActive] = useState([{}])
-
-    /// test delete
-    const [daysList, setDaysList] = useState([])
-
-    /// medium
-    // kunni aydisini olish
     const [selectedId, setSelectedId] = useState([])
-    // kunlar royhati
     const [typesOfDays, setTypesOfDays] = useState([])
-    // kunlar royhatini aniqroq korish
     const [selectedDay, setSelectedDay] = useState([])
-    // svich
     const [activeSwitch, setActiveSwitch] = useState(true)
-    // single boganda aydi olib berish
     const [singleId, setSingleId] = useState([])
-    // single boganda ularni olib berish
     const [singleIdActive, setSingleIdActive] = useState(false)
     const [deletedId, setDeletedId] = useState([])
 
@@ -214,6 +197,7 @@ export const CalendarListItem = memo((props) => {
     const renderCelebrateDays = useCallback(() => {
         return typesOfDays.map((item, index) => {
             // console.log(item.days,index, "days")
+            if (!item?.days?.length) return null
             return (
                 <div
                     className={cls.all}
@@ -243,7 +227,11 @@ export const CalendarListItem = memo((props) => {
                                 item.type === "Ish kuni" || item.type === "Dam" ? null :
                                     <i
                                         className={classNames("fas fa-trash", cls.item__icon)}
-                                        onClick={() => onSubmitDelete(item.days.map(item => item.id))}
+                                        onClick={() => {
+                                            // console.log(item, "item")
+                                            // console.log(item.days.map(item => item.day_id), "map")
+                                            onSubmitDelete(item.days.map(item => item.id))
+                                        }}
                                     />
                             }
                             {/*{*/}

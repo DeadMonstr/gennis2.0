@@ -7,7 +7,6 @@ import defaultUserImage from "shared/assets/images/user_image.png";
 
 export const UserProfileInfo = memo(({setActive, data, setStatus}) => {
 
-    console.log(data, "data")
 
     return (
         <div className={cls.info}>

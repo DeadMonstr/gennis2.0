@@ -6,49 +6,28 @@ const getAuthToken = () => {
     return userData ? userData : null;
 };
 
-export const fetchSubjectsAndLanguages = createAsyncThunk(
-    'user/fetchSubjectsAndLanguages',
+export const fetchSubjects = createAsyncThunk(
+    'user/fetchSubjects',
     async (_, thunkAPI) => {
         const token = getAuthToken();
-
         if (!token) {
-            return thunkAPI.rejectWithValue('No authorization token found');
+            return "Qayta login qilish kerak "
         }
-
-        try {
-            const [subjectsResponse, languagesResponse] = await Promise.all([
-                fetch(`${API_URL}Subjects/subject/`, {
-                    headers: {
-                        ...headers,
-                        Authorization: `JWT ${token}`
-                    }
-                }),
-                fetch(`${API_URL}Language/language/`, {
-                    headers: {
-                        ...headers,
-                        Authorization: `JWT ${token}`
-                    }
-                })
-            ]);
-
-            if (!subjectsResponse.ok || !languagesResponse.ok) {
-                throw new Error('Failed to fetch data');
-            }
-
-            const subjectsData = await subjectsResponse.json();
-            const languagesData = await languagesResponse.json();
-
-            const subjects = subjectsData.subjects.map(subj => ({ id: subj.id, name: subj.name, ball_number: subj.ball_number }));
-            const languages = languagesData.languages.map(lang => ({ id: lang.id, name: lang.name }));
-
-            console.log(languages)
-
-            return { subjects, languages };
-        } catch (error) {
-            return thunkAPI.rejectWithValue(error.message);
-        }
+        const {request} = useHttp()
+        return await request(`${API_URL}Subjects/subject/`, "GET", null, headers())
     }
 );
+
+
+export const fetchLanguages = createAsyncThunk(
+    'user/fetchLanguages',
+    async () => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Language/language/`, "GET", null, headers())
+    }
+)
+
+
 
 export const registerUser = createAsyncThunk(
     'user/registerUser',

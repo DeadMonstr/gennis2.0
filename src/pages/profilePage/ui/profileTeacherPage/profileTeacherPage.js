@@ -2,8 +2,8 @@ import React, {createContext, useEffect, useState} from 'react';
 import classNames from "classnames";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";
-
-import {TeacherProfileInfo, TeacherProfileTeachersGroup} from "entities/profile/teacherProfile";
+import {useTheme} from "shared/lib/hooks/useTheme";
+import {TeacherProfileInfo, TeacherProfileTeachersGroup, SchoolTeacherGroups} from "entities/profile/teacherProfile";
 import {TeacherEdit} from "features/profileEdits/teacherEdit";
 import {fetchTeacherId, getTeacherId, changeTeacherProfileImage} from "entities/teachers";
 import {ImageCrop} from "features/imageCrop";
@@ -21,6 +21,7 @@ export const ProfileTeacherPage = () => {
     const teacherId = useSelector(getTeacherId)
     const [activeModal, setActiveModal] = useState("")
     const [newImage, setNewImage] = useState("")
+    const {theme} = useTheme()
 
 
 
@@ -58,7 +59,13 @@ export const ProfileTeacherPage = () => {
                         [cls.active]: active
                     })}
                 >
-                    <TeacherProfileTeachersGroup/>
+                    {
+                        theme === "app_school_theme" ?
+                            <SchoolTeacherGroups/>
+                            :
+                            <TeacherProfileTeachersGroup/>
+                    }
+
                 </div>
                 <ImageCrop
                     setActive={setActiveModal}

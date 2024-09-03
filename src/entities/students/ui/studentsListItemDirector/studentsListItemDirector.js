@@ -2,7 +2,7 @@ import {memo} from 'react';
 import classNames from "classnames";
 
 import cls from "./studentsListItemDirector.module.sass";
-import {Link} from "../../../../shared/ui/link";
+import {Link} from "shared/ui/link";
 
 export const StudentsListItemDirector = memo(({title, data}) => {
 
@@ -13,10 +13,10 @@ export const StudentsListItemDirector = memo(({title, data}) => {
                     [cls.eval]: (i + 1) % 2 === 0
                 })}>
                     {item.name}
-                    <span>{item.label}</span>
+                    <span>{item.count}</span>
                 </h2>
                 {
-                    item?.branches?.map(branch =>
+                    item?.list?.map(branch =>
                         <Link to={`../students/${branch?.id}`}>
                             <h2
                                 className={classNames(cls.studentsListItem__inner, {

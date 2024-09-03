@@ -1,3 +1,4 @@
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import {useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 
@@ -42,13 +43,9 @@ export const TimeTableListPage = () => {
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
 
-    console.log(currentTableData, "data")
-
     const searchedUsers = useMemo(() => {
         const filteredHeroes = data?.slice()
         setCurrentPage(1)
-
-        console.log(search, true)
 
         if (!search) return filteredHeroes
 
@@ -59,11 +56,22 @@ export const TimeTableListPage = () => {
 
     const onSubmitCreate = (data) => {
         dispatch(createTimeTable(data))
+        dispatch(onAddAlertOptions({
+            type: "success",
+            status: true,
+            mas: `Vaqt qo'shildi`
+        }))
         setCurrentStatus(true)
     }
 
-    const onSubmitChange = (data) => {
-        dispatch(updateTimeTable({id: isChange?.id, obj: data}))
+    const onSubmitChange = (dataForm) => {
+        const filteredTime = data?.filter(item => item.id === isChange?.id)[0]
+        dispatch(updateTimeTable({id: isChange?.id, obj: dataForm}))
+        dispatch(onAddAlertOptions({
+            type: "success",
+            status: true,
+            msg: `${filteredTime?.name}ni malumotlari o'zgardi`
+        }))
         setCurrentStatus(true)
     }
 

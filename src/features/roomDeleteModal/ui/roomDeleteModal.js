@@ -6,12 +6,18 @@ import cls from './roomDeleteModal.module.sass';
 import alertIcon from 'shared/assets/icons/alert.svg'
 import {deleteRoomThunk} from "../model/roomDeleteThunk";
 import {Link} from "../../../shared/ui/link";
+import {onAddAlertOptions} from "../../alert/model/slice/alertSlice";
 
 export const RoomDeleteModal = ({ isOpen, onClose, roomId }) => {
     const dispatch = useDispatch();
 
     const handleDelete = () => {
         dispatch(deleteRoomThunk(roomId)).then(() => {
+            dispatch(onAddAlertOptions({
+                type: "success",
+                status: true,
+                msg: "Xona muvofaqqiyatli o'chirildi"
+            }))
             onClose();
         });
     };

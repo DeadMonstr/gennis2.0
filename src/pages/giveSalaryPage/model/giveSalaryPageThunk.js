@@ -5,6 +5,6 @@ export const fetchEmployerSalaryThunk = createAsyncThunk(
     "giveEmployerSalarySlice/fetchEmployerSalaryThunk",
     async (id) => {
         const {request} = useHttp()
-        return await  request(`${API_URL}Users/salaries/${id}`, "GET", null, headers())
+        return await  request(`${API_URL}Users/salaries/${id}/?status=False`, "GET", null, headers())
     }
 )

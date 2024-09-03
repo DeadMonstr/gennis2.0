@@ -54,10 +54,14 @@ export const DraggableContainer = (props) => {
 
                 canChange &&
                 <>
-                    <Grip
-                        {...listeners}
-                        className={cls.handle}
-                    />
+                    {
+                        !!item?.teacher?.user?.name &&
+                        <Grip
+                            {...listeners}
+                            className={cls.handle}
+                        />
+                    }
+
                     <i
                         onClick={() => onDelete(item.room, item.dndId, item.id)}
                         className={classNames("fa-solid  fa-times", cls.trash)}

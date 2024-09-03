@@ -1,21 +1,19 @@
 import React, {useMemo, useState, useEffect} from "react";
 import {Pagination} from "features/pagination";
-import {GroupsFilter} from "features/filters/groupsFilter";
 import {Button} from "shared/ui/button";
 import cls from "./vacancyWorkPage.module.sass";
 import {vacancyWorkList, vacancyWorkerList} from "entities/vacancy/model";
 import {VacancyPageEdit} from "features/vacancyModals/vacancyPageEdit";
 import {VacancyWorkList} from "entities/vacancy/ui/vacancyWorkList";
-import {Switch} from "../../../shared/ui/switch";
+import {Switch} from "shared/ui/switch";
 import {VacancyWorkerList} from "entities/vacancy/ui/vacancyWorkerList";
-import {VacancyWorkerPermission} from "../../../features/vacancyModals/vacancyWorkerPermission";
+import {VacancyWorkerPermission} from "features/vacancyModals/vacancyWorkerPermission";
 import {useSelector, useDispatch} from "react-redux";
-import {getWorkerId} from "../../../features/vacancyModals/vacancyWorkPage/model";
+import {getWorkerId} from "features/vacancyModals/vacancyWorkPage/model";
 import {getUserProfileData} from "entities/profile/userProfile/model/userProfileSelector";
-import {fetchUserProfileData} from "../../profilePage";
 import {useParams} from "react-router-dom";
 import {getUserPermission} from "entities/profile/userProfile";
-import {vacancyWorkerListThunk} from "../../../features/vacancyWorkerList";
+import {vacancyWorkerListThunk} from "features/vacancyWorkerList";
 
 export const VacancyWorkPage = () => {
     const [active, setActive] = useState(false);
@@ -28,7 +26,6 @@ export const VacancyWorkPage = () => {
     const [currentTableData, setCurrentTableData] = useState([]);
     const [currentEditingVacancy, setCurrentEditingVacancy] = useState(null);
     const [selectedItems, setSelectedItems] = useState([]);
-    const userPermissions = useSelector(getUserPermission)
     const [isDirector, setIsDirector] = useState(false)
     const dispatch = useDispatch()
     const getWorkerID = useSelector(getWorkerId)
@@ -37,21 +34,19 @@ export const VacancyWorkPage = () => {
     const {id} = useParams()
 
 
+    const user = useSelector(getUserProfileData)
+
+
 
     useEffect(() => {
-        if (userPermissions) {
-            const directorRole = userPermissions[1].jobs.some(job => job.director === true)
-            setIsDirector(directorRole)
+        if (user && user?.job) {
+            setIsDirector(user.job.includes("director"))
         }
-    }, [userPermissions])
-    console.log(getWorkerID)
-
+    }, [user])
     useEffect(() => {
         setCurrentTableData(!activeSwitch ? vacancyWorkList : vacancyWorkerList);
     }, [activeSwitch]);
 
-
-    console.log(getCurrentUser, 'current user')
 
     const handleEditClick = (vacancy) => {
         setCurrentEditingVacancy(vacancy);

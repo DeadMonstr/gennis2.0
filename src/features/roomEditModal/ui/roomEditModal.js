@@ -6,6 +6,7 @@ import { Input } from 'shared/ui/input';
 import { Button } from 'shared/ui/button';
 import cls from './roomEditModal.module.sass';
 import { getRoomsID } from "../../roomsEditModal/model";
+import {onAddAlertOptions} from "../../alert/model/slice/alertSlice";
 
 export const RoomEditModal = ({ isOpen, onClose, roomId, onUpdate }) => {
     const dispatch = useDispatch();
@@ -32,8 +33,13 @@ export const RoomEditModal = ({ isOpen, onClose, roomId, onUpdate }) => {
 
         dispatch(editRoomThunk({ id: roomId, updatedRoom }))
             .then(() => {
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: "Xona muvofaqqiyatli tahrirlandi"
+                }))
                 onClose();
-                onUpdate(updatedRoom); // Trigger the parent update function
+                onUpdate(updatedRoom);
             });
     };
 

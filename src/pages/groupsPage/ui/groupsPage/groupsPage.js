@@ -1,6 +1,6 @@
 import {getUserBranchId} from "entities/profile/userProfile";
 import React, {useEffect, useMemo, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
 import {GroupsList} from "entities/groups/groups/ui/groupsList";
@@ -18,6 +18,7 @@ import {Button} from "shared/ui/button";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
 
 import cls from "./groupsPage.module.sass";
+import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
 // import {DeletedGroups} from "entities/groups/index";
 
 
@@ -27,20 +28,16 @@ export const GroupsPage = () => {
     const data = useSelector(getGroupsListData)
     const deletedGroupsData = useSelector(getDeletedGroupsData)
     const loading = useSelector(getGroupsLoading)
-    const userBranchId = useSelector(getUserBranchId)
-
+    const {"*": id} = useParams()
+    const userBranchId = id
     const [deletedGroups, setDeletedGroups] = useState([])
-
     const [active, setActive] = useState(false);
     const [activeSwitch, setActiveSwitch] = useState(false)
-
-
     const search = useSelector(getSearchValue)
     let PageSize = useMemo(() => 50, [])
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
 
-    console.log(data, "data")
 
     const searchedUsers = useMemo(() => {
         const filteredHeroes = data?.slice()
@@ -60,61 +57,75 @@ export const GroupsPage = () => {
     }, [deletedGroupsData])
 
     useEffect(() => {
-        if (userBranchId)
-            dispatch(fetchGroupsData({userBranchId}))
-    }, [userBranchId])
+        if (!userBranchId) return;
+
+            dispatch(fetchGroupsData(userBranchId))
+    }, [dispatch, userBranchId])
+
+    const types = [
+        {
+            name: "Guruhlar",
+            type: "groups"
+        }
+    ]
 
     return (
-        <div className={cls.deletedGroups}>
-            <div className={cls.mainContainer_filterPanelBox}>
-                <Button
-                    status={"filter"}
-                    extraClass={cls.extraCutClassFilter}
-                    onClick={() => setActive(!active)}
-                    type={"filter"}
-                >
-                    Filter
-                </Button>
-                <Link to={"deletedGroups"}>
+        <MultiPage types={[{
+            name: "O'qiyotgan o'quvchilar",
+            type: "groups"
+        }]} page={"groups"}>
+            <div className={cls.deletedGroups}>
+                <div className={cls.mainContainer_filterPanelBox}>
                     <Button
-                        type={"login"}
-                        status={"timeTable"}
+                        status={"filter"}
                         extraClass={cls.extraCutClassFilter}
-                        onClick={() => setActive(true)}
+                        onClick={() => setActive(!active)}
+                        type={"filter"}
                     >
-                        Time Table
+                        Filter
                     </Button>
-                </Link>
-            </div>
-            {
-                loading ? <DefaultPageLoader/> :
-                    <>
-                        <div className={cls.table}>
+                    <Link to={"deletedGroups"}>
+                        <Button
+                            type={"login"}
+                            status={"timeTable"}
+                            extraClass={cls.extraCutClassFilter}
+                            onClick={() => setActive(true)}
+                        >
+                            Time Table
+                        </Button>
+                    </Link>
+                </div>
+                {
+                    loading ? <DefaultPageLoader/> :
+                        <>
+                            <div className={cls.table}>
 
-                            <h2>{activeSwitch ? "Deleted Groups" : "Groups"}</h2>
-                            {activeSwitch ? <DeletedGroups currentTableData={currentTableData}/> : <GroupsList
-                                currentTableData={currentTableData}
-                            />}
-                        </div>
-                        <Pagination
-                            setCurrentTableData={setCurrentTableData}
-                            users={searchedUsers}
-                            setCurrentPage={setCurrentPage}
-                            currentPage={currentPage}
-                            pageSize={PageSize}
-                            onPageChange={page => {
-                                setCurrentPage(page)
-                            }}
-                            type={"custom"}
-                        />
-                    </>
-            }
-            <GroupsFilter
-                // activeSwitch={activeSwitch}
-                // setActiveSwitch={setActiveSwitch}
-                setActive={setActive}
-                active={active}
-            />
-        </div>
+                                <h2>{activeSwitch ? "Deleted Groups" : "Groups"}</h2>
+                                {activeSwitch ? <DeletedGroups currentTableData={currentTableData}/> : <GroupsList
+                                    currentTableData={currentTableData}
+                                />}
+                            </div>
+                            <Pagination
+                                setCurrentTableData={setCurrentTableData}
+                                users={searchedUsers}
+                                setCurrentPage={setCurrentPage}
+                                currentPage={currentPage}
+                                pageSize={PageSize}
+                                onPageChange={page => {
+                                    setCurrentPage(page)
+                                }}
+                                type={"custom"}
+                            />
+                        </>
+                }
+                <GroupsFilter
+                    // activeSwitch={activeSwitch}
+                    // setActiveSwitch={setActiveSwitch}
+                    setActive={setActive}
+                    active={active}
+                />
+            </div>
+        </MultiPage>
+
     )
 }

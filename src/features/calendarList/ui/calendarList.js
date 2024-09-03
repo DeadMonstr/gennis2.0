@@ -1,6 +1,8 @@
+import {deleteDayType} from "pages/calendarPage/model/calendarThunk";
 import {memo, useCallback, useEffect, useState} from 'react';
 
 import {CalendarListItem} from "entities/calendar";
+import {useDispatch} from "react-redux";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
 
 import cls from "./calendarList.module.sass";
@@ -16,10 +18,16 @@ export const CalendarList = (props) => {
         onDelete,
         isChanged,
         setIsChanged,
-        onSubmitDelete
+        // onSubmitDelete
     } = props
 
+    const dispatch = useDispatch()
     const [selected, setSelected] = useState([])
+
+    const onSubmitDelete = (data) => {
+        // console.log(data, "del")
+        dispatch(deleteDayType({days: data}))
+    }
 
     useEffect(() => {
         if (isChanged) {
