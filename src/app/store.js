@@ -1,5 +1,6 @@
 
 import {configureStore} from "@reduxjs/toolkit";
+import {flowsProfileSlice} from "entities/flowsProfile";
 import {groupProfileSlice} from "entities/profile/groupProfile";
 import {searchSlice} from "features/searchInput";
 import {registerUser} from "pages/registerPage";
@@ -158,7 +159,8 @@ export const store = configureStore({
         locationsSlice,
         themeSwitcherSlice,
         branchSwitcherSlice,
-        multiPageSlice
+        multiPageSlice,
+        flowsProfileSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

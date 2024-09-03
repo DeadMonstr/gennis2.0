@@ -26,7 +26,7 @@ import {FlowsPage} from "pages/flowsPage";
 import {FlowProfileNavigators} from "entities/flowsProfile";
 import {FlowListPage} from "pages/FlowListPage";
 import {ClassAddColorPage, ClassPage} from "pages/classPage";
-import {T} from "pages/timeTable";
+// import {T} from "pages/timeTable";
 import {CalendarPage} from "pages/calendarPage";
 
 
@@ -73,13 +73,13 @@ export const AppRouter = () => {
                             )
                         }
 
-                        {/*<RequireAuth>*/}
-                        {/*    <Route path={"students/:id/createGroup"} element={<CreateGroup/>} />*/}
-                        {/*</RequireAuth>*/}
-                        <Route
-                            path={"profile"}
-                            element={<StudentProfilePage/>}
-                        />
+                    {/*<RequireAuth>*/}
+                    {/*    <Route path={"students/:id/createGroup"} element={<CreateGroup/>} />*/}
+                    {/*</RequireAuth>*/}
+                    <Route
+                        path={"profile"}
+                        element={<StudentProfilePage/>}
+                    />
 
                         {/*<Route*/}
                         {/*    path={"classProfile"}*/}
@@ -91,12 +91,12 @@ export const AppRouter = () => {
                             element={<ClassMolassesPage/>}
                         />
                         <Route
-                            path={"flowsProfile"}
+                            path={"flows/:id/flowsProfile/:id"}
                             element={<FlowProfileNavigators/>}
                         />
 
                         <Route
-                            path={"flows/flow-list"}
+                            path={"flows/:id/flow-list"}
                             element={<FlowListPage/>}
                         />
                         <Route

@@ -49,7 +49,7 @@ export const Accordion = ({title, subtitle, children, backOpen, setBackOpen, cla
 
 
                 <div className={cls.btns}>
-                    {subtitle && <div className={cls.checkbox}>{subtitle ? <Input type={"checkbox"}/> : null}</div>}
+                    {subtitle && <div className={cls.checkbox}>{subtitle}</div>}
                     {
                         btns?.map(item => {
                             return item

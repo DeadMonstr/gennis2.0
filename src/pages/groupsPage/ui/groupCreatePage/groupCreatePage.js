@@ -1,4 +1,6 @@
-import React, {memo, useCallback, useEffect, useState} from "react";
+import {Pagination} from "features/pagination";
+import {getSearchValue} from "features/searchInput";
+import React, {memo, useCallback, useEffect, useMemo, useState} from "react";
 import {useNavigate} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
@@ -27,7 +29,7 @@ import {
     getCurseLevel,
     getCurseTypes,
     getFilteredStudentsData,
-    getFilteredStudentsStatus
+    getFilteredStudentsStatus, stopFilteredStudentsLoading
 } from "entities/students/model/studentsSlice";
 import {Teachers} from "entities/teachers";
 import {fetchTeachersData} from "entities/teachers";
@@ -63,6 +65,10 @@ const peoples = [
 ]
 export const GroupCreatePage = () => {
 
+    useEffect(() => {
+        dispatch(stopFilteredStudentsLoading())
+    }, [])
+
     const {request} = useHttp()
     // const {theme} = useTheme()
     const theme = localStorage.getItem("theme")
@@ -74,6 +80,7 @@ export const GroupCreatePage = () => {
     const filteredTeachers = useSelector(getFilteredTeachers)
     const filteredErrors = useSelector(getFilteredErrors)
     const filteredStatus = useSelector(getFilteredStatus)
+    const search = useSelector(getSearchValue)
 
     const [weekDays, setWeekDays] = useState()
     const [selectedData, setSelectedData] = useState()
@@ -88,7 +95,7 @@ export const GroupCreatePage = () => {
     useEffect(() => {
         // console.log(theme, "theme")
         // if (theme === "app_school_theme") {
-            navigation(-1)
+        navigation(-1)
         // }
     }, [theme])
 
@@ -103,9 +110,7 @@ export const GroupCreatePage = () => {
             }
         }
         setSelectedStudents(prev => {
-            console.log(prev, "prev")
-            console.log(id, "id")
-            if (prev.filter(item => item === id)[0]){
+            if (prev.filter(item => item === id)[0]) {
                 return prev.filter(item => item !== id)
             } else return [...prev, id]
         })
@@ -115,7 +120,7 @@ export const GroupCreatePage = () => {
         if (selectedSubjectId) {
             request(`${API_URL}Subjects/level-for-subject/${selectedSubjectId}/`, "GET", null, headers())
                 .then(res => {
-                    console.log(res)
+                    // console.log(res)
                     dispatch(getCurseLevel(res))
                 })
                 .catch(err => console.log(err))
@@ -130,11 +135,27 @@ export const GroupCreatePage = () => {
 
 
     const [modalAddGroup, setModalAddGroup] = useState(false)
+    const [currentTableData, setCurrentTableData] = useState([])
+    const [currentPage, setCurrentPage] = useState(1)
+    let PageSize = useMemo(() => 20, []);
 
     const dispatch = useDispatch()
     const handleChange = (value) => {
         setSelectedRadio(value);
     };
+
+    const searchedUsers = useMemo(() => {
+        const filteredHeroes = filteredTeachers?.slice()
+
+        setCurrentPage(1)
+
+        if (!search) return filteredHeroes;
+
+        return filteredHeroes.filter(item =>
+            item?.user?.name?.toLowerCase().includes(search.toLowerCase()) ||
+            item?.user?.surname?.toLowerCase().includes(search.toLowerCase())
+        )
+    }, [filteredTeachers, search])
 
     useEffect(() => {
         dispatch(fetchRoomsData());
@@ -142,7 +163,7 @@ export const GroupCreatePage = () => {
         request(`${API_URL}TimeTable/week_days/`, "GET", null, headers())
             .then(res => {
                 // console.log(res, "days")
-                setWeekDays(res.map(item => ({...item, name: item.name_uz})))
+                setWeekDays(res?.days?.map(item => ({...item, name: item.name_uz})))
             })
             .catch(err => console.log(err))
         request(`${API_URL}Group/course_types/`, "GET", null, headers())
@@ -203,16 +224,18 @@ export const GroupCreatePage = () => {
                     className={cls.table__box}
                 >
                     <h2 className={cls.table__title}>{item.name ?? "Ingliz tili"}</h2>
-                    <Table extraClass={cls.table__inner}>
-                        <thead>
-                        <tr>
-                            <th>№</th>
-                            <th>Full name</th>
-                            <th>Age</th>
-                        </tr>
-                        </thead>
-                        {renterGroups(item.students)}
-                    </Table>
+                    <div className={cls.table__container}>
+                        <Table extraClass={cls.table__inner}>
+                            <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>Full name</th>
+                                <th>Age</th>
+                            </tr>
+                            </thead>
+                            {renterGroups(item.students)}
+                        </Table>
+                    </div>
                 </div>
             )
         })
@@ -243,19 +266,20 @@ export const GroupCreatePage = () => {
                             Add group
                         </Button>
                     </div>
-                    {branches.length >= 1 ? <Select options={branches} onChangeOption={() => setSelected}
-                                                    defaultValue={branches[0].name}/> : null}
+                    {/*{branches.length >= 1 ? <Select options={branches} onChangeOption={() => setSelected}*/}
+                    {/*                                defaultValue={branches[0].name}/> : null}*/}
                 </div>
                 <div className={cls.mainContainer_filterPanelBox}>
+                    {/*<Button*/}
+                    {/*    status={"filter"}*/}
+                    {/*    extraClass={cls.extraCutClassFilter}*/}
+                    {/*    onClick={() => setActive(!active)}*/}
+                    {/*    type={"filter"}*/}
+                    {/*>*/}
+                    {/*    Filter*/}
+                    {/*</Button>*/}
                     <Button
-                        status={"filter"}
-                        extraClass={cls.extraCutClassFilter}
-                        onClick={() => setActive(!active)}
-                        type={"filter"}
-                    >
-                        Filter
-                    </Button>
-                    <Button
+                        extraClass={cls.timeTable}
                         onClick={() => setActiveModal("timeTable")}
                         status={"timeTable"}
                         type={"login"}
@@ -277,7 +301,8 @@ export const GroupCreatePage = () => {
                 </div>
             </div>
             {
-                filteredStatus === "loading" ? <DefaultPageLoader/> : <>
+                // filteredStatus === "loading" ? <DefaultPageLoader/> :
+                    <>
                     <div className={cls.mainError}>
                         {
                             filteredErrors?.rooms && filteredErrors.rooms[0] ? <h1>{filteredErrors.rooms[0]}</h1> : null
@@ -287,11 +312,24 @@ export const GroupCreatePage = () => {
                         {
                             selectedRadio === "studying" ? <div className={cls.table}>
                                 {renderStudent()}
-                            </div> : <Teachers
-                                data={filteredTeachers}
-                                setSelect={onSelectTeacherId}
-                                select={selectedTeachers}
-                            />
+                            </div> : <div className={cls.mainContainer__container}>
+                                <Teachers
+                                    data={currentTableData}
+                                    setSelect={onSelectTeacherId}
+                                    select={selectedTeachers}
+                                />
+                                <Pagination
+                                    setCurrentTableData={setCurrentTableData}
+                                    users={searchedUsers}
+                                    setCurrentPage={setCurrentPage}
+                                    currentPage={currentPage}
+                                    pageSize={PageSize}
+                                    onPageChange={page => {
+                                        setCurrentPage(page)
+                                    }}
+                                    type={"custom"}
+                                />
+                            </div>
                         }
                     </div>
                 </>

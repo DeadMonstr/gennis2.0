@@ -1,3 +1,5 @@
+@import "app/styles/abstracts/mixins"
+
 .flowProfile
   display: flex
   flex-direction: column
@@ -44,6 +46,34 @@
       align-items: center
       text-align: center
       gap: .5rem
+      .status
+        display: flex
+        align-items: center
+        justify-content: center
+        width: 30px
+        height: 30px
+        border-radius: 50%
+        background-color: rgba(255, 0, 0, 0.37)
+        &.active
+          background-color: rgba(36, 255, 0, 0.37)
+
+        &__inner
+          border-radius: 50%
+          transform: translate(0.5px)
+          width: 15px
+          height: 15px
+          background-color: #ff0000
+          &.active
+            background-color: #24FF00
+    &__inner
+      display: flex
+      align-items: center
+      gap: 1rem
+    &__iconPosition
+      position: absolute
+      top: 1rem
+      right: 1rem
+      font-size: 2rem
     &__image
       width: 6.2rem
       height: 6.2rem
@@ -70,6 +100,18 @@
   gap: 1rem
   font-size: 1.6rem
 
+  .btns
+    width: 100%
+    display: flex
+    justify-content: space-between
+    align-items: center
+    &__inner
+      display: flex
+      align-items: center
+      gap: 3rem
+    &__icon
+      font-size: 3rem
+
   &__container
     max-height: 50rem
     overflow: auto
@@ -95,6 +137,13 @@
         padding: 2rem
   &__input
     width: 3rem !important
+  &__delete
+    font-size: 2rem
+    cursor: pointer
+    transition: .3s
+    @include btn-active
+    &:hover
+      color: #FF3B30
   &__status
     width: fit-content
     color: #24FF00
@@ -107,3 +156,35 @@
     &.yellow
       color: #FACC15
       border: .1rem solid #FACC15
+.infoModal
+  display: flex
+  flex-direction: column
+  gap: 2rem
+  &__btn
+    align-self: flex-end
+  .form
+    display: flex
+    flex-direction: column
+    gap: 2rem
+    &__input
+      min-width: 100% !important
+      margin: 0 !important
+    &__select
+      width: 100%
+    &__switch
+      display: flex
+      align-items: center
+      gap: .7rem
+      align-self: center
+      font-size: 1.6rem
+    &__radios
+      display: flex
+      gap: 3rem
+      align-self: center
+    &__inner
+      display: flex
+      gap: 1rem
+      align-items: center
+      font-size: 1.8rem
+    &__item
+      margin: 0 !important

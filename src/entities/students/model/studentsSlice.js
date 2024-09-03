@@ -52,7 +52,10 @@ export const studentsSlice = createSlice({
         },
         getCurseLevel: (state, action) => {
             state.filteredCurseLevel = action.payload
-        }
+        },
+        stopFilteredStudentsLoading: (state) => {
+            state.newStudentsStatus = "idle"
+        },
     },
     extraReducers: builder =>
         builder
@@ -195,5 +198,6 @@ export const {
     getFilteredStudentsData,
     getFilteredStudentsStatus,
     getCurseTypes,
-    getCurseLevel
+    getCurseLevel,
+    stopFilteredStudentsLoading
 } = studentsSlice.actions

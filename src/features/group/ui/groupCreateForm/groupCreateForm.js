@@ -1,6 +1,7 @@
-import React, {memo} from 'react';
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
+import React, {memo, useState} from 'react';
 import {useForm} from "react-hook-form";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import {getUserBranchId} from "entities/profile/userProfile";
 import {
@@ -34,10 +35,13 @@ export const GroupCreateForm = memo((props) => {
     const {request} = useHttp()
 
     const {theme} = useTheme()
+    const dispatch = useDispatch()
     const curseTypesData = useSelector(getCurseTypesData)
     const curseLevelData = useSelector(getCurseLevelData)
     const userBranchId = useSelector(getUserBranchId)
-    const languages = useSelector(state => state.registerUser.languages)
+    const languages = useSelector(state => state.registerUser)
+
+    const [createStatus, setCreateStatus] = useState(false)
 
     const onSubmit = (data) => {
 
@@ -52,7 +56,16 @@ export const GroupCreateForm = memo((props) => {
             system: 1
         }
         request(`${API_URL}Group/groups/create/`, "POST", JSON.stringify(res), headers())
-            .then(res => console.log(res, "group create"))
+            .then(res => {
+                // console.log(res, "group create")
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: "Guruh yaratildi"
+                }))
+                // setCreateStatus(true)
+                setActive(false)
+            })
             .catch(err => console.log(err))
     }
 

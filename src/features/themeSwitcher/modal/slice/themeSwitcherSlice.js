@@ -49,28 +49,32 @@ const themeSwitcherSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchThemeSwitcherSystemsThunk.fulfilled, (state, action) => {
-                state.systems = action.payload.map(item => {
-                    if (item.id === 1) {
+                state.systems = action.payload
 
-                        const localSystem = JSON.parse(localStorage.getItem("selectedSystem"))
-
-                        if (!localSystem && !localSystem?.id) {
-                            state.system = {
-                                id: item.id,
-                                type: "center"
-                            }
-                        }
-                        return {
-                            ...item,
-                            type: "center"
-                        }
-                    } else {
-                        return {
-                            ...item,
-                            type: "school"
-                        }
-                    }
-                })
+                // const localSystem = JSON.parse(localStorage.getItem("selectedSystem"))
+                // if (!localSystem && !localSystem?.id) {
+                //     state.system = {
+                //         id: action.payload[0].id,
+                //         type: action.payload[0].type
+                //         const localSystem = JSON.parse(localStorage.getItem("selectedSystem"))
+                //
+                //         if (!localSystem && !localSystem?.id) {
+                //             state.system = {
+                //                 id: item.id,
+                //                 type: "center"
+                //             }
+                //         }
+                //         return {
+                //             ...item,
+                //             type: "center"
+                //         }
+                //     } else {
+                //         return {
+                //             ...item,
+                //             type: "school"
+                //         }
+                //     }
+                // })
                 if (action.payload.length < 2) {
                     if (action.payload[0].id === 1) {
                         state.system =  {
@@ -84,6 +88,10 @@ const themeSwitcherSlice = createSlice({
                         }
                     }
 
+                    localStorage.setItem("selectedSystem", JSON.stringify({
+                        id: action.payload[0].id,
+                        type: action.payload[0].type
+                    }))
                 }
 
 

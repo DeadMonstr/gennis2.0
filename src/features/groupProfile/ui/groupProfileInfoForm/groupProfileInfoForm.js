@@ -1,3 +1,6 @@
+import {getGroupProfileNextLsData} from "entities/profile/groupProfile/model/groupProfileSelector";
+import {getUserSystemId} from "entities/profile/userProfile";
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import React, {memo, useEffect, useState} from 'react';
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
@@ -38,7 +41,9 @@ export const GroupProfileInfoForm = memo(() => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const data = useSelector(getGroupProfileData)
+    const nextLesson = useSelector(getGroupProfileNextLsData)
     const languages = useSelector(getLanguagesData)
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
     const schoolClassNumbers = useSelector(getSchoolClassNumbers)
     const schoolClassColors = useSelector(getSchoolClassColors)
 
@@ -47,7 +52,6 @@ export const GroupProfileInfoForm = memo(() => {
     const [activeSwitch, setActiveSwitch] = useState(data?.status ?? false)
 
     const onSubmitChange = (data) => {
-        console.log(data, "data change")
         const res = {
             ...data,
             color: selectColor
@@ -58,18 +62,28 @@ export const GroupProfileInfoForm = memo(() => {
             id,
             group_type: theme === "app_center_theme" ? "center" : "school"
         }))
+        dispatch(onAddAlertOptions({
+            type: "success",
+            status: true,
+            msg: `Guruhni malumotlari o'zgardi`
+        }))
     }
 
     const onDelete = () => {
-        navigate(-1)
-        dispatch(deleteGroupProfile({id}))
+        dispatch(deleteGroupProfile({
+            id,
+            res: {type: userSystem?.id === 1 ? "center" : "school"}
+        }))
+        navigate(-2)
     }
 
     useEffect(() => {
         setValue("name", data?.name)
         setValue("price", data?.price)
         setValue("language", data?.language?.id)
-        setValue("class_number", data?.class_number?.id)
+        if (userSystem?.id === 2) {
+            setValue("class_number", data?.class_number?.id)
+        }
     }, [])
 
     return (
@@ -105,7 +119,8 @@ export const GroupProfileInfoForm = memo(() => {
                         data?.level?.name ? <p>Level: <span>{data?.level?.name}</span></p> : null
                     }
                     {
-                        data?.class_number?.number ? <p>Sinf raqami: <span>{data?.class_number?.number}</span></p> : null
+                        data?.class_number?.number ?
+                            <p>Sinf raqami: <span>{data?.class_number?.number}</span></p> : null
                     }
 
                     <p>Guruh narxi: <span>{data?.price}</span></p>
@@ -122,7 +137,12 @@ export const GroupProfileInfoForm = memo(() => {
                 >
                     <div className={cls.info__title}>
                         <h1>Next <br/> Lesson</h1>
-                        <p>WEDNESDAY <br/> 14:00 <br/> Lincoln</p>
+                        {
+                            nextLesson?.msg ? <p>
+                                {nextLesson?.msg}
+                            </p> : <p>{nextLesson?.day} <br/> {nextLesson?.hour} <br/> {nextLesson?.room}</p>
+                        }
+
                     </div>
                     <div>
                         <img src={nextImage} alt=""/>
@@ -172,34 +192,38 @@ export const GroupProfileInfoForm = memo(() => {
                         defaultValue={data?.language?.id}
                         required
                     />
-                    <Select
-                        extraClass={cls.form__select}
-                        options={schoolClassNumbers}
-                        title={"Sinf rangi"}
-                        register={register}
-                        name={"class_number"}
-                        defaultValue={data?.class_number?.id}
-                        required
-                    />
-                    <div className={cls.form__radios}>
-                        {
-                            schoolClassColors.map(item => {
-                                return (
-                                    <div className={cls.form__inner}>
-                                        <Radio
-                                            extraClasses={cls.form__item}
-                                            onChange={() => setSelectColor(item.id)}
-                                            checked={selectColor === item.id}
-                                            name={"color"}
-                                        />
-                                        {
-                                            item.name
-                                        }
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
+                    {
+                        userSystem?.id === 2 ? <>
+                            <Select
+                                extraClass={cls.form__select}
+                                options={schoolClassNumbers}
+                                title={"Sinf rangi"}
+                                register={register}
+                                name={"class_number"}
+                                defaultValue={data?.class_number?.id}
+                                required
+                            />
+                            <div className={cls.form__radios}>
+                                {
+                                    schoolClassColors.map(item => {
+                                        return (
+                                            <div className={cls.form__inner}>
+                                                <Radio
+                                                    extraClasses={cls.form__item}
+                                                    onChange={() => setSelectColor(item.id)}
+                                                    checked={selectColor ? selectColor === item.id : data?.color.id === item.id}
+                                                    name={"color"}
+                                                />
+                                                {
+                                                    item.name
+                                                }
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                        </> : null
+                    }
                     <div className={cls.form__switch}>
                         <p>Guruh statusi: </p>
                         <Switch

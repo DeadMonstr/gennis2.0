@@ -1,3 +1,5 @@
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
+import {ClassAddForm} from "features/classProfile";
 import React, {memo, useEffect, useMemo, useState} from "react";
 import {user} from "entities/user";
 import {useDispatch, useSelector} from "react-redux";
@@ -24,6 +26,7 @@ import {
     getOnlyDeletedStudents
 } from "entities/students";
 import {Pagination} from "features/pagination";
+import {Button} from "shared/ui/button";
 import {useNavigate} from "react-router";
 import {Modal} from "shared/ui/modal";
 import {Form} from "shared/ui/form";
@@ -44,7 +47,8 @@ import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
 import {getSelectedLocations} from "features/locations";
 import {getSelectedLocationsByIds} from "features/locations/model/selector/locationsSelector";
 import {useParams, useSearchParams} from "react-router-dom";
-import {getBranch} from "../../../../features/branchSwitcher";
+import {getBranch} from "features/branchSwitcher";
+import {API_URL, branchQuery, headers, useHttp} from "shared/api/base";
 
 const studentsFilter = [
     {name: "new_students", label: "New Students"},
@@ -65,11 +69,14 @@ export const StudentsPage = () => {
     const [searchParams] = useSearchParams();
 
 
+
+    const {request} = useHttp()
     const dispatch = useDispatch()
     const {theme} = useTheme()
     const {"*": id} = useParams()
     const __THEME__ = localStorage.getItem("theme");
     const { register, handleSubmit } = useForm();
+    const localSystem = JSON.parse(localStorage.getItem(""))
     const navigation = useNavigate()
     const studyingStudents = useSelector(getStudyingStudents);
     const newStudents = useSelector( getNewStudentsData);
@@ -78,7 +85,7 @@ export const StudentsPage = () => {
     const schoolClassColors = useSelector(getSchoolClassColors);
     const userBranchId = id
     const teachers = useSelector(getTeachers);
-    const userSystemId = useSelector(getUserSystemId)
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
     const languages = useSelector(state => state.registerUser.languages);
     const [selectColor, setSelectColor] = useState();
     const [selectTeacher, setSelectTeacher] = useState();
@@ -129,12 +136,12 @@ export const StudentsPage = () => {
 
 
     useEffect(() => {
-        if (userSystemId === 2 && userBranchId) {
+        if (userSystem?.id === 2 && userBranchId) {
             dispatch(fetchSchoolStudents({userBranchId}))
             dispatch(fetchClassColors())
             dispatch(fetchClassNumberList())
         }
-    }, [userSystemId, userBranchId])
+    }, [userSystem?.id, userBranchId])
 
     const onSubmit = (data) => {
         const res = {
@@ -142,11 +149,24 @@ export const StudentsPage = () => {
             teacher: [+selectTeacher],
             students: selectStudents,
             color: selectColor,
-            branch: userBranchId,
-            create_type: theme === "app_school_theme" ? "school" : "center",
+            // branch: userBranchId,
+            create_type: "school",
             system: 2
         }
+        request(`${API_URL}Group/groups/create/?branch=${userBranchId}`, "POST", JSON.stringify(res), headers())
+            .then(res => {
+                console.log(res, "res classAdd")
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: `Sinf yaratildi`
+                }))
+                setActiveModal(false)
+                // setCreateStatus(true)
+            })
         dispatch(createSchoolClass({res}))
+
+        // setSelectStudents([])
     }
 
     useEffect(() => {
@@ -174,7 +194,7 @@ export const StudentsPage = () => {
         if (type) {
             setSelectedRadio(type)
         }
-    },[searchParams])
+    }, [searchParams])
 
 
 
@@ -207,7 +227,6 @@ export const StudentsPage = () => {
     };
 
     const renderNewStudents = renderStudents()
-
 
 
     const types = [
@@ -262,7 +281,7 @@ export const StudentsPage = () => {
 
             <StudentsFilter active={active} setActive={setActive} activePage={selectedRadio}/>
             <Modal
-                active={activeModal}
+                active={activeModal === "create"}
                 setActive={setActiveModal}
             >
                 <div className={cls.modal}>
@@ -299,7 +318,7 @@ export const StudentsPage = () => {
                         />
                         <div className={cls.modal__radios}>
                             {
-                                schoolClassColors.map(item => {
+                                schoolClassColors?.map(item => {
                                     return (
                                         <div className={cls.modal__inner}>
                                             <Radio
@@ -325,6 +344,11 @@ export const StudentsPage = () => {
                     </Form>
                 </div>
             </Modal>
+            <ClassAddForm
+                setActive={setActiveModal}
+                active={activeModal === "add"}
+            />
         </MultiPage>
+        // </>
     )
 }

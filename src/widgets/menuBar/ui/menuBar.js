@@ -46,7 +46,7 @@ export const Menubar = () => {
 
         return menuConfig.map((item, index) => {
 
-
+            console.log(user, "absdjabsha")
             if (!item?.system.includes(system.type)) return;
             if ((typeof item.roles === "object" && user?.job.some(job => item.roles.includes(job))) || (typeof item.roles === "boolean" && item.roles)) {
 
@@ -95,8 +95,10 @@ export const Menubar = () => {
                 {renderedMenu}
             </ul>
             <div className={cls.menu__footer}>
-                <i className="fas fa-sign-out-alt"/>
-                <h2>Chiqish</h2>
+                <div className={cls.menu__}>
+                    <i className="fas fa-sign-out-alt"/>
+                    <h2>Chiqish</h2>
+                </div>
             </div>
         </nav>
     );

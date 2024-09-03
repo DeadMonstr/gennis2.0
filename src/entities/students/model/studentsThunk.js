@@ -6,7 +6,7 @@ import {API_URL, branchQuery, headers, useHttp} from "shared/api/base";
 
 export const fetchNewStudentsData = createAsyncThunk(
     "studentsSlice/fetchNewStudentsData",
-     async (id) =>{
+     async () =>{
         const {request} = useHttp()
          return await request(`${API_URL}Students/students_list/`, "GET" , null , headers())
      }

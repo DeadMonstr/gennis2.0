@@ -1,3 +1,5 @@
+import {getNextLesson} from "entities/profile/groupProfile/model/groupProfileSlice";
+import {fetchGroupProfileNextLesson} from "entities/profile/groupProfile/model/groupProfileThunk";
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import classNames from "classnames";
@@ -35,6 +37,7 @@ import {fetchClassColors, fetchClassNumberList} from "entities/students";
 import {getUserBranchId, getUserSystemId} from "entities/profile/userProfile";
 import {fetchTeachersData} from "entities/teachers";
 import {fetchGroupsData} from "entities/groups";
+import {API_URL, headers, useHttp} from "shared/api/base";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import {fetchSubjects} from "pages/registerPage";
 
@@ -42,6 +45,7 @@ import cls from "./groupProfilePage.module.sass";
 
 export const GroupProfilePage = () => {
 
+    const {request} = useHttp()
     const dispatch = useDispatch()
     const {id} = useParams()
     const data = useSelector(getGroupProfileData)
@@ -63,6 +67,34 @@ export const GroupProfilePage = () => {
         dispatch(fetchClassColors())
         dispatch(fetchClassNumberList())
     }, [])
+
+    useEffect(() => {
+        // if (systemId === 1) {
+        //     request(
+        //         `${API_URL}SchoolTimeTable/check-next-lesson/?id=${id}&type=class`,
+        //         "POST",
+        //         null,
+        //         headers()
+        //     )
+        //         .then(res => {
+        //             dispatch(getNextLesson(res))
+        //         })
+        //         .catch(err => console.log(err))
+        //     // dispatch(fetchGroupProfileNextLesson({id, type: "group"}))
+        // } else {
+            request(
+                `${API_URL}TimeTable/check_group_next_lesson/?id=${id}`,
+                "GET",
+                null,
+                headers()
+            )
+                .then(res => {
+                    console.log(res, "res group")
+                    dispatch(getNextLesson(res))
+                })
+                .catch(err => console.log(err))
+        // }
+    }, [id, systemId])
 
     // useEffect(() => {
     //     if (branchId && data) {
@@ -87,7 +119,7 @@ export const GroupProfilePage = () => {
     }, [data])
 
     useEffect(() => {
-        if (branchId && data && timeTable) {
+        if (branchId && data && timeTable && systemId === 1) {
             const res = {
                 time_tables: timeTable.map(item => ({
                     week: item.week.id,
@@ -105,7 +137,7 @@ export const GroupProfilePage = () => {
             }))
         }
 
-    }, [branchId, data, timeTable])
+    }, [branchId, data, timeTable, systemId])
 
     if (loading) {
         return <DefaultPageLoader/>

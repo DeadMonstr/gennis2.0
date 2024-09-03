@@ -142,8 +142,8 @@ export const Login = () => {
                                             disabled/>
                                     </>
                                 }
-                                <Input extraClassName={cls.checkbox} type="checkbox" onChange={() => setInputChange}
-                                       checkboxTitle={"Remember me"}/>
+                                {/*<Input extraClassName={cls.checkbox} type="checkbox" onChange={() => setInputChange}*/}
+                                {/*       checkboxTitle={"Remember me"}/>*/}
                                 {/*<Button extraClass={cls.login__btn}>Login</Button>*/}
                                 {loading ?
                                     <Button extraClass={cls.login__btn}>Login</Button> :

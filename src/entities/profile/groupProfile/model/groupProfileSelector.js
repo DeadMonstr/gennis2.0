@@ -2,6 +2,9 @@
 export const getGroupProfileData = (state) =>
     state.groupProfileSlice.data
 
+export const getGroupProfileNextLsData = (state) =>
+    state.groupProfileSlice.nextLessonData
+
 export const getGroupProfileLoading = (state) =>
     state.groupProfileSlice.loading
 

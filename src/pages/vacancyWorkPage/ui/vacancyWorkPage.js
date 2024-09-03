@@ -26,7 +26,6 @@ export const VacancyWorkPage = () => {
     const [currentTableData, setCurrentTableData] = useState([]);
     const [currentEditingVacancy, setCurrentEditingVacancy] = useState(null);
     const [selectedItems, setSelectedItems] = useState([]);
-    const userPermissions = useSelector(getUserPermission)
     const [isDirector, setIsDirector] = useState(false)
     const dispatch = useDispatch()
     const getWorkerID = useSelector(getWorkerId)
@@ -35,13 +34,15 @@ export const VacancyWorkPage = () => {
     const {id} = useParams()
 
 
+    const user = useSelector(getUserProfileData)
+
+
 
     useEffect(() => {
-        if (userPermissions) {
-            const directorRole = userPermissions[1].jobs.some(job => job.director === true)
-            setIsDirector(directorRole)
+        if (user && user?.job) {
+            setIsDirector(user.job.includes("director"))
         }
-    }, [userPermissions])
+    }, [user])
     useEffect(() => {
         setCurrentTableData(!activeSwitch ? vacancyWorkList : vacancyWorkerList);
     }, [activeSwitch]);
