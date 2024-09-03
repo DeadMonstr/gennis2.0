@@ -70,8 +70,6 @@ export const StudentProfilePage = () => {
         dispatch(changeStudentProfileImage({id: userData?.user?.id, data}))
     }
 
-    console.log(userData, "student ")
-    console.log(selectedGroup, "branc id")
 
     return (
         <div
@@ -85,6 +83,7 @@ export const StudentProfilePage = () => {
                 contract={userData}
                 newImage={newImage}
             />
+
             <div
                 className={classNames(cls.profile__mainContent, {
                     [cls.active]: active

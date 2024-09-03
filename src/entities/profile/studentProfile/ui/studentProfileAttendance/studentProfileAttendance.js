@@ -22,12 +22,12 @@ export const StudentProfileAttendance = memo(({setActive, data, onSelectGroup, o
                 onClick={() => {
                     setActive("totalAttendance");
                     onSelectGroup(item.id)
-                    onSelectGroupName(item.name)
+                    onSelectGroupName(item?.name)
                 }}
                 key={item?.id}
                 className={cls.item}
             >
-                <h2>{item?.subject.name}</h2>
+                <h2>{item?.name}</h2>
                 <div className={cls.item__action}>
                     <p>Kelmagan</p>
                     <div className={cls.item__progress}>
