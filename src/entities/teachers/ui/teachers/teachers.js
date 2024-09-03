@@ -8,18 +8,20 @@ import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 import {Input} from "../../../../shared/ui/input";
 import{getTeachersWithFilter} from "../../model/selector/teacherSelector";
 
-export const Teachers = memo(({data, setSelect, select}) => {
+import {useNavigate} from "react-router";
+
+export const Teachers = memo(({data, setSelect, select, theme}) => {
+    const navigation = useNavigate()
     const [checkbox, setCheckbox] = useState(false)
     const [selectId, setSelectId] = useState()
     const loadingDef = useSelector(getTeacherLoading)
     const filteredTeachersData = useSelector(getTeachersWithFilter)
+    const [editMode, setEditMode] = useState(false)
 
     const renderTeachers = () => {
         if (loadingDef) {
             return (
-                <tr>
-                    <td colSpan="6">Yuklanmoqda</td>
-                </tr>
+                <DefaultPageLoader/>
             )
         }
         const teachersToRender = filteredTeachersData && filteredTeachersData.length > 0 ? filteredTeachersData : data
@@ -31,42 +33,42 @@ export const Teachers = memo(({data, setSelect, select}) => {
         }
 
         return teachersToRender?.map((item, i) => {
-            return (
-                <tr key={i}>
-                    <td>{i + 1}</td>
-                    <Link to={`teacherProfile/${item.id}`}>
-                        <td>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
-                    </Link>
+            if (typeof item === "object" && !Array.isArray(item)) {
+                return (
 
-                    <td>{item?.user?.username}</td>
-                    <td>{item.user.phone}</td>
-                    <td>{item.user.age}</td>
-                    <td>
-                        <div
-                            className={item.subject.length ? cls.teacher__language : null}>{item.subject.map(item =>
-                            <p>{item.name}</p>
-                        )}</div>
-                    </td>
-                    <td>
-                        {item?.extra_info?.status ? <div className={cls.teacher__inner}>
-                            <div className={cls.status}>
-                                <div className={cls.status__inner}/>
-                            </div>
-                            <Input
-                                type={"radio"}
-                                name={"radio"}
-                                extraClassName={cls.teacher__input}
-                                onChange={() => {
-                                    setSelect(item.id)
-                                    setSelectId(item.id)
-                                }}
-                                value={selectId === item.id}
-                                checked={selectId === item.id}
-                            />
-                        </div> : null}
-                    </td>
-                </tr>
-            )
+                    <tr key={i}>
+                        <td>{i + 1}</td>
+                        <td onClick={() => navigation(`teacherProfile/${item.id}`)}>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
+                        <td>{item?.user?.username}</td>
+                        <td>{item.user.phone}</td>
+                        <td>{item.user.age}</td>
+                        <td>
+                            <div
+                                className={item.subject.length ? cls.teacher__language : null}>{item.subject.map(item =>
+                                <p>{item.name}</p>
+                            )}</div>
+                        </td>
+                        <td>
+                            {item?.extra_info?.status ? <div className={cls.teacher__inner}>
+                                <div className={cls.status}>
+                                    <div className={cls.status__inner}/>
+                                </div>
+                                <Input
+                                    type={"radio"}
+                                    name={"radio"}
+                                    extraClassName={cls.teacher__input}
+                                    onChange={() => {
+                                        setSelect(item.id)
+                                        setSelectId(item.id)
+                                    }}
+                                    value={selectId === item.id}
+                                    checked={selectId === item.id}
+                                />
+                            </div> : null}
+                        </td>
+                    </tr>
+                )
+            }
         })
 
     }
@@ -79,29 +81,32 @@ export const Teachers = memo(({data, setSelect, select}) => {
 
     const renderedData = renderTeachers()
     return (
-        <div className={cls.teacher}>
+        <>
+            <div className={cls.teacher}>
 
-            <div className={cls.table}>
-                <Table>
-                    <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Full name</th>
-                        <th>Username</th>
-                        <th>Tel</th>
-                        <th>Yosh</th>
-                        <th>Fan</th>
-                        <th>Status</th>
-                    </tr>
-                    </thead>
-                            <tbody>
-                            {renderedData}
-                            </tbody>
+                <div className={cls.table}>
+                    <Table>
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Full name</th>
+                            <th>Username</th>
+                            <th>Tel</th>
+                            <th>Yosh</th>
+                            <th>Fan</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {renderedData}
+                        </tbody>
 
-                </Table>
+                    </Table>
+                </div>
+
             </div>
 
+        </>
 
-        </div>
     )
 })

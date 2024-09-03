@@ -39,7 +39,7 @@ import {fetchTeachersData} from "entities/teachers";
 import {fetchGroupsData} from "entities/groups";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
-import {fetchSubjectsAndLanguages} from "pages/registerPage";
+import {fetchSubjects} from "pages/registerPage";
 
 import cls from "./groupProfilePage.module.sass";
 
@@ -58,8 +58,8 @@ export const GroupProfilePage = () => {
 
     useEffect(() => {
         dispatch(fetchGroupProfile({id}))
-        dispatch(fetchSubjectsAndLanguages())
-        // dispatch(fetchTeachersData({userBranchId}))
+        dispatch(fetchSubjects())
+        dispatch(fetchTeachersData())
         dispatch(fetchGroupsData())
         dispatch(fetchReasons())
         dispatch(fetchRoomsData())

@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {fetchSubjectsAndLanguages, registerUser, registerTeacher, registerEmployer} from "./registerThunk";
+import {
+    fetchSubjectsAndLanguages,
+    registerUser,
+    registerTeacher,
+    registerEmployer,
+    fetchSubjects, fetchLanguages
+} from "./registerThunk";
 
 export const userSlice = createSlice({
     name: 'user',
@@ -13,10 +19,26 @@ export const userSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchSubjectsAndLanguages.fulfilled, (state, action) => {
-                state.subjects = action.payload.subjects;
-                state.languages = action.payload;
+            .addCase(fetchSubjects.pending, (state) => {
+                state.status = "loading"
+            })
+            .addCase(fetchSubjects.fulfilled, (state, action) => {
+                state.subjects = action.payload
                 console.log(action);
+            })
+            .addCase(fetchSubjects.rejected, (state, action) => {
+                state.status = action.error
+            })
+
+            .addCase(fetchLanguages.pending, (state) => {
+                state.status = "loading"
+            })
+            .addCase(fetchLanguages.fulfilled, (state, action) => {
+                state.status = "false";
+                state.languages = action.payload
+            })
+            .addCase(fetchLanguages.rejected, (state, action) => {
+                state.status = action.error
             })
             .addCase(registerUser.pending, (state) => {
                 state.status = 'loading';

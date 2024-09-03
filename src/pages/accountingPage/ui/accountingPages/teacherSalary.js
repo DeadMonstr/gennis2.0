@@ -19,6 +19,8 @@ import {API_URL, headers, useHttp} from "../../../../shared/api/base";
 import {
     DeletedTeacherSalary
 } from "../../../../entities/accounting/ui/acauntingTables/accountingTableTeacherSalary/deletedTeacherSalary";
+import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
+import {YesNo} from "../../../../shared/ui/yesNoModal";
 
 
 export const TeacherSalaryPage = () => {
@@ -39,7 +41,7 @@ export const TeacherSalaryPage = () => {
         dispatch(getPaymentType())
         dispatch(getTeacherSalary())
         dispatch(getDeletedTeacherSalary())
-    }, [deleted])
+    }, [])
 
 
     const onDelete = () => {
@@ -49,6 +51,11 @@ export const TeacherSalaryPage = () => {
             .then(res => {
                 console.log(res)
                 dispatch(onDeleteTeacherSalary({id: id}))
+                dispatch(onAddAlertOptions({
+                    status: true,
+                    msg: res.msg,
+                    type: "success"
+                }))
                 setActiveDelete(false)
             })
             .catch(err => {
@@ -87,7 +94,6 @@ export const TeacherSalaryPage = () => {
                 setChangingData={setChangingData}
                 changePayment={changePayment}
                 setChangePayment={setChangePayment}
-                onDelete={onDelete}
                 deleted={deleted}
                 teacherSalary={teacherSalary}
                 changingData={changingData}
@@ -101,6 +107,7 @@ export const TeacherSalaryPage = () => {
             {/*    </div>*/}
             {/*</Modal>*/}
 
+            <YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>
             <Modal active={changePayment} setActive={setChangePayment}>
                 <div className={cls.changeType}>
                     <Select

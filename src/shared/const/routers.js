@@ -8,20 +8,20 @@ export const getDirectorRouteStudents = () => `locations-overview`;
 export const getRouteGroups = (id) => `groups/*`;
 // export const getRouteDeletedGroups = (id) => `deletedGroups`;
 export const getRouteRegister = () => `register/*`;
-export const getRouteTeacher = (id) => `teacher/${id}`;
+export const getRouteTeacher = (id) => `teacher/*`;
 // export const getRouteCreateGroup = () => `newStudents/createGroup`;
-export const getRouteRooms = (id) => `rooms/${id}`;
-export const getTeacherProfile = (id) => `teacher/:id/teacherProfile/${id}`;
+export const getRouteRooms = (id) => `rooms/*`;
+export const getTeacherProfile = (id) => `teacher/teacherProfile/${id}`;
 export const getVacancyPage = (id) => `vacancyPage/${id}`
 export const getVacancyWorkPage = (id) => `vacancyPage/:id/vacancyWorkPage/${id}`
 export const getRoomsProfilePage = (id) => `rooms/:id/roomsProfilePage/${id}`
 export const getProfile = (id) => `students/:id/profile/${id}`;
 export const getRouteTimePage = (id) => `timeList/${id}`
 export const getRouteUserProfile = (id) => `profile/${id}`
-export const getEmployerPage = (id) => `employer/${id}`
+export const getEmployerPage = (id) => `employer/*`
 export const getEmployerProfile = (id) => `employer/:id/employerProfile/${id}`;
 
-export const getTeacherSalary = (id) => `teacher/:id/teacherProfile/:id/teacherSalaryPage/${id}`
+export const getTeacherSalary = (id) => `teacher/teacherProfile/:id/teacherSalaryPage/${id}`
 export const getEmployerSalary = (id) => `employer/:id/employerProfile/:id/employerSalaryPage/${id}`
 export const getEmployerSalaryInsideSource = (id, permission) => `employer/:id/employerProfile/:id/employerSalaryPage/:id/giveSalaryPage/${id}/${permission}`
 export const getTeacherSalaryInsideSource = (id) => `teacher/:id/teacherProfile/:id/teacherSalaryPage/:id/giveTeacherSalaryPage/${id}`
@@ -58,8 +58,8 @@ export const getAccounting = (id) => `accounting/${id}/*`
 export const getInkasatsiya = (id) => `inkasatsiya/${id}/*`
 
 
-export const getGroupHistory = (id) => `students/:id/profile/:id/history/${id}`
+export const getGroupHistory = (id) => `students/profile/:id/history/${id}`
 
-export const getRouteClassProfile = (id) => `groups/:id/classProfile/${id}`
+export const getRouteClassProfile = (id) => `groups/classProfile/${id}`
 
 

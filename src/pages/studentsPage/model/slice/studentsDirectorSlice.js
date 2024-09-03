@@ -25,7 +25,6 @@ const StudentsDirectorSlice = createSlice({
     reducers: {
         getLocations: (state, action) => {
             state.data = state.data.map(item => ({title: item.title ,locations: action.payload}))
-            console.log(action.payload, "locationss")
             state.loading = false
             state.error = null
         }

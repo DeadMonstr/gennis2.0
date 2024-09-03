@@ -1,19 +1,21 @@
-import {getUserSystemId} from "entities/profile/userProfile";
 import {fetchClassNumberList, getSchoolClassNumbers} from "entities/students";
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import {useTheme} from "shared/lib/hooks/useTheme";
-import { fetchSubjectsAndLanguages, registerUser, registerTeacher, registerEmployer } from "../model/registerThunk";
+import { fetchLanguages, fetchSubjects, registerUser, registerTeacher, registerEmployer } from "../model/registerThunk";
 import cls from "./register.module.sass";
+import { fetchVacancyData, getVacancyJobs } from "features/vacancyModals/vacancyPageAdd";
 import { Button } from "shared/ui/button";
 import bg__img from 'shared/assets/images/reg__bg.svg';
 import { Input } from 'shared/ui/input';
 import { Textarea } from "shared/ui/textArea";
 import { Select } from "shared/ui/select";
 import { MiniLoader } from "shared/ui/miniLoader";
-// import { Alert } from "shared/ui/alert";
 import { API_URL, useHttp, headers } from "shared/api/base";
+import {onAddAlertOptions} from "../../../features/alert/model/slice/alertSlice";
+import {getLanguagesData, getSubjectsData} from "../model/registerSelector";
+import {Form} from "../../../shared/ui/form";
 
 const userstype = {
     types: [
@@ -23,13 +25,29 @@ const userstype = {
     ]
 };
 
+const shift = [
+    { id: 1, name: "1 smen" },
+    { id: 2, name: "2 smen" },
+    { id: 3, name: "hamma vaqt" }
+]
+
 export const Register = () => {
+    const jobsData = useSelector(getVacancyJobs)
+    const jobOptions = jobsData?.jobs?.map(job => ({
+        id: job.group.id,
+        name: job.group.name
+    })) || [];
+
+
     const { register, handleSubmit, watch, setValue, reset } = useForm();
     const registerType = watch("registerType", "student");
     const username = watch("username", "");
     const {theme} = useTheme()
+
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
     const classNumbers = useSelector(getSchoolClassNumbers)
+    const languages = useSelector(getLanguagesData);
+    const subjects = useSelector(getSubjectsData)
     const dispatch = useDispatch();
     const [error, setError] = useState(false);
     const [selectedLang, setSelectedLang] = useState(1);
@@ -40,17 +58,18 @@ export const Register = () => {
     const [selectedClassType, setSelectedClassType] = useState()
     const [selected, setSelected] = useState()
     const [loading, setLoading] = useState(false);
-
+    const {request} = useHttp()
     const [usernameMessage, setUsernameMessage] = useState('');
     const [isUsernameAvailable, setIsUsernameAvailable] = useState(true);
 
-    const subjects = useSelector(state => state.registerUser.subjects) || [];
-    const languages = useSelector(state => state.registerUser.languages) || [];
-
+    useEffect(() => {
+        dispatch(fetchLanguages());
+        dispatch(fetchSubjects())
+    }, []);
 
     useEffect(() => {
-        dispatch(fetchSubjectsAndLanguages());
-    }, []);
+        dispatch(fetchVacancyData())
+    }, [])
 
     useEffect(() => {
         if (userSystem?.id === 2 || theme === "app_school_theme") {
@@ -62,16 +81,9 @@ export const Register = () => {
         if (username) {
             const checkUsername = async () => {
                 try {
-                    const response = await fetch(`${API_URL}Users/username-check/`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            ...headers
-                        },
-                        body: JSON.stringify({ username })
-                    });
+                    const response = await request(`${API_URL}Users/username-check/`, "POST", JSON.stringify({ username }), headers());
 
-                    const data = await response.json();
+                    const data = await response
                     if (data.exists) {
                         setUsernameMessage(<p className={cls.errorMess}>
                             <i class="fa-solid fa-circle-exclamation" style={{color: "#f15c5c"}}></i>
@@ -100,14 +112,13 @@ export const Register = () => {
     }, [username]);
 
 
-
     const onSubmit = (data) => {
         if (!isUsernameAvailable) {
-            // showAlert('error', 'Please choose a different username');
             return;
         }
 
         setLoading(true);
+        const selectedTimes = shift.find(shift => shift.id === Number(selectedTime))
         const selectedLanguage = languages.find(lang => lang.id === Number(selectedLang));
         const selectedSubjectData = subjects.find(subj => subj.id === Number(selectedSubject));
 
@@ -132,11 +143,10 @@ export const Register = () => {
         if (registerType === 'student') {
             res = {
                 ...res,
-                shift: selectedTime === 1 ? "1 smen" : selectedTime === 2 ? "2 smen" : "hamma vaqt",
+                shift: selectedTimes?.id || "",
                 parents_number: data.parents_phone,
                 class_number: selectedClass,
             };
-            console.log(res, "res student")
             registerAction = registerUser(res);
         } else if (registerType === 'teacher') {
             res = {
@@ -146,16 +156,12 @@ export const Register = () => {
                 class_type: selectedClassType,
                 toifa: selected
             };
-            console.log(res, "res teacher")
-            console.log(res.user.resume[0], "res teacher resume")
-            console.log(res.user.resume["0"], "res teacher resume 2")
             registerAction = registerTeacher(res);
         } else if (registerType === 'employer') {
             res2 = {
                 ...res2,
-                profession: selectedProfession,
+                profession: Number(selectedProfession),
             };
-            console.log(res, "res employer")
             registerAction = registerEmployer(res2);
         }
 
@@ -163,8 +169,11 @@ export const Register = () => {
             dispatch(registerAction).then((action) => {
                 setLoading(false);
                 if (action.type.endsWith('fulfilled')) {
-                    // showAlert('success', 'Registration successful!');
-                    reset();
+                    dispatch(onAddAlertOptions({
+                        type: "success",
+                        status: true,
+                        msg: "Student muvofaqqiyatli qo'shildi"
+                    }))
                     setSelectedLang(1);
                     setSelectedSubject(1);
                     setSelectedTime(1);
@@ -173,7 +182,11 @@ export const Register = () => {
                     setIsUsernameAvailable(true);
                 } else {
                     console.error('Registration error:', action.error);
-                    // showAlert('error', 'Registration failed. Please try again.');
+                    dispatch(onAddAlertOptions({
+                        type: "error",
+                        status: true,
+                        msg: "Internet yoki serverda xatolik qayta urinib ko'ring"
+                    }))
                     setError(true);
                 }
             });
@@ -189,25 +202,21 @@ export const Register = () => {
                             extraClass={cls.extraClasses}
                             name={"language"}
                             onChangeOption={setSelectedLang}
-                            options={languages.map(lang => ({ id: lang.id, name: lang.name }))}
+                            options={languages}
                         />
 
                         <Select
                             extraClass={cls.extraClasses}
                             name={"subject_id"}
                             onChangeOption={setSelectedSubject}
-                            options={subjects.map(subj => ({ id: subj.id, name: subj.name }))}
+                            options={subjects}
                         />
 
                         <Select
                             extraClass={cls.extraClasses}
                             name={"shift"}
                             onChangeOption={setSelectedTime}
-                            options={[
-                                { id: 1, name: "1 smen" },
-                                { id: 2, name: "2 smen" },
-                                { id: 3, name: "hamma vaqt" }
-                            ]}
+                            options={shift}
                         />
                         {
                             (theme === "app_school_theme" || userSystem?.id === 2) && (
@@ -275,17 +284,13 @@ export const Register = () => {
                             extraClass={cls.extraClasses}
                             name={"language"}
                             onChangeOption={setSelectedLang}
-                            options={languages.map(lang => ({ id: lang.id, name: lang.name }))}
+                            options={languages}
                         />
                         <Select
                             extraClass={cls.extraClasses}
                             name={"profession"}
                             onChangeOption={setSelectedProfession}
-                            options={[
-                                { id: 1, value: "farrosh", name: "farrosh" },
-                                { id: 2, value: "elektrik", name: "elektrik" },
-                                { id: 3, value: "qorovul", name: "qorovul" }
-                            ]}
+                            options={jobOptions}
                         />
                     </>
                 );

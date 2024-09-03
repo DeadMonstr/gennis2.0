@@ -58,7 +58,7 @@ export const TeacherProfileInfo = memo(({active,setActive,setActiveModal, newIma
                             alt=""
                         />
                         <h1>{teacherId.user?.username}</h1>
-                        <h2 className={cls.info__role}>Student</h2>
+                        <h2 className={cls.info__role}>Teacher</h2>
                     </div>
                     <div className={cls.info__text}>
                         <p>Ism: <span>{teacherId.user?.name}</span></p>

@@ -9,6 +9,7 @@ import {fetchVacancyData} from "features/vacancyModals/vacancyPageAdd";
 import {useParams} from "react-router-dom";
 import {vacancyWorkerListThunk} from "features/vacancyWorkerList";
 import {userSetPermissionThunk} from "../../vacancyWorkerList";
+import {DefaultPageLoader} from "../../../../../shared/ui/defaultLoader";
 
 export const VacancyList = ({ currentTableData, currentPage, PageSize, editMode, onEditClick }) => {
 
@@ -19,12 +20,16 @@ export const VacancyList = ({ currentTableData, currentPage, PageSize, editMode,
     }, [dispatch])
 
 
-
+    if (!currentTableData || currentTableData.length === 0){
+        return (
+            <DefaultPageLoader/>
+        )
+    }
 
     const renderVacancies = () => {
-        return jobsData.jobs?.map((item, index) => (
+        return currentTableData?.map((item, index) => (
             <tr key={item.id}>
-                <td>{(currentPage - 1) * PageSize + index + 1}</td>
+                <td>{index + 1 }</td>
                 <Link  to={`vacancyWorkPage/${item.group.id}`}>
                     <td className={cls.otClick}>{item.group.name}</td>
                 </Link>

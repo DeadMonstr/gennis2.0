@@ -45,3 +45,6 @@ export const getStudyingStudentsWithBranch = (state) =>
 export const getStudyingStudentsLoading = (state) =>
     state.newStudents?.branchStStudentsLoading
 
+
+export const getOnlyDeletedStudents = (state) =>
+    state.newStudents?.deletedStudents

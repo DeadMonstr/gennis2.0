@@ -16,6 +16,8 @@ import creditCard from "shared/assets/images/CreditCard.png";
 import bank from "shared/assets/images/Bank.png";
 import {useDispatch} from "react-redux";
 import {studentPaymentThunk, studentCharityThunk, studentDiscountThunk, studentPaymentListThunk} from "features/studentPayment";
+import {API_URL, headers, useHttp} from "../../../../../shared/api/base";
+import {onAddAlertOptions, onAddMultipleAlertOptions} from "../../../../../features/alert/model/slice/alertSlice";
 
 
 const listPretcent = [-1, 34.8, 70.4]
@@ -34,8 +36,8 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     const [checkModalStatus, setCheckModalStatus] = useState(false)
     const [payment, setPayment] = useState(1)
     const dispatch = useDispatch()
-
-    const handleAddPayment = (data) => {
+    const {request} = useHttp()
+    const handleAddPayment = async  (data) => {
         const newPayment = {
             student: student_id,
             payment_type: payment,
@@ -44,31 +46,45 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
             branch: branch_id,
             ...data
         };
-        dispatch(studentPaymentThunk(newPayment));
-        dispatch(studentPaymentListThunk(student_id))
-        reset({
-            amount: '',
-        });
+
+        const response = await request(`${API_URL}Students/student_payment_create/`, "POST", JSON.stringify(newPayment), headers())
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: response.msg
+                }))
+
         setPaymentSum(0);
+        return await response
+
+
+
     };
 
-    const handleAddCharity = (data) => {
+    const handleAddCharity = async (data) => {
         const newCharity = {
             student: student_id,
             group: option,
             charity_sum: charitysum,
             ...data
         };
-        dispatch(studentCharityThunk(newCharity));
-        dispatch(studentPaymentListThunk(student_id))
 
-        reset({
-            amount: '',
-        });
+        const response = await request(`${API_URL}Students/student_charities_create/`, "POST", JSON.stringify(newCharity), headers())
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: response.msg
+                }))
+
         setCharitySum(0);
+        return response
+        // dispatch(studentCharityThunk(newCharity));
+        // dispatch(studentPaymentListThunk(student_id))
+
+
     };
 
-    const handleAddDiscount = (data) => {
+    const handleAddDiscount = async (data) => {
         const newDiscount = {
             student: student_id,
             payment_type: 1,
@@ -78,12 +94,17 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
             ...data
         };
 
-        dispatch(studentDiscountThunk(newDiscount));
-        dispatch(studentPaymentListThunk(student_id))
-        reset({
-            amount: '',
-        });
+        const response = await request(`${API_URL}Students/student_payment_create/`, "POST", JSON.stringify(newDiscount), headers())
+            dispatch(onAddAlertOptions({
+                type: "success",
+                status: true,
+                msg: response.msg
+            }))
         setDiscount(0);
+        return response
+        // dispatch(studentDiscountThunk(newDiscount));
+        // dispatch(studentPaymentListThunk(student_id))
+
     };
 
     const onSubmitPassword = (data) => {

@@ -6,6 +6,7 @@ import { Button } from 'shared/ui/button';
 import {uploadRoomImageThunk} from "../model/roomImageAddThunk";
 import cls from './roomImageAddModal.module.sass';
 import defaultImage from 'shared/assets/images/default.png';
+import {onAddAlertOptions} from "../../alert/model/slice/alertSlice";
 
 export const RoomImageAddModal = ({ isOpen, onClose, roomId, onUpdate }) => {
     const dispatch = useDispatch();
@@ -29,6 +30,11 @@ export const RoomImageAddModal = ({ isOpen, onClose, roomId, onUpdate }) => {
             const imageFile = dropzone.files[0];
             dispatch(uploadRoomImageThunk({ roomId, imageFile }))
                 .then(() => {
+                    dispatch(onAddAlertOptions({
+                        type: "success",
+                        status: true,
+                        msg: "Rasm muvofaqqiyatli yuklandi"
+                    }))
                     onClose();
                     onUpdate();
                 });

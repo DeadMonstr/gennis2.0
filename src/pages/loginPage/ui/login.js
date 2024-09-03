@@ -6,7 +6,6 @@ import {set, useForm} from "react-hook-form";
 import {Button} from "shared/ui/button";
 import {Input} from "shared/ui/input";
 import {MiniLoader} from "shared/ui/miniLoader";
-// import {Alert} from "shared/ui/alert";
 import cls from "./login.module.sass"
 import gennisImg from "shared/assets/images/logo.svg"
 import loginAside from "shared/assets/images/login-page-4468581-3783954 1.svg"
@@ -102,7 +101,7 @@ export const Login = () => {
                             login
                         </h1>
                         {error && error ?
-                            <div className={cls.login__error}>Username yoki Parol notug'ri !</div> : null}
+                            <div className={cls.login__error}>Username yoki Parol noto'g'ri !</div> : null}
                         <div className={cls.box__form}>
                             <form onSubmit={handleSubmit(onClick)}>
                                 {loading ?

@@ -19,6 +19,6 @@ export const fetchFilteredRooms = createAsyncThunk(
     "filterRooms/fetchFilteredRooms",
     async ({teacherId, seatFromId, seatUntilId, boardCond}) => {
         const {request} = useHttp();
-        return await  request(`${API_URL}Rooms/rooms/?seats_number=${seatFromId}-${seatUntilId}&deleted=False`, "GET", null, headers())
+        return await  request(`${API_URL}Rooms/rooms/?seats_number=${seatFromId}-${seatUntilId}&deleted=False&electronic_board=${boardCond}`, "GET", null, headers())
     }
 )

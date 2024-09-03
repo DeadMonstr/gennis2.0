@@ -43,8 +43,6 @@ export const TeachersSalary = ({
     const sum1 = currentTableData.reduce((a, c) => a + parseFloat(c.salary || 0), 0);
     const onDeleteModal = (data) => {
         setActiveDelete(true)
-        console.log(data)
-        console.log(changingData, "changing")
 
     }
 
@@ -205,15 +203,6 @@ export const TeachersSalary = ({
             />
 
 
-            <Modal active={activeDelete} setActive={setActiveDelete}>
-                <div className={cls.modalHeader}> {changingData.name} {changingData.surname}'ning <br/> oyligini
-                    o'chirmoqchimisz
-                </div>
-                <div className={cls.deletemodal}>
-                    <Button type={"danger"} onClick={onDelete}>Xa</Button>
-                    <Button onClick={() => setActiveDelete(!activeDelete)}>Yo'q</Button>
-                </div>
-            </Modal>
         </>
 
     );

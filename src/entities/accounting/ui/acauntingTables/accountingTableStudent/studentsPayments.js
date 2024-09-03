@@ -122,15 +122,6 @@ export const StudentsPayments = ({
                     {/*{deleted ? renderDeletedStudents() : renderStudents()}*/}
                     </tbody>
                 </Table>
-                <Modal active={activeDelete} setActive={setActiveDelete}>
-                    <div className={cls.modalHeader}>{changingData.name} {changingData.surname}'ning <br/> to'lovlarini
-                        o'chirmoqchimisz
-                    </div>
-                    <div className={cls.deletemodal}>
-                        <Button type={"danger"} onClick={onDelete}>Xa</Button>
-                        <Button onClick={() => setActiveDelete(!activeDelete)}>Yo'q</Button>
-                    </div>
-                </Modal>
                 {/*<Modal active={changePayment} setActive={setChangePayment}>*/}
                 {/*    <h2>To'lov turini uzgartirish</h2>*/}
                 {/*    <div className={cls.changeType}>*/}

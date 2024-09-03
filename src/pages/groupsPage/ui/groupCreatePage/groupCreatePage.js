@@ -5,7 +5,7 @@ import {useNavigate} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 
-import {fetchSubjectsAndLanguages} from "pages/registerPage";
+import {fetchLanguages, fetchSubjects} from "pages/registerPage";
 import {getUserBranchId} from "entities/profile/userProfile/model/userProfileSelector";
 import {
     GroupCreateForm,
@@ -160,7 +160,7 @@ export const GroupCreatePage = () => {
     useEffect(() => {
         dispatch(fetchRoomsData());
         // dispatch(fetchFilteredStudents(userBranchId))
-        request(`${API_URL}TimeTable/week_days`, "GET", null, headers())
+        request(`${API_URL}TimeTable/week_days/`, "GET", null, headers())
             .then(res => {
                 // console.log(res, "days")
                 setWeekDays(res?.days?.map(item => ({...item, name: item.name_uz})))
@@ -172,7 +172,7 @@ export const GroupCreatePage = () => {
                 dispatch(getCurseTypes(res))
             })
             .catch(err => console.log(err))
-        dispatch(fetchSubjectsAndLanguages())
+        dispatch(fetchLanguages())
     }, [userBranchId])
 
     const renterGroups = (data) => {
