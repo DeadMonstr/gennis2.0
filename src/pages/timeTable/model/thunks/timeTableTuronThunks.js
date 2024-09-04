@@ -31,7 +31,7 @@ export const fetchTimeTableSubject = createAsyncThunk(
     "TimeTableTuronSlice/fetchTimeTableSubject",
     async (id) => {
         const {request} = useHttp()
-        return await  request(`${API_URL}Subjects/subject/`, "GET", null, headers())
+        return await  request(`${API_URL}Class/class-subjects/?group=${id}`, "GET", null, headers())
     }
 )
 

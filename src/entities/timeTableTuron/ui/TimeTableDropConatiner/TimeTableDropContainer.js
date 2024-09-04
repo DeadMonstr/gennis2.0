@@ -89,7 +89,8 @@ const Container = (props) => {
 
 
     const onDoubleClick = () => {
-        if (!item.group.name) return;
+        if (!item.group.name ) return;
+        if (item.group.type === "flow") return;
 
         onDoubleClickContainer(item.room, item.dndId)
     }
