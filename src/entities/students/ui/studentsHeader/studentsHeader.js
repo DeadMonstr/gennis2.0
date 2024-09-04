@@ -68,7 +68,7 @@ export const StudentsHeader = ({
                 <Button
                     status={"filter"}
                     extraClass={cls.extraCutClassFilter}
-                    onClick={() => setActive(!active)}
+                    onClick={() => setActive("filter")}
                     type={"filter"}
                 >
                     Filter

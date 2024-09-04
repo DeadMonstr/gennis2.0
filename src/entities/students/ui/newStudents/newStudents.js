@@ -51,18 +51,18 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                        }
 
                        <td>{item.user?.registered_date}</td>
-                       {
-                           theme ? <Input
-                               type={"checkbox"}
-                               onChange={() => setSelectStudents(prev => {
-                                   if (prev.filter(i => i === item.id)[0]) {
-                                       return prev.filter(i => i !== item.id)
-                                   } else {
-                                       return [...prev, item.id]
-                                   }
-                               })}
-                           />: null
-                       }
+                       {/*{*/}
+                       {/*    theme ? <Input*/}
+                       {/*        type={"checkbox"}*/}
+                       {/*        onChange={() => setSelectStudents(prev => {*/}
+                       {/*            if (prev.filter(i => i === item.id)[0]) {*/}
+                       {/*                return prev.filter(i => i !== item.id)*/}
+                       {/*            } else {*/}
+                       {/*                return [...prev, item.id]*/}
+                       {/*            }*/}
+                       {/*        })}*/}
+                       {/*    />: null*/}
+                       {/*}*/}
                    </tr>
                )
            })
@@ -89,9 +89,9 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                         }
 
                         <th>Reg. sana</th>
-                        {
-                            theme ? <th/> : null
-                        }
+                        {/*{*/}
+                        {/*    theme ? <th/> : null*/}
+                        {/*}*/}
                     </tr>
                     </thead>
                     <tbody>

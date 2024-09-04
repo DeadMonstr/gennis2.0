@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 
 import { Pagination } from "features/pagination";
-import {getLoadingSalary, GiveSalaryModal} from "../../../features/giveSalary/giveSalary";
+import {getLoadingSalary, GiveSalaryModal} from "features/giveSalary/giveSalary";
 import {GiveSalaryList, GiveTeacherSalaryList} from "entities/giveSalary";
 import {branches} from "entities/giveSalary";
 import { Select } from "shared/ui/select";
@@ -10,11 +10,11 @@ import cls from "./giveSalaryPage.module.sass";
 import {useSelector, useDispatch} from "react-redux";
 import {
     fetchTeacherSalaryIdThunk,
-} from "../../../entities/teacherSalary";
-import {getTeacherSalariesList} from "../../../entities/teacherSalary";
+} from "entities/teacherSalary";
+import {getTeacherSalariesList} from "entities/teacherSalary";
 import {useParams} from "react-router-dom";
 import {useLocation} from "react-router";
-import {DefaultLoader} from "../../../shared/ui/defaultLoader";
+import {DefaultLoader} from "shared/ui/defaultLoader";
 
 
 export const GiveTeacherSalaryPage = () => {
