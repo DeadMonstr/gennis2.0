@@ -26,6 +26,7 @@ import { API_URL, useHttp, headers } from "shared/api/base";
 import {onAddAlertOptions} from "../../../features/alert/model/slice/alertSlice";
 import {getCategories, getLanguagesData, getSubjectsData} from "../model/registerSelector";
 import {Form} from "../../../shared/ui/form";
+import {branchQuery} from "shared/api/base";
 
 const userstype = {
     types: [
@@ -64,6 +65,7 @@ export const Register = () => {
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
     const classNumbers = useSelector(getSchoolClassNumbers)
     const languages = useSelector(getLanguagesData);
+    const branch = localStorage.getItem("selectedBranch")
     const subjects = useSelector(getSubjectsData)
     const classTypes = useSelector(classData)
     const categories = useSelector(getCategories)
@@ -132,8 +134,6 @@ export const Register = () => {
             setIsUsernameAvailable(false);
         }
     }, [username]);
-
-    console.log(id, "branch")
 
 
     const onSubmit = (data) => {
@@ -222,7 +222,7 @@ export const Register = () => {
                     dispatch(onAddAlertOptions({
                         type: "success",
                         status: true,
-                        msg: "Student muvofaqqiyatli qo'shildi"
+                        msg: `${registerType} muvofaqqiyatli qo'shildi`
                     }))
                     setSelectedLang(1);
                     setSelectedSubject(1);

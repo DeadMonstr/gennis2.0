@@ -46,7 +46,6 @@ export const Menubar = () => {
 
         return menuConfig.map((item, index) => {
 
-            console.log(user, "absdjabsha")
             if (!item?.system.includes(system.type)) return;
             if ((typeof item.roles === "object" && user?.job.some(job => item.roles.includes(job))) || (typeof item.roles === "boolean" && item.roles)) {
 

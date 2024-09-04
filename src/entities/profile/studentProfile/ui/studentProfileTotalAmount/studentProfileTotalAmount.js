@@ -1,4 +1,4 @@
-import {memo, useCallback, useState} from 'react';
+import {memo, useCallback, useEffect, useState} from 'react';
 import {useForm} from "react-hook-form";
 import classNames from "classnames";
 
@@ -9,13 +9,13 @@ import {Radio} from "shared/ui/radio";
 import {Select} from "shared/ui/select";
 import {Form} from "shared/ui/form";
 import {Modal} from "shared/ui/modal";
-
+import {useTheme} from "shared/lib/hooks/useTheme";
 import cls from "./studentProfileTotalAmount.module.sass";
 import money from "shared/assets/images/Money.png";
 import creditCard from "shared/assets/images/CreditCard.png";
 import bank from "shared/assets/images/Bank.png";
-import {useDispatch} from "react-redux";
-import {studentPaymentThunk, studentCharityThunk, studentDiscountThunk, studentPaymentListThunk} from "features/studentPayment";
+import {useDispatch, useSelector} from "react-redux";
+import {studentPaymentThunk, studentCharityThunk, studentDiscountThunk, studentPaymentListThunk, getMonthDataThunk, getMonthData} from "features/studentPayment";
 import {API_URL, headers, useHttp} from "../../../../../shared/api/base";
 import {onAddAlertOptions, onAddMultipleAlertOptions} from "../../../../../features/alert/model/slice/alertSlice";
 
@@ -25,8 +25,9 @@ const listPretcent = [-1, 34.8, 70.4]
 export const StudentProfileTotalAmount = memo(({active, setActive, student_id, branch_id, group_id}) => {
 
     const {register, handleSubmit, reset} = useForm()
-
+    const getMonthDate = useSelector(getMonthData)
     const [activeService, setActiveService] = useState(amountService[0])
+    const [selectMonth, setSelectedMonth] = useState(0)
     const [activePaymentType, setActivePaymentType] = useState(0)
     const [option, setOption] = useState(0)
     const [paymentSum, setPaymentSum] = useState(0)
@@ -36,7 +37,14 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     const [checkModalStatus, setCheckModalStatus] = useState(false)
     const [payment, setPayment] = useState(1)
     const dispatch = useDispatch()
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
+    const {theme} = useTheme()
     const {request} = useHttp()
+
+    useEffect(() => {
+        dispatch(getMonthDataThunk(student_id))
+    }, [student_id])
+
     const handleAddPayment = async  (data) => {
         const newPayment = {
             student: student_id,
@@ -111,6 +119,9 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
         console.log(data)
     }
 
+
+    console.log(selectMonth, "datass")
+
     const renderAmountServiceTypes = useCallback(() => {
         return amountService.map(item =>
             <div className={cls.items__inner}>
@@ -162,6 +173,11 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                         activeService === "To'lov"
                             ?
                             <>
+                            {
+                                (theme === "app_school_theme" || userSystem?.id === 2) && (
+                                    <Select extraClass={cls.monthSelect} title={"Oyni tanlang"} options={getMonthDate} onChangeOption={setSelectedMonth}/>
+                                )
+                            }
                                 <div className={cls.items}>
                                     {
                                         amountTypes.map((item, index) =>

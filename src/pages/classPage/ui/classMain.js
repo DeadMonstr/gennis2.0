@@ -12,7 +12,7 @@ export const ClassMain = () => {
 
     const classes = useSelector(classData)
     const color = useSelector(colorItem)
-    const [activeMenu, setActiveMenu] = useState(classes[0])
+    const [activeMenu, setActiveMenu] = useState(classes)
     const [edit, setEdit] = useState({})
     const [activeEdit, setActiveEdit] = useState(false)
 

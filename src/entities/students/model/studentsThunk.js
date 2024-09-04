@@ -73,7 +73,7 @@ export const createSchoolClass = createAsyncThunk(
     "studentsSlice/createSchoolClass",
     async ({res}) => {
         const {request} = useHttp()
-        return await request(`${API_URL}Group/groups/create/?branch=${res.branch}`, "POST", JSON.stringify(res), headers())
+        return await request(`${API_URL}Group/groups/create/?${branchQuery()}`, "POST", JSON.stringify(res), headers())
     }
 )
 
