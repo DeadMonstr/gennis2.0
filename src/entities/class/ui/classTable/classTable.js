@@ -23,7 +23,7 @@ export const ClassTable = ({edit, classType, active, selectOptions}) => {
         const res = {
             subjects: selectedSubject.map(item => (
                 // name: item.label,
-            item.value
+                item.value
             )),
             ...data
         }
@@ -32,7 +32,7 @@ export const ClassTable = ({edit, classType, active, selectOptions}) => {
 
         request(`${API_URL}Class/class_number_update/${id}/`, "PATCH", JSON.stringify(res), headers())
             .then(res => {
-                setValue("curriculum_hours" , "")
+                setValue("curriculum_hours", "")
                 setEditClass(!editClass)
             })
     }
@@ -62,14 +62,16 @@ export const ClassTable = ({edit, classType, active, selectOptions}) => {
     };
 
     const renderTable = () => {
-        return sortItemsByStatus(classType).map((item, i) => (
-            <tr key={item.id}>
+        return sortItemsByStatus(classType)?.map((item, i) => (
+            <tr>
                 <td>{i + 1}</td>
-                <td>{item.number}</td>
-                <td>{item.subjects}</td>
-                <td>{item.curriculum_hours}</td>
+                <td>{item?.number}</td>
+                <td>{item?.subjects.map(itemSubject => (
+                    <span className={cls.subject}> {itemSubject.name}</span>
+                ))}</td>
+                <td>{item?.curriculum_hours}</td>
                 <td style={{width: "3rem"}}>
-                    {item.status ?
+                    {item?.status ?
                         (
                             <div className={cls.items}>
                                 <div className={cls.checkbox__checked}>
@@ -139,7 +141,7 @@ export const ClassTable = ({edit, classType, active, selectOptions}) => {
                 </Table> : null}
 
 
-            <ClassModal selectedSubject={selectedSubject} setSelectedSubject={setSelectedSubject}
+            <ClassModal  selectedSubject={selectedSubject} setSelectedSubject={setSelectedSubject}
                         changeInfo={onChangeClass} selectOptions={selectOptions} extraClassForm={cls.extraClassForm}
                         extraClassSelect={cls.select} extraClassBtn={cls.btn} editClass={editClass}
                         setEditClass={setEditClass} register={register} handleSubmit={handleSubmit}/>
