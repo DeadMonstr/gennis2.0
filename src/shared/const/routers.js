@@ -26,7 +26,7 @@ export const getEmployerSalary = (id) => `employer/employerProfile/employerSalar
 export const getEmployerSalaryInsideSource = (id, permission) => `employer/employerProfile/employerSalaryPage/giveSalaryPage/${id}/${permission}`
 export const getTeacherSalaryInsideSource = (id) => `teacher/teacherProfile/teacherSalaryPage/giveTeacherSalaryPage/${id}`
 
-export const getClass = (id) => `class`
+export const getClass = (id) => `class/:id`
 
 export const getFlow = (id) => `flows/${id}`
 

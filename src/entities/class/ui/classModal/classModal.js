@@ -135,7 +135,10 @@ export const ColorModal = ({
                                color,
                                setColor,
                                active,
-                               setActive
+                               setActive,
+                               changeName,
+                               setChangeName,
+                               changeColor
                            }) => {
 
     return (
@@ -159,10 +162,20 @@ export const ColorModal = ({
                             {/*</div>*/}
 
                         </div>
-
                     </Form>
                 </div>
+            </Modal>
 
+
+            <Modal active={changeName} setActive={setChangeName}>
+                <h2>Rangni oz'gartirish</h2>
+                <div>
+                    <Form extraClassname={cls.extraClassForm}  onSubmit={handleSubmit(changeColor)}>
+                        <Input required name={"name"} register={register}/>
+
+                    </Form>
+
+                </div>
             </Modal>
         </>
     )

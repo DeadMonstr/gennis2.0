@@ -7,6 +7,7 @@ import cls from "./classTable.module.sass"
 import {API_URL, headers, useHttp} from "../../../../shared/api/base";
 import {useDispatch} from "react-redux";
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
+import {classItem} from "../../model/thunk/classThunk";
 
 
 export const ClassTable = ({edit, classType, active, selectOptions}) => {
@@ -65,6 +66,8 @@ export const ClassTable = ({edit, classType, active, selectOptions}) => {
             <tr key={item.id}>
                 <td>{i + 1}</td>
                 <td>{item.number}</td>
+                <td>{item.subjects}</td>
+                <td>{item.curriculum_hours}</td>
                 <td style={{width: "3rem"}}>
                     {item.status ?
                         (
@@ -124,6 +127,8 @@ export const ClassTable = ({edit, classType, active, selectOptions}) => {
                     <tr>
                         <th>No</th>
                         <th>Sinf Raqami</th>
+                        <th>Fanlari</th>
+                        <th>Dars soati</th>
                         <th/>
 
                     </tr>

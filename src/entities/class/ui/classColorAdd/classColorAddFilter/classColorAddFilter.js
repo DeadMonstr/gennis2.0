@@ -3,7 +3,7 @@ import classNames from "classnames";
 import {useState} from "react";
 
 
-export const ClassColorAddFilter = ({color}) => {
+export const ClassColorAddFilter = ({color, setEdit, edit}) => {
 
     const [activeMenu, setActiveMenu] = useState(color[0].name)
 
@@ -18,6 +18,7 @@ export const ClassColorAddFilter = ({color}) => {
                             })}
                             key={i}
                             onClick={() => {
+                                setEdit(item.id)
                                 setActiveMenu(item.name)
                             }}
                         >{item.name}
