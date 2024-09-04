@@ -7,13 +7,12 @@ import {getSearchValue} from "features/searchInput";
 import {DeletedTeachers, Teachers} from "entities/teachers";
 import {Button} from "shared/ui/button";
 import cls from "./teacher.module.sass";
-import {getTeachers} from "../../../entities/teachers";
-import {useTheme} from "../../../shared/lib/hooks/useTheme";
+import {getTeachers} from "entities/teachers";
+import {useTheme} from "shared/lib/hooks/useTheme";
 import {getTeachersWithFilter} from "entities/teachers";
 import {getTeacherLoading} from "entities/teachers";
-import {fetchTeachersData} from "../../../entities/teachers";
-import {DefaultLoader} from "../../../shared/ui/defaultLoader";
-import {MultiPage} from "../../../widgets/multiPage/ui/MultiPage/MultiPage";
+import {fetchTeachersData} from "entities/teachers";
+import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
 import {useParams} from "react-router-dom";
 
 

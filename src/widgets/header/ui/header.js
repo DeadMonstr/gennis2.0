@@ -145,10 +145,13 @@ export const Header = () => {
                 <div className={cls.header__selected}>
                     {locations.length > 1 && selectedLocations.map(item => (
                         <div className={cls.header__item} key={item?.id}>
-                            <i
-                                onClick={() => onDelete(item?.id)}
-                                className="fa fa-times"
-                            />
+                            {
+                                selectedLocations.length >= 2 ? <i
+                                    onClick={() => onDelete(item?.id)}
+                                    className="fa fa-times"
+                                /> : null
+                            }
+
                             <p>{item?.name}</p>
                         </div>
                     ))}

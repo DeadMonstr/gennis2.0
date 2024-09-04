@@ -17,7 +17,7 @@ export const userRefreshData = createAsyncThunk(
     "loginSlice/userRefreshData",
     async (refresh) => {
         const {request} = useHttp()
-        return await request(`${API_URL}Api/token/refresh/`, "POST", JSON.stringify(refresh))
+        return await request(`${API_URL}token/refresh/`, "POST", JSON.stringify(refresh))
     }
 )
 

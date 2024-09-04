@@ -103,9 +103,7 @@ export const Teachers = memo(({data, setSelect, select, theme}) => {
 
                     </Table>
                 </div>
-
             </div>
-
         </>
 
     )
