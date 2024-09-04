@@ -1,3 +1,4 @@
+import {deleteGroup} from "entities/groups/model/slice/groupsSlice";
 import {getGroupProfileNextLsData} from "entities/profile/groupProfile/model/groupProfileSelector";
 import {getUserSystemId} from "entities/profile/userProfile";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
@@ -74,6 +75,7 @@ export const GroupProfileInfoForm = memo(() => {
             id,
             res: {type: userSystem?.id === 1 ? "center" : "school"}
         }))
+        dispatch(deleteGroup(id))
         navigate(-2)
     }
 

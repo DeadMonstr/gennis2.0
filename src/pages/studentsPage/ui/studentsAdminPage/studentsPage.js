@@ -1,5 +1,6 @@
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import {ClassAddForm} from "features/classProfile";
+import {StudentCreateClass} from "features/studentCreateClass";
 import React, {memo, useEffect, useMemo, useState} from "react";
 import {user} from "entities/user";
 import {useDispatch, useSelector} from "react-redux";
@@ -87,11 +88,12 @@ export const StudentsPage = () => {
     const teachers = useSelector(getTeachers);
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
     const languages = useSelector(state => state.registerUser.languages);
+    const [data, setData] = useState({})
     const [selectColor, setSelectColor] = useState();
     const [selectTeacher, setSelectTeacher] = useState();
     const [selectStudents, setSelectStudents] = useState([]);
     const [activeModal, setActiveModal] = useState(false);
-    const [active, setActive] = useState(false);
+    const [active, setActive] = useState("");
     const [selectedRadio, setSelectedRadio] = useState(studentsFilter[0].name);
     const [selected, setSelected] = useState([]);
     const [currentTableData, setCurrentTableData] = useState([]);
@@ -137,7 +139,7 @@ export const StudentsPage = () => {
 
     useEffect(() => {
         if (userSystem?.id === 2 && userBranchId) {
-            dispatch(fetchSchoolStudents({userBranchId}))
+            // dispatch(fetchSchoolStudents({userBranchId}))
             dispatch(fetchClassColors())
             dispatch(fetchClassNumberList())
         }
@@ -147,24 +149,16 @@ export const StudentsPage = () => {
         const res = {
             ...data,
             teacher: [+selectTeacher],
-            students: selectStudents,
+            // students: selectStudents,
             color: selectColor,
             branch: id,
             create_type: "school",
             system: 2
         }
-        request(`${API_URL}Group/groups/create/`, "POST", JSON.stringify(res), headers())
-            .then(res => {
-                console.log(res, "res classAdd")
-                dispatch(onAddAlertOptions({
-                    type: "success",
-                    status: true,
-                    msg: `Sinf yaratildi`
-                }))
-                setActiveModal(false)
-                // setCreateStatus(true)
-            })
-        dispatch(createSchoolClass({res}))
+        setData(res)
+        dispatch(fetchOnlyNewStudentsData({userBranchId, number: data?.class_number}))
+        setActive("post")
+        // dispatch(createSchoolClass({res}))
 
         // setSelectStudents([])
     }
@@ -279,7 +273,7 @@ export const StudentsPage = () => {
             />
 
 
-            <StudentsFilter active={active} setActive={setActive} activePage={selectedRadio}/>
+            <StudentsFilter active={active==="filter"} setActive={setActive} activePage={selectedRadio}/>
             <Modal
                 active={activeModal === "create"}
                 setActive={setActiveModal}
@@ -347,6 +341,11 @@ export const StudentsPage = () => {
             <ClassAddForm
                 setActive={setActiveModal}
                 active={activeModal === "add"}
+            />
+            <StudentCreateClass
+                setActive={setActive}
+                active={active === "post"}
+                data={data}
             />
         </MultiPage>
         // </>

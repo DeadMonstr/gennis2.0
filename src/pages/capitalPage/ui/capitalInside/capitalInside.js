@@ -28,6 +28,7 @@ import {API_URL, headers, headersImg, useHttp} from "shared/api/base";
 import {AddCategoryModal, EditModal} from "features/createCapitalModal";
 import {getBranchThunk, getLocations} from "../../../../entities/editCreates";
 import {getLocationThunk} from "../../../../entities/creates/model/createThunk/createBranchThunk";
+import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 
 const capitalType = [
     {name: "category", label: "Category"},
@@ -76,12 +77,15 @@ export const CapitalInside = memo(() => {
     const [editModal, setEditModal] = useState(false)
     const [selectedBranches, setSelectedBranches] = useState([])
     const onDelete = () => {
-
-
-        request(`${API_URL}Capital/capital_category/${id}`, "DELETE", null, headers()) // JSON.stringify qismi kerak emas, chunki DELETE so'rovi uchun badan (body) odatda kerak bo'lmaydi
+        request(`${API_URL}Capital/capital_category/${id}/`, "DELETE", null, headers())
             .then(res => {
                 console.log(res)
-                dispatch(onDeleteBranch({id: id}));
+                // dispatch(onDeleteBranch({id: id}));
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg : res.msg
+                }))
                 navigation(-2)
             })
             .catch(err => {

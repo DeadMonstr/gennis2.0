@@ -13,6 +13,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getLocations} from "pages/studentsPage";
 import {Textarea} from "shared/ui/textArea";
 import {fetchedImageError, fetchedImageItems, fetchingImageItems} from "../model/homeSlice";
+import {HomeHeader} from "../homeHeader/homeHeader";
 
 const branches = [
     {name: "chirchiq"},
@@ -77,94 +78,100 @@ export const Home = () => {
     })
 
     return (
-        <div className={cls.home} ref={sectionRef}>
+        <>
 
-            <div className={cls.homeWrapper}>
+            <div className={cls.home} ref={sectionRef}>
 
-                <div className={cls.homeTexts}>
-                    {/*<div onClick={onChange}>*/}
-                    {/*    <i className={classNames("fa fa-pen ", cls.icon)}></i>*/}
-                    {/*</div>*/}
+                <div className={cls.homeWrapper}>
 
-                    <div className={cls.homeTitle}>
-                        GENNIS - "Muvaffaqiyatni istaganlar uchun"
-                    </div>
-                    <div className={cls.homeParagraph}>
-                        <p>GENNIS ta'lim markazi sifatida bizning missiyamiz – har bir talabamizning intellektual va
-                            shaxsiy
-                            o'sishini qo'llab-quvvatlashdir. Biz yuqori sifatli ta'lim, innovatsion o'quv dasturlari va
-                            iliq,
-                            qo'llab-quvvatlovchi muhit yaratish orqali talabalarning muvaffaqiyatga erishishlariga
-                            yordam
-                            beramiz. Bizning maqsadimiz – o'quvchilarimizning bilim va ko'nikmalarini rivojlantirish,
-                            ularni
-                            global raqobatga tayyorlash va ularga o'zlarining intilishlariga erishishlari uchun barcha
-                            zarur
-                            vositalarni taqdim etishdir. "Muvaffaqiyatni istaganlar uchun" GENNIS sizning ishonchli
-                            hamkoringizdir.</p>
-                    </div>
-                </div>
-                <div className={cls.homeAside}>
-                    <div className={cls.homeAside__title}>
-                        Ro’yxatdan o’tish
-                    </div>
-                    <form action="">
-                        <Input extraClassName={cls.home__input} placeholder={"name"} type={"text"}/>
-                        <Input extraClassName={cls.home__input} placeholder="+998 (__) ___ __ __" type={"number"}/>
-                        <Select extraClass={cls.select} options={branches}/>
-                        <Button extraClass={cls.buttonExtra}>Registratsiya</Button>
-                    </form>
-                </div>
-            </div>
+                    <div className={cls.homeTexts}>
+                        {/*<div onClick={onChange}>*/}
+                        {/*    <i className={classNames("fa fa-pen ", cls.icon)}></i>*/}
+                        {/*</div>*/}
 
-
-            <Modal
-                active={changeStatus}
-                setActive={setChangeStatus}
-            >
-                <div className={cls.home__modal}>
-                    <h1>Malumotlarni o'zgartirish</h1>
-                    <div className={cls.wrapper}>
-                        <div
-                            className={cls.home__modal_img}
-                            {...getRootProps()}
-                        >
-                            {
-                                changeImage?.path ? <img src={URL.createObjectURL(changeImage)} alt=""/>
-                                    : image?.img ? <img src={API_URL + image?.img} alt=""/>
-                                        : <>
-                                            <input
-                                                required
-                                                {...getInputProps()}
-                                                type="file"
-                                            />
-                                            <i className="far fa-image"/>
-                                        </>
-                            }
+                        <div className={cls.homeTitle}>
+                            GENNIS - "Muvaffaqiyatni istaganlar uchun"
                         </div>
-                        <form
-                            className={cls.home__modal_text}
-                            onSubmit={handleSubmit(onSubmit)}
-                        >
-                            <Input
-                                required
-                                register={register}
-                                name={'name'}
-                                placeholder={'Title'}
-                            />
-                            <Textarea
-                                placeholder="Text"
-                                required
-                                {...register("text")}
-                                cols="30"
-                                rows="10"
-                            />
-                            <Button>O'zgartirish</Button>
+                        <div className={cls.homeParagraph}>
+                            <p>GENNIS ta'lim markazi sifatida bizning missiyamiz – har bir talabamizning intellektual va
+                                shaxsiy
+                                o'sishini qo'llab-quvvatlashdir. Biz yuqori sifatli ta'lim, innovatsion o'quv dasturlari
+                                va
+                                iliq,
+                                qo'llab-quvvatlovchi muhit yaratish orqali talabalarning muvaffaqiyatga erishishlariga
+                                yordam
+                                beramiz. Bizning maqsadimiz – o'quvchilarimizning bilim va ko'nikmalarini
+                                rivojlantirish,
+                                ularni
+                                global raqobatga tayyorlash va ularga o'zlarining intilishlariga erishishlari uchun
+                                barcha
+                                zarur
+                                vositalarni taqdim etishdir. "Muvaffaqiyatni istaganlar uchun" GENNIS sizning ishonchli
+                                hamkoringizdir.</p>
+                        </div>
+                    </div>
+                    <div className={cls.homeAside}>
+                        <div className={cls.homeAside__title}>
+                            Ro’yxatdan o’tish
+                        </div>
+                        <form action="">
+                            <Input extraClassName={cls.home__input} placeholder={"name"} type={"text"}/>
+                            <Input extraClassName={cls.home__input} placeholder="+998 (__) ___ __ __" type={"number"}/>
+                            <Select extraClass={cls.select} options={branches}/>
+                            <Button extraClass={cls.buttonExtra}>Registratsiya</Button>
                         </form>
                     </div>
                 </div>
-            </Modal>
-        </div>
+
+
+                <Modal
+                    active={changeStatus}
+                    setActive={setChangeStatus}
+                >
+                    <div className={cls.home__modal}>
+                        <h1>Malumotlarni o'zgartirish</h1>
+                        <div className={cls.wrapper}>
+                            <div
+                                className={cls.home__modal_img}
+                                {...getRootProps()}
+                            >
+                                {
+                                    changeImage?.path ? <img src={URL.createObjectURL(changeImage)} alt=""/>
+                                        : image?.img ? <img src={API_URL + image?.img} alt=""/>
+                                            : <>
+                                                <input
+                                                    required
+                                                    {...getInputProps()}
+                                                    type="file"
+                                                />
+                                                <i className="far fa-image"/>
+                                            </>
+                                }
+                            </div>
+                            <form
+                                className={cls.home__modal_text}
+                                onSubmit={handleSubmit(onSubmit)}
+                            >
+                                <Input
+                                    required
+                                    register={register}
+                                    name={'name'}
+                                    placeholder={'Title'}
+                                />
+                                <Textarea
+                                    placeholder="Text"
+                                    required
+                                    {...register("text")}
+                                    cols="30"
+                                    rows="10"
+                                />
+                                <Button>O'zgartirish</Button>
+                            </form>
+                        </div>
+                    </div>
+                </Modal>
+            </div>
+        </>
     );
 };
 

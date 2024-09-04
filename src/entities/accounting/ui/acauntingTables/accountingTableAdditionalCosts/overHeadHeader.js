@@ -8,12 +8,6 @@ export const OverHeadHeader = ({onClick , setDeleted , deleted , sum , formatSal
                 <Button type={deleted ? "disabled" : ""} onClick={deleted ? null : onClick}>
                     Qo'shish
                 </Button>
-                <Button onClick={() => setDeleted(!deleted)} type={deleted ? "danger" : "filter"}>
-                    O'chirilganlar
-                </Button>
-                <Button type={"filter"}>
-                    Archive
-                </Button>
             </div>
             <div style={{color: "rgb(34, 197, 94)" , fontSize: "2.2rem" , textAlign: "end" }}>Total : {formatSalary(deleted ? sum2 : sum)}</div>
         </div>

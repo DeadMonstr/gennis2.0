@@ -1,6 +1,6 @@
 import {Table} from "../../../../shared/ui/table";
 
-export const Overhead = ({overhead , extraClass}) => {
+export const Overhead = ({overhead , extraClass , formatSalary}) => {
 
     const renderTable = () => {
         return overhead?.overheads?.overhead_data?.map((item , i) => (
@@ -8,7 +8,7 @@ export const Overhead = ({overhead , extraClass}) => {
                 <td>{i +1}</td>
                 <td>{item.name}</td>
                 <td>{item.payment.name}</td>
-                <td>{item.price}</td>
+                <td>{formatSalary(item.price)}</td>
                 <td>{item.created}</td>
             </tr>
         ))

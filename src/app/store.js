@@ -70,6 +70,7 @@ import {schoolTeacherDaySlice} from "../features/teacherModals";
 import {inkasatsiyaSlice} from "../entities/inkasatsiya";
 import {timeTableTuronSlice} from "pages/timeTable"
 import {alertSlice} from "features/alert"
+import {classSlice} from "../entities/class";
 import {locationsSlice} from "features/locations"
 import {themeSwitcherSlice} from "features/themeSwitcher"
 import {branchSwitcherSlice} from "features/branchSwitcher"
@@ -160,7 +161,8 @@ export const store = configureStore({
         themeSwitcherSlice,
         branchSwitcherSlice,
         multiPageSlice,
-        flowsProfileSlice
+        flowsProfileSlice,
+        classSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

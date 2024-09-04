@@ -34,7 +34,7 @@ const groupProfileSlice = createSlice({
     reducers: {
         getNextLesson: (state, action) => {
             state.nextLessonData = action.payload
-        },
+        }
     },
     extraReducers: builder =>
         builder

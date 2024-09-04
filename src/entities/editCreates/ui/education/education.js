@@ -12,6 +12,7 @@ import {useForm} from "react-hook-form";
 import {onDeleteEducation} from "../../model/slice/educationSlice";
 import {API_URL, headers, useHttp} from "../../../../shared/api/base";
 import {EducationCreate} from "../../../creates";
+import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 
 
 export const Education = () => {
@@ -22,12 +23,12 @@ export const Education = () => {
     const loading = useSelector(getLocationLoading)
     const getEducation = useSelector(getEducationName)
     const [isChange, setIsChange] = useState([])
-    const [active , setActive] = useState(false)
+    const [active, setActive] = useState(false)
+    const [activeDel, setActiveDel] = useState(false)
     const {request} = useHttp()
     useEffect(() => {
         dispatch(getEducationThunk())
     }, [])
-
 
 
     const onChange = (data) => {
@@ -36,13 +37,23 @@ export const Education = () => {
         setActiveLocationModal(!activeLocationModal)
     }
     const onDelete = () => {
+
         request(`${API_URL}Language/language/${isChange.id}/`, "DELETE", JSON.stringify({id: isChange.id}), headers())
+            .then(res => {
+                dispatch(onDeleteEducation({id: isChange.id}))
+                setActiveLocationModal(!activeLocationModal)
+                setActive(false)
+                setActiveDel(!activeDel)
+                dispatch(onAddAlertOptions({
+                    msg: res.msg,
+                    type: "success",
+                    status: true
+                }))
+            })
             .catch(err => {
                 console.log(err)
             })
-        dispatch(onDeleteEducation({id: isChange.id}))
-        setActiveLocationModal(!activeLocationModal)
-        setActive(false)
+
     }
 
     function compareById(a, b) {
@@ -70,8 +81,16 @@ export const Education = () => {
 
 
             <i onClick={() => setActive(!active)} className={classNames("fa fa-plus", cls.plus)}></i>
-            <ModalEducation onDelete={onDelete} register={register} handleSubmit={handleSubmit} onChange={onChange}
-                            activeModal={activeLocationModal} setActive={setActiveLocationModal}/>
+            <ModalEducation
+                onDelete={onDelete}
+                register={register}
+                handleSubmit={handleSubmit}
+                onChange={onChange}
+                activeModal={activeLocationModal}
+                setActive={setActiveLocationModal}
+                setActiveDel={setActiveDel}
+                activeDel={activeDel}
+            />
             <EducationCreate active={active} setActive={setActive}/>
         </div>
     );

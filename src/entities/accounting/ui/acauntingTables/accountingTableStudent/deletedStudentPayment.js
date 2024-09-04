@@ -7,7 +7,7 @@ import React, {useMemo, useState} from "react";
 import {useSelector} from "react-redux";
 import {getSearchValue} from "../../../../../features/searchInput";
 
-export const DeletedStudentPayment = ({deletedStudent  , }) => {
+export const DeletedStudentPayment = ({deletedStudent  , formatSalary }) => {
     const search = useSelector(getSearchValue)
     let PageSize = useMemo(() => 50, [])
     const [currentTableData, setCurrentTableData] = useState([])
@@ -24,10 +24,7 @@ export const DeletedStudentPayment = ({deletedStudent  , }) => {
         )
     }, [deletedStudent, setCurrentPage, search])
 
-    const formatSalary = (payment_sum) => {
-        return Number(payment_sum).toLocaleString();
-    };
-    const sum2 = deletedStudent.reduce((a, c) => a + parseFloat(c.payment_sum || 0), 0);
+
     const renderDeletedStudents = () => {
         return currentTableData.map((item, i) => (
             <tr>
@@ -51,24 +48,6 @@ export const DeletedStudentPayment = ({deletedStudent  , }) => {
     return (
         <>
             <div className={cls.empSalary}>
-                <div style={{
-                    // textAlign: "right",
-                    display: "flex",
-                    justifyContent: "flex-end"
-                }}>
-
-                    <div style={{
-                        alignSelf: "flex-end",
-                        fontSize: "2rem",
-                        color: "#22C55E",
-                        padding: "1rem 2rem 1rem 1rem",
-                        borderRadius: "5px",
-                        marginBottom: "10px"
-                    }}>
-                        {/*Total : {deleted ? formatSalary(sum1) : formatSalary(sum2)} sum*/}
-                        Total : {formatSalary(sum2)} sum
-                    </div>
-                </div>
                 <Table>
                     <thead>
                     <tr>
