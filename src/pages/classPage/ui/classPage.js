@@ -28,6 +28,7 @@ export const ClassPage = ({setEdit, edit, activeEdit, setActiveEdit , activeMenu
     }, [])
 
 
+
     return (
         <>
          <ClassFilter classesType={classes} setActiveEdit={setActiveEdit} edit={edit} setEdit={setEdit}

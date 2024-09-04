@@ -9,36 +9,31 @@ import {useDispatch} from "react-redux";
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 
 
-
-
-
-
-export const ClassTable = ({edit, classType, active , selectOptions}) => {
+export const ClassTable = ({edit, classType, active, selectOptions}) => {
     const [editClass, setEditClass] = useState(false)
     const [clickedCheckbox, setClickedCheckbox] = useState([])
     const {register, handleSubmit, setValue} = useForm()
     const {request} = useHttp()
     const dispatch = useDispatch()
     const [selectedSubject, setSelectedSubject] = useState([])
-
-
-
     const onChangeClass = (data) => {
 
 
         const res = {
-            subject: selectedSubject.name,
+            subjects: selectedSubject.map(item => (
+                // name: item.label,
+            item.value
+            )),
             ...data
         }
         const id = editClass
-        console.log(res, id, "hello")
 
-        // request(`${API_URL}Class/class_number_update/${id}/`, "PATCH", JSON.stringify(data), headers())
-        //     .then(res => {
-        //         console.log(res)
-        //         setValue("curriculum_hours" , "")
-        //         setEditClass(!editClass)
-        //     })
+
+        request(`${API_URL}Class/class_number_update/${id}/`, "PATCH", JSON.stringify(res), headers())
+            .then(res => {
+                setValue("curriculum_hours" , "")
+                setEditClass(!editClass)
+            })
     }
 
     const onChange = (e) => {
@@ -50,8 +45,6 @@ export const ClassTable = ({edit, classType, active , selectOptions}) => {
         const {id} = e
         request(`${API_URL}Class/class_number_update/${id}/`, "PATCH", JSON.stringify(res), headers())
             .then(res => {
-                console.log(res)
-
                 dispatch(onAddAlertOptions({
                     type: "success",
                     status: true,

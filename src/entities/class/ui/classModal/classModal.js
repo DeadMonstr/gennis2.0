@@ -7,6 +7,8 @@ import {Select} from "shared/ui/select";
 import cls from "../classTable/classTable.module.sass"
 import {useEffect, useState} from "react";
 import {HexColorPicker} from "react-colorful";
+import {AnimatedMulti} from "features/workerSelect";
+import {value} from "lodash/seq";
 
 export const ClassModal = ({
 
@@ -28,50 +30,55 @@ export const ClassModal = ({
                            }) => {
 
 
-    const [subject, setSubject] = useState([])
+    // const [subject, setSubject] = useState([])
+    //
+    // const [selected, setSelected] = useState([])
+    // const [deletedId, setDeletedId] = useState(0)
 
-    const [selected, setSelected] = useState([])
-    const [deletedId, setDeletedId] = useState(0)
 
-    useEffect(() => {
-        setSubject(selectOptions)
-    }, [])
+    const option = selectOptions?.map(item => ({
+        value: item.id,
+        label: item.name
+    }))
+    // useEffect(() => {
+    //     setSubject(selectOptions)
+    // }, [])
 
-    useEffect(() => {
-        if (deletedId !== 0) {
-            setSubject(subject => {
-                return subject.map(item => {
-                    if (item.id === +deletedId) {
-                        return {...item, disabled: false}
-                    }
-                    return item
-                })
-            })
-
-            setSelectedSubject(selectedSubject.filter(item => item.id !== +deletedId))
-            setSelected(selectedSubject.filter(item => item.id !== +deletedId))
-        }
-    }, [deletedId])
+    // useEffect(() => {
+    //     if (deletedId !== 0) {
+    //         setSubject(subject => {
+    //             return subject.map(item => {
+    //                 if (item.id === +deletedId) {
+    //                     return {...item, disabled: false}
+    //                 }
+    //                 return item
+    //             })
+    //         })
+    //
+    //         setSelectedSubject(selectedSubject.filter(item => item.id !== +deletedId))
+    //         setSelected(selectedSubject.filter(item => item.id !== +deletedId))
+    //     }
+    // }, [deletedId])
     //
     // console.log(subject, "subject")
     // console.log(selectedSubject, "selectedSubject")
-    console.log(deletedId , "deletedId")
-    console.log(selected , "selected")
+    // console.log(deletedId , "deletedId")
+    // console.log(selected , "selected")
 
-    const onChangeSelect = (id) => {
-        const filteredSubjects = subject.filter(item => item.id === +id)
-        setSubject(
-            subject.map(item => {
-                if (item.id === +id) {
-                    return {...item, disabled: true}
-                }
-                return item
-            })
-        )
-        setSelectedSubject(arr => [...arr, ...filteredSubjects])
-        setSelected(arr => [...arr, ...filteredSubjects])
-
-    }
+    // const onChangeSelect = (id) => {
+    //     const filteredSubjects = subject.filter(item => item.id === +id)
+    //     setSubject(
+    //         subject.map(item => {
+    //             if (item.id === +id) {
+    //                 return {...item, disabled: true}
+    //             }
+    //             return item
+    //         })
+    //     )
+    //     setSelectedSubject(arr => [...arr, ...filteredSubjects])
+    //     setSelected(arr => [...arr, ...filteredSubjects])
+    //
+    // }
 
 
     return (
@@ -100,18 +107,11 @@ export const ClassModal = ({
                 <h2>Ma’lumotlarni o’zgartirish</h2>
                 <div>
                     <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>
-                        <Input name={"curriculum_hours"} register={register} type={"number"}/>
-                        <Select onChangeOption={onChangeSelect} options={subject}/>
+                        <Input required name={"curriculum_hours"} register={register} type={"number"}/>
+                        {/*<Select onChangeOption={onChangeSelect} options={subject}/>*/}
 
                         <div className={cls.selectBox}>
-                            {selected?.map(item => {
-                                return (
-                                    <div className={cls.subjectSelect}>
-                                        <i onClick={() => setDeletedId(item.id)} className={"fa fa-times"}/>
-                                        <p>{item.name}</p>
-                                    </div>
-                                )
-                            })}
+                            <AnimatedMulti extraClass={cls.select}  options={option} onChange={setSelectedSubject}/>
                         </div>
                         <Button>
                             Tastiqlash
