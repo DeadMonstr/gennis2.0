@@ -35,7 +35,7 @@ const themeSwitcherSlice = createSlice({
 
             localStorage.setItem("selectedSystem", JSON.stringify(filtered))
             state.system =  {
-                id: filtered?.id,
+                id: filtered.id,
                 type: action.payload
             }
 
@@ -51,46 +51,16 @@ const themeSwitcherSlice = createSlice({
             .addCase(fetchThemeSwitcherSystemsThunk.fulfilled, (state, action) => {
                 state.systems = action.payload
 
-                // const localSystem = JSON.parse(localStorage.getItem("selectedSystem"))
-                // if (!localSystem && !localSystem?.id) {
-                //     state.system = {
-                //         id: action.payload[0].id,
-                //         type: action.payload[0].type
-                //         const localSystem = JSON.parse(localStorage.getItem("selectedSystem"))
-                //
-                //         if (!localSystem && !localSystem?.id) {
-                //             state.system = {
-                //                 id: item.id,
-                //                 type: "center"
-                //             }
-                //         }
-                //         return {
-                //             ...item,
-                //             type: "center"
-                //         }
-                //     } else {
-                //         return {
-                //             ...item,
-                //             type: "school"
-                //         }
-                //     }
-                // })
-                if (action.payload.length < 2) {
-                    if (action.payload[0]?.id === 1) {
-                        state.system =  {
-                            ...action.payload[0],
-                            type: "center"
-                        }
-                    } else {
-                        state.system = {
-                            ...action.payload[0],
-                            type: "school"
-                        }
+                const localSystem = JSON.parse(localStorage.getItem("selectedSystem"))
+                if (!localSystem && !localSystem?.id) {
+                    state.system = {
+                        id: action.payload[0].id,
+                        type: action.payload[0].type
                     }
 
                     localStorage.setItem("selectedSystem", JSON.stringify({
-                        id: action.payload[0]?.id,
-                        type: action.payload[0]?.type
+                        id: action.payload[0].id,
+                        type: action.payload[0].type
                     }))
                 }
 

@@ -26,7 +26,7 @@ export const MultiPage = ({types,children,page}) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log(locations.length > 1 && !changedPage && page !== oldPage)
+
         if (locations.length > 1  && page !== oldPage) {
             navigate(".", { relative: "path" })
             const data = {
@@ -47,9 +47,6 @@ export const MultiPage = ({types,children,page}) => {
         if (locations.length < 2 && branch?.id) {
             navigate(`./${branch.id}`, {relative: "path"})
         }
-        // else if (!locations.length && !branch?.id) {
-        //     navigate(`../home`, {relative: "path"})
-        // }
     },[branch?.id,locations])
 
 
