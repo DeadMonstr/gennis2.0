@@ -50,3 +50,6 @@ export const getDatasWithPost = (state) =>
 
 export const getBookPaymentsList = (state) =>
     state.studentPaymentSlice?.booksList
+
+export const getMonthData = (state) =>
+    state.studentPaymentSlice.getMonthData
