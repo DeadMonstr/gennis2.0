@@ -26,7 +26,7 @@ export const getEmployerSalary = (id) => `employer/employerProfile/employerSalar
 export const getEmployerSalaryInsideSource = (id, permission) => `employer/employerProfile/employerSalaryPage/giveSalaryPage/${id}/${permission}`
 export const getTeacherSalaryInsideSource = (id) => `teacher/teacherProfile/teacherSalaryPage/giveTeacherSalaryPage/${id}`
 
-export const getClass = (id) => `class/:id`
+export const getClass = (id) => `class/${id}`
 
 export const getFlow = (id) => `flows/${id}`
 
@@ -35,7 +35,6 @@ export const getContract = (id) => `contract/${id}`
 export const getCapital = (id) => `capital/${id}`
 
 export const getCapitalInside = (id) => `capital/:id/capitalBoxProfile/${id}`
-
 
 
 export const getCreateBranch = (id) => `createBranch/${id}`
@@ -53,7 +52,7 @@ export const getEducation = (id) => `education/${id}`
 
 
 export const getSystem = (id) => `system/${id}`
-export const getAccounting = (id) => `accounting/${id}/*`
+export const getAccounting = (id) => `accounting/*`
 
 export const getInkasatsiya = (id) => `inkasatsiya/${id}/*`
 

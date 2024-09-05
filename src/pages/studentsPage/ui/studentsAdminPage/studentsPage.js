@@ -249,7 +249,6 @@ export const StudentsPage = () => {
     return (
         <MultiPage types={types} page={"students"}>
             <StudentsHeader
-
                 selected={selected}
                 setSelected={setSelected}
                 branches={branches}

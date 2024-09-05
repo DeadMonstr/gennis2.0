@@ -17,6 +17,7 @@ export const ClassTable = ({edit, classType, active, selectOptions}) => {
     const {request} = useHttp()
     const dispatch = useDispatch()
     const [selectedSubject, setSelectedSubject] = useState([])
+
     const onChangeClass = (data) => {
 
 
@@ -42,7 +43,6 @@ export const ClassTable = ({edit, classType, active, selectOptions}) => {
         const res = {
             class_types: edit.id,
         }
-
         const {id} = e
         request(`${API_URL}Class/class_number_update/${id}/`, "PATCH", JSON.stringify(res), headers())
             .then(res => {
@@ -61,9 +61,26 @@ export const ClassTable = ({edit, classType, active, selectOptions}) => {
         return [...items].sort((a, b) => b.status - a.status);
     };
 
+    // const color1rgb = hexToRgb(item?.teacher[0]?.color ? item?.teacher[0]?.color : "#ffffff");
+    //
+    //
+    //
+    // const brightness = Math.round(((parseInt(color1rgb.r) * 299) +
+    //     (parseInt(color1rgb.g) * 587) +
+    //     (parseInt(color1rgb.b) * 114)) / 1000);
+    //
+    // const heightItem = +item.to.replace(":",".")- +item.from.replace(":",".")
+    //
+    // const style = {
+    //     height: heightItem * 120 + "px",
+    //     backgroundColor: item?.teacher[0]?.color ? item?.teacher[0]?.color : "white",
+    //     color: brightness > 125 ? "black" : "white"
+    // }
+
     const renderTable = () => {
-        return sortItemsByStatus(classType)?.map((item, i) => (
-            <tr>
+        return sortItemsByStatus(classType)?.map((item, i) => {
+
+            return <tr>
                 <td>{i + 1}</td>
                 <td>{item?.number}</td>
                 <td>{item?.subjects.map(itemSubject => (
@@ -109,14 +126,16 @@ export const ClassTable = ({edit, classType, active, selectOptions}) => {
                                 )}
                             </div>
                             <i
-                                onClick={() => setEditClass(item.id)}
+                                onClick={() => {
+                                    setEditClass(item.id)
+                                }}
                                 className={"fa fa-pen"}
                             />
                         </div>)
                     }
                 </td>
             </tr>
-        ));
+        })
     };
     const render = renderTable()
 

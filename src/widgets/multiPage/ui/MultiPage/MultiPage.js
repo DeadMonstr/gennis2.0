@@ -43,14 +43,14 @@ export const MultiPage = ({types,children,page}) => {
 
 
 
-    useEffect(() => {
-        if (locations.length < 2 && branch?.id) {
-            navigate(`./${branch.id}`, {relative: "path"})
-        }
-        // else if (!locations.length && !branch?.id) {
-        //     navigate(`../home`, {relative: "path"})
-        // }
-    },[branch?.id,locations])
+    // useEffect(() => {
+    //     if (locations.length < 2 && branch?.id) {
+    //         navigate(`./${branch.id}`, {relative: "path"})
+    //     }
+    //     // else if (!locations.length && !branch?.id) {
+    //     //     navigate(`../home`, {relative: "path"})
+    //     // }
+    // },[branch?.id,locations])
 
 
 

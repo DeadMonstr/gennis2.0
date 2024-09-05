@@ -36,6 +36,8 @@ import {Capital} from "./accountingPages/capital";
 import {getEncashment} from "entities/accounting/model/selector/accountingSelector";
 import {accountingThunk} from "entities/accounting/model/thunk/accountingThunk";
 import {AccountingFilter} from "features/filters/accountingFilter/accountingFilter";
+import {MultiPage} from "../../../widgets/multiPage/ui/MultiPage/MultiPage";
+import {useSearchParams} from "react-router-dom";
 
 
 export const AccountingPageMain = memo(() => {
@@ -46,10 +48,21 @@ export const AccountingPageMain = memo(() => {
     const {request} = useHttp()
     const [active, setActive] = useState(false)
     const [activeDel, setActiveDel] = useState(false)
-
-
     const encashment = useSelector(getEncashment)
     const {id} = useParams()
+    const [searchParams] = useSearchParams();
+
+
+    useEffect(() => {
+
+        const type = searchParams.get("type")
+
+
+        if (type) {
+            setPage(type)
+        }
+    }, [searchParams])
+
 
     useEffect(() => {
         dispatch(accountingThunk())
@@ -62,101 +75,101 @@ export const AccountingPageMain = memo(() => {
     const formatSalary = (payment_sum) => {
         return Number(payment_sum).toLocaleString();
     };
-    console.log(encashment , "eng")
     // const renderTable = renderTables()
+    const types= [
+        {name: "Students Payments" , type: "studentsPayments"},
+        {name: "Teacher Salary" , type: "teachersSalary"},
+        {name: "Employer Salary" , type: "employeesSalary"},
+        {name: "overhead" , type: "overhead"},
+        {name: "capital" , type: "capital"},
+    ]
     return (
-        <div className={cls.accountingMain}>
+       <MultiPage  types={types} page={"accounting"}>
+           <div className={cls.accountingMain}>
+               <div className={cls.accounting}>
+                   <div className={cls.accounting__wrapper}>
+                       <div className={cls.wrapper__filter}>
+                           <Button type={"filter"} status={"filter"} onClick={() => setActive(!active)}>Filter</Button>
+                           <Select options={getAccountingPage} onChangeOption={setPage}/>
+                       </div>
+                       <div className={cls.wrapper__middle}>
+                           <div className={cls.middle__box}>
+                               {encashment.payments?.map(item => (
+                                   <div>{item?.payment_type}: {formatSalary(item.overall)}</div>
+                               ))}
+                           </div>
+                           <div className={cls.typeExpenses}>
+                               <Link to={`../inkasatsiya/${id}`}>
+                                   <Button>
 
-            <div className={cls.accounting}>
-                <div className={cls.accounting__wrapper}>
-                    <div className={cls.wrapper__filter}>
-                        <Button type={"filter"} status={"filter"} onClick={() => setActive(!active)}>Filter</Button>
-                        <Select options={getAccountingPage} onChangeOption={setPage}/>
-                    </div>
-                    <div className={cls.wrapper__middle}>
-                        <div className={cls.middle__box}>
-                            {encashment.payments?.map(item => (
-                                <div>{item?.payment_type}: {formatSalary(item.overall)}</div>
-                            ))}
-                        </div>
-                        <div className={cls.typeExpenses}>
-                            <Link to={`../inkasatsiya/${id}`}>
-                                <Button>
-
-                                    Inkasatsiya
+                                       Inkasatsiya
 
 
-                                    {/*Harajatlar to’plami*/}
-                                </Button></Link>
-                            {/*<Button>*/}
-                            {/*    Harajatlar tarixi*/}
-                            {/*</Button>*/}
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                       {/*Harajatlar to’plami*/}
+                                   </Button></Link>
+                               {/*<Button>*/}
+                               {/*    Harajatlar tarixi*/}
+                               {/*</Button>*/}
+                           </div>
+                       </div>
+                   </div>
+               </div>
 
-            {/*{renderTable}*/}
+               {/*{renderTable}*/}
 
-            <Routes>
-                <Route
-                    path={"studentsPayments"}
-                    element={
-                        <StudentSalary
-                            deleted={activeDel}
-                            setDeleted={setActiveDel}
-                            locationId={locationId}
-                        />
-                    }
-                />
-                <Route
-                    path={"teachersSalary"}
-                    element={<TeacherSalaryPage
-                        deleted={activeDel}
-                        setDeleted={setActiveDel}
-                        path={"teachersSalary"}
-                    />
-                    }
-                />
-                <Route
-                    path={"employeesSalary"}
-                    element={
-                        <EmployerSalaryPage
-                            deleted={activeDel}
-                            setDeleted={setActiveDel}
-                            path={"employeesSalary"}
-                        />
-                    }
-                />
-                <Route
-                    path={"overhead"}
-                    element={
-                        <AdditionalCosts
-                            path={"overhead"}
-                            deleted={activeDel}
-                            setDeleted={setActiveDel}
-                        />
-                    }
-                />
-                <Route path={"capital"}
+               <Routes>
+                   <Route
+                       path={"studentsPayments"}
                        element={
-                           <Capital
+                           <StudentSalary
                                deleted={activeDel}
                                setDeleted={setActiveDel}
-                               path={"capital"}
+                               locationId={locationId}
                            />
                        }
-                />
+                   />
+                   <Route
+                       path={"teachersSalary"}
+                       element={<TeacherSalaryPage
+                           deleted={activeDel}
+                           setDeleted={setActiveDel}
+                           path={"teachersSalary"}
+                       />
+                       }
+                   />
+                   <Route
+                       path={"employeesSalary"}
+                       element={
+                           <EmployerSalaryPage
+                               deleted={activeDel}
+                               setDeleted={setActiveDel}
+                               path={"employeesSalary"}
+                           />
+                       }
+                   />
+                   <Route
+                       path={"overhead"}
+                       element={
+                           <AdditionalCosts
+                               path={"overhead"}
+                               deleted={activeDel}
+                               setDeleted={setActiveDel}
+                           />
+                       }
+                   />
+                   <Route path={"capital"}
+                          element={
+                              <Capital
+                                  deleted={activeDel}
+                                  setDeleted={setActiveDel}
+                                  path={"capital"}
+                              />
+                          }
+                   />
 
-
-                {/*<Route path={"studentsDiscounts"} element={<StudentsDiscount path={"studentsDiscounts"} locationId={locationId}/>}/>*/}
-                {/*<Route path={"debtStudents"} element={<DebtStudents path={"debtStudents"} locationId={locationId}/>}/>*/}
-
-                {/*<Route path={"bookPayment"} element={<AccountingBooks path={"bookPayment"} locationId={locationId}/>}/>*/}
-
-                {/*<Route path={"debtStudents"} element={<DebtStudents/>}/>*/}
-            </Routes>
-            <AccountingFilter setActive={setActive} active={active} setActiveDel={setActiveDel} activeDel={activeDel}/>
-        </div>
+               </Routes>
+               <AccountingFilter setActive={setActive} active={active} setActiveDel={setActiveDel} activeDel={activeDel}/>
+           </div>
+       </MultiPage>
     );
 });

@@ -7,7 +7,7 @@ export const ClassAddColorPage = ({color , setEdit , edit}) => {
                 color={color}
                 edit={edit}
                 setEdit={setEdit}/>
-            <ClassColorAddTable/>
+            {/*<ClassColorAddTable/>*/}
         </>
     );
 };

@@ -47,7 +47,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                            </>
                        }
 
-                       <td>{item.user?.registered_date}</td>
+                       <td>{item?.user?.registered_date}</td>
                        {
                            theme ? <Input
                                type={"checkbox"}
