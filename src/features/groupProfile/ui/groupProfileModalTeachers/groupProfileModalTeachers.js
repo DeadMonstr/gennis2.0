@@ -23,6 +23,7 @@ import defaultUserImg from "shared/assets/images/user_image.png";
 
 export const GroupProfileModalTeachers = memo(() => {
 
+    const branch = localStorage.getItem("selectedBranch")
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
     const userBranchId = useSelector(getUserBranchId)
     const dispatch = useDispatch()
@@ -33,9 +34,9 @@ export const GroupProfileModalTeachers = memo(() => {
     const schoolTeachers = useSelector(getTeachers)
 
     useEffect(() => {
-        if (userBranchId)
-            dispatch(fetchTeachersData({userBranchId}))
-    }, [userBranchId])
+        if (branch)
+            dispatch(fetchTeachersData({userBranchId: branch}))
+    }, [branch])
 
     const [currentTeachersData, setCurrentTeachersData] = useState([])
 

@@ -15,6 +15,7 @@ import {fetchTeachersDataWithFilter} from "../../../../entities/teachers/model/t
 
 export const GroupsFilter = React.memo(({active, setActive}) => {
 
+    const branch = localStorage.getItem("selectedBranch")
     const getTeacher = useSelector(getTeachers)
     const [selectedSubject, setSelectedSubject] = useState()
     const [selectedTeacher, setSelectedTeacher] = useState()
@@ -26,8 +27,9 @@ export const GroupsFilter = React.memo(({active, setActive}) => {
     const types = useSelector(getGroupTypes)
 
     useEffect(() => {
-        dispatch(fetchTeachersData({userBranchId}))
-    },[])
+        if (branch)
+            dispatch(fetchTeachersData({userBranchId: branch}))
+    }, [branch])
 
     useEffect(() => {
         dispatch(fetchSubjects());
@@ -52,7 +54,8 @@ export const GroupsFilter = React.memo(({active, setActive}) => {
         setSelectedSubject(value);
         const selectedSubjectData = subjects.find(subj => subj.id === Number(value));
         const subjectId = selectedSubjectData.id;
-        dispatch(fetchGroupsDataWithFilter({subjId: subjectId
+        dispatch(fetchGroupsDataWithFilter({
+            subjId: subjectId
         }))
     }
     console.log(getTeacher, "teacherss")

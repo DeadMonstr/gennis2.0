@@ -45,7 +45,7 @@ export const ClassAddForm = memo((props) => {
     const loading = useSelector(getGroupProfileLoading)
     const students = useSelector(getGroupProfileFilteredStudents)
     const data = useSelector(getGroupProfileData)
-    const branchId = useSelector(getUserBranchId)
+    const branch = localStorage.getItem("selectedBranch")
     const systemId = useSelector(getUserSystemId)
     const timeTable = useSelector(getTimeTable)
 
@@ -96,9 +96,9 @@ export const ClassAddForm = memo((props) => {
     }
 
     useEffect(() => {
-        if (branchId)
-            dispatch(fetchGroupsData({userBranchId: branchId}))
-    }, [branchId])
+        if (branch)
+            dispatch(fetchGroupsData({userBranchId: branch}))
+    }, [branch])
 
     // useEffect(() => {
     //     if (data) {
@@ -109,15 +109,15 @@ export const ClassAddForm = memo((props) => {
     // }, [data])
 
     useEffect(() => {
-        if (data && branchId) {
+        if (data && branch) {
             dispatch(filteredStudents({
-                userBranchId: branchId,
+                userBranchId: branch,
                 group_id: data?.id,
                 res: {ignore_students: data?.students.map(item => item.id)}
             }))
-            dispatch(fetchTeachersData({userBranchId: branchId}))
+            dispatch(fetchTeachersData({userBranchId: branch}))
         }
-    }, [data, branchId])
+    }, [data, branch])
 
     const searched = useMemo(() => {
         const filteredSlice = students?.slice()

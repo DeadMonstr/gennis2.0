@@ -53,8 +53,8 @@ const TimeTableTuronSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchTimeTableColors.fulfilled, (state, action) => {
-                state.colors = action.payload.classcolors
-                state.color = action.payload.classcolors[0].id
+                state.colors = action.payload
+                state.color = action.payload[0].id
                 state.loading = false
                 state.error = null
             })
@@ -69,7 +69,7 @@ const TimeTableTuronSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchTimeTableSubject.fulfilled, (state, action) => {
-                state.subjects = action.payload.subjects.map((item,index) => {
+                state.subjects = action.payload.map((item,index) => {
                     return {
                         ...item,
                         dndId: `subject-${item.id}`,

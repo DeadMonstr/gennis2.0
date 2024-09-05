@@ -223,7 +223,8 @@ export const routersConfig = [
         element: <CalendarPage/>,
     },
     {
-        path: "time",
+        name: "Time Table",
+        path: "time/*",
         element: <TimeTableTuronPage/>,
     },
     {

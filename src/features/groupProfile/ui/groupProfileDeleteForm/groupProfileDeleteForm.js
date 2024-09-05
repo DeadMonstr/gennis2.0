@@ -65,6 +65,7 @@ export const GroupProfileDeleteForm = memo(() => {
     const {theme} = useTheme()
     const {id} = useParams()
     const dispatch = useDispatch()
+    const branch = localStorage.getItem("selectedBranch")
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
     const userBranchId = useSelector(getUserBranchId)
     const data = useSelector(getGroupProfileData)
@@ -75,15 +76,15 @@ export const GroupProfileDeleteForm = memo(() => {
     const reasons = useSelector(getReasons)
 
     useEffect(() => {
-        if (data && userBranchId) {
+        if (data && branch) {
             dispatch(filteredStudents({
-                userBranchId,
+                branch,
                 group_id: data?.id,
                 res: {ignore_students: data?.students.map(item => item.id)}
             }))
-            dispatch(fetchTeachersData({userBranchId}))
+            dispatch(fetchTeachersData({userBranchId: branch}))
         }
-    }, [data, userBranchId])
+    }, [data, branch])
 
     const [active, setActive] = useState(false)
     const [activeModal, setActiveModal] = useState("")
@@ -134,7 +135,7 @@ export const GroupProfileDeleteForm = memo(() => {
                 ...data,
                 students: select
             }
-            dispatch(moveToClass({userBranchId, id, res}))
+            dispatch(moveToClass({branch, id, res}))
             msg= `O'quvchilar boshqa sinfga o'tqazildi`
         } else {
             const res = {

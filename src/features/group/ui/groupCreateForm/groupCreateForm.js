@@ -34,12 +34,13 @@ export const GroupCreateForm = memo((props) => {
     } = useForm()
     const {request} = useHttp()
 
+    const branch = localStorage.getItem("selectedBranch")
     const {theme} = useTheme()
     const dispatch = useDispatch()
     const curseTypesData = useSelector(getCurseTypesData)
     const curseLevelData = useSelector(getCurseLevelData)
-    const userBranchId = useSelector(getUserBranchId)
-    const languages = useSelector(state => state.registerUser)
+    // const userBranchId = useSelector(getUserBranchId)
+    const {languages} = useSelector(state => state.registerUser)
 
     const [createStatus, setCreateStatus] = useState(false)
 
@@ -50,7 +51,7 @@ export const GroupCreateForm = memo((props) => {
             students: selectedStudents,
             teacher: selectedTeachers,
             subject: selectedSubjectId,
-            branch: userBranchId,
+            branch: branch,
             time_table: selectedTime,
             create_type: theme === "app_center_theme" ? "center" : "school",
             system: 1
@@ -95,7 +96,7 @@ export const GroupCreateForm = memo((props) => {
                             // onChangeOption={setSelectedCurseType}
                         />
                         {
-                            curseLevelData.length ? <Select
+                            curseLevelData?.length ? <Select
                                 extraClassName={cls.createGroupFormItem}
                                 title={"Kurs darajasi"}
                                 options={curseLevelData}

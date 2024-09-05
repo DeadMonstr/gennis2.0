@@ -167,7 +167,7 @@ export const StudentsPage = () => {
         if (!userBranchId) return ;
         switch (selectedRadio) {
             case "new_students":
-                dispatch(fetchOnlyNewStudentsData(userBranchId));
+                dispatch(fetchOnlyNewStudentsData({userBranchId}));
                 break;
             case "studying_students":
                 dispatch(fetchOnlyStudyingStudentsData());

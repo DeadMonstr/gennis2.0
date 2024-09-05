@@ -1,15 +1,15 @@
-import React, { useMemo, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'shared/ui/button';
-import { Select } from 'shared/ui/select';
-import { Pagination } from 'features/pagination';
-import { RoomsList } from 'entities/rooms/ui/roomList/roomList';
-import { RoomsFilter } from 'features/filters/roomsFilter';
-import { RoomModal } from 'features/roomsAddModal';
+import React, {useMemo, useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Button} from 'shared/ui/button';
+import {Select} from 'shared/ui/select';
+import {Pagination} from 'features/pagination';
+import {RoomsList} from 'entities/rooms/ui/roomList/roomList';
+import {RoomsFilter} from 'features/filters/roomsFilter';
+import {RoomModal} from 'features/roomsAddModal';
 import {getLoading, getRoomsData} from 'entities/rooms/model/selectors/roomsSelectors';
-import { fetchRoomsData } from 'entities/rooms/model/roomsThunk';
+import {fetchRoomsData} from 'entities/rooms/model/roomsThunk';
 import cls from './rooms.module.sass';
-import { getSearchValue } from 'features/searchInput';
+import {getSearchValue} from 'features/searchInput';
 import {DefaultLoader, DefaultPageLoader} from "../../../shared/ui/defaultLoader";
 import {MultiPage} from "../../../widgets/multiPage/ui/MultiPage/MultiPage";
 import {useParams} from "react-router-dom";
@@ -30,7 +30,7 @@ export const Rooms = () => {
 
     useEffect(() => {
         if (!userBranchId) return;
-        dispatch(fetchRoomsData(userBranchId));
+        dispatch(fetchRoomsData({id}));
     }, [dispatch, userBranchId]);
 
     const searchedRooms = useMemo(() => {
@@ -77,14 +77,16 @@ export const Rooms = () => {
                 </div>
                 <div className={cls.mainContainer_tablePanelBox}>
                     {
-                        loading ? <DefaultPageLoader/> :  <RoomsList currentTableData={searchedRooms.slice((currentPage - 1) * PageSize, currentPage * PageSize)} />
+                        loading ? <DefaultPageLoader/> : <RoomsList
+                            currentTableData={searchedRooms.slice((currentPage - 1) * PageSize, currentPage * PageSize)}/>
                     }
                     {/*<RoomsList currentTableData={searchedRooms.slice((currentPage - 1) * PageSize, currentPage * PageSize)} />*/}
                 </div>
-                <RoomsFilter active={modal} setActive={setModal} />
+                <RoomsFilter active={modal} setActive={setModal}/>
                 <div className={cls.paginationBox}>
                     <Pagination
-                        setCurrentTableData={() => {}}
+                        setCurrentTableData={() => {
+                        }}
                         search={search}
                         users={searchedRooms}
                         setCurrentPage={setCurrentPage}
@@ -95,7 +97,7 @@ export const Rooms = () => {
                         }}
                     />
                 </div>
-                <RoomModal isOpen={active} onClose={() => setActive(false)} />
+                <RoomModal isOpen={active} onClose={() => setActive(false)}/>
             </div>
         </MultiPage>
 
