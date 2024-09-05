@@ -49,7 +49,7 @@ import {getSelectedLocations} from "features/locations";
 import {getSelectedLocationsByIds} from "features/locations/model/selector/locationsSelector";
 import {useParams, useSearchParams} from "react-router-dom";
 import {getBranch} from "features/branchSwitcher";
-import {API_URL, branchQuery, headers, useHttp} from "shared/api/base";
+import {API_URL, branchQuery, branchQueryId, headers, useHttp} from "shared/api/base";
 
 const studentsFilter = [
     {name: "new_students", label: "New Students"},
@@ -66,7 +66,6 @@ const branches = [
 export const StudentsPage = () => {
 
     // let newStudents
-
     const [searchParams] = useSearchParams();
 
 
@@ -74,16 +73,19 @@ export const StudentsPage = () => {
     const {request} = useHttp()
     const dispatch = useDispatch()
     const {theme} = useTheme()
-    const {"*": id} = useParams()
+
     const __THEME__ = localStorage.getItem("theme");
     const { register, handleSubmit } = useForm();
     const localSystem = JSON.parse(localStorage.getItem(""))
     const navigation = useNavigate()
     const studyingStudents = useSelector(getStudyingStudents);
-    const newStudents = useSelector( getNewStudentsData);
+    const newStudents = useSelector(getNewStudentsData);
     const deletedStudents = useSelector(getOnlyDeletedStudents)
     const schoolClassNumbers = useSelector(getSchoolClassNumbers);
     const schoolClassColors = useSelector(getSchoolClassColors);
+    const {"*": id} = useParams()
+
+
     const userBranchId = id
     const teachers = useSelector(getTeachers);
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
@@ -146,14 +148,15 @@ export const StudentsPage = () => {
     }, [userSystem?.id, userBranchId])
 
     const onSubmit = (data) => {
+
         const res = {
             ...data,
             teacher: [+selectTeacher],
             // students: selectStudents,
             color: selectColor,
-            branch: id,
+            branch: userBranchId,
             create_type: "school",
-            system: 2
+            system: userSystem.id
         }
         setData(res)
         dispatch(fetchOnlyNewStudentsData({userBranchId, number: data?.class_number}))
@@ -164,10 +167,11 @@ export const StudentsPage = () => {
     }
 
     useEffect(() => {
-        if (!userBranchId) return ;
+        if (!userBranchId) return;
+
         switch (selectedRadio) {
             case "new_students":
-                dispatch(fetchOnlyNewStudentsData({userBranchId}));
+                dispatch(fetchOnlyNewStudentsData({id: userBranchId}));
                 break;
             case "studying_students":
                 dispatch(fetchOnlyStudyingStudentsData());
@@ -243,7 +247,6 @@ export const StudentsPage = () => {
     return (
         <MultiPage types={types} page={"students"}>
             <StudentsHeader
-
                 selected={selected}
                 setSelected={setSelected}
                 branches={branches}

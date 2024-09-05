@@ -67,7 +67,7 @@ export const studentsSlice = createSlice({
                 state.newStudentsStatus = "success"
             })
             .addCase(fetchOnlyNewStudentsData.rejected, (state, action) => {
-                state.newStudentes = "error"
+                state.newStudentsStatus = "error"
             })
 
 
