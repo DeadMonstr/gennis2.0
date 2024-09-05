@@ -10,7 +10,7 @@ export const fetchLoginUser = createAsyncThunk(
         //     "Authorization": "Bearer " + token,
         //     'Content-Type': 'application/json'
         // }
-        return await request(`${API_URL}Api/token/`, "POST", JSON.stringify(data))
+        return await request(`${API_URL}token/`, "POST", JSON.stringify(data))
     })
 
 export const userRefreshData = createAsyncThunk(

@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {API_URL, headers, useHttp} from "../../../../shared/api/base";
+import {API_URL, headers, useHttp} from "shared/api/base";
 
 export const giveTeacherSalaryThunk = createAsyncThunk(
     'giveTeacherSalarySlices/giveTeacherSalaryThunk',
@@ -8,9 +8,10 @@ export const giveTeacherSalaryThunk = createAsyncThunk(
             const response = await fetch(`${API_URL}Teachers/teachers/salary/create/`, {
                 method: "POST",
                 headers: {
+                    ...headers(),
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(newSalary)
+                body: JSON.stringify(newSalary),
             });
 
             if (!response.ok)

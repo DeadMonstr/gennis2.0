@@ -59,7 +59,7 @@ export const GroupsPage = () => {
     useEffect(() => {
         if (!userBranchId) return;
 
-            dispatch(fetchGroupsData(userBranchId))
+        dispatch(fetchGroupsData({userBranchId}))
     }, [dispatch, userBranchId])
 
     const types = [

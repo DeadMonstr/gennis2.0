@@ -189,7 +189,7 @@ export const Register = () => {
                     total_students: 1212,
                     color: "red",
                     class_type: selectedClassType,
-                    salary_type: selectedCategory
+                    teacher_salary_type: selectedCategory
                 };
 
                 registerAction = registerTeacher({res, file: res?.user?.resume[0]})

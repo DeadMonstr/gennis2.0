@@ -18,7 +18,7 @@ const initialState = {
     filteredStudents: [],
     filteredTeachers: [],
     filteredCurseTypes: [],
-    filteredCurseLevel: [],
+    filteredCurseLevel: null,
     schoolClassNumbers: [],
     schoolClassColors: [],
     schoolStudents: [],

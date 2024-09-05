@@ -4,9 +4,9 @@ import {API_URL, branchQuery, headers, useHttp} from "shared/api/base";
 
 export const fetchEmployersData = createAsyncThunk(
     "employersSlice/fetchEmployersData",
-    async () => {
+    async ({branch}) => {
         const {request} = useHttp()
-        return request(`${API_URL}Users/employeers/?${branchQuery()}`,"GET", null, headers())
+        return request(`${API_URL}Users/employeers/?branch=${branch}`,"GET", null, headers())
     }
 )
 

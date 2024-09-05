@@ -66,6 +66,7 @@ const branches = [
 export const StudentsPage = () => {
 
     // let newStudents
+
     const [searchParams] = useSearchParams();
 
 
@@ -73,7 +74,6 @@ export const StudentsPage = () => {
     const {request} = useHttp()
     const dispatch = useDispatch()
     const {theme} = useTheme()
-
     const __THEME__ = localStorage.getItem("theme");
     const { register, handleSubmit } = useForm();
     const localSystem = JSON.parse(localStorage.getItem(""))
@@ -159,9 +159,9 @@ export const StudentsPage = () => {
             system: userSystem.id
         }
         setData(res)
-        // dispatch(fetchOnlyNewStudentsData({userBranchId, number: data?.class_number}))
+        dispatch(fetchOnlyNewStudentsData({userBranchId, number: data?.class_number}))
         setActive("post")
-        dispatch(createSchoolClass({res}))
+        // dispatch(createSchoolClass({res}))
 
         // setSelectStudents([])
     }

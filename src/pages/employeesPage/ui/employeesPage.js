@@ -14,6 +14,7 @@ import {useParams} from "react-router-dom";
 
 export const EmployerPage = () => {
 
+    const branch = localStorage.getItem("selectedBranch")
     const dispatch = useDispatch()
     const employersData = useSelector(getEmployersData)
     const [activeFilter , setActiveModal] = useState(false)
@@ -25,8 +26,8 @@ export const EmployerPage = () => {
     const userBranchId = id
 
     useEffect(() => {
-        dispatch(fetchEmployersData(userBranchId))
-    }, [userBranchId])
+        dispatch(fetchEmployersData({branch}))
+    }, [branch])
 
     const searchedEmployers = useMemo(() => {
         const filteredRooms = employersData?.filter(item => !item.deleted) || [];

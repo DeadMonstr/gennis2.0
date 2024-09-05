@@ -6,7 +6,7 @@ export const fetchTeachersData = createAsyncThunk(
     "teachersSlice/fetchTeachersData",
     async ({userBranchId}) =>{
         const {request} = useHttp()
-        return await request(`${API_URL}Teachers/teachers/?${branchQuery()}` , "GET" , null , headers())
+        return await request(`${API_URL}Teachers/teachers/?branch=${userBranchId}` , "GET" , null , headers())
     }
 )
 export const fetchTeachersDataWithFilter = createAsyncThunk(

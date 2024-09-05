@@ -79,6 +79,13 @@ export const menuConfig = [
 
     },
     {
+        to: "time",
+        name: "Time Table",
+        icon: "fa-clock",
+        system: ["center","school"],
+        roles: [ROLES.admin,ROLES.director,ROLES.programmer]
+    },
+    {
         to: "employer",
         name: "Employers",
         icon: "fa-user-graduate",

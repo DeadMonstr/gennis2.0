@@ -47,11 +47,11 @@ export const GroupProfilePage = () => {
 
     const {request} = useHttp()
     const dispatch = useDispatch()
-    const {id} = useParams()
+    const {"*": id} = useParams()
     const data = useSelector(getGroupProfileData)
     const timeTable = useSelector(getTimeTable)
     const loading = useSelector(getGroupProfileLoading)
-    const branchId = useSelector(getUserBranchId)
+    const branch = localStorage.getItem("selectedBranch")
     const systemId = useSelector(getUserSystemId)
 
     const [active, setActive] = useState(false)
@@ -59,14 +59,22 @@ export const GroupProfilePage = () => {
     useEffect(() => {
         dispatch(fetchGroupProfile({id}))
         dispatch(fetchSubjects())
-        dispatch(fetchTeachersData())
-        dispatch(fetchGroupsData())
+
+
         dispatch(fetchReasons())
-        dispatch(fetchRoomsData())
+
         dispatch(fetchWeekDays())
         dispatch(fetchClassColors())
         dispatch(fetchClassNumberList())
     }, [])
+
+    useEffect(() => {
+        if (branch) {
+            dispatch(fetchGroupsData({userBranchId: branch}))
+            dispatch(fetchRoomsData({id:branch}))
+            dispatch(fetchTeachersData({userBranchId: branch}))
+        }
+    }, [branch])
 
     useEffect(() => {
         // if (systemId === 1) {
@@ -82,17 +90,17 @@ export const GroupProfilePage = () => {
         //         .catch(err => console.log(err))
         //     // dispatch(fetchGroupProfileNextLesson({id, type: "group"}))
         // } else {
-            request(
-                `${API_URL}TimeTable/check_group_next_lesson/?id=${id}`,
-                "GET",
-                null,
-                headers()
-            )
-                .then(res => {
-                    console.log(res, "res group")
-                    dispatch(getNextLesson(res))
-                })
-                .catch(err => console.log(err))
+        request(
+            `${API_URL}TimeTable/check_group_next_lesson/?id=${id}`,
+            "GET",
+            null,
+            headers()
+        )
+            .then(res => {
+                console.log(res, "res group")
+                dispatch(getNextLesson(res))
+            })
+            .catch(err => console.log(err))
         // }
     }, [id, systemId])
 
@@ -119,7 +127,7 @@ export const GroupProfilePage = () => {
     }, [data])
 
     useEffect(() => {
-        if (branchId && data && timeTable && systemId === 1) {
+        if (branch && data && timeTable && systemId === 1) {
             const res = {
                 time_tables: timeTable.map(item => ({
                     week: item.week.id,
@@ -131,13 +139,13 @@ export const GroupProfilePage = () => {
                 ignore_teacher: data?.teacher.map(item => item.id)[0]
             }
             dispatch(fetchFilteredStudentsAndTeachers({
-                branch_id: branchId,
+                branch_id: branch,
                 subject_id: data?.subject?.id,
                 res
             }))
         }
 
-    }, [branchId, data, timeTable, systemId])
+    }, [branch, data, timeTable, systemId])
 
     if (loading) {
         return <DefaultPageLoader/>

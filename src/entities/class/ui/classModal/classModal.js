@@ -7,6 +7,8 @@ import {Select} from "shared/ui/select";
 import cls from "../classTable/classTable.module.sass"
 import {useEffect, useState} from "react";
 import {HexColorPicker} from "react-colorful";
+import {AnimatedMulti} from "features/workerSelect";
+import {value} from "lodash/seq";
 
 export const ClassModal = ({
 
@@ -22,50 +24,61 @@ export const ClassModal = ({
                                editClass,
                                setEditClass,
                                changeInfo,
-                               edit
+                               edit,
+                               setSelectedSubject,
+                               selectedSubject
                            }) => {
 
 
-    const [subject, setSubject] = useState([])
-    const [selectedSubject, setSelectedSubject] = useState([])
-    const [selected, setSelected] = useState([])
-    const [deletedId, setDeletedId] = useState(0)
-
-    useEffect(() => {
-        setSubject(selectOptions)
-    }, [])
-
-    useEffect(() => {
-        if (deletedId !== 0) {
-            setSubject(subject => {
-                return subject.map(item => {
-                    if (item.id === +deletedId) {
-                        return {...item, disabled: false}
-                    }
-                    return item
-                })
-            })
-
-            setSelectedSubject(selectedSubject.filter(item => item.id !== +deletedId))
-            setSelected(selectedSubject.filter(item => item.id !== +deletedId))
-        }
-    }, [deletedId])
+    // const [subject, setSubject] = useState([])
+    //
+    // const [selected, setSelected] = useState([])
+    // const [deletedId, setDeletedId] = useState(0)
 
 
-    const onChangeSelect = (id) => {
-        const filteredSubjects = subject.filter(item => item.id === +id)
-        setSubject(
-            subject.map(item => {
-                if (item.id === +id) {
-                    return {...item, disabled: true}
-                }
-                return item
-            })
-        )
-        setSelectedSubject(arr => [...arr, ...filteredSubjects])
-        setSelected(arr => [...arr, ...filteredSubjects])
+    const option = selectOptions?.map(item => ({
+        value: item.id,
+        label: item.name
+    }))
+    // useEffect(() => {
+    //     setSubject(selectOptions)
+    // }, [])
 
-    }
+    // useEffect(() => {
+    //     if (deletedId !== 0) {
+    //         setSubject(subject => {
+    //             return subject.map(item => {
+    //                 if (item.id === +deletedId) {
+    //                     return {...item, disabled: false}
+    //                 }
+    //                 return item
+    //             })
+    //         })
+    //
+    //         setSelectedSubject(selectedSubject.filter(item => item.id !== +deletedId))
+    //         setSelected(selectedSubject.filter(item => item.id !== +deletedId))
+    //     }
+    // }, [deletedId])
+    //
+    // console.log(subject, "subject")
+    // console.log(selectedSubject, "selectedSubject")
+    // console.log(deletedId , "deletedId")
+    // console.log(selected , "selected")
+
+    // const onChangeSelect = (id) => {
+    //     const filteredSubjects = subject.filter(item => item.id === +id)
+    //     setSubject(
+    //         subject.map(item => {
+    //             if (item.id === +id) {
+    //                 return {...item, disabled: true}
+    //             }
+    //             return item
+    //         })
+    //     )
+    //     setSelectedSubject(arr => [...arr, ...filteredSubjects])
+    //     setSelected(arr => [...arr, ...filteredSubjects])
+    //
+    // }
 
 
     return (
@@ -86,7 +99,6 @@ export const ClassModal = ({
                 <div>
                     <Form extraClassname={cls.extraClassForm} onSubmit={handleSubmit(createClass)}>
                         <Input placeholder={"sinf nomi"} name={"name"} register={register}/>
-
                     </Form>
                 </div>
             </Modal>
@@ -95,22 +107,17 @@ export const ClassModal = ({
                 <h2>Ma’lumotlarni o’zgartirish</h2>
                 <div>
                     <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>
-                        <Select extraClass={cls.select}/>
-                        <Select onChangeOption={onChangeSelect} options={subject}/>
+                        <Input required name={"curriculum_hours"} register={register} type={"number"}/>
+                        {/*<Select onChangeOption={onChangeSelect} options={subject}/>*/}
 
                         <div className={cls.selectBox}>
-                            {selected.map(item => {
-                                return (
-                                    <div className={cls.subjectSelect}>
-                                        <i onClick={() => setDeletedId(item.id)} className={"fa fa-times"}/>
-                                        <p>{item.name}</p>
-                                    </div>
-                                )
-                            })}
+                            <AnimatedMulti extraClass={cls.select}  options={option} onChange={setSelectedSubject}/>
                         </div>
-
-                        <Button extraClass={cls.btn}>O'zgartirish</Button>
+                        <Button>
+                            Tastiqlash
+                        </Button>
                     </Form>
+
                 </div>
             </Modal>
 
@@ -119,7 +126,17 @@ export const ClassModal = ({
 }
 
 
-export const ColorModal = ({createColor, setCreateColor, handleSubmit, addColor , register , color , setColor , active , setActive}) => {
+export const ColorModal = ({
+                               createColor,
+                               setCreateColor,
+                               handleSubmit,
+                               addColor,
+                               register,
+                               color,
+                               setColor,
+                               active,
+                               setActive
+                           }) => {
 
     return (
         <>
@@ -133,7 +150,8 @@ export const ColorModal = ({createColor, setCreateColor, handleSubmit, addColor 
                                 <h2>Tanlangan rang :</h2>
                                 <div className={cls.modalBox} style={{background: color}}></div>
                             </div>
-                            <HexColorPicker style={{width: "22rem", height: "15rem"}} color={color} onChange={setColor}/>
+                            <HexColorPicker style={{width: "22rem", height: "15rem"}} color={color}
+                                            onChange={setColor}/>
                             {/*<div style={{display: "flex" , flexWrap: "wrap",width: "30rem"}}>*/}
                             {/*    /!*<Button onClick={() => setColor("#c6ad23")}>Choose gold</Button>*!/*/}
                             {/*    <Button onClick={() => setColor("#22C55E")}>Choose green</Button>*/}

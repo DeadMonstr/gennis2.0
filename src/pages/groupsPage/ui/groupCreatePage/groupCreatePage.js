@@ -34,6 +34,7 @@ import {
 import {Teachers} from "entities/teachers";
 import {fetchTeachersData} from "entities/teachers";
 import {getTeachers} from "entities/teachers";
+import {useParams} from "react-router-dom";
 import {useTheme} from "shared/lib/hooks/useTheme";
 import {getRoomsData} from "entities/rooms/model/selectors/roomsSelectors";
 import {fetchRoomsData} from "entities/rooms/model/roomsThunk";
@@ -71,6 +72,7 @@ export const GroupCreatePage = () => {
 
     const {request} = useHttp()
     // const {theme} = useTheme()
+    const {"*": id} = useParams()
     const theme = localStorage.getItem("theme")
     const navigation = useNavigate()
     const {register, handleSubmit} = useForm()
@@ -158,7 +160,8 @@ export const GroupCreatePage = () => {
     }, [filteredTeachers, search])
 
     useEffect(() => {
-        dispatch(fetchRoomsData());
+        if (id)
+            dispatch(fetchRoomsData({id}));
         // dispatch(fetchFilteredStudents(userBranchId))
         request(`${API_URL}TimeTable/week_days/`, "GET", null, headers())
             .then(res => {
@@ -173,7 +176,7 @@ export const GroupCreatePage = () => {
             })
             .catch(err => console.log(err))
         dispatch(fetchLanguages())
-    }, [userBranchId])
+    }, [id])
 
     const renterGroups = (data) => {
         return data.map((item, index) => {
@@ -302,7 +305,7 @@ export const GroupCreatePage = () => {
             </div>
             {
                 // filteredStatus === "loading" ? <DefaultPageLoader/> :
-                    <>
+                <>
                     <div className={cls.mainError}>
                         {
                             filteredErrors?.rooms && filteredErrors.rooms[0] ? <h1>{filteredErrors.rooms[0]}</h1> : null
