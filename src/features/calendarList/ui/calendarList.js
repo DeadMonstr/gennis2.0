@@ -1,8 +1,10 @@
-import {deleteDayType} from "pages/calendarPage/model/calendarThunk";
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
+import {deleteDayType} from "pages/calendarPage/model/calendarSlice";
 import {memo, useCallback, useEffect, useState} from 'react';
 
 import {CalendarListItem} from "entities/calendar";
 import {useDispatch} from "react-redux";
+import {API_URL, headers, useHttp} from "shared/api/base";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
 
 import cls from "./calendarList.module.sass";
@@ -21,12 +23,23 @@ export const CalendarList = (props) => {
         // onSubmitDelete
     } = props
 
+    const {request} = useHttp()
     const dispatch = useDispatch()
     const [selected, setSelected] = useState([])
 
     const onSubmitDelete = (data) => {
         // console.log(data, "del")
-        dispatch(deleteDayType({days: data}))
+        request(`${API_URL}Calendar/delete-type/`, "DELETE", JSON.stringify({days: data}), headers())
+            .then(res => {
+                dispatch(deleteDayType(res))
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: `${res.length > 1 ? "Kunlar": "Kun"} o'chirildi`
+                }))
+            })
+            .catch(err => console.log(err))
+        // dispatch(deleteDayType())
     }
 
     useEffect(() => {

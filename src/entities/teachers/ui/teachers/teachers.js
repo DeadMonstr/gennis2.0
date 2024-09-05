@@ -26,11 +26,11 @@ export const Teachers = memo(({data, setSelect, select, theme}) => {
         }
         const teachersToRender = filteredTeachersData && filteredTeachersData.length > 0 ? filteredTeachersData : data
 
-        if (!teachersToRender || teachersToRender.length === 0){
-            return (
-                <DefaultPageLoader/>
-            )
-        }
+        // if (!teachersToRender || teachersToRender.length === 0){
+        //     return (
+        //         <DefaultPageLoader/>
+        //     )
+        // }
 
         return teachersToRender?.map((item, i) => {
             if (typeof item === "object" && !Array.isArray(item)) {

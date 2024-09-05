@@ -82,7 +82,7 @@ const groupProfileSlice = createSlice({
                 // state.error = "error"
             })
             .addCase(filteredStudents.fulfilled, (state, action) => {
-                console.log(action.payload, "payload")
+                // console.log(action.payload, "payload")
                 state.filteredStudents = action.payload.students
                 // state.error = action.payload.errors
                 // state.loading = false
@@ -190,7 +190,7 @@ const groupProfileSlice = createSlice({
                 // state.error = null
             })
             .addCase(createWeekDays.fulfilled, (state, action) => {
-                console.log(action.payload, "create")
+                // console.log(action.payload, "create")
                 state.weekDays = action.payload.map(item => ({...item, name: item.name_uz}))
                 // state.filteredStudents = action.payload.students
                 // state.loading = false

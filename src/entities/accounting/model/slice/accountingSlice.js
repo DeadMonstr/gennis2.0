@@ -78,7 +78,7 @@ const accountingSlice = createSlice({
                 state.error = false
             })
             .addCase(accountingThunk.rejected, state => {
-                state.error = true
+                state.error = "error"
                 state.loading = false
             })
 

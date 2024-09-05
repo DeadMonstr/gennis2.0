@@ -17,9 +17,11 @@ export const schoolTeacherDaySlice = createSlice({
          builder
              .addCase(schoolTeacherDayThunk.pending, (state) => {
                  state.loading = true
+                 state.error = null
              })
              .addCase(schoolTeacherDayThunk.fulfilled, (state, action) => {
                  state.loading = false;
+                 state.error = null
                  state.workedDay = action.payload
              })
              .addCase(schoolTeacherDayThunk.rejected, (state,action) => {

@@ -29,7 +29,7 @@ const postCreateBranch = createSlice({
                 state.error = false
             })
             .addCase(createBranchThunk.rejected , (state , action) => {
-                state.error = true
+                state.error = action.payload ?? null
                 state.loading = false
             })
             .addCase(getLocationThunk.pending , state => {
@@ -42,7 +42,7 @@ const postCreateBranch = createSlice({
                 state.error = false
             })
             .addCase(getLocationThunk.rejected , (state , action) => {
-                state.error = true
+                state.error = action.payload ?? null
                 state.loading = false
             })
             .addCase(changeLocation.pending, state => {

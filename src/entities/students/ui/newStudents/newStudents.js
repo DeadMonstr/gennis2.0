@@ -22,12 +22,12 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
     const renderStudents = () => {
 
         const studentToRender = getNewSt && getNewSt.length > 0 ? getNewSt : currentTableData
-        if (!studentToRender || studentToRender.length === 0)
-        {
-            return (
-                <DefaultPageLoader/>
-            )
-        }
+        // if (!studentToRender || studentToRender.length === 0)
+        // {
+        //     return (
+        //         <DefaultPageLoader/>
+        //     )
+        // }
            return studentToRender?.map((item,i) => {
                return (
                    <tr

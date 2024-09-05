@@ -25,7 +25,7 @@ const postCreateSystem = createSlice({
                 state.error = false
             })
             .addCase(postCreateSystemThunk.rejected , (state , action) => {
-                state.error = true
+                state.error = "error"
                 state.loading = false
             })
 })
