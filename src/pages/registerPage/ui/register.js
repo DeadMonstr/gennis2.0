@@ -1,9 +1,9 @@
 import {classData} from "entities/class/model/selector/classSelector";
 import {getClassTypes} from "entities/class/model/thunk/classThunk";
 import {fetchClassNumberList, getSchoolClassNumbers} from "entities/students";
-import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {useForm} from 'react-hook-form';
+import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from "react-router-dom";
 import {useTheme} from "shared/lib/hooks/useTheme";
 import {
@@ -15,14 +15,14 @@ import {
     fetchCategories, registerTeacherImage
 } from "../model/registerThunk";
 import cls from "./register.module.sass";
-import { fetchVacancyData, getVacancyJobs } from "features/vacancyModals/vacancyPageAdd";
-import { Button } from "shared/ui/button";
+import {fetchVacancyData, getVacancyJobs} from "features/vacancyModals/vacancyPageAdd";
+import {Button} from "shared/ui/button";
 import bg__img from 'shared/assets/images/reg__bg.svg';
-import { Input } from 'shared/ui/input';
-import { Textarea } from "shared/ui/textArea";
-import { Select } from "shared/ui/select";
-import { MiniLoader } from "shared/ui/miniLoader";
-import { API_URL, useHttp, headers } from "shared/api/base";
+import {Input} from 'shared/ui/input';
+import {Textarea} from "shared/ui/textArea";
+import {Select} from "shared/ui/select";
+import {MiniLoader} from "shared/ui/miniLoader";
+import {API_URL, useHttp, headers} from "shared/api/base";
 import {onAddAlertOptions} from "../../../features/alert/model/slice/alertSlice";
 import {getCategories, getLanguagesData, getSubjectsData} from "../model/registerSelector";
 import {Form} from "../../../shared/ui/form";
@@ -30,16 +30,16 @@ import {branchQuery} from "shared/api/base";
 
 const userstype = {
     types: [
-        { id: 1, value: "student", name: "Student" },
-        { id: 2, value: "teacher", name: "Teacher" },
-        { id: 3, value: "employer", name: "Employer" }
+        {id: 1, value: "student", name: "Student"},
+        {id: 2, value: "teacher", name: "Teacher"},
+        {id: 3, value: "employer", name: "Employer"}
     ]
 };
 
 const shift = [
-    { id: 1, name: "1 smen" },
-    { id: 2, name: "2 smen" },
-    { id: 3, name: "hamma vaqt" }
+    {id: 1, name: "1 smen"},
+    {id: 2, name: "2 smen"},
+    {id: 3, name: "hamma vaqt"}
 ]
 
 export const Register = () => {
@@ -57,7 +57,7 @@ export const Register = () => {
         setValue,
         reset
     } = useForm();
-    const {"*":id} = useParams()
+    const {"*": id} = useParams()
     const registerType = watch("registerType", "student");
     const username = watch("username", "");
     const {theme} = useTheme()
@@ -105,7 +105,7 @@ export const Register = () => {
         if (username) {
             const checkUsername = async () => {
                 try {
-                    const response = await request(`${API_URL}Users/username-check/`, "POST", JSON.stringify({ username }), headers());
+                    const response = await request(`${API_URL}Users/username-check/`, "POST", JSON.stringify({username}), headers());
 
                     const data = await response
                     if (data.exists) {
@@ -212,10 +212,11 @@ export const Register = () => {
         }
 
         if (registerAction) {
-            // dispatch(registerTeacherImage({
-            //     id: res?.user?.username,
-            //     file: res?.user?.resume[0]
-            // }))
+            if (registerType !== 'student')
+                dispatch(registerTeacherImage({
+                    id: res?.user?.username,
+                    file: res?.user?.resume[0]
+                }))
             dispatch(registerAction).then((action) => {
                 setLoading(false);
                 if (action.type.endsWith('fulfilled')) {
@@ -294,13 +295,13 @@ export const Register = () => {
                             extraClass={cls.extraClasses}
                             name={"language"}
                             onChangeOption={setSelectedLang}
-                            options={languages.map(lang => ({ id: lang.id, name: lang.name }))}
+                            options={languages.map(lang => ({id: lang.id, name: lang.name}))}
                         />
                         <Select
                             extraClass={cls.extraClasses}
                             name={"subject_id"}
                             onChangeOption={setSelectedSubject}
-                            options={subjects.map(subj => ({ id: subj.id, name: subj.name }))}
+                            options={subjects.map(subj => ({id: subj.id, name: subj.name}))}
                         />
                         {
                             (theme === "app_school_theme" || userSystem?.id === 2) && (
@@ -442,8 +443,9 @@ export const Register = () => {
                             />
                             {renderFormFields()}
                             {loading ?
-                                <MiniLoader /> :
-                                <Button type={!isUsernameAvailable ? "disabled" : "submit"} extraClass={cls.registerBtn}>
+                                <MiniLoader/> :
+                                <Button type={!isUsernameAvailable ? "disabled" : "submit"}
+                                        extraClass={cls.registerBtn}>
                                     Register
                                 </Button>
                             }
@@ -451,7 +453,7 @@ export const Register = () => {
                     </div>
                 </div>
                 <div className={cls.login__aside}>
-                    <img className={cls.login__aside__img} src={bg__img} alt="" />
+                    <img className={cls.login__aside__img} src={bg__img} alt=""/>
                 </div>
             </div>
         </div>
