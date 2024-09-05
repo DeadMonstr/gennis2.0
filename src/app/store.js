@@ -10,7 +10,7 @@ import {filteredStudents} from "features/filters/studentsFilter";
 import {filteredEmployees} from "features/filters/employeesFilter";
 import {filteredGroups} from "features/filters/groupsFilter";
 import {filteredRoomsSlice} from "features/filters/roomsFilter";
-import {deletedGroups, groups} from "entities/groups/index";
+import {deletedGroupsSlice, groupsSlice} from "entities/groups";
 // import {user} from "entities/user";
 import {studentProfilePayment} from "entities/profile/studentProfile";
 import {studentProfileBooks} from "entities/profile/studentProfile";
@@ -96,12 +96,12 @@ export const store = configureStore({
         filteredEmployees,
         filteredGroups,
         filteredRoomsSlice,
-        groups,
+        groupsSlice,
         studentProfilePayment,
         studentProfileBooks,
         studentProfileRating,
         studentsDirectorSlice,
-        deletedGroups,
+        deletedGroupsSlice,
         // user,
         newStudents,
         employers,

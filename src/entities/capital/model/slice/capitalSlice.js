@@ -46,6 +46,7 @@ export const CapitalSlice = createSlice({
             })
             .addCase(getCapitalDataThunk.rejected , (state, action) => {
                 state.error = action.payload ?? null
+                state.loading = false
             })
 
 
@@ -146,8 +147,8 @@ export const CapitalSlice = createSlice({
                 state.error = false
             })
             .addCase(getPaymentType.rejected , (state , action) => {
+                state.error = "error"
                 state.loading = false
-                state.loading = true
             })
 
 
@@ -164,7 +165,7 @@ export const CapitalSlice = createSlice({
 
             })
             .addCase(getCapitalCategory.rejected , state => {
-                state.error = true
+                state.error = "error"
                 state.loading = false
             })
 })

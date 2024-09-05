@@ -9,20 +9,20 @@ export const fetchCalendarData = createAsyncThunk(
     }
 )
 
-export const changeDayType = createAsyncThunk(
-    "calendarSlice/changeDayType",
-    async (obj) => {
-        const {request} = useHttp()
-        return request(`${API_URL}Calendar/change-type/`, "POST", JSON.stringify(obj), headers())
-    }
-)
+// export const changeDayType = createAsyncThunk(
+//     "calendarSlice/changeDayType",
+//     async (obj) => {
+//         const {request} = useHttp()
+//         return request(`${API_URL}Calendar/change-type/`, "POST", JSON.stringify(obj), headers())
+//     }
+// )
 
-export const deleteDayType = createAsyncThunk(
-    "calendarSlice/deleteDayType",
-    async (obj) => {
-        const {request} = useHttp()
-        return request(`${API_URL}Calendar/delete-type/`, "DELETE", JSON.stringify(obj), headers())
-    }
-)
+// export const deleteDayType = createAsyncThunk(
+//     "calendarSlice/deleteDayType",
+//     async (obj) => {
+//         const {request} = useHttp()
+//         return request(`${API_URL}Calendar/delete-type/`, "DELETE", JSON.stringify(obj), headers())
+//     }
+// )
 
 

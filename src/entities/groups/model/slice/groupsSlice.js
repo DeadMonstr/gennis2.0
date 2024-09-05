@@ -6,7 +6,7 @@ const initialState = {
     data: [],
     dataWithFilter: [],
     typeData: [],
-    loading: true,
+    loading: false,
     error: null
 }
 

@@ -20,11 +20,11 @@ export const VacancyList = ({ currentTableData, currentPage, PageSize, editMode,
     }, [dispatch])
 
 
-    if (!currentTableData || currentTableData.length === 0){
-        return (
-            <DefaultPageLoader/>
-        )
-    }
+    // if (!currentTableData || currentTableData.length === 0){
+    //     return (
+    //         <DefaultPageLoader/>
+    //     )
+    // }
 
     const renderVacancies = () => {
         return currentTableData?.map((item, index) => (

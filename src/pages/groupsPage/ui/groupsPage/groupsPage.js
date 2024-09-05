@@ -38,6 +38,8 @@ export const GroupsPage = () => {
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
 
+    console.log(loading, "loading")
+
 
     const searchedUsers = useMemo(() => {
         const filteredHeroes = data?.slice()
@@ -57,10 +59,11 @@ export const GroupsPage = () => {
     }, [deletedGroupsData])
 
     useEffect(() => {
-        if (!userBranchId) return;
-
-        dispatch(fetchGroupsData({userBranchId}))
-    }, [dispatch, userBranchId])
+        if (userBranchId) {
+            console.log(true, userBranchId, "id")
+            dispatch(fetchGroupsData({userBranchId}))
+        }
+    }, [userBranchId])
 
     const types = [
         {

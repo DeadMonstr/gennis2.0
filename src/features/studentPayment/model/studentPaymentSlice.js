@@ -57,11 +57,13 @@ const studentPaymentSlice = createSlice({
     reducers: {},
     extraReducers: builder => {
         builder
-           .addCase(studentPaymentThunk.pending, (state) => {
-               state.loading = true
-           })
+            .addCase(studentPaymentThunk.pending, (state) => {
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentPaymentThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.payment = action.payload
             })
             .addCase(studentPaymentThunk.rejected, (state, action) => {
@@ -71,10 +73,12 @@ const studentPaymentSlice = createSlice({
 
 
             .addCase(studentCharityThunk.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentCharityThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.charities = action.payload
             })
             .addCase(studentCharityThunk.rejected, (state, action) => {
@@ -83,12 +87,13 @@ const studentPaymentSlice = createSlice({
             })
 
 
-
             .addCase(studentDiscountThunk.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentDiscountThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.discount = action.payload
             })
             .addCase(studentDiscountThunk.rejected, (state, action) => {
@@ -98,10 +103,12 @@ const studentPaymentSlice = createSlice({
 
 
             .addCase(studentGroupHistoryThunk.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentGroupHistoryThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.groupHistory = action.payload
             })
             .addCase(studentGroupHistoryThunk.rejected, (state, action) => {
@@ -110,12 +117,13 @@ const studentPaymentSlice = createSlice({
             })
 
 
-
             .addCase(studentTotalAddendanceThunk.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentTotalAddendanceThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.attendance = action.payload
             })
             .addCase(studentTotalAddendanceThunk.rejected, (state, action) => {
@@ -124,12 +132,13 @@ const studentPaymentSlice = createSlice({
             })
 
 
-
             .addCase(studentProfileTotalAmountThunk.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentProfileTotalAmountThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.totalAmount = action.payload
             })
             .addCase(studentProfileTotalAmountThunk.rejected, (state, action) => {
@@ -138,12 +147,13 @@ const studentPaymentSlice = createSlice({
             })
 
 
-
             .addCase(studentProfileAttendanceDataThunk.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentProfileAttendanceDataThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.attendanceData = action.payload
             })
             .addCase(studentProfileAttendanceDataThunk.rejected, (state, action) => {
@@ -152,12 +162,13 @@ const studentPaymentSlice = createSlice({
             })
 
 
-
             .addCase(studentProfileAttendanceDataPostThunk.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentProfileAttendanceDataPostThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.attendanceDatas = action.payload
             })
             .addCase(studentProfileAttendanceDataPostThunk.rejected, (state, action) => {
@@ -166,12 +177,13 @@ const studentPaymentSlice = createSlice({
             })
 
 
-
             .addCase(studentProfileAttendanceAll.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentProfileAttendanceAll.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.allAttendance = action.payload
             })
             .addCase(studentProfileAttendanceAll.rejected, (state, action) => {
@@ -180,12 +192,13 @@ const studentPaymentSlice = createSlice({
             })
 
 
-
             .addCase(studentProfileAttendanceAllDataThunk.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentProfileAttendanceAllDataThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.attendanceAllData = action.payload
             })
             .addCase(studentProfileAttendanceAllDataThunk.rejected, (state, action) => {
@@ -194,12 +207,13 @@ const studentPaymentSlice = createSlice({
             })
 
 
-
             .addCase(studentProfileAttendanceAllDataPostThunk.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentProfileAttendanceAllDataPostThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.allAttendanceDatas = action.payload
             })
             .addCase(studentProfileAttendanceAllDataPostThunk.rejected, (state, action) => {
@@ -208,12 +222,13 @@ const studentPaymentSlice = createSlice({
             })
 
 
-
             .addCase(studentPaymentListThunk.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentPaymentListThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.paymentList = action.payload
             })
             .addCase(studentPaymentListThunk.rejected, (state, action) => {
@@ -222,12 +237,13 @@ const studentPaymentSlice = createSlice({
             })
 
 
-
             .addCase(studentContractThunk.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentContractThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.contract = action.payload;
             })
             .addCase(studentContractThunk.rejected, (state, action) => {
@@ -236,12 +252,13 @@ const studentPaymentSlice = createSlice({
             })
 
 
-
             .addCase(studentContractUploadThunk.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentContractUploadThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.contractFile = action.payload;
             })
             .addCase(studentContractUploadThunk.rejected, (state, action) => {
@@ -250,12 +267,13 @@ const studentPaymentSlice = createSlice({
             })
 
 
-
             .addCase(studentPaymenListDelete.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentPaymenListDelete.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.deleteList = action.payload;
             })
             .addCase(studentPaymenListDelete.rejected, (state, action) => {
@@ -264,12 +282,13 @@ const studentPaymentSlice = createSlice({
             })
 
 
-
             .addCase(studentPaymentListDeleteGetThunk.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentPaymentListDeleteGetThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.getDeletedList = action.payload;
             })
             .addCase(studentPaymentListDeleteGetThunk.rejected, (state, action) => {
@@ -278,12 +297,13 @@ const studentPaymentSlice = createSlice({
             })
 
 
-
             .addCase(studentPaymentDataThunk.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentPaymentDataThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.getPaymentDates = action.payload;
             })
             .addCase(studentPaymentDataThunk.rejected, (state, action) => {
@@ -292,12 +312,13 @@ const studentPaymentSlice = createSlice({
             })
 
 
-
             .addCase(studentPaymentDataPostThunk.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentPaymentDataPostThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.getDateWithPost = action.payload;
             })
             .addCase(studentPaymentDataPostThunk.rejected, (state, action) => {
@@ -306,12 +327,13 @@ const studentPaymentSlice = createSlice({
             })
 
 
-
             .addCase(studentPaymentTypeChangeThunk.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentPaymentTypeChangeThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.paymentType = action.payload;
             })
             .addCase(studentPaymentTypeChangeThunk.rejected, (state, action) => {
@@ -320,12 +342,13 @@ const studentPaymentSlice = createSlice({
             })
 
 
-
             .addCase(studentBookOrderListThunk.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(studentBookOrderListThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.booksList = action.payload;
             })
             .addCase(studentBookOrderListThunk.rejected, (state, action) => {
@@ -334,12 +357,13 @@ const studentPaymentSlice = createSlice({
             })
 
 
-
             .addCase(getMonthDataThunk.pending, (state) => {
-               state.loading = true
-           })
+                state.loading = true
+                state.error = null
+            })
             .addCase(getMonthDataThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.getMonthData = action.payload;
             })
             .addCase(getMonthDataThunk.rejected, (state, action) => {
