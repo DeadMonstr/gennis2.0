@@ -26,13 +26,13 @@ export const getEmployerSalary = (id) => `employer/employerProfile/employerSalar
 export const getEmployerSalaryInsideSource = (id, permission) => `employer/employerProfile/employerSalaryPage/giveSalaryPage/${id}/${permission}`
 export const getTeacherSalaryInsideSource = (id) => `teacher/:id/teacherProfile/teacherSalaryPage/giveTeacherSalaryPage/${id}`
 
-export const getClass = (id) => `class`
+export const getClass = () => `class/*`
 
-export const getFlow = (id) => `flows/${id}`
+export const getFlow = (id) => `flows/*`
 
 export const getContract = (id) => `contract/${id}`
 
-export const getCapital = (id) => `capital/${id}`
+export const getCapital = (id) => `capital/*`
 
 export const getCapitalInside = (id) => `capital/:id/capitalBoxProfile/${id}`
 

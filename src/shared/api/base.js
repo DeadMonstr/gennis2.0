@@ -1,4 +1,4 @@
-export const API_URL_DOC = `http://192.168.0.113:8000/`
+export const API_URL_DOC = `http://192.168.0.105:8000/`
 export const API_URL = `${API_URL_DOC}api/`
 export const CLASSROOM_API_URL = `http://localhost:3000/`
 export const CLASSROOM_API_URL_DOC = `http://192.168.68.116:8000/`
@@ -27,9 +27,13 @@ export const headersImg = () => {
 export const branchQuery = () => {
     const branch = localStorage.getItem("selectedBranch")
     return `branch=${branch}`
+
 }
 
+export const branchQueryId = () => {
+    return localStorage.getItem("selectedBranch")
 
+}
 
 
 export const useHttp = () => {

@@ -47,6 +47,8 @@ export const StudentCreateClass = memo((props) => {
     }
 
     const renderStudents = () => {
+        if (!studentsList?.length) return;
+
         return studentsList?.map((item, i) => {
             return <tr>
                 <td>{i + 1}</td>
