@@ -14,6 +14,8 @@ import {NavLink} from "react-router-dom";
 import {getSystem} from "features/themeSwitcher";
 import {getSelectedLocations} from "features/locations";
 import {getBranch} from "features/branchSwitcher";
+import {DefaultLoader, DefaultPageLoader} from "shared/ui/defaultLoader";
+import {MiniLoader} from "shared/ui/miniLoader";
 
 export const Menubar = () => {
     const navigate = useNavigate();
@@ -33,10 +35,11 @@ export const Menubar = () => {
     const selectedLocations = useSelector(getSelectedLocations)
     const branch = useSelector(getBranch)
 
-
-
-
-
+    const onClickExit = () => {
+        navigate("/login")
+        sessionStorage.clear()
+        localStorage.clear()
+    }
 
 
     const renderMultipleMenu = useCallback(() => {
@@ -48,7 +51,6 @@ export const Menubar = () => {
 
             if (!item?.system.includes(system.type)) return;
             if ((typeof item.roles === "object" && user?.job.some(job => item.roles.includes(job))) || (typeof item.roles === "boolean" && item.roles)) {
-
 
 
                 return (
@@ -71,9 +73,11 @@ export const Menubar = () => {
 
 
         });
-    }, [theme, selectedLocations, branch,user]);
+    }, [theme, selectedLocations, branch, user]);
 
     const renderedMenu = renderMultipleMenu();
+
+
 
     return (
         <nav className={cls.menu}>
@@ -91,10 +95,16 @@ export const Menubar = () => {
                 </div>
             </div>
             <ul className={cls.menu__inner}>
-                {renderedMenu}
+
+                {
+                    !user?.job ? <MiniLoader/> : renderedMenu
+                }
             </ul>
             <div className={cls.menu__footer}>
-                <div className={cls.menu__}>
+                <div
+                    className={cls.menu__exit}
+                    onClick={onClickExit}
+                >
                     <i className="fas fa-sign-out-alt"/>
                     <h2>Chiqish</h2>
                 </div>

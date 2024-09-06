@@ -40,9 +40,17 @@ export const menuConfig = [
     },
     {
         to: "groups",
-        name: "Gruppalar",
+        name: "Guruhlar",
         icon: "fa-users",
-        system: ["center","school"],
+        system: ["center"],
+        roles: [ROLES.admin,ROLES.director,ROLES.programmer]
+
+    },
+    {
+        to: "groups",
+        name: "Sinflar",
+        icon: "fa-users",
+        system: ["school"],
         roles: [ROLES.admin,ROLES.director,ROLES.programmer]
 
     },
@@ -69,6 +77,13 @@ export const menuConfig = [
 
         roles: [ROLES.admin,ROLES.director,ROLES.programmer]
 
+    },
+    {
+        to: "time",
+        name: "Time Table",
+        icon: "fa-clock",
+        system: ["center","school"],
+        roles: [ROLES.admin,ROLES.director,ROLES.programmer]
     },
     {
         to: "employer",

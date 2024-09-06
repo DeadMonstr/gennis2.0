@@ -31,12 +31,12 @@ export const DeletedStudents = ({currentTableData}) => {
 
     const renderDeletedStudents = () => {
 
-        if (!currentTableData || currentTableData.length === 0)
-        {
-            return (
-                <DefaultLoader/>
-            )
-        }
+        // if (!currentTableData || currentTableData.length === 0)
+        // {
+        //     return (
+        //         <DefaultLoader/>
+        //     )
+        // }
         return currentTableData.map((item,  i) =>{
             switch (activeMenu) {
                 case ("all"): {

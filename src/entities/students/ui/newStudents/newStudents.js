@@ -22,12 +22,12 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
     const renderStudents = () => {
 
         const studentToRender = getNewSt && getNewSt.length > 0 ? getNewSt : currentTableData
-        if (!studentToRender || studentToRender.length === 0)
-        {
-            return (
-                <DefaultPageLoader/>
-            )
-        }
+        // if (!studentToRender || studentToRender.length === 0)
+        // {
+        //     return (
+        //         <DefaultPageLoader/>
+        //     )
+        // }
            return studentToRender?.map((item,i) => {
                return (
                    <tr
@@ -38,7 +38,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                        <td>{item.user?.language?.name}</td>
                        {
                            userSystem?.id === 2 ? <>
-                               <td>{item?.group[0]?.name}</td>
+                               <td>{item?.class_number}</td>
                            </> : <>
                                <td>{item.user?.phone}</td>
                                <td>{
@@ -47,19 +47,19 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                            </>
                        }
 
-                       <td>{item?.user?.registered_date}</td>
-                       {
-                           theme ? <Input
-                               type={"checkbox"}
-                               onChange={() => setSelectStudents(prev => {
-                                   if (prev.filter(i => i === item.id)[0]) {
-                                       return prev.filter(i => i !== item.id)
-                                   } else {
-                                       return [...prev, item.id]
-                                   }
-                               })}
-                           />: null
-                       }
+                       <td>{item.user?.registered_date}</td>
+                       {/*{*/}
+                       {/*    theme ? <Input*/}
+                       {/*        type={"checkbox"}*/}
+                       {/*        onChange={() => setSelectStudents(prev => {*/}
+                       {/*            if (prev.filter(i => i === item.id)[0]) {*/}
+                       {/*                return prev.filter(i => i !== item.id)*/}
+                       {/*            } else {*/}
+                       {/*                return [...prev, item.id]*/}
+                       {/*            }*/}
+                       {/*        })}*/}
+                       {/*    />: null*/}
+                       {/*}*/}
                    </tr>
                )
            })
@@ -86,9 +86,9 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                         }
 
                         <th>Reg. sana</th>
-                        {
-                            theme ? <th/> : null
-                        }
+                        {/*{*/}
+                        {/*    theme ? <th/> : null*/}
+                        {/*}*/}
                     </tr>
                     </thead>
                     <tbody>

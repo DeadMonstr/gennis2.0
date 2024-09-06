@@ -30,7 +30,7 @@ const getEducationSlice = createSlice({
             })
             .addCase(getEducationThunk.rejected , state => {
                 state.loading = false
-                state.error = true
+                state.error = "error"
             })
             .addCase(getEducationChange.pending, state => {
                 state.loading = true
@@ -46,7 +46,7 @@ const getEducationSlice = createSlice({
             })
             .addCase(getEducationChange.rejected, (state, action) => {
                 state.loading = false
-                state.error = action.payload ?? null
+                state.error = "error"
             })
 
 })

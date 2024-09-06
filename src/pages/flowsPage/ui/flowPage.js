@@ -28,6 +28,7 @@ export const FlowsPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("")
 
+    const branch = localStorage.getItem("selectedBranch")
     const {request} = useHttp()
     const dispatch = useDispatch()
     const flows = useSelector(getFlows)
@@ -44,9 +45,9 @@ export const FlowsPage = () => {
         dispatch(fetchFlows())
     }, [])
     useEffect(() => {
-        if (userBranchId)
-            dispatch(fetchTeachersData({userBranchId}))
-    }, [userBranchId])
+        if (branch)
+            dispatch(fetchTeachersData({userBranchId: branch}))
+    }, [branch])
 
     const getLevelData = (id) => {
         const subjectId = teachers.filter(item => item.id === +id)[0]?.subject[0]?.id

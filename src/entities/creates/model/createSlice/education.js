@@ -24,7 +24,7 @@ const postEducationSlice = createSlice({
             })
             .addCase(postEducationThunk.rejected , (state, action) => {
                 state.loading = false
-                state.error = true
+                state.error = "error"
             })
 })
 

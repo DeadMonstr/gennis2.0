@@ -1,4 +1,3 @@
-import {getUserBranchId} from "../../../entities/profile/userProfile";
 import React, {useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {TeacherFilter} from "features/filters/teacherFilter";
@@ -7,21 +6,16 @@ import {getSearchValue} from "features/searchInput";
 import {DeletedTeachers, Teachers} from "entities/teachers";
 import {Button} from "shared/ui/button";
 import cls from "./teacher.module.sass";
-import {getTeachers} from "../../../entities/teachers";
-import {useTheme} from "../../../shared/lib/hooks/useTheme";
+import {getTeachers} from "entities/teachers";
+import {useTheme} from "shared/lib/hooks/useTheme";
 import {getTeachersWithFilter} from "entities/teachers";
 import {getTeacherLoading} from "entities/teachers";
-import {fetchTeachersData} from "../../../entities/teachers";
-import {DefaultLoader} from "../../../shared/ui/defaultLoader";
-import {MultiPage} from "../../../widgets/multiPage/ui/MultiPage/MultiPage";
+import {fetchTeachersData} from "entities/teachers";
+import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
 import {useParams} from "react-router-dom";
 
 
-const branches = [
-    {name: "chirchiq"},
-    {name: "chirchiq1"},
-    {name: "chirchiq2"},
-]
+
 export const TeachersPage = () => {
     const {theme} = useTheme()
     const loading = useSelector(getTeacherLoading)
@@ -50,14 +44,11 @@ export const TeachersPage = () => {
     const searchedUsers = useMemo(() => {
         const filteredHeroes =!filteredTeachersData || filteredTeachersData.length === 0 ? teachersData.slice() : filteredTeachersData.slice()
         setCurrentPage(1)
-
         if (!search) return  filteredHeroes
-
         return filteredHeroes.filter(item =>
             (item?.user?.name?.toLowerCase().includes(search.toLowerCase()) ||
                 item?.user?.surname?.toLowerCase().includes(search.toLowerCase()))
         );
-
     }, [teachersData, filteredTeachersData, setCurrentPage, search])
 
     const types = [
@@ -87,7 +78,8 @@ export const TeachersPage = () => {
                 <div className={cls.table}>
 
                     <h2>{activeSwitch ? "Deleted Teachers" : "Teachers"}</h2>
-                    {activeSwitch ?
+                    {
+                        activeSwitch ?
                         <DeletedTeachers
                             data={teachersData}
                             // data={searchedUsers}
@@ -98,7 +90,8 @@ export const TeachersPage = () => {
                             loading={getTeacherLoading}
                             data={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
                             // data={currentTableData}
-                        />}
+                        />
+                    }
                 </div>
 
                 <Pagination

@@ -5,7 +5,6 @@ import cls from './giveSalaryModal.module.sass'
 import {TeacherProfileTotalAmount} from "entities/profile/teacherProfile";
 
 
-
 export const GiveSalaryModal = React.memo(({active, setActive, salary_id, user_id}) => {
 
     return (
@@ -15,12 +14,12 @@ export const GiveSalaryModal = React.memo(({active, setActive, salary_id, user_i
         >
             <div className={cls.filter}>
                 <h1>Oylik berish</h1>
-                <div  className={cls.filter__container}>
+                <div className={cls.filter__container}>
                     <TeacherProfileTotalAmount
-                    active={active}
-                    setActive={setActive}
-                    salary_id={salary_id}
-                    user_id={user_id}
+                        active={active}
+                        setActive={setActive}
+                        salary_id={salary_id}
+                        user_id={user_id}
                     />
 
                 </div>

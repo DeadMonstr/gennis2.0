@@ -31,7 +31,7 @@ export const overHeadSlice = createSlice({
             })
             .addCase(overHeadList.rejected, state => {
                 state.loading = false
-                state.error = false
+                state.error = true
             })
             .addCase(overHeadDeletedList.pending, state => {
                 state.loading = true
@@ -44,7 +44,7 @@ export const overHeadSlice = createSlice({
             })
             .addCase(overHeadDeletedList.rejected, state => {
                 state.loading = false
-                state.error = false
+                state.error = true
             })
             .addCase(getOverheadType.pending, state => {
                 state.loading = true
@@ -57,7 +57,7 @@ export const overHeadSlice = createSlice({
             })
             .addCase(getOverheadType.rejected, state => {
                 state.loading = false
-                state.error = false
+                state.error = true
             })
             .addCase(getMonthDay.pending, state => {
                 state.loading = true
@@ -70,7 +70,7 @@ export const overHeadSlice = createSlice({
             })
             .addCase(getMonthDay.rejected, state => {
                 state.loading = false
-                state.error = false
+                state.error = true
             })
 })
 

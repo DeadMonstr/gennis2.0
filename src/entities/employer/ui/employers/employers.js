@@ -36,12 +36,12 @@ export const Employers = ({currentTableData, loading}) => {
         }
         const employerToRender = filteredEmployer && filteredEmployer.length > 0 ? filteredEmployer : currentTableData
 
-        if (!employerToRender || employerToRender.length === 0)
-        {
-            return (
-                <DefaultPageLoader/>
-            )
-        }
+        // if (!employerToRender || employerToRender.length === 0)
+        // {
+        //     return (
+        //         <DefaultPageLoader/>
+        //     )
+        // }
 
         return employerToRender?.map((item, i) => {
             if (typeof item === "object" && !Array.isArray(item)) {

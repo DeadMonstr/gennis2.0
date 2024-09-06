@@ -26,7 +26,7 @@ const giveEmployerSalarySlices = createSlice({
             })
             .addCase(giveEmployerSalaryThunk.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.payload
+                state.error = "error"
         })
     }
 })

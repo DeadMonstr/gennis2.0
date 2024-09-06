@@ -3,6 +3,7 @@ import {fetchLocationsThunk} from "features/locations/model/thunk/locationsThunk
 
 const initialState = {
     locations: [],
+    systemId: null,
     selectedLocations: [],
     loading: false,
     fetchStatus: "idle",
@@ -48,8 +49,13 @@ const locationsSlice = createSlice({
         },
 
 
-        clearSelectedLocations: (state) => {
+        clearSelectedLocations: (state,action) => {
             state.selectedLocations = []
+            if (state.systemId && action.payload !== state.systemId) {
+                localStorage.removeItem("selectedLocations")
+            }
+
+
         }
     },
     extraReducers: builder =>
@@ -60,17 +66,41 @@ const locationsSlice = createSlice({
                 state.fetchStatus = "pending"
             })
             .addCase(fetchLocationsThunk.fulfilled, (state, action) => {
-                if (action.payload.length > 1) {
-                    state.locations = action.payload
-                } else {
-                    state.locations = action.payload.map(item => {
-                        return {
-                            ...item,
-                            disabled: false
+
+
+                state.systemId = action.payload.systemId
+
+                const localstorageLocs = JSON.parse(localStorage.getItem("selectedLocations"))
+
+
+                console.log(localstorageLocs, "hvbasjdbasd")
+                if (localstorageLocs && localstorageLocs.length > 0) {
+                    console.log("ure")
+                    state.selectedLocations = localstorageLocs
+                    state.locations = state.locations.map(item => {
+
+                        const isHave = localstorageLocs.some(loc => loc.id === item.id)
+
+                        if (isHave) {
+                            return {
+                                ...item,
+                                disabled: true
+                            }
                         }
                     })
-                    state.locations =
-                    state.selectedLocations = action.payload.filter(item => item.id !== +action.payload)
+                } else {
+
+                    localStorage.setItem("selectedLocations", JSON.stringify( [action.payload.list[0]]))
+                    state.selectedLocations = [action.payload.list[0]]
+                    state.locations = action.payload.list.map((item,index) => {
+                        if (index === 0) {
+                            return {
+                                ...item,
+                                disabled: true
+                            }
+                        }
+                        return item
+                    })
                 }
 
                 state.loading = false

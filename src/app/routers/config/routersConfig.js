@@ -211,7 +211,7 @@ export const routersConfig = [
         element: <GroupCreatePage/>,
     },
     {
-        path: "groups/:id/groupInfo/:id",
+        path: "groups/groupInfo/:id",
         element: <GroupProfilePage/>,
     },
     {
@@ -223,7 +223,8 @@ export const routersConfig = [
         element: <CalendarPage/>,
     },
     {
-        path: "time",
+        name: "Time Table",
+        path: "time/*",
         element: <TimeTableTuronPage/>,
     },
     {

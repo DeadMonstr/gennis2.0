@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {roomsAddThunk} from 'pages/roomsPage/model/roomsAddThunk';
+import {useParams} from "react-router-dom";
 import {Modal} from 'shared/ui/modal';
 import {Input} from 'shared/ui/input';
 import {Button} from 'shared/ui/button';
@@ -19,6 +20,7 @@ export const RoomModal = ({isOpen, onClose}) => {
     const [branch, setBranch] = useState(1);
     const dispatch = useDispatch();
     const getBranches = useSelector(getLocations)
+    const {"*": id} = useParams()
 
     const onSelectBranch = (value) => {
         setBranch(value);
@@ -45,7 +47,7 @@ export const RoomModal = ({isOpen, onClose}) => {
             status: true,
             msg: "Xona muvofaqqiyatli qo'shildi"
         }))
-        dispatch(fetchRoomsData());
+        dispatch(fetchRoomsData({id}));
         onClose();
     };
 

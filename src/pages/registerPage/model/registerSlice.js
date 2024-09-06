@@ -1,10 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 import {
     fetchSubjectsAndLanguages,
     registerUser,
     registerTeacher,
     registerEmployer,
-    fetchSubjects, fetchLanguages
+    fetchSubjects, fetchLanguages, fetchCategories
 } from "./registerThunk";
 
 export const userSlice = createSlice({
@@ -14,7 +14,8 @@ export const userSlice = createSlice({
         status: 'idle',
         error: null,
         subjects: [],
-        languages: []
+        languages: [],
+        categories: []
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -70,6 +71,17 @@ export const userSlice = createSlice({
                 state.user = action.payload;
             })
             .addCase(registerEmployer.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+            })
+            .addCase(fetchCategories.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchCategories.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.categories = action.payload;
+            })
+            .addCase(fetchCategories.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;
             });

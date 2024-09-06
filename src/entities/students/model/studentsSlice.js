@@ -18,7 +18,7 @@ const initialState = {
     filteredStudents: [],
     filteredTeachers: [],
     filteredCurseTypes: [],
-    filteredCurseLevel: [],
+    filteredCurseLevel: null,
     schoolClassNumbers: [],
     schoolClassColors: [],
     schoolStudents: [],
@@ -67,7 +67,7 @@ export const studentsSlice = createSlice({
                 state.newStudentsStatus = "success"
             })
             .addCase(fetchOnlyNewStudentsData.rejected, (state, action) => {
-                state.newStudentes = "error"
+                state.newStudentsStatus = "error"
             })
 
 
@@ -80,7 +80,7 @@ export const studentsSlice = createSlice({
                 state.studyingStudentsStatus = "success"
             })
             .addCase(fetchOnlyStudyingStudentsData.rejected, (state, action) => {
-                state.studyingStudents = "error"
+                state.studyingStudentsStatus = "error"
             })
 
 

@@ -41,7 +41,7 @@ const employerSlice = createSlice({
             })
             .addCase(getDeletedEmpSalary.fulfilled , (state, action) => {
                 state.deletedEmployerSalary = action.payload
-                state.loading = true
+                state.loading = false
                 state.error = false
             })
             .addCase(getDeletedEmpSalary.rejected , state => {

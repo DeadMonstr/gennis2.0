@@ -4,3 +4,6 @@ export const getLanguagesData = (state) =>
 
 export const getSubjectsData = (state) =>
     state.registerUser.subjects
+
+export const getCategories = (state) =>
+    state.registerUser.categories

@@ -16,12 +16,12 @@ export const GroupsList = React.memo(({currentTableData}) => {
 
     const renderGroups = () => {
         const groupsToRender = getFilteredGroups && getFilteredGroups.length > 0 ? getFilteredGroups : currentTableData
-        if (!groupsToRender || groupsToRender.length === 0)
-        {
-            return (
-                <DefaultPageLoader/>
-            )
-        }
+        // if (!groupsToRender || groupsToRender.length === 0)
+        // {
+        //     return (
+        //         <DefaultPageLoader/>
+        //     )
+        // }
         return groupsToRender?.map((item, i) => {
             return (
                 <tr onClick={() => navigate(`groupInfo/${item?.id}`)}>

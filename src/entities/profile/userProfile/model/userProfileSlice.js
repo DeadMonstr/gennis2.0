@@ -221,7 +221,7 @@ const userProfileSlice = createSlice({
             })
             .addCase(fetchUserProfileData.rejected, (state, action) => {
                 state.loading = false
-                state.error = action.payload ?? null
+                state.error = "error"
             })
             // .addCase(changeUserProfileData.pending, state => {
             //     state.loading = true

@@ -4,6 +4,7 @@ import {fetchGroupsData, getGroupsListData} from "entities/groups";
 import {getUserBranchId} from "entities/profile/userProfile";
 import {useDispatch, useSelector} from "react-redux";
 import {flowListThunk, getFlowList} from "entities/flows";
+import {useParams} from "react-router-dom";
 import {useHttp} from "shared/api/base";
 import {Button} from "shared/ui/button";
 import cls from "./FlowListPage.module.sass";
@@ -16,7 +17,8 @@ export const FlowListPage = () => {
 
     const {request} = useHttp()
     const dispatch = useDispatch()
-    const userBranchId = useSelector(getUserBranchId)
+    const {"*": id} = useParams()
+    const userBranchId = id
 
     useEffect(() => {
         if (userBranchId) {

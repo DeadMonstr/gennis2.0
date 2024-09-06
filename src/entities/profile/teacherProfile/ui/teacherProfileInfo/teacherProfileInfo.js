@@ -1,3 +1,4 @@
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import React, {memo, useEffect, useState} from 'react';
 import {EditableCard} from "shared/ui/editableCard";
 import {Link} from "shared/ui/link";
@@ -19,19 +20,27 @@ export const TeacherProfileInfo = memo(({active,setActive,setActiveModal, newIma
     const [localTeacherData, setLocalTeacherData] = useState({});
 
     useEffect(() => {
-        if (teacherId)
-        {
+        if (teacherId) {
             setLocalTeacherData(teacherId);
         }
     }, [teacherId]);
 
     useEffect(() => {
-        if (id)
-        {
+        if (id) {
             dispatch(fetchTeacherId(id))
         }
 
     } ,[dispatch, id])
+
+    useEffect(() => {
+        if (localTeacherData?.msg) {
+            dispatch(onAddAlertOptions({
+                type: "error",
+                status: true,
+                msg: localTeacherData?.msg
+            }))
+        }
+    }, [localTeacherData?.msg])
 
     const handleUpdateTeacher = (updateTeacher) => {
         setLocalTeacherData((prevData) => ({
@@ -61,6 +70,7 @@ export const TeacherProfileInfo = memo(({active,setActive,setActiveModal, newIma
                         <h2 className={cls.info__role}>Teacher</h2>
                     </div>
                     <div className={cls.info__text}>
+                        <h3 style={{color: "red"}}>{localTeacherData?.msg}</h3>
                         <p>Ism: <span>{teacherId.user?.name}</span></p>
                         <p>Familiya: <span>{teacherId.user?.surname}</span></p>
                         <p>Otasinig ismi: <span>{teacherId.user?.father_name}</span></p>
