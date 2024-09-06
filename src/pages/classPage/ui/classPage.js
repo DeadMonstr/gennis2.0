@@ -10,16 +10,16 @@ import {Button} from "../../../shared/ui/button";
 import {API_URL, headers, useHttp} from "../../../shared/api/base";
 import {fetchSubjects, getSubjectsData} from "../../registerPage";
 
-export const ClassPage = ({setEdit, edit, activeEdit, setActiveEdit , activeMenu , setActiveMenu , classes}) => {
+export const ClassPage = ({setEdit, edit, activeEdit, setActiveEdit, activeMenu, setActiveMenu, classes}) => {
 
     const {request} = useHttp()
-    const [selectBox , setSelectBox] = useState([])
+    const [selectBox, setSelectBox] = useState([])
     const selectOptions = useSelector(getSubjectsData)
 
 
     const dispatch = useDispatch()
     // const classType = useSelector(classTypeNumber)
-    const classType  = useSelector(classItems)
+    const classType = useSelector(classItems)
 
     useEffect(() => {
         dispatch(classItem())
@@ -27,13 +27,16 @@ export const ClassPage = ({setEdit, edit, activeEdit, setActiveEdit , activeMenu
         // dispatch(getClassTypeNumber())
     }, [])
 
+    const id = edit.id
 
 
     return (
         <>
-         <ClassFilter classesType={classes} setActiveEdit={setActiveEdit} edit={edit} setEdit={setEdit}
-                                             active={activeMenu} setActive={setActiveMenu}/>
-            <ClassTable selectOptions={selectOptions} active={activeMenu} classType={classType} selectBox={selectBox} setSelectBox={setSelectBox} edit={edit}/>
+            <ClassFilter classesType={classes} setActiveEdit={setActiveEdit} edit={edit} setEdit={setEdit}
+                         active={activeMenu} setActive={setActiveMenu}/>
+            <ClassTable id={id} selectOptions={selectOptions} active={activeMenu} classType={classType}
+                        selectBox={selectBox}
+                        setSelectBox={setSelectBox} edit={edit}/>
             {/*<Button onClick={onClick}>Tastiqlash</Button>*/}
         </>
     )

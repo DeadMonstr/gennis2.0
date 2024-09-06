@@ -46,17 +46,27 @@ export const classItem = createAsyncThunk(
     }
 )
 
+
+export const updateClassItem = createAsyncThunk(
+    "classSlice/updateClassItem",
+    async ({idClass, res}) => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Class/class_number_update/${idClass}/`, "PATCH", JSON.stringify(res), headers())
+
+    }
+)
+
 export const createColor = createAsyncThunk(
     "classSlice/createColor",
     async (res) => {
         const {request} = useHttp()
-        return await request(`${API_URL}Class/class_colors/` , "POST" , JSON.stringify(res) , headers())
+        return await request(`${API_URL}Class/class_colors/`, "POST", JSON.stringify(res), headers())
     }
 )
 export const getColor = createAsyncThunk(
     "classSlice/getColor",
     async () => {
         const {request} = useHttp()
-        return await request(`${API_URL}Class/class_colors/` , "GET" , null , headers())
+        return await request(`${API_URL}Class/class_colors/`, "GET", null, headers())
     }
 )

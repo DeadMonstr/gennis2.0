@@ -1,5 +1,4 @@
 import {Table} from "shared/ui/table";
-import {Input} from "shared/ui/input";
 import {ClassModal} from "../classModal/classModal";
 import React, {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
@@ -7,16 +6,17 @@ import cls from "./classTable.module.sass"
 import {API_URL, headers, useHttp} from "../../../../shared/api/base";
 import {useDispatch} from "react-redux";
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
-import {classItem} from "../../model/thunk/classThunk";
+import {classItem, updateClassItem} from "../../model/thunk/classThunk";
 
 
-export const ClassTable = ({edit, classType, active, selectOptions}) => {
+export const ClassTable = ({edit, classType, active, selectOptions , id}) => {
     const [editClass, setEditClass] = useState(false)
     const [clickedCheckbox, setClickedCheckbox] = useState([])
     const {register, handleSubmit, setValue} = useForm()
     const {request} = useHttp()
     const dispatch = useDispatch()
     const [selectedSubject, setSelectedSubject] = useState([])
+
 
     const onChangeClass = (data) => {
 
@@ -28,14 +28,13 @@ export const ClassTable = ({edit, classType, active, selectOptions}) => {
             )),
             ...data
         }
-        const id = editClass
+        const idClass = editClass
 
 
-        request(`${API_URL}Class/class_number_update/${id}/`, "PATCH", JSON.stringify(res), headers())
-            .then(res => {
-                setValue("curriculum_hours", "")
-                setEditClass(!editClass)
-            })
+        dispatch(updateClassItem({idClass, res}))
+        setEditClass(!editClass)
+        dispatch(classItem(id))
+
     }
 
     const onChange = (e) => {
@@ -83,9 +82,13 @@ export const ClassTable = ({edit, classType, active, selectOptions}) => {
             return <tr>
                 <td>{i + 1}</td>
                 <td>{item?.number}</td>
-                <td>{item?.subjects.map(itemSubject => (
-                    <span className={cls.subject}> {itemSubject.name}</span>
-                ))}</td>
+                <td>
+                    <div className={cls.subject__main}>
+                        {item?.subjects.map(itemSubject => (
+                            <span className={cls.subject}> {itemSubject.name}</span>
+                        ))}
+                    </div>
+                </td>
                 <td>{item?.curriculum_hours}</td>
                 <td style={{width: "3rem"}}>
                     {item?.status ?
@@ -160,7 +163,7 @@ export const ClassTable = ({edit, classType, active, selectOptions}) => {
                 </Table> : null}
 
 
-            <ClassModal  selectedSubject={selectedSubject} setSelectedSubject={setSelectedSubject}
+            <ClassModal selectedSubject={selectedSubject} setSelectedSubject={setSelectedSubject}
                         changeInfo={onChangeClass} selectOptions={selectOptions} extraClassForm={cls.extraClassForm}
                         extraClassSelect={cls.select} extraClassBtn={cls.btn} editClass={editClass}
                         setEditClass={setEditClass} register={register} handleSubmit={handleSubmit}/>

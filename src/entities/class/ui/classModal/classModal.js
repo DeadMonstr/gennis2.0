@@ -28,7 +28,6 @@ export const ClassModal = ({
                                edit,
                                setSelectedSubject,
                                selectedSubject,
-                               options,
                            }) => {
 
 
@@ -37,8 +36,6 @@ export const ClassModal = ({
     // const [selected, setSelected] = useState([])
     // const [deletedId, setDeletedId] = useState(0)
 
-
-    console.log(options , "op[tip[wef")
     const option = selectOptions?.map(item => ({
         value: item.id,
         label: item.name
@@ -107,56 +104,56 @@ export const ClassModal = ({
                 </div>
             </Modal>
 
-            {/*<Modal active={editClass} setActive={setEditClass}>*/}
-            {/*    <h2>Ma’lumotlarni o’zgartirish</h2>*/}
-            {/*    <div>*/}
-            {/*        <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>*/}
-            {/*            <Input  name={"curriculum_hours"} register={register} type={"number"}/>*/}
-            {/*            /!*<Select onChangeOption={onChangeSelect} options={subject}/>*!/*/}
-
-            {/*            <div className={cls.selectBox}>*/}
-            {/*                <AnimatedMulti extraClass={cls.select} options={option} onChange={setSelectedSubject}/>*/}
-            {/*            </div>*/}
-            {/*            /!*{options?.map(item => (*!/*/}
-            {/*            /!*    item.subjects.map(itemSubject => (*!/*/}
-            {/*            /!*        itemSubject.name*!/*/}
-            {/*            /!*    ))*!/*/}
-            {/*            /!*))}*!/*/}
-            {/*            <Button>*/}
-            {/*                Tastiqlash*/}
-            {/*            </Button>*/}
-            {/*        </Form>*/}
-
-            {/*    </div>*/}
-            {/*</Modal>*/}
-
             <Modal active={editClass} setActive={setEditClass}>
                 <h2>Ma’lumotlarni o’zgartirish</h2>
                 <div>
                     <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>
-                        <Input name={"curriculum_hours"} register={register} type={"number"}/>
+                        <Input  name={"curriculum_hours"} register={register} type={"number"}/>
+                        {/*<Select onChangeOption={onChangeSelect} options={subject}/>*/}
 
-                        <div className={cls.extraClassSelect}>
-                            <AnimatedMulti options={option} onChange={setSelectedSubject}/>
+                        <div className={cls.selectBox}>
+                            <AnimatedMulti extraClass={cls.select} options={option} onChange={setSelectedSubject}/>
                         </div>
-
-                        <div className={cls.extraClassForm}>
-                            {/* Selected subjects list */}
-                            {/*{*/}
-                            {/*    selectedSubject.map((subject, index) => (*/}
-                            {/*        <div key={index}>*/}
-                            {/*            <span>{subject.label}</span>*/}
-                            {/*        </div>*/}
-                            {/*    ))*/}
-                            {/*}*/}
-                        </div>
-
+                        {/*{options?.map(item => (*/}
+                        {/*    item.subjects.map(itemSubject => (*/}
+                        {/*        itemSubject.name*/}
+                        {/*    ))*/}
+                        {/*))}*/}
                         <Button>
                             Tastiqlash
                         </Button>
                     </Form>
+
                 </div>
             </Modal>
+
+            {/*<Modal active={editClass} setActive={setEditClass}>*/}
+            {/*    <h2>Ma’lumotlarni o’zgartirish</h2>*/}
+            {/*    <div>*/}
+            {/*        <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>*/}
+            {/*            <Input name={"curriculum_hours"} register={register} type={"number"}/>*/}
+
+            {/*            <div className={cls.extraClassSelect}>*/}
+            {/*                <AnimatedMulti options={option} onChange={setSelectedSubject}/>*/}
+            {/*            </div>*/}
+
+            {/*            <div className={cls.extraClassForm}>*/}
+            {/*                /!* Selected subjects list *!/*/}
+            {/*                /!*{*!/*/}
+            {/*                /!*    selectedSubject.map((subject, index) => (*!/*/}
+            {/*                /!*        <div key={index}>*!/*/}
+            {/*                /!*            <span>{subject.label}</span>*!/*/}
+            {/*                /!*        </div>*!/*/}
+            {/*                /!*    ))*!/*/}
+            {/*                /!*}*!/*/}
+            {/*            </div>*/}
+
+            {/*            <Button>*/}
+            {/*                Tastiqlash*/}
+            {/*            </Button>*/}
+            {/*        </Form>*/}
+            {/*    </div>*/}
+            {/*</Modal>*/}
 
         </>
     )

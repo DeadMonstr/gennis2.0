@@ -4,7 +4,7 @@ import {
     createClassType, createColor,
     getClassTypeNumber,
     getClassTypes,
-    getColor,
+    getColor, updateClassItem,
     updateClassType
 } from "../thunk/classThunk";
 
@@ -91,9 +91,30 @@ const classSlice = createSlice({
                 state.loading = false
                 state.error = false
                 state.classItems =  action.payload
+                console.log(action.payload , "classsdsad")
 
             })
             .addCase(classItem.rejected, state => {
+                state.loading = false
+                state.error = true
+            })
+
+
+
+            .addCase(updateClassItem.pending, state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(updateClassItem.fulfilled, (state, action) => {
+                state.loading = false
+                state.error = false
+                state.classItems =  [
+                    ...state.classItems.filter(item => item.id !== action.payload.id),
+                    action.payload
+                ]
+
+            })
+            .addCase(updateClassItem.rejected, state => {
                 state.loading = false
                 state.error = true
             })

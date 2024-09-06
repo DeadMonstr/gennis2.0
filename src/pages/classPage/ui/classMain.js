@@ -12,7 +12,7 @@ export const ClassMain = () => {
 
     const classes = useSelector(classData)
     const color = useSelector(colorItem)
-    const [activeMenu, setActiveMenu] = useState(classes)
+    const [activeMenu, setActiveMenu] = useState(classes[0]?.name)
     const [edit, setEdit] = useState({})
     const [activeEdit, setActiveEdit] = useState(false)
 
@@ -23,6 +23,7 @@ export const ClassMain = () => {
         dispatch(getColor())
     }, [])
     const [activeSwitch, setActiveSwitch] = useState(true)
+
 
 
     return (
