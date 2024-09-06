@@ -48,14 +48,13 @@ export const Menubar = () => {
 
 
         return menuConfig.map((item, index) => {
-
+            console.log(selectedLocations , !item.branches)
+            if (selectedLocations > 1 && !item.branches) return;
             if (!item?.system.includes(system.type)) return;
             if ((typeof item.roles === "object" && user?.job.some(job => item.roles.includes(job))) || (typeof item.roles === "boolean" && item.roles)) {
-
-
                 return (
                     <NavLink
-                        to={`${item.to}${linkId}`}
+                        to={`${item.to}${item.branches ? linkId : `/${branch?.id}`}`}
                         key={index}
                         className={({isActive}) =>
                             isActive ? `${cls.link} ${cls.active}` : `${cls.link}`

@@ -66,6 +66,7 @@ const branches = [
 export const StudentsPage = () => {
 
     // let newStudents
+
     const [searchParams] = useSearchParams();
 
 
@@ -73,7 +74,6 @@ export const StudentsPage = () => {
     const {request} = useHttp()
     const dispatch = useDispatch()
     const {theme} = useTheme()
-
     const __THEME__ = localStorage.getItem("theme");
     const { register, handleSubmit } = useForm();
     const localSystem = JSON.parse(localStorage.getItem(""))
@@ -174,10 +174,10 @@ export const StudentsPage = () => {
                 dispatch(fetchOnlyNewStudentsData({id: userBranchId}));
                 break;
             case "studying_students":
-                dispatch(fetchOnlyStudyingStudentsData());
+                dispatch(fetchOnlyStudyingStudentsData({id: userBranchId}));
                 break;
             case "deleted_students":
-                dispatch(fetchOnlyDeletedStudentsData());
+                dispatch(fetchOnlyDeletedStudentsData({id: userBranchId}));
                 break;
             default:
                 break;
@@ -332,12 +332,12 @@ export const StudentsPage = () => {
                                 })
                             }
                         </div>
-                        <Input
-                            extraClassName={cls.modal__input}
-                            placeholder={"price"}
-                            name={"price"}
-                            register={register}
-                        />
+                        {/*<Input*/}
+                        {/*    extraClassName={cls.modal__input}*/}
+                        {/*    placeholder={"price"}*/}
+                        {/*    name={"price"}*/}
+                        {/*    register={register}*/}
+                        {/*/>*/}
                     </Form>
                 </div>
             </Modal>

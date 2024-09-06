@@ -50,6 +50,8 @@ export const ClassMain = () => {
                 :
                 <ClassAddColorPage
                     color={color}
+                    edit={edit}
+                    setEdit={setEdit}
                 />
             }
         </div>

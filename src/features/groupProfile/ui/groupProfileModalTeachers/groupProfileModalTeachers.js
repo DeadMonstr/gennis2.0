@@ -41,8 +41,6 @@ export const GroupProfileModalTeachers = memo(() => {
     const [currentTeachersData, setCurrentTeachersData] = useState([])
 
     useEffect(() => {
-        console.log(schoolTeachers, "schoolTeachers")
-        console.log(centerTeachers, "centerTeachers")
         if (userSystem?.id === 2) {
             setCurrentTeachersData(schoolTeachers)
         } else {
@@ -53,7 +51,6 @@ export const GroupProfileModalTeachers = memo(() => {
     const [active, setActive] = useState(false)
     const [searchValue, setSearchValue] = useState("")
 
-    console.log(currentTeachersData, "currentTeachersData")
 
     const onChangeTeacher = (teacherId) => {
         dispatch(changeGroupProfile({
@@ -125,7 +122,7 @@ export const GroupProfileModalTeachers = memo(() => {
                 title={<i className="fas fa-edit"/>}
                 onClick={() => setActive(true)}
             >
-                <h1>O’qituvchilari</h1>
+                <h1>O’qituvchi</h1>
                 <div className={cls.teacher__container}>
                     <div className={cls.teacher__info}>
                         <img

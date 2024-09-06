@@ -15,16 +15,17 @@ export const getTeacherProfile = (id) => `teacher/teacherProfile/${id}`;
 export const getVacancyPage = (id) => `vacancyPage/${id}`
 export const getVacancyWorkPage = (id) => `vacancyPage/vacancyWorkPage/${id}`
 export const getRoomsProfilePage = (id) => `rooms/roomsProfilePage/${id}`
+
 export const getProfile = (id) => `students/profile/${id}`;
 export const getRouteTimePage = (id) => `timeList/${id}`
 export const getRouteUserProfile = (id) => `profile/${id}`
 export const getEmployerPage = (id) => `employer/*`
 export const getEmployerProfile = (id) => `employer/employerProfile/${id}`;
 
-export const getTeacherSalary = (id) => `teacher/teacherProfile/:id/teacherSalaryPage/${id}`
+export const getTeacherSalary = (id) => `teacher/teacherProfile/teacherSalaryPage/${id}`
 export const getEmployerSalary = (id) => `employer/employerProfile/employerSalaryPage/${id}`
 export const getEmployerSalaryInsideSource = (id, permission) => `employer/employerProfile/employerSalaryPage/giveSalaryPage/${id}/${permission}`
-export const getTeacherSalaryInsideSource = (id) => `teacher/teacherProfile/:id/teacherSalaryPage/:id/giveTeacherSalaryPage/${id}`
+export const getTeacherSalaryInsideSource = (id) => `teacher/teacherProfile/teacherSalaryPage/giveTeacherSalaryPage/${id}`
 
 export const getClass = () => `class/*`
 
@@ -53,14 +54,14 @@ export const getEducation = (id) => `education/${id}`
 
 
 export const getSystem = (id) => `system/${id}`
-export const getAccounting = (id) => `accounting/${id}/*`
+export const getAccounting = (id) => `accounting/*`
 
 export const getInkasatsiya = (id) => `inkasatsiya/${id}/*`
 
 
 export const getGroupHistory = (id) => `students/profile/:id/history/${id}`
 
-export const getRouteClassProfile = (id) => `groups/:id/classProfile/${id}`
+export const getRouteClassProfile = (id) => `groups/classProfile/${id}`
 export const getCapitalCategoryProfile = (id) => `capital/:id/capitalBoxProfile/:id/categoryProfile/${id}`
 
 

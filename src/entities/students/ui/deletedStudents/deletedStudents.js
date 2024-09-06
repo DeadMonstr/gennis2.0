@@ -43,13 +43,13 @@ export const DeletedStudents = ({currentTableData}) => {
                     return(
                         <tr  onClick={() => navigation(`profile/${item.id}`)}>
                             <td>{i + 1}</td>
-                            <td>{item?.student?.user?.name} {item.student?.user?.surname}</td>
-                            <td>{item.student?.user?.age}</td>
-                            <td>{item.student?.user?.phone}</td>
-                            <td>{item.group}</td>
-                            <td>{item.student?.user?.registered_date}</td>
-                            <td>{item.deletedDate}</td>
-                            <td>{item.reason}</td>
+                            <td>{item?.student?.user?.name} {item?.student?.user?.surname}</td>
+                            <td>{item?.student?.user?.age}</td>
+                            <td>{item?.student?.user?.phone}</td>
+                            <td>{item?.group.name}</td>
+                            <td>{item?.student?.user?.registered_date}</td>
+                            <td>{item?.deleted_date}</td>
+                            <td>{item?.group_reason.name}</td>
                         </tr>
                     )
                 }

@@ -55,7 +55,7 @@ const deleteTypeList = [
     }
 ]
 
-export const GroupProfileDeleteForm = memo(() => {
+export const GroupProfileDeleteForm = memo(({branch,system}) => {
 
     const {
         register,
@@ -65,7 +65,6 @@ export const GroupProfileDeleteForm = memo(() => {
     const {theme} = useTheme()
     const {id} = useParams()
     const dispatch = useDispatch()
-    const branch = localStorage.getItem("selectedBranch")
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
     const userBranchId = useSelector(getUserBranchId)
     const data = useSelector(getGroupProfileData)
@@ -78,7 +77,7 @@ export const GroupProfileDeleteForm = memo(() => {
     useEffect(() => {
         if (data && branch) {
             dispatch(filteredStudents({
-                branch,
+                userBranchId:branch,
                 group_id: data?.id,
                 res: {ignore_students: data?.students.map(item => item.id)}
             }))
@@ -98,6 +97,8 @@ export const GroupProfileDeleteForm = memo(() => {
 
     const [searchValue, setSearchValue] = useState("")
     const [currentTeachersData, setCurrentTeachersData] = useState([])
+
+
 
     const searched = useMemo(() => {
         const filteredSlice = students?.slice()
@@ -175,6 +176,7 @@ export const GroupProfileDeleteForm = memo(() => {
     }
 
     const renderStudents = () => {
+        console.log(data?.students, "studentsssssssss")
         return data?.students?.map(item =>
             <tr>
                 <td>
@@ -195,7 +197,7 @@ export const GroupProfileDeleteForm = memo(() => {
                         })}
                         onClick={() => setActiveModal("paymentModal")}
                     >
-                        {item.money}
+                        {item.debt}
                     </div>
                 </td>
                 {
@@ -230,6 +232,7 @@ export const GroupProfileDeleteForm = memo(() => {
     }
 
     const renderStudentsData = () => {
+        console.log(searched,"searchhhhhhhhhhhhhhhhhhhhhh")
         return searched?.map(item =>
             <tr>
                 <td>
@@ -527,7 +530,10 @@ export const GroupProfileDeleteForm = memo(() => {
                             <th/>
                             <th>Ism</th>
                             <th>Familya</th>
-                            <th>Fanlar</th>
+                            {
+                                system.type === "center" ? <th>Fanlar</th>: <th>Sinf</th>
+                            }
+
                             <th>Status</th>
                         </tr>
                         </thead>

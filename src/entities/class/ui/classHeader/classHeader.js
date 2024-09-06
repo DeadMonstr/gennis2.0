@@ -6,7 +6,7 @@ import {useState} from "react";
 import {Modal} from "shared/ui/modal";
 import {Button} from "shared/ui/button";
 import {ClassModal, ColorModal} from "../classModal/classModal";
-import {useForm} from "react-hook-form";
+import {set, useForm} from "react-hook-form";
 import {Switch} from "../../../../shared/ui/switch";
 import {ClassSwitch} from "../../../../pages/classPage/ui/switch/switch";
 import {API_URL, headers, useHttp} from "../../../../shared/api/base";
@@ -33,6 +33,7 @@ export const ClassHeader = ({
     const {request} = useHttp()
 
     const dispatch = useDispatch()
+    const [changeName, setChangeName] = useState(false)
 
 
     const [addClass, setAddClass] = useState(false)
@@ -61,7 +62,23 @@ export const ClassHeader = ({
             value: color,
             ...data
         }
+        setCreateColor(!createColorModal)
+        setValue("name", "")
         dispatch(createColor(res))
+
+    }
+    const changeColor = (data) => {
+        const id = edit
+
+        request(`${API_URL}Class/class_colors/${id}/`, "PATCH", JSON.stringify(data), headers())
+            .then(res => {
+                console.log(res)
+                setValue("name", "")
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
 
     }
     return (
@@ -99,6 +116,7 @@ export const ClassHeader = ({
 
 
                         <Button
+                            onClick={() => setChangeName(!changeName)}
                             type={"editPlus"}> <i className="fa fa-pen"/>
                         </Button>
 
@@ -109,10 +127,11 @@ export const ClassHeader = ({
 
             <ClassModal
                 edit={edit} handleSubmit={handleSubmit} register={register} onClick={editClassName}
-                        createClass={createClass} activeEdit={activeEdit}
-                        setActiveEdit={setActiveEdit} addClass={addClass} setAddClass={setAddClass} />
+                createClass={createClass} activeEdit={activeEdit}
+                setActiveEdit={setActiveEdit} addClass={addClass} setAddClass={setAddClass}/>
 
-            <ColorModal color={color} setColor={setColor} active={activeColor} setActive={setActiveColor}
+            <ColorModal changeColor={changeColor} changeName={changeName} setChangeName={setChangeName} color={color}
+                        setColor={setColor} active={activeColor} setActive={setActiveColor}
                         createColor={createColorModal} setCreateColor={setCreateColor} handleSubmit={handleSubmit}
                         addColor={addColor} register={register}/>
         </div>

@@ -73,11 +73,10 @@ const locationsSlice = createSlice({
                 const localstorageLocs = JSON.parse(localStorage.getItem("selectedLocations"))
 
 
-                console.log(localstorageLocs, "hvbasjdbasd")
                 if (localstorageLocs && localstorageLocs.length > 0) {
                     console.log("ure")
                     state.selectedLocations = localstorageLocs
-                    state.locations = state.locations.map(item => {
+                    state.locations = action.payload.list.map(item => {
 
                         const isHave = localstorageLocs.some(loc => loc.id === item.id)
 
@@ -87,6 +86,7 @@ const locationsSlice = createSlice({
                                 disabled: true
                             }
                         }
+                        return item
                     })
                 } else {
 
