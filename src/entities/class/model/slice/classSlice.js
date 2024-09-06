@@ -5,7 +5,7 @@ import {
     getClassTypeNumber,
     getClassTypes,
     getColor, updateClassItem,
-    updateClassType
+    updateClassType, updateColor
 } from "../thunk/classThunk";
 
 const initialState = {
@@ -20,7 +20,11 @@ const initialState = {
 const classSlice = createSlice({
     name: "classSlice",
     initialState,
-    reducers: {},
+    reducers: {
+        onDelete: (state, action) => {
+            state.color = state.color.filter(item => item.id !== action.payload.id)
+        },
+    },
     extraReducers: builder =>
         builder
             .addCase(getClassTypes.pending, state => {
@@ -90,15 +94,14 @@ const classSlice = createSlice({
             .addCase(classItem.fulfilled, (state, action) => {
                 state.loading = false
                 state.error = false
-                state.classItems =  action.payload
-                console.log(action.payload , "classsdsad")
+                state.classItems = action.payload
+                console.log(action.payload, "classsdsad")
 
             })
             .addCase(classItem.rejected, state => {
                 state.loading = false
                 state.error = true
             })
-
 
 
             .addCase(updateClassItem.pending, state => {
@@ -108,7 +111,7 @@ const classSlice = createSlice({
             .addCase(updateClassItem.fulfilled, (state, action) => {
                 state.loading = false
                 state.error = false
-                state.classItems =  [
+                state.classItems = [
                     ...state.classItems.filter(item => item.id !== action.payload.id),
                     action.payload
                 ]
@@ -120,7 +123,6 @@ const classSlice = createSlice({
             })
 
 
-
             .addCase(createColor.pending, state => {
                 state.loading = true
                 state.error = false
@@ -128,14 +130,13 @@ const classSlice = createSlice({
             .addCase(createColor.fulfilled, (state, action) => {
                 state.loading = false
                 state.error = false
-                state.color =  [...state.color , action.payload]
+                state.color = [...state.color, action.payload]
 
             })
             .addCase(createColor.rejected, state => {
                 state.loading = false
                 state.error = true
             })
-
 
 
             .addCase(getColor.pending, state => {
@@ -145,7 +146,7 @@ const classSlice = createSlice({
             .addCase(getColor.fulfilled, (state, action) => {
                 state.loading = false
                 state.error = false
-                state.color =  action.payload
+                state.color = action.payload
 
             })
             .addCase(getColor.rejected, state => {
@@ -153,6 +154,27 @@ const classSlice = createSlice({
                 state.error = true
             })
 
+
+            .addCase(updateColor.pending, state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(updateColor.fulfilled, (state, action) => {
+                state.loading = false
+                state.error = false
+                state.color = [
+                    ...state.color.filter(item => item.id !== action.payload.id),
+                    action.payload
+                ]
+
+            })
+            .addCase(updateColor.rejected, state => {
+                state.loading = false
+                state.error = true
+            })
+
 })
+
+export const {onDelete} = classSlice.actions
 
 export default classSlice.reducer

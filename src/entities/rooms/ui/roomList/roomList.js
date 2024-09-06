@@ -40,7 +40,7 @@ export const RoomsList = ({ currentTableData }) => {
                 ))}
             </div>
         );
-    } else if (currentTableData.length === 0)
+    } else if (currentTableData?.length === 0)
     {
         return (
             <div className={cls.skeletonContainer}>
@@ -60,7 +60,7 @@ export const RoomsList = ({ currentTableData }) => {
 
     const roomsToRender = getFilteredRoom && getFilteredRoom.length > 0 ? getFilteredRoom : currentTableData
 
-    if (!roomsToRender || roomsToRender.length === 0)
+    if (!roomsToRender || roomsToRender?.length === 0)
     {
         return (
             <DefaultLoader/>

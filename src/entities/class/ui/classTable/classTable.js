@@ -9,7 +9,7 @@ import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSli
 import {classItem, updateClassItem} from "../../model/thunk/classThunk";
 
 
-export const ClassTable = ({edit, classType, active, selectOptions , id}) => {
+export const ClassTable = ({edit, classType, active, selectOptions, id}) => {
     const [editClass, setEditClass] = useState(false)
     const [clickedCheckbox, setClickedCheckbox] = useState([])
     const {register, handleSubmit, setValue} = useForm()
@@ -30,10 +30,11 @@ export const ClassTable = ({edit, classType, active, selectOptions , id}) => {
         }
         const idClass = editClass
 
-
+        setValue("curriculum_hours", "")
+        setValue("price", "")
         dispatch(updateClassItem({idClass, res}))
         setEditClass(!editClass)
-        dispatch(classItem(id))
+        dispatch(classItem(1))
 
     }
 
@@ -89,6 +90,7 @@ export const ClassTable = ({edit, classType, active, selectOptions , id}) => {
                         ))}
                     </div>
                 </td>
+                <td>{item.price}</td>
                 <td>{item?.curriculum_hours}</td>
                 <td style={{width: "3rem"}}>
                     {item?.status ?
@@ -152,6 +154,7 @@ export const ClassTable = ({edit, classType, active, selectOptions , id}) => {
                         <th>No</th>
                         <th>Sinf Raqami</th>
                         <th>Fanlari</th>
+                        <th>Narxi</th>
                         <th>Dars soati</th>
                         <th/>
 

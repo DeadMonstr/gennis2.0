@@ -3,7 +3,7 @@ import classNames from "classnames";
 import {useState} from "react";
 
 
-export const ClassColorAddFilter = ({color, setEdit, edit}) => {
+export const ClassColorAddFilter = ({color, setEdit, edit, setChangeName, changeName , setValue}) => {
 
     // const color1rgb = hexToRgb(item?.teacher[0]?.color ? item?.teacher[0]?.color : "#ffffff");
     //
@@ -17,8 +17,6 @@ export const ClassColorAddFilter = ({color, setEdit, edit}) => {
     //     color: brightness > 125 ? "black" : "white"
     // }
 
-    const [activeMenu, setActiveMenu] = useState(color[0].name)
-
     const renderTable = () => {
 
 
@@ -27,7 +25,7 @@ export const ClassColorAddFilter = ({color, setEdit, edit}) => {
 
             function hexToRgb(hex) {
                 var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-                hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+                hex = hex.replace(shorthandRegex, function (m, r, g, b) {
                     return r + r + g + g + b + b;
                 });
 
@@ -43,7 +41,6 @@ export const ClassColorAddFilter = ({color, setEdit, edit}) => {
             const color1rgb = hexToRgb(item?.value ? item?.value : "#ffffff");
 
 
-
             const brightness = Math.round(((parseInt(color1rgb.r) * 299) +
                 (parseInt(color1rgb.g) * 587) +
                 (parseInt(color1rgb.b) * 114)) / 1000);
@@ -56,13 +53,13 @@ export const ClassColorAddFilter = ({color, setEdit, edit}) => {
 
             return <li
                 style={style}
-                className={classNames(cls.classFilter_li, {
-                    [cls.active]: activeMenu === item.name,
-                })}
+                className={classNames(cls.classFilter_li)}
                 key={i}
                 onClick={() => {
                     setEdit(item.id)
-                    setActiveMenu(item.name)
+                    setValue("name" , item.name)
+                    setChangeName(!changeName)
+
                 }}
             >{item.name}
                 <span>{item.class}</span>

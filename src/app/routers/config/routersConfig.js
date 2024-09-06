@@ -349,10 +349,10 @@ export const routersConfig = [
         path: getGroupHistory(":id"),
         element: <StudentProfileGroupsHistory/>
     },
-    {
-        name: "capital category profile",
-        path: getCapitalCategoryProfile(":id"),
-        element: <CategoryProfile/>
-    },
+    // {
+    //     name: "capital category profile",
+    //     path: getCapitalCategoryProfile(":id"),
+    //     element: <CategoryProfile/>
+    // },
 
 ]

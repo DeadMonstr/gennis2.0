@@ -81,7 +81,6 @@ export const ClassModal = ({
     // }
 
 
-
     return (
         <>
             <Modal active={activeEdit} setActive={setActiveEdit}>
@@ -108,7 +107,8 @@ export const ClassModal = ({
                 <h2>Ma’lumotlarni o’zgartirish</h2>
                 <div>
                     <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>
-                        <Input  name={"curriculum_hours"} register={register} type={"number"}/>
+                        <Input name={"curriculum_hours"} register={register} type={"number"} placeholder={"darslar soati"}/>
+                        <Input name={"price"} register={register} type={"number"} placeholder={"narxi"}/>
                         {/*<Select onChangeOption={onChangeSelect} options={subject}/>*/}
 
                         <div className={cls.selectBox}>
@@ -172,7 +172,10 @@ export const ColorModal = ({
                                setActive,
                                changeName,
                                setChangeName,
-                               changeColor
+                               changeColor,
+                               setColorChange,
+                               colorChange,
+                               deleteColor
                            }) => {
 
 
@@ -203,11 +206,28 @@ export const ColorModal = ({
 
 
             <Modal active={changeName} setActive={setChangeName}>
-                <h2>Rangni oz'gartirish</h2>
+                <h2>Rangni oz'gartirish yoki O'chirish</h2>
                 <div>
-                    <Form extraClassname={cls.extraClassForm} onSubmit={handleSubmit(changeColor)}>
-                        <Input required name={"name"} register={register}/>
 
+                    <Form extraClassname={cls.extraClassForm} typeSubmit={""}>
+                        <Input name={"name"} register={register}/>
+                        <div className={cls.changeColorItem}>
+                            <div className={cls.color}>
+                                <h2>Tanlangan rang :</h2>
+                                <div className={cls.modalBox} style={{background: colorChange}}></div>
+                            </div>
+                            <HexColorPicker style={{width: "22rem", height: "15rem"}} color={colorChange}
+                                            onChange={setColorChange}/>
+                            {/*<div style={{display: "flex" , flexWrap: "wrap",width: "30rem"}}>*/}
+                            {/*    /!*<Button onClick={() => setColor("#c6ad23")}>Choose gold</Button>*!/*/}
+                            {/*    <Button onClick={() => setColor("#22C55E")}>Choose green</Button>*/}
+                            {/*    <Button onClick={() => setColor("#2563EB")}>Choose blue</Button>*/}
+                            {/*</div>*/}
+                        </div>
+                        <div style={{display: "flex", gap: "2rem"}}>
+                            <Button onClick={handleSubmit(changeColor)}>Rangni o'zgartirish</Button>
+                            <Button onClick={handleSubmit(deleteColor)} type={"danger"}>Rangni O'chirish</Button>
+                        </div>
                     </Form>
 
                 </div>
