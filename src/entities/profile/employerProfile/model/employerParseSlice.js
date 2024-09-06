@@ -13,18 +13,26 @@ export const employerParseSlice = createSlice({
     reducers: {},
     extraReducers: builder => {
         builder
-            .addCase(fetchEmployerId.pending, state => { state.fetchTeacherStatus = 'loading' })
+            .addCase(fetchEmployerId.pending, state => {
+                state.loading = true
+                state.error = null
+            })
             .addCase(fetchEmployerId.fulfilled, (state, action) => {
-                state.fetchTeacherStatus = 'success';
+                state.loading = false;
+                state.error = null
                 state.employerId = action.payload;
             })
-            .addCase(fetchEmployerId.rejected, state => { state.fetchTeacherStatus = "error" })
+            .addCase(fetchEmployerId.rejected, state => {
+                state.loading = false
+                state.error = "error"
+            })
             .addCase(editEmployerThunk.pending, state => {
                 state.loading = true;
                 state.error = null;
             })
             .addCase(editEmployerThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null;
                 state.employerId = {
                     ...state.employerId,
                     ...action.payload

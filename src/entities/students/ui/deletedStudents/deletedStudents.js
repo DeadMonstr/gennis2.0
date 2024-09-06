@@ -1,32 +1,30 @@
-import React, {useMemo, useState} from "react";
+import {fetchReasons} from "entities/profile/groupProfile";
+import {getReasons} from "entities/profile/groupProfile/model/groupProfileSelector";
+import React, {useEffect, useMemo, useState} from "react";
 import classNames from "classnames";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 
 import {Table} from "shared/ui/table";
 
 import cls from "./deletedStudents.module.sass";
-import {DefaultLoader} from "shared/ui/defaultLoader";
-
-
-
-
-
-const menuList = [
-    {name: "all", label: 'hammasi'},
-    {name: "teacherDontLike", label: 'O’qituvchi yoqmadi'},
-    {name: "badSituation", label: 'Pul oilaviy sharoit'},
-    {name: "couldStudy", label: 'O’quvchi o’qishni eplolmadi'},
-    {name: "finished", label: 'Kursni tamomladi'},
-    {name: "other", label: 'boshqa'},
-
-]
 
 
 export const DeletedStudents = ({currentTableData}) => {
-    const [activeMenu, setActiveMenu] = useState(menuList[0]?.name)
+
+    const dispatch = useDispatch()
+
+    const reasons = useSelector(getReasons)
+    const [activeMenu, setActiveMenu] = useState("all")
+    const [currentReasons , setCurrentReasons] = useState([])
     const [deletedStudentsData , setDeletedStudents] = useState([])
     const navigation = useNavigate()
+
+    console.log(reasons, "reasons")
+
+    useEffect(() =>{
+        dispatch(fetchReasons())
+    },[])
 
 
     const renderDeletedStudents = () => {
@@ -37,10 +35,24 @@ export const DeletedStudents = ({currentTableData}) => {
         //         <DefaultLoader/>
         //     )
         // }
+
         return currentTableData.map((item,  i) =>{
-            switch (activeMenu) {
-                case ("all"): {
-                    return(
+            if (activeMenu === "all") {
+                return (
+                    <tr  onClick={() => navigation(`profile/${item.id}`)}>
+                        <td>{i + 1}</td>
+                        <td>{item?.student?.user?.name} {item?.student?.user?.surname}</td>
+                        <td>{item?.student?.user?.age}</td>
+                        <td>{item?.student?.user?.phone}</td>
+                        <td>{item?.group.name}</td>
+                        <td>{item?.student?.user?.registered_date}</td>
+                        <td>{item?.deleted_date}</td>
+                        <td>{item?.group_reason.name}</td>
+                    </tr>
+                )
+            } else {
+                if (item?.group_reason?.id === activeMenu) {
+                    return (
                         <tr  onClick={() => navigation(`profile/${item.id}`)}>
                             <td>{i + 1}</td>
                             <td>{item?.student?.user?.name} {item?.student?.user?.surname}</td>
@@ -52,146 +64,38 @@ export const DeletedStudents = ({currentTableData}) => {
                             <td>{item?.group_reason.name}</td>
                         </tr>
                     )
-                }
-                case "teacherDontLike" :
-                    if (item.teacherDontLike){
-                        return (
-                            <tr onClick={() => navigation(`profile/${item.id}`)}>
-                                <td>{i + 1}</td>
-                                <td>{item.name} {item.surname}</td>
-                                <td>{item.age}</td>
-                                <td>{item.number}</td>
-                                <td>{item.group}</td>
-                                <td>{item.reg_date}</td>
-                                <td>{item.deletedDate}</td>
-                                <td>{item.reason}</td>
-                            </tr>
-                        )
-                    }
+                } else return null
             }
         })
-        // return currentTableData.map((item, i) => {
-        //     if (activeMenu === "all") {
-        //         return (
-        //             <tr>
-        //                 <td>{i + 1}</td>
-        //                 <td>{item.name} {item.surname}</td>
-        //                 <td>{item.age}</td>
-        //                 <td>{item.number}</td>
-        //                 <td>{item.group}</td>
-        //                 <td>{item.reg_date}</td>
-        //                 <td>{item.deletedDate}</td>
-        //                 <td>{item.reason}</td>
-        //             </tr>
-        //
-        //         )
-        //     } else if (activeMenu === "teacherDontLike") {
-        //         if (item.teacherDontLike) {
-        //             return (
-        //
-        //                 <tr>
-        //                     <td>{i + 1}</td>
-        //                     <td>{item.name} {item.surname}</td>
-        //                     <td>{item.age}</td>
-        //                     <td>{item.number}</td>
-        //                     <td>{item.group}</td>
-        //                     <td>{item.reg_date}</td>
-        //                     <td>{item.deletedDate}</td>
-        //                     <td>{item.reason}</td>
-        //                 </tr>
-        //
-        //             )
-        //         }
-        //     }
-        //     else if (activeMenu === "badSituation") {
-        //         if (item.badSituation) {
-        //             return (
-        //
-        //                 <tr>
-        //                     <td>{i + 1}</td>
-        //                     <td>{item.name} {item.surname}</td>
-        //                     <td>{item.age}</td>
-        //                     <td>{item.number}</td>
-        //                     <td>{item.group}</td>
-        //                     <td>{item.reg_date}</td>
-        //                     <td>{item.deletedDate}</td>
-        //                     <td>{item.reason}</td>
-        //                 </tr>
-        //
-        //             )
-        //         }
-        //     }
-        //     else if (activeMenu === "couldStudy") {
-        //         if (item.couldStudy) {
-        //             return (
-        //
-        //                 <tr>
-        //                     <td>{i + 1}</td>
-        //                     <td>{item.name} {item.surname}</td>
-        //                     <td>{item.age}</td>
-        //                     <td>{item.number}</td>
-        //                     <td>{item.group}</td>
-        //                     <td>{item.reg_date}</td>
-        //                     <td>{item.deletedDate}</td>
-        //                     <td>{item.reason}</td>
-        //                 </tr>
-        //
-        //             )
-        //         }
-        //     }
-        //     else if (activeMenu === "finished") {
-        //         if (item.finished) {
-        //             return (
-        //
-        //                 <tr>
-        //                     <td>{i + 1}</td>
-        //                     <td>{item.name} {item.surname}</td>
-        //                     <td>{item.age}</td>
-        //                     <td>{item.number}</td>
-        //                     <td>{item.group}</td>
-        //                     <td>{item.reg_date}</td>
-        //                     <td>{item.deletedDate}</td>
-        //                     <td>{item.reason}</td>
-        //                 </tr>
-        //
-        //             )
-        //         }
-        //     }
-        //     else if (activeMenu === "other") {
-        //         if (item.other) {
-        //             return (
-        //
-        //                 <tr>
-        //                     <td>{i + 1}</td>
-        //                     <td>{item.name} {item.surname}</td>
-        //                     <td>{item.age}</td>
-        //                     <td>{item.number}</td>
-        //                     <td>{item.group}</td>
-        //                     <td>{item.reg_date}</td>
-        //                     <td>{item.deletedDate}</td>
-        //                     <td>{item.reason}</td>
-        //                 </tr>
-        //
-        //             )
-        //         }
-        //     }
-        // })
+
+
     }
 
     return (
         <div className={cls.deletedStudents}>
 
             <ul className={cls.deletedStudents__menu}>
-                {menuList.map((item, i) => <li
-                    key={i}
+                <li
+                    key={6}
                     className={classNames(cls.other__item, {
-                        [cls.active]: activeMenu === item.name
+                        [cls.active]: activeMenu === "all"
                     })}
                     onClick={() => {
-                        setActiveMenu(item.name)
+                        setActiveMenu("all")
                     }}
                 >
-                    {item.label}
+                    Hammasi
+                </li>
+                {reasons?.map((item, i) => <li
+                    key={i}
+                    className={classNames(cls.other__item, {
+                        [cls.active]: activeMenu === item.id
+                    })}
+                    onClick={() => {
+                        setActiveMenu(item.id)
+                    }}
+                >
+                    {item.name}
                 </li>)}
             </ul>
             <div className={cls.table}>
@@ -219,707 +123,3 @@ export const DeletedStudents = ({currentTableData}) => {
 
     );
 };
-
-
-
-
-
-
-//export const allStudentsData = [
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 14,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         teacherDontLike: true,
-//         id: 1
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 15,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         badSituation: true,
-//         id: 2
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 16,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         couldStudy: true,
-//         id: 3
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         finished: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 14,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         teacherDontLike: true,
-//         id: 1
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 15,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         badSituation: true,
-//         id: 2
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 16,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         couldStudy: true,
-//         id: 3
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         finished: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 14,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         teacherDontLike: true,
-//         id: 1
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 15,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         badSituation: true,
-//         id: 2
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 16,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         couldStudy: true,
-//         id: 3
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         finished: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 14,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         teacherDontLike: true,
-//         id: 1
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 15,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         badSituation: true,
-//         id: 2
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 16,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         couldStudy: true,
-//         id: 3
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         finished: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 14,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         teacherDontLike: true,
-//         id: 1
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 15,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         badSituation: true,
-//         id: 2
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 16,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         couldStudy: true,
-//         id: 3
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         finished: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 14,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         teacherDontLike: true,
-//         id: 1
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 15,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         badSituation: true,
-//         id: 2
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 16,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         couldStudy: true,
-//         id: 3
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         finished: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 14,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         teacherDontLike: true,
-//         id: 1
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 15,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         badSituation: true,
-//         id: 2
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 16,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         couldStudy: true,
-//         id: 3
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         finished: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 14,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         teacherDontLike: true,
-//         id: 1
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 15,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         badSituation: true,
-//         id: 2
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 16,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         couldStudy: true,
-//         id: 3
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         finished: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 14,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         teacherDontLike: true,
-//         id: 1
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 15,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         badSituation: true,
-//         id: 2
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 16,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         couldStudy: true,
-//         id: 3
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         finished: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-//     {
-//         name: "AnelyaErmekova",
-//         surname: "AnelyaErmekova",
-//         age: 18,
-//         number: 1233131,
-//         group: "1-guruh",
-//         reg_date: "22.22.22",
-//         deletedDate: "12312",
-//         reason: "boshqa",
-//         other: true,
-//         id: 4
-//     },
-// ]

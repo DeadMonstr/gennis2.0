@@ -71,6 +71,15 @@ export const Select = React.memo(({
 
     return register ? (
         <label className={classNames(cls.label, extraClass)}>
+            {
+                title ?
+                    <div className={cls.info}>
+                        <span className={cls.info__inner}>
+                            {title}
+                        </span>
+                    </div>
+                    : null
+            }
             <select
                 disabled={status === "disabled"}
                 className={classNames(cls.label__inner, extraClass, {
@@ -96,6 +105,15 @@ export const Select = React.memo(({
         </label>
     ) : (
         <label className={classNames(cls.label, extraClass)}>
+            {
+                title ?
+                    <div className={cls.info}>
+                        <span className={cls.info__inner}>
+                            {title}
+                        </span>
+                    </div>
+                    : null
+            }
             <select
                 disabled={status === "disabled"}
                 className={classNames(cls.label__inner, extraClass, {

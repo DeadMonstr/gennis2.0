@@ -75,7 +75,7 @@ import {Inkasatsiya} from "pages/inkasatsiyaPage";
 import {AccountingBooks} from "entities/accounting";
 // import Calendar from "react-calendar";
 import {CalendarPage} from "pages/calendarPage";
-import {TimeTable} from "pages/timeTable";
+// import {TimeTable} from "pages/timeTable";
 import {StudentProfileGroupsHistory} from "../../../entities/profile/studentProfile";
 import {TimeTableTuronPage} from "pages/timeTable";
 import {CategoryProfileProfile} from "entities/capital/ui/categoryProfileProfile/categoryProfileProfile"

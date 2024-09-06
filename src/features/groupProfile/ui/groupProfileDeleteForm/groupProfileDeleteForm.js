@@ -392,7 +392,7 @@ export const GroupProfileDeleteForm = memo(({branch,system}) => {
                 >
                     <Select
                         extraClass={cls.deleteForm__select}
-                        options={userSystem?.id === 1 ? teachers : schoolTeachers}
+                        options={userSystem?.type === "center" ? teachers : schoolTeachers}
                         title={"Teacher"}
                         onChangeOption={onFilterGroups}
                         // register={register}

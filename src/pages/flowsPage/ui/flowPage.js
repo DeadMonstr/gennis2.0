@@ -2,6 +2,8 @@ import {getUserBranchId} from "entities/profile/userProfile";
 import {getCurseLevelData} from "entities/students";
 import {getCurseLevel} from "entities/students/model/studentsSlice";
 import {FlowAddForm} from "features/flow";
+import {Pagination} from "features/pagination";
+import {getSearchValue} from "features/searchInput";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import cls from "./flowsPage.module.sass"
 import {Select} from "shared/ui/select";
@@ -26,7 +28,7 @@ export const FlowsPage = () => {
     let PageSize = useMemo(() => 50, [])
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
-    const [search, setSearch] = useState("")
+    const search = useSelector(getSearchValue);
 
     const branch = localStorage.getItem("selectedBranch")
     const {request} = useHttp()
@@ -38,6 +40,17 @@ export const FlowsPage = () => {
     const level = useSelector(getCurseLevelData)
 
     const [active, setActive] = useState(false)
+
+    const searchedFlow = useMemo(() => {
+        const filteredRooms = flows?.filter(item => !item.deleted) || [];
+        setCurrentPage(1);
+
+        if (!search) return filteredRooms;
+
+        return filteredRooms.filter(item =>
+            item?.name?.toLowerCase().includes(search.toLowerCase())
+        );
+    }, [flows, search]);
 
 
 
@@ -70,24 +83,23 @@ export const FlowsPage = () => {
 
             </div>
             <Flows
-                currentTableData={flows}
+                currentTableData={currentTableData}
                 loading={flowsLoading}
                 teacherData={teachers}
                 levelData={level}
                 getLevelData={getLevelData}
                 setActive={setActive}
             />
-            {/*<Pagination*/}
-            {/*    setCurrentTableData={setCurrentTableData}*/}
-            {/*    users={flows}*/}
-            {/*    search={search}*/}
-            {/*    setCurrentPage={setCurrentPage}*/}
-            {/*    currentPage={currentPage}*/}
-            {/*    pageSize={PageSize}*/}
-            {/*    onPageChange={page => {*/}
-            {/*        setCurrentPage(page)*/}
-            {/*    }}*/}
-            {/*    type={"custom"}/>*/}
+            <Pagination
+                setCurrentTableData={setCurrentTableData}
+                users={searchedFlow}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                pageSize={PageSize}
+                onPageChange={page => {
+                    setCurrentPage(page)
+                }}
+                type={"custom"}/>
             <FlowAddForm
                 active={active}
                 setActive={setActive}

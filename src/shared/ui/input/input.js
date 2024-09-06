@@ -28,9 +28,9 @@ export const Input = React.memo(({
 
     return register ? (
         <label style={style} className={cls.inputLabel} htmlFor={name}>
-            {title || subTitle ? (
+            {title || subTitle || placeholder ? (
                 <div className={cls.info}>
-                    {title && <span>{title}</span>}
+                    {(title || placeholder) && <span>{title ? title : placeholder}</span>}
                     {subTitle && <span>{subTitle}</span>}
                 </div>
             ) : null}

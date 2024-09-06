@@ -1,3 +1,4 @@
+import {getVacancySystems} from "features/vacancyModals/vacancyPageAdd/model/selectors/selectors";
 import React, { useEffect, useState } from 'react';
 import { Modal } from "shared/ui/modal";
 import { Input } from "shared/ui/input";
@@ -13,7 +14,7 @@ export const VacancyAdd = React.memo(({ active, setActive }) => {
     const [subjectName, setSubjectName] = useState('');
     const [systemType, setSystemType] = useState('');
     const dispatch = useDispatch();
-    const vacancySystemData = useSelector(getVacancyJobs);
+    const vacancySystemData = useSelector(getVacancySystems);
 
 
     const handleAdd = () => {
@@ -53,7 +54,7 @@ export const VacancyAdd = React.memo(({ active, setActive }) => {
                         extraClass={cls.filter__select}
                         value={systemType}
                         onChangeOption={(value) => setSystemType(value)}
-                        options={vacancySystemData?.systems || []}
+                        options={vacancySystemData || []}
                     />
                     <Button
                         extraClass={cls.buttonChange}

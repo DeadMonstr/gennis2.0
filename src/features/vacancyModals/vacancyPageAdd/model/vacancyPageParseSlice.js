@@ -3,6 +3,7 @@ import {fetchVacancyData} from "./vacancyPageParseThunk";
 
 const initialState = {
     vacanciesData: [],
+    vacanciesSystems: [],
     loading: false,
     error: null
 }
@@ -17,7 +18,8 @@ export const vacancyPageParseSlice = createSlice({
             .addCase(fetchVacancyData.pending, (state) => {state.loading = true})
             .addCase(fetchVacancyData.fulfilled, (state, action) => {
                 state.loading = false;
-                state.vacanciesData = action.payload
+                state.vacanciesData = action.payload?.jobs
+                state.vacanciesSystems = action.payload?.systems
                 console.log(action.payload, "jobs")
             })
             .addCase(fetchVacancyData.rejected, (state) => {

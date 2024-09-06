@@ -77,7 +77,8 @@ export const Rooms = () => {
                 </div>
                 <div className={cls.mainContainer_tablePanelBox}>
                     {
-                        loading ? <DefaultPageLoader/> : <RoomsList
+                        // loading ? <DefaultPageLoader/> :
+                            <RoomsList
                             currentTableData={searchedRooms.slice((currentPage - 1) * PageSize, currentPage * PageSize)}/>
                     }
                     {/*<RoomsList currentTableData={searchedRooms.slice((currentPage - 1) * PageSize, currentPage * PageSize)} />*/}

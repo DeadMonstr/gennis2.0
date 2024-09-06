@@ -39,7 +39,7 @@ import {fetchTeachersData} from "entities/teachers";
 import {fetchGroupsData} from "entities/groups";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
-import {fetchSubjects} from "pages/registerPage";
+import {fetchLanguages, fetchSubjects} from "pages/registerPage";
 
 import cls from "./groupProfilePage.module.sass";
 import {getBranch} from "features/branchSwitcher";
@@ -63,6 +63,7 @@ export const GroupProfilePage = () => {
     useEffect(() => {
         dispatch(fetchGroupProfile({id}))
         dispatch(fetchSubjects())
+        dispatch(fetchLanguages())
         dispatch(fetchReasons())
         dispatch(fetchWeekDays())
         dispatch(fetchClassColors())
@@ -103,7 +104,7 @@ export const GroupProfilePage = () => {
             })
             .catch(err => console.log(err))
         // }
-    }, [id, systemId])
+    }, [id, system])
 
     // useEffect(() => {
     //     if (branchId && data) {
@@ -128,7 +129,7 @@ export const GroupProfilePage = () => {
     }, [data])
 
     useEffect(() => {
-        if (branch && data && timeTable && systemId === 1) {
+        if (branch && data && timeTable && system.type === "center") {
             const res = {
                 time_tables: timeTable.map(item => ({
                     week: item.week.id,
@@ -146,7 +147,7 @@ export const GroupProfilePage = () => {
             }))
         }
 
-    }, [branch, data, timeTable, systemId])
+    }, [branch, data, timeTable, system])
 
     if (loading) {
         return <DefaultPageLoader/>
@@ -159,12 +160,12 @@ export const GroupProfilePage = () => {
                     [cls.active]: active
                 })}
             >
-                <GroupProfileModalTeachers/>
+                <GroupProfileModalTeachers branch={branch}/>
                 {/*<GroupProfileTeacher setActive={setActiveModal}/>*/}
                 <GroupProfileDeleteForm branch={branch} system={system}/>
                 {/*<GroupProfileStudents/>*/}
                 {
-                    systemId === 1 ? <>
+                    system.type === "center" ? <>
                         <GroupProfileStatistics setActive={setActive}/>
                         <GroupProfileAttendanceForm/>
                         {/*<GroupProfileAttendance/>*/}

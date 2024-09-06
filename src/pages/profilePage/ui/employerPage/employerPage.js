@@ -7,7 +7,7 @@ import {fetchEmployerId, getEmployerId, getEmployerLoading} from "../../../../en
 import {ImageCrop} from "../../../../features/imageCrop";
 import {changeEmployerProfileImage} from "../../../../entities/profile/employerProfile";
 import {EmployerProfileInfo} from "../../../../entities/profile/employerProfile";
-import {DefaultLoader} from "../../../../shared/ui/defaultLoader";
+import {DefaultLoader, DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 export const ContextStuPro = createContext(null)
 
 export const ProfileEmployerPage = () => {
@@ -22,6 +22,13 @@ export const ProfileEmployerPage = () => {
     const loadingDef = useSelector(getEmployerLoading)
 
 
+    useEffect(() => {
+        if (id)
+        {
+            dispatch(fetchEmployerId(id))
+        }
+
+    } ,[dispatch, id])
 
 
     const onSubmitImage = (data) => {
@@ -30,7 +37,7 @@ export const ProfileEmployerPage = () => {
         dispatch(changeEmployerProfileImage({id: employerId.id, data}))
     }
 
-
+    if (loadingDef) return <DefaultPageLoader/>
     return (
         // <ContextStuPro.Provider value={}>
         <div

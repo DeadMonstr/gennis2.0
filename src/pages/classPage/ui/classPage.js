@@ -21,11 +21,11 @@ export const ClassPage = ({setEdit, edit, activeEdit, setActiveEdit , activeMenu
     // const classType = useSelector(classTypeNumber)
     const classType  = useSelector(classItems)
 
-    useEffect(() => {
-        dispatch(classItem())
-        dispatch(fetchSubjects())
-        // dispatch(getClassTypeNumber())
-    }, [])
+    // useEffect(() => {
+    //     dispatch(classItem())
+    //     dispatch(fetchSubjects())
+    //     // dispatch(getClassTypeNumber())
+    // }, [])
 
 
 

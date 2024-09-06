@@ -1,3 +1,4 @@
+import {getBranch} from "features/branchSwitcher";
 import React, {useEffect, useState} from 'react';
 
 import cls from "./TimeTableTuronPage.module.sass"
@@ -200,18 +201,19 @@ export const TimeTableTuronPage = () => {
     const subjectsData = useSelector(getTimeTableTuronSubjects)
     const teachersData = useSelector(getTimeTableTuronTeachers)
     const teachersStatus = useSelector(getTimeTableTuronTeachersStatus)
+    const {id: branch} = useSelector(getBranch)
 
 
     const dispatch = useDispatch()
 
 
     useEffect(() => {
-        if (day) dispatch(fetchTimeTableData({id: day, type: "class"}))
-    }, [day])
+        if (day && branch) dispatch(fetchTimeTableData({id: day, type: "class", branch}))
+    }, [day, branch])
 
     useEffect(() => {
-        if (type) dispatch(fetchTimeTableTypesData(type))
-    }, [type])
+        if (type && branch) dispatch(fetchTimeTableTypesData({type, branch}))
+    }, [type, branch])
 
 
     useEffect( () => {
@@ -254,11 +256,11 @@ export const TimeTableTuronPage = () => {
     }, [teachersData,teachersStatus])
 
     useEffect(() => {
-        if (selectedSubject) {
+        if (selectedSubject && branch) {
             setLoading(true)
-            dispatch(fetchTimeTableTeacher(selectedSubject))
+            dispatch(fetchTimeTableTeacher({subject:selectedSubject, branch}))
         }
-    }, [selectedSubject])
+    }, [selectedSubject, branch])
 
 
     // const showAlert = (type, message) => {
@@ -299,7 +301,7 @@ export const TimeTableTuronPage = () => {
 
         setLoading(true)
 
-        const res = await request(`${API_URL}SchoolTimeTable/can-set${type === "flow" ? "-flow" : ""}/?branch=25`, "POST", JSON.stringify(data), headers())
+        const res = await request(`${API_URL}SchoolTimeTable/can-set${type === "flow" ? "-flow" : ""}/?branch=${branch}`, "POST", JSON.stringify(data), headers())
             .then(res => {
                 setLoading(false)
 
@@ -322,7 +324,7 @@ export const TimeTableTuronPage = () => {
 
         setLoading(true)
 
-        const res = await request(`${API_URL}SchoolTimeTable/timetable-update-hours-rooms/?branch=25`, "POST", JSON.stringify(data), headers())
+        const res = await request(`${API_URL}SchoolTimeTable/timetable-update-hours-rooms/?branch=${branch}`, "POST", JSON.stringify(data), headers())
             .then(res => {
                 setLoading(false)
 

@@ -57,6 +57,7 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
             return (
                 <tr>
                     <td>{i + 1}</td>
+                    <td>{item?.name}</td>
                     <td
                         onClick={() => navigate(`flowsProfile/${item?.id}`)}
                     >
@@ -93,6 +94,7 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
                 <thead>
                 <tr>
                     <th>No</th>
+                    <th>Nomi</th>
                     <th>Fan Level</th>
                     <th>O'quvchi soni</th>
                     <th>O'qituvchisi</th>

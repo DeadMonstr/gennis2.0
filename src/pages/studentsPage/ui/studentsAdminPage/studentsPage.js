@@ -29,13 +29,19 @@ import {
 import {Pagination} from "features/pagination";
 import {Button} from "shared/ui/button";
 import {useNavigate} from "react-router";
+import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import {Modal} from "shared/ui/modal";
 import {Form} from "shared/ui/form";
 import {Select} from "shared/ui/select";
 import {fetchTeachersData, getTeachers} from "entities/teachers";
 import {useForm} from "react-hook-form";
 import {fetchLanguages} from "pages/registerPage";
-import {getSchoolStudents} from "entities/students/model/selector/studentsSelector";
+import {
+    getLoadingDeletedStudents,
+    getLoadingNewStudents,
+    getLoadingStudents, getLoadingStudyingStudents,
+    getSchoolStudents
+} from "entities/students/model/selector/studentsSelector";
 import {createSchoolClass, fetchSchoolStudents} from "entities/students/model/studentsThunk";
 import {Radio} from "shared/ui/radio";
 import {Input} from "shared/ui/input";
@@ -70,14 +76,16 @@ export const StudentsPage = () => {
     const [searchParams] = useSearchParams();
 
 
-
     const {request} = useHttp()
     const dispatch = useDispatch()
     const {theme} = useTheme()
     const __THEME__ = localStorage.getItem("theme");
-    const { register, handleSubmit } = useForm();
+    const {register, handleSubmit} = useForm();
     const localSystem = JSON.parse(localStorage.getItem(""))
     const navigation = useNavigate()
+    const loadingNewStudents = useSelector(getLoadingNewStudents);
+    const loadingStudyingStudents = useSelector(getLoadingStudyingStudents);
+    const loadingDeletedStudents = useSelector(getLoadingDeletedStudents);
     const studyingStudents = useSelector(getStudyingStudents);
     const newStudents = useSelector(getNewStudentsData);
     const deletedStudents = useSelector(getOnlyDeletedStudents)
@@ -92,6 +100,7 @@ export const StudentsPage = () => {
     const languages = useSelector(state => state.registerUser.languages);
     const [data, setData] = useState({})
     const [selectColor, setSelectColor] = useState();
+    const [colorError, setColorError] = useState(false);
     const [selectTeacher, setSelectTeacher] = useState();
     const [selectStudents, setSelectStudents] = useState([]);
     const [activeModal, setActiveModal] = useState(false);
@@ -125,7 +134,7 @@ export const StudentsPage = () => {
 
         return filteredStudents.filter(item =>
             (item.user?.name?.toLowerCase().includes(search.toLowerCase()) ||
-              item.user?.surname?.toLowerCase().includes(search.toLowerCase()) ||
+                item.user?.surname?.toLowerCase().includes(search.toLowerCase()) ||
                 item?.student?.user?.name.toLowerCase().includes(search.toLowerCase()) ||
                 item?.student?.user?.surname.toLowerCase().includes(search.toLowerCase()))
         );
@@ -136,7 +145,7 @@ export const StudentsPage = () => {
             dispatch(fetchTeachersData({userBranchId}))
             dispatch(fetchLanguages())
         }
-    } , [userBranchId])
+    }, [userBranchId])
 
 
     useEffect(() => {
@@ -148,18 +157,21 @@ export const StudentsPage = () => {
     }, [userSystem?.id, userBranchId])
 
     const onSubmit = (data) => {
-
+        if (!selectColor && schoolClassColors.length <= 3) {
+            setColorError(true)
+            return null
+        }
         const res = {
             ...data,
             teacher: [+selectTeacher],
             // students: selectStudents,
-            color: selectColor,
+            color: data?.color ?? selectColor,
             branch: userBranchId,
             create_type: "school",
             system: userSystem.id
         }
         setData(res)
-        dispatch(fetchOnlyNewStudentsData({userBranchId, number: data?.class_number}))
+        dispatch(fetchOnlyNewStudentsData({id:userBranchId, number: data?.class_number}))
         setActive("post")
         // dispatch(createSchoolClass({res}))
 
@@ -182,7 +194,7 @@ export const StudentsPage = () => {
             default:
                 break;
         }
-    },[dispatch, selectedRadio,userBranchId]);
+    }, [dispatch, selectedRadio, userBranchId]);
 
     useEffect(() => {
 
@@ -195,12 +207,6 @@ export const StudentsPage = () => {
     }, [searchParams])
 
 
-
-
-
-
-
-
     const handleChange = (value) => {
         setSelectedRadio(value);
     };
@@ -208,17 +214,22 @@ export const StudentsPage = () => {
     const renderStudents = () => {
         switch (selectedRadio) {
             case "new_students":
+                if (loadingNewStudents === "loading") return <DefaultPageLoader/>
                 return (
                     <NewStudents
-                        theme={ theme === "app_school_theme"}
+                        theme={theme === "app_school_theme"}
                         setSelectStudents={setSelectStudents}
                         currentTableData={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
                     />
                 );
             case "deleted_students":
-                return <DeletedStudents currentTableData={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)} />;
+                if (loadingDeletedStudents === "loading") return <DefaultPageLoader/>
+                return <DeletedStudents
+                    currentTableData={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}/>;
             case "studying_students":
-                return <Students currentTableData={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)} />;
+                if (loadingStudyingStudents === "loading") return <DefaultPageLoader/>
+                return <Students
+                    currentTableData={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}/>;
             default:
                 return null;
         }
@@ -241,7 +252,6 @@ export const StudentsPage = () => {
             type: "studying_students"
         }
     ]
-
 
 
     return (
@@ -276,7 +286,7 @@ export const StudentsPage = () => {
             />
 
 
-            <StudentsFilter active={active==="filter"} setActive={setActive} activePage={selectedRadio}/>
+            <StudentsFilter active={active === "filter"} setActive={setActive} activePage={selectedRadio}/>
             <Modal
                 active={activeModal === "create"}
                 setActive={setActiveModal}
@@ -288,18 +298,21 @@ export const StudentsPage = () => {
                         extraClassname={cls.modal__form}
                     >
                         <Input
+                            required
                             extraClassName={cls.modal__input}
                             placeholder={"Sinf nomi"}
                             name={"name"}
                             register={register}
                         />
                         <Select
+                            required
                             extraClass={cls.modal__select}
                             title={"O'qituvchi"}
                             options={teachers}
                             onChangeOption={setSelectTeacher}
                         />
                         <Select
+                            required
                             extraClass={cls.modal__select}
                             title={"Til"}
                             options={languages}
@@ -307,31 +320,53 @@ export const StudentsPage = () => {
                             name={"language"}
                         />
                         <Select
+                            required
                             extraClass={cls.modal__select}
                             title={"Sinf raqami"}
                             options={schoolClassNumbers}
                             register={register}
                             name={"class_number"}
                         />
-                        <div className={cls.modal__radios}>
-                            {
-                                schoolClassColors?.map(item => {
-                                    return (
-                                        <div className={cls.modal__inner}>
-                                            <Radio
-                                                extraClasses={cls.modal__item}
-                                                onChange={() => setSelectColor(item.id)}
-                                                checked={selectColor === item.id}
-                                                name={"color"}
-                                            />
-                                            {
-                                                item.name
-                                            }
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
+                        {
+                            colorError ? <span className={cls.modal__error}>Sinfga rang tanlang</span> : null
+                        }
+                        {
+                            schoolClassColors.length <= 3 ?
+                                <div className={cls.modal__radios}>
+
+                                    {
+                                        schoolClassColors?.map(item => {
+                                            return (
+                                                <div className={cls.modal__inner}>
+                                                    <Radio
+                                                        extraClasses={cls.modal__item}
+                                                        onChange={() => {
+                                                            setSelectColor(item.id)
+                                                            setColorError(false)
+                                                        }}
+                                                        checked={selectColor === item.id}
+                                                        name={"color"}
+                                                    />
+                                                    {
+                                                        item.name
+                                                    }
+                                                </div>
+                                            )
+                                        })
+
+                                    }
+                                </div>
+                                :
+                                <Select
+                                    required
+                                    extraClass={cls.modal__select}
+                                    title={"Sinf rangi"}
+                                    name={"color"}
+                                    options={schoolClassColors}
+                                    register={register}
+                                />
+                        }
+
                         {/*<Input*/}
                         {/*    extraClassName={cls.modal__input}*/}
                         {/*    placeholder={"price"}*/}

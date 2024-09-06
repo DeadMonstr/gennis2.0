@@ -1,4 +1,7 @@
 
+export const classItemLoading = (state) =>
+    state.classSlice.loading
+
 export const classData  = (state) =>
     state.classSlice?.classData
 

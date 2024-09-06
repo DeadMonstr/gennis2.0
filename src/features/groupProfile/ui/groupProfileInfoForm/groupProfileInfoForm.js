@@ -53,9 +53,10 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
     const [activeSwitch, setActiveSwitch] = useState(data?.status ?? false)
 
     const onSubmitChange = (data) => {
+        console.log(data, "data change")
         const res = {
             ...data,
-            color: selectColor
+            color: data?.color ?? selectColor
         }
         dispatch(changeGroupProfile({
             status: activeSwitch,
@@ -73,7 +74,7 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
     const onDelete = () => {
         dispatch(deleteGroupProfile({
             id,
-            res: {type: userSystem?.id === 1 ? "center" : "school"}
+            res: {type: userSystem?.type}
         }))
         dispatch(deleteGroup(id))
         navigate(-2)
@@ -83,10 +84,11 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
         setValue("name", data?.name)
         setValue("price", data?.price)
         setValue("language", data?.language?.id)
-        if (userSystem?.id === 2) {
+        if (userSystem?.type === "school") {
+            setValue("color", data?.color?.id)
             setValue("class_number", data?.class_number?.id)
         }
-    }, [])
+    }, [userSystem?.type, data])
 
     return (
         <>
@@ -175,6 +177,7 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
                     <Input
                         extraClassName={cls.form__input}
                         placeholder={"Guruh nomi"}
+                        // title={"Guruh nomi"}
                         register={register}
                         name={"name"}
                         required
@@ -204,31 +207,45 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
                             <Select
                                 extraClass={cls.form__select}
                                 options={schoolClassNumbers}
-                                title={"Sinf rangi"}
+                                title={"Sinf raqami"}
                                 register={register}
                                 name={"class_number"}
                                 defaultValue={data?.class_number?.id}
                                 required
                             />
-                            <div className={cls.form__radios}>
-                                {
-                                    schoolClassColors.map(item => {
-                                        return (
-                                            <div className={cls.form__inner}>
-                                                <Radio
-                                                    extraClasses={cls.form__item}
-                                                    onChange={() => setSelectColor(item.id)}
-                                                    checked={selectColor ? selectColor === item.id : data?.color.id === item.id}
-                                                    name={"color"}
-                                                />
-                                                {
-                                                    item.name
-                                                }
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
+                            {
+                                schoolClassColors.length <= 3 ?
+                                    <div className={cls.form__radios}>
+                                        {
+                                            schoolClassColors.map(item => {
+                                                return (
+                                                    <div className={cls.form__inner}>
+                                                        <Radio
+                                                            extraClasses={cls.form__item}
+                                                            onChange={() => setSelectColor(item.id)}
+                                                            checked={selectColor ? selectColor === item.id : data?.color.id === item.id}
+                                                            name={"color"}
+                                                        />
+                                                        {
+                                                            item.name
+                                                        }
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                    :
+                                    <Select
+                                        keyValue={"id"}
+                                        extraClass={cls.form__select}
+                                        title={"Sinf rangi"}
+                                        name={"color"}
+                                        options={schoolClassColors}
+                                        defaultValue={data?.color?.id}
+                                        register={register}
+                                    />
+                            }
+
                         </> : null
                     }
                     <div className={cls.form__switch}>
