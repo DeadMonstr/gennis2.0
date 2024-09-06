@@ -35,6 +35,12 @@ export const Menubar = () => {
     const selectedLocations = useSelector(getSelectedLocations)
     const branch = useSelector(getBranch)
 
+    const onClickExit = () => {
+        navigate("/login")
+        sessionStorage.clear()
+        localStorage.clear()
+    }
+
 
     const renderMultipleMenu = useCallback(() => {
 
@@ -95,7 +101,10 @@ export const Menubar = () => {
                 }
             </ul>
             <div className={cls.menu__footer}>
-                <div className={cls.menu__}>
+                <div
+                    className={cls.menu__exit}
+                    onClick={onClickExit}
+                >
                     <i className="fas fa-sign-out-alt"/>
                     <h2>Chiqish</h2>
                 </div>

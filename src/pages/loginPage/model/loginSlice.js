@@ -81,7 +81,7 @@ export const loginSlice =createSlice({
             })
             .addCase(userRefreshData.rejected, (state, action) => {
                 state.loading = false
-                state.error = action.payload ?? null
+                state.error = "error"
             })
 
 })
