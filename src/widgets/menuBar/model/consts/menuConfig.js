@@ -146,9 +146,9 @@ export const menuConfig = [
         name: "Bugalteriya",
         icon: "fa-calculator",
         system: ["center","school"],
-
         roles: [ROLES.admin,ROLES.director,ROLES.programmer],
-        branches: true
+        branches: true,
+        multi: true
 
     },
     {

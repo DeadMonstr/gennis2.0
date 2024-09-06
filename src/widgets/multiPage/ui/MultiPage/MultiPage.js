@@ -13,7 +13,10 @@ import {onChangedPage,onChangedOldPage} from "../../model/slice/multiPageSlice";
 import {getMultiChangePage, getMultiPageData,getMultiOldPage} from "../../model/selector/multiPageSelector";
 import {fetchMultiPageDataThunk} from "../../model/thunk/multiPageThunk";
 import {getBranch} from "features/branchSwitcher";
-export const MultiPage = ({types,children,page}) => {
+
+
+
+export const MultiPage = ({types,children,page,id = true}) => {
 
 
     const dispatch = useDispatch()
@@ -26,9 +29,8 @@ export const MultiPage = ({types,children,page}) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-
         if (locations.length > 1  && page !== oldPage) {
-            navigate(".", { relative: "path" })
+
             const data = {
                 types,
                 locations
@@ -37,11 +39,20 @@ export const MultiPage = ({types,children,page}) => {
             dispatch(onChangedOldPage(page))
             dispatch(fetchMultiPageDataThunk(data))
         } else if (locations.length < 2 && changedPage) {
-            dispatch(onChangedPage(false))
         }
     }, [locations.length, types,page,oldPage])
 
 
+    useEffect(() => {
+
+        if (!changedPage) {
+            navigate(".", { relative: "path" })
+
+        } else {
+            dispatch(onChangedPage(false))
+
+        }
+    },[changedPage,])
 
     useEffect(() => {
         if (locations.length < 2 && branch?.id) {
@@ -56,20 +67,28 @@ export const MultiPage = ({types,children,page}) => {
     }
 
 
-    return (
-        <div className={cls.locations}>
-            <Routes>
-                <Route
-                    index
-                    element={
-                        <MultiPageList data={data}/>
-                    }
-                />
-                <Route path={"*"}   element={<ChildComponent children={children}/>}/>
-            </Routes>
+    if (id) {
+        return (
+            <div className={cls.locations}>
+                <Routes>
+                    <Route
+                        index
+                        element={
+                            <MultiPageList id={id} data={data}/>
+                        }
+                    />
+                    <Route path={"*"}  element={<ChildComponent  children={children}/>}/>
+                </Routes>
 
-        </div>
-    );
+            </div>
+        );
+    } else {
+        return (
+            <MultiPageList id={id} data={data}/>
+        )
+    }
+
+
 };
 
 
