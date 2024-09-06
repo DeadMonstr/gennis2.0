@@ -42,16 +42,20 @@ import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import {fetchSubjects} from "pages/registerPage";
 
 import cls from "./groupProfilePage.module.sass";
+import {getBranch} from "features/branchSwitcher";
+import {system} from "features/workerSelect";
+import {getSystem} from "features/themeSwitcher";
 
 export const GroupProfilePage = () => {
 
     const {request} = useHttp()
     const dispatch = useDispatch()
-    const {"*": id} = useParams()
+    const {id} = useParams()
     const data = useSelector(getGroupProfileData)
     const timeTable = useSelector(getTimeTable)
     const loading = useSelector(getGroupProfileLoading)
-    const branch = localStorage.getItem("selectedBranch")
+    const {id: branch} = useSelector(getBranch)
+    const system = useSelector(getSystem)
     const systemId = useSelector(getUserSystemId)
 
     const [active, setActive] = useState(false)
@@ -59,14 +63,12 @@ export const GroupProfilePage = () => {
     useEffect(() => {
         dispatch(fetchGroupProfile({id}))
         dispatch(fetchSubjects())
-
-
         dispatch(fetchReasons())
-
         dispatch(fetchWeekDays())
         dispatch(fetchClassColors())
         dispatch(fetchClassNumberList())
     }, [])
+
 
     useEffect(() => {
         if (branch) {
@@ -97,7 +99,6 @@ export const GroupProfilePage = () => {
             headers()
         )
             .then(res => {
-                console.log(res, "res group")
                 dispatch(getNextLesson(res))
             })
             .catch(err => console.log(err))
@@ -151,7 +152,7 @@ export const GroupProfilePage = () => {
         return <DefaultPageLoader/>
     } else return (
         <div className={cls.profile}>
-            <GroupProfileInfoForm/>
+            <GroupProfileInfoForm branch={branch} system={system}/>
             {/*<GroupProfileInfo/>*/}
             <div
                 className={classNames(cls.profile__mainContent, {
@@ -160,7 +161,7 @@ export const GroupProfilePage = () => {
             >
                 <GroupProfileModalTeachers/>
                 {/*<GroupProfileTeacher setActive={setActiveModal}/>*/}
-                <GroupProfileDeleteForm/>
+                <GroupProfileDeleteForm branch={branch} system={system}/>
                 {/*<GroupProfileStudents/>*/}
                 {
                     systemId === 1 ? <>

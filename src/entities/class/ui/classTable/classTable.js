@@ -83,7 +83,7 @@ export const ClassTable = ({edit, classType, active, selectOptions}) => {
             return <tr>
                 <td>{i + 1}</td>
                 <td>{item?.number}</td>
-                <td>{item?.subjects.map(itemSubject => (
+                <td>{item?.subjects?.map(itemSubject => (
                     <span className={cls.subject}> {itemSubject.name}</span>
                 ))}</td>
                 <td>{item?.curriculum_hours}</td>

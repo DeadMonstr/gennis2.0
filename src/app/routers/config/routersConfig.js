@@ -290,6 +290,7 @@ export const routersConfig = [
         name: "Registratsiya",
         path: getRouteRegister(),
         element: <Register/>,
+
     },
 
 

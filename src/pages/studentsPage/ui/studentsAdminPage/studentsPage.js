@@ -174,10 +174,10 @@ export const StudentsPage = () => {
                 dispatch(fetchOnlyNewStudentsData({id: userBranchId}));
                 break;
             case "studying_students":
-                dispatch(fetchOnlyStudyingStudentsData());
+                dispatch(fetchOnlyStudyingStudentsData({id: userBranchId}));
                 break;
             case "deleted_students":
-                dispatch(fetchOnlyDeletedStudentsData());
+                dispatch(fetchOnlyDeletedStudentsData({id: userBranchId}));
                 break;
             default:
                 break;
@@ -332,12 +332,12 @@ export const StudentsPage = () => {
                                 })
                             }
                         </div>
-                        <Input
-                            extraClassName={cls.modal__input}
-                            placeholder={"price"}
-                            name={"price"}
-                            register={register}
-                        />
+                        {/*<Input*/}
+                        {/*    extraClassName={cls.modal__input}*/}
+                        {/*    placeholder={"price"}*/}
+                        {/*    name={"price"}*/}
+                        {/*    register={register}*/}
+                        {/*/>*/}
                     </Form>
                 </div>
             </Modal>

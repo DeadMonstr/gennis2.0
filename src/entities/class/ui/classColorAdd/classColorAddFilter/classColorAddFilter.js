@@ -44,9 +44,9 @@ export const ClassColorAddFilter = ({color, setEdit, edit}) => {
 
 
 
-            const brightness = Math.round(((parseInt(color1rgb.r) * 299) +
-                (parseInt(color1rgb.g) * 587) +
-                (parseInt(color1rgb.b) * 114)) / 1000);
+            const brightness = Math.round(((parseInt(color1rgb?.r) * 299) +
+                (parseInt(color1rgb?.g) * 587) +
+                (parseInt(color1rgb?.b) * 114)) / 1000);
 
 
             const style = {

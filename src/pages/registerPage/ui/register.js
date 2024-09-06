@@ -232,7 +232,6 @@ export const Register = () => {
                     setUsernameMessage('');
                     setIsUsernameAvailable(true);
                 } else {
-                    console.error('Registration error:', action.error);
                     dispatch(onAddAlertOptions({
                         type: "error",
                         status: true,

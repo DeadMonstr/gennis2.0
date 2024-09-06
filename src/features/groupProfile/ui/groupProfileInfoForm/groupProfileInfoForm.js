@@ -29,7 +29,7 @@ import nextImage from "shared/assets/images/groupImage.png";
 import defaultUserImg from "shared/assets/images/user_image.png";
 
 
-export const GroupProfileInfoForm = memo(() => {
+export const GroupProfileInfoForm = memo(({system,branch}) => {
 
     const {
         register,
@@ -113,7 +113,9 @@ export const GroupProfileInfoForm = memo(() => {
                             data?.language?.name
                     }
                 </span></p>
-                    <p className={cls.info__hoverName}>{data?.language?.name}</p>
+                    <p className={cls.info__hoverName}>
+                        {data?.language?.name}
+                    </p>
                     {
                         data?.course_types?.name ? <p>Kurs turi: <span>{data?.course_types?.name}</span></p> : null
                     }
@@ -177,14 +179,17 @@ export const GroupProfileInfoForm = memo(() => {
                         name={"name"}
                         required
                     />
-                    <Input
-                        extraClassName={cls.form__input}
-                        placeholder={"Guruh narxi"}
-                        register={register}
-                        name={"price"}
-                        type={"number"}
-                        required
-                    />
+                    {
+                        system.type === "center" ? <Input
+                            extraClassName={cls.form__input}
+                            placeholder={"Guruh narxi"}
+                            register={register}
+                            name={"price"}
+                            type={"number"}
+                            required
+                        /> : null
+                    }
+
                     <Select
                         extraClass={cls.form__select}
                         options={languages}

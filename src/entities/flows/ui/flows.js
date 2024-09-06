@@ -141,7 +141,7 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
                                         name={"teacher"}
                                     />
                                     {
-                                        selectedSubjects.length ? <Select
+                                        selectedSubjects?.length ? <Select
                                             title={"Fan"}
                                             options={selectedSubjects}
                                             register={register}
@@ -150,7 +150,7 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
                                         /> : null
                                     }
                                     {
-                                        levelData.length ? <Select
+                                        levelData?.length ? <Select
                                             title={"Level"}
                                             options={levelData}
                                             register={register}

@@ -74,7 +74,6 @@ export const ClassAddForm = memo((props) => {
                 }))
             })
             .catch(err => {
-                console.log(err)
                 dispatch(onAddAlertOptions({
                     type: "error",
                     status: true,
