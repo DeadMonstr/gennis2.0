@@ -28,7 +28,6 @@ export const ClassModal = ({
                                edit,
                                setSelectedSubject,
                                selectedSubject,
-                               options,
                            }) => {
 
 
@@ -37,8 +36,6 @@ export const ClassModal = ({
     // const [selected, setSelected] = useState([])
     // const [deletedId, setDeletedId] = useState(0)
 
-
-    console.log(options , "op[tip[wef")
     const option = selectOptions?.map(item => ({
         value: item.id,
         label: item.name
@@ -84,7 +81,6 @@ export const ClassModal = ({
     // }
 
 
-
     return (
         <>
             <Modal active={activeEdit} setActive={setActiveEdit}>
@@ -107,56 +103,57 @@ export const ClassModal = ({
                 </div>
             </Modal>
 
-            {/*<Modal active={editClass} setActive={setEditClass}>*/}
-            {/*    <h2>Ma’lumotlarni o’zgartirish</h2>*/}
-            {/*    <div>*/}
-            {/*        <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>*/}
-            {/*            <Input  name={"curriculum_hours"} register={register} type={"number"}/>*/}
-            {/*            /!*<Select onChangeOption={onChangeSelect} options={subject}/>*!/*/}
-
-            {/*            <div className={cls.selectBox}>*/}
-            {/*                <AnimatedMulti extraClass={cls.select} options={option} onChange={setSelectedSubject}/>*/}
-            {/*            </div>*/}
-            {/*            /!*{options?.map(item => (*!/*/}
-            {/*            /!*    item.subjects.map(itemSubject => (*!/*/}
-            {/*            /!*        itemSubject.name*!/*/}
-            {/*            /!*    ))*!/*/}
-            {/*            /!*))}*!/*/}
-            {/*            <Button>*/}
-            {/*                Tastiqlash*/}
-            {/*            </Button>*/}
-            {/*        </Form>*/}
-
-            {/*    </div>*/}
-            {/*</Modal>*/}
-
             <Modal active={editClass} setActive={setEditClass}>
                 <h2>Ma’lumotlarni o’zgartirish</h2>
                 <div>
                     <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>
-                        <Input name={"curriculum_hours"} register={register} type={"number"}/>
+                        <Input name={"curriculum_hours"} register={register} type={"number"} placeholder={"darslar soati"}/>
+                        <Input name={"price"} register={register} type={"number"} placeholder={"narxi"}/>
+                        {/*<Select onChangeOption={onChangeSelect} options={subject}/>*/}
 
-                        <div className={cls.extraClassSelect}>
-                            <AnimatedMulti options={option} onChange={setSelectedSubject}/>
+                        <div className={cls.selectBox}>
+                            <AnimatedMulti extraClass={cls.select} options={option} onChange={setSelectedSubject}/>
                         </div>
-
-                        <div className={cls.extraClassForm}>
-                            {/* Selected subjects list */}
-                            {/*{*/}
-                            {/*    selectedSubject.map((subject, index) => (*/}
-                            {/*        <div key={index}>*/}
-                            {/*            <span>{subject.label}</span>*/}
-                            {/*        </div>*/}
-                            {/*    ))*/}
-                            {/*}*/}
-                        </div>
-
+                        {/*{options?.map(item => (*/}
+                        {/*    item.subjects.map(itemSubject => (*/}
+                        {/*        itemSubject.name*/}
+                        {/*    ))*/}
+                        {/*))}*/}
                         <Button>
                             Tastiqlash
                         </Button>
                     </Form>
+
                 </div>
             </Modal>
+
+            {/*<Modal active={editClass} setActive={setEditClass}>*/}
+            {/*    <h2>Ma’lumotlarni o’zgartirish</h2>*/}
+            {/*    <div>*/}
+            {/*        <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>*/}
+            {/*            <Input name={"curriculum_hours"} register={register} type={"number"}/>*/}
+
+            {/*            <div className={cls.extraClassSelect}>*/}
+            {/*                <AnimatedMulti options={option} onChange={setSelectedSubject}/>*/}
+            {/*            </div>*/}
+
+            {/*            <div className={cls.extraClassForm}>*/}
+            {/*                /!* Selected subjects list *!/*/}
+            {/*                /!*{*!/*/}
+            {/*                /!*    selectedSubject.map((subject, index) => (*!/*/}
+            {/*                /!*        <div key={index}>*!/*/}
+            {/*                /!*            <span>{subject.label}</span>*!/*/}
+            {/*                /!*        </div>*!/*/}
+            {/*                /!*    ))*!/*/}
+            {/*                /!*}*!/*/}
+            {/*            </div>*/}
+
+            {/*            <Button>*/}
+            {/*                Tastiqlash*/}
+            {/*            </Button>*/}
+            {/*        </Form>*/}
+            {/*    </div>*/}
+            {/*</Modal>*/}
 
         </>
     )
@@ -175,7 +172,10 @@ export const ColorModal = ({
                                setActive,
                                changeName,
                                setChangeName,
-                               changeColor
+                               changeColor,
+                               setColorChange,
+                               colorChange,
+                               deleteColor
                            }) => {
 
 
@@ -206,11 +206,28 @@ export const ColorModal = ({
 
 
             <Modal active={changeName} setActive={setChangeName}>
-                <h2>Rangni oz'gartirish</h2>
+                <h2>Rangni oz'gartirish yoki O'chirish</h2>
                 <div>
-                    <Form extraClassname={cls.extraClassForm} onSubmit={handleSubmit(changeColor)}>
-                        <Input required name={"name"} register={register}/>
 
+                    <Form extraClassname={cls.extraClassForm} typeSubmit={""}>
+                        <Input name={"name"} register={register}/>
+                        <div className={cls.changeColorItem}>
+                            <div className={cls.color}>
+                                <h2>Tanlangan rang :</h2>
+                                <div className={cls.modalBox} style={{background: colorChange}}></div>
+                            </div>
+                            <HexColorPicker style={{width: "22rem", height: "15rem"}} color={colorChange}
+                                            onChange={setColorChange}/>
+                            {/*<div style={{display: "flex" , flexWrap: "wrap",width: "30rem"}}>*/}
+                            {/*    /!*<Button onClick={() => setColor("#c6ad23")}>Choose gold</Button>*!/*/}
+                            {/*    <Button onClick={() => setColor("#22C55E")}>Choose green</Button>*/}
+                            {/*    <Button onClick={() => setColor("#2563EB")}>Choose blue</Button>*/}
+                            {/*</div>*/}
+                        </div>
+                        <div style={{display: "flex", gap: "2rem"}}>
+                            <Button onClick={handleSubmit(changeColor)}>Rangni o'zgartirish</Button>
+                            <Button onClick={handleSubmit(deleteColor)} type={"danger"}>Rangni O'chirish</Button>
+                        </div>
                     </Form>
 
                 </div>
