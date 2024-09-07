@@ -20,6 +20,7 @@ export const vacancyWorkerSlice = createSlice({
             })
             .addCase(vacancyWorkerListThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.workerData = action.payload
 
             })

@@ -48,7 +48,7 @@ export const TimeTableDragItems = (props) => {
                 return <TimeTableDragItem type={"teacher"} item={item}>{item?.user?.name} {item?.user?.surname}</TimeTableDragItem>
             })
         }
-    }, [isSelected,selectedSubject,groups,teachers,color])
+    }, [isSelected,selectedSubject,groups,teachers,color,subjects])
 
 
     return (

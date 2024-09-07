@@ -35,6 +35,12 @@ export const Menubar = () => {
     const selectedLocations = useSelector(getSelectedLocations)
     const branch = useSelector(getBranch)
 
+    const onClickExit = () => {
+        navigate("/login")
+        sessionStorage.clear()
+        localStorage.clear()
+    }
+
 
     const renderMultipleMenu = useCallback(() => {
 
@@ -42,14 +48,13 @@ export const Menubar = () => {
 
 
         return menuConfig.map((item, index) => {
-
+            // console.log(selectedLocations , !item.branches)
+            if (selectedLocations > 1 && !item.branches) return;
             if (!item?.system.includes(system.type)) return;
             if ((typeof item.roles === "object" && user?.job.some(job => item.roles.includes(job))) || (typeof item.roles === "boolean" && item.roles)) {
-
-
                 return (
                     <NavLink
-                        to={`${item.to}${linkId}`}
+                        to={`${item.to}${item.branches ? linkId : `/${branch?.id}`}`}
                         key={index}
                         className={({isActive}) =>
                             isActive ? `${cls.link} ${cls.active}` : `${cls.link}`
@@ -95,7 +100,10 @@ export const Menubar = () => {
                 }
             </ul>
             <div className={cls.menu__footer}>
-                <div className={cls.menu__}>
+                <div
+                    className={cls.menu__exit}
+                    onClick={onClickExit}
+                >
                     <i className="fas fa-sign-out-alt"/>
                     <h2>Chiqish</h2>
                 </div>

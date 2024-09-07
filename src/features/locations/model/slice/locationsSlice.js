@@ -51,8 +51,7 @@ const locationsSlice = createSlice({
 
         clearSelectedLocations: (state,action) => {
             state.selectedLocations = []
-            if (action.payload !== state.systemId) {
-                console.log(action.payload)
+            if (state.systemId && action.payload !== state.systemId) {
                 localStorage.removeItem("selectedLocations")
             }
 
@@ -73,9 +72,11 @@ const locationsSlice = createSlice({
 
                 const localstorageLocs = JSON.parse(localStorage.getItem("selectedLocations"))
 
+
                 if (localstorageLocs && localstorageLocs.length > 0) {
+                    console.log("ure")
                     state.selectedLocations = localstorageLocs
-                    state.locations = state.locations.map(item => {
+                    state.locations = action.payload.list.map(item => {
 
                         const isHave = localstorageLocs.some(loc => loc.id === item.id)
 
@@ -85,6 +86,7 @@ const locationsSlice = createSlice({
                                 disabled: true
                             }
                         }
+                        return item
                     })
                 } else {
 

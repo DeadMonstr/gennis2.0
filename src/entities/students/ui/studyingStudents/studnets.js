@@ -21,11 +21,11 @@ export const Students = ({ currentTableData }) => {
 
         const studentsToRender = getStStudents && getStStudents.length > 0 ? getStStudents : currentTableData;
 
-        if (!studentsToRender || studentsToRender.length === 0) {
-            return (
-               <DefaultPageLoader/>
-            );
-        }
+        // if (!studentsToRender || studentsToRender.length === 0) {
+        //     return (
+        //        <DefaultPageLoader/>
+        //     );
+        // }
 
         return studentsToRender?.map((item, i) => {
 

@@ -1,5 +1,7 @@
+@import "app/styles/abstracts/mixins"
+
 .select
-  width: 40rem!important
+  width: 35rem!important
   margin-bottom: 1rem
 .btn
   align-self: flex-end
@@ -8,19 +10,84 @@
 .extraClassForm
   padding: 2rem
   display: flex
+  align-items: center
   flex-direction: column
-.selectBox
+  select
+    width: 35rem!important
+//.selectBox
+//  display: flex
+//  gap: 1rem
+//  flex-wrap: wrap
+//  width: 50rem
+//  .subjectSelect
+//    display: flex
+//    align-items: center
+//    gap: 0.5rem
+//    margin-top: 10px
+//    padding: 1rem
+//    box-shadow:  0 0 4px 0
+//    width: fit-content
+//    border-radius: 10px
+//    font-size: 16px
+.modalHeader
+  font-size: 1.8rem
+  text-transform: capitalize
+  span
+    text-transform: none
+
+.items
   display: flex
-  gap: 1rem
-  flex-wrap: wrap
-  width: 50rem
-  .subjectSelect
+  align-items: center
+.checkbox__minus
+  height: 30px
+  width: 30px
+  background: #F43F5E
+  display: flex
+  justify-content: center
+  align-items: center
+  border-radius: 5px
+  @include btn-active
+  .minus
+    color: white
+.checkbox__checked
+  height: 30px
+  width: 30px
+  background: #22C55E
+  border-radius: 5px
+  display: flex
+  justify-content: center
+  align-items: center
+  .check
+    color: white
+
+//.header__changeColor
+//  margin-bottom: 10px
+//  display: flex
+//  gap: 1rem
+//  align-items: center
+//  .changeColorBox
+//    border: 1px solid
+//    width: 30px
+//    height: 30px
+//    border-radius: 5px
+//
+.changeColorItem
+  padding: 2rem 0
+  //display: flex
+  //flex-direction: column
+  //gap: 2rem
+  h2
+    font-size: 2rem
+    text-transform: capitalize
+  .modalBox
+    width: 30px
+    height: 30px
+  .color
     display: flex
+    gap: 2rem
     align-items: center
-    gap: 0.5rem
-    margin-top: 10px
-    padding: 1rem
-    box-shadow:  0 0 4px 0
-    width: fit-content
-    border-radius: 10px
-    font-size: 16px
+    margin-bottom: 10px
+
+
+.subject
+  margin-left: 5px

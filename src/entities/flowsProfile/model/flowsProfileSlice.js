@@ -32,7 +32,7 @@ const flowsProfileSlice = createSlice({
             })
             .addCase(fetchFlowProfileData.rejected, (state) => {
                 state.loading = false
-                state.error = null
+                state.error = "error"
             })
             .addCase(fetchFlowProfileNextLesson.pending, (state) => {
                 // state.loading = true
@@ -84,7 +84,7 @@ const flowsProfileSlice = createSlice({
             })
             .addCase(changeFlowProfile.rejected, (state) => {
                 state.loading = false
-                state.error = null
+                state.error = "error"
             })
 })
 

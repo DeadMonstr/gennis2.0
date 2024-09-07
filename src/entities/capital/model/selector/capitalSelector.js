@@ -22,3 +22,7 @@ export const getCapitalInside = (state) =>
 
 export const getCapitalTypes = (state) =>
     state.capital?.paymentTypes
+
+
+export const getCapitalCategoryInfo = (state) =>
+    state.capital?.capitalCategory

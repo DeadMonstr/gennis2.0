@@ -25,7 +25,7 @@ export const teachersSlice = createSlice({
                 state.loading = false
             })
             .addCase(fetchTeachersData.rejected , (state , action) =>{
-                state.teachers = "error"
+                state.error = "error"
             })
 
 
@@ -38,7 +38,7 @@ export const teachersSlice = createSlice({
                 state.loading = false
             })
             .addCase(fetchTeachersDataWithFilter.rejected , (state , action) =>{
-                state.teachers = "error"
+                state.error = "error"
             })
     }
 })

@@ -1,7 +1,7 @@
 import {Table} from "../../../../shared/ui/table";
 
 
-export const Student = ({students , extraClass}) => {
+export const Student = ({students , extraClass , formatSalary}) => {
 
 
     const renderTable = () => {
@@ -10,7 +10,7 @@ export const Student = ({students , extraClass}) => {
                 <td>{i + 1}</td>
                 <td>{item.name}  {item.surname}</td>
                 <td>{item.payment_type_name}</td>
-                <td>{item.payment_sum}</td>
+                <td>{formatSalary(item.payment_sum)}</td>
                 <td>{item.date}</td>
             </tr>
         ))

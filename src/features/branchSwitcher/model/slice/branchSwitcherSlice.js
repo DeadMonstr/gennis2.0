@@ -44,7 +44,8 @@ const branchSwitcherSlice = createSlice({
 
                 state.branches = action.payload
                 state.branch = action.payload[0]
-                localStorage.setItem("selectedBranch",  state.branch.id)
+
+                localStorage.setItem("selectedBranch",  state.branch?.id)
 
                 state.loading = false
                 state.error = null

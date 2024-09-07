@@ -55,7 +55,7 @@ const deleteTypeList = [
     }
 ]
 
-export const GroupProfileDeleteForm = memo(() => {
+export const GroupProfileDeleteForm = memo(({branch,system}) => {
 
     const {
         register,
@@ -75,15 +75,15 @@ export const GroupProfileDeleteForm = memo(() => {
     const reasons = useSelector(getReasons)
 
     useEffect(() => {
-        if (data && userBranchId) {
+        if (data && branch) {
             dispatch(filteredStudents({
-                userBranchId,
+                userBranchId:branch,
                 group_id: data?.id,
                 res: {ignore_students: data?.students.map(item => item.id)}
             }))
-            dispatch(fetchTeachersData({userBranchId}))
+            dispatch(fetchTeachersData({userBranchId: branch}))
         }
-    }, [data, userBranchId])
+    }, [data, branch])
 
     const [active, setActive] = useState(false)
     const [activeModal, setActiveModal] = useState("")
@@ -97,6 +97,8 @@ export const GroupProfileDeleteForm = memo(() => {
 
     const [searchValue, setSearchValue] = useState("")
     const [currentTeachersData, setCurrentTeachersData] = useState([])
+
+
 
     const searched = useMemo(() => {
         const filteredSlice = students?.slice()
@@ -134,7 +136,7 @@ export const GroupProfileDeleteForm = memo(() => {
                 ...data,
                 students: select
             }
-            dispatch(moveToClass({userBranchId, id, res}))
+            dispatch(moveToClass({branch, id, res}))
             msg= `O'quvchilar boshqa sinfga o'tqazildi`
         } else {
             const res = {
@@ -174,6 +176,7 @@ export const GroupProfileDeleteForm = memo(() => {
     }
 
     const renderStudents = () => {
+        console.log(data?.students, "studentsssssssss")
         return data?.students?.map(item =>
             <tr>
                 <td>
@@ -194,7 +197,7 @@ export const GroupProfileDeleteForm = memo(() => {
                         })}
                         onClick={() => setActiveModal("paymentModal")}
                     >
-                        {item.money}
+                        {item.debt}
                     </div>
                 </td>
                 {
@@ -229,6 +232,7 @@ export const GroupProfileDeleteForm = memo(() => {
     }
 
     const renderStudentsData = () => {
+        console.log(searched,"searchhhhhhhhhhhhhhhhhhhhhh")
         return searched?.map(item =>
             <tr>
                 <td>
@@ -388,7 +392,7 @@ export const GroupProfileDeleteForm = memo(() => {
                 >
                     <Select
                         extraClass={cls.deleteForm__select}
-                        options={userSystem?.id === 1 ? teachers : schoolTeachers}
+                        options={userSystem?.type === "center" ? teachers : schoolTeachers}
                         title={"Teacher"}
                         onChangeOption={onFilterGroups}
                         // register={register}
@@ -526,7 +530,10 @@ export const GroupProfileDeleteForm = memo(() => {
                             <th/>
                             <th>Ism</th>
                             <th>Familya</th>
-                            <th>Fanlar</th>
+                            {
+                                system.type === "center" ? <th>Fanlar</th>: <th>Sinf</th>
+                            }
+
                             <th>Status</th>
                         </tr>
                         </thead>

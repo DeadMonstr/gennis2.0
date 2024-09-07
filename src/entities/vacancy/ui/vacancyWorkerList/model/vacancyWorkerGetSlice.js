@@ -17,6 +17,7 @@ export const vacancyWorkerSoucre = createSlice({
             .addCase(vacancyWorkerGetThunk.pending, (state) => {state.loading = true})
             .addCase(vacancyWorkerGetThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.workerData = action.payload;
             })
             .addCase(vacancyWorkerGetThunk.rejected, (state, action) => {

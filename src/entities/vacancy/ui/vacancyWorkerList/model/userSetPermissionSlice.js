@@ -20,6 +20,7 @@ export const userSetPermissionSlice = createSlice({
             })
             .addCase(userSetPermissionThunk.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null
                 state.newPermission = action.payload;
             })
             .addCase(userSetPermissionThunk.rejected, (state, action) => {

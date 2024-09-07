@@ -10,7 +10,7 @@ import {filteredStudents} from "features/filters/studentsFilter";
 import {filteredEmployees} from "features/filters/employeesFilter";
 import {filteredGroups} from "features/filters/groupsFilter";
 import {filteredRoomsSlice} from "features/filters/roomsFilter";
-import {deletedGroups, groups} from "entities/groups/index";
+import {deletedGroupsSlice, groupsSlice} from "entities/groups";
 // import {user} from "entities/user";
 import {studentProfilePayment} from "entities/profile/studentProfile";
 import {studentProfileBooks} from "entities/profile/studentProfile";
@@ -70,6 +70,7 @@ import {schoolTeacherDaySlice} from "../features/teacherModals";
 import {inkasatsiyaSlice} from "../entities/inkasatsiya";
 import {timeTableTuronSlice} from "pages/timeTable"
 import {alertSlice} from "features/alert"
+import {classSlice} from "../entities/class";
 import {locationsSlice} from "features/locations"
 import {themeSwitcherSlice} from "features/themeSwitcher"
 import {branchSwitcherSlice} from "features/branchSwitcher"
@@ -95,12 +96,12 @@ export const store = configureStore({
         filteredEmployees,
         filteredGroups,
         filteredRoomsSlice,
-        groups,
+        groupsSlice,
         studentProfilePayment,
         studentProfileBooks,
         studentProfileRating,
         studentsDirectorSlice,
-        deletedGroups,
+        deletedGroupsSlice,
         // user,
         newStudents,
         employers,
@@ -160,7 +161,8 @@ export const store = configureStore({
         themeSwitcherSlice,
         branchSwitcherSlice,
         multiPageSlice,
-        flowsProfileSlice
+        flowsProfileSlice,
+        classSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

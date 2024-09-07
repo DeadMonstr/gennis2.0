@@ -25,39 +25,39 @@ export const overHeadSlice = createSlice({
                 state.error = false
             })
             .addCase(overHeadList.fulfilled, (state, action) => {
-                state.overHeadList = action.payload.overheads
+                state.overHeadList = action.payload
                 state.loading = false
                 state.error = false
             })
             .addCase(overHeadList.rejected, state => {
                 state.loading = false
-                state.error = false
+                state.error = true
             })
             .addCase(overHeadDeletedList.pending, state => {
                 state.loading = true
                 state.error = false
             })
             .addCase(overHeadDeletedList.fulfilled, (state, action) => {
-                state.overHeadDeletedLists = action.payload.overheads
+                state.overHeadDeletedLists = action.payload
                 state.loading = false
                 state.error = false
             })
             .addCase(overHeadDeletedList.rejected, state => {
                 state.loading = false
-                state.error = false
+                state.error = true
             })
             .addCase(getOverheadType.pending, state => {
                 state.loading = true
                 state.error = false
             })
             .addCase(getOverheadType.fulfilled, (state, action) => {
-                state.overHeadType = action.payload.overheads
+                state.overHeadType = action.payload
                 state.loading = false
                 state.error = false
             })
             .addCase(getOverheadType.rejected, state => {
                 state.loading = false
-                state.error = false
+                state.error = true
             })
             .addCase(getMonthDay.pending, state => {
                 state.loading = true
@@ -70,7 +70,7 @@ export const overHeadSlice = createSlice({
             })
             .addCase(getMonthDay.rejected, state => {
                 state.loading = false
-                state.error = false
+                state.error = true
             })
 })
 

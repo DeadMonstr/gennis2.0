@@ -1,3 +1,5 @@
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
+import {changeDayType} from "pages/calendarPage/model/calendarSlice";
 import {useEffect, useState} from 'react';
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
@@ -7,7 +9,8 @@ import {
     CalendarHeader,
     CalendarAdd
 } from "entities/calendar";
-import {changeDayType, deleteDayType, fetchCalendarData} from "../model/calendarThunk";
+import {API_URL, headers, useHttp} from "shared/api/base";
+import {deleteDayType, fetchCalendarData} from "../model/calendarThunk";
 import {getCalendarData, getCalendarLoading} from "../model/calendarSelector";
 
 // http://192.168.0.109:8000/Calendar/get-calendar/{current_year}/{next_year}/
@@ -17,6 +20,7 @@ import cls from "./calendarPage.module.sass";
 
 export const CalendarPage = () => {
 
+    const {request} = useHttp()
     const dispatch = useDispatch()
     const {register, handleSubmit, setValue} = useForm()
     const calendarData = useSelector(getCalendarData)
@@ -42,16 +46,26 @@ export const CalendarPage = () => {
         }
 
         // console.log(res, "res")
-        dispatch(changeDayType(res))
+        request(`${API_URL}Calendar/change-type/`, "POST", JSON.stringify(res), headers())
+            .then(res => {
+                dispatch(changeDayType(res))
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: `${res.length > 1 ? "Kunlar": "Kun"} qo'shildi`
+                }))
+            })
+            .catch(err => console.log(err))
+        // dispatch(changeDayType(res))
         setActive({})
         // active.onClear()
         setIsChanged(true)
     }
 
-    const onSubmitDelete = (data) => {
-        // console.log(data, "del")
-        dispatch(deleteDayType({days: data}))
-    }
+    // const onSubmitDelete = (data) => {
+    //     // console.log(data, "del")
+    //     dispatch(deleteDayType({days: data}))
+    // }
 
     useEffect(() => {
         dispatch(fetchCalendarData({current_year: currentYear, next_year: currentYear + 1}))

@@ -6,14 +6,18 @@ const initialState = {
     data: [],
     dataWithFilter: [],
     typeData: [],
-    loading: true,
+    loading: false,
     error: null
 }
 
 export const groupsSlice = createSlice({
     name: "groupsSlice",
     initialState,
-    reducers: {},
+    reducers: {
+        deleteGroup: (state, action) => {
+            state.data = state.data.filter(item => item.id !== action.payload)
+        }
+    },
     extraReducers: builder =>
         builder
             .addCase(fetchGroupsData.pending, state => {
@@ -63,4 +67,5 @@ export const groupsSlice = createSlice({
             })
 })
 
+export const {deleteGroup} = groupsSlice.actions
 export default groupsSlice.reducer

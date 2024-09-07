@@ -203,17 +203,7 @@ const initialState = {
 const userProfileSlice = createSlice({
     name: "userProfile",
     initialState,
-    reducers: {
-        changingUserProfile: (state) => {
-            state.loading = true
-            state.error = null
-        },
-        changeUserProfile: (state, action) => {
-            state.userData = action.payload
-            state.loading = false
-            state.error = null
-        },
-    },
+    reducers: {},
     extraReducers: builder =>
         builder
             .addCase(fetchUserProfileData.pending, state => {
@@ -223,7 +213,7 @@ const userProfileSlice = createSlice({
             .addCase(fetchUserProfileData.fulfilled, (state, action) => {
                 console.log(action.payload)
                 state.userData = action.payload
-                state.userBranchId = action.payload.branch?.id
+                state.userBranchId = action.payload.branch.id
                 // state.userSystemId = action.payload.user.branch.location.system.id
                 state.userPermissions = action.payload.permissions
                 state.loading = false
@@ -231,7 +221,7 @@ const userProfileSlice = createSlice({
             })
             .addCase(fetchUserProfileData.rejected, (state, action) => {
                 state.loading = false
-                state.error = action.payload ?? null
+                state.error = "error"
             })
             // .addCase(changeUserProfileData.pending, state => {
             //     state.loading = true

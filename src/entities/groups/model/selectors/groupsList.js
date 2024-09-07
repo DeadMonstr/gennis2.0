@@ -1,12 +1,12 @@
 
 export const getGroupsListData = (state) =>
-    state.groups.data;
+    state.groupsSlice.data;
 
 export const getGroupsLoading = (state) =>
-    state.groups.loading
+    state.groupsSlice.loading
 
 export const getGroupListWithFilter = (state) =>
-    state.groups.dataWithFilter
+    state.groupsSlice.dataWithFilter
 
 export const getGroupTypes = (state) =>
-    state.groups.typeData
+    state.groupsSlice.typeData

@@ -23,6 +23,7 @@ export const giveEmployerSalarySlice = createSlice({
             })
             .addCase(fetchEmployerSalaryThunk.rejected, (state, action) =>{
                 state.error = action.error.message
+                state.loading = false
             })
     }
 })

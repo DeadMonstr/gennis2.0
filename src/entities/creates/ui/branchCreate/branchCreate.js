@@ -13,7 +13,8 @@ import {useEffect, useState} from "react";
 import {getLoading} from "../../../editCreates/model/selector/locationSelector";
 import {DefaultLoader, DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 import {Modal} from "../../../../shared/ui/modal";
-import {getBranchThunk} from "../../../editCreates/model/thunk/branchThunk";
+import {getBranchThunk} from "../../../editCreates";
+import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 
 
 
@@ -33,14 +34,16 @@ export const BranchCreate = ({active , setActive , loading}) => {
     }, [])
     //
     //
-    console.log(select)
     const onClick = (data) => {
-        console.log(data)
-        console.log(select)
         const res = {
             ...data,
             location: select
         }
+        dispatch(onAddAlertOptions({
+            status: true,
+            type: 'success',
+            msg: "maʼlumotlari muvaffaqiyatli qushildi."
+        }))
         dispatch(createBranchThunk(res))
         dispatch(getBranchThunk())
         setValue("name", "")
@@ -59,11 +62,11 @@ export const BranchCreate = ({active , setActive , loading}) => {
                     <h1 className={cls.formTitle}>Branches</h1>
                     <Form onSubmit={handleSubmit(onClick)} extraClassname={cls.form} typeSubmit={""}>
                         <Select options={getLocationId} title={"System_id"} onChangeOption={setSelected}/>
-                        <Input register={register} name={"name"} title={"Name"}/>
-                        <Input register={register} name={"number"} title={"Number"}/>
-                        <Input register={register} name={"location_text"} title={"Location"}/>
-                        <Input register={register} name={"code"} type={"number"} title={"Code"}/>
-                        <Input register={register} name={"phone_number"} type={"number"} title={"Phone Number"}/>
+                        <Input register={register} name={"name"} placeholder={"Name"}/>
+                        <Input register={register} name={"number"} placeholder={"Number"}/>
+                        <Input register={register} name={"location_text"} placeholder={"Location"}/>
+                        <Input register={register} name={"code"} type={"number"} placeholder={"Code"}/>
+                        <Input register={register} name={"phone_number"} type={"number"} placeholder={"Phone Number"}/>
                         <Button children={"create"}/>
                     </Form>
                 </div>

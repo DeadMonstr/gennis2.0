@@ -4,15 +4,16 @@ import cls from "./capitalInsideSecond.module.sass"
 import {Button} from "shared/ui/button";
 import {DefaultPageLoader} from "../../../../../shared/ui/defaultLoader";
 import {useNavigate} from "react-router";
+import {API_URL_DOC} from "../../../../../shared/api/base";
 
-export const CapitalInsideSecond = memo(({capitalData, editModal, setEditModal , onDelete}) => {
+export const CapitalInsideSecond = memo(({capitalData, editModal, setEditModal, onDelete}) => {
 
 
     const capitalDataRender = () => {
         return (
             <div className={cls.capitalBox}>
                 <div className={cls.capitalBox_img}>
-                    <img src={capitalData?.img} alt=""/>
+                    <img src={`${API_URL_DOC}${capitalData.img}`} alt=""/>
                 </div>
                 <div className={cls.capitalBoxInfo}>
                     <div>
@@ -32,9 +33,11 @@ export const CapitalInsideSecond = memo(({capitalData, editModal, setEditModal ,
             </div>
         )
     }
+
     function compareById(a, b) {
         return a.id - b.id;
     }
+
     const render = capitalDataRender()
 
     return (

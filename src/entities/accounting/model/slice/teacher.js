@@ -41,12 +41,11 @@ const teacherSalary = createSlice({
             //     state.error = action.payload ?? null
             // })
             .addCase(getTeacherSalary.pending, state => {
-                state.loading = false
+                state.loading = true
                 state.error = false
             })
             .addCase(getTeacherSalary.fulfilled, (state, action) => {
                 state.teacherSalary = action.payload
-                console.log(action.payload , "log213")
                 state.loading = false
                 state.error = false
             })
@@ -55,7 +54,7 @@ const teacherSalary = createSlice({
                 state.loading = false
             })
             .addCase(getDeletedTeacherSalary.pending, state => {
-                state.loading = false
+                state.loading = true
                 state.error = false
             })
             .addCase(getDeletedTeacherSalary.fulfilled, (state, action) => {

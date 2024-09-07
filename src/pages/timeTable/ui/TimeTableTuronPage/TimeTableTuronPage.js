@@ -1,3 +1,4 @@
+import {getBranch} from "features/branchSwitcher";
 import React, {useEffect, useState} from 'react';
 
 import cls from "./TimeTableTuronPage.module.sass"
@@ -173,66 +174,11 @@ export const TimeTableTuronPage = () => {
     // ])
 
 
-    const [groups, setGroups] = useState([
-        {
-            dndId: "class-1",
-            title: "1 sinf",
-            type: 'group'
-        },
-        {
-            dndId: "class-2",
-            title: "2 sinf",
-            type: 'group'
-        },
-        {
-            dndId: "class-3",
-            title: "3 sinf",
-            type: 'group'
-        }
-    ])
+    const [groups, setGroups] = useState([])
 
-    const [subjects, setSubjects] = useState([
-        {
-            dndId: "subject-1",
-            title: "Ingliz tili",
-            id: 1,
-            type: 'subject'
-        },
-        {
-            dndId: "subject-2",
-            title: "Rus tili",
-            id: 2,
-            type: 'subject'
+    const [subjects, setSubjects] = useState([])
 
-        },
-        {
-            dndId: "subject-3",
-            title: "Ona tili",
-            id: 3,
-            type: 'subject'
-        }
-    ])
-
-    const [teachers, setTeachers] = useState([
-        {
-            dndId: "teacher-1",
-            title: "Ulug'bek Fatxullayev",
-            subject: 1,
-            type: "teacher"
-        },
-        {
-            dndId: "teacher-2",
-            title: "Begzod Jumaniyozov",
-            subject: 2,
-            type: "teacher"
-        },
-        {
-            dndId: "teacher-3",
-            title: "Shaxzod Sobirov",
-            subject: 3,
-            type: "teacher"
-        }
-    ])
+    const [teachers, setTeachers] = useState([])
 
 
     const [startItem, setStartItem] = useState()
@@ -241,6 +187,7 @@ export const TimeTableTuronPage = () => {
     const [canDisabled, setCanDisabled] = useState(false)
     const [fullScreen, setFullScreen] = useState(false)
     const [selectedSubject, setSelectedSubject] = useState(null)
+    const [selectedGroup, setSelectedGroup] = useState(null)
     const [canSubmitLesson, setCanSubmitLesson] = useState({})
     const [rooms, setRooms] = useState([])
 
@@ -254,23 +201,25 @@ export const TimeTableTuronPage = () => {
     const subjectsData = useSelector(getTimeTableTuronSubjects)
     const teachersData = useSelector(getTimeTableTuronTeachers)
     const teachersStatus = useSelector(getTimeTableTuronTeachersStatus)
+    const {id: branch} = useSelector(getBranch)
 
 
     const dispatch = useDispatch()
 
 
     useEffect(() => {
-        if (day) dispatch(fetchTimeTableData({id: day, type: "class"}))
-    }, [day])
+        if (day && branch) dispatch(fetchTimeTableData({id: day, type: "class", branch}))
+    }, [day, branch])
 
     useEffect(() => {
-        if (type) dispatch(fetchTimeTableTypesData(type))
-    }, [type])
+        if (type && branch) dispatch(fetchTimeTableTypesData({type, branch}))
+    }, [type, branch])
 
 
-    useEffect(() => {
-        dispatch(fetchTimeTableSubject())
-    }, [])
+    useEffect( () => {
+        if (selectedGroup)
+        dispatch(fetchTimeTableSubject(selectedGroup))
+    }, [selectedGroup])
 
 
     useEffect(() => {
@@ -307,11 +256,11 @@ export const TimeTableTuronPage = () => {
     }, [teachersData,teachersStatus])
 
     useEffect(() => {
-        if (selectedSubject) {
+        if (selectedSubject && branch) {
             setLoading(true)
-            dispatch(fetchTimeTableTeacher(selectedSubject))
+            dispatch(fetchTimeTableTeacher({subject:selectedSubject, branch}))
         }
-    }, [selectedSubject])
+    }, [selectedSubject, branch])
 
 
     // const showAlert = (type, message) => {
@@ -352,7 +301,7 @@ export const TimeTableTuronPage = () => {
 
         setLoading(true)
 
-        const res = await request(`${API_URL}SchoolTimeTable/can-set${type === "flow" ? "-flow" : ""}/?branch=25`, "POST", JSON.stringify(data), headers())
+        const res = await request(`${API_URL}SchoolTimeTable/can-set${type === "flow" ? "-flow" : ""}/?branch=${branch}`, "POST", JSON.stringify(data), headers())
             .then(res => {
                 setLoading(false)
 
@@ -375,7 +324,7 @@ export const TimeTableTuronPage = () => {
 
         setLoading(true)
 
-        const res = await request(`${API_URL}SchoolTimeTable/timetable-update-hours-rooms/?branch=25`, "POST", JSON.stringify(data), headers())
+        const res = await request(`${API_URL}SchoolTimeTable/timetable-update-hours-rooms/?branch=${branch}`, "POST", JSON.stringify(data), headers())
             .then(res => {
                 setLoading(false)
 
@@ -687,13 +636,16 @@ export const TimeTableTuronPage = () => {
         setCanDisabled(false)
     }
 
+
     const onDoubleClickContainer = (roomId, id) => {
         setRooms(rooms => rooms.map(room => {
             if (room.id === roomId) {
                 const newLessons = room.lessons.map(item => {
-                    if (item.dndId === id) {
+                    if (item.dndId === id ) {
                         setIsSelected(true)
+                        setSelectedGroup(item.group.id)
                         setSelectedSubject(!item.teacher.id && item.subject.id ? item.subject.id : null)
+
                         return {
                             ...item,
                             isSelected: true,
@@ -755,8 +707,6 @@ export const TimeTableTuronPage = () => {
 
                 const newLessons = item.lessons.map(container => {
                     if (container.dndId === dndId) {
-
-
                         if (container.id) {
                             request(`${API_URL}SchoolTimeTable/timetable-list-delete/${id}`, "DELETE", null, headers())
                                 .then(res => {
@@ -848,11 +798,16 @@ export const TimeTableTuronPage = () => {
     return (
         <div className={cls.timeTable}>
 
-            <TimeTableTuronPageFilters
+
+            {
+                !isSelected ?
+                <TimeTableTuronPageFilters
                 setIsSelected={setIsSelected}
                 isSelected={isSelected}
                 setFullScreen={setFullScreen}
-            />
+                /> : null
+            }
+
 
             {isSelected && <Button type={"danger"} onClick={onFalseSelected}>Remove Selected</Button>}
 
@@ -866,7 +821,7 @@ export const TimeTableTuronPage = () => {
                 collisionDetection={rectIntersection}
                 onDragStart={onDragStart}
                 onDragEnd={handleDragEnd}
-                modifiers={[restrictToFirstScrollableAncestor]}
+                // modifiers={[restrictToFirstScrollableAncestor]}
 
 
             >

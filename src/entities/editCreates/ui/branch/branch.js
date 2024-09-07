@@ -17,6 +17,7 @@ import {Form} from "../../../../shared/ui/form";
 import {Select} from "../../../../shared/ui/select";
 import {Input} from "../../../../shared/ui/input";
 import {BranchCreate} from "../../../creates";
+import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 
 export const Branch = () => {
     const [activeLocationModal, setActiveLocationModal] = useState(false)
@@ -27,6 +28,7 @@ export const Branch = () => {
     const getLocationList = useSelector(getLocation)
     const [active , setActive] = useState(false)
     const [select, setSelect] = useState([])
+    const [activeDel , setActiveDel] = useState(false)
     const {request} = useHttp()
 
     const loading = useSelector(getLoading)
@@ -83,13 +85,23 @@ export const Branch = () => {
     }
 
     const onDelete = () => {
-        console.log(isChange.id, "hello")
         request(`${API_URL}Branch/branch_delete/${isChange.id}/`, "DELETE", JSON.stringify({id: isChange.id}), headers())
+            .then(res => {
+                console.log(res)
+                setActiveLocationModal(!activeLocationModal)
+                dispatch(onDeleteBranch({id: isChange.id}))
+                setActiveDel(false)
+                dispatch(onAddAlertOptions({
+                    status: true,
+                    type: "success",
+                    msg: res.msg
+                }))
+            })
             .catch(err => {
                 console.log(err)
             })
-        setActiveLocationModal(!activeLocationModal)
-        dispatch(onDeleteBranch({id: isChange.id}))
+
+
 
     }
 
@@ -103,9 +115,19 @@ export const Branch = () => {
 
                 <i onClick={onAdd} className={classNames("fa fa-plus", cls.plus)}></i>
 
-                <ModalBranch onDelete={onDelete} select={select} setSelected={setSelect} options={getLocationList}
-                             activeModal={activeLocationModal} setActive={setActiveLocationModal} register={register}
-                             onChange={onChange} handleSubmit={handleSubmit}/>
+
+                <ModalBranch
+                    activeDel={activeDel}
+                    setActiveDel={setActiveDel}
+                    onDelete={onDelete}
+                    select={select}
+                    setSelected={setSelect}
+                    options={getLocationList}
+                    activeModal={activeLocationModal}
+                    setActive={setActiveLocationModal}
+                    register={register}
+                    onChange={onChange}
+                    handleSubmit={handleSubmit}/>
             </div>
             <BranchCreate loading={loading} setActive={setActive} active={active}/>
         </div>

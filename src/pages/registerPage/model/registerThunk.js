@@ -1,5 +1,5 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { API_URL, headers, useHttp } from "shared/api/base";
+import {createAsyncThunk} from "@reduxjs/toolkit";
+import {API_URL, headers, headersImg, useHttp} from "shared/api/base";
 
 const getAuthToken = () => {
     const userData = sessionStorage.getItem('token');
@@ -26,7 +26,6 @@ export const fetchLanguages = createAsyncThunk(
         return await request(`${API_URL}Language/language/`, "GET", null, headers())
     }
 )
-
 
 
 export const registerUser = createAsyncThunk(
@@ -67,8 +66,26 @@ export const registerUser = createAsyncThunk(
 
 export const registerTeacher = createAsyncThunk(
     'user/registerTeacher',
-    async (teacherData, thunkAPI) => {
+    async ({res, file}, thunkAPI) => {
         const token = getAuthToken();
+        // const formData = new FormData()
+
+        console.log(res, "res data")
+
+        // const imageObject = {
+        //     data: base64Image,
+        //     mimeType: 'image/jpeg', // Укажите тип изображения в зависимости от вашего изображения
+        // };
+        //
+        // // Логирование или отправка imageObject в ваш API
+        // console.log('Image Object:', imageObject);
+
+        // console.log(teacherData?.user?.resume[0], "resume")
+        // formData.append("file", res?.user?.resume[0])
+        delete res?.user?.resume
+        // formData.append("data", JSON.stringify(res))
+        // console.log(teacherData)
+        // const postData = teacherData?.class_type ? formData : JSON.stringify(teacherData)
 
         if (!token) {
             return thunkAPI.rejectWithValue('No authorization token found');
@@ -80,11 +97,9 @@ export const registerTeacher = createAsyncThunk(
                 {
                     method: 'POST',
                     headers: {
-                        ...headers,
-                        Authorization: `JWT ${token}`,
-                        'Content-Type': 'application/json'
+                        ...headers()
                     },
-                    body: JSON.stringify(teacherData)
+                    body: JSON.stringify(res)
                 }
             );
 
@@ -93,13 +108,23 @@ export const registerTeacher = createAsyncThunk(
             }
 
             const data = await response.json();
-            console.log(data);
+            // console.log(data);
             return data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);
         }
     }
 );
+
+export const registerTeacherImage = createAsyncThunk(
+    "user/registerTeacherImage",
+    ({id, file}) => {
+        const {request} = useHttp()
+        const formData = new FormData()
+        formData.append("file", file)
+        return request(`${API_URL}Teachers/upload-file/?username=${id}`, "POST", formData, headersImg())
+    }
+)
 
 export const registerEmployer = createAsyncThunk(
     'user/registerEmployer',
@@ -136,3 +161,11 @@ export const registerEmployer = createAsyncThunk(
         }
     }
 );
+
+export const fetchCategories = createAsyncThunk(
+    "user/fetchCategories",
+    () => {
+        const {request} = useHttp()
+        return request(`${API_URL}Teachers/salary-types`, "GET", null, headers())
+    }
+)

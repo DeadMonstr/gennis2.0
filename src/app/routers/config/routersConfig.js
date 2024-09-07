@@ -37,7 +37,8 @@ import {
     getEmployerSalary,
     getTeacherSalary, getInkasatsiya,
     getGroupHistory,
-    getRouteClassProfile, getRouteCalendar,
+    getRouteClassProfile, getCapitalCategoryProfile,
+     getRouteCalendar,
 
 } from "shared/const/routers";
 
@@ -74,9 +75,12 @@ import {Inkasatsiya} from "pages/inkasatsiyaPage";
 import {AccountingBooks} from "entities/accounting";
 // import Calendar from "react-calendar";
 import {CalendarPage} from "pages/calendarPage";
-import {TimeTable} from "pages/timeTable";
+// import {TimeTable} from "pages/timeTable";
 import {StudentProfileGroupsHistory} from "../../../entities/profile/studentProfile";
 import {TimeTableTuronPage} from "pages/timeTable";
+import {CategoryProfileProfile} from "entities/capital/ui/categoryProfileProfile/categoryProfileProfile"
+import {CategoryProfile} from "../../../pages/capitalPage/ui/capitalCategoryProfile/categoryProfile";
+import {ClassMain} from "../../../pages/classPage/ui/classMain";
 // import {TimeTable} from "pages/timeTable";
 // import {RoomsProfilePage} from "pages/profilePage";
 
@@ -179,7 +183,7 @@ export const routersConfig = [
     {
         name: "Class",
         path: getClass(":id"),
-        element: <ClassPage/>,
+        element: <ClassMain/>,
     },
     {
         path: getContract(":id"),
@@ -207,7 +211,7 @@ export const routersConfig = [
         element: <GroupCreatePage/>,
     },
     {
-        path: "groups/:id/groupInfo/:id",
+        path: "groups/groupInfo/:id",
         element: <GroupProfilePage/>,
     },
     {
@@ -219,7 +223,8 @@ export const routersConfig = [
         element: <CalendarPage/>,
     },
     {
-        path: "time",
+        name: "Time Table",
+        path: "time/*",
         element: <TimeTableTuronPage/>,
     },
     {
@@ -253,9 +258,9 @@ export const routersConfig = [
         element: <EmployerSalaryPage/>
     },
     {
-      name: "Give salary",
-      path: getEmployerSalaryInsideSource(":id", ":permission"),
-      element: <GiveSalaryPage/>
+        name: "Give salary",
+        path: getEmployerSalaryInsideSource(":id", ":permission"),
+        element: <GiveSalaryPage/>
     },
     {
         name: "Give salary",
@@ -285,6 +290,7 @@ export const routersConfig = [
         name: "Registratsiya",
         path: getRouteRegister(),
         element: <Register/>,
+
     },
 
 
@@ -343,6 +349,11 @@ export const routersConfig = [
         name: "History",
         path: getGroupHistory(":id"),
         element: <StudentProfileGroupsHistory/>
+    },
+    {
+        name: "capital category profile",
+        path: getCapitalCategoryProfile(":id"),
+        element: <CategoryProfile/>
     },
 
 ]

@@ -1,12 +1,14 @@
-import {ClassColorAdd, ClassColorAddFilter, ClassColorAddTable} from "entities/class";
-import cls from "./classPage.module.sass"
-export const ClassAddColorPage = () => {
+import { ClassColorAddFilter, ClassColorAddTable} from "entities/class";
+
+export const ClassAddColorPage = ({color , setEdit , edit}) => {
     return (
-        <div className={cls.class}>
-            <ClassColorAdd/>
-            <ClassColorAddFilter/>
-            <ClassColorAddTable/>
-        </div>
+        <>
+            <ClassColorAddFilter
+                color={color}
+                edit={edit}
+                setEdit={setEdit}/>
+            {/*<ClassColorAddTable/>*/}
+        </>
     );
 };
 

@@ -1,3 +1,4 @@
+import {getUserFetchError} from "pages/loginPage/model/selectors/selectors";
 import {useEffect, useMemo} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Navigate, Outlet} from "react-router";
@@ -18,6 +19,7 @@ export const RequireAuth = ({roles, children}) => {
     const refresh_token = sessionStorage.getItem("refresh_token")
     const userRoles = useSelector(getUserRole)
     const refreshLoading = useSelector(getUserRefreshLoading)
+    const error = useSelector(getUserFetchError)
 
     const dispatch = useDispatch()
 
@@ -60,5 +62,7 @@ export const RequireAuth = ({roles, children}) => {
 
     if (refreshLoading) {
         return <DefaultPageLoader/>
+    } else if (error) {
+        return <Navigate to={"/login"}/>
     } else return <Outlet/>
 };

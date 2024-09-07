@@ -1,5 +1,14 @@
 
 
+export const getLoadingNewStudents = (state) =>
+    state.newStudents?.newStudentsStatus;
+
+export const getLoadingStudyingStudents = (state) =>
+    state.newStudents?.studyingStudentsStatus;
+
+export const getLoadingDeletedStudents = (state) =>
+    state.newStudents?.loading;
+
 export const getNewStudentsData = (state) =>
     state.newStudents?.newStudentes;
 

@@ -23,10 +23,9 @@ const postCreateSystem = createSlice({
                 state.name = action.payload
                 state.loading = false
                 state.error = false
-                console.log(action.payload , "yedi")
             })
             .addCase(postCreateSystemThunk.rejected , (state , action) => {
-                state.error = true
+                state.error = "error"
                 state.loading = false
             })
 })

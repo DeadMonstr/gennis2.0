@@ -1,6 +1,6 @@
 import {Table} from "../../../../shared/ui/table";
 
-export const Teacher = ({teacher , extraClass}) => {
+export const Teacher = ({teacher , extraClass , formatSalary}) => {
 
     const renderTable = () => {
         return teacher?.teachers?.teacher_data?.map((item , i) => (
@@ -8,7 +8,7 @@ export const Teacher = ({teacher , extraClass}) => {
                 <td>{i +1}</td>
                 <td>{item.name} {item.surname}</td>
                 <td>{item.payment_type_name}</td>
-                <td>{item.salary}</td>
+                <td>{formatSalary(item.salary)}</td>
                 <td>{item.date}</td>
             </tr>
         ))

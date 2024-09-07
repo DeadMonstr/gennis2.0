@@ -1,13 +1,13 @@
 import {Table} from "../../../../shared/ui/table";
 
-export const Capital = ({capital , extraClass}) => {
+export const Capital = ({capital , extraClass , formatSalary}) => {
     const renderTable = () => {
         return capital?.capitals?.capital_data?.map((item, i) => (
             <tr>
                 <td>{i +1}</td>
                 <td>{item.name}</td>
                 <td>{item.payment_type.name}</td>
-                <td>{item.price}</td>
+                <td>{formatSalary(item.price)}</td>
                 <td>{item.added_date}</td>
             </tr>
         ))

@@ -24,13 +24,13 @@ const getBranchSlice = createSlice({
                 state.error = false
             })
             .addCase(getBranchThunk.fulfilled , (state, action) => {
-                state.name = action.payload.branches
+                state.name = action.payload
                 state.loading = false
                 state.error = false
             })
             .addCase(getBranchThunk.rejected , (state, action) => {
                 state.loading = false
-                state.error = true
+                state.error = "error"
             })
             .addCase(changeBranchName.pending, state => {
                 state.loading = true
@@ -46,7 +46,7 @@ const getBranchSlice = createSlice({
             })
             .addCase(changeBranchName.rejected, (state, action) => {
                 state.loading = false
-                state.error = action.payload ?? null
+                state.error = "error"
             })
 })
 

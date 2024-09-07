@@ -23,13 +23,13 @@ const getSystemSlice = createSlice({
                 state.error = false
             })
             .addCase(getSystemThunk.fulfilled, (state, action) => {
-                state.name = action.payload.systems
+                state.name = action.payload
                 state.loading = false
                 state.error = false
             })
             .addCase(getSystemThunk.rejected, (state, action) => {
                 state.loading = false
-                state.error = true
+                state.error = action.payload ?? null
             })
             .addCase(changeSystemName.pending, state => {
                 state.loading = true

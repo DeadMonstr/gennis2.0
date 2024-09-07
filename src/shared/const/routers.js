@@ -15,6 +15,7 @@ export const getTeacherProfile = (id) => `teacher/teacherProfile/${id}`;
 export const getVacancyPage = (id) => `vacancyPage/${id}`
 export const getVacancyWorkPage = (id) => `vacancyPage/vacancyWorkPage/${id}`
 export const getRoomsProfilePage = (id) => `rooms/roomsProfilePage/${id}`
+
 export const getProfile = (id) => `students/profile/${id}`;
 export const getRouteTimePage = (id) => `timeList/${id}`
 export const getRouteUserProfile = (id) => `profile/${id}`
@@ -26,13 +27,13 @@ export const getEmployerSalary = (id) => `employer/employerProfile/:id/employerS
 export const getEmployerSalaryInsideSource = (id, permission) => `employer/employerProfile/:id/employerSalaryPage/:id/giveSalaryPage/${id}/${permission}`
 export const getTeacherSalaryInsideSource = (id) => `teacher/teacherProfile/:id/teacherSalaryPage/:id/giveTeacherSalaryPage/${id}`
 
-export const getClass = (id) => `class`
+export const getClass = () => `class/*`
 
-export const getFlow = (id) => `flows/${id}`
+export const getFlow = (id) => `flows/*`
 
 export const getContract = (id) => `contract/${id}`
 
-export const getCapital = (id) => `capital/${id}`
+export const getCapital = (id) => `capital/*`
 
 export const getCapitalInside = (id) => `capital/:id/capitalBoxProfile/${id}`
 
@@ -53,7 +54,7 @@ export const getEducation = (id) => `education/${id}`
 
 
 export const getSystem = (id) => `system/${id}`
-export const getAccounting = (id) => `accounting/${id}/*`
+export const getAccounting = (id) => `accounting/*`
 
 export const getInkasatsiya = (id) => `inkasatsiya/${id}/*`
 
@@ -61,5 +62,6 @@ export const getInkasatsiya = (id) => `inkasatsiya/${id}/*`
 export const getGroupHistory = (id) => `students/profile/history/${id}`
 
 export const getRouteClassProfile = (id) => `groups/classProfile/${id}`
+export const getCapitalCategoryProfile = (id) => `capital/:id/capitalBoxProfile/:id/categoryProfile/${id}`
 
 
