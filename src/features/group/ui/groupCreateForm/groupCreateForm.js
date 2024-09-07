@@ -16,6 +16,7 @@ import {Select} from "shared/ui/select";
 import {API_URL, headers, useHttp} from "shared/api/base";
 
 import cls from "./groupCreateForm.module.sass";
+// import {createSchoolClass} from "../../../../entities/students/model/studentsThunk";
 
 export const GroupCreateForm = memo((props) => {
 
@@ -43,31 +44,6 @@ export const GroupCreateForm = memo((props) => {
 
     const [createStatus, setCreateStatus] = useState(false)
 
-    const onSubmit = (data) => {
-
-        const res = {
-            ...data,
-            students: selectedStudents,
-            teacher: selectedTeachers,
-            subject: selectedSubjectId,
-            branch: userBranchId,
-            time_table: selectedTime,
-            create_type: theme === "app_center_theme" ? "center" : "school",
-            system: 1
-        }
-        request(`${API_URL}Group/groups/create/`, "POST", JSON.stringify(res), headers())
-            .then(res => {
-                // console.log(res, "group create")
-                dispatch(onAddAlertOptions({
-                    type: "success",
-                    status: true,
-                    msg: "Guruh yaratildi"
-                }))
-                // setCreateStatus(true)
-                setActive(false)
-            })
-            .catch(err => console.log(err))
-    }
 
     return (
         <Modal
@@ -79,7 +55,7 @@ export const GroupCreateForm = memo((props) => {
                     <h2>Gruppa ochish</h2>
                 </div>
                 <div className={cls.createGroupForm}>
-                    <Form onSubmit={handleSubmit(onSubmit)}>
+                    <Form>
                         <Input
                             extraClassName={cls.createGroupFormItem}
                             placeholder={"Gruppa nomi"}

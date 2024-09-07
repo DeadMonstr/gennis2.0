@@ -20,7 +20,8 @@ import {
     studentPaymentDataPostThunk,
     studentPaymentTypeChangeThunk,
     studentBookOrderListThunk,
-    getMonthDataThunk
+    getMonthDataThunk,
+    getMonthPrice
 
 } from "./studentPaymentThunk";
 
@@ -345,7 +346,11 @@ const studentPaymentSlice = createSlice({
             .addCase(getMonthDataThunk.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
-            });
+            })
+
+
+
+
     }
 });
 

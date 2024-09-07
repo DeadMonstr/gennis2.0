@@ -21,10 +21,10 @@ export const getRouteUserProfile = (id) => `profile/${id}`
 export const getEmployerPage = (id) => `employer/*`
 export const getEmployerProfile = (id) => `employer/employerProfile/${id}`;
 
-export const getTeacherSalary = (id) => `teacher/teacherProfile/teacherSalaryPage/${id}`
-export const getEmployerSalary = (id) => `employer/employerProfile/employerSalaryPage/${id}`
-export const getEmployerSalaryInsideSource = (id, permission) => `employer/employerProfile/employerSalaryPage/giveSalaryPage/${id}/${permission}`
-export const getTeacherSalaryInsideSource = (id) => `teacher/:id/teacherProfile/teacherSalaryPage/giveTeacherSalaryPage/${id}`
+export const getTeacherSalary = (id) => `teacher/teacherProfile/:id/teacherSalaryPage/${id}`
+export const getEmployerSalary = (id) => `employer/employerProfile/:id/employerSalaryPage/${id}`
+export const getEmployerSalaryInsideSource = (id, permission) => `employer/employerProfile/:id/employerSalaryPage/:id/giveSalaryPage/${id}/${permission}`
+export const getTeacherSalaryInsideSource = (id) => `teacher/teacherProfile/:id/teacherSalaryPage/:id/giveTeacherSalaryPage/${id}`
 
 export const getClass = (id) => `class`
 
@@ -58,7 +58,7 @@ export const getAccounting = (id) => `accounting/${id}/*`
 export const getInkasatsiya = (id) => `inkasatsiya/${id}/*`
 
 
-export const getGroupHistory = (id) => `students/profile/:id/history/${id}`
+export const getGroupHistory = (id) => `students/profile/history/${id}`
 
 export const getRouteClassProfile = (id) => `groups/classProfile/${id}`
 

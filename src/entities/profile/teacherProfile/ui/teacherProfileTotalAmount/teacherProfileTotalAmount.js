@@ -54,8 +54,7 @@ export const TeacherProfileTotalAmount = memo(({active, setActive, salary_id, us
                     status: true,
                     msg: "Oylik muvofaqqiyatli to'landi"
                 }))
-            } else {
-                console.error("Thunk failed with error: ", action.payload);
+            } else if (giveTeacherSalaryThunk.rejected.match(action)){
                 dispatch(onAddAlertOptions({
                     type: "error",
                     status: true,

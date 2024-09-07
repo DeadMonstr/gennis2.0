@@ -164,7 +164,7 @@ export const StudentsPage = () => {
                 setActiveModal(false)
                 // setCreateStatus(true)
             })
-        dispatch(createSchoolClass({res}))
+        // dispatch(createSchoolClass({res}))
 
         // setSelectStudents([])
     }
