@@ -24,7 +24,7 @@ import defaultUserImg from "shared/assets/images/user_image.png";
 export const GroupProfileModalTeachers = memo(({branch}) => {
 
     // const branch = localStorage.getItem("selectedBranch")
-    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
     const userBranchId = useSelector(getUserBranchId)
     const dispatch = useDispatch()
     const {id} = useParams()
@@ -41,12 +41,12 @@ export const GroupProfileModalTeachers = memo(({branch}) => {
     const [currentTeachersData, setCurrentTeachersData] = useState([])
 
     useEffect(() => {
-        if (userSystem?.type === "school") {
+        if (userSystem?.name === "school") {
             setCurrentTeachersData(schoolTeachers)
         } else {
             setCurrentTeachersData(centerTeachers)
         }
-    }, [theme, userSystem, centerTeachers, schoolTeachers])
+    }, [theme, userSystem?.name, centerTeachers, schoolTeachers])
 
     const [active, setActive] = useState(false)
     const [searchValue, setSearchValue] = useState("")
@@ -56,7 +56,7 @@ export const GroupProfileModalTeachers = memo(({branch}) => {
         dispatch(changeGroupProfile({
             data: {teacher: [teacherId]},
             id: id,
-            group_type: userSystem?.type
+            group_type: userSystem?.name
         }))
         dispatch(onAddAlertOptions({
             type: "success",

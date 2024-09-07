@@ -35,20 +35,20 @@ export const ThemeSwitcher = () => {
     }
 
     useEffect(() => {
-        const localSystem = JSON.parse(localStorage.getItem("selectedSystem"))
+        const localSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
         if (!localSystem && !localSystem?.id) {
-            toggleTheme(system.type === "center" ? "app_school_theme" : "app_center_theme")
+            toggleTheme(system.name === "center" ? "app_school_theme" : "app_center_theme")
         }
-    }, [system?.id])
+    }, [system?.name])
 
 
     useEffect(() => {
-        const localSystem = JSON.parse(localStorage.getItem("selectedSystem"))
+        const localSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
         if (localSystem && localSystem?.id && !isLocal && systems.length) {
-            toggleTheme(localSystem.type === "center" ? "app_school_theme" : "app_center_theme")
+            toggleTheme(localSystem.name === "center" ? "app_school_theme" : "app_center_theme")
             setIsLocal(true)
-            setActive(localSystem.type === "center")
-            dispatch(onChangeSystem(localSystem.type))
+            setActive(localSystem.name === "center")
+            dispatch(onChangeSystem(localSystem.name))
         }
     },[isLocal,systems])
 

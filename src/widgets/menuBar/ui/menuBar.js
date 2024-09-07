@@ -52,7 +52,7 @@ export const Menubar = () => {
 
 
             if (selectedLocations > 1 && !item.branches) return;
-            if (!item?.system.includes(system.type)) return;
+            if (!item?.system.includes(system.name)) return;
             if ((typeof item.roles === "object" && user?.job.some(job => item.roles.includes(job))) || (typeof item.roles === "boolean" && item.roles)) {
 
 
