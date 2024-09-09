@@ -20,7 +20,7 @@ export const EmployeesFilter = React.memo(({ active, setActive, activeSwitch, se
     const jobsData = useSelector(getVacancyJobs);
     const languages = useSelector(getLanguagesData);
 
-    const jobOptions = jobsData?.jobs?.map(job => ({
+    const jobOptions = jobsData?.map(job => ({
         id: job.group.id,
         name: job.group.name
     })) || [];
@@ -63,6 +63,7 @@ export const EmployeesFilter = React.memo(({ active, setActive, activeSwitch, se
     };
 
     useEffect(() => {
+        console.log("emp")
         dispatch(fetchVacancyData());
     }, [dispatch]);
 

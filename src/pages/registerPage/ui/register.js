@@ -44,7 +44,7 @@ const shift = [
 
 export const Register = () => {
     const jobsData = useSelector(getVacancyJobs)
-    const jobOptions = jobsData?.jobs?.map(job => ({
+    const jobOptions = jobsData?.map(job => ({
         id: job.group.id,
         name: job.group.name
     })) || [];
@@ -62,7 +62,7 @@ export const Register = () => {
     const username = watch("username", "");
     const {theme} = useTheme()
 
-    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))// changed
     const classNumbers = useSelector(getSchoolClassNumbers)
     const languages = useSelector(getLanguagesData);
     const branch = localStorage.getItem("selectedBranch")
@@ -96,7 +96,7 @@ export const Register = () => {
     }, [])
 
     useEffect(() => {
-        if (userSystem?.id === 2 || theme === "app_school_theme") {
+        if (userSystem?.name === "school") {
             dispatch(fetchClassNumberList())
         }
     }, [])
@@ -166,7 +166,7 @@ export const Register = () => {
 
         if (registerType === 'student') {
             let result;
-            if (userSystem?.id === 2) {
+            if (userSystem?.name === "school") {
                 result = {
                     class_number: selectedClass
                 }
@@ -183,7 +183,7 @@ export const Register = () => {
             };
             registerAction = registerUser(res);
         } else if (registerType === 'teacher') {
-            if (userSystem?.id === 2) {
+            if (userSystem?.name === "school") {
                 res = {
                     ...res,
                     total_students: 1212,
@@ -232,7 +232,6 @@ export const Register = () => {
                     setUsernameMessage('');
                     setIsUsernameAvailable(true);
                 } else {
-                    console.error('Registration error:', action.error);
                     dispatch(onAddAlertOptions({
                         type: "error",
                         status: true,
@@ -260,7 +259,7 @@ export const Register = () => {
 
 
                         {
-                            (theme === "app_school_theme" || userSystem?.id === 2) ? (
+                            (userSystem?.name === "school") ? (
                                 <Select
                                     extraClass={cls.extraClasses}
                                     title={"Sinf"}
@@ -304,7 +303,7 @@ export const Register = () => {
                             options={subjects.map(subj => ({id: subj.id, name: subj.name}))}
                         />
                         {
-                            (theme === "app_school_theme" || userSystem?.id === 2) && (
+                            (userSystem?.name === "school") && (
                                 <>
                                     <Select
                                         extraClass={cls.extraClasses}

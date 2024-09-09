@@ -44,18 +44,21 @@ export const Menubar = () => {
 
     const renderMultipleMenu = useCallback(() => {
 
-        const linkId = selectedLocations?.length > 1 ? "" : `/${branch?.id}`
-
 
         return menuConfig.map((item, index) => {
 
-            if (!item?.system.includes(system.type)) return;
+            const linkId = selectedLocations?.length > 1 && !item.multi ? "" : selectedLocations?.length > 1 && item.multi ? "/list" : `/${branch?.id}`
+
+
+
+            if (selectedLocations > 1 && !item.branches) return;
+            if (!item?.system.includes(system.name)) return;
             if ((typeof item.roles === "object" && user?.job.some(job => item.roles.includes(job))) || (typeof item.roles === "boolean" && item.roles)) {
 
 
                 return (
                     <NavLink
-                        to={`${item.to}${linkId}`}
+                        to={`${item.to}${item.branches  ? linkId : `/${branch?.id}`}`}
                         key={index}
                         className={({isActive}) =>
                             isActive ? `${cls.link} ${cls.active}` : `${cls.link}`

@@ -40,16 +40,17 @@ export const RoomsList = ({ currentTableData }) => {
                 ))}
             </div>
         );
-    } else if (currentTableData?.length === 0)
-    {
-        return (
-            <div className={cls.skeletonContainer}>
-                {Array.from({ length: 5 }).map((_, index) => (
-                    <SkeletonCard key={index} />
-                ))}
-            </div>
-        );
     }
+    // else if (currentTableData.length === 0)
+    // {
+    //     return (
+    //         <div className={cls.skeletonContainer}>
+    //             {Array.from({ length: 5 }).map((_, index) => (
+    //                 <SkeletonCard key={index} />
+    //             ))}
+    //         </div>
+    //     );
+    // }
 
     const handleSwitchChange = (id) => {
         setSwitchStates(prevStates => ({
@@ -60,12 +61,12 @@ export const RoomsList = ({ currentTableData }) => {
 
     const roomsToRender = getFilteredRoom && getFilteredRoom.length > 0 ? getFilteredRoom : currentTableData
 
-    if (!roomsToRender || roomsToRender?.length === 0)
-    {
-        return (
-            <DefaultLoader/>
-        )
-    }
+    // if (!roomsToRender || roomsToRender.length === 0)
+    // {
+    //     return (
+    //         <DefaultLoader/>
+    //     )
+    // }
 
 
     return roomsToRender?.map((item, index) => (

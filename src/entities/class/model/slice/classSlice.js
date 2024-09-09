@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
     classItem,
-    createClassType, createColor,
+    createClassType, createColor, fetchClassSubjects,
     getClassTypeNumber,
     getClassTypes,
     getColor, updateClassItem,
@@ -15,6 +15,7 @@ const initialState = {
     classTypeNumber: [],
     classItems: [],
     color: [],
+    subjects: []
 }
 
 const classSlice = createSlice({
@@ -176,6 +177,23 @@ const classSlice = createSlice({
 
             })
             .addCase(updateColor.rejected, state => {
+                state.loading = false
+                state.error = true
+            })
+
+
+            .addCase(fetchClassSubjects.pending, state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(fetchClassSubjects.fulfilled, (state, action) => {
+                state.subjects = action.payload
+                state.loading = false
+                state.error = false
+
+
+            })
+            .addCase(fetchClassSubjects.rejected, state => {
                 state.loading = false
                 state.error = true
             })

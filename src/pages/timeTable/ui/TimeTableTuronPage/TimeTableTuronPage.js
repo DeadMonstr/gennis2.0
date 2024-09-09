@@ -1,3 +1,4 @@
+import {getBranch} from "features/branchSwitcher";
 import React, {useEffect, useState} from 'react';
 
 import cls from "./TimeTableTuronPage.module.sass"
@@ -30,7 +31,7 @@ import {
     getTimeTableTuronColor,
     getTimeTableTuronColors,
     getTimeTableTuronData,
-    getTimeTableTuronDay,
+    getTimeTableTuronDay, getTimeTableTuronFilterClass,
     getTimeTableTuronGroup,
     getTimeTableTuronHours,
     getTimeTableTuronSubjects,
@@ -200,23 +201,26 @@ export const TimeTableTuronPage = () => {
     const subjectsData = useSelector(getTimeTableTuronSubjects)
     const teachersData = useSelector(getTimeTableTuronTeachers)
     const teachersStatus = useSelector(getTimeTableTuronTeachersStatus)
+    const filteredClass = useSelector(getTimeTableTuronFilterClass)
+    const {id: branch} = useSelector(getBranch)
+
 
 
     const dispatch = useDispatch()
 
 
     useEffect(() => {
-        if (day) dispatch(fetchTimeTableData({id: day, type: "class"}))
-    }, [day])
+        if (day && branch) dispatch(fetchTimeTableData({id: day, type: "class", branch}))
+    }, [day, branch])
 
     useEffect(() => {
-        if (type) dispatch(fetchTimeTableTypesData(type))
-    }, [type])
+        if (type && branch) dispatch(fetchTimeTableTypesData({type, branch}))
+    }, [type, branch])
 
 
-    useEffect( () => {
+    useEffect(() => {
         if (selectedGroup)
-        dispatch(fetchTimeTableSubject(selectedGroup))
+            dispatch(fetchTimeTableSubject(selectedGroup))
     }, [selectedGroup])
 
 
@@ -227,7 +231,7 @@ export const TimeTableTuronPage = () => {
 
 
     useEffect(() => {
-        if (!groupsData.length) return;
+        // if (!groupsData.length) return;
         setGroups(groupsData)
     }, [groupsData])
 
@@ -240,7 +244,7 @@ export const TimeTableTuronPage = () => {
 
     useEffect(() => {
         setLoading(false)
-        if (!teachersData.length && teachersStatus === "success" ) {
+        if (!teachersData.length && teachersStatus === "success") {
             dispatch(onAddAlertOptions({
                 type: "error",
                 status: true,
@@ -251,14 +255,58 @@ export const TimeTableTuronPage = () => {
             setTeachers(teachersData)
         }
 
-    }, [teachersData,teachersStatus])
+    }, [teachersData, teachersStatus])
 
     useEffect(() => {
-        if (selectedSubject) {
+        if (selectedSubject && branch) {
             setLoading(true)
-            dispatch(fetchTimeTableTeacher(selectedSubject))
+            dispatch(fetchTimeTableTeacher({subject: selectedSubject, branch}))
         }
-    }, [selectedSubject])
+    }, [selectedSubject, branch])
+
+
+    useEffect(() => {
+        if (rooms.length && filteredClass && type) {
+            setRooms(rooms => rooms.map(room => {
+
+                const newLessons = room.lessons.map(item => {
+
+
+                    const isItemGroup = !!item.group.id
+
+                    if (isItemGroup) {
+
+
+                        let isFilteredColor
+                        if (type === "group") {
+                            isFilteredColor = item.group.type === "group" ? item.group.id === +filteredClass : item.group.classes.includes(+filteredClass)
+
+                        } else {
+                            isFilteredColor = item.group.id === +filteredClass
+
+                        }
+
+                        return {
+                            ...item,
+                            isFilteredColor: isFilteredColor,
+                        }
+                    }
+
+                    return item
+
+                })
+
+
+
+
+                return {
+                    ...room,
+                    lessons: newLessons,
+                }
+
+            }))
+        }
+    },[rooms.length,filteredClass,type])
 
 
     // const showAlert = (type, message) => {
@@ -266,6 +314,7 @@ export const TimeTableTuronPage = () => {
     //     setAlerts([...alerts, newAlert]);
     //
     // };
+
 
 
     const onDragStart = (e) => {
@@ -299,7 +348,7 @@ export const TimeTableTuronPage = () => {
 
         setLoading(true)
 
-        const res = await request(`${API_URL}SchoolTimeTable/can-set${type === "flow" ? "-flow" : ""}/?branch=25`, "POST", JSON.stringify(data), headers())
+        const res = await request(`${API_URL}SchoolTimeTable/can-set${type === "flow" ? "-flow" : ""}/?branch=${branch}`, "POST", JSON.stringify(data), headers())
             .then(res => {
                 setLoading(false)
 
@@ -316,13 +365,12 @@ export const TimeTableTuronPage = () => {
     }
 
 
-
     const canChangeContainer = async (data) => {
 
 
         setLoading(true)
 
-        const res = await request(`${API_URL}SchoolTimeTable/timetable-update-hours-rooms/?branch=25`, "POST", JSON.stringify(data), headers())
+        const res = await request(`${API_URL}SchoolTimeTable/timetable-update-hours-rooms/?branch=${branch}`, "POST", JSON.stringify(data), headers())
             .then(res => {
                 setLoading(false)
 
@@ -360,7 +408,6 @@ export const TimeTableTuronPage = () => {
         let isActiveItem
 
 
-
         if (activeTypeItem === "group" || activeTypeItem === "flow") {
             isActiveItem = groups.filter(item => item.dndId === activeItemId)[0]
         } else if (activeTypeItem === "subject") {
@@ -370,7 +417,6 @@ export const TimeTableTuronPage = () => {
             isActiveItem = teachers.filter(item => item.dndId === activeItemId)[0]
             setSelectedSubject(null)
         }
-
 
 
         if (activeTypeItem === "container" && overTypeItem === "container") {
@@ -639,7 +685,7 @@ export const TimeTableTuronPage = () => {
         setRooms(rooms => rooms.map(room => {
             if (room.id === roomId) {
                 const newLessons = room.lessons.map(item => {
-                    if (item.dndId === id ) {
+                    if (item.dndId === id) {
                         setIsSelected(true)
                         setSelectedGroup(item.group.id)
                         setSelectedSubject(!item.teacher.id && item.subject.id ? item.subject.id : null)
@@ -748,7 +794,7 @@ export const TimeTableTuronPage = () => {
                 teacher: canSubmitLesson.teacher.id,
                 room: canSubmitLesson.room,
                 week: +day,
-                branch: 25
+                branch: branch
             }
 
 
@@ -799,11 +845,12 @@ export const TimeTableTuronPage = () => {
 
             {
                 !isSelected ?
-                <TimeTableTuronPageFilters
-                setIsSelected={setIsSelected}
-                isSelected={isSelected}
-                setFullScreen={setFullScreen}
-                /> : null
+                    <TimeTableTuronPageFilters
+                        setIsSelected={setIsSelected}
+                        isSelected={isSelected}
+                        setFullScreen={setFullScreen}
+                        groups={groups}
+                    /> : null
             }
 
 
@@ -812,16 +859,12 @@ export const TimeTableTuronPage = () => {
             {loading && <DefaultLoader/>}
 
 
-
-
             <DndContext
                 sensors={sensors}
                 collisionDetection={rectIntersection}
                 onDragStart={onDragStart}
                 onDragEnd={handleDragEnd}
                 // modifiers={[restrictToFirstScrollableAncestor]}
-
-
             >
                 <TimeTableDragItems
                     setSelectedSubject={setSelectedSubject}
@@ -831,9 +874,8 @@ export const TimeTableTuronPage = () => {
                     subjects={subjects}
                     teachers={teachers}
                     color={color}
+                    type={type}
                 />
-
-
 
 
                 <TimeTableDropContainer
@@ -848,30 +890,27 @@ export const TimeTableTuronPage = () => {
                 />
 
 
-
-
-                <DragOverlay >
+                <DragOverlay>
                     {
                         startItem?.room ?
                             <DraggableContainer type={"overlay"} item={startItem}/> :
-                        startItem?.type === "teacher" ?
-                            <TimeTableDragItem
-                                item={startItem}
-
-                            >
-                                {startItem.user.name} {startItem.user.surname}
-                            </TimeTableDragItem>
-                            : startItem?.dndId ?
+                            startItem?.type === "teacher" ?
                                 <TimeTableDragItem
                                     item={startItem}
-                                    color={startItem?.color?.value}
+
                                 >
-                                    {startItem.name}
+                                    {startItem.user.name} {startItem.user.surname}
                                 </TimeTableDragItem>
-                                : null
+                                : startItem?.dndId ?
+                                    <TimeTableDragItem
+                                        item={startItem}
+                                        color={startItem?.color?.value}
+                                    >
+                                        {startItem.name}
+                                    </TimeTableDragItem>
+                                    : null
                     }
                 </DragOverlay>
-
 
 
             </DndContext>

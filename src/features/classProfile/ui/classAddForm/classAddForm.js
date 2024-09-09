@@ -50,6 +50,7 @@ export const ClassAddForm = memo((props) => {
     const timeTable = useSelector(getTimeTable)
 
     const [activeModal, setActiveModal] = useState(false)
+    const [onChangeSelect, setOnChangeSelect] = useState(null)
     const [selectedId, setSelectedId] = useState([])
     const [searchValue, setSearchValue] = useState("")
 
@@ -72,9 +73,10 @@ export const ClassAddForm = memo((props) => {
                     status: true,
                     msg: `O'quvchilar sinfga qo'shildi`
                 }))
+                setActiveModal(false)
+                setActive(false)
             })
             .catch(err => {
-                console.log(err)
                 dispatch(onAddAlertOptions({
                     type: "error",
                     status: true,
@@ -179,7 +181,7 @@ export const ClassAddForm = memo((props) => {
     return (
         <>
             <Modal
-                setActive={setActive}
+                setActive={(value) => setActive(value)}
                 active={active}
             >
                 <Form
@@ -189,12 +191,18 @@ export const ClassAddForm = memo((props) => {
                 >
                     <h2>Add Class</h2>
                     <Select
+                        onChangeOption={setOnChangeSelect}
                         options={groupData}
                         title={"Classes"}
                         register={register}
                         name={"class"}
                     />
-                    <Button>Tekshirmoq</Button>
+                    <Button
+                        disabled={!onChangeSelect}
+                        type={!onChangeSelect ? "disabled" : ""}
+                    >
+                        Tekshirmoq
+                    </Button>
                 </Form>
             </Modal>
             <Modal
@@ -231,6 +239,8 @@ export const ClassAddForm = memo((props) => {
                 <Button
                     extraClass={cls.addModal__btn}
                     onClick={onSubmitAddStudents}
+                    type={selectedId.length === 0 ? "disabled" : ""}
+                    disabled={selectedId.length === 0 ? "disabled" : ""}
                 >
                     Add
                 </Button>

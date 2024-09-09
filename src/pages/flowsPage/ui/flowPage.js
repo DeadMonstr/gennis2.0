@@ -2,6 +2,8 @@ import {getUserBranchId} from "entities/profile/userProfile";
 import {getCurseLevelData} from "entities/students";
 import {getCurseLevel} from "entities/students/model/studentsSlice";
 import {FlowAddForm} from "features/flow";
+import {Pagination} from "features/pagination";
+import {getSearchValue} from "features/searchInput";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import cls from "./flowsPage.module.sass"
 import {Select} from "shared/ui/select";
@@ -18,6 +20,7 @@ import {Input} from "shared/ui/input";
 import {fetchTeachersData, getTeachers} from "entities/teachers";
 import {useForm} from "react-hook-form";
 import {getFlowsLoading} from "entities/flows/model/selector/flowsSelector";
+import {getBranch} from "features/branchSwitcher";
 
 
 export const FlowsPage = () => {
@@ -26,18 +29,30 @@ export const FlowsPage = () => {
     let PageSize = useMemo(() => 50, [])
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
-    const [search, setSearch] = useState("")
+    const search = useSelector(getSearchValue);
 
     const branch = localStorage.getItem("selectedBranch")
     const {request} = useHttp()
     const dispatch = useDispatch()
     const flows = useSelector(getFlows)
     const flowsLoading = useSelector(getFlowsLoading)
-    const userBranchId = useSelector(getUserBranchId)
+    const userBranchId = useSelector(getBranch)
     const teachers = useSelector(getTeachers)
     const level = useSelector(getCurseLevelData)
 
+
     const [active, setActive] = useState(false)
+
+    const searchedFlow = useMemo(() => {
+        const filteredRooms = flows?.filter(item => !item.deleted) || [];
+        setCurrentPage(1);
+
+        if (!search) return filteredRooms;
+
+        return filteredRooms.filter(item =>
+            item?.name?.toLowerCase().includes(search.toLowerCase())
+        );
+    }, [flows, search]);
 
 
 
@@ -64,34 +79,34 @@ export const FlowsPage = () => {
         <div className={cls.flow}>
             <div className={cls.flow__header}>
 
-                <div className={cls.flow__location}>
-                    <Select/>
-                </div>
+                {/*<div className={cls.flow__location}>*/}
+                {/*    <Select/>*/}
+                {/*</div>*/}
 
             </div>
             <Flows
-                currentTableData={flows}
+                branchId={userBranchId.id}
+                currentTableData={currentTableData}
                 loading={flowsLoading}
                 teacherData={teachers}
                 levelData={level}
                 getLevelData={getLevelData}
                 setActive={setActive}
             />
-            {/*<Pagination*/}
-            {/*    setCurrentTableData={setCurrentTableData}*/}
-            {/*    users={flows}*/}
-            {/*    search={search}*/}
-            {/*    setCurrentPage={setCurrentPage}*/}
-            {/*    currentPage={currentPage}*/}
-            {/*    pageSize={PageSize}*/}
-            {/*    onPageChange={page => {*/}
-            {/*        setCurrentPage(page)*/}
-            {/*    }}*/}
-            {/*    type={"custom"}/>*/}
-            <FlowAddForm
-                active={active}
-                setActive={setActive}
-            />
+            <Pagination
+                setCurrentTableData={setCurrentTableData}
+                users={searchedFlow}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                pageSize={PageSize}
+                onPageChange={page => {
+                    setCurrentPage(page)
+                }}
+                type={"custom"}/>
+            {/*<FlowAddForm*/}
+            {/*    active={active}*/}
+            {/*    setActive={setActive}*/}
+            {/*/>*/}
         </div>
     )
 }

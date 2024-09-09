@@ -24,6 +24,12 @@ export const ProfileTeacherPage = () => {
     const {theme} = useTheme()
 
 
+    useEffect(() => {
+        if (id) {
+            dispatch(fetchTeacherId(id))
+        }
+
+    } ,[dispatch, id])
 
 
     const onSubmitImage = (data) => {

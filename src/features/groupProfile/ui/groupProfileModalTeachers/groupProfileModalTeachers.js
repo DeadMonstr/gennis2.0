@@ -21,10 +21,10 @@ import {getGroupProfileData} from "entities/profile/groupProfile";
 import cls from "./groupProfileModalTeachers.module.sass";
 import defaultUserImg from "shared/assets/images/user_image.png";
 
-export const GroupProfileModalTeachers = memo(() => {
+export const GroupProfileModalTeachers = memo(({branch}) => {
 
-    const branch = localStorage.getItem("selectedBranch")
-    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
+    // const branch = localStorage.getItem("selectedBranch")
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
     const userBranchId = useSelector(getUserBranchId)
     const dispatch = useDispatch()
     const {id} = useParams()
@@ -41,25 +41,22 @@ export const GroupProfileModalTeachers = memo(() => {
     const [currentTeachersData, setCurrentTeachersData] = useState([])
 
     useEffect(() => {
-        console.log(schoolTeachers, "schoolTeachers")
-        console.log(centerTeachers, "centerTeachers")
-        if (userSystem?.id === 2) {
+        if (userSystem?.name === "school") {
             setCurrentTeachersData(schoolTeachers)
         } else {
             setCurrentTeachersData(centerTeachers)
         }
-    }, [theme, userSystem, centerTeachers, schoolTeachers])
+    }, [theme, userSystem?.name, centerTeachers, schoolTeachers])
 
     const [active, setActive] = useState(false)
     const [searchValue, setSearchValue] = useState("")
 
-    console.log(currentTeachersData, "currentTeachersData")
 
     const onChangeTeacher = (teacherId) => {
         dispatch(changeGroupProfile({
             data: {teacher: [teacherId]},
             id: id,
-            group_type: userSystem?.id === 1 ? "center" : "school"
+            group_type: userSystem?.name
         }))
         dispatch(onAddAlertOptions({
             type: "success",
@@ -125,7 +122,7 @@ export const GroupProfileModalTeachers = memo(() => {
                 title={<i className="fas fa-edit"/>}
                 onClick={() => setActive(true)}
             >
-                <h1>O’qituvchilari</h1>
+                <h1>O’qituvchi</h1>
                 <div className={cls.teacher__container}>
                     <div className={cls.teacher__info}>
                         <img

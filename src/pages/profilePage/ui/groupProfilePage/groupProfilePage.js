@@ -39,19 +39,23 @@ import {fetchTeachersData} from "entities/teachers";
 import {fetchGroupsData} from "entities/groups";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
-import {fetchSubjects} from "pages/registerPage";
+import {fetchLanguages, fetchSubjects} from "pages/registerPage";
 
 import cls from "./groupProfilePage.module.sass";
+import {getBranch} from "features/branchSwitcher";
+import {system} from "features/workerSelect";
+import {getSystem} from "features/themeSwitcher";
 
 export const GroupProfilePage = () => {
 
     const {request} = useHttp()
     const dispatch = useDispatch()
-    const {"*": id} = useParams()
+    const {id} = useParams()
     const data = useSelector(getGroupProfileData)
     const timeTable = useSelector(getTimeTable)
     const loading = useSelector(getGroupProfileLoading)
-    const branch = localStorage.getItem("selectedBranch")
+    const {id: branch} = useSelector(getBranch)
+    const system = useSelector(getSystem)
     const systemId = useSelector(getUserSystemId)
 
     const [active, setActive] = useState(false)
@@ -59,14 +63,13 @@ export const GroupProfilePage = () => {
     useEffect(() => {
         dispatch(fetchGroupProfile({id}))
         dispatch(fetchSubjects())
-
-
+        dispatch(fetchLanguages())
         dispatch(fetchReasons())
-
         dispatch(fetchWeekDays())
         dispatch(fetchClassColors())
         dispatch(fetchClassNumberList())
     }, [])
+
 
     useEffect(() => {
         if (branch) {
@@ -97,12 +100,11 @@ export const GroupProfilePage = () => {
             headers()
         )
             .then(res => {
-                console.log(res, "res group")
                 dispatch(getNextLesson(res))
             })
             .catch(err => console.log(err))
         // }
-    }, [id, systemId])
+    }, [id, system])
 
     // useEffect(() => {
     //     if (branchId && data) {
@@ -127,7 +129,7 @@ export const GroupProfilePage = () => {
     }, [data])
 
     useEffect(() => {
-        if (branch && data && timeTable && systemId === 1) {
+        if (branch && data && timeTable && system.name === "center") {
             const res = {
                 time_tables: timeTable.map(item => ({
                     week: item.week.id,
@@ -145,25 +147,25 @@ export const GroupProfilePage = () => {
             }))
         }
 
-    }, [branch, data, timeTable, systemId])
+    }, [branch, data, timeTable, system])
 
     if (loading) {
         return <DefaultPageLoader/>
     } else return (
         <div className={cls.profile}>
-            <GroupProfileInfoForm/>
+            <GroupProfileInfoForm branch={branch} system={system}/>
             {/*<GroupProfileInfo/>*/}
             <div
                 className={classNames(cls.profile__mainContent, {
                     [cls.active]: active
                 })}
             >
-                <GroupProfileModalTeachers/>
+                <GroupProfileModalTeachers branch={branch}/>
                 {/*<GroupProfileTeacher setActive={setActiveModal}/>*/}
-                <GroupProfileDeleteForm/>
+                <GroupProfileDeleteForm branch={branch} system={system}/>
                 {/*<GroupProfileStudents/>*/}
                 {
-                    systemId === 1 ? <>
+                    system.name === "center" ? <>
                         <GroupProfileStatistics setActive={setActive}/>
                         <GroupProfileAttendanceForm/>
                         {/*<GroupProfileAttendance/>*/}

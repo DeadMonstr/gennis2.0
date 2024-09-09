@@ -12,7 +12,7 @@ import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 export const GroupsList = React.memo(({currentTableData}) => {
     const getFilteredGroups = useSelector(getGroupListWithFilter)
     const navigate = useNavigate()
-    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
 
     const renderGroups = () => {
         const groupsToRender = getFilteredGroups && getFilteredGroups.length > 0 ? getFilteredGroups : currentTableData
@@ -28,7 +28,7 @@ export const GroupsList = React.memo(({currentTableData}) => {
                     <td>{i + 1}</td>
                     <td>{item?.name}</td>
                     {
-                        userSystem?.id === 1 ? <>
+                        userSystem?.name === "center" ? <>
                                 <td>{item?.name} {item?.surname}</td>
                                 <td>{item?.subject?.name}</td>
                                 <td>{item?.course_types?.name}</td>
@@ -66,7 +66,7 @@ export const GroupsList = React.memo(({currentTableData}) => {
             <Table extraClass={cls.table__head}>
                 <thead>
                 {
-                    userSystem?.id === 1 ? <tr>
+                    userSystem?.name === "center" ? <tr>
                         <th>No</th>
                         <th>Guruh Nomi</th>
                         <th>Full name</th>

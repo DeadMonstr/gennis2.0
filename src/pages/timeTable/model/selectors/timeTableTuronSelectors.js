@@ -38,3 +38,6 @@ export const getTimeTableTuronTeachers = (state) =>
 
 export const getTimeTableTuronTeachersStatus = (state) =>
     state.timeTableTuronSlice.fetchStatusTeachers
+
+export const getTimeTableTuronFilterClass = (state) =>
+    state.timeTableTuronSlice.filterClass

@@ -1,11 +1,8 @@
-
-
-
 import {Pagination} from "features/pagination";
 import React, {useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getSearchValue} from "features/searchInput";
-import {getLoadingStudent, StudentsPayments , getDeletedStudent} from "entities/accounting";
+import {getLoadingStudent, StudentsPayments, getDeletedStudent} from "entities/accounting";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {onDeleteStudents} from "entities/accounting/model/slice/studetntSlice";
 import {Button} from "shared/ui/button";
@@ -19,8 +16,7 @@ import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import {YesNo} from "shared/ui/yesNoModal";
 
 
-
-export const StudentSalary = ({deleted , setDeleted}) => {
+export const StudentSalary = ({deleted, setDeleted}) => {
     const {request} = useHttp()
     const dispatch = useDispatch()
     const studentData = useSelector(getStudentPaymentes)
@@ -28,6 +24,8 @@ export const StudentSalary = ({deleted , setDeleted}) => {
     const [activeDelete, setActiveDelete] = useState(false)
     const [changingData, setChangingData] = useState({})
     const deletedStudentPayment = useSelector(getDeletedStudent)
+
+
     useEffect(() => {
         dispatch(getStudentPayment())
         dispatch(getDeletedPayment())
@@ -60,10 +58,19 @@ export const StudentSalary = ({deleted , setDeleted}) => {
 
     return loading ? <DefaultPageLoader/> : (
         <div>
-            <div style={{display: "flex", gap: "2rem" ,alignItems: "center" ,justifyContent: "space-between"}}>
-                <div style={{display: "flex" , gap: "2rem"}}>
+            <div style={{display: "flex", gap: "2rem", alignItems: "center", justifyContent: "space-between"}}>
+                <div style={{display: "flex", gap: "2rem"}}>
                 </div>
-                <div style={{color: "rgb(34, 197, 94)" , fontSize: "2.2rem" , textAlign: "end" , marginBottom: "3rem" }}>Total : {formatSalary(deleted ? sum2 : sum1)}</div>
+                <div
+                    style={{
+                        color: "rgb(34, 197, 94)",
+                        fontSize: "2.2rem",
+                        textAlign: "end",
+                        marginBottom: "3rem"
+                    }}
+                >
+                    Total : {formatSalary(deleted ? sum2 : sum1)}
+                </div>
             </div>
             {deleted ?
 
@@ -84,7 +91,8 @@ export const StudentSalary = ({deleted , setDeleted}) => {
                 />
 
             }
-            <YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>
+            <YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete}
+                   changingData={changingData}/>
 
         </div>
     );

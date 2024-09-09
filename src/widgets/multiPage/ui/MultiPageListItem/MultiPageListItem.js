@@ -7,7 +7,7 @@ import {useNavigate} from "react-router";
 import {useDispatch} from "react-redux";
 import {onChangeBranch} from "features/branchSwitcher";
 
-const MultiPageListItem = ({data, title, item: type,isType}) => {
+const MultiPageListItem = ({data, title, item: type,isType,id}) => {
 
 
     const dispatch = useDispatch()
@@ -27,8 +27,8 @@ const MultiPageListItem = ({data, title, item: type,isType}) => {
                     item?.list?.map(branch =>
                         <Link
                             to={{
-                                // pathname: `${branch?.id}`,
-                                search: isType ? `type=${type.type}` : null,
+                                pathname: id ? `${branch?.id}` : `../${branch?.id}/${type.type}`,
+                                search: isType && id ? `type=${type.type}` : null,
                             }}
                             onClick={() => {
                                 dispatch(onChangeBranch(branch?.id))

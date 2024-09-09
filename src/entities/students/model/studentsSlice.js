@@ -87,6 +87,7 @@ export const studentsSlice = createSlice({
 
             .addCase(fetchOnlyDeletedStudentsData.pending, state => {
                 state.loading = "loading"
+                state.error = null
             })
             .addCase(fetchOnlyDeletedStudentsData.fulfilled, (state, action) => {
                 state.deletedStudents = action.payload
@@ -94,6 +95,7 @@ export const studentsSlice = createSlice({
             })
             .addCase(fetchOnlyDeletedStudentsData.rejected, (state, action) => {
                 state.error = action.error.message
+                state.loading = false
             })
 
 

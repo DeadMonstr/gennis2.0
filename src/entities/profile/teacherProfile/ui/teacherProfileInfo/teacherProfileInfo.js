@@ -25,12 +25,6 @@ export const TeacherProfileInfo = memo(({active,setActive,setActiveModal, newIma
         }
     }, [teacherId]);
 
-    useEffect(() => {
-        if (id) {
-            dispatch(fetchTeacherId(id))
-        }
-
-    } ,[dispatch, id])
 
     useEffect(() => {
         if (localTeacherData?.msg) {

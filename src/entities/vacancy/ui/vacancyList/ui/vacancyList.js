@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {memo, useEffect} from 'react';
 import { Table } from "shared/ui/table";
 import cls from './vacancyList.module.sass';
 import { Button } from "shared/ui/button";
@@ -11,13 +11,14 @@ import {vacancyWorkerListThunk} from "features/vacancyWorkerList";
 import {userSetPermissionThunk} from "../../vacancyWorkerList";
 import {DefaultPageLoader} from "../../../../../shared/ui/defaultLoader";
 
-export const VacancyList = ({ currentTableData, currentPage, PageSize, editMode, onEditClick }) => {
+export const VacancyList = memo(({ currentTableData, currentPage, PageSize, editMode, onEditClick }) => {
 
     const dispatch = useDispatch()
     const jobsData = useSelector(getVacancyJobs)
-    useEffect(() => {
-        dispatch(fetchVacancyData())
-    }, [dispatch])
+    // useEffect(() => {
+    //     console.log("list")
+    //     dispatch(fetchVacancyData())
+    // }, [])
 
 
     // if (!currentTableData || currentTableData.length === 0){
@@ -63,4 +64,4 @@ export const VacancyList = ({ currentTableData, currentPage, PageSize, editMode,
             </tbody>
         </Table>
     );
-};
+})

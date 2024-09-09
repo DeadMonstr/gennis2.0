@@ -96,7 +96,7 @@ export const AppRouter = () => {
                         />
 
                         <Route
-                            path={"flows/:id/flow-list"}
+                            path={"flows/flow-list"}
                             element={<FlowListPage/>}
                         />
                         <Route
@@ -114,9 +114,7 @@ export const AppRouter = () => {
                             index
                             element={<Navigate to={"home"}/>}
                         />
-
                     </Route>
-
                 </Route>
 
                 <Route

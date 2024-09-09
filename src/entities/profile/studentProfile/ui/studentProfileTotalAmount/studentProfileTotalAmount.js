@@ -37,7 +37,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     const [checkModalStatus, setCheckModalStatus] = useState(false)
     const [payment, setPayment] = useState(1)
     const dispatch = useDispatch()
-    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
     const {theme} = useTheme()
     const {request} = useHttp()
 
@@ -174,7 +174,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                             ?
                             <>
                             {
-                                (theme === "app_school_theme" || userSystem?.id === 2) && (
+                                (theme === "app_school_theme" || userSystem?.name === "school") && (
                                     <Select extraClass={cls.monthSelect} title={"Oyni tanlang"} options={getMonthDate} onChangeOption={setSelectedMonth}/>
                                 )
                             }

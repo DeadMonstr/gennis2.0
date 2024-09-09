@@ -27,13 +27,7 @@ export const EmployerProfileInfo = memo(({active,setActive,setActiveModal, newIm
         }
     }, [employerId]);
 
-    useEffect(() => {
-        if (id)
-        {
-            dispatch(fetchEmployerId(id))
-        }
 
-    } ,[dispatch, id])
     console.log(employerId, "data user")
 
     const handleUpdateTeacher = (updateTeacher) => {
@@ -64,7 +58,7 @@ export const EmployerProfileInfo = memo(({active,setActive,setActiveModal, newIm
                             <h1 className={cls.username} title={employerId.user?.username}>{employerId.user?.username}</h1>
                         </div>
 
-                        <h2 className={cls.info__role}>Student</h2>
+                        <h2 className={cls.info__role}>Employer</h2>
                     </div>
                     <div className={cls.info__text}>
                         <p>Ism: <span>{employerId.user?.name}</span></p>

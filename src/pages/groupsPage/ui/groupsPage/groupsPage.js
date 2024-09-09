@@ -1,4 +1,5 @@
 import {getUserBranchId} from "entities/profile/userProfile";
+import {getSystem} from "features/themeSwitcher";
 import React, {useEffect, useMemo, useState} from "react";
 import {Link, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -30,6 +31,7 @@ export const GroupsPage = () => {
     const loading = useSelector(getGroupsLoading)
     const {"*": id} = useParams()
     const userBranchId = id
+    const system = useSelector(getSystem)
     const [deletedGroups, setDeletedGroups] = useState([])
     const [active, setActive] = useState(false);
     const [activeSwitch, setActiveSwitch] = useState(false)
@@ -38,14 +40,12 @@ export const GroupsPage = () => {
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
 
-    console.log(loading, "loading")
 
 
     const searchedUsers = useMemo(() => {
         const filteredHeroes = data?.slice()
         setCurrentPage(1)
 
-        console.log(search, true)
 
         if (!search) return filteredHeroes
 
@@ -60,7 +60,7 @@ export const GroupsPage = () => {
 
     useEffect(() => {
         if (userBranchId) {
-            console.log(true, userBranchId, "id")
+            // console.log(true, userBranchId, "id")
             dispatch(fetchGroupsData({userBranchId}))
         }
     }, [userBranchId])
@@ -73,10 +73,7 @@ export const GroupsPage = () => {
     ]
 
     return (
-        <MultiPage types={[{
-            name: "O'qiyotgan o'quvchilar",
-            type: "groups"
-        }]} page={"groups"}>
+        <MultiPage types={types} page={"groups"}>
             <div className={cls.deletedGroups}>
                 <div className={cls.mainContainer_filterPanelBox}>
                     <Button
@@ -87,7 +84,7 @@ export const GroupsPage = () => {
                     >
                         Filter
                     </Button>
-                    <Link to={"deletedGroups"}>
+                    {/*<Link to={"deletedGroups"}>*/}
                         <Button
                             type={"login"}
                             status={"timeTable"}
@@ -96,14 +93,15 @@ export const GroupsPage = () => {
                         >
                             Time Table
                         </Button>
-                    </Link>
+                    {/*</Link>*/}
                 </div>
                 {
                     loading ? <DefaultPageLoader/> :
                         <>
                             <div className={cls.table}>
 
-                                <h2>{activeSwitch ? "Deleted Groups" : "Groups"}</h2>
+                                <h2>{activeSwitch ? system.name === "center" ? "Deleted Groups" : "Deleted Classes" :
+                                    system.name === "center" ? "Groups" : "Classes"}</h2>
                                 {activeSwitch ? <DeletedGroups currentTableData={currentTableData}/> : <GroupsList
                                     currentTableData={currentTableData}
                                 />}
@@ -122,8 +120,8 @@ export const GroupsPage = () => {
                         </>
                 }
                 <GroupsFilter
-                    // activeSwitch={activeSwitch}
-                    // setActiveSwitch={setActiveSwitch}
+                    activeSwitch={activeSwitch}
+                    setActiveSwitch={setActiveSwitch}
                     setActive={setActive}
                     active={active}
                 />

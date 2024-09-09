@@ -3,18 +3,24 @@ import {ClassModal} from "../classModal/classModal";
 import React, {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import cls from "./classTable.module.sass"
-import {API_URL, headers, useHttp} from "../../../../shared/api/base";
-import {useDispatch} from "react-redux";
-import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
+import {API_URL, headers, useHttp} from "shared/api/base";
+import {useDispatch, useSelector} from "react-redux";
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
+import {fetchClassSubjects} from "../../model/thunk/classThunk";
+import {classSubjects} from "../../model/selector/classSelector";
 import {classItem, updateClassItem} from "../../model/thunk/classThunk";
 import {data} from "../../../calendar";
 import {onDeleteSubject} from "../../model/slice/classSlice";
 
 
-export const ClassTable = ({edit, classType, active, selectOptions, id}) => {
+export const ClassTable = ({edit, classType, active, id}) => {
     const [editClass, setEditClass] = useState(false)
     const [clickedCheckbox, setClickedCheckbox] = useState([])
-    const {register, handleSubmit, setValue} = useForm()
+
+    const [changedItem,setChangedItem] = useState({})
+
+    const subjects = useSelector(classSubjects)
+
     const {request} = useHttp()
     const dispatch = useDispatch()
     const [selectedSubject, setSelectedSubject] = useState([])
@@ -38,21 +44,21 @@ export const ClassTable = ({edit, classType, active, selectOptions, id}) => {
             ...data
         }
         const idClass = editClass
-
-        setValue("curriculum_hours", "")
-        setValue("price", "")
+        //
+        // setValue("curriculum_hours", "")
+        // setValue("price", "")
         dispatch(updateClassItem({idClass, res}))
         setEditClass(!editClass)
         dispatch(classItem(1))
 
     }
 
-    const onDeleteSub = (id) => {
-
-        dispatch(onDeleteSubject(id))
-        console.log(id, "id")
-
-    }
+    // const onDeleteSub = (id) => {
+    //
+    //     dispatch(onDeleteSubject(id))
+    //     console.log(id, "id")
+    //
+    // }
 
     const onChange = (e) => {
 
@@ -77,21 +83,7 @@ export const ClassTable = ({edit, classType, active, selectOptions, id}) => {
         return [...items].sort((a, b) => b.status - a.status);
     };
 
-    // const color1rgb = hexToRgb(item?.teacher[0]?.color ? item?.teacher[0]?.color : "#ffffff");
-    //
-    //
-    //
-    // const brightness = Math.round(((parseInt(color1rgb.r) * 299) +
-    //     (parseInt(color1rgb.g) * 587) +
-    //     (parseInt(color1rgb.b) * 114)) / 1000);
-    //
-    // const heightItem = +item.to.replace(":",".")- +item.from.replace(":",".")
-    //
-    // const style = {
-    //     height: heightItem * 120 + "px",
-    //     backgroundColor: item?.teacher[0]?.color ? item?.teacher[0]?.color : "white",
-    //     color: brightness > 125 ? "black" : "white"
-    // }
+
 
     const renderTable = () => {
         return sortItemsByStatus(classType)?.map((item, i) => {
@@ -113,11 +105,15 @@ export const ClassTable = ({edit, classType, active, selectOptions, id}) => {
                         (
                             <div className={cls.items}>
                                 <div className={cls.checkbox__checked}>
-                                    <i className={`fa fa-check ${cls.check}`}/>
+                                    <i  onClick={() => onChange({id: item.id})} className={`fa fa-check ${cls.check}`}/>
 
                                 </div>
                                 <i
-                                    onClick={() => setEditClass(item.id)}
+                                    onClick={() => {
+                                        setEditClass(item.id)
+                                        setChangedItem(item)
+
+                                    }}
                                     className={"fa fa-pen"}
                                 />
                             </div>
@@ -138,7 +134,7 @@ export const ClassTable = ({edit, classType, active, selectOptions, id}) => {
                                 }
                             >
                                 {clickedCheckbox.includes(item?.id) ? (
-                                    <i className={`fa fa-check ${cls.check}`}/>
+                                    <i  onClick={() => onChange({id: item.id})} className={`fa fa-check ${cls.check}`}/>
                                 ) : (
                                     <i
                                         className={`fa fa-minus ${cls.minus}`}
@@ -148,8 +144,8 @@ export const ClassTable = ({edit, classType, active, selectOptions, id}) => {
                             </div>
                             <i
                                 onClick={() => {
-                                    setEditClass(item.id);
-                                    setSelectedClass(item);
+                                    setEditClass(item.id)
+                                    setChangedItem(item)
                                 }}
                                 className={"fa fa-pen"}
                             />
@@ -182,20 +178,30 @@ export const ClassTable = ({edit, classType, active, selectOptions, id}) => {
                     </tbody>
                 </Table> : null}
 
+
+            <ClassModal
+                changedItem={changedItem}
+                selectOptions={subjects}
+                extraClassForm={cls.extraClassForm}
+                extraClassSelect={cls.select}
+                extraClassBtn={cls.btn}
+                editClass={editClass}
+                setEditClass={setEditClass}
+            />
             <ClassModal
                 selectedClass={selectedClass}  // Pass selected class
                 selectedSubject={selectedSubject}
                 setSelectedSubject={setSelectedSubject}
-                changeInfo={onChangeClass}
-                selectOptions={selectOptions}
+                // changeInfo={onChangeClass}
+                // selectOptions={selectOptions}
                 extraClassForm={cls.extraClassForm}
                 extraClassSelect={cls.select}
                 extraClassBtn={cls.btn}
                 editClass={editClass}
                 setEditClass={setEditClass}
                 register={register}
-                handleSubmit={handleSubmit}
-                onDeleteSub={onDeleteSub}
+                // handleSubmit={handleSubmit}
+                // onDeleteSub={onDeleteSub}
             />
         </div>
     )

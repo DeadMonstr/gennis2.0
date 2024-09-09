@@ -72,7 +72,7 @@ export const Location = ({systemId}) => {
             {
                 locations.length > 1 ?
                     <Select
-                        // title={"Tanlang"}
+                        // title={"Location"}
                         onChangeOption={changeSelectedLocation}
                         options={locations}
                         defaultValue={selectedLocations.length === 1 ? "clear" : ""}

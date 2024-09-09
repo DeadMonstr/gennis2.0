@@ -1,4 +1,7 @@
 
+export const classItemLoading = (state) =>
+    state.classSlice.loading
+
 export const classData  = (state) =>
     state.classSlice?.classData
 
@@ -11,3 +14,7 @@ export const classItems = (state) =>
 
 export const colorItem = (state) =>
     state.classSlice?.color
+
+
+export const classSubjects = (state) =>
+    state.classSlice?.subjects
