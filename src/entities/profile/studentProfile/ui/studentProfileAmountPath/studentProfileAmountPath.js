@@ -77,7 +77,7 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
 
 
     const renderInData = () => {
-        const listToRender = change ? getDeletedLists.payments : getPaymentLists;
+        const listToRender = change ? getDeletedLists : getPaymentLists;
         return listToRender?.map(item =>
             <tr key={item.id} onClick={() => setSelectedSalary(item.id)}>
                 <td>
