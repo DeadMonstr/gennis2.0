@@ -27,7 +27,8 @@ export const ClassModal = ({
                                changeInfo,
                                edit,
                                setSelectedSubject,
-                               selectedSubject,
+                               selectedClass,
+                               onDeleteSub
                            }) => {
 
 
@@ -93,39 +94,62 @@ export const ClassModal = ({
                 </div>
             </Modal>
 
-
-            <Modal active={addClass} setActive={setAddClass}>
-                <h2>Sinf turi yaratish </h2>
-                <div>
-                    <Form extraClassname={cls.extraClassForm} onSubmit={handleSubmit(createClass)}>
-                        <Input placeholder={"sinf nomi"} name={"name"} register={register}/>
-                    </Form>
-                </div>
-            </Modal>
-
             <Modal active={editClass} setActive={setEditClass}>
                 <h2>Ma’lumotlarni o’zgartirish</h2>
                 <div>
-                    <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>
-                        <Input name={"curriculum_hours"} register={register} type={"number"} placeholder={"darslar soati"}/>
+                    <Form extraClassname={cls.extraClassForm} onSubmit={handleSubmit(changeInfo)} typeSubmit={""}>
+                        <Input name={"curriculum_hours"} register={register} type={"number"}
+                               placeholder={"darslar soati"}/>
                         <Input name={"price"} register={register} type={"number"} placeholder={"narxi"}/>
-                        {/*<Select onChangeOption={onChangeSelect} options={subject}/>*/}
 
-                        <div className={cls.selectBox}>
-                            <AnimatedMulti extraClass={cls.select} options={option} onChange={setSelectedSubject}/>
+                        <div style={{alignSelf: "flex-start"}}>
+                            <h2 className={cls.selectBoxHeader}>Sinfning fanlari</h2>
+                            <div className={cls.selectBoxMain}>
+                                {selectedClass?.subjects?.map(subject => (
+                                    <div className={cls.selectBox} key={subject.id}><i
+
+                                        onClick={() => onDeleteSub(subject.id)}
+                                        className={"fa fa-times"}/> {subject.name} </div>
+                                ))}
+                            </div>
                         </div>
-                        {/*{options?.map(item => (*/}
-                        {/*    item.subjects.map(itemSubject => (*/}
-                        {/*        itemSubject.name*/}
-                        {/*    ))*/}
-                        {/*))}*/}
-                        <Button>
-                            Tastiqlash
-                        </Button>
+                        <AnimatedMulti extraClass={cls.select} options={option} onChange={setSelectedSubject}/>
+                        <Button>Tastiqlash</Button>
                     </Form>
-
                 </div>
             </Modal>
+            {/*<Modal active={addClass} setActive={setAddClass}>*/}
+            {/*    <h2>Sinf turi yaratish </h2>*/}
+            {/*    <div>*/}
+            {/*        <Form extraClassname={cls.extraClassForm} onSubmit={handleSubmit(createClass)}>*/}
+            {/*            <Input placeholder={"sinf nomi"} name={"name"} register={register}/>*/}
+            {/*        </Form>*/}
+            {/*    </div>*/}
+            {/*</Modal>*/}
+
+            {/*<Modal active={editClass} setActive={setEditClass}>*/}
+            {/*    <h2>Ma’lumotlarni o’zgartirish</h2>*/}
+            {/*    <div>*/}
+            {/*        <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>*/}
+            {/*            <Input name={"curriculum_hours"} register={register} type={"number"} placeholder={"darslar soati"}/>*/}
+            {/*            <Input name={"price"} register={register} type={"number"} placeholder={"narxi"}/>*/}
+            {/*            /!*<Select onChangeOption={onChangeSelect} options={subject}/>*!/*/}
+
+            {/*            <div className={cls.selectBox}>*/}
+            {/*                <AnimatedMulti extraClass={cls.select} options={option} onChange={setSelectedSubject}/>*/}
+            {/*            </div>*/}
+            {/*            /!*{options?.map(item => (*!/*/}
+            {/*            /!*    item.subjects.map(itemSubject => (*!/*/}
+            {/*            /!*        itemSubject.name*!/*/}
+            {/*            /!*    ))*!/*/}
+            {/*            /!*))}*!/*/}
+            {/*            <Button>*/}
+            {/*                Tastiqlash*/}
+            {/*            </Button>*/}
+            {/*        </Form>*/}
+
+            {/*    </div>*/}
+            {/*</Modal>*/}
 
             {/*<Modal active={editClass} setActive={setEditClass}>*/}
             {/*    <h2>Ma’lumotlarni o’zgartirish</h2>*/}

@@ -24,6 +24,13 @@ const classSlice = createSlice({
         onDelete: (state, action) => {
             state.color = state.color.filter(item => item.id !== action.payload.id)
         },
+        onDeleteSubject: (state, action) => {
+            state.classItems = state.classItems.map(itemDel => (
+                {
+
+                }
+            ))
+        },
     },
     extraReducers: builder =>
         builder
@@ -175,6 +182,6 @@ const classSlice = createSlice({
 
 })
 
-export const {onDelete} = classSlice.actions
+export const {onDelete, onDeleteSubject} = classSlice.actions
 
 export default classSlice.reducer
