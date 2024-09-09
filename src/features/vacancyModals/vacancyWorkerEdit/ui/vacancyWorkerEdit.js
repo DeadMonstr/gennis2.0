@@ -38,8 +38,6 @@ export const VacancyWorkerEdit = React.memo(({ active, setActive, user_id }) => 
             locations: selectedLocations.map(location => location.value),
             branchs: selectedBranches.map(branch => branch.value),
         };
-        console.log(user_id, "user_id")
-
         try {
             await dispatch(userSetPermissionThunk(newPermission));
         } catch (error) {
@@ -68,7 +66,6 @@ export const VacancyWorkerEdit = React.memo(({ active, setActive, user_id }) => 
         label: location.name,
     }));
     const branchData = Array.isArray(branches) ? branches : [branches];
-    console.log(branchData, "branches")
     const branchesOptions = branchData?.map(branch => ({
         value: branch?.id,
         label: branch?.name,

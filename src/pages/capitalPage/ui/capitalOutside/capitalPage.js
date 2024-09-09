@@ -42,7 +42,7 @@ export const CapitalPage = memo(() => {
     const getCapital = useSelector(getCapitalData)
 
     const onClick = (data) => {
-        console.log(data)
+
         setActiveModal(!activeModal)
         setValue("name", '')
         setValue("id_number", '')

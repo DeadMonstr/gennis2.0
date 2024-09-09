@@ -45,7 +45,7 @@ export const Login = () => {
         // dispatch(fetchLoginUser(res))
         // .then((action =>{
         //     const isNav = localStorage.getItem("navigate")
-        //     console.log(action)
+
         //     if (action.error) {
         //         console.error('Registration error:', action.error);
         //         showAlert('error', 'Login failed. Please try again.');

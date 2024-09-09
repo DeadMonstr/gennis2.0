@@ -52,7 +52,7 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
             }
 
             else {
-                console.log("O'chirishda xatolik", action.error);
+
                 dispatch(onAddAlertOptions({
                     tpye: "error",
                     status: true,

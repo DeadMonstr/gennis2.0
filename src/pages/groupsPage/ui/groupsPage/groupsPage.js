@@ -60,7 +60,6 @@ export const GroupsPage = () => {
 
     useEffect(() => {
         if (userBranchId) {
-            // console.log(true, userBranchId, "id")
             dispatch(fetchGroupsData({userBranchId}))
         }
     }, [userBranchId])

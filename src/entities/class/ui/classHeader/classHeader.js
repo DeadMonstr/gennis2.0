@@ -46,7 +46,8 @@ export const ClassHeader = ({
     const editClassName = (data) => {
         const {id} = edit
         setActiveEdit(!activeEdit)
-        setValue("name", "")
+        setValue("name", data.name)
+
         dispatch(updateClassType({id, data}))
 
     }
@@ -62,7 +63,6 @@ export const ClassHeader = ({
         const id = edit.id
         request(`${API_URL}Class/class_types/${id}`, "DELETE", null, headers())
             .then(res => {
-                console.log(res)
                 dispatch(onDeleteTypes({id: id}))
                 dispatch(onAddAlertOptions({
                     type: "success",
@@ -85,7 +85,6 @@ export const ClassHeader = ({
         dispatch(createColor(res))
 
     }
-
     return (
         <div className={cls.header}>
             <div className={cls.header__btn}>
@@ -99,22 +98,28 @@ export const ClassHeader = ({
                             onClick={() => {
                                 setAddClass(!addClass)
                                 setEdit(!edit)
+                                setValue("name", "sardor")
                             }}
                             type={"editPlus"}>
                             <i className="fa fa-plus"/>
                         </Button>
 
-                        {activeMenu ?
-                            <Button
-                                onClick={() => setActiveEdit(!activeEdit)}
-                                type={"editPlus"}> <i
-                                className="fa fa-pen"/></Button>
-                            :
-                            null}
+
+                        <Button
+                            onClick={() => {
+                                setActiveEdit(!activeEdit)
+                                setValue("name" , edit.name)
+
+                            }}
+                            type={"editPlus"}> <i
+                            className="fa fa-pen"/></Button>
                     </div> :
                     <div style={{display: "flex"}}>
                         <Button
-                            onClick={() => setCreateColor(!createColorModal)}
+                            onClick={() => {
+                                setCreateColor(!createColorModal)
+                                setValue("name" , edit.name)
+                            }}
                             type={"editPlus"}>
                             <i className="fa fa-plus"/>
                         </Button>

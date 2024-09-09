@@ -100,7 +100,6 @@ export const FlowProfileStudentsForm = ({activeTeacher, setActiveTeacher}) => {
     }
 
     const onSubmitMove = (data) => {
-        console.log(data, "data")
         // dispatch(moveFlow({
         //     id,
         //     ...data,
@@ -108,7 +107,6 @@ export const FlowProfileStudentsForm = ({activeTeacher, setActiveTeacher}) => {
         // }))
         request(`${API_URL}Flow/move-to-flow/?flow_id=${id}&to_flow_id=${data?.to_id}`, "POST", JSON.stringify({students: selectedMoveId}), headers())
             .then(res => {
-                console.log(res, "res")
                 dispatch(onAddMultipleAlertOptions(res.errors.map(item => ({
                     type: "error",
                     status: true,
@@ -140,8 +138,6 @@ export const FlowProfileStudentsForm = ({activeTeacher, setActiveTeacher}) => {
     }
 
     const onSubmitSubject = (data) => {
-
-        console.log(data, "data")
 
         const res = {
             ...data,
@@ -213,7 +209,6 @@ export const FlowProfileStudentsForm = ({activeTeacher, setActiveTeacher}) => {
     }
 
     const onChangeAll = (classId) => {
-        console.log(currentFilteredData, "currentFilteredData")
         setCurrentFilteredData(prev => prev.map(item => {
             if (item.id === +classId) {
                 if (item.isCheck) {
@@ -222,7 +217,6 @@ export const FlowProfileStudentsForm = ({activeTeacher, setActiveTeacher}) => {
                         isCheck: false,
                         id: item.id,
                         students: item.students.map(inner => {
-                            console.log(inner, "item")
                             return ({
                                 isCheck: false,
                                 id: inner.id,
@@ -255,7 +249,6 @@ export const FlowProfileStudentsForm = ({activeTeacher, setActiveTeacher}) => {
                         isCheck: true,
                         id: item.id,
                         students: item.students.map(inner => {
-                            console.log(inner, "inner")
                             return ({
                                 isCheck: true,
                                 id: inner.id,
@@ -302,7 +295,6 @@ export const FlowProfileStudentsForm = ({activeTeacher, setActiveTeacher}) => {
                     id: item.id,
                     students: item.students.map(i => {
                         if (filtered?.students?.includes(i.id)) {
-                            console.log(i, "i")
                             return {
                                 isCheck: true,
                                 id: i.id,
@@ -310,7 +302,6 @@ export const FlowProfileStudentsForm = ({activeTeacher, setActiveTeacher}) => {
                                 user: i.user
                             }
                         } else {
-                            console.log(i, "i 2")
                             return {
                                 isCheck: false,
                                 id: i.id,

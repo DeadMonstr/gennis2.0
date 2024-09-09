@@ -66,7 +66,7 @@ export const StudentProfilePage = () => {
     }
 
     const onSubmitImage = (data) => {
-        console.log(data, "file profile-page")
+
         dispatch(changeStudentProfileImage({id: userData?.user?.id, data}))
     }
 

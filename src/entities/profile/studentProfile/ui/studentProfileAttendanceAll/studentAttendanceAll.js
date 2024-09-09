@@ -19,8 +19,6 @@ export const StudentProfileAttendanceAll = memo(({ active, setActive, selectedGr
     useEffect(() => {
         dispatch(studentProfileAttendanceAll(lastId));
     }, [lastId, dispatch]);
-
-    console.log(allAttendanceData, "datata")
     const allDays = [...new Set(mapData.flatMap(student => student.days.map(day => day.day)))].sort((a, b) => a - b);
 
     const renderAttendance = (days) => {

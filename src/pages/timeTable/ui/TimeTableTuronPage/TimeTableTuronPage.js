@@ -754,7 +754,7 @@ export const TimeTableTuronPage = () => {
                         if (container.id) {
                             request(`${API_URL}SchoolTimeTable/timetable-list-delete/${id}`, "DELETE", null, headers())
                                 .then(res => {
-                                    console.log(res)
+
                                 })
                         }
                         return {

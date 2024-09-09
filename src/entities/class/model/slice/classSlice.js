@@ -28,6 +28,17 @@ const classSlice = createSlice({
         onDeleteTypes: (state, action) => {
             state.classData = state.classData.filter(item => item.id !== action.payload.id)
         },
+        onChangeClassStatus : (state , action) =>{
+            state.classItems = state.classItems.map(item => {
+                if (item.id === action.payload.id){
+                    return {
+                        ...item,
+                        status: !item.status
+                    }
+                }
+                return item
+            })
+        }
     },
     extraReducers: builder =>
         builder
@@ -85,7 +96,6 @@ const classSlice = createSlice({
                 state.classTypeNumber = action.payload
                 state.loading = false
                 state.error = false
-                console.log(action.payload, "classsdsad")
             })
             .addCase(getClassTypeNumber.rejected, state => {
                 state.error = true
@@ -101,7 +111,6 @@ const classSlice = createSlice({
                 state.error = false
                 state.classItems = action.payload
 
-
             })
             .addCase(classItem.rejected, state => {
                 state.loading = false
@@ -116,10 +125,18 @@ const classSlice = createSlice({
             .addCase(updateClassItem.fulfilled, (state, action) => {
                 state.loading = false
                 state.error = false
-                state.classItems = [
-                    ...state.classItems.filter(item => item.id !== action.payload.id),
-                    action.payload
-                ]
+
+                state.classItems = state.classItems.map(item => {
+                    if (item.id === action.payload.id) {
+                        return {
+                            ...item,
+                            price : action.payload.price,
+                            curriculum_hours : action.payload.curriculum_hours,
+                            subjects: action.payload.subjects
+                        }
+                    }
+                    return item
+                })
 
             })
             .addCase(updateClassItem.rejected, state => {
@@ -199,6 +216,6 @@ const classSlice = createSlice({
 
 })
 
-export const {onDelete, onDeleteTypes} = classSlice.actions
+export const {onDelete, onDeleteTypes,onChangeClassStatus} = classSlice.actions
 
 export default classSlice.reducer

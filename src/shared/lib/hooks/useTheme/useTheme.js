@@ -7,7 +7,7 @@ export function useTheme() {
     const currentTheme = localStorage.getItem("theme")
 
     const toggleTheme = (theme) => {
-        console.log(theme, "theme")
+
         let newTheme;
         switch (theme) {
             case "app_center_theme":

@@ -43,7 +43,6 @@ export const Branch = () => {
         setActive(!active)
     }
     const onChange = (data) => {
-        console.log(select, data)
         dispatch(changeBranchName({location_text: select, data, id: isChange.id,}));
         setActiveLocationModal(!activeLocationModal)
         setValue("name", "");

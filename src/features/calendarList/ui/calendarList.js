@@ -28,7 +28,6 @@ export const CalendarList = (props) => {
     const [selected, setSelected] = useState([])
 
     const onSubmitDelete = (data) => {
-        // console.log(data, "del")
         request(`${API_URL}Calendar/delete-type/`, "DELETE", JSON.stringify({days: data}), headers())
             .then(res => {
                 dispatch(deleteDayType(res))

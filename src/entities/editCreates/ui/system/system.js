@@ -29,7 +29,6 @@ export const System = () => {
     const loading = useSelector(getLoading)
     const {request} = useHttp()
     const [activeDel , setActiveDel] = useState(false)
-    console.log(getName, "name")
     useEffect(() => {
         dispatch(getSystemThunk());
     }, [dispatch]);
@@ -44,7 +43,6 @@ export const System = () => {
 
 
     const onClick = (data) => {
-        console.log(data)
         dispatch(postCreateSystemThunk(data))
         dispatch(getSystemThunk());
 
@@ -55,7 +53,6 @@ export const System = () => {
 
 
     const onDelete = () => {
-        console.log(isChange.id, "hello")
         request(`${API_URL}System/systems/delete/${isChange.id}/`, "DELETE", JSON.stringify({id: isChange.id}), headers())
             .then(res => {
                 setActiveLocationModal(!activeLocationModal)

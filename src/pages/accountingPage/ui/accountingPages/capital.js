@@ -61,10 +61,10 @@ export const Capital = ({deleted , setDeleted }) => {
 
             ...data
         }
-        console.log(res)
+
         request(`${API_URL}Capital/old_capital_create/`, "POST", JSON.stringify(res), headers())
             .then(res => {
-                console.log(res)
+
                 setActiveModal(false)
                 dispatch(onAddAlertOptions({
                     type: "success",
@@ -86,11 +86,11 @@ export const Capital = ({deleted , setDeleted }) => {
     const sum2 = capitalDeletedList.reduce((a, c) => a + parseFloat(c.price || 0), 0);
     const onDelete = () => {
         const {id} = changingData
-        console.log(id, "log")
+
         request(`${API_URL}Capital/old_capital_delete/${id}`, "DELETE", JSON.stringify(id), headers())
             .then(res => {
                 dispatch(onDeleteCapital({id: id}))
-                console.log(res)
+
                 setActiveDelete(false)
                 dispatch(onAddAlertOptions({
                     type: "success",

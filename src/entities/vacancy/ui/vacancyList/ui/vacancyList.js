@@ -16,7 +16,6 @@ export const VacancyList = memo(({ currentTableData, currentPage, PageSize, edit
     const dispatch = useDispatch()
     const jobsData = useSelector(getVacancyJobs)
     // useEffect(() => {
-    //     console.log("list")
     //     dispatch(fetchVacancyData())
     // }, [])
 

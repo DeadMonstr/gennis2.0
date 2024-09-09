@@ -12,7 +12,7 @@ export const SchoolTeacherCountDayModal = memo(({setEditMode, editMode, teacherI
     const {register, handleSubmit} = useForm()
     const [day, setDay] = useState("")
     const dispatch = useDispatch()
-    console.log(teacherId, "teacherId")
+
     const handleAddDay = () => {
         const data = {
             worked_days: day

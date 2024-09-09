@@ -53,7 +53,6 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
     const [activeSwitch, setActiveSwitch] = useState(data?.status ?? false)
 
     const onSubmitChange = (data) => {
-        console.log(data, "data change")
         const res = {
             ...data,
             color: data?.color ?? selectColor

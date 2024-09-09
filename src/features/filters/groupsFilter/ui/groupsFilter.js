@@ -58,8 +58,6 @@ export const GroupsFilter = React.memo(({active, setActive}) => {
             subjId: subjectId
         }))
     }
-    console.log(getTeacher, "teacherss")
-    console.log(selectedTeacher, "seelectw")
     return (
         <Modal
             active={active}

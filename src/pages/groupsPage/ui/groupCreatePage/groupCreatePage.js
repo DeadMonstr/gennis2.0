@@ -95,7 +95,7 @@ export const GroupCreatePage = () => {
 
 
     useEffect(() => {
-        // console.log(theme, "theme")
+
         // if (theme === "app_school_theme") {
         navigation(-1)
         // }
@@ -122,7 +122,7 @@ export const GroupCreatePage = () => {
         if (selectedSubjectId) {
             request(`${API_URL}Subjects/level-for-subject/${selectedSubjectId}/`, "GET", null, headers())
                 .then(res => {
-                    // console.log(res)
+
                     dispatch(getCurseLevel(res))
                 })
                 .catch(err => console.log(err))
@@ -165,13 +165,13 @@ export const GroupCreatePage = () => {
         // dispatch(fetchFilteredStudents(userBranchId))
         request(`${API_URL}TimeTable/week_days/`, "GET", null, headers())
             .then(res => {
-                // console.log(res, "days")
+
                 setWeekDays(res?.days?.map(item => ({...item, name: item.name_uz})))
             })
             .catch(err => console.log(err))
         request(`${API_URL}Group/course_types/`, "GET", null, headers())
             .then(res => {
-                // console.log(res, "types")
+
                 dispatch(getCurseTypes(res))
             })
             .catch(err => console.log(err))

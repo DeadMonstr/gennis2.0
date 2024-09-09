@@ -46,7 +46,7 @@ export const TeacherSalaryPage = ({deleted , setDeleted}) => {
         const {id} = changingData
         request(`${API_URL}Teachers/teachers/salary/delete/${id}/`, "DELETE", JSON.stringify({id: id}), headers())
             .then(res => {
-                console.log(res)
+
                 dispatch(onDeleteTeacherSalary({id: id}))
                 dispatch(onAddAlertOptions({
                     status: true,

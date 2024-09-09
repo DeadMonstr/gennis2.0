@@ -67,7 +67,7 @@ export const EmployerSalaryPage = memo(({deleted , setDeleted }) => {
         const {id} = changingData
         request(`${API_URL}Users/salaries/delete/${id}/`, "DELETE", JSON.stringify(id), headers())
             .then(res => {
-                console.log(res)
+
                 setActiveDelete(!activeDelete)
                 dispatch(onDeleteEmployerSalary({id: id}))
                 dispatch(onAddAlertOptions({
@@ -90,7 +90,7 @@ export const EmployerSalaryPage = memo(({deleted , setDeleted }) => {
         dispatch(changePaymentType({id: id, payment_types: newPaymentType}));
         // request(`${API_URL}Users/salaries/update/${id}/`, "PATCH", JSON.stringify({payment_types: newPaymentType}), headers())
         //     .then(res => {
-        //         console.log(res);
+
         //
         //     })
         //     .catch(err => {

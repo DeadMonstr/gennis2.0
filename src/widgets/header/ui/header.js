@@ -78,7 +78,6 @@ export const Header = () => {
 
 
     useEffect(() => {
-        console.log(searchParams.get("type"))
         if (!searchParams.get('search') && !searchParams.get('type') ) {
             setSearchParams({});
             setValueData(null);

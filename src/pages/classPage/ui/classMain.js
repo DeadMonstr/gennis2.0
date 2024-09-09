@@ -36,7 +36,7 @@ export const ClassMain = () => {
 
     }, [userBranchId])
     const [activeSwitch, setActiveSwitch] = useState(true)
-    console.log(userBranchId, "branch id")
+
 
     return (
         <div className={cls.class}>

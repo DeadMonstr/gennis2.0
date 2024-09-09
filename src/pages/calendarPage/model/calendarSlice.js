@@ -20,7 +20,7 @@ const calendarSlice = createSlice({
                 return a.id - b.id;
             }
 
-            // console.log(action.payload, "action")
+
             state.data = state.data.map(item => ({
                 year: item.year,
                 months: item.months.map(i => ({

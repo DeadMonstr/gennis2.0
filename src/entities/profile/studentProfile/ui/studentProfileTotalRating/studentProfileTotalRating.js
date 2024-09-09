@@ -13,9 +13,7 @@ export const StudentProfileTotalRating = memo(({active, setActive}) => {
         request(`${API_URL}Permissions/tables/`, "POST", JSON.stringify({
             "table": "user_customuser"
         }))
-            .then(res =>
-                console.log(res)
-            )
+
             .catch(err => console.log(err))
     }, [])
 

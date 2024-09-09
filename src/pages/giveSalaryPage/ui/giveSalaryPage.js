@@ -35,7 +35,6 @@ export const GiveSalaryPage = () => {
     const employerSalaryPageId = pathSegments[salaryPageIdx];
     const {id} = useParams()
 
-    console.log(pathParts, "idddd")
     useEffect(() => {
         if(id)
         {

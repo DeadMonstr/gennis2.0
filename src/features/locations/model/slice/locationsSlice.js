@@ -74,7 +74,6 @@ const locationsSlice = createSlice({
 
 
                 if (localstorageLocs && localstorageLocs.length > 0) {
-                    console.log("ure")
                     state.selectedLocations = localstorageLocs
                     state.locations = action.payload.list.map(item => {
 

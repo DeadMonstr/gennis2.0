@@ -33,7 +33,6 @@ export const ClassProfileStudentsForm = memo(() => {
     const [selectedMoveId, setSelectedMoveId] = useState([])
 
     const onSubmitMove = (data) => {
-        console.log(data, "data")
     }
 
     const onSubmitDelete = () => {
@@ -41,7 +40,6 @@ export const ClassProfileStudentsForm = memo(() => {
     }
 
     const onSubmitAdd = (data) => {
-        console.log(data, "data add")
     }
 
     const renderStudentsList = () => {

@@ -55,7 +55,7 @@ export const FlowsPage = () => {
     }, [flows, search]);
 
 
-    console.log(branch , "flow id")
+
 
     useEffect(() => {
         dispatch(fetchFlows())
@@ -69,7 +69,7 @@ export const FlowsPage = () => {
         const subjectId = teachers.filter(item => item.id === +id)[0]?.subject[0]?.id
         request(`${API_URL}Subjects/level-for-subject/${subjectId}/`, "GET", null, headers())
             .then(res => {
-                console.log(res, "level data")
+
                 dispatch(getCurseLevel(res))
             })
             .catch(err => console.log(err))
@@ -86,7 +86,7 @@ export const FlowsPage = () => {
 
             </div>
             <Flows
-                branchId={userBranchId.id}
+                branchId={userBranchId?.id}
                 currentTableData={currentTableData}
                 loading={flowsLoading}
                 teacherData={teachers}

@@ -67,7 +67,6 @@ export const ClassAddForm = memo((props) => {
         }
         request(`${API_URL}Group/groups/profile/${data?.id}/`, "PATCH", JSON.stringify(res), headers())
             .then(res => {
-                console.log(res, "res class")
                 dispatch(onAddAlertOptions({
                     type: "success",
                     status: true,

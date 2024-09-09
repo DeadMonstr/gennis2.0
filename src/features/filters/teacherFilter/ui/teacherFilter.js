@@ -29,7 +29,6 @@ export const TeacherFilter = React.memo(({active, setActive, activePage , setAct
         setActive(false)
 
     }
-    console.log(subjects, "fan")
 
     const onSelectLanguage = (value) => {
         setSelectedLanguage(value);

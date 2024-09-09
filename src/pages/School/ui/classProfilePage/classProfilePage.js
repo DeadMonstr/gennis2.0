@@ -30,11 +30,11 @@ export const ClassProfilePage = () => {
     const [activeSalary, setActiveSalary] = useState(false)
 
     const onSubmitCoin = (data) => {
-        console.log(data, "dataCoin")
+
     }
 
     const onSubmitSalary = (data) => {
-        console.log(data, "dataCoin")
+
     }
 
     useEffect(() => {

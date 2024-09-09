@@ -8,7 +8,6 @@ import {DefaultPageLoader} from "../../../shared/ui/defaultLoader";
 
 
 export const EmployerSalaryList = ({ currentTableData, currentPage, PageSize }) => {
-    console.log(currentTableData, "dataaaa")
     const loadingDef = useSelector(getEmployerSalaryLoading)
     const renderStudents = () => {
         return currentTableData?.map((item, index) => (

@@ -34,7 +34,7 @@ export const ProfileTeacherPage = () => {
 
     const onSubmitImage = (data) => {
         // formData.append("profile_img", data)
-        console.log(data, "file profile-page")
+
         dispatch(changeStudentProfileImage({id: teacherId.user?.id, data}))
     }
 

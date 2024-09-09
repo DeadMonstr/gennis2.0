@@ -60,10 +60,7 @@ export const ImageCrop = memo((props) => {
     const imgRef = useRef(null)
     const previewCanvasRef = useRef(null)
 
-    // console.log(URL.revokeObjectURL(currentImage), "revoke")
 
-    console.log(imgSrc, "imgSrc")
-    console.log(typeof imgSrc, "type imgSrc")
 
 
     function onImageLoad(e) {
@@ -189,7 +186,7 @@ export const ImageCrop = memo((props) => {
         transform: `scale(${scale}) rotate(${rotate}deg)`
     }), [scale, rotate])
 
-    console.log(imgSrc, "src")
+
 
 
     return (

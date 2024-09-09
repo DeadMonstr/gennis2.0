@@ -57,7 +57,7 @@ export const Contact = () => {
             link: data?.link,
             name: data?.name
         }
-        console.log(res)
+
         formData.append("res", JSON.stringify(res))
         formData.append("img", changeImage)
         request(`${API_URL}change_link`, "POST", formData, {"Authorization": "Bearer " + token})

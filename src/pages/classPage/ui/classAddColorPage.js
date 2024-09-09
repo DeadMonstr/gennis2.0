@@ -17,7 +17,7 @@ export const ClassAddColorPage = ({color, setEdit, edit}) => {
     const [colorChange, setColorChange] = useState("")
 
     const changeColor = (data) => {
-        const id = edit
+        const id = edit.id
 
         const res = {
             value: colorChange,
@@ -38,7 +38,7 @@ export const ClassAddColorPage = ({color, setEdit, edit}) => {
         const id = edit
         request(`${API_URL}Class/class_colors-delete/${id}/`, "DELETE", null, headers())
             .then(res => {
-                console.log(res)
+
                 dispatch(onDelete({id: id}))
                 setChangeName(!changeName)
                 dispatch(onAddAlertOptions({
@@ -63,7 +63,7 @@ export const ClassAddColorPage = ({color, setEdit, edit}) => {
             />
             {/*<ClassColorAddTable/>*/}
 
-            <ColorModal changeName={changeName} setChangeName={setChangeName} changeColor={changeColor}
+            <ColorModal edit={edit} changeName={changeName} setChangeName={setChangeName} changeColor={changeColor}
                         handleSubmit={handleSubmit} register={register} colorChange={colorChange}
                         setColorChange={setColorChange} deleteColor={deleteColor}/>
         </>

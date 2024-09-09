@@ -56,7 +56,7 @@ export const registerUser = createAsyncThunk(
             }
 
             const data = await response.json();
-            console.log(data)
+
             return data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);
@@ -70,7 +70,7 @@ export const registerTeacher = createAsyncThunk(
         const token = getAuthToken();
         // const formData = new FormData()
 
-        console.log(res, "res data")
+
 
         // const imageObject = {
         //     data: base64Image,
@@ -78,13 +78,13 @@ export const registerTeacher = createAsyncThunk(
         // };
         //
         // // Логирование или отправка imageObject в ваш API
-        // console.log('Image Object:', imageObject);
 
-        // console.log(teacherData?.user?.resume[0], "resume")
+
+
         // formData.append("file", res?.user?.resume[0])
         delete res?.user?.resume
         // formData.append("data", JSON.stringify(res))
-        // console.log(teacherData)
+
         // const postData = teacherData?.class_type ? formData : JSON.stringify(teacherData)
 
         if (!token) {
@@ -108,7 +108,7 @@ export const registerTeacher = createAsyncThunk(
             }
 
             const data = await response.json();
-            // console.log(data);
+
             return data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);
@@ -154,7 +154,7 @@ export const registerEmployer = createAsyncThunk(
             }
 
             const data = await response.json();
-            console.log(data);
+
             return data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);

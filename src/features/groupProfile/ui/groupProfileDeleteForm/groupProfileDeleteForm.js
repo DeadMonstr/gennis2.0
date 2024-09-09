@@ -176,7 +176,6 @@ export const GroupProfileDeleteForm = memo(({branch,system}) => {
     }
 
     const renderStudents = () => {
-        console.log(data?.students, "studentsssssssss")
         return data?.students?.map(item =>
             <tr>
                 <td>
@@ -232,7 +231,6 @@ export const GroupProfileDeleteForm = memo(({branch,system}) => {
     }
 
     const renderStudentsData = () => {
-        console.log(searched,"searchhhhhhhhhhhhhhhhhhhhhh")
         return searched?.map(item =>
             <tr>
                 <td>

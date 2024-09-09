@@ -81,7 +81,7 @@ export const FlowProfileNavigators = memo(() => {
         if (data)
             request(`${API_URL}Subjects/level-for-subject/${data?.subject?.id}/`, "GET", null, headers())
                 .then(res => {
-                    // console.log(res, "level data")
+
                     dispatch(getCurseLevel(res))
                 })
                 .catch(err => console.log(err))
