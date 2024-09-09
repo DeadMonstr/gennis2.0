@@ -191,7 +191,6 @@ export const Register = () => {
                     class_type: selectedClassType,
                     teacher_salary_type: selectedCategory
                 };
-
                 registerAction = registerTeacher({res, file: res?.user?.resume[0]})
             } else {
                 res = {

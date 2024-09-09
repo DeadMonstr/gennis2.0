@@ -33,7 +33,7 @@ export const updateClassType = createAsyncThunk(
 
 export const getClassTypeNumber = createAsyncThunk(
     "classSlice/getClassTypeNumber",
-    async () => {
+    async (branchId) => {
         const {request} = useHttp()
         return await request(`${API_URL}Class/class_number_list/`, "GET", null, headers())
     }
@@ -42,9 +42,9 @@ export const getClassTypeNumber = createAsyncThunk(
 
 export const classItem = createAsyncThunk(
     "classSlice/classItem",
-    async (id) => {
+    async ({id , branchId}) => {
         const {request} = useHttp()
-        return await request(`${API_URL}Class/class_number/${id}/`, "GET", null, headers())
+        return await request(`${API_URL}Class/class_number/?branch=${branchId}/${id}/`, "GET", null, headers())
     }
 )
 
@@ -57,6 +57,7 @@ export const updateClassItem = createAsyncThunk(
 
     }
 )
+
 
 export const createColor = createAsyncThunk(
     "classSlice/createColor",

@@ -14,6 +14,8 @@ import {useDispatch} from "react-redux";
 import {createClassType, createColor, updateClassType} from "../../model/thunk/classThunk";
 import {useParams} from "react-router";
 import {data} from "../../../calendar";
+import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
+import {onDelete, onDeleteTypes} from "../../model/slice/classSlice";
 
 
 export const ClassHeader = ({
@@ -42,7 +44,6 @@ export const ClassHeader = ({
     const [createColorModal, setCreateColor] = useState(false)
 
     const editClassName = (data) => {
-
         const {id} = edit
         setActiveEdit(!activeEdit)
         setValue("name", "")
@@ -57,6 +58,23 @@ export const ClassHeader = ({
 
     }
 
+    const onDelete = () => {
+        const id = edit.id
+        request(`${API_URL}Class/class_types/${id}`, "DELETE", null, headers())
+            .then(res => {
+                console.log(res)
+                dispatch(onDeleteTypes({id: id}))
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: res.msg
+                }))
+                setActiveEdit(!activeEdit)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
     const addColor = (data) => {
         const res = {
             value: color,
@@ -113,14 +131,27 @@ export const ClassHeader = ({
 
 
             <ClassModal
-                edit={edit} handleSubmit={handleSubmit} register={register} onClick={editClassName}
-                createClass={createClass} activeEdit={activeEdit}
-                setActiveEdit={setActiveEdit} addClass={addClass} setAddClass={setAddClass}/>
+                edit={edit}
+                handleSubmit={handleSubmit}
+                register={register}
+                onClick={editClassName}
+                createClass={createClass}
+                activeEdit={activeEdit}
+                setActiveEdit={setActiveEdit}
+                addClass={addClass}
+                setAddClass={setAddClass}
+                onDelete={onDelete}/>
 
-            <ColorModal  color={color}
-                        setColor={setColor} active={activeColor} setActive={setActiveColor}
-                        createColor={createColorModal} setCreateColor={setCreateColor} handleSubmit={handleSubmit}
-                        addColor={addColor} register={register}/>
+            <ColorModal
+                color={color}
+                setColor={setColor}
+                active={activeColor}
+                setActive={setActiveColor}
+                createColor={createColorModal}
+                setCreateColor={setCreateColor}
+                handleSubmit={handleSubmit}
+                addColor={addColor}
+                register={register}/>
         </div>
     )
 }

@@ -50,7 +50,6 @@ export const ClassAddColorPage = ({color, setEdit, edit}) => {
             .catch(err => {
                 console.log(err)
             })
-
     }
     return (
         <>

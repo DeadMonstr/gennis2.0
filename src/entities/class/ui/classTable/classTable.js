@@ -17,7 +17,7 @@ export const ClassTable = ({edit, classType, active, id}) => {
     const [editClass, setEditClass] = useState(false)
     const [clickedCheckbox, setClickedCheckbox] = useState([])
 
-    const [changedItem,setChangedItem] = useState({})
+    const [changedItem, setChangedItem] = useState({})
 
     const subjects = useSelector(classSubjects)
 
@@ -60,6 +60,14 @@ export const ClassTable = ({edit, classType, active, id}) => {
     //
     // }
 
+    const checkedItem = (id) => {
+        const filteredCheckbox = clickedCheckbox.filter(item => item !== id)
+        setClickedCheckbox([...filteredCheckbox, id])
+
+
+    }
+
+
     const onChange = (e) => {
 
         const res = {
@@ -84,7 +92,6 @@ export const ClassTable = ({edit, classType, active, id}) => {
     };
 
 
-
     const renderTable = () => {
         return sortItemsByStatus(classType)?.map((item, i) => {
 
@@ -101,31 +108,33 @@ export const ClassTable = ({edit, classType, active, id}) => {
                 <td>{item.price}</td>
                 <td>{item?.curriculum_hours}</td>
                 <td style={{width: "3rem"}}>
-                    {item?.status ?
-                        (
-                            <div className={cls.items}>
-                                <div className={cls.checkbox__checked}>
-                                    <i  onClick={() => onChange({id: item.id})} className={`fa fa-check ${cls.check}`}/>
+                    <div className={cls.items}>
+                        {item?.status ?
 
-                                </div>
-                                <i
-                                    onClick={() => {
-                                        setEditClass(item.id)
-                                        setChangedItem(item)
-
-                                    }}
-                                    className={"fa fa-pen"}
-                                />
-                            </div>
-                        )
-                        : (<div className={cls.items}>
                             <div
                                 onClick={() =>
-                                    setClickedCheckbox((arr) => {
-                                        if (clickedCheckbox.includes(item?.id)) {
-                                            return [...arr.filter((id) => id !== item?.id)];
-                                        } else return [...arr, item?.id];
-                                    })
+                                    checkedItem(item.id)
+                                }
+                                className={
+                                    clickedCheckbox.includes(item?.id)
+                                        ? cls.checkbox__minus : cls.checkbox__checked
+
+                                }
+                            >
+                                {clickedCheckbox.includes(item?.id) ? (
+                                    <i
+                                        className={`fa fa-minus ${cls.minus}`}
+                                        onClick={() => console.log("helo")}
+                                    />
+                                ) : (
+                                    <i onClick={() => console.log("hello")} className={`fa fa-check ${cls.check}`}/>
+                                )}
+
+                            </div>
+                            :
+                            <div
+                                onClick={() =>
+                                    checkedItem(item.id)
                                 }
                                 className={
                                     clickedCheckbox.includes(item?.id)
@@ -134,23 +143,25 @@ export const ClassTable = ({edit, classType, active, id}) => {
                                 }
                             >
                                 {clickedCheckbox.includes(item?.id) ? (
-                                    <i  onClick={() => onChange({id: item.id})} className={`fa fa-check ${cls.check}`}/>
+                                    <i onClick={() => onChange({id: item.id})} className={`fa fa-check ${cls.check}`}/>
                                 ) : (
                                     <i
                                         className={`fa fa-minus ${cls.minus}`}
                                         onClick={() => onChange({id: item.id})}
                                     />
                                 )}
+
+
                             </div>
-                            <i
-                                onClick={() => {
-                                    setEditClass(item.id)
-                                    setChangedItem(item)
-                                }}
-                                className={"fa fa-pen"}
-                            />
-                        </div>)
-                    }
+                        }
+                        <i
+                            onClick={() => {
+                                setEditClass(item.id)
+                                setChangedItem(item)
+                            }}
+                            className={"fa fa-pen"}
+                        />
+                    </div>
                 </td>
             </tr>
         })
@@ -192,9 +203,58 @@ export const ClassTable = ({edit, classType, active, id}) => {
                 // register={register}
                 changedItem={changedItem}
                 selectOptions={subjects}
+                edit={edit}
                 // handleSubmit={handleSubmit}
                 // onDeleteSub={onDeleteSub}
             />
         </div>
     )
 }
+
+
+//
+// (?
+// <div className={cls.items}>
+//     <div className={cls.checkbox__checked}>
+//         <i  className={`fa fa-check ${cls.check}`}/>
+//
+//     </div>
+
+//
+// </div>
+//     <div className={cls.items}>
+//         <div
+//             onClick={() =>
+//                 setClickedCheckbox((arr) => {
+//                     if (clickedCheckbox.includes(item?.id)) {
+//                         return [...arr.filter((id) => id !== item?.id)];
+//                     } else return [...arr, item?.id];
+//                 })
+//             }
+//             className={
+//                 clickedCheckbox.includes(item?.id)
+//                     ? cls.checkbox__minus : cls.checkbox__checked
+//
+//             }
+//         >
+//             {clickedCheckbox.includes(item?.id) ? (
+//                 <i
+//                     className={`fa fa-minus ${cls.minus}`}
+//                     onClick={() => onChange({id: item.id})}
+//                 />
+//             ) : (
+//                 <i onClick={() => onChange({id: item.id})}
+//                    className={`fa fa-check ${cls.check}`}/>
+//             )}
+//         </div>
+//         <i
+//             onClick={() => {
+//                 setEditClass(item.id)
+//                 setChangedItem(item)
+//
+//             }}
+//             className={"fa fa-pen"}
+//         />
+//     </div>
+// )
+// : ()

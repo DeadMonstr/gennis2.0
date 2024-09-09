@@ -31,6 +31,7 @@ export const ClassModal = ({
                                // setSelectedSubject,
                                selectedClass,
                                onDeleteSub,
+                               onDelete
                            }) => {
 
 
@@ -40,10 +41,13 @@ export const ClassModal = ({
     const {register, handleSubmit, setValue} = useForm()
     const {request} = useHttp()
     const dispatch = useDispatch()
+    const branchId =
 
     const changeInfo = (data) => {
 
+        const id = edit.id
 
+        console.log(id, "header bosilsa")
         const res = {
             subjects: selectedSubject.map(item => (
                 // name: item.label,
@@ -57,11 +61,9 @@ export const ClassModal = ({
         setValue("price", "")
         dispatch(updateClassItem({idClass, res}))
         setEditClass(!editClass)
-        dispatch(classItem(1))
+        dispatch(classItem(id))
 
     }
-
-
 
 
     const [optionsSubject, setOptionsSubject] = useState([])
@@ -90,17 +92,23 @@ export const ClassModal = ({
     }, [selectOptions])
 
 
-
-
-
     return (
         <>
             <Modal active={activeEdit} setActive={setActiveEdit}>
 
                 <div className={cls.modalHeader}> {edit?.name} <span>ni o'zgartirish</span></div>
                 <div>
-                    <Form extraClassname={cls.extraClassForm} onSubmit={handleSubmit(onClick)}>
+                    <Form typeSubmit={""} extraClassname={cls.extraClassForm}>
                         <Input name={"name"} register={register} placeholder={"nomi"}/>
+                        <div className={cls.modalBtn}>
+                            <Button onClick={handleSubmit(onClick)}>
+                                Tastiqlash
+                            </Button>
+                            <Button onClick={handleSubmit(onDelete)} type={"danger"}>
+                                O'chirish
+                                <i className={"fa fa-trash"}/>
+                            </Button>
+                        </div>
                     </Form>
                 </div>
             </Modal>

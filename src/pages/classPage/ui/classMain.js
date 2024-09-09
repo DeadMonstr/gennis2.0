@@ -41,9 +41,6 @@ export const ClassMain = () => {
             />
 
             {
-                loading ?
-                    <DefaultPageLoader/>
-                    :
                     activeSwitch ?
                         <ClassPage
                             setActiveEdit={setActiveEdit}

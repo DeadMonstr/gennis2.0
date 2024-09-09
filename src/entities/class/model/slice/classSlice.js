@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
     classItem,
-    createClassType, createColor, fetchClassSubjects,
+    createClassType, createColor, deleteTypes, fetchClassSubjects,
     getClassTypeNumber,
     getClassTypes,
     getColor, updateClassItem,
@@ -25,12 +25,8 @@ const classSlice = createSlice({
         onDelete: (state, action) => {
             state.color = state.color.filter(item => item.id !== action.payload.id)
         },
-        onDeleteSubject: (state, action) => {
-            state.classItems = state.classItems.map(itemDel => (
-                {
-
-                }
-            ))
+        onDeleteTypes: (state, action) => {
+            state.classData = state.classData.filter(item => item.id !== action.payload.id)
         },
     },
     extraReducers: builder =>
@@ -89,6 +85,7 @@ const classSlice = createSlice({
                 state.classTypeNumber = action.payload
                 state.loading = false
                 state.error = false
+                console.log(action.payload, "classsdsad")
             })
             .addCase(getClassTypeNumber.rejected, state => {
                 state.error = true
@@ -103,7 +100,7 @@ const classSlice = createSlice({
                 state.loading = false
                 state.error = false
                 state.classItems = action.payload
-                console.log(action.payload, "classsdsad")
+
 
             })
             .addCase(classItem.rejected, state => {
@@ -129,6 +126,8 @@ const classSlice = createSlice({
                 state.loading = false
                 state.error = true
             })
+
+
 
 
             .addCase(createColor.pending, state => {
@@ -200,6 +199,6 @@ const classSlice = createSlice({
 
 })
 
-export const {onDelete, onDeleteSubject} = classSlice.actions
+export const {onDelete, onDeleteTypes} = classSlice.actions
 
 export default classSlice.reducer
