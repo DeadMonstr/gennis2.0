@@ -12,6 +12,7 @@ import {Select} from "shared/ui/select";
 import {value} from "lodash/seq";
 import {fetchRoomsData} from "entities/rooms";
 import {onAddAlertOptions} from "../../alert/model/slice/alertSlice";
+import {branchQueryId} from "../../../shared/api/base";
 
 export const RoomModal = ({isOpen, onClose,branch}) => {
     const [groupName, setGroupName] = useState('');
@@ -27,7 +28,7 @@ export const RoomModal = ({isOpen, onClose,branch}) => {
             seats_number: parseInt(seatCount, 10),
             electronic_board: electronicBoard,
             deleted: false,
-            branch: branch,
+            branch: branchQueryId(),
         };
 
         dispatch(roomsAddThunk(newRoom)).then((action) => {

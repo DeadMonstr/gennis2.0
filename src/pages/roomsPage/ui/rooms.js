@@ -80,7 +80,7 @@ export const Rooms = () => {
                     }
                     {/*<RoomsList currentTableData={searchedRooms.slice((currentPage - 1) * PageSize, currentPage * PageSize)} />*/}
                 </div>
-                <RoomsFilter active={modal} setActive={setModal}/>
+                <RoomsFilter active={modal} setActive={setModal} roomsData={searchedRooms}/>
                 <div className={cls.paginationBox}>
                     {/*<Pagination*/}
                     {/*    search={search}*/}

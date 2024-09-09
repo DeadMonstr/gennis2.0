@@ -20,7 +20,7 @@ export {
     studentPaymentDataPostThunk,
     studentPaymentTypeChangeThunk,
     studentBookOrderListThunk,
-    getMonthDataThunk
+    getMonthDataThunk,
 } from './model/studentPaymentThunk'
 
 export {StudentPaymentEditModal} from './ui/studentPaymentEditModal/studentPaymentEditModal'
@@ -41,5 +41,5 @@ export {
     getPaymentDates,
     getDatasWithPost,
     getBookPaymentsList,
-    getMonthData
+    getMonthData,
 } from './model/selectors/selectors'

@@ -7,8 +7,10 @@ import {Link} from "../../../../shared/ui/link";
 import {DefaultLoader} from "../../../../shared/ui/defaultLoader";
 import {useDispatch, useSelector} from "react-redux";
 import {getFilteredRooms} from "../../../../features/filters/roomsFilter";
+import {useNavigate} from "react-router";
 
 export const RoomsList = ({ currentTableData }) => {
+    const navigation = useNavigate()
     const [loading, setLoading] = useState(true);
     const [switchStates, setSwitchStates] = useState({});
     const dispatch = useDispatch()
@@ -72,8 +74,8 @@ export const RoomsList = ({ currentTableData }) => {
     return roomsToRender?.map((item, index) => (
         <>
             {!item.deleted && (
-                <Link extraClass={cls.extraStyle} to={`roomsProfilePage/${item.id}`}>
-                    <div key={index} className={cls.mainContainer_tablePanelBox_cardBox}>
+                // <Link extraClass={cls.extraStyle} to={`roomsProfilePage/${item.id}`}>
+                    <div onClick={() => navigation(`roomsProfilePage/${item.id}`)} key={index} className={cls.mainContainer_tablePanelBox_cardBox}>
                         <div className={cls.mainContainer_tablePanelBox_cardBox_imgBox}>
                             <img src={Icon} alt="" className={cls.mainContainer_tablePanelBox_cardBox_imgBox_img}/>
                         </div>
@@ -95,7 +97,7 @@ export const RoomsList = ({ currentTableData }) => {
                             </div>
                         </div>
                     </div>
-                </Link>
+                // </Link>
             ) }
         </>
 

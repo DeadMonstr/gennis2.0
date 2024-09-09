@@ -11,7 +11,7 @@ export {
 } from "./model/studentsSlice"
 
 export {fetchNewStudentsData, fetchClassNumberList, fetchClassColors} from "./model/studentsThunk"
-export {fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData, fetchNewStudentsDataWithBranch, fetchStudyingStudentsDataWithBranch, fetchOnlyDeletedStudentsData} from "./model/studentsThunk"
+export {fetchOnlyNewStudentsData, fetchOnlyStudyingStudentsData, fetchNewStudentsDataWithBranch, fetchStudyingStudentsDataWithBranch, fetchOnlyDeletedStudentsData, createSchoolClass} from "./model/studentsThunk"
 export {
     getNewStudentsData,
     getStudyingStudents,

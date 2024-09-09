@@ -77,7 +77,7 @@ export const GiveSalaryPage = () => {
                     getSalaryLoading ? <DefaultLoader/>
                         :
                         <GiveSalaryList
-                            currentTableData={getSalaryGivesData?.usersalarylist}
+                            currentTableData={getSalaryGivesData}
                             currentPage={currentPage}
                             PageSize={PageSize}
                             user_id={Number(pathParts[1])}

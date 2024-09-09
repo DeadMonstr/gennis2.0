@@ -52,11 +52,11 @@ export const RoomsFilter = React.memo(({ active, setActive, activeSwitch, setAct
                 <h1>Filter</h1>
                 <div className={cls.filter__container}>
 
-                    <Select
-                        title={"Teacher"}
-                        extraClass={cls.filter__select}
-                        onChangeOption={setSelectedTeacher}
-                    />
+                    {/*<Select*/}
+                    {/*    title={"Teacher"}*/}
+                    {/*    extraClass={cls.filter__select}*/}
+                    {/*    onChangeOption={setSelectedTeacher}*/}
+                    {/*/>*/}
 
                     <div className={cls.filter__age}>
                         <Input

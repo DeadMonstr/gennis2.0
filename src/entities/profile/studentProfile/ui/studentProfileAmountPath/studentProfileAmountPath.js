@@ -20,6 +20,7 @@ import {Button} from "shared/ui/button";
 import {YesNo} from "../../../../../shared/ui/yesNoModal/yesNo";
 import {StudentPaymentDates} from "../../../../../features/studentPaymentDates";
 import {onAddAlertOptions} from "../../../../../features/alert/model/slice/alertSlice";
+import {fetchStudentProfileData} from "../../../../../pages/profilePage/model/thunk/studentProfileThunk";
 
 export const StudentProfileAmountPath = memo(({active, setActive}) => {
     const pathArray = window.location.pathname.split('/');
@@ -46,6 +47,7 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                     status: true,
                     msg: "To'lov muvoffaqqiyatli o'chirildi"
                 }))
+                dispatch(fetchStudentProfileData(lastId))
                 dispatch(studentPaymentListThunk(lastId));
             }
 
@@ -70,6 +72,10 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
         }
     }, [lastId, change]);
 
+    useEffect(() => {
+        dispatch(studentPaymentListThunk(lastId))
+    }, [])
+
 
     useEffect(() => {
         dispatch(studentBookOrderListThunk(lastId));
@@ -77,7 +83,7 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
 
 
     const renderInData = () => {
-        const listToRender = change ? getDeletedLists.payments : getPaymentLists;
+        const listToRender = change ? getDeletedLists : getPaymentLists
         return listToRender?.map(item =>
             <tr key={item.id} onClick={() => setSelectedSalary(item.id)}>
                 <td>
