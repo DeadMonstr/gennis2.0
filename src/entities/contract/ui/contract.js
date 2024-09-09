@@ -8,7 +8,6 @@ export const Contract = () => {
 
 
     const onClickForm = (data) => {
-        console.log(data)
         setValue("name" , "")
         setValue("campusName" , "")
         setValue("code" , "")

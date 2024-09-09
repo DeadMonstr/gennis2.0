@@ -45,14 +45,11 @@ export const loginSlice =createSlice({
                 state.error = null
             })
             .addCase(fetchLoginUser.fulfilled , (state , action) =>{
-                console.log(action.payload)
                 sessionStorage.setItem('token', action.payload.access);
                 sessionStorage.setItem('refresh_token', action.payload.refresh);
                 if (action.payload.access) {
-                    console.log()
                     const decodedToken = jwtDecode(action.payload.access);
                     const userId = decodedToken.user_id; // Bu yerda user_id ni olasiz
-                    console.log("User ID:", userId);
                 }
                 state.role = action.payload.admin
                 state.username = action.payload

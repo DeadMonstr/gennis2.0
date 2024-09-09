@@ -44,7 +44,6 @@ export const TeacherProfileTotalAmount = memo(({active, setActive, salary_id, us
             teacher: user_id,
             branch: branch
         };
-        console.log(newSalary)
         try {
             const action = await dispatch(giveTeacherSalaryThunk(newSalary));
             if (giveTeacherSalaryThunk.fulfilled.match(action)) {

@@ -81,7 +81,7 @@ export const Inkasatsiya = () => {
     }
 
     const setPage = useCallback((value) => {
-        console.log(value)
+
         dispatch(onChangeAccountingPage({value: value}))
         navigate(`./${value}`)
     }, [navigate])

@@ -2,7 +2,7 @@ import cls from "./accountFilter.module.sass"
 import classNames from "classnames";
 import React from "react";
 export const  AccountingFilter = ({filter , activeMenu , setPage , setActive }) => {
-    // console.log(activeMenu , "filter")
+
     return (
         <ul className={cls.ul}>
             {filter.map((item, i) => <li

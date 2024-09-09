@@ -180,12 +180,11 @@ export const StudentsPage = () => {
     }
 
     const onSubmitFilteredByClass = (data) => {
-        // console.log(data, "data")
+
         setActiveFormBtn(schoolClassNumbers.filter(item => item.id === +data)[0]?.price === 0)
         dispatch(fetchStudentsByClass({branch:userBranchId, number: data}))
     }
 
-    console.log(activeFormBtn, "activeFormBtn")
 
     useEffect(() => {
         if (!userBranchId) return;

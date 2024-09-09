@@ -23,7 +23,7 @@ const postCreateLocation = createSlice({
                 state.name = action.payload
                 state.loading = false
                 state.error = false
-                console.log(action.payload , "yedi")
+
             })
             .addCase(createLocationThunk.rejected , (state , action) => {
                 state.error = true
@@ -37,7 +37,7 @@ const postCreateLocation = createSlice({
                 state.system = action.payload.systems
                 state.loading = false
                 state.error = false
-                console.log(action.payload , "oldi")
+
             })
             .addCase(getSystemId.rejected , (state , action) => {
                 state.error = true

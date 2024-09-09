@@ -18,7 +18,6 @@ export const EducationCreate = ({active , setActive}) => {
     const dispatch = useDispatch()
 
     const onClick = (data) => {
-        console.log(data)
         dispatch(postEducationThunk(data))
         dispatch(getEducationThunk())
         setValue("name" , "")

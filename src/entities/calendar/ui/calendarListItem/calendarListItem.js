@@ -41,7 +41,7 @@ export const CalendarListItem = memo((props) => {
     const [deletedId, setDeletedId] = useState([])
 
     useEffect(() => {
-        // console.log(data, "data inner")
+
         setTotalWeeksCount(sortWeeksDays(data[0]?.days, data[0]?.days[0]?.day_name === "Friday" ?
             4 : data[0]?.days[0]?.day_name === "Saturday" ?
                 5 : data[0]?.days[0]?.day_name === "Sunday" ?
@@ -60,20 +60,18 @@ export const CalendarListItem = memo((props) => {
         }
     }, [isChanged, selectedId])
 
-    // console.log(isChanged, "isChanged")
-    // console.log(selectedId, "selectedId")
-    // console.log(trueActive, "trueActive")
+
 
     useEffect(() => {
-        // console.log(isChanged, "isChanged")
+
         if (selectedId.length && !singleIdActive && activeSwitch) {
-            // console.log(true, "select")
+
             setSelected(selectedId)
         }
     }, [selectedId, singleIdActive])
 
     // if (selectedId.length) {
-    //     console.log(selectedId, "Iddddddddddd")
+
     // }
 
     const renderWeekDaysSingle = useCallback(() => {
@@ -126,7 +124,7 @@ export const CalendarListItem = memo((props) => {
 
 
     // if (trueActive[0]?.finishId) {
-    //     console.log(trueActive, "habdsbkjd")
+
     // }
 
     const renderWeekDaysSelect = useCallback(() => {
@@ -196,7 +194,7 @@ export const CalendarListItem = memo((props) => {
 
     const renderCelebrateDays = useCallback(() => {
         return typesOfDays.map((item, index) => {
-            // console.log(item.days,index, "days")
+
             if (!item?.days?.length) return null
             return (
                 <div
@@ -228,8 +226,6 @@ export const CalendarListItem = memo((props) => {
                                     <i
                                         className={classNames("fas fa-trash", cls.item__icon)}
                                         onClick={() => {
-                                            // console.log(item, "item")
-                                            // console.log(item.days.map(item => item.day_id), "map")
                                             onSubmitDelete(item.days.map(item => item.id))
                                         }}
                                     />

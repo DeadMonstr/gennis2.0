@@ -63,7 +63,6 @@ export const EmployeesFilter = React.memo(({ active, setActive, activeSwitch, se
     };
 
     useEffect(() => {
-        console.log("emp")
         dispatch(fetchVacancyData());
     }, [dispatch]);
 

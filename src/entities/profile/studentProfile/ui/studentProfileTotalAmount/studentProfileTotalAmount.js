@@ -116,11 +116,11 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     };
 
     const onSubmitPassword = (data) => {
-        console.log(data)
+
     }
 
 
-    console.log(selectMonth, "datass")
+
 
     const renderAmountServiceTypes = useCallback(() => {
         return amountService.map(item =>

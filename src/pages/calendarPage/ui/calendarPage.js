@@ -30,11 +30,11 @@ export const CalendarPage = () => {
     const [isChanged, setIsChanged] = useState(false)
     const currentYear = new Date().getFullYear()
 
-    console.log(calendarData, "calendarData")
+
 
     const onSubmitAdd = (data) => {
         let res;
-        // console.log(active, "active")
+
         setData({...data, ...active})
 
         if (active?.length) {
@@ -45,7 +45,7 @@ export const CalendarPage = () => {
             res = {...data, ...active}
         }
 
-        // console.log(res, "res")
+
         request(`${API_URL}Calendar/change-type/`, "POST", JSON.stringify(res), headers())
             .then(res => {
                 dispatch(changeDayType(res))
@@ -63,7 +63,7 @@ export const CalendarPage = () => {
     }
 
     // const onSubmitDelete = (data) => {
-    //     // console.log(data, "del")
+
     //     dispatch(deleteDayType({days: data}))
     // }
 

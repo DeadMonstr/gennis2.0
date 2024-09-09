@@ -15,7 +15,7 @@ export const CategoryProfile = () => {
     useEffect(() => {
         dispatch(getCapitalCategory(id))
     }, [])
-    console.log(categoryInfo)
+
 
     return (
         <div>

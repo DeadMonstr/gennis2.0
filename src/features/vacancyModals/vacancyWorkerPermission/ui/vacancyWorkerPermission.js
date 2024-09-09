@@ -21,18 +21,16 @@ export const VacancyWorkerPermission = React.memo(({active, setActive, onAddVaca
     const permissionData = useSelector(getPermissionTables);
     const {request} = useHttp()
     const userId = selectedJobID.job?.length ? Number(selectedJobID.job[0].id) : null;
-    console.log(userId);
+
 
     useEffect(() => {
         dispatch(fetchPermissionTable());
-        console.log("ishladi")
     }, [dispatch]);
 
     const onChangeWorkName = (value) => {
         setSelectedWorkName(value);
         dispatch(postSelectedTable(value)).then((action) => {
             if (postSelectedTable.fulfilled.match(action)) {
-                console.log("Kevotgan permissionla", action.payload);
                 setAvailablePermissions(action.payload.permissions);
             } else {
                 console.error("Permissionlada xato", action.payload);
@@ -60,7 +58,6 @@ export const VacancyWorkerPermission = React.memo(({active, setActive, onAddVaca
         setSelectedPermissions([]);
         setSelectedWorkName("");
         dispatch(postSelectedTable(newVacancy))
-        console.log(newVacancy,"new")
         const selectedPermissionsIds = availablePermissions.permissions
             .filter(permission => selectedPermissions.includes(permission.name))
             .map(permission => permission.id);

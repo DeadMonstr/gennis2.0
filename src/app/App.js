@@ -15,12 +15,12 @@ function App() {
     //         .then(response => response.json())
     //         .then(data => {
     //             setIPAddress(data.ip)
-    //             console.log(data)
+
     //         })
-    //         .catch(error => console.log(error))
+
     // }, [])
     //
-    // console.log(document)
+
 
 
     // if (blockedIPs.includes(ipAddress))

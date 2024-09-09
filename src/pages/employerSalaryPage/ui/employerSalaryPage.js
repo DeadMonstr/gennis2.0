@@ -47,7 +47,7 @@ export const EmployerSalaryPage = () => {
         }
     }, [dispatch, id])
 
-    console.log(employerSalaries, "employerSalaries")
+
     return (
         <div className={cls.mainContainer}>
             <div className={cls.mainContainer_buttonPanelBox}>

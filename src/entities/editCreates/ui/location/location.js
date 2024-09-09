@@ -40,10 +40,10 @@ export const Location = () => {
 
 
     const onAdd = () => {
-        console.log("hello")
+
     }
     const onChange = (data) => {
-        console.log(select, data)
+
         dispatch(changeLocation({system: select, data, id: isChange.id}))
         setValue("name", "");
         setValue("number", "");
@@ -53,10 +53,8 @@ export const Location = () => {
 
 
     const onDelete = () => {
-        console.log(isChange.id, "hello")
         request(`${API_URL}Location/location_delete/${isChange.id}/`, "DELETE", JSON.stringify({id: isChange.id}), headers())
             .then(res => {
-                console.log(res)
                 setActiveLocationModal(!activeLocationModal)
                 dispatch(onDeleteBranch({id: isChange.id}))
                 setActiveDel(!activeDel)

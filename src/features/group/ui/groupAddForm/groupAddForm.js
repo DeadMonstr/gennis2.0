@@ -65,7 +65,6 @@ export const GroupAddForm = memo((props) => {
         // const place = userSystemId === 1 ? "guruh" : "sinf"
         request(`${API_URL}Group/groups/profile/${data?.id}/`, "PATCH", JSON.stringify(res), headers())
             .then(res => {
-                console.log(res, "res group")
                 dispatch(onAddAlertOptions({
                     type: "success",
                     status: true,
@@ -73,7 +72,6 @@ export const GroupAddForm = memo((props) => {
                 }))
             })
             .catch(err => {
-                console.log(err)
                 dispatch(onAddAlertOptions({
                     type: "error",
                     status: true,

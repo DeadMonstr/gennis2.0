@@ -47,7 +47,7 @@ export const VacancyPage = () => {
 
 
     useEffect(() => {
-        console.log("main")
+
         dispatch(fetchVacancyData())
     }, [])
 

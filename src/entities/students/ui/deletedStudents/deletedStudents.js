@@ -20,8 +20,6 @@ export const DeletedStudents = ({currentTableData}) => {
     const [deletedStudentsData , setDeletedStudents] = useState([])
     const navigation = useNavigate()
 
-    console.log(reasons, "reasons")
-
     useEffect(() =>{
         dispatch(fetchReasons())
     },[])

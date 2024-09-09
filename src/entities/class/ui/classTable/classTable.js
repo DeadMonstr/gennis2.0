@@ -10,11 +10,13 @@ import {fetchClassSubjects} from "../../model/thunk/classThunk";
 import {classSubjects} from "../../model/selector/classSelector";
 import {classItem, updateClassItem} from "../../model/thunk/classThunk";
 import {data} from "../../../calendar";
-import {onDeleteSubject} from "../../model/slice/classSlice";
+import {onChangeClassStatus, onDeleteSubject} from "../../model/slice/classSlice";
+import classNames from "classnames";
 
 
 export const ClassTable = ({edit, classType, active, id}) => {
     const [editClass, setEditClass] = useState(false)
+
     const [clickedCheckbox, setClickedCheckbox] = useState([])
 
     const [changedItem, setChangedItem] = useState({})
@@ -33,49 +35,51 @@ export const ClassTable = ({edit, classType, active, id}) => {
             setSelectedClass(selected);
         }
     }, [editClass, classType]);
-    const onChangeClass = (data) => {
-
-
-        const res = {
-            subjects: selectedSubject.map(item => (
-                // name: item.label,
-                item.value
-            )),
-            ...data
-        }
-        const idClass = editClass
-        //
-        // setValue("curriculum_hours", "")
-        // setValue("price", "")
-        dispatch(updateClassItem({idClass, res}))
-        setEditClass(!editClass)
-        dispatch(classItem(1))
-
-    }
+    // const onChangeClass = (data) => {
+    //
+    //
+    //     const res = {
+    //         subjects: selectedSubject.map(item => (
+    //             // name: item.label,
+    //             item.value
+    //         )),
+    //         ...data
+    //     }
+    //     const idClass = editClass
+    //     //
+    //     // setValue("curriculum_hours", "")
+    //     // setValue("price", "")
+    //     dispatch(updateClassItem({idClass, res}))
+    //     setEditClass(!editClass)
+    //     dispatch(classItem(1))
+    //
+    // }
 
     // const onDeleteSub = (id) => {
     //
     //     dispatch(onDeleteSubject(id))
-    //     console.log(id, "id")
+
     //
     // }
 
-    const checkedItem = (id) => {
-        const filteredCheckbox = clickedCheckbox.filter(item => item !== id)
-        setClickedCheckbox([...filteredCheckbox, id])
+    // const checkedItem = (id) => {
+    //     const filteredCheckbox = clickedCheckbox.filter(item => item !== id)
+    //     setClickedCheckbox([...filteredCheckbox, id])
+    //
+    //
+    // }
 
 
-    }
 
-
-    const onChange = (e) => {
+    const onChange = ({id , type}) => {
 
         const res = {
-            class_types: edit.id,
+            class_types: !type ? edit.id : null,
         }
-        const {id} = e
+
         request(`${API_URL}Class/class_number_update/${id}/`, "PATCH", JSON.stringify(res), headers())
             .then(res => {
+                dispatch(onChangeClassStatus({id}))
                 dispatch(onAddAlertOptions({
                     type: "success",
                     status: true,
@@ -87,13 +91,14 @@ export const ClassTable = ({edit, classType, active, id}) => {
                 console.log(err)
             })
     }
-    const sortItemsByStatus = (items) => {
-        return [...items].sort((a, b) => b.status - a.status);
-    };
+    // const sortItemsByStatus = (items) => {
+    //     // return [...items].sort((a, b) => b.status - a.status);
+    // };
+
 
 
     const renderTable = () => {
-        return sortItemsByStatus(classType)?.map((item, i) => {
+        return classType.map((item, i) => {
 
             return <tr>
                 <td>{i + 1}</td>
@@ -109,51 +114,20 @@ export const ClassTable = ({edit, classType, active, id}) => {
                 <td>{item?.curriculum_hours}</td>
                 <td style={{width: "3rem"}}>
                     <div className={cls.items}>
-                        {item?.status ?
 
-                            <div
-                                onClick={() =>
-                                    checkedItem(item.id)
-                                }
-                                className={
-                                    clickedCheckbox.includes(item?.id)
-                                        ? cls.checkbox__minus : cls.checkbox__checked
+                        <div
+                            onClick={() => onChange({id: item.id, type: item.status})}
+                            className={classNames(cls.checkbox__minus , {
+                                [cls.active] : item.status
+                            })}
+                        >
+                            {item.status ?
+                                <i className={`fa fa-check `}/> :
+                                <i className={`fa fa-minus`}/>
 
-                                }
-                            >
-                                {clickedCheckbox.includes(item?.id) ? (
-                                    <i
-                                        className={`fa fa-minus ${cls.minus}`}
-                                        onClick={() => console.log("helo")}
-                                    />
-                                ) : (
-                                    <i onClick={() => console.log("hello")} className={`fa fa-check ${cls.check}`}/>
-                                )}
+                            }
+                        </div>
 
-                            </div>
-                            :
-                            <div
-                                onClick={() =>
-                                    checkedItem(item.id)
-                                }
-                                className={
-                                    clickedCheckbox.includes(item?.id)
-                                        ? cls.checkbox__checked
-                                        : cls.checkbox__minus
-                                }
-                            >
-                                {clickedCheckbox.includes(item?.id) ? (
-                                    <i onClick={() => onChange({id: item.id})} className={`fa fa-check ${cls.check}`}/>
-                                ) : (
-                                    <i
-                                        className={`fa fa-minus ${cls.minus}`}
-                                        onClick={() => onChange({id: item.id})}
-                                    />
-                                )}
-
-
-                            </div>
-                        }
                         <i
                             onClick={() => {
                                 setEditClass(item.id)
@@ -210,7 +184,77 @@ export const ClassTable = ({edit, classType, active, id}) => {
         </div>
     )
 }
+{/*{item?.status ?*/
+}
 
+{/*    <div*/
+}
+{/*        onClick={() =>*/
+}
+{/*            checkedItem(item.id)*/
+}
+{/*        }*/
+}
+{/*        className={*/
+}
+{/*            clickedCheckbox.includes(item?.id)*/
+}
+{/*                ? cls.checkbox__minus : cls.checkbox__checked*/
+}
+
+{/*        }*/
+}
+{/*    >*/
+}
+{/*        {clickedCheckbox.includes(item?.id) ? (*/
+}
+
+{/*        ) : (*/
+}
+{/*            <i onClick={() => console.log("hello")} className={`fa fa-check ${cls.check}`}/>*/
+}
+{/*        )}*/
+}
+
+{/*    </div>*/
+}
+{/*    :*/
+}
+{/*    <div*/
+}
+{/*        onClick={() =>*/
+}
+{/*            checkedItem(item.id)*/
+}
+{/*        }*/
+}
+{/*        className={*/
+}
+{/*            clickedCheckbox.includes(item?.id)*/
+}
+{/*                ? cls.checkbox__checked*/
+}
+{/*                : cls.checkbox__minus*/
+}
+{/*        }*/
+}
+{/*    >*/
+}
+{/*        {clickedCheckbox.includes(item?.id) ? (*/
+}
+{/*            <i onClick={() => onChange({id: item.id})} className={`fa fa-check ${cls.check}`}/>*/
+}
+{/*        ) : (*/
+}
+
+{/*        )}*/
+}
+
+
+{/*    </div>*/
+}
+{/*}*/
+}
 
 //
 // (?

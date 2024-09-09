@@ -28,7 +28,6 @@ export const EmployerProfileInfo = memo(({active,setActive,setActiveModal, newIm
     }, [employerId]);
 
 
-    console.log(employerId, "data user")
 
     const handleUpdateTeacher = (updateTeacher) => {
         setLocalTeacherData((prevData) => ({

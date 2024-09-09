@@ -25,7 +25,6 @@ const getEducationSlice = createSlice({
             .addCase(getEducationThunk.fulfilled , (state , action) => {
                 state.educationName = action.payload.languages
                 state.loading = false
-                console.log(action.payload , "LOG")
                 state.error = false
             })
             .addCase(getEducationThunk.rejected , state => {

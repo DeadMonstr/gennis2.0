@@ -56,7 +56,7 @@ export const ClassColorAddFilter = ({color, setEdit, edit, setChangeName, change
                 className={classNames(cls.classFilter_li)}
                 key={i}
                 onClick={() => {
-                    setEdit(item.id)
+                    setEdit(item)
                     setValue("name" , item.name)
                     setChangeName(!changeName)
 

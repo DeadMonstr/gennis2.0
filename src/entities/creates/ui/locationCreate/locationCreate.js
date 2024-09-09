@@ -27,11 +27,8 @@ export const LocationCreate = ({active , setActive}) => {
         dispatch(getSystemThunk())
     }, [])
 
-    console.log(systemId , "sfwf")
 
     const onClick = (data) => {
-        console.log(data)
-        console.log(select)
         const res = {
             ...data,
             system: select

@@ -32,7 +32,6 @@ export const Education = () => {
 
 
     const onChange = (data) => {
-        console.log(data)
         dispatch(getEducationChange({data, id: isChange.id}))
         setActiveLocationModal(!activeLocationModal)
     }

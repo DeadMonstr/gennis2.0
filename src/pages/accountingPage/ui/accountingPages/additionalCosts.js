@@ -68,14 +68,13 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
     }
 
     const onChangeRadio = (value) => {
-        console.log(value)
         setRadioSelect(value)
     }
     const onChange = (value) => {
         setSelect(value)
-        // console.log(value)
+
         const {id} = value
-        console.log(id)
+
         if (id === "9") {
             setShowAdditionalFields(true)
 
@@ -95,7 +94,7 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
         }
         request(`${API_URL}Overhead/overheads/create/`, "POST", JSON.stringify(res), headers())
             .then(res => {
-                console.log(res)
+
                 setActiveModal(false)
                 setValue("name", "")
                 setValue("price", "")
@@ -111,15 +110,14 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
                 console.log(err)
             })
 
-        console.log(res, "res")
     }
     const onDelete = () => {
-        console.log("bosilvoti")
+
         const {id} = changingData
-        console.log(id, id)
+
         request(`${API_URL}Overhead/overheads/delete/${id}`, "DELETE", JSON.stringify({id}), headers())
             .then(res => {
-                console.log(res)
+
                 dispatch(onDeleteOverhead({id: id}))
                 // dispatch(overHeadList())
                 setActiveDelete(false)

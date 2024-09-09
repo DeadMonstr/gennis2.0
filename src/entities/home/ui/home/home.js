@@ -44,10 +44,10 @@ export const Home = () => {
     const onChange = () => {
         setChangeItem(image)
         setChangeStatus(!changeStatus)
-        console.log(":da")
+
     }
     const onSubmit = (data) => {
-        console.log("hello world")
+
         dispatch(fetchingImageItems())
 
         formData.append("name", data.name)

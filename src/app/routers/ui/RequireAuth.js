@@ -28,10 +28,10 @@ export const RequireAuth = ({roles, children}) => {
         dispatch(userRefreshData({refresh: refresh_token}))
         // request(`${API_URL}Api/token/refresh/`, "POST", JSON.stringify({refresh: refresh_token}))
         //     .then(res => {
-        //         console.log(res)
+
         //         dispatch(userRefresh(res))
         //     })
-        //     .catch(err => console.log(err))
+
     }, [])
 
 
@@ -40,17 +40,16 @@ export const RequireAuth = ({roles, children}) => {
     //         return true;
     //     }
     //
-    //     console.log(roles)
+
     //
     //     return roles.some((requiredRole) => {
-    //         console.log(requiredRole, "roles")
+
     //         return userRoles?.includes(requiredRole);
     //     });
     // }, [roles, userRoles]);
 
-    // console.log(roles.includes(userRoles))
-    // console.log(roles)
-    // console.log(userRoles)
+
+
 
     // if (!roles.includes(userRoles)){
     //     return (
