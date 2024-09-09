@@ -14,7 +14,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
     const navigation = useNavigate()
     const dispatch =  useDispatch()
     const getNewSt = useSelector(getStudentsWithBranch)
-    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
 
 
 
@@ -37,7 +37,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                        <td>{item.user?.age}</td>
                        <td>{item.user?.language?.name}</td>
                        {
-                           userSystem?.id === 2 ? <>
+                           userSystem?.name === "school" ? <>
                                <td>{item?.class_number}</td>
                            </> : <>
                                <td>{item.user?.phone}</td>
@@ -79,7 +79,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                         <th>Age</th>
                         <th>Til</th>
                         {
-                            userSystem?.id === 2 ? <th>Sinf</th> : <>
+                            userSystem?.name === "school" ? <th>Sinf</th> : <>
                                 <th>Telefon numer</th>
                                 <th>Fani</th>
                             </>

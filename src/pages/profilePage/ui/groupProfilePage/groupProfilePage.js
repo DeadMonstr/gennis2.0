@@ -129,7 +129,7 @@ export const GroupProfilePage = () => {
     }, [data])
 
     useEffect(() => {
-        if (branch && data && timeTable && system.type === "center") {
+        if (branch && data && timeTable && system.name === "center") {
             const res = {
                 time_tables: timeTable.map(item => ({
                     week: item.week.id,
@@ -165,7 +165,7 @@ export const GroupProfilePage = () => {
                 <GroupProfileDeleteForm branch={branch} system={system}/>
                 {/*<GroupProfileStudents/>*/}
                 {
-                    system.type === "center" ? <>
+                    system.name === "center" ? <>
                         <GroupProfileStatistics setActive={setActive}/>
                         <GroupProfileAttendanceForm/>
                         {/*<GroupProfileAttendance/>*/}

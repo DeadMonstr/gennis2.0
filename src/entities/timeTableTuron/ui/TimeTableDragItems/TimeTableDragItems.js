@@ -9,7 +9,7 @@ import {Button} from "shared/ui/button";
 
 export const TimeTableDragItems = (props) => {
 
-    const {groups, isSelected, subjects, teachers, selectedSubject,color,setSelectedSubject} = props
+    const {groups, isSelected, subjects, teachers, selectedSubject,color,setSelectedSubject,type} = props
 
 
 
@@ -26,8 +26,8 @@ export const TimeTableDragItems = (props) => {
 
     const renderItems = useCallback(() => {
         if (!isSelected) {
-            if (!groups.length ) {
-                return <h1 style={{color: 'red'}}>Sinflar yoq</h1>
+            if (!groups.length  ) {
+                return <h1 style={{color: 'red'}}>{type} yoq</h1>
             }
             return filteredColors()?.map(item => {
                 return <TimeTableDragItem color={item.type === "group" ? item.color.value : ""} type={"class"} item={item}>{item.name}</TimeTableDragItem>

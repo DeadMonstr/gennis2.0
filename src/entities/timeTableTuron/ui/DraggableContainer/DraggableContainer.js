@@ -26,16 +26,16 @@ export const DraggableContainer = (props) => {
 
     const style = type === "overlay" ? {border: '1px solid black'} : null
 
-
+    console.log( item?.isFilteredColor, "hahahahahahaahahahaha")
     const newStyle = isDragging
         ? {
             transform: CSS.Translate.toString(transform),
             opacity: "0",
-            backgroundColor: item.group?.color?.value || null,
+            backgroundColor: item?.isFilteredColor ? "red" : item.group?.color?.value || null,
             ...style
         }
         : {
-            backgroundColor: item.group?.color?.value || null,
+            backgroundColor:  item?.isFilteredColor ? "#642626" : item.group?.color?.value || null,
             ...style
         };
 

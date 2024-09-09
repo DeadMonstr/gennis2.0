@@ -89,14 +89,14 @@ export const RoomsProfilePage = () => {
                             <i className="fa-solid fa-file-arrow-up"></i>
                             Rasm yuklash
                         </span>
-                                {roomImageData.length > 0 ? (
+                                {roomImageData?.length > 0 ? (
                                     <img className={cls.container_leftBox_sliderBox_imgSlide} src={`${API_URL_IMAGE}${roomImageData[0]?.image}`} alt="Classroom Image" />
                                 ) : (
                                     <img className={cls.container_leftBox_sliderBox_imgSlide} src={Icon} alt="Default Icon" />
                                 )}
                                 <span onClick={() => setWindow(true)} className={cls.roomSlider} title={"Rasmlarni ko'rish"}>
                             <i className="fa-solid fa-camera"></i>
-                            <h4>{roomImageData.length}</h4>
+                            <h4>{roomImageData?.length}</h4>
                         </span>
                             </div>
 

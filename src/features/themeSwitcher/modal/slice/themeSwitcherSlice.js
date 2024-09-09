@@ -31,12 +31,12 @@ const themeSwitcherSlice = createSlice({
 
         onChangeSystem: (state,action) => {
 
-            const filtered = state.systems.filter(item => item.type === action.payload)[0]
+            const filtered = state.systems.filter(item => item.name === action.payload)[0]
 
             localStorage.setItem("selectedSystem", JSON.stringify(filtered))
             state.system =  {
                 id: filtered.id,
-                type: action.payload
+                name: action.payload
             }
 
 
@@ -51,17 +51,22 @@ const themeSwitcherSlice = createSlice({
             .addCase(fetchThemeSwitcherSystemsThunk.fulfilled, (state, action) => {
                 state.systems = action.payload
 
-                const localSystem = JSON.parse(localStorage.getItem("selectedSystem"))
-                if (!localSystem && !localSystem?.id) {
+                const localSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
+                if (!localSystem && !localSystem?.name) {
                     state.system = {
                         id: action.payload[0].id,
-                        type: action.payload[0].type
+                        name: action.payload[0].name
                     }
 
                     localStorage.setItem("selectedSystem", JSON.stringify({
                         id: action.payload[0].id,
-                        type: action.payload[0].type
+                        name: action.payload[0].name
                     }))
+                } else {
+                    state.system = {
+                        id: localSystem.id,
+                        name: localSystem.name
+                    }
                 }
 
 

@@ -8,7 +8,7 @@ import classNames from "classnames";
 import {useDispatch, useSelector} from "react-redux";
 import {
     onChangeColorTimeTable,
-    onChangeDayTimeTable,
+    onChangeDayTimeTable, onChangeFilterClassTimeTable,
     onChangeTypeTimeTable
 } from "../../model/slice/timeTableTuronSlice";
 import {
@@ -26,7 +26,8 @@ const TimeTableTuronPageFilters = (props) => {
     const {
         setFullScreen,
         isSelected,
-        setIsSelected
+        setIsSelected,
+        groups
     } = props
 
     const [activeIdColor, setActiveIdColor] = useState(1)
@@ -61,7 +62,7 @@ const TimeTableTuronPageFilters = (props) => {
                         })}
                         onClick={() => onChangeColor(item.id)}
                     >
-                        {item.value}
+                        {item.name}
                     </div>
                 )
             }
@@ -80,6 +81,10 @@ const TimeTableTuronPageFilters = (props) => {
 
     const onChangeOption = (item) => {
         dispatch(onChangeDayTimeTable(item))
+    }
+
+    const onChangeOptionClassLesson = (item) => {
+        dispatch(onChangeFilterClassTimeTable(item))
     }
 
     return (
@@ -105,6 +110,11 @@ const TimeTableTuronPageFilters = (props) => {
 
 
                 <Button onClick={() => setFullScreen(true)}>Full screen</Button>
+                <Select
+                    onChangeOption={onChangeOptionClassLesson}
+                    options={groups}
+                    title={"filter"}
+                />
                 <Select
                     defaultValue={day}
                     onChangeOption={onChangeOption}

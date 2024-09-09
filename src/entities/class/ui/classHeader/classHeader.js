@@ -33,7 +33,7 @@ export const ClassHeader = ({
     const {request} = useHttp()
 
     const dispatch = useDispatch()
-    const [changeName, setChangeName] = useState(false)
+    // const [changeName, setChangeName] = useState(false)
 
 
     const [addClass, setAddClass] = useState(false)
@@ -67,20 +67,7 @@ export const ClassHeader = ({
         dispatch(createColor(res))
 
     }
-    const changeColor = (data) => {
-        const id = edit
 
-        request(`${API_URL}Class/class_colors/${id}/`, "PATCH", JSON.stringify(data), headers())
-            .then(res => {
-                console.log(res)
-                setValue("name", "")
-            })
-            .catch(err => {
-                console.log(err)
-            })
-
-
-    }
     return (
         <div className={cls.header}>
             <div className={cls.header__btn}>
@@ -115,10 +102,10 @@ export const ClassHeader = ({
                         </Button>
 
 
-                        <Button
-                            onClick={() => setChangeName(!changeName)}
-                            type={"editPlus"}> <i className="fa fa-pen"/>
-                        </Button>
+                        {/*<Button*/}
+                        {/*    onClick={() => setChangeName(!changeName)}*/}
+                        {/*    type={"editPlus"}> <i className="fa fa-pen"/>*/}
+                        {/*</Button>*/}
 
 
                     </div>}
@@ -130,7 +117,7 @@ export const ClassHeader = ({
                 createClass={createClass} activeEdit={activeEdit}
                 setActiveEdit={setActiveEdit} addClass={addClass} setAddClass={setAddClass}/>
 
-            <ColorModal changeColor={changeColor} changeName={changeName} setChangeName={setChangeName} color={color}
+            <ColorModal  color={color}
                         setColor={setColor} active={activeColor} setActive={setActiveColor}
                         createColor={createColorModal} setCreateColor={setCreateColor} handleSubmit={handleSubmit}
                         addColor={addColor} register={register}/>

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 
 
@@ -27,17 +27,14 @@ export const MultiPage = ({types,children,page,id = true}) => {
     const changedPage = useSelector(getMultiChangePage)
     const oldPage = useSelector(getMultiOldPage)
     const navigate = useNavigate()
+    const [oldLength,setOldLength] = useState(null)
 
     useEffect(() => {
         if (locations.length > 1  && page !== oldPage) {
 
-            const data = {
-                types,
-                locations
-            }
+
             dispatch(onChangedPage(true))
             dispatch(onChangedOldPage(page))
-            dispatch(fetchMultiPageDataThunk(data))
         } else if (locations.length < 2 && changedPage) {
         }
     }, [locations.length, types,page,oldPage])
@@ -52,7 +49,19 @@ export const MultiPage = ({types,children,page,id = true}) => {
             dispatch(onChangedPage(false))
 
         }
-    },[changedPage,])
+    },[changedPage])
+
+
+    useEffect(() => {
+        const data = {
+            types,
+            locations
+        }
+        if (locations.length > 1  && oldLength !== locations.length ) {
+            setOldLength(locations.length)
+            dispatch(fetchMultiPageDataThunk(data))
+        }
+    },[oldLength,locations.length])
 
     useEffect(() => {
         if (locations.length < 2 && branch?.id) {

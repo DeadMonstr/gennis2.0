@@ -62,7 +62,7 @@ export const Register = () => {
     const username = watch("username", "");
     const {theme} = useTheme()
 
-    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))// changed
     const classNumbers = useSelector(getSchoolClassNumbers)
     const languages = useSelector(getLanguagesData);
     const branch = localStorage.getItem("selectedBranch")
@@ -96,7 +96,7 @@ export const Register = () => {
     }, [])
 
     useEffect(() => {
-        if (userSystem?.type === "school") {
+        if (userSystem?.name === "school") {
             dispatch(fetchClassNumberList())
         }
     }, [])
@@ -166,7 +166,7 @@ export const Register = () => {
 
         if (registerType === 'student') {
             let result;
-            if (userSystem?.type === "school") {
+            if (userSystem?.name === "school") {
                 result = {
                     class_number: selectedClass
                 }
@@ -183,7 +183,7 @@ export const Register = () => {
             };
             registerAction = registerUser(res);
         } else if (registerType === 'teacher') {
-            if (userSystem?.type === "school") {
+            if (userSystem?.name === "school") {
                 res = {
                     ...res,
                     total_students: 1212,
@@ -259,7 +259,7 @@ export const Register = () => {
 
 
                         {
-                            (userSystem?.type === "school") ? (
+                            (userSystem?.name === "school") ? (
                                 <Select
                                     extraClass={cls.extraClasses}
                                     title={"Sinf"}
@@ -303,7 +303,7 @@ export const Register = () => {
                             options={subjects.map(subj => ({id: subj.id, name: subj.name}))}
                         />
                         {
-                            (userSystem?.type === "school") && (
+                            (userSystem?.name === "school") && (
                                 <>
                                     <Select
                                         extraClass={cls.extraClasses}

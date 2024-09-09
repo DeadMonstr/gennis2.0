@@ -3,16 +3,15 @@
 
 .draggableContainer
   width: 20rem
-  height: 20rem
+  height: 7rem
   display: flex
   flex-direction: column
-  padding: 1rem
-  gap: 2rem
   background-color: $btn-gennis
   border-radius: 10px
   //z-index: 102
   position: absolute
   user-select: none
+  padding: .7rem
   //border: 1px solid $color-grey-dark
   .handle
     position: absolute
@@ -27,23 +26,18 @@
     font-size: 1.8rem
   &.selected
     border: 2px solid $color-danger
+    color: #642626
   h1
     color: white
     text-align: center
-    font-size: 2.5rem
+    font-size: 1.6rem
 
   .info
     width: 100%
-    padding: 1rem
-    background-color: white
     display: flex
     flex-direction: column
-    gap: 1rem
-    border-radius: 5px
 
     span
-      padding: 1.2rem
-      border: 1px solid $color-grey-dark
       text-align: center
       width: 100%
       white-space: nowrap !important
@@ -51,3 +45,4 @@
       font-size: 1.6rem
       text-overflow: ellipsis
       border-radius: 5px
+      color: white

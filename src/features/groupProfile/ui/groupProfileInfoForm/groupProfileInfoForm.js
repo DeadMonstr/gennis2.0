@@ -44,7 +44,7 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
     const data = useSelector(getGroupProfileData)
     const nextLesson = useSelector(getGroupProfileNextLsData)
     const languages = useSelector(getLanguagesData)
-    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
     const schoolClassNumbers = useSelector(getSchoolClassNumbers)
     const schoolClassColors = useSelector(getSchoolClassColors)
 
@@ -74,7 +74,7 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
     const onDelete = () => {
         dispatch(deleteGroupProfile({
             id,
-            res: {type: userSystem?.type}
+            res: {type: userSystem?.name}
         }))
         dispatch(deleteGroup(id))
         navigate(-2)
@@ -84,11 +84,11 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
         setValue("name", data?.name)
         setValue("price", data?.price)
         setValue("language", data?.language?.id)
-        if (userSystem?.type === "school") {
+        if (userSystem?.name === "school") {
             setValue("color", data?.color?.id)
             setValue("class_number", data?.class_number?.id)
         }
-    }, [userSystem?.type, data])
+    }, [userSystem?.name, data])
 
     return (
         <>
@@ -183,7 +183,7 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
                         required
                     />
                     {
-                        system.type === "center" ? <Input
+                        system.name === "center" ? <Input
                             extraClassName={cls.form__input}
                             placeholder={"Guruh narxi"}
                             register={register}
@@ -203,7 +203,7 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
                         required
                     />
                     {
-                        userSystem?.id === 2 ? <>
+                        userSystem?.name === "school" ? <>
                             <Select
                                 extraClass={cls.form__select}
                                 options={schoolClassNumbers}

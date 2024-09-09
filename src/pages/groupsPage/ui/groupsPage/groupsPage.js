@@ -100,8 +100,8 @@ export const GroupsPage = () => {
                         <>
                             <div className={cls.table}>
 
-                                <h2>{activeSwitch ? system.type === "center" ? "Deleted Groups" : "Deleted Classes" :
-                                    system.type === "center" ? "Groups" : "Classes"}</h2>
+                                <h2>{activeSwitch ? system.name === "center" ? "Deleted Groups" : "Deleted Classes" :
+                                    system.name === "center" ? "Groups" : "Classes"}</h2>
                                 {activeSwitch ? <DeletedGroups currentTableData={currentTableData}/> : <GroupsList
                                     currentTableData={currentTableData}
                                 />}

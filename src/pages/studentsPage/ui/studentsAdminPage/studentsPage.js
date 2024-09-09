@@ -96,7 +96,7 @@ export const StudentsPage = () => {
 
     const userBranchId = id
     const teachers = useSelector(getTeachers);
-    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
     const languages = useSelector(state => state.registerUser.languages);
     const [data, setData] = useState({})
     const [selectColor, setSelectColor] = useState();
@@ -149,12 +149,12 @@ export const StudentsPage = () => {
 
 
     useEffect(() => {
-        if (userSystem?.id === 2 && userBranchId) {
+        if (userSystem?.name === "school" && userBranchId) {
             // dispatch(fetchSchoolStudents({userBranchId}))
             dispatch(fetchClassColors())
             dispatch(fetchClassNumberList())
         }
-    }, [userSystem?.id, userBranchId])
+    }, [userSystem?.name, userBranchId])
 
     const onSubmit = (data) => {
         if (!selectColor && schoolClassColors.length <= 3) {
@@ -381,6 +381,7 @@ export const StudentsPage = () => {
                 active={activeModal === "add"}
             />
             <StudentCreateClass
+                deactiveModal={setActiveModal}
                 setActive={setActive}
                 active={active === "post"}
                 data={data}

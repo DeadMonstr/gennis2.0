@@ -22,6 +22,7 @@ const initialState = {
 
     day: "",
     color: "",
+    filterClass: "",
 
     fetchStatusTeachers: "idle",
     loading: false,
@@ -40,6 +41,10 @@ const TimeTableTuronSlice = createSlice({
 
         onChangeDayTimeTable: (state, action) => {
             state.day = action.payload
+        },
+
+        onChangeFilterClassTimeTable: (state, action) => {
+            state.filterClass = action.payload
         },
 
         onChangeColorTimeTable: (state, action) => {
@@ -162,7 +167,7 @@ const TimeTableTuronSlice = createSlice({
                         type: item.type
 
                     }
-                })
+                }) || []
 
 
 
@@ -184,7 +189,6 @@ const TimeTableTuronSlice = createSlice({
             .addCase(fetchTimeTableData.fulfilled, (state, action) => {
 
                 let indexContainer = 1
-
 
                 state.data = action.payload.time_tables.map(room => {
 
@@ -245,4 +249,4 @@ const TimeTableTuronSlice = createSlice({
 })
 
 export default TimeTableTuronSlice.reducer
-export const {onChangeTypeTimeTable,onChangeDayTimeTable,onChangeColorTimeTable} = TimeTableTuronSlice.actions
+export const {onChangeTypeTimeTable,onChangeDayTimeTable,onChangeColorTimeTable,onChangeFilterClassTimeTable} = TimeTableTuronSlice.actions

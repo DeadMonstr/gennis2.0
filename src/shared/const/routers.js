@@ -35,11 +35,13 @@ export const getContract = (id) => `contract/${id}`
 
 export const getCapital = (id) => `capital/*`
 
-export const getCapitalInside = (id) => `capital/:id/capitalBoxProfile/${id}`
+export const getCapitalInside = (id) => `capital/capitalBoxProfile/${id}`
 
 
 
-export const getCreateBranch = (id) => `createBranch/${id}`
+
+export const getCreateBranch = (id) => `crea
+teBranch/${id}`
 export const getCreateSystem = (id) => `createSystem/${id}`
 export const getCreateLocation = (id) => `createLocation/${id}`
 export const getCreateEducation = (id) => `createEducation/${id}`
