@@ -21,7 +21,7 @@ export const UserProfileInfo = memo(({setActive, data, setStatus}) => {
                     alt=""
                 />
                 <h3>{data?.surname} {data?.name}</h3>
-                <p className={cls.info__role}>Teacher</p>
+                <p className={cls.info__role}>{data?.job[0]}</p>
             </div>
             <Button
                 type={"simple"}

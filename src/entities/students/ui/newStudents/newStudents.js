@@ -6,7 +6,7 @@ import {Input} from "shared/ui/input";
 import cls from "entities/students/ui/newStudents/newStudents.module.sass";
 import {Table} from "shared/ui/table";
 import {StudentsFilter} from "features/filters/studentsFilter";
-import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
+import {DefaultPageLoader} from "shared/ui/defaultLoader";
 
 export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) => {
 
@@ -38,7 +38,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                        <td>{item.user?.language?.name}</td>
                        {
                            userSystem?.name === "school" ? <>
-                               <td>{item?.class_number}</td>
+                               <td>{item?.class_number?.number}</td>
                            </> : <>
                                <td>{item.user?.phone}</td>
                                <td>{

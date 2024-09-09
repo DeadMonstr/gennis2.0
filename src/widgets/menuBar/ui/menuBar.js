@@ -88,17 +88,16 @@ export const Menubar = () => {
                 <Link to={`profile/${userId}`}>
                     <img
                         className={cls.userImage}
-                        src={defaultUserImage}
+                        src={user?.profile_img ?? defaultUserImage}
                         alt=""
                     />
                 </Link>
                 <div className={cls.userInfo}>
-                    <h3>Admin</h3>
-                    <p>admin</p>
+                    <h3>{user?.username}</h3>
+                    <p>{user?.job[0]}</p>
                 </div>
             </div>
             <ul className={cls.menu__inner}>
-
                 {
                     !user?.job ? <MiniLoader/> : renderedMenu
                 }

@@ -172,6 +172,7 @@ export const FlowListPage = () => {
                     msg: res.msg,
                     status: true
                 }))
+                localStorage.removeItem("flowData")
             })
             .then(() => {
                 navigate(-2)
