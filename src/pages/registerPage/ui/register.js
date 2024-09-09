@@ -25,8 +25,8 @@ import {MiniLoader} from "shared/ui/miniLoader";
 import {API_URL, useHttp, headers} from "shared/api/base";
 import {onAddAlertOptions} from "../../../features/alert/model/slice/alertSlice";
 import {getCategories, getLanguagesData, getSubjectsData} from "../model/registerSelector";
-import {Form} from "../../../shared/ui/form";
-import {branchQuery} from "shared/api/base";
+import {getSystems} from "../../../features/themeSwitcher";
+import {getSystemName} from "../../../entities/editCreates";
 
 const userstype = {
     types: [
@@ -61,8 +61,8 @@ export const Register = () => {
     const registerType = watch("registerType", "student");
     const username = watch("username", "");
     const {theme} = useTheme()
-
-    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))// changed
+    const getSystem = useSelector(getSystemName)
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
     const classNumbers = useSelector(getSchoolClassNumbers)
     const languages = useSelector(getLanguagesData);
     const branch = localStorage.getItem("selectedBranch")
@@ -83,11 +83,13 @@ export const Register = () => {
     const [usernameMessage, setUsernameMessage] = useState('');
     const [isUsernameAvailable, setIsUsernameAvailable] = useState(true);
 
+    console.log(getSystem, "system")
     useEffect(() => {
         dispatch(fetchLanguages());
         dispatch(fetchSubjects())
         dispatch(getClassTypes())
         dispatch(fetchCategories())
+        dispatch(fetchClassNumberList())
         setValue("password", 12345678)
     }, []);
 
@@ -95,11 +97,7 @@ export const Register = () => {
         dispatch(fetchVacancyData())
     }, [])
 
-    useEffect(() => {
-        if (userSystem?.name === "school") {
-            dispatch(fetchClassNumberList())
-        }
-    }, [])
+
 
     useEffect(() => {
         if (username) {

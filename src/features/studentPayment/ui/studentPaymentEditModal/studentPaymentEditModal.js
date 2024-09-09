@@ -7,11 +7,16 @@ import { useForm } from "react-hook-form";
 import { Input } from "../../../../shared/ui/input";
 import { Select } from "../../../../shared/ui/select";
 import { amountTypes } from "../../../../entities/profile/studentProfile";
-import {studentPaymentDataThunk, studentPaymentTypeChangeThunk} from "../../model/studentPaymentThunk";
+import {
+    studentPaymentDataThunk,
+    studentPaymentListThunk,
+    studentPaymentTypeChangeThunk
+} from "../../model/studentPaymentThunk";
 
 export const StudentPaymentEditModal = ({ portal, setPortal, paymentId, studentId }) => {
     const dispatch = useDispatch();
-
+    const pathArray = window.location.pathname.split('/');
+    const lastId = pathArray[pathArray.length - 1];
     const [paymentType, setPaymentType] = useState("");
     const { register, handleSubmit } = useForm();
 
@@ -19,9 +24,9 @@ export const StudentPaymentEditModal = ({ portal, setPortal, paymentId, studentI
         const requestData = {
             payment_type: paymentType || data.amount
         };
-        dispatch(studentPaymentTypeChangeThunk({id: paymentId, data: requestData}));
-
-        dispatch(studentPaymentDataThunk(studentId))
+        dispatch(studentPaymentTypeChangeThunk({id: paymentId, data: requestData})).then(() => {
+            dispatch(studentPaymentListThunk(lastId))
+        })
         setPortal(false)
     };
 
