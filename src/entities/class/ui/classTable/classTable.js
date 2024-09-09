@@ -178,16 +178,6 @@ export const ClassTable = ({edit, classType, active, id}) => {
                     </tbody>
                 </Table> : null}
 
-
-            <ClassModal
-                changedItem={changedItem}
-                selectOptions={subjects}
-                extraClassForm={cls.extraClassForm}
-                extraClassSelect={cls.select}
-                extraClassBtn={cls.btn}
-                editClass={editClass}
-                setEditClass={setEditClass}
-            />
             <ClassModal
                 selectedClass={selectedClass}  // Pass selected class
                 selectedSubject={selectedSubject}
@@ -199,7 +189,9 @@ export const ClassTable = ({edit, classType, active, id}) => {
                 extraClassBtn={cls.btn}
                 editClass={editClass}
                 setEditClass={setEditClass}
-                register={register}
+                // register={register}
+                changedItem={changedItem}
+                selectOptions={subjects}
                 // handleSubmit={handleSubmit}
                 // onDeleteSub={onDeleteSub}
             />

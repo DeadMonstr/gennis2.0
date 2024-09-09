@@ -28,10 +28,9 @@ export const ClassModal = ({
                                setEditClass,
                                edit,
                                changedItem,
-
-                               setSelectedSubject,
+                               // setSelectedSubject,
                                selectedClass,
-                               onDeleteSub
+                               onDeleteSub,
                            }) => {
 
 
