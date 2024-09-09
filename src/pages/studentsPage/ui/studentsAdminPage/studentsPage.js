@@ -42,7 +42,7 @@ import {
     getLoadingStudents, getLoadingStudyingStudents,
     getSchoolStudents
 } from "entities/students/model/selector/studentsSelector";
-import {createSchoolClass, fetchSchoolStudents} from "entities/students/model/studentsThunk";
+import {createSchoolClass, fetchSchoolStudents, fetchStudentsByClass} from "entities/students/model/studentsThunk";
 import {Radio} from "shared/ui/radio";
 import {Input} from "shared/ui/input";
 import {getStudentsListDirector} from "../../model/selectors/studentsListDirector";
@@ -109,6 +109,7 @@ export const StudentsPage = () => {
     const [selected, setSelected] = useState([]);
     const [currentTableData, setCurrentTableData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [activeFormBtn, setActiveFormBtn] = useState(true)
     const search = useSelector(getSearchValue);
     let PageSize = useMemo(() => 50, []);
 
@@ -152,7 +153,7 @@ export const StudentsPage = () => {
         if (userSystem?.name === "school" && userBranchId) {
             // dispatch(fetchSchoolStudents({userBranchId}))
             dispatch(fetchClassColors())
-            dispatch(fetchClassNumberList())
+            dispatch(fetchClassNumberList({branch: userBranchId}))
         }
     }, [userSystem?.name, userBranchId])
 
@@ -171,12 +172,20 @@ export const StudentsPage = () => {
             system: userSystem.id
         }
         setData(res)
-        dispatch(fetchOnlyNewStudentsData({id:userBranchId, number: data?.class_number}))
+        // dispatch(fetchOnlyNewStudentsData({id:userBranchId, number: data?.class_number}))
         setActive("post")
         // dispatch(createSchoolClass({res}))
 
         // setSelectStudents([])
     }
+
+    const onSubmitFilteredByClass = (data) => {
+        // console.log(data, "data")
+        setActiveFormBtn(schoolClassNumbers.filter(item => item.id === +data)[0]?.price === 0)
+        dispatch(fetchStudentsByClass({branch:userBranchId, number: data}))
+    }
+
+    console.log(activeFormBtn, "activeFormBtn")
 
     useEffect(() => {
         if (!userBranchId) return;
@@ -296,6 +305,7 @@ export const StudentsPage = () => {
                     <Form
                         onSubmit={handleSubmit(onSubmit)}
                         extraClassname={cls.modal__form}
+                        typeSubmit={activeFormBtn ? "" : "inside"}
                     >
                         <Input
                             required
@@ -325,6 +335,7 @@ export const StudentsPage = () => {
                             title={"Sinf raqami"}
                             options={schoolClassNumbers}
                             register={register}
+                            onChangeOption={onSubmitFilteredByClass}
                             name={"class_number"}
                         />
                         {

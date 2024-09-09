@@ -32,7 +32,7 @@ export const StudentsHeader = ({
                 extraClass={cls.extraCutClass}
                 onClick={() => onClick("create")}
             >
-                Create group
+                Create Class
             </Button>
             :
             <Link to={"createGroup"}>
@@ -56,7 +56,7 @@ export const StudentsHeader = ({
                             type={"filter"}
                             extraClass={cls.noneBackground}
                         >
-                            Add group
+                            Add class
                         </Button> : null
                     }
 

@@ -1,3 +1,4 @@
+import {getFilteredClassStudents, getFilteredLoading} from "entities/students/model/selector/studentsSelector";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import React, {memo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
@@ -6,6 +7,7 @@ import {fetchOnlyNewStudentsData, getNewStudentsData} from "entities/students";
 import {useParams} from "react-router-dom";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {Button} from "shared/ui/button";
+import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import {Input} from "shared/ui/input";
 import {Modal} from "shared/ui/modal";
 import {Table} from "shared/ui/table";
@@ -24,7 +26,8 @@ export const StudentCreateClass = memo((props) => {
     const {request} = useHttp()
     const {"*": id} = useParams()
     const dispatch = useDispatch()
-    const studentsList = useSelector(getNewStudentsData);
+    const studentsList = useSelector(getFilteredClassStudents);
+    const loading = useSelector(getFilteredLoading);
 
     const [selectStudents, setSelectStudents] = useState([]);
 
@@ -48,7 +51,7 @@ export const StudentCreateClass = memo((props) => {
     }
 
     const renderStudents = () => {
-        if (!studentsList?.length) return;
+        if (loading === "loading" || loading === "idle") return <DefaultPageLoader/>;
 
         return studentsList?.map((item, i) => {
             return <tr>

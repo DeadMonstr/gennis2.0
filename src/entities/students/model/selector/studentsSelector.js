@@ -1,5 +1,12 @@
 
 
+export const getFilteredLoading = (state) =>
+    state.newStudents.filteredByClass
+
+export const getFilteredClassStudents = (state) =>
+    state.newStudents.filteredByClassStudents
+
+
 export const getLoadingNewStudents = (state) =>
     state.newStudents?.newStudentsStatus;
 
