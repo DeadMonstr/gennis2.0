@@ -2,7 +2,7 @@ import React from 'react';
 import cls from "./MultiPageList.module.sass";
 import MultiPageListItem from "../MultiPageListItem/MultiPageListItem";
 
-export const MultiPageList = ({data}) => {
+export const MultiPageList = ({data,id}) => {
 
 
     let isType = data.length > 1
@@ -13,6 +13,7 @@ export const MultiPageList = ({data}) => {
 
         return data.map(item =>
             <MultiPageListItem
+                id={id}
                 isType={isType}
                 item={item}
                 title={item.name}

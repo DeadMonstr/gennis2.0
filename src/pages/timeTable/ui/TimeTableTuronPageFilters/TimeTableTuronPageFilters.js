@@ -61,7 +61,7 @@ const TimeTableTuronPageFilters = (props) => {
                         })}
                         onClick={() => onChangeColor(item.id)}
                     >
-                        {item.value}
+                        {item.name}
                     </div>
                 )
             }

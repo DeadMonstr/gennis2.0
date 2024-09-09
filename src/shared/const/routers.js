@@ -35,7 +35,8 @@ export const getContract = (id) => `contract/${id}`
 
 export const getCapital = (id) => `capital/*`
 
-export const getCapitalInside = (id) => `capital/:id/capitalBoxProfile/${id}`
+export const getCapitalInside = (id) => `capital/capitalBoxProfile/${id}`
+
 
 
 

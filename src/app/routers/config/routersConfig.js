@@ -70,7 +70,7 @@ import {EmployerSalaryPage} from "pages/employerSalaryPage";
 import {GiveSalaryPage, GiveTeacherSalaryPage} from "pages/giveSalaryPage";
 import {Branch, Education, Location, System} from "entities/editCreates";
 import {BranchCreate, EducationCreate, LocationCreate, SystemCreate} from "entities/creates";
-import {AccountingPageMain} from "pages/accountingPage";
+import {AccountingPageMainIndex} from "pages/accountingPage";
 import {Inkasatsiya} from "pages/inkasatsiyaPage";
 import {AccountingBooks} from "entities/accounting";
 // import Calendar from "react-calendar";
@@ -338,7 +338,7 @@ export const routersConfig = [
     {
         name: "accounting",
         path: getAccounting(":id"),
-        element: <AccountingPageMain/>,
+        element: <AccountingPageMainIndex/>,
     },
     {
         name: "inkasatsiya",
@@ -350,10 +350,10 @@ export const routersConfig = [
         path: getGroupHistory(":id"),
         element: <StudentProfileGroupsHistory/>
     },
-    {
-        name: "capital category profile",
-        path: getCapitalCategoryProfile(":id"),
-        element: <CategoryProfile/>
-    },
+    // {
+    //     name: "capital category profile",
+    //     path: getCapitalCategoryProfile(":id"),
+    //     element: <CategoryProfile/>
+    // },
 
 ]
