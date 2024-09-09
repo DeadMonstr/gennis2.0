@@ -86,45 +86,7 @@ export const ClassModal = ({
     }, [selectOptions])
 
 
-    // useEffect(() => {
-    //     setSubject(selectOptions)
-    // }, [])
 
-    // useEffect(() => {
-    //     if (deletedId !== 0) {
-    //         setSubject(subject => {
-    //             return subject.map(item => {
-    //                 if (item.id === +deletedId) {
-    //                     return {...item, disabled: false}
-    //                 }
-    //                 return item
-    //             })
-    //         })
-    //
-    //         setSelectedSubject(selectedSubject.filter(item => item.id !== +deletedId))
-    //         setSelected(selectedSubject.filter(item => item.id !== +deletedId))
-    //     }
-    // }, [deletedId])
-    //
-    // console.log(subject, "subject")
-    // console.log(selectedSubject, "selectedSubject")
-    // console.log(deletedId , "deletedId")
-    // console.log(selected , "selected")
-
-    // const onChangeSelect = (id) => {
-    //     const filteredSubjects = subject.filter(item => item.id === +id)
-    //     setSubject(
-    //         subject.map(item => {
-    //             if (item.id === +id) {
-    //                 return {...item, disabled: true}
-    //             }
-    //             return item
-    //         })
-    //     )
-    //     setSelectedSubject(arr => [...arr, ...filteredSubjects])
-    //     setSelected(arr => [...arr, ...filteredSubjects])
-    //
-    // }
 
 
     return (
