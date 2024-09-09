@@ -45,21 +45,7 @@ export const ClassTable = ({edit, classType, active, id}) => {
         return [...items].sort((a, b) => b.status - a.status);
     };
 
-    // const color1rgb = hexToRgb(item?.teacher[0]?.color ? item?.teacher[0]?.color : "#ffffff");
-    //
-    //
-    //
-    // const brightness = Math.round(((parseInt(color1rgb.r) * 299) +
-    //     (parseInt(color1rgb.g) * 587) +
-    //     (parseInt(color1rgb.b) * 114)) / 1000);
-    //
-    // const heightItem = +item.to.replace(":",".")- +item.from.replace(":",".")
-    //
-    // const style = {
-    //     height: heightItem * 120 + "px",
-    //     backgroundColor: item?.teacher[0]?.color ? item?.teacher[0]?.color : "white",
-    //     color: brightness > 125 ? "black" : "white"
-    // }
+
 
     const renderTable = () => {
         return sortItemsByStatus(classType)?.map((item, i) => {
