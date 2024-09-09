@@ -38,7 +38,7 @@ import {
     getTeacherSalary, getInkasatsiya,
     getGroupHistory,
     getRouteClassProfile, getCapitalCategoryProfile,
-     getRouteCalendar,
+    getRouteCalendar, getBranch404,
 
 } from "shared/const/routers";
 
@@ -81,17 +81,18 @@ import {TimeTableTuronPage} from "pages/timeTable";
 import {CategoryProfileProfile} from "entities/capital/ui/categoryProfileProfile/categoryProfileProfile"
 import {CategoryProfile} from "../../../pages/capitalPage/ui/capitalCategoryProfile/categoryProfile";
 import {ClassMain} from "../../../pages/classPage/ui/classMain";
+import Branch404 from "pages/branch404/Branch404";
 // import {TimeTable} from "pages/timeTable";
 // import {RoomsProfilePage} from "pages/profilePage";
 
 
 export const routersConfig = [
-    {
-        name: "Bosh Sahifa",
-        path: getRouteMain(),
-        // element: <HomePage/>,
-        element: null,
-    },
+    // {
+    //     name: "Bosh Sahifa",
+    //     path: getRouteMain(),
+    //     // element: <HomePage/>,
+    //     // element: null,
+    // },
     {
         name: "Task Manager",
         path: getRouteTaskManager(":id"),
@@ -154,12 +155,12 @@ export const routersConfig = [
     },
     {
         name: "Time Table",
-        path: getRouteTimePage(":id"),
+        path: getRouteTimePage(":idBranch"),
         element: <TimeTableListPage/>,
     },
     {
         name: "Vakansiyalar",
-        path: getVacancyPage(":id"),
+        path: getVacancyPage(":idBranch"),
         element: <VacancyPage/>,
     },
     {
@@ -172,7 +173,7 @@ export const routersConfig = [
         name: "Employers",
         icon: "fa-user-graduate",
         roles: [],
-        path: getEmployerPage(":id"),
+        path: getEmployerPage(":idBranch"),
         element: <EmployerPage/>,
     },
     {
@@ -296,7 +297,7 @@ export const routersConfig = [
 
     {
         name: "createBranch",
-        path: getCreateBranch(":id"),
+        path: getCreateBranch(":idBranch"),
         element: <BranchCreate/>
     },
 
@@ -322,7 +323,7 @@ export const routersConfig = [
     },
     {
         name: "branch",
-        path: getBranch(":id"),
+        path: getBranch(":idBranch"),
         element: <Branch/>
     },
     {
@@ -342,7 +343,7 @@ export const routersConfig = [
     },
     {
         name: "inkasatsiya",
-        path: getInkasatsiya(":id"),
+        path: getInkasatsiya(":idBranch"),
         element: <Inkasatsiya/>
     },
     {
@@ -350,6 +351,8 @@ export const routersConfig = [
         path: getGroupHistory(":id"),
         element: <StudentProfileGroupsHistory/>
     },
+
+
     // {
     //     name: "capital category profile",
     //     path: getCapitalCategoryProfile(":id"),

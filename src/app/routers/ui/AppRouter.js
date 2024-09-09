@@ -28,6 +28,7 @@ import {FlowListPage} from "pages/FlowListPage";
 import {ClassAddColorPage, ClassPage} from "pages/classPage";
 // import {T} from "pages/timeTable";
 import {CalendarPage} from "pages/calendarPage";
+import RequireBranch from "app/routers/ui/RequireBranch";
 
 
 export const AppRouter = () => {
@@ -37,6 +38,7 @@ export const AppRouter = () => {
     const router = createBrowserRouter(
         createRoutesFromElements(
             <>
+
                 <Route
                     path={"/"}
                     element={<HomePage/>}
@@ -67,7 +69,9 @@ export const AppRouter = () => {
                                         // <RequireAuth>
                                         //     {item.element}
                                         // </RequireAuth>
-                                        item.element
+                                        <RequireBranch>
+                                            {item.element}
+                                        </RequireBranch>
                                     }
                                 />
                             )

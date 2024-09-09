@@ -38,7 +38,6 @@ export const StudentsFilter = React.memo(({ active, setActive, activePage, setDa
     const [selectedLang, setSelectedLanguage] = useState("")
     const [selectedClass, setSelectedClass] = useState("")
     const [selectedStatus, setSelectedStatus] = useState("")
-    const getStStudents = useSelector(getStudyingStudentsWithBranch)
     const dispatch = useDispatch()
     const languages = useSelector(getLanguagesData)
     const subjects = useSelector(getSubjectsData)

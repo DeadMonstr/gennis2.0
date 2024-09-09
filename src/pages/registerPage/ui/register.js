@@ -57,7 +57,7 @@ export const Register = () => {
         setValue,
         reset
     } = useForm();
-    const {"*": id} = useParams()
+    const {id} = useParams()
     const registerType = watch("registerType", "student");
     const username = watch("username", "");
     const {theme} = useTheme()
@@ -83,7 +83,6 @@ export const Register = () => {
     const [usernameMessage, setUsernameMessage] = useState('');
     const [isUsernameAvailable, setIsUsernameAvailable] = useState(true);
 
-    console.log(getSystem, "system")
     useEffect(() => {
         dispatch(fetchLanguages());
         dispatch(fetchSubjects())

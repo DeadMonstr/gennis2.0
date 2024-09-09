@@ -35,7 +35,6 @@ export const MultiPage = ({types,children,page,id = true}) => {
 
             dispatch(onChangedPage(true))
             dispatch(onChangedOldPage(page))
-        } else if (locations.length < 2 && changedPage) {
         }
     }, [locations.length, types,page,oldPage])
 
@@ -63,11 +62,6 @@ export const MultiPage = ({types,children,page,id = true}) => {
         }
     },[oldLength,locations.length])
 
-    useEffect(() => {
-        if (locations.length < 2 && branch?.id) {
-            navigate(`./${branch.id}`, {relative: "path"})
-        }
-    },[branch?.id,locations])
 
 
 

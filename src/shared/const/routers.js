@@ -7,7 +7,7 @@ export const getRouteCalendar = () => `calendar/*`;
 export const getDirectorRouteStudents = () => `locations-overview`;
 export const getRouteGroups = (id) => `groups/*`;
 // export const getRouteDeletedGroups = (id) => `deletedGroups`;
-export const getRouteRegister = () => `register/*`;
+export const getRouteRegister = () => `register/:idBranch`;
 export const getRouteTeacher = (id) => `teacher/*`;
 // export const getRouteCreateGroup = () => `newStudents/createGroup`;
 export const getRouteRooms = (id) => `rooms/*`;
