@@ -1,12 +1,12 @@
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
-import {ClassHeader} from "../../../entities/class";
+import {ClassHeader} from "entities/class";
 import {useEffect, useState} from "react";
 import cls from "./classPage.module.sass";
 import {ClassPage} from "./classPage";
 import {ClassAddColorPage} from "./classAddColorPage";
 import {useDispatch, useSelector} from "react-redux";
-import {classData, classItemLoading, colorItem} from "../../../entities/class/model/selector/classSelector";
-import {getClassTypes, getColor} from "../../../entities/class/model/thunk/classThunk";
+import {classData, classItemLoading, colorItem} from "entities/class/model/selector/classSelector";
+import {fetchClassSubjects, getClassTypes, getColor} from "entities/class/model/thunk/classThunk";
 
 
 export const ClassMain = () => {
@@ -23,6 +23,7 @@ export const ClassMain = () => {
     useEffect(() => {
         dispatch(getClassTypes())
         dispatch(getColor())
+        dispatch(fetchClassSubjects())
     }, [])
     const [activeSwitch, setActiveSwitch] = useState(true)
 

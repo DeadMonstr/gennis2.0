@@ -96,7 +96,7 @@ export const AppRouter = () => {
                         />
 
                         <Route
-                            path={"flows/:id/flow-list"}
+                            path={"flows/flow-list"}
                             element={<FlowListPage/>}
                         />
                         <Route

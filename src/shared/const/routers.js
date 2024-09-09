@@ -40,7 +40,8 @@ export const getCapitalInside = (id) => `capital/capitalBoxProfile/${id}`
 
 
 
-export const getCreateBranch = (id) => `createBranch/${id}`
+export const getCreateBranch = (id) => `crea
+teBranch/${id}`
 export const getCreateSystem = (id) => `createSystem/${id}`
 export const getCreateLocation = (id) => `createLocation/${id}`
 export const getCreateEducation = (id) => `createEducation/${id}`

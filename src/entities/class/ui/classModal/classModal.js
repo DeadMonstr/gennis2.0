@@ -9,7 +9,11 @@ import {useEffect, useState} from "react";
 import {HexColorPicker} from "react-colorful";
 import {AnimatedMulti} from "features/workerSelect";
 import {value} from "lodash/seq";
-import {useParams} from "react-router";
+
+import {classItem, updateClassItem} from "entities/class/model/thunk/classThunk";
+
+import {useHttp} from "shared/api/base";
+import {useDispatch} from "react-redux";
 
 export const ClassModal = ({
 
@@ -20,66 +24,73 @@ export const ClassModal = ({
                                setAddClass,
                                addClass,
                                createClass,
-                               register,
-                               handleSubmit,
                                editClass,
                                setEditClass,
-                               changeInfo,
                                edit,
-                               setSelectedSubject,
+                               changedItem,
+                               // setSelectedSubject,
                                selectedClass,
-                               onDeleteSub
+                               onDeleteSub,
                            }) => {
 
 
-    // const [subject, setSubject] = useState([])
-    //
-    // const [selected, setSelected] = useState([])
-    // const [deletedId, setDeletedId] = useState(0)
+    const [selectedSubject, setSelectedSubject] = useState([])
 
-    const option = selectOptions?.map(item => ({
-        value: item.id,
-        label: item.name
-    }))
-    // useEffect(() => {
-    //     setSubject(selectOptions)
-    // }, [])
 
-    // useEffect(() => {
-    //     if (deletedId !== 0) {
-    //         setSubject(subject => {
-    //             return subject.map(item => {
-    //                 if (item.id === +deletedId) {
-    //                     return {...item, disabled: false}
-    //                 }
-    //                 return item
-    //             })
-    //         })
-    //
-    //         setSelectedSubject(selectedSubject.filter(item => item.id !== +deletedId))
-    //         setSelected(selectedSubject.filter(item => item.id !== +deletedId))
-    //     }
-    // }, [deletedId])
-    //
-    // console.log(subject, "subject")
-    // console.log(selectedSubject, "selectedSubject")
-    // console.log(deletedId , "deletedId")
-    // console.log(selected , "selected")
+    const {register, handleSubmit, setValue} = useForm()
+    const {request} = useHttp()
+    const dispatch = useDispatch()
 
-    // const onChangeSelect = (id) => {
-    //     const filteredSubjects = subject.filter(item => item.id === +id)
-    //     setSubject(
-    //         subject.map(item => {
-    //             if (item.id === +id) {
-    //                 return {...item, disabled: true}
-    //             }
-    //             return item
-    //         })
-    //     )
-    //     setSelectedSubject(arr => [...arr, ...filteredSubjects])
-    //     setSelected(arr => [...arr, ...filteredSubjects])
-    //
-    // }
+    const changeInfo = (data) => {
+
+
+        const res = {
+            subjects: selectedSubject.map(item => (
+                // name: item.label,
+                item.value
+            )),
+            ...data
+        }
+        const idClass = editClass
+
+        setValue("curriculum_hours", "")
+        setValue("price", "")
+        dispatch(updateClassItem({idClass, res}))
+        setEditClass(!editClass)
+        dispatch(classItem(1))
+
+    }
+
+
+
+
+    const [optionsSubject, setOptionsSubject] = useState([])
+
+
+    useEffect(() => {
+        if (changedItem?.id) {
+            console.log(changedItem)
+            setSelectedSubject(changedItem.subjects.map(item => ({
+                value: item.id,
+                label: item.name
+            })))
+            setValue("curriculum_hours", changedItem.curriculum_hours)
+            setValue("price", changedItem.price)
+
+        }
+    }, [changedItem?.id])
+
+    useEffect(() => {
+        if (selectOptions?.length)
+            setOptionsSubject(selectOptions?.map(item => ({
+                value: item.id,
+                label: item.name
+            })))
+
+    }, [selectOptions])
+
+
+
 
 
     return (
@@ -94,28 +105,39 @@ export const ClassModal = ({
                 </div>
             </Modal>
 
-            <Modal active={editClass} setActive={setEditClass}>
-                <h2>Ma’lumotlarni o’zgartirish</h2>
+
+            <Modal active={addClass} setActive={setAddClass}>
+                <h2>Sinf turi yaratish </h2>
                 <div>
-                    <Form extraClassname={cls.extraClassForm} onSubmit={handleSubmit(changeInfo)} typeSubmit={""}>
+                    <Form extraClassname={cls.extraClassForm} onSubmit={handleSubmit(createClass)}>
+                        <Input placeholder={"sinf nomi"} name={"name"} register={register}/>
+                    </Form>
+                </div>
+            </Modal>
+
+            <Modal active={editClass} setActive={setEditClass}>
+                <h2>Ma’lumotlarni o’zgartirish </h2>
+                <div>
+                    <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>
                         <Input name={"curriculum_hours"} register={register} type={"number"}
                                placeholder={"darslar soati"}/>
                         <Input name={"price"} register={register} type={"number"} placeholder={"narxi"}/>
+                        {/*<Select onChangeOption={onChangeSelect} options={subject}/>*/}
 
-                        <div style={{alignSelf: "flex-start"}}>
-                            <h2 className={cls.selectBoxHeader}>Sinfning fanlari</h2>
-                            <div className={cls.selectBoxMain}>
-                                {selectedClass?.subjects?.map(subject => (
-                                    <div className={cls.selectBox} key={subject.id}><i
-
-                                        onClick={() => onDeleteSub(subject.id)}
-                                        className={"fa fa-times"}/> {subject.name} </div>
-                                ))}
-                            </div>
+                        <div className={cls.selectBox}>
+                            <AnimatedMulti extraClass={cls.select} value={selectedSubject} options={optionsSubject}
+                                           onChange={setSelectedSubject}/>
                         </div>
-                        <AnimatedMulti extraClass={cls.select} options={option} onChange={setSelectedSubject}/>
-                        <Button>Tastiqlash</Button>
+                        {/*{options?.map(item => (*/}
+                        {/*    item.subjects.map(itemSubject => (*/}
+                        {/*        itemSubject.name*/}
+                        {/*    ))*/}
+                        {/*))}*/}
+                        <Button>
+                            Tastiqlash
+                        </Button>
                     </Form>
+
                 </div>
             </Modal>
             {/*<Modal active={addClass} setActive={setAddClass}>*/}

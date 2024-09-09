@@ -1,4 +1,3 @@
-import {getUserBranchId} from "entities/profile/userProfile";
 import {getCurseLevel} from "entities/students/model/studentsSlice";
 import {Table} from "shared/ui/table";
 import cls from "pages/flowsPage/ui/flowsPage.module.sass";
@@ -16,7 +15,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 
 
-export const Flows = ({currentTableData, teacherData, loading, levelData, getLevelData, setActive}) => {
+export const Flows = ({currentTableData, teacherData, loading, levelData, getLevelData, setActive,branchId}) => {
 
     const navigate = useNavigate()
 
@@ -27,7 +26,7 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
     } = useForm()
     const [activeFlow, setActiveFlow] = useState(false)
     const [addFlow, setAddFlow] = useState(false)
-    const branchId = useSelector(getUserBranchId)
+
     const [selectedSubjects, setSelectedSubjects] = useState([])
     const dispatch = useDispatch()
     const {request} = useHttp()

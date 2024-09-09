@@ -31,12 +31,12 @@ const themeSwitcherSlice = createSlice({
 
         onChangeSystem: (state,action) => {
 
-            const filtered = state.systems.filter(item => item.type === action.payload)[0]
+            const filtered = state.systems.filter(item => item.name === action.payload)[0]
 
             localStorage.setItem("selectedSystem", JSON.stringify(filtered))
             state.system =  {
                 id: filtered.id,
-                type: action.payload
+                name: action.payload
             }
 
 
@@ -62,6 +62,11 @@ const themeSwitcherSlice = createSlice({
                         id: action.payload[0].id,
                         name: action.payload[0].name
                     }))
+                } else {
+                    state.system = {
+                        id: localSystem.id,
+                        name: localSystem.name
+                    }
                 }
 
 

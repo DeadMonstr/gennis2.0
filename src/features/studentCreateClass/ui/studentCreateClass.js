@@ -17,7 +17,8 @@ export const StudentCreateClass = memo((props) => {
     const {
         active,
         setActive,
-        data
+        data,
+        deactiveModal
     } = props
 
     const {request} = useHttp()
@@ -34,7 +35,6 @@ export const StudentCreateClass = memo((props) => {
         }
         request(`${API_URL}Group/groups/create/`, "POST", JSON.stringify(res), headers())
             .then(res => {
-                console.log(res, "res classAdd")
                 dispatch(onAddAlertOptions({
                     type: "success",
                     status: true,
@@ -42,6 +42,7 @@ export const StudentCreateClass = memo((props) => {
                 }))
                 dispatch(fetchOnlyNewStudentsData({userBranchId: id}))
                 setActive(false)
+                deactiveModal(false)
                 // setCreateStatus(true)
             })
     }

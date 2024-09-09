@@ -20,6 +20,7 @@ import {Input} from "shared/ui/input";
 import {fetchTeachersData, getTeachers} from "entities/teachers";
 import {useForm} from "react-hook-form";
 import {getFlowsLoading} from "entities/flows/model/selector/flowsSelector";
+import {getBranch} from "features/branchSwitcher";
 
 
 export const FlowsPage = () => {
@@ -35,9 +36,10 @@ export const FlowsPage = () => {
     const dispatch = useDispatch()
     const flows = useSelector(getFlows)
     const flowsLoading = useSelector(getFlowsLoading)
-    const userBranchId = useSelector(getUserBranchId)
+    const userBranchId = useSelector(getBranch)
     const teachers = useSelector(getTeachers)
     const level = useSelector(getCurseLevelData)
+
 
     const [active, setActive] = useState(false)
 
@@ -77,12 +79,13 @@ export const FlowsPage = () => {
         <div className={cls.flow}>
             <div className={cls.flow__header}>
 
-                <div className={cls.flow__location}>
-                    <Select/>
-                </div>
+                {/*<div className={cls.flow__location}>*/}
+                {/*    <Select/>*/}
+                {/*</div>*/}
 
             </div>
             <Flows
+                branchId={userBranchId.id}
                 currentTableData={currentTableData}
                 loading={flowsLoading}
                 teacherData={teachers}
@@ -100,10 +103,10 @@ export const FlowsPage = () => {
                     setCurrentPage(page)
                 }}
                 type={"custom"}/>
-            <FlowAddForm
-                active={active}
-                setActive={setActive}
-            />
+            {/*<FlowAddForm*/}
+            {/*    active={active}*/}
+            {/*    setActive={setActive}*/}
+            {/*/>*/}
         </div>
     )
 }
