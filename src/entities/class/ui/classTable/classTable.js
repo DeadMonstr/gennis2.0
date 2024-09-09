@@ -7,6 +7,8 @@ import {API_URL, headers, useHttp} from "../../../../shared/api/base";
 import {useDispatch} from "react-redux";
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 import {classItem, updateClassItem} from "../../model/thunk/classThunk";
+import {data} from "../../../calendar";
+import {onDeleteSubject} from "../../model/slice/classSlice";
 
 
 export const ClassTable = ({edit, classType, active, selectOptions, id}) => {
@@ -16,8 +18,15 @@ export const ClassTable = ({edit, classType, active, selectOptions, id}) => {
     const {request} = useHttp()
     const dispatch = useDispatch()
     const [selectedSubject, setSelectedSubject] = useState([])
+    const [selectedClass, setSelectedClass] = useState(null);
 
 
+    useEffect(() => {
+        if (editClass) {
+            const selected = classType.find(item => item.id === editClass);
+            setSelectedClass(selected);
+        }
+    }, [editClass, classType]);
     const onChangeClass = (data) => {
 
 
@@ -35,6 +44,13 @@ export const ClassTable = ({edit, classType, active, selectOptions, id}) => {
         dispatch(updateClassItem({idClass, res}))
         setEditClass(!editClass)
         dispatch(classItem(1))
+
+    }
+
+    const onDeleteSub = (id) => {
+
+        dispatch(onDeleteSubject(id))
+        console.log(id, "id")
 
     }
 
@@ -132,7 +148,8 @@ export const ClassTable = ({edit, classType, active, selectOptions, id}) => {
                             </div>
                             <i
                                 onClick={() => {
-                                    setEditClass(item.id)
+                                    setEditClass(item.id);
+                                    setSelectedClass(item);
                                 }}
                                 className={"fa fa-pen"}
                             />
@@ -165,11 +182,21 @@ export const ClassTable = ({edit, classType, active, selectOptions, id}) => {
                     </tbody>
                 </Table> : null}
 
-
-            <ClassModal selectedSubject={selectedSubject} setSelectedSubject={setSelectedSubject}
-                        changeInfo={onChangeClass} selectOptions={selectOptions} extraClassForm={cls.extraClassForm}
-                        extraClassSelect={cls.select} extraClassBtn={cls.btn} editClass={editClass}
-                        setEditClass={setEditClass} register={register} handleSubmit={handleSubmit}/>
+            <ClassModal
+                selectedClass={selectedClass}  // Pass selected class
+                selectedSubject={selectedSubject}
+                setSelectedSubject={setSelectedSubject}
+                changeInfo={onChangeClass}
+                selectOptions={selectOptions}
+                extraClassForm={cls.extraClassForm}
+                extraClassSelect={cls.select}
+                extraClassBtn={cls.btn}
+                editClass={editClass}
+                setEditClass={setEditClass}
+                register={register}
+                handleSubmit={handleSubmit}
+                onDeleteSub={onDeleteSub}
+            />
         </div>
     )
 }
