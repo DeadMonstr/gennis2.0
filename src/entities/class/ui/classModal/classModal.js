@@ -41,7 +41,6 @@ export const ClassModal = ({
     const {register, handleSubmit, setValue} = useForm()
     const {request} = useHttp()
     const dispatch = useDispatch()
-    const branchId =
 
     const changeInfo = (data) => {
 

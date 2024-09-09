@@ -1,10 +1,11 @@
 import cls from "./classFilter.module.sass"
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import classNames from "classnames";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {useDispatch, useSelector} from "react-redux";
 import {classItem} from "../../model/thunk/classThunk";
 import {classItems} from "../../model/selector/classSelector";
+import {useParams} from "react-router";
 
 // const data = [
 //     {
@@ -37,9 +38,16 @@ export const ClassFilter = ({classesType, active, setActive, edit, setEdit}) => 
     const {request} = useHttp()
     const className = useSelector(classItems)
     const dispatch = useDispatch()
-    const onClick = (id) => {
-        dispatch(classItem(id))
-    }
+
+    const {"*": id} = useParams()
+
+
+    const userBranchId = id
+    const onClick = useCallback((id) => {
+        dispatch(classItem({branchId: userBranchId, id: id}))
+
+    }, [userBranchId])
+
     function compareById(a, b) {
         return a.id - b.id;
     }
