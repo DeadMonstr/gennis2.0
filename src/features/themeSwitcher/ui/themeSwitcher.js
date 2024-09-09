@@ -11,7 +11,7 @@ import {getSystem, getSystems} from "../modal/selector/themeSwitcherSystems";
 export const ThemeSwitcher = () => {
 
     const {toggleTheme, theme} = useTheme()
-    const dispatch= useDispatch()
+    const dispatch = useDispatch()
     const currentTheme = localStorage.getItem("theme")
 
     const system = useSelector(getSystem)
@@ -24,7 +24,7 @@ export const ThemeSwitcher = () => {
 
     useEffect(() => {
         dispatch(fetchThemeSwitcherSystemsThunk())
-    },[])
+    }, [])
 
 
     const onClick = (status) => {
@@ -35,24 +35,20 @@ export const ThemeSwitcher = () => {
     }
 
     useEffect(() => {
-        const localSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
-        if (!localSystem && !localSystem?.id) {
-            toggleTheme(system.name === "center" ? "app_school_theme" : "app_center_theme")
-        }
+        setActive(system.name === "center")
+        setActiveType(system?.name)
+        toggleTheme(system.name === "center" ? "app_school_theme" : "app_center_theme")
     }, [system?.name])
 
 
-    useEffect(() => {
-        const localSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
-        if (localSystem && localSystem?.id && !isLocal && systems.length) {
-            toggleTheme(localSystem.name === "center" ? "app_school_theme" : "app_center_theme")
-            setIsLocal(true)
-            setActive(localSystem.name === "center")
-            dispatch(onChangeSystem(localSystem.name))
-        }
-    },[isLocal,systems])
-
-
+    // useEffect(() => {
+    //     const localSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
+    //     if (localSystem && localSystem?.id && !isLocal && systems.length) {
+    //         toggleTheme(localSystem.name === "center" ? "app_school_theme" : "app_center_theme")
+    //         setIsLocal(true)
+    //         setActive(localSystem.name === "center")
+    //     }
+    // },[isLocal,systems.length])
 
 
     if (systems.length < 2) return

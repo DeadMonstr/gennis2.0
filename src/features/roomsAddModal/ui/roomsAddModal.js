@@ -10,23 +10,16 @@ import {addRoom} from "pages/roomsPage/model/roomsAddSlice";
 import {getBranchThunk, getLocations} from "entities/editCreates";
 import {Select} from "shared/ui/select";
 import {value} from "lodash/seq";
-import {fetchRoomsData} from "../../../entities/rooms";
+import {fetchRoomsData} from "entities/rooms";
 import {onAddAlertOptions} from "../../alert/model/slice/alertSlice";
 
-export const RoomModal = ({isOpen, onClose}) => {
+export const RoomModal = ({isOpen, onClose,branch}) => {
     const [groupName, setGroupName] = useState('');
     const [seatCount, setSeatCount] = useState('');
     const [electronicBoard, setElectronicBoard] = useState(false);
-    const [branch, setBranch] = useState(1);
     const dispatch = useDispatch();
     const getBranches = useSelector(getLocations)
     const {"*": id} = useParams()
-
-    const onSelectBranch = (value) => {
-        setBranch(value);
-        const selectedBranchData = getBranches.find(branch => branch.id === Number(value))
-        const branchId = selectedBranchData.id
-    }
 
     const handleAddRoom = () => {
         const newRoom = {
@@ -86,14 +79,14 @@ export const RoomModal = ({isOpen, onClose}) => {
                             onChange={(e) => setElectronicBoard(e.target.checked)}
                         />
                     </div>
-                    <div>
-                        <Select
-                            title={"Branch"}
-                            extraClass={cls.filter__select}
-                            options={getBranches}
-                            onChangeOption={onSelectBranch}
-                        />
-                    </div>
+                    {/*<div>*/}
+                    {/*    <Select*/}
+                    {/*        title={"Branch"}*/}
+                    {/*        extraClass={cls.filter__select}*/}
+                    {/*        options={getBranches}*/}
+                    {/*        onChangeOption={onSelectBranch}*/}
+                    {/*    />*/}
+                    {/*</div>*/}
                     <div className={cls.filter__switch}>
                         <Button onClick={handleAddRoom}>Add room</Button>
                         <Button onClick={onClose} extraClass={cls.buttonStyle}>Close</Button>

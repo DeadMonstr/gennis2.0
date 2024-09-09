@@ -83,3 +83,12 @@ export const updateColor = createAsyncThunk(
     }
 )
 
+
+
+export const fetchClassSubjects = createAsyncThunk(
+    "classSlice/fetchClassSubjects",
+    async () => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Subjects/subject/`, "GET", null, headers())
+    }
+)

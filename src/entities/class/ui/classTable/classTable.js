@@ -3,40 +3,24 @@ import {ClassModal} from "../classModal/classModal";
 import React, {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import cls from "./classTable.module.sass"
-import {API_URL, headers, useHttp} from "../../../../shared/api/base";
-import {useDispatch} from "react-redux";
-import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
-import {classItem, updateClassItem} from "../../model/thunk/classThunk";
+import {API_URL, headers, useHttp} from "shared/api/base";
+import {useDispatch, useSelector} from "react-redux";
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
+import {fetchClassSubjects} from "../../model/thunk/classThunk";
+import {classSubjects} from "../../model/selector/classSelector";
 
 
-export const ClassTable = ({edit, classType, active, selectOptions, id}) => {
+export const ClassTable = ({edit, classType, active, id}) => {
     const [editClass, setEditClass] = useState(false)
     const [clickedCheckbox, setClickedCheckbox] = useState([])
-    const {register, handleSubmit, setValue} = useForm()
+
+    const [changedItem,setChangedItem] = useState({})
+
+    const subjects = useSelector(classSubjects)
+
     const {request} = useHttp()
     const dispatch = useDispatch()
-    const [selectedSubject, setSelectedSubject] = useState([])
 
-
-    const onChangeClass = (data) => {
-
-
-        const res = {
-            subjects: selectedSubject.map(item => (
-                // name: item.label,
-                item.value
-            )),
-            ...data
-        }
-        const idClass = editClass
-
-        setValue("curriculum_hours", "")
-        setValue("price", "")
-        dispatch(updateClassItem({idClass, res}))
-        setEditClass(!editClass)
-        dispatch(classItem(1))
-
-    }
 
     const onChange = (e) => {
 
@@ -97,11 +81,15 @@ export const ClassTable = ({edit, classType, active, selectOptions, id}) => {
                         (
                             <div className={cls.items}>
                                 <div className={cls.checkbox__checked}>
-                                    <i className={`fa fa-check ${cls.check}`}/>
+                                    <i  onClick={() => onChange({id: item.id})} className={`fa fa-check ${cls.check}`}/>
 
                                 </div>
                                 <i
-                                    onClick={() => setEditClass(item.id)}
+                                    onClick={() => {
+                                        setEditClass(item.id)
+                                        setChangedItem(item)
+
+                                    }}
                                     className={"fa fa-pen"}
                                 />
                             </div>
@@ -122,7 +110,7 @@ export const ClassTable = ({edit, classType, active, selectOptions, id}) => {
                                 }
                             >
                                 {clickedCheckbox.includes(item?.id) ? (
-                                    <i className={`fa fa-check ${cls.check}`}/>
+                                    <i  onClick={() => onChange({id: item.id})} className={`fa fa-check ${cls.check}`}/>
                                 ) : (
                                     <i
                                         className={`fa fa-minus ${cls.minus}`}
@@ -133,6 +121,7 @@ export const ClassTable = ({edit, classType, active, selectOptions, id}) => {
                             <i
                                 onClick={() => {
                                     setEditClass(item.id)
+                                    setChangedItem(item)
                                 }}
                                 className={"fa fa-pen"}
                             />
@@ -166,10 +155,15 @@ export const ClassTable = ({edit, classType, active, selectOptions, id}) => {
                 </Table> : null}
 
 
-            <ClassModal selectedSubject={selectedSubject} setSelectedSubject={setSelectedSubject}
-                        changeInfo={onChangeClass} selectOptions={selectOptions} extraClassForm={cls.extraClassForm}
-                        extraClassSelect={cls.select} extraClassBtn={cls.btn} editClass={editClass}
-                        setEditClass={setEditClass} register={register} handleSubmit={handleSubmit}/>
+            <ClassModal
+                changedItem={changedItem}
+                selectOptions={subjects}
+                extraClassForm={cls.extraClassForm}
+                extraClassSelect={cls.select}
+                extraClassBtn={cls.btn}
+                editClass={editClass}
+                setEditClass={setEditClass}
+            />
         </div>
     )
 }

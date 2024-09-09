@@ -168,7 +168,7 @@ export const StudentsPage = () => {
             color: data?.color ?? selectColor,
             branch: userBranchId,
             create_type: "school",
-            system: userSystem.name
+            system: userSystem.id
         }
         setData(res)
         dispatch(fetchOnlyNewStudentsData({id:userBranchId, number: data?.class_number}))
@@ -381,6 +381,7 @@ export const StudentsPage = () => {
                 active={activeModal === "add"}
             />
             <StudentCreateClass
+                deactiveModal={setActiveModal}
                 setActive={setActive}
                 active={active === "post"}
                 data={data}

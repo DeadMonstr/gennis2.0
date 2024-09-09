@@ -5,13 +5,15 @@ import {getUserBranchId} from "entities/profile/userProfile";
 import {useDispatch, useSelector} from "react-redux";
 import {flowListThunk, getFlowList} from "entities/flows";
 import {useParams} from "react-router-dom";
-import {useHttp} from "shared/api/base";
+import {API_URL, headers, useHttp} from "shared/api/base";
 import {Button} from "shared/ui/button";
 import cls from "./FlowListPage.module.sass";
 import {Input} from "shared/ui/input";
 import {Pagination} from "features/pagination";
 import {getSearchValue} from "features/searchInput";
 import {useEffect, useMemo, useState} from "react";
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
+import {useNavigate} from "react-router";
 
 export const FlowListPage = () => {
 
@@ -19,6 +21,7 @@ export const FlowListPage = () => {
     const dispatch = useDispatch()
     const {"*": id} = useParams()
     const userBranchId = id
+    const navigate= useNavigate()
 
     useEffect(() => {
         if (userBranchId) {
@@ -154,9 +157,25 @@ export const FlowListPage = () => {
         const res = localStorage.getItem("flowData")
         const data = {
             ...JSON.parse(res),
-            students: idArr
+            students: idArr,
+            classes: []
         }
-        dispatch(flowListThunk({data}))
+
+
+        // dispatch(flowListThunk({data}))
+
+
+        request(`${API_URL}Flow/flow-list-create/` , "POST" , JSON.stringify(data) , headers())
+            .then(res => {
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    msg: res.msg,
+                    status: true
+                }))
+            })
+            .then(() => {
+                navigate(-2)
+            })
     }
 
     const renderFlowList = () => {
@@ -179,9 +198,6 @@ export const FlowListPage = () => {
                 <div>
                     <span>No</span>
                     <span>Sinf Raqami</span>
-                </div>
-                <div>
-                    <Input type={"checkbox"}/>
                 </div>
             </div>
             <div className={cls.table}>

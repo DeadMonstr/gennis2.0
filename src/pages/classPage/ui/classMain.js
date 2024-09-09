@@ -6,7 +6,7 @@ import {ClassPage} from "./classPage";
 import {ClassAddColorPage} from "./classAddColorPage";
 import {useDispatch, useSelector} from "react-redux";
 import {classData, classItemLoading, colorItem} from "../../../entities/class/model/selector/classSelector";
-import {getClassTypes, getColor} from "../../../entities/class/model/thunk/classThunk";
+import {fetchClassSubjects, getClassTypes, getColor} from "../../../entities/class/model/thunk/classThunk";
 
 
 export const ClassMain = () => {
@@ -23,6 +23,7 @@ export const ClassMain = () => {
     useEffect(() => {
         dispatch(getClassTypes())
         dispatch(getColor())
+        dispatch(fetchClassSubjects())
     }, [])
     const [activeSwitch, setActiveSwitch] = useState(true)
 
