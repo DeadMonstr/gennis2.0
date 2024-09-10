@@ -38,7 +38,7 @@ import {
     getTeacherSalary, getInkasatsiya,
     getGroupHistory,
     getRouteClassProfile, getCapitalCategoryProfile,
-     getRouteCalendar,
+    getRouteCalendar, getEmployerCategory,
 
 } from "shared/const/routers";
 
@@ -57,7 +57,7 @@ import {StudentsDirectorPage} from "pages/studentsPage";
 import {VacancyPage} from "pages/vacancyPage";
 import {VacancyWorkPage} from "pages/vacancyWorkPage";
 import {TimeTableListPage} from "pages/timeTableListPage";
-import {EmployerPage} from "pages/employeesPage";
+import {EmployerCategoryPage, EmployerPage} from "pages/employeesPage";
 import {FlowsPage} from "pages/flowsPage";
 import {RoomsProfilePage} from "pages/roomsProiflePage";
 import {ClassPage} from "pages/classPage";
@@ -174,6 +174,13 @@ export const routersConfig = [
         roles: [],
         path: getEmployerPage(":id"),
         element: <EmployerPage/>,
+    },
+
+    {
+        name: "Employer Category",
+        path: getEmployerCategory(),
+        element: <EmployerCategoryPage/>
+
     },
     {
         name: "Flows",

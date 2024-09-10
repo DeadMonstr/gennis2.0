@@ -20,6 +20,8 @@ export const getProfile = (id) => `students/profile/${id}`;
 export const getRouteTimePage = (id) => `timeList/${id}`
 export const getRouteUserProfile = (id) => `profile/${id}`
 export const getEmployerPage = (id) => `employer/*`
+
+export const getEmployerCategory = () => `employer/category/*`
 export const getEmployerProfile = (id) => `employer/employerProfile/${id}`;
 
 export const getTeacherSalary = (id) => `teacher/teacherProfile/:id/teacherSalaryPage/${id}`
@@ -38,10 +40,7 @@ export const getCapital = (id) => `capital/*`
 export const getCapitalInside = (id) => `capital/capitalBoxProfile/${id}`
 
 
-
-
-export const getCreateBranch = (id) => `crea
-teBranch/${id}`
+export const getCreateBranch = (id) => `createBranch/${id}`
 export const getCreateSystem = (id) => `createSystem/${id}`
 export const getCreateLocation = (id) => `createLocation/${id}`
 export const getCreateEducation = (id) => `createEducation/${id}`

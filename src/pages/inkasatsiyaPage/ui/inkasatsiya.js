@@ -42,8 +42,6 @@ export const Inkasatsiya = () => {
 
     const branchId = useSelector(getBranch)
 
-
-    console.log(branchId.id, "bra1nch id")
     useEffect(() => {
 
         if (to.length && ot.length && radio > 0) {

@@ -21,7 +21,7 @@ import {timeTableListSlice} from "pages/timeTableListPage";
 import {homeSlice} from "entities/home";
 import {teachers} from "entities/teachers"
 import {newStudents} from "../entities/students";
-import {employers} from "../entities/employer";
+import {employerCategorySlice, employers} from "../entities/employer";
 import {roomsSlice} from "../entities/rooms";
 import {roomssSlice} from "../features/roomsEditModal";
 import {capital} from "../entities/capital";
@@ -162,7 +162,8 @@ export const store = configureStore({
         branchSwitcherSlice,
         multiPageSlice,
         flowsProfileSlice,
-        classSlice
+        classSlice,
+        employerCategorySlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

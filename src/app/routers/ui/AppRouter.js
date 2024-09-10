@@ -91,7 +91,7 @@ export const AppRouter = () => {
                             element={<ClassMolassesPage/>}
                         />
                         <Route
-                            path={"flows/:id/flowsProfile/:id"}
+                            path={"flows/flowsProfile/:id"}
                             element={<FlowProfileNavigators/>}
                         />
 

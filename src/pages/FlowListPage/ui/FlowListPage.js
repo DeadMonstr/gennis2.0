@@ -52,9 +52,9 @@ export const FlowListPage = () => {
 
     const onChangeAll = (classId) => {
         setCurrentTableData(prev => prev.map(item => {
-            if (item.id === +classId) {
+            if (item?.id === +classId) {
                 if (item.isCheck) {
-                    setSelectedId(prev => prev.filter(i => i.classId !== item.id))
+                    setSelectedId(prev => prev.filter(i => i?.classId !== item?.id))
                     return {
                         isCheck: false,
                         id: item.id,
@@ -68,18 +68,18 @@ export const FlowListPage = () => {
                     }
                 } else {
                     setSelectedId(prev => {
-                        if (prev.filter(i => i.classId === item.id)[0]) {
+                        if (prev.filter(i => i?.classId === item?.id)[0]) {
                             return [
-                                ...prev.filter(i => i.classId !== item.id),
+                                ...prev.filter(i => i?.classId !== item.id),
                                 {
-                                    classId: item.id,
+                                    classId: item?.id,
                                     students: item?.students?.map(item => item?.id)
                                 }
                             ]
                         } else return [
                             ...prev,
                             {
-                                classId: item.id,
+                                classId: item?.id,
                                 students: item?.students?.map(item => item?.id)
                             }
                         ]
@@ -104,10 +104,10 @@ export const FlowListPage = () => {
         setSelectedId(prev => {
             if (prev.filter(i => i?.classId === +classId)[0]) {
                 return prev.map(i => {
-                    if (i.classId === classId) {
+                    if (i?.classId === classId) {
                         return {
-                            classId: i.classId,
-                            students: i.students.includes(+studentId)
+                            classId: i?.classId,
+                            students: i?.students.includes(+studentId)
                                 ?
                                 i.students.filter(item => item !== +studentId)
                                 :
