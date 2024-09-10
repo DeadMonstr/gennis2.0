@@ -16,7 +16,7 @@ export const SchoolTeacherGroups = memo(() => {
     return (
         <div className={cls.groupsContainer}>
             {
-                schoolTeacherGroups.length === 0 ?
+                schoolTeacherGroups?.length === 0 ?
                     <EditableCard>
                         <h1>O'qituvchida guruhi yo'q</h1>
                     </EditableCard>
