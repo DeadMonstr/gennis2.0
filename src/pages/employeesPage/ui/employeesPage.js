@@ -12,6 +12,8 @@ import {Pagination} from "features/pagination";
 import {MultiPage} from "../../../widgets/multiPage/ui/MultiPage/MultiPage";
 import {useParams} from "react-router-dom";
 import {getBranch} from "features/branchSwitcher";
+import {useNavigate} from "react-router";
+import {EmployerCategoryPage} from "./employerCategory/employerCategoryPage";
 
 export const EmployerPage = () => {
 
