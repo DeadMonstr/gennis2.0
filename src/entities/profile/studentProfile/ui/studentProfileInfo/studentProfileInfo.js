@@ -5,7 +5,7 @@ import defaultUserImg from "shared/assets/images/user_image.png";
 import {API_URL_DOC} from "../../../../../shared/api/base";
 import {Button} from "../../../../../shared/ui/button";
 
-export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal, content, contract}) => {
+export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal, content, contract , system}) => {
     const number = content?.debt
     const formattedNumber = number?.toLocaleString();
     return (
@@ -54,6 +54,7 @@ export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal
                     <i className="fas fa-plus"/>
                 </div>
             </div>
+
             <EditableCard
                 extraClass={cls.info__balance}
                 onClick={() => setActive("balance")}
@@ -62,7 +63,7 @@ export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal
                 <p>Summa</p>
                 <div className={cls.info__money}>
                     <h2 onClick={() => setActive("balanceIn")}>$ {formattedNumber}</h2>
-                    <p>$ 390.000</p>
+                    {system.name === "school" ? <p>$ 390.000</p> : null}
                 </div>
             </EditableCard>
         </EditableCard>
