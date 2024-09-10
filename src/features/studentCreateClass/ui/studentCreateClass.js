@@ -20,11 +20,11 @@ export const StudentCreateClass = memo((props) => {
         active,
         setActive,
         data,
-        deactiveModal
+        deactiveModal,
+        branch
     } = props
 
     const {request} = useHttp()
-    const {"*": id} = useParams()
     const dispatch = useDispatch()
     const studentsList = useSelector(getFilteredClassStudents);
     const loading = useSelector(getFilteredLoading);
@@ -43,12 +43,13 @@ export const StudentCreateClass = memo((props) => {
                     status: true,
                     msg: `Sinf yaratildi`
                 }))
-                dispatch(fetchOnlyNewStudentsData({userBranchId: id}))
+                dispatch(fetchOnlyNewStudentsData({userBranchId: branch}))
                 setActive(false)
                 deactiveModal(false)
                 // setCreateStatus(true)
             })
     }
+
 
     const renderStudents = () => {
         if (loading === "loading" || loading === "idle") return <DefaultPageLoader/>;
@@ -59,7 +60,7 @@ export const StudentCreateClass = memo((props) => {
                 <td>{item.user?.surname} {item.user?.name}</td>
                 <td>{item.user?.age}</td>
                 <td>{item.user?.language?.name}</td>
-                <td>{item?.class_number}</td>
+                <td>{item?.class_number?.number}</td>
                 <td>{item.user?.registered_date}</td>
                 <td>
                     <Input

@@ -84,7 +84,7 @@ const AccountingPageMain = () => {
     const setPage = useCallback((e) => {
         dispatch(onChangeAccountingPage({value: e}))
         navigate(`${e}`, {relative: "path"})
-    }, [])
+    }, [navigate])
 
     const formatSalary = (payment_sum) => {
         return Number(payment_sum).toLocaleString();

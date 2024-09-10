@@ -56,10 +56,6 @@ export const GiveTeacherSalaryPage = () => {
             <div className={cls.mainContainer_buttonPanelBox}>
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}>
                 </div>
-                <Select
-                    onChangeOption={() => onChangeOption}
-                    options={branches}
-                />
             </div>
             <div className={cls.mainContainer_filterPanelBox}>
                 <div></div>

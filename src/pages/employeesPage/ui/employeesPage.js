@@ -11,12 +11,11 @@ import {getSearchValue} from "features/searchInput";
 import {Pagination} from "features/pagination";
 import {MultiPage} from "../../../widgets/multiPage/ui/MultiPage/MultiPage";
 import {useParams} from "react-router-dom";
-import {useNavigate} from "react-router";
-import {EmployerCategoryPage} from "./employerCategory/employerCategoryPage";
+import {getBranch} from "features/branchSwitcher";
 
 export const EmployerPage = () => {
 
-    const branch = localStorage.getItem("selectedBranch")
+    const branch = useSelector(getBranch)
     const dispatch = useDispatch()
     const employersData = useSelector(getEmployersData)
     const [activeFilter, setActiveModal] = useState(false)
@@ -30,8 +29,9 @@ export const EmployerPage = () => {
     const userBranchId = id
 
     useEffect(() => {
-        dispatch(fetchEmployersData({branch}))
-    }, [branch])
+        if (branch?.id)
+        dispatch(fetchEmployersData({branch: branch?.id}))
+    }, [branch?.id])
 
     const searchedEmployers = useMemo(() => {
         const filteredRooms = employersData?.filter(item => !item.deleted) || [];

@@ -3,7 +3,7 @@ import {createRoutesFromElements, Navigate, Route, RouterProvider} from "react-r
 import {createBrowserRouter} from "react-router-dom";
 import classNames from "classnames";
 import {RequireAuth} from "./RequireAuth";
-import {routersConfig} from "../config/routersConfig";
+import {routersConfigList} from "app/routers/config/routersConfigList";
 import {Layout} from "app/layout";
 import {Login} from "pages/loginPage";
 import {StudentProfilePage} from "pages/profilePage";
@@ -28,6 +28,9 @@ import {FlowListPage} from "pages/FlowListPage";
 import {ClassAddColorPage, ClassPage} from "pages/classPage";
 // import {T} from "pages/timeTable";
 import {CalendarPage} from "pages/calendarPage";
+import RequireBranch from "app/routers/ui/RequireBranch";
+import RequireHeader from "app/routers/ui/RequireHeader";
+import {routersConfigProfile} from "app/routers/config/routerConfigProfiles";
 
 
 export const AppRouter = () => {
@@ -37,6 +40,7 @@ export const AppRouter = () => {
     const router = createBrowserRouter(
         createRoutesFromElements(
             <>
+
                 <Route
                     path={"/"}
                     element={<HomePage/>}
@@ -53,33 +57,47 @@ export const AppRouter = () => {
 
                 <Route element={<RequireAuth/>}>
 
-                    <Route path={"platform/*"} element={<Layout/>}>
+                    <Route path={"platform/*"} element={<Layout />}>
 
-                        {
-                            routersConfig.map(item =>
-                                <Route
-                                    key={item.name}
-                                    path={item.path}
-                                    element={
-                                        // <Route element={}>
-                                        //     {item.element}
-                                        // </Route>
-                                        // <RequireAuth>
-                                        //     {item.element}
-                                        // </RequireAuth>
-                                        item.element
-                                    }
-                                />
-                            )
-                        }
+                        <Route element={<RequireHeader/>}>
+                            {
+                                routersConfigList.map((item, index) =>
+                                    <Route
+                                        key={index}
+                                        path={item.path}
 
-                    {/*<RequireAuth>*/}
-                    {/*    <Route path={"students/:id/createGroup"} element={<CreateGroup/>} />*/}
-                    {/*</RequireAuth>*/}
-                    <Route
-                        path={"profile"}
-                        element={<StudentProfilePage/>}
-                    />
+                                        element={
+                                            <RequireBranch>
+                                                {item.element}
+                                            </RequireBranch>
+                                        }
+                                    />
+                                )
+                            }
+                        </Route>
+
+                        <Route element={<RequireHeader header={false}/>}>
+                            {
+                                routersConfigProfile.map((item, index) =>
+                                    <Route
+                                        key={index}
+                                        path={item.path}
+                                        element={
+                                            <RequireBranch>
+                                                {item.element}
+                                            </RequireBranch>
+                                        }
+                                    />
+                                )
+                            }
+                        </Route>
+
+
+
+                        <Route
+                            path={"profile"}
+                            element={<StudentProfilePage/>}
+                        />
 
                         {/*<Route*/}
                         {/*    path={"classProfile"}*/}
@@ -112,7 +130,7 @@ export const AppRouter = () => {
 
                         <Route
                             index
-                            element={<Navigate to={"home"}/>}
+                            element={<Navigate to={"register/*"}/>}
                         />
                     </Route>
                 </Route>

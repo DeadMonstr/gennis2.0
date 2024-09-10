@@ -4,7 +4,6 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {classItemLoading, classItems} from "entities/class/model/selector/classSelector";
 import {useHttp} from "shared/api/base";
-import {fetchClassSubjects} from "entities/class/model/thunk/classThunk";
 import {DefaultPageLoader} from "../../../shared/ui/defaultLoader";
 
 export const ClassPage = ({setEdit, edit, activeEdit, setActiveEdit, activeMenu, setActiveMenu, classes}) => {

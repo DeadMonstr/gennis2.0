@@ -395,6 +395,7 @@ export const StudentsPage = () => {
                 setActive={setActive}
                 active={active === "post"}
                 data={data}
+                branch={userBranchId}
             />
         </MultiPage>
         // </>
