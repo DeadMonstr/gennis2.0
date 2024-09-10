@@ -6,7 +6,7 @@ import cls from "shared/ui/mainSwitch/mainSwitch.module.sass";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchThemeSwitcherSystemsThunk} from "features/themeSwitcher/modal/thunk/themeSwitcherThunk";
 import {onChangeSystem} from "../modal/slice/themeSwitcherSlice";
-import {getSystem, getSystems} from "../modal/selector/themeSwitcherSystems";
+import {getSystem, getSystemInited, getSystems} from "../modal/selector/themeSwitcherSystems";
 
 export const ThemeSwitcher = () => {
 
@@ -16,6 +16,7 @@ export const ThemeSwitcher = () => {
 
     const system = useSelector(getSystem)
     const systems = useSelector(getSystems)
+    const inited = useSelector(getSystemInited)
 
     const [active, setActive] = useState(true)
     const [activeType, setActiveType] = useState("center")
@@ -23,8 +24,10 @@ export const ThemeSwitcher = () => {
 
 
     useEffect(() => {
-        dispatch(fetchThemeSwitcherSystemsThunk())
-    }, [])
+        if (!inited) {
+            dispatch(fetchThemeSwitcherSystemsThunk())
+        }
+    }, [inited])
 
 
     const onClick = (status) => {
@@ -50,8 +53,8 @@ export const ThemeSwitcher = () => {
     //     }
     // },[isLocal,systems.length])
 
-
-    if (systems.length < 2) return
+    console.log(systems,"systemsssssssssssssssssss")
+    if (systems?.length < 2) return
 
     return (
         <MainSwitch

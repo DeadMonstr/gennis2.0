@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Outlet, useLocation, useNavigate, useParams} from "react-router";
+import {Outlet, useLocation, useMatches, useNavigate, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 
 import {Menubar} from "widgets/menuBar";
@@ -24,6 +24,12 @@ export const Layout = () => {
     const refreshLoading = useSelector(getUserRefreshLoading)
 
 
+
+
+
+
+
+
     const dispatch = useDispatch()
 
     // const system = useSelector(getSystem)
@@ -40,7 +46,8 @@ export const Layout = () => {
             <Alert/>
             <Menubar/>
             <main className={cls.main}>
-                <Header/>
+
+
 
                 <div className={cls.main__content}>
                     <Outlet/>
@@ -49,3 +56,6 @@ export const Layout = () => {
         </>
     );
 };
+
+
+
