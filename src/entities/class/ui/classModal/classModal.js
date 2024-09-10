@@ -240,7 +240,7 @@ export const ColorModal = ({
                                 <div style={{fontSize: "2rem"}}>{color}</div>
                                 {/*<div className={cls.modalBox} style={{background: color}}></div>*/}
                             </div>
-                            <HexColorPicker style={{width: "30rem", height: "15rem"}} color={color}
+                            <HexColorPicker  style={{width: "30rem", height: "15rem"}} color={color}
                                             onChange={setColor}/>
                             {/*<div style={{display: "flex" , flexWrap: "wrap",width: "30rem"}}>*/}
                             {/*    /!*<Button onClick={() => setColor("#c6ad23")}>Choose gold</Button>*!/*/}
