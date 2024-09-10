@@ -137,7 +137,7 @@ export const studentPaymenListDelete = createAsyncThunk(
     'studentPaymentSlice/studentPaymenListDelete',
     async (id) => {
         const {request} = useHttp();
-        const response = await request(`${API_URL}Students/student_payment_delete_for_month/${id}/`, "DELETE", null, headers())
+        const response = await request(`${API_URL}Students/student_payment_delete/${id}/`, "DELETE", null, headers())
         return response
     }
 )
