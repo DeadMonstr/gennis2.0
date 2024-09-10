@@ -137,7 +137,7 @@ export const studentPaymenListDelete = createAsyncThunk(
     'studentPaymentSlice/studentPaymenListDelete',
     async (id) => {
         const {request} = useHttp();
-        const response = await request(`${API_URL}Students/student_payment_delete/${id}/`, "DELETE", null, headers())
+        const response = await request(`${API_URL}Students/student_payment_delete_for_month/${id}/`, "DELETE", null, headers())
         return response
     }
 )
@@ -190,6 +190,7 @@ export const getMonthDataThunk = createAsyncThunk(
     'studentPaymentSlice/getMonthData',
     async (id) => {
         const {request} = useHttp();
-        return await request(`${API_URL}Students/student_payment_month/${id}/`, "GET", null, headers())
+        return await request(`${API_URL}Students/student_payment_month/${id}/1/`, "GET", null, headers())
     }
 )
+

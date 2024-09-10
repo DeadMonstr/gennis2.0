@@ -80,7 +80,7 @@ export const GroupCreateForm = memo((props) => {
                     <h2>Gruppa ochish</h2>
                 </div>
                 <div className={cls.createGroupForm}>
-                    <Form onSubmit={handleSubmit(onSubmit)}>
+                    <Form>
                         <Input
                             extraClassName={cls.createGroupFormItem}
                             placeholder={"Gruppa nomi"}
