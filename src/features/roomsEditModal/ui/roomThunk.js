@@ -13,6 +13,6 @@ export const editRoomThunk = createAsyncThunk(
     'roomsEditModal/editRoom',
     async ({ id, updatedRoom }) => {
         const { request } = useHttp();
-        return await request(`${API_URL}Rooms/rooms_update/${id}/`, 'PATCH', JSON.stringify(updatedRoom));
+        return await request(`${API_URL}Rooms/rooms_update/${id}/`, 'PATCH', JSON.stringify(updatedRoom), headers());
     }
 );

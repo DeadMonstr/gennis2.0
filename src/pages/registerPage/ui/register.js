@@ -292,12 +292,14 @@ export const Register = () => {
                         <Select
                             extraClass={cls.extraClasses}
                             name={"language"}
+                            title={"Til"}
                             onChangeOption={setSelectedLang}
                             options={languages.map(lang => ({id: lang.id, name: lang.name}))}
                         />
                         <Select
                             extraClass={cls.extraClasses}
                             name={"subject_id"}
+                            title={"Fan"}
                             onChangeOption={setSelectedSubject}
                             options={subjects.map(subj => ({id: subj.id, name: subj.name}))}
                         />

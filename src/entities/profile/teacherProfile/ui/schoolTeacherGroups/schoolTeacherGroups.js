@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, {memo, useEffect, useState} from 'react';
 
 import { EditableCard } from "shared/ui/editableCard";
 import {groups} from "entities/profile/teacherProfile";
@@ -7,12 +7,41 @@ import cls from "./schoolTeacherGroups.module.sass";
 import cardBg from 'shared/assets/icons/card-bg.svg';
 import groupImage from 'shared/assets/images/group-img.svg';
 import {Table} from "../../../../../shared/ui/table";
-import {useSelector} from "react-redux";
-import {getTeacherId} from "../../../../teachers";
+import {useDispatch, useSelector} from "react-redux";
+import {getTeacherId, getTeacherGroups} from "../../../../teachers";
+import {useNavigate} from "react-router";
+import {Link} from "../../../../../shared/ui/link";
+import {teacherGroupThunk} from "../../../../teachers/model/teacherGroupThunk";
 
 export const SchoolTeacherGroups = memo(() => {
     const teacherData = useSelector(getTeacherId)
+    const dispatch = useDispatch()
+    const groups = useSelector(getTeacherGroups)
+    const pathArray = window.location.pathname.split('/');
+    const teacherID = pathArray[pathArray.length - 1];
+
+    useEffect(() => {
+        dispatch(teacherGroupThunk(teacherID))
+    }, [])
+
+
     const schoolTeacherGroups = teacherData?.group
+    const navigate = useNavigate()
+
+    const renderStudents = () => {
+        return groups?.map((item, index) => {
+            return (
+                <tr>
+                    <td>{index + 1}</td>
+                    <td>{item?.name} {item?.surname}</td>
+                    <td>{item?.parent_number}</td>
+                    <td>{item?.number}</td>
+                    <td>{item?.debt}</td>
+                </tr>
+            )
+        })
+    }
+
     return (
         <div className={cls.groupsContainer}>
             {
@@ -22,15 +51,16 @@ export const SchoolTeacherGroups = memo(() => {
                     </EditableCard>
                     :
                 schoolTeacherGroups?.map((item, index) => (
-                    <EditableCard extraClass={cls.classProfile} titleType="">
-                        <h1>Sinfi</h1>
+                        <EditableCard onClick={() => navigate(`/platform/groups/groupInfo/${item?.id}`)} extraClass={cls.classProfile}>
+                            <h1>Sinfi</h1>
 
-                        <div className={cls.classColor}></div>
+                            <div className={cls.classColor}></div>
 
-                        <h1>{item?.name}</h1>
+                            <h1>{item?.name}</h1>
 
-                        <h2 className={cls.info__role}>Green</h2>
-                    </EditableCard>
+                            <h2 className={cls.info__role}>Green</h2>
+                        </EditableCard>
+
                 ))
             }
 
@@ -48,97 +78,7 @@ export const SchoolTeacherGroups = memo(() => {
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Sardor Eshonov</td>
-                        <td>98565468</td>
-                        <td>88759848</td>
-                        <td>690000</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Sardor Eshonov</td>
-                        <td>98565468</td>
-                        <td>88759848</td>
-                        <td>690000</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Sardor Eshonov</td>
-                        <td>98565468</td>
-                        <td>88759848</td>
-                        <td>690000</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Sardor Eshonov</td>
-                        <td>98565468</td>
-                        <td>88759848</td>
-                        <td>690000</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Sardor Eshonov</td>
-                        <td>98565468</td>
-                        <td>88759848</td>
-                        <td>690000</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Sardor Eshonov</td>
-                        <td>98565468</td>
-                        <td>88759848</td>
-                        <td>690000</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Sardor Eshonov</td>
-                        <td>98565468</td>
-                        <td>88759848</td>
-                        <td>690000</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Sardor Eshonov</td>
-                        <td>98565468</td>
-                        <td>88759848</td>
-                        <td>690000</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Sardor Eshonov</td>
-                        <td>98565468</td>
-                        <td>88759848</td>
-                        <td>690000</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Sardor Eshonov</td>
-                        <td>98565468</td>
-                        <td>88759848</td>
-                        <td>690000</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Sardor Eshonov</td>
-                        <td>98565468</td>
-                        <td>88759848</td>
-                        <td>690000</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Sardor Eshonov</td>
-                        <td>98565468</td>
-                        <td>88759848</td>
-                        <td>690000</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Sardor Eshonov</td>
-                        <td>98565468</td>
-                        <td>88759848</td>
-                        <td>690000</td>
-                    </tr>
+                    {renderStudents()}
                     </tbody>
                 </Table>
             </EditableCard>
