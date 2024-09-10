@@ -11,7 +11,7 @@ import {getLoading} from "../../../../teachers/model/selector/teacherIdSelector"
 import {TeacherEdit} from "features/profileEdits/teacherEdit";
 import {DefaultLoader} from "shared/ui/defaultLoader";
 
-export const TeacherProfileInfo = memo(({active,setActive,setActiveModal, newImage}) => {
+export const TeacherProfileInfo = memo(({active, setActive, setActiveModal, newImage, system}) => {
 
     const loading = useSelector(getLoading)
     const dispatch = useDispatch()
@@ -51,13 +51,13 @@ export const TeacherProfileInfo = memo(({active,setActive,setActiveModal, newIma
             title={<i className="fas fa-edit"/>}
         >
             {loading ? <DefaultLoader/>
-            :
+                :
                 <>
                     <div className={cls.info__avatar}>
                         <img
                             onClick={() => setActiveModal("changeImage")}
                             className={cls.info__image}
-                            src={ teacherId.user?.profile_img ?? defaultUserImg}
+                            src={teacherId.user?.profile_img ?? defaultUserImg}
                             alt=""
                         />
                         <h1>{teacherId.user?.username}</h1>
@@ -83,10 +83,14 @@ export const TeacherProfileInfo = memo(({active,setActive,setActiveModal, newIma
                 >
                     <h2>Balans</h2>
                     <p>Summa</p>
-                    <div className={cls.info__money}>
-                        <h2>$ 570.000</h2>
-                        <p>$ 390.000</p>
-                    </div>
+                    {system.type === "school" ?
+                        <div className={cls.info__money}>
+                            <h2>$ 570.000</h2>
+                            <p>$ 390.000</p>
+                        </div>
+                        :
+                        null
+                    }
                 </EditableCard>
             </Link>
             <TeacherEdit
