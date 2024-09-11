@@ -59,7 +59,7 @@ export const StudentCreateClass = memo((props) => {
                 <td>{item.user?.surname} {item.user?.name}</td>
                 <td>{item.user?.age}</td>
                 <td>{item.user?.language?.name}</td>
-                <td>{item?.class_number}</td>
+                <td>{item?.class_number?.number}</td>
                 <td>{item.user?.registered_date}</td>
                 <td>
                     <Input

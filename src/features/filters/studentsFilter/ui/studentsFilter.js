@@ -46,7 +46,7 @@ export const StudentsFilter = React.memo(({ active, setActive, activePage, setDa
     const onSelectSubject = (value) => {
         setSelectedSubject(value);
         const selectedSubjectData = subjects.find(subj => subj.id === Number(value));
-        const subjectId = selectedSubjectData.id;
+        const subjectId = value !== "all" ? selectedSubjectData.id : "all";
         {
             activePage === "studying_students"
                 ?
@@ -60,7 +60,7 @@ export const StudentsFilter = React.memo(({ active, setActive, activePage, setDa
     const onSelectLanguage = (value) => {
         setSelectedLanguage(value);
         const selectedLanguageData = languages.find(lang => lang.id === Number(value));
-        const languageId = selectedLanguageData.id
+        const languageId = value !== "all" ? selectedLanguageData.id : "all"
         {
             activePage === "studying_students"
             ?
@@ -114,7 +114,7 @@ export const StudentsFilter = React.memo(({ active, setActive, activePage, setDa
                     {
                         activePage !== "deleted" ? <Select
                             title={"Fan"}
-                            options={subjects}
+                            options={[{name: "Hamma", id: "all"},...subjects]}
                             extraClass={cls.filter__select}
                             onChangeOption={(value) => onSelectSubject(value)}
                         /> : null
@@ -148,7 +148,7 @@ export const StudentsFilter = React.memo(({ active, setActive, activePage, setDa
                     </div>
                     <Select
                         title={"Til"}
-                        options={languages}
+                        options={[{name: "Hamma", id: "all"},...languages]}
                         extraClass={cls.filter__select}
                         onChangeOption={(value) => onSelectLanguage(value)}
                     />
@@ -156,10 +156,10 @@ export const StudentsFilter = React.memo(({ active, setActive, activePage, setDa
                         <p>O’chirilgan</p>
                         <Switch disabled />
                     </div>
-                    <div className={cls.filter__switch}>
-                        <p>Filterlangan</p>
-                        <Switch />
-                    </div>
+                    {/*<div className={cls.filter__switch}>*/}
+                    {/*    <p>Filterlangan</p>*/}
+                    {/*    <Switch />*/}
+                    {/*</div>*/}
                 </div>
             </div>
         </Modal>

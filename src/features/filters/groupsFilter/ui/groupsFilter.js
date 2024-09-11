@@ -53,13 +53,13 @@ export const GroupsFilter = React.memo(({active, setActive}) => {
     const onSelectSubject = (value) => {
         setSelectedSubject(value);
         const selectedSubjectData = subjects.find(subj => subj.id === Number(value));
-        const subjectId = selectedSubjectData.id;
+        const subjectId = value !== "all" ? selectedSubjectData.id : "all";
         dispatch(fetchGroupsDataWithFilter({
             subjId: subjectId
         }))
     }
-    console.log(getTeacher, "teacherss")
-    console.log(selectedTeacher, "seelectw")
+    // console.log(getTeacher, "teacherss")
+    // console.log(selectedTeacher, "seelectw")
     return (
         <Modal
             active={active}
@@ -71,19 +71,19 @@ export const GroupsFilter = React.memo(({active, setActive}) => {
 
                     <Select
                         title={"Teacher"}
-                        options={getTeacher}
+                        options={[{name: "Hamma", id: "all"},...getTeacher]}
                         extraClass={cls.filter__select}
                         onChangeOption={onSelectTeacher}
                     />
                     <Select
                         title={"Fan"}
-                        options={subjects}
+                        options={[{name: "Hamma", id: "all"},...subjects]}
                         extraClass={cls.filter__select}
                         onChangeOption={(value) => onSelectSubject(value)}
                     />
                     <Select
                         title={"Kurs turi"}
-                        options={types}
+                        options={[{name: "Hamma", id: "all"},...types]}
                         extraClass={cls.filter__select}
                         onChangeOption={onSelectType}
                     />

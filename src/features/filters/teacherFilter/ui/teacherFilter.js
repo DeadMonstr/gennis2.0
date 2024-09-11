@@ -29,7 +29,7 @@ export const TeacherFilter = React.memo(({active, setActive, activePage , setAct
         setActive(false)
 
     }
-    console.log(subjects, "fan")
+    // console.log(subjects, "fan")
 
     const onSelectLanguage = (value) => {
         setSelectedLanguage(value);
@@ -74,7 +74,7 @@ export const TeacherFilter = React.memo(({active, setActive, activePage , setAct
 
                     <Select
                         title={"Fan"}
-                        options={subjects}
+                        options={[{name: "Hamma", id: "all"},...subjects]}
                         extraClass={cls.filter__select}
                         onChangeOption={(value) => onSelectSubject(value)}
                     />
@@ -100,7 +100,7 @@ export const TeacherFilter = React.memo(({active, setActive, activePage , setAct
 
                     <Select
                         title={"Til"}
-                        options={languages}
+                        options={[{name: "Hamma", id: "all"},...languages]}
                         extraClass={cls.filter__select}
                         onChangeOption={(value) => onSelectLanguage(value)}
                     />
