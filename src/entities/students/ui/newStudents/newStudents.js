@@ -28,7 +28,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
         //         <DefaultPageLoader/>
         //     )
         // }
-           return studentToRender?.map((item,i) => {
+           return currentTableData?.map((item,i) => {
                return (
                    <tr
                    >
