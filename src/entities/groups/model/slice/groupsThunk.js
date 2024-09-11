@@ -13,9 +13,10 @@ export const fetchGroupsData = createAsyncThunk(
 
 export const fetchGroupsDataWithFilter = createAsyncThunk(
     "groupsSlice/fetchGroupsDataWithFilter",
-    async({userBranchId, teacherId, subjId, typeId, fromId, untilId})  =>{
+    async({userBranchId, teacherId, subjId, typeId})  =>{
+        console.log("ready")
         const {request} = useHttp()
-        return await request(`${API_URL}Group/groups/create/?branch=${userBranchId}&teacher=${teacherId}&subject=${subjId}&course_types=${typeId}&created_date=${fromId}-${untilId}`, "GET", null, headers())
+        return await request(`${API_URL}Group/groups/create/?branch=${userBranchId}&teacher=${teacherId}&subject=${subjId}&course_types=${typeId}`, "GET", null, headers())
     }
 )
 
