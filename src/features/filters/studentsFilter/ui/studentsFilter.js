@@ -128,6 +128,7 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
                             options={[{name: "Hamma", id: "all"}, ...subjects]}
                             extraClass={cls.filter__select}
                             onChangeOption={(value) => onSelectSubject(value)}
+                            defaultValue={"all"}
                         /> : null
                     }
 
@@ -136,6 +137,7 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
                             title={"Sinf"}
                             extraClass={cls.filter__select}
                             onChangeOption={setSelectedClass}
+                            defaultValue={"all"}
                         /> : null
                     }
 
@@ -162,6 +164,7 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
                         options={[{name: "Hamma", id: "all"}, ...languages]}
                         extraClass={cls.filter__select}
                         onChangeOption={(value) => onSelectLanguage(value)}
+                        defaultValue={"all"}
                     />
                     <div className={cls.filter__switch}>
                         <p>O’chirilgan</p>

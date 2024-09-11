@@ -95,6 +95,7 @@ export const TeacherFilter = React.memo(({active, setActive, setActiveSwitch, ac
                         options={[{name: "Hamma", id: "all"}, ...subjects]}
                         extraClass={cls.filter__select}
                         onChangeOption={(value) => onSelectSubject(value)}
+                        defaultValue={"all"}
                     />
 
                     <div className={cls.filter__age}>
@@ -121,6 +122,7 @@ export const TeacherFilter = React.memo(({active, setActive, setActiveSwitch, ac
                         options={[{name: "Hamma", id: "all"}, ...languages]}
                         extraClass={cls.filter__select}
                         onChangeOption={(value) => onSelectLanguage(value)}
+                        defaultValue={"all"}
                     />
 
 

@@ -102,21 +102,21 @@ export const GroupsFilter = React.memo((props) => {
                         options={[{name: "Hamma", id: "all"}, ...getTeacher]}
                         extraClass={cls.filter__select}
                         onChangeOption={onSelectTeacher}
-                        defaultValue={selectedTeacher}
+                        defaultValue={"all"}
                     />
                     <Select
                         title={"Fan"}
                         options={[{name: "Hamma", id: "all"}, ...subjects]}
                         extraClass={cls.filter__select}
                         onChangeOption={(value) => onSelectSubject(value)}
-                        defaultValue={selectedSubject}
+                        defaultValue={"all"}
                     />
                     <Select
                         title={"Kurs turi"}
                         options={[{name: "Hamma", id: "all"}, ...types]}
                         extraClass={cls.filter__select}
                         onChangeOption={onSelectType}
-                        defaultValue={selectedType}
+                        defaultValue={"all"}
                     />
 
 

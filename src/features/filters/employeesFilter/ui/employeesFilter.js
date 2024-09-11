@@ -105,7 +105,7 @@ export const EmployeesFilter = React.memo(({active, setActive, activeSwitch, set
                         options={[{name: "Hamma", id: "all"}, ...jobOptions]}
                         extraClass={cls.filter__select}
                         onChangeOption={onSelectJob}
-                        defaultValue={selectedJob}
+                        defaultValue={"all"}
                     />
 
                     <div className={cls.filter__age}>
@@ -132,7 +132,7 @@ export const EmployeesFilter = React.memo(({active, setActive, activeSwitch, set
                         options={[{name: "Hamma", id: "all"}, ...languages]}
                         extraClass={cls.filter__select}
                         onChangeOption={onSelectLanguage}
-                        defaultValue={selectedLanguage}
+                        defaultValue={"all"}
                     />
 
                     <div className={cls.filter__switch}>
