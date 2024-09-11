@@ -28,9 +28,8 @@ export const ClassModal = ({
                                setEditClass,
                                edit,
                                changedItem,
-                               // setSelectedSubject,
-                               selectedClass,
-                               onDeleteSub,
+                               onDelete,
+
                            }) => {
 
 
@@ -43,6 +42,7 @@ export const ClassModal = ({
 
     const changeInfo = (data) => {
 
+        const id = edit.id
 
         const res = {
             subjects: selectedSubject.map(item => (
@@ -57,11 +57,9 @@ export const ClassModal = ({
         setValue("price", "")
         dispatch(updateClassItem({idClass, res}))
         setEditClass(!editClass)
-        dispatch(classItem(1))
+        dispatch(classItem(id))
 
     }
-
-
 
 
     const [optionsSubject, setOptionsSubject] = useState([])
@@ -69,7 +67,7 @@ export const ClassModal = ({
 
     useEffect(() => {
         if (changedItem?.id) {
-            console.log(changedItem)
+
             setSelectedSubject(changedItem.subjects.map(item => ({
                 value: item.id,
                 label: item.name
@@ -88,19 +86,23 @@ export const ClassModal = ({
             })))
 
     }, [selectOptions])
-
-
-
-
-
     return (
         <>
             <Modal active={activeEdit} setActive={setActiveEdit}>
 
                 <div className={cls.modalHeader}> {edit?.name} <span>ni o'zgartirish</span></div>
                 <div>
-                    <Form extraClassname={cls.extraClassForm} onSubmit={handleSubmit(onClick)}>
-                        <Input name={"name"} register={register} placeholder={"nomi"}/>
+                    <Form typeSubmit={""} extraClassname={cls.extraClassForm}>
+                        <Input name={"name"} register={register}/>
+                        <div className={cls.modalBtn}>
+                            <Button onClick={handleSubmit(onClick)}>
+                                Tastiqlash
+                            </Button>
+                            <Button onClick={handleSubmit(onDelete)} type={"danger"}>
+                                O'chirish
+                                <i className={"fa fa-trash"}/>
+                            </Button>
+                        </div>
                     </Form>
                 </div>
             </Modal>
@@ -221,10 +223,9 @@ export const ColorModal = ({
                                changeColor,
                                setColorChange,
                                colorChange,
-                               deleteColor
+                               deleteColor,
+                               edit
                            }) => {
-
-
     return (
         <>
             <Modal active={createColor} setActive={setCreateColor}>
@@ -233,11 +234,13 @@ export const ColorModal = ({
                     <Form extraClassname={cls.extraClassForm} onSubmit={handleSubmit(addColor)}>
                         <Input name={"name"} register={register}/>
                         <div className={cls.changeColorItem}>
+
                             <div className={cls.color}>
-                                <h2>Tanlangan rang :</h2>
-                                <div className={cls.modalBox} style={{background: color}}></div>
+                                <h2>Tanlangan rang : </h2>
+                                <div style={{fontSize: "2rem"}}>{color}</div>
+                                {/*<div className={cls.modalBox} style={{background: color}}></div>*/}
                             </div>
-                            <HexColorPicker style={{width: "22rem", height: "15rem"}} color={color}
+                            <HexColorPicker style={{width: "30rem", height: "15rem"}} color={color}
                                             onChange={setColor}/>
                             {/*<div style={{display: "flex" , flexWrap: "wrap",width: "30rem"}}>*/}
                             {/*    /!*<Button onClick={() => setColor("#c6ad23")}>Choose gold</Button>*!/*/}
@@ -258,11 +261,14 @@ export const ColorModal = ({
                     <Form extraClassname={cls.extraClassForm} typeSubmit={""}>
                         <Input name={"name"} register={register}/>
                         <div className={cls.changeColorItem}>
+
                             <div className={cls.color}>
                                 <h2>Tanlangan rang :</h2>
-                                <div className={cls.modalBox} style={{background: colorChange}}></div>
+                                <div style={{fontSize: "2rem"}}>{colorChange ? colorChange : edit?.value}</div>
+                                {/*<div className={cls.modalBox} style={{background: colorChange}}></div>*/}
                             </div>
-                            <HexColorPicker style={{width: "22rem", height: "15rem"}} color={colorChange}
+                            {/*<Input/>*/}
+                            <HexColorPicker style={{width: "30rem", height: "15rem"}} color={edit?.value}
                                             onChange={setColorChange}/>
                             {/*<div style={{display: "flex" , flexWrap: "wrap",width: "30rem"}}>*/}
                             {/*    /!*<Button onClick={() => setColor("#c6ad23")}>Choose gold</Button>*!/*/}
@@ -272,7 +278,8 @@ export const ColorModal = ({
                         </div>
                         <div style={{display: "flex", gap: "2rem"}}>
                             <Button onClick={handleSubmit(changeColor)}>Rangni o'zgartirish</Button>
-                            <Button onClick={handleSubmit(deleteColor)} type={"danger"}>Rangni O'chirish</Button>
+                            {edit?.status ? <Button onClick={handleSubmit(deleteColor)} type={"danger"}>Rangni
+                                O'chirish</Button> : null}
                         </div>
                     </Form>
 

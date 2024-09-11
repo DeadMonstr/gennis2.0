@@ -2,6 +2,7 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {API_URL, headers, useHttp} from "../../../../shared/api/base";
 import {useDispatch} from "react-redux";
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
+import {branch} from "../../../../features/workerSelect";
 
 
 export const createClassType = createAsyncThunk(
@@ -15,9 +16,9 @@ export const createClassType = createAsyncThunk(
 
 export const getClassTypes = createAsyncThunk(
     "classSlice/getClassTypes",
-    async () => {
+    async (userBranchId) => {
         const {request} = useHttp()
-        return await request(`${API_URL}Class/class_types`, "GET", null, headers())
+        return await request(`${API_URL}Class/class_types/?branch=${userBranchId}`, "GET", null, headers())
     }
 )
 
@@ -33,7 +34,7 @@ export const updateClassType = createAsyncThunk(
 
 export const getClassTypeNumber = createAsyncThunk(
     "classSlice/getClassTypeNumber",
-    async () => {
+    async (branchId) => {
         const {request} = useHttp()
         return await request(`${API_URL}Class/class_number_list/`, "GET", null, headers())
     }
@@ -42,9 +43,9 @@ export const getClassTypeNumber = createAsyncThunk(
 
 export const classItem = createAsyncThunk(
     "classSlice/classItem",
-    async (id) => {
+    async ({id , branchId}) => {
         const {request} = useHttp()
-        return await request(`${API_URL}Class/class_number/${id}/`, "GET", null, headers())
+        return await request(`${API_URL}Class/class_number/${id}/?branch=${branchId}`, "GET", null, headers())
     }
 )
 
@@ -57,6 +58,7 @@ export const updateClassItem = createAsyncThunk(
 
     }
 )
+
 
 export const createColor = createAsyncThunk(
     "classSlice/createColor",

@@ -15,7 +15,6 @@ export const VacancyWorkList = ({ currentTableData, currentPage, PageSize, editM
     const workerID = useSelector(getWorkerId)
     const userName = workerID.job?.map(item => item.group.name)
     const loadingDef = useSelector(getWorkerLoading)
-    console.log(userName, "name")
 
     useEffect(() => {
         if (id)
@@ -26,7 +25,6 @@ export const VacancyWorkList = ({ currentTableData, currentPage, PageSize, editM
     }, [dispatch, id])
 
 
-    // console.log(workerID, 'worker id')
 
     const handleSelectAll = (e) => {
         if (e.target.checked) {

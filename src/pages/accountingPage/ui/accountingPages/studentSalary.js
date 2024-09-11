@@ -39,7 +39,7 @@ export const StudentSalary = ({deleted, setDeleted}) => {
     const sum1 = studentData.reduce((a, c) => a + parseFloat(c.payment_sum || 0), 0);
 
     const onDelete = () => {
-        console.log("bosilvoti")
+
         const {id} = changingData
         request(`${API_URL}Students/student_payment_delete/${id}/`, "DELETE", JSON.stringify({id}), headers())
             .then(res => {

@@ -33,7 +33,7 @@ export const ProfileEmployerPage = () => {
 
     const onSubmitImage = (data) => {
         // formData.append("profile_img", data)
-        console.log(data, "file profile-page")
+
         dispatch(changeEmployerProfileImage({id: employerId.id, data}))
     }
 

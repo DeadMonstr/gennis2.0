@@ -24,10 +24,8 @@ export const BreadCrumbs = ({defaultLink}) => {
         // }
     }, [location, id])
 
-    console.log(location.pathname)
 
     // useEffect(() => {
-    //     console.log(true, 2)
     //     setCrumbsStory(
     //         arr => uniqueCrumbsStory[1] === crumbsData[1] ? [...arr, ...crumbsData] : crumbsData
     //     )

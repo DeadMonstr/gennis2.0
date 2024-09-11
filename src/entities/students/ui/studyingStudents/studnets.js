@@ -44,7 +44,6 @@ export const Students = ({ currentTableData }) => {
                     </tr>
                 )
 
-            // console.log(item.color, i)
             // return (
             //
             // )

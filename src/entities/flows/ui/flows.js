@@ -54,12 +54,10 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
     const renderFlowData = () => {
         return currentTableData?.map((item, i) => {
             return (
-                <tr>
+                <tr onClick={() => navigate(`./flowsProfile/${item?.id}`)}>
                     <td>{i + 1}</td>
                     <td>{item?.name}</td>
-                    <td
-                        onClick={() => navigate(`flowsProfile/${item?.id}`)}
-                    >
+                    <td>
                         {item?.subject?.name}
                         {
                             item?.level ? `/ ${item?.level?.name}` : null

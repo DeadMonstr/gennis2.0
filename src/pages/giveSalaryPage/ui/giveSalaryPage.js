@@ -35,7 +35,6 @@ export const GiveSalaryPage = () => {
     const employerSalaryPageId = pathSegments[salaryPageIdx];
     const {id} = useParams()
 
-    console.log(pathParts, "idddd")
     useEffect(() => {
         if(id)
         {
@@ -77,7 +76,7 @@ export const GiveSalaryPage = () => {
                     getSalaryLoading ? <DefaultLoader/>
                         :
                         <GiveSalaryList
-                            currentTableData={getSalaryGivesData?.usersalarylist}
+                            currentTableData={getSalaryGivesData}
                             currentPage={currentPage}
                             PageSize={PageSize}
                             user_id={Number(pathParts[1])}

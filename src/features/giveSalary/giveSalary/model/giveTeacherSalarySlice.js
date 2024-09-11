@@ -12,9 +12,7 @@ const giveTeacherSalarySlices = createSlice({
     initialState,
     reducers: {
         addSalary: (state, action) => {
-            console.log("Adding salary:", action.payload);
             state.salaries.push(action.payload);
-            console.log("Updated salaries:", state.salaries);
         },
     },
     extraReducers: builder => {
@@ -25,7 +23,6 @@ const giveTeacherSalarySlices = createSlice({
             .addCase(giveTeacherSalaryThunk.fulfilled, (state, action) => {
                 state.loading = false;
                 state.salaries.push(action.payload);
-                console.log("Thunk fulfilled. Updated salaries:", state.salaries);
             })
             .addCase(giveTeacherSalaryThunk.rejected, (state, action) => {
                 state.loading = false;

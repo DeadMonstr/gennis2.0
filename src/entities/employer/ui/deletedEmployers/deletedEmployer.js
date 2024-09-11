@@ -9,7 +9,6 @@ import React, {useState} from "react";
 export const DeletedEmployers = () => {
     const deletedEmployers = useSelector(getDeletedEmployersData)
 
-    console.log(deletedEmployers)
 
     const [clickedCheckbox, setClickedCheckbox] = useState([])
 

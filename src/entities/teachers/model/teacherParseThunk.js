@@ -13,7 +13,7 @@ export const editTeacherThunk = createAsyncThunk (
     "teacherEditSlice/editTeacherThunk",
     async ({id, updateTeacher}) => {
         const {request} = useHttp();
-        return await request(`${API_URL}Teachers/teachers/update/${id}/`, "PATCH", JSON.stringify(updateTeacher))
+        return await request(`${API_URL}Teachers/teachers/update/${id}/`, "PATCH", JSON.stringify(updateTeacher), headers())
     }
 )
 

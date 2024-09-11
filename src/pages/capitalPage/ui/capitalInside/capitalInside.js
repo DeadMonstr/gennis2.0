@@ -79,7 +79,6 @@ export const CapitalInside = memo(() => {
     const onDelete = () => {
         request(`${API_URL}Capital/capital_category/${id}/`, "DELETE", null, headers())
             .then(res => {
-                console.log(res)
                 // dispatch(onDeleteBranch({id: id}));
                 dispatch(onAddAlertOptions({
                     type: "success",

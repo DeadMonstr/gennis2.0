@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
     classItem,
-    createClassType, createColor, fetchClassSubjects,
+    createClassType, createColor, deleteTypes, fetchClassSubjects,
     getClassTypeNumber,
     getClassTypes,
     getColor, updateClassItem,
@@ -25,13 +25,20 @@ const classSlice = createSlice({
         onDelete: (state, action) => {
             state.color = state.color.filter(item => item.id !== action.payload.id)
         },
-        onDeleteSubject: (state, action) => {
-            state.classItems = state.classItems.map(itemDel => (
-                {
-
-                }
-            ))
+        onDeleteTypes: (state, action) => {
+            state.classData = state.classData.filter(item => item.id !== action.payload.id)
         },
+        onChangeClassStatus : (state , action) =>{
+            state.classItems = state.classItems.map(item => {
+                if (item.id === action.payload.id){
+                    return {
+                        ...item,
+                        status: !item.status
+                    }
+                }
+                return item
+            })
+        }
     },
     extraReducers: builder =>
         builder
@@ -103,7 +110,6 @@ const classSlice = createSlice({
                 state.loading = false
                 state.error = false
                 state.classItems = action.payload
-                console.log(action.payload, "classsdsad")
 
             })
             .addCase(classItem.rejected, state => {
@@ -119,16 +125,26 @@ const classSlice = createSlice({
             .addCase(updateClassItem.fulfilled, (state, action) => {
                 state.loading = false
                 state.error = false
-                state.classItems = [
-                    ...state.classItems.filter(item => item.id !== action.payload.id),
-                    action.payload
-                ]
+
+                state.classItems = state.classItems.map(item => {
+                    if (item.id === action.payload.id) {
+                        return {
+                            ...item,
+                            price : action.payload.price,
+                            curriculum_hours : action.payload.curriculum_hours,
+                            subjects: action.payload.subjects
+                        }
+                    }
+                    return item
+                })
 
             })
             .addCase(updateClassItem.rejected, state => {
                 state.loading = false
                 state.error = true
             })
+
+
 
 
             .addCase(createColor.pending, state => {
@@ -200,6 +216,6 @@ const classSlice = createSlice({
 
 })
 
-export const {onDelete, onDeleteSubject} = classSlice.actions
+export const {onDelete, onDeleteTypes,onChangeClassStatus} = classSlice.actions
 
 export default classSlice.reducer

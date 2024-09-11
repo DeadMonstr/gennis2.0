@@ -26,7 +26,7 @@ export const ChangeInfoForm = ({onSubmit, data, defaultValue, active, setActive,
     }, [data])
 
     useEffect(() => {
-        console.log(defaultValue, 'default ')
+
         // setValue("name", defaultValue?.name)
         // setValue("surname", defaultValue?.surname)
         // setValue("father_name", defaultValue?.father_name)

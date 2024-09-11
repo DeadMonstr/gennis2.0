@@ -25,8 +25,8 @@ import {MiniLoader} from "shared/ui/miniLoader";
 import {API_URL, useHttp, headers} from "shared/api/base";
 import {onAddAlertOptions} from "../../../features/alert/model/slice/alertSlice";
 import {getCategories, getLanguagesData, getSubjectsData} from "../model/registerSelector";
-import {Form} from "../../../shared/ui/form";
-import {branchQuery} from "shared/api/base";
+import {getSystems} from "../../../features/themeSwitcher";
+import {getSystemName} from "../../../entities/editCreates";
 
 const userstype = {
     types: [
@@ -57,12 +57,12 @@ export const Register = () => {
         setValue,
         reset
     } = useForm();
-    const {"*": id} = useParams()
+    const {idBranch: id} = useParams()
     const registerType = watch("registerType", "student");
     const username = watch("username", "");
     const {theme} = useTheme()
-
-    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))// changed
+    const getSystem = useSelector(getSystemName)
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
     const classNumbers = useSelector(getSchoolClassNumbers)
     const languages = useSelector(getLanguagesData);
     const branch = localStorage.getItem("selectedBranch")
@@ -84,22 +84,22 @@ export const Register = () => {
     const [isUsernameAvailable, setIsUsernameAvailable] = useState(true);
 
     useEffect(() => {
-        dispatch(fetchLanguages());
-        dispatch(fetchSubjects())
-        dispatch(getClassTypes())
-        dispatch(fetchCategories())
+        if (id) {
+            dispatch(fetchLanguages());
+            dispatch(fetchSubjects())
+            dispatch(getClassTypes(id))
+            dispatch(fetchCategories())
+            dispatch(fetchClassNumberList({branch:id}))
+        }
+
         setValue("password", 12345678)
-    }, []);
+    }, [id]);
 
     useEffect(() => {
         dispatch(fetchVacancyData())
     }, [])
 
-    useEffect(() => {
-        if (userSystem?.name === "school") {
-            dispatch(fetchClassNumberList())
-        }
-    }, [])
+
 
     useEffect(() => {
         if (username) {
@@ -191,7 +191,6 @@ export const Register = () => {
                     class_type: selectedClassType,
                     teacher_salary_type: selectedCategory
                 };
-
                 registerAction = registerTeacher({res, file: res?.user?.resume[0]})
             } else {
                 res = {
@@ -293,12 +292,14 @@ export const Register = () => {
                         <Select
                             extraClass={cls.extraClasses}
                             name={"language"}
+                            title={"Til"}
                             onChangeOption={setSelectedLang}
                             options={languages.map(lang => ({id: lang.id, name: lang.name}))}
                         />
                         <Select
                             extraClass={cls.extraClasses}
                             name={"subject_id"}
+                            title={"Fan"}
                             onChangeOption={setSelectedSubject}
                             options={subjects.map(subj => ({id: subj.id, name: subj.name}))}
                         />

@@ -66,7 +66,7 @@ export const StudentProfilePage = () => {
     }
 
     const onSubmitImage = (data) => {
-        console.log(data, "file profile-page")
+
         dispatch(changeStudentProfileImage({id: userData?.user?.id, data}))
     }
 
@@ -80,6 +80,7 @@ export const StudentProfilePage = () => {
                 active={active}
                 setActiveModal={setActiveModal}
                 data={userData?.user}
+                content={userData}
                 contract={userData}
                 newImage={newImage}
             />

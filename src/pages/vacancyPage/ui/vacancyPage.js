@@ -11,7 +11,8 @@ import {VacancyPageEdit} from "features/vacancyModals/vacancyPageEdit";
 import {VacancyAdd} from "entities/vacancy/ui/vacancyAdd";
 import {useDispatch, useSelector} from "react-redux";
 import {getVacancyJobs, fetchVacancyData} from "features/vacancyModals/vacancyPageAdd";
-import {getSearchValue} from "../../../features/searchInput";
+import {getSearchValue} from "features/searchInput";
+import {getSystems} from "features/themeSwitcher";
 
 
 export const VacancyPage = () => {
@@ -27,6 +28,8 @@ export const VacancyPage = () => {
     const dispatch = useDispatch()
     const data = useSelector(getVacancyJobs)
     const loading = useSelector(getVacancyLoading)
+    const systems = useSelector(getSystems)
+
     // const getVacancy = getVacancyData?.
 
 
@@ -47,7 +50,6 @@ export const VacancyPage = () => {
 
 
     useEffect(() => {
-        console.log("main")
         dispatch(fetchVacancyData())
     }, [])
 
@@ -64,6 +66,7 @@ export const VacancyPage = () => {
         );
         setModal(false);
     };
+
 
     const addVacancy = (newVacancy) => {
         setCurrentTableData(prevData => [...prevData, {id: Date.now(), ...newVacancy}]);
@@ -114,11 +117,13 @@ export const VacancyPage = () => {
                 modal={modal}
                 vacancy={currentEditingVacancy}
                 onSave={handleVacancyChange}
+                systems={systems}
             />
             <VacancyAdd
                 setActive={setModalActive}
                 active={modalActive}
                 addVacancy={addVacancy}
+                systems={systems}
             />
         </div>
     );

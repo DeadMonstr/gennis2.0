@@ -7,7 +7,7 @@ const initialState = {
     branches: [],
     branch: {},
 
-
+    isChanged: true,
     loading: false,
     error: null
 }

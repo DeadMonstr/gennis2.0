@@ -1,10 +1,14 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {API_URL, headers, useHttp} from "shared/api/base";
+import {getSystemInited} from "features/themeSwitcher/modal/selector/themeSwitcherSystems";
 
 export const fetchThemeSwitcherSystemsThunk = createAsyncThunk(
     'themeSwitcherSlice/fetchThemeSwitcherSystemsThunk',
-    async (selectedSystemIds, {rejectWithValue}) => {
+    async (selectedSystemIds, {rejectWithValue, getState}) => {
         const {request} = useHttp();
+
+
+
         try {
             const response = await request(
                 `${API_URL}Permissions/user_systems/`,
@@ -17,5 +21,6 @@ export const fetchThemeSwitcherSystemsThunk = createAsyncThunk(
         } catch (error) {
             return rejectWithValue(error.message);
         }
+
     }
 );

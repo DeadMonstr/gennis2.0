@@ -1,19 +1,17 @@
-import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import {ClassAddForm} from "features/classProfile";
 import {StudentCreateClass} from "features/studentCreateClass";
 import React, {memo, useEffect, useMemo, useState} from "react";
-import {user} from "entities/user";
+
 import {useDispatch, useSelector} from "react-redux";
 
 import {
-    GroupCreatePage,
     DeletedStudents,
     NewStudents,
     Students,
     fetchClassColors,
     fetchClassNumberList,
     getSchoolClassNumbers,
-    getSchoolClassColors, getStudentsWithBranch, StudentsListDirector
+    getSchoolClassColors,
 } from "entities/students";
 import {StudentsHeader} from "entities/students";
 import {StudentsFilter} from "features/filters/studentsFilter";
@@ -22,7 +20,6 @@ import {
     fetchOnlyStudyingStudentsData,
     fetchOnlyDeletedStudentsData,
     getNewStudentsData,
-    getNewStudentsLoading,
     getStudyingStudents,
     getOnlyDeletedStudents
 } from "entities/students";
@@ -39,23 +36,20 @@ import {fetchLanguages} from "pages/registerPage";
 import {
     getLoadingDeletedStudents,
     getLoadingNewStudents,
-    getLoadingStudents, getLoadingStudyingStudents,
-    getSchoolStudents
+    getLoadingStudyingStudents,
+
 } from "entities/students/model/selector/studentsSelector";
 import {createSchoolClass, fetchSchoolStudents, fetchStudentsByClass} from "entities/students/model/studentsThunk";
 import {Radio} from "shared/ui/radio";
 import {Input} from "shared/ui/input";
-import {getStudentsListDirector} from "../../model/selectors/studentsListDirector";
 import {useTheme} from "shared/lib/hooks/useTheme";
 import cls from "./students.module.sass"
 import {getSearchValue} from "features/searchInput";
-import {getUserBranchId, getUserSystemId} from "entities/profile/userProfile";
 import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
-import {getSelectedLocations} from "features/locations";
-import {getSelectedLocationsByIds} from "features/locations/model/selector/locationsSelector";
+
 import {useParams, useSearchParams} from "react-router-dom";
-import {getBranch} from "features/branchSwitcher";
-import {API_URL, branchQuery, branchQueryId, headers, useHttp} from "shared/api/base";
+import { useHttp} from "shared/api/base";
+import {savePageTypeToLocalStorage, getPageTypeFromLocalStorage, removePageTypeFromLocalStorage} from "features/pagesType";
 
 const studentsFilter = [
     {name: "new_students", label: "New Students"},
@@ -74,8 +68,7 @@ export const StudentsPage = () => {
     // let newStudents
 
     const [searchParams] = useSearchParams();
-
-
+    const [selectedRadio, setSelectedRadio] = useState(getPageTypeFromLocalStorage("selectedRadio") || studentsFilter[0].name);
     const {request} = useHttp()
     const dispatch = useDispatch()
     const {theme} = useTheme()
@@ -92,8 +85,6 @@ export const StudentsPage = () => {
     const schoolClassNumbers = useSelector(getSchoolClassNumbers);
     const schoolClassColors = useSelector(getSchoolClassColors);
     const {"*": id} = useParams()
-
-
     const userBranchId = id
     const teachers = useSelector(getTeachers);
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
@@ -105,7 +96,6 @@ export const StudentsPage = () => {
     const [selectStudents, setSelectStudents] = useState([]);
     const [activeModal, setActiveModal] = useState(false);
     const [active, setActive] = useState("");
-    const [selectedRadio, setSelectedRadio] = useState(studentsFilter[0].name);
     const [selected, setSelected] = useState([]);
     const [currentTableData, setCurrentTableData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -180,12 +170,11 @@ export const StudentsPage = () => {
     }
 
     const onSubmitFilteredByClass = (data) => {
-        // console.log(data, "data")
+
         setActiveFormBtn(schoolClassNumbers.filter(item => item.id === +data)[0]?.price === 0)
         dispatch(fetchStudentsByClass({branch:userBranchId, number: data}))
     }
 
-    console.log(activeFormBtn, "activeFormBtn")
 
     useEffect(() => {
         if (!userBranchId) return;
@@ -214,6 +203,10 @@ export const StudentsPage = () => {
             setSelectedRadio(type)
         }
     }, [searchParams])
+
+    useEffect(() => {
+        savePageTypeToLocalStorage("selectedRadio", selectedRadio);
+    }, [selectedRadio]);
 
 
     const handleChange = (value) => {
@@ -396,6 +389,7 @@ export const StudentsPage = () => {
                 setActive={setActive}
                 active={active === "post"}
                 data={data}
+                branch={userBranchId}
             />
         </MultiPage>
         // </>

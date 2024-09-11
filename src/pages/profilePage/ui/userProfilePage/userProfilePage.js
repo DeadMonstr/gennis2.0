@@ -93,7 +93,7 @@ export const UserProfilePage = () => {
         dispatch(changingUserProfile())
         request(`${API_URL}Users/users/update/${id}/`, "PATCH", JSON.stringify(data), headers())
             .then(res => {
-                console.log(res, "data changed")
+
                 dispatch(changeUserProfile(res))
                 dispatch(onAddAlertOptions({
                     type: "success",
@@ -113,7 +113,7 @@ export const UserProfilePage = () => {
         formData.append("profile_img", data)
         request(`${API_URL}Users/users/update/${id}/`, "PATCH", formData, headersImg())
             .then(res => {
-                console.log(res, "image changed")
+
                 dispatch(changeUserProfile(res))
                 dispatch(onAddAlertOptions({
                     type: "success",

@@ -25,7 +25,7 @@ export const userSlice = createSlice({
             })
             .addCase(fetchSubjects.fulfilled, (state, action) => {
                 state.subjects = action.payload
-                console.log(action);
+
             })
             .addCase(fetchSubjects.rejected, (state, action) => {
                 state.status = action.error

@@ -44,7 +44,6 @@ export const TeacherProfileTotalAmount = memo(({active, setActive, salary_id, us
             teacher: user_id,
             branch: branch
         };
-        console.log(newSalary)
         try {
             const action = await dispatch(giveTeacherSalaryThunk(newSalary));
             if (giveTeacherSalaryThunk.fulfilled.match(action)) {
@@ -54,8 +53,7 @@ export const TeacherProfileTotalAmount = memo(({active, setActive, salary_id, us
                     status: true,
                     msg: "Oylik muvofaqqiyatli to'landi"
                 }))
-            } else {
-                console.error("Thunk failed with error: ", action.payload);
+            } else if (giveTeacherSalaryThunk.rejected.match(action)){
                 dispatch(onAddAlertOptions({
                     type: "error",
                     status: true,

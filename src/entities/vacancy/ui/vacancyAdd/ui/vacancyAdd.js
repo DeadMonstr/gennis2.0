@@ -10,11 +10,10 @@ import { fetchVacancyData, vacancyPageAddThunk } from "features/vacancyModals/va
 import { addVacancy } from "features/vacancyModals/vacancyPageAdd/model/vacancyPageAddSlice";
 import { getVacancyJobs } from "features/vacancyModals/vacancyPageAdd";
 
-export const VacancyAdd = React.memo(({ active, setActive }) => {
+export const VacancyAdd = React.memo(({ active, setActive,systems }) => {
     const [subjectName, setSubjectName] = useState('');
     const [systemType, setSystemType] = useState('');
     const dispatch = useDispatch();
-    const vacancySystemData = useSelector(getVacancySystems);
 
 
     const handleAdd = () => {
@@ -54,7 +53,7 @@ export const VacancyAdd = React.memo(({ active, setActive }) => {
                         extraClass={cls.filter__select}
                         value={systemType}
                         onChangeOption={(value) => setSystemType(value)}
-                        options={vacancySystemData || []}
+                        options={systems}
                     />
                     <Button
                         extraClass={cls.buttonChange}

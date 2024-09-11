@@ -58,7 +58,6 @@ export const TimeTableSchedule = memo((props) => {
     const [currentData, setCurrentData] = useState([])
 
     useEffect(() => {
-        console.log(data)
         setCurrentData(
 
             data?.time_tables.map((item, iI) => ({
@@ -155,7 +154,6 @@ export const TimeTableSchedule = memo((props) => {
     }, [activeDrop, currentData])
 
     const renderData = useCallback(() => {
-        console.log(currentData, "currentData")
         return currentData?.map((item, iI) => {
             let status;
             const renderItem = (
@@ -282,7 +280,6 @@ export const TimeTableSchedule = memo((props) => {
         // setActiveDrag(active?.id)
         // setActiveDrop(over?.id)
 
-        console.log(event, "event 2 inner")
     }
 
     return (

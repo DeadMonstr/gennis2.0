@@ -7,6 +7,8 @@ import {ClassAddColorPage} from "./classAddColorPage";
 import {useDispatch, useSelector} from "react-redux";
 import {classData, classItemLoading, colorItem} from "entities/class/model/selector/classSelector";
 import {fetchClassSubjects, getClassTypes, getColor} from "entities/class/model/thunk/classThunk";
+import {getBranch} from "features/branchSwitcher";
+import {useParams} from "react-router";
 
 
 export const ClassMain = () => {
@@ -17,14 +19,22 @@ export const ClassMain = () => {
     const [activeMenu, setActiveMenu] = useState(classes)
     const [edit, setEdit] = useState({})
     const [activeEdit, setActiveEdit] = useState(false)
+    const {"*": id} = useParams()
+
+
+    const userBranchId = id
 
 
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(getClassTypes())
-        dispatch(getColor())
-        dispatch(fetchClassSubjects())
-    }, [])
+
+        if (userBranchId) {
+            dispatch(getClassTypes(userBranchId))
+            dispatch(getColor())
+            dispatch(fetchClassSubjects())
+        }
+
+    }, [userBranchId])
     const [activeSwitch, setActiveSwitch] = useState(true)
 
 
@@ -41,25 +51,22 @@ export const ClassMain = () => {
             />
 
             {
-                loading ?
-                    <DefaultPageLoader/>
+                activeSwitch ?
+                    <ClassPage
+                        setActiveEdit={setActiveEdit}
+                        classes={classes}
+                        setActiveMenu={setActiveMenu}
+                        activeMenu={activeMenu}
+                        activeEdit={activeEdit}
+                        edit={edit}
+                        setEdit={setEdit}
+                    />
                     :
-                    activeSwitch ?
-                        <ClassPage
-                            setActiveEdit={setActiveEdit}
-                            classes={classes}
-                            setActiveMenu={setActiveMenu}
-                            activeMenu={activeMenu}
-                            activeEdit={activeEdit}
-                            edit={edit}
-                            setEdit={setEdit}
-                        />
-                        :
-                        <ClassAddColorPage
-                            color={color}
-                            edit={edit}
-                            setEdit={setEdit}
-                        />
+                    <ClassAddColorPage
+                        color={color}
+                        edit={edit}
+                        setEdit={setEdit}
+                    />
             }
         </div>
     );

@@ -20,7 +20,6 @@ export const vacancyWorkerPermissionSlice = createSlice({
             .addCase(fetchPermissionTable.fulfilled, (state, action ) => {
                 state.loading = false
                 state.tables = action.payload
-                console.log(action.payload, "tables")
 
             })
             .addCase(fetchPermissionTable.rejected, (state,action) => {

@@ -10,7 +10,7 @@ export const giveEmployerSalaryThunk = createAsyncThunk(
             const res = await  request(`${API_URL}Users/salaries/create/`, "POST", JSON.stringify(newSalary), headers())
             if (!res.ok)
             {
-                console.log("Succcess")
+
             }
         }catch (error){
             console.log("ERrror")

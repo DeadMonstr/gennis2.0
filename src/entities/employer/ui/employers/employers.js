@@ -13,15 +13,12 @@ export const Employers = ({currentTableData, loading}) => {
     const loadingDef = useSelector(getEmployerLoading)
     const [removeClickedCheckbox , setRemovedClickedCheckbox] = useState([])
     const filteredEmployer = useSelector(getEmployerDataWithFilter)
-    const checkedItem = (id) => {
-        const filteredCheckbox = clickedCheckbox.filter(item => item !== id)
-        setClickedCheckbox([...filteredCheckbox , id])
-
-
-        // const unFilteredCheckbox = removeClickedCheckbox.filter(item => item === id)
-        // setRemovedClickedCheckbox([...unFilteredCheckbox , id])
-
-    }
+    // const checkedItem = (id) => {
+    //     const filteredCheckbox = clickedCheckbox.filter(item => item !== id)
+    //     setClickedCheckbox([...filteredCheckbox , id])
+    //
+    //
+    // }
 
 
 

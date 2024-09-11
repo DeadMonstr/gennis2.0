@@ -21,7 +21,7 @@ export const employerSalarySlice = createSlice({
             .addCase(fetchEmployerSalaryThunk.fulfilled, (state, action) => {
                 state.loading = false
                 state.salaryData = action.payload
-                console.log(action.payload, "salaryData")
+
             })
             .addCase(fetchEmployerSalaryThunk.rejected, (state, action) => {
                 state.loading = false;

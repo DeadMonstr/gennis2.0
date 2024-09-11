@@ -23,7 +23,6 @@ export const StudentProfileSubjects = memo(({ setActive, data, onSelectSubject }
                 groupId: data.id
             }] : []);
 
-        console.log(subjects, "subjects")
 
         return subjects?.map(item =>
             <div onClick={() => {

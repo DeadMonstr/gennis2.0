@@ -41,9 +41,9 @@ export const ClassColorAddFilter = ({color, setEdit, edit, setChangeName, change
             const color1rgb = hexToRgb(item?.value ? item?.value : "#ffffff");
 
 
-            const brightness = Math.round(((parseInt(color1rgb.r) * 299) +
-                (parseInt(color1rgb.g) * 587) +
-                (parseInt(color1rgb.b) * 114)) / 1000);
+            const brightness = Math.round(((parseInt(color1rgb?.r) * 299) +
+                (parseInt(color1rgb?.g) * 587) +
+                (parseInt(color1rgb?.b) * 114)) / 1000);
 
 
             const style = {
@@ -56,7 +56,7 @@ export const ClassColorAddFilter = ({color, setEdit, edit, setChangeName, change
                 className={classNames(cls.classFilter_li)}
                 key={i}
                 onClick={() => {
-                    setEdit(item.id)
+                    setEdit(item)
                     setValue("name" , item.name)
                     setChangeName(!changeName)
 

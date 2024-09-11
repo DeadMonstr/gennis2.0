@@ -21,7 +21,6 @@ const inkasatsiyaSlice = createSlice({
                 state.error = false
                 state.loading = false
                 state.inkasatsiya = action.payload
-                console.log(action.payload, "payload")
             })
             .addCase(inkasatsiyaThunk.rejected, state => {
                 state.error = true

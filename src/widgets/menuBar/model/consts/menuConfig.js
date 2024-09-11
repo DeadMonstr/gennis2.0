@@ -1,13 +1,13 @@
 import {ROLES} from "shared/const/roles";
 
 export const menuConfig = [
-    {
-        to: "home",
-        name: "Bosh Sahifa",
-        icon: "fa-home",
-        system: ["center","school"],
-        roles: true
-    },
+    // {
+    //     to: "home",
+    //     name: "Bosh Sahifa",
+    //     icon: "fa-home",
+    //     system: ["center","school"],
+    //     roles: true
+    // },
     {
         to: "register",
         name: "Registratsiya",
