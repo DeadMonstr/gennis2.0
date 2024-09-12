@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Outlet, useLocation, useNavigate, useParams} from "react-router";
+import {Outlet, useLocation, useMatches, useNavigate, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 
 import {Menubar} from "widgets/menuBar";
@@ -9,10 +9,11 @@ import {getUserId, getUserRefreshLoading} from "pages/loginPage"
 
 import cls from "./Layout.module.sass"
 import {Alert} from "features/alert";
-import {getLocations, getSelectedLocations} from "features/locations";
-import {getBranch} from "features/branchSwitcher";
-import {getSystem} from "features/themeSwitcher";
+import {fetchLocationsThunk, getLocations, getSelectedLocations} from "features/locations";
+import {fetchBranchesByLocationsThunk, getBranch, onDeleteBranch} from "features/branchSwitcher";
+import {fetchThemeSwitcherSystemsThunk, getSystem} from "features/themeSwitcher";
 import {getBranchStatus} from "features/branchSwitcher/model/selector/brachSwitcherSelector";
+import {getSystemInited} from "features/themeSwitcher/modal/selector/themeSwitcherSystems";
 
 
 export const Layout = () => {
@@ -24,9 +25,14 @@ export const Layout = () => {
     const refreshLoading = useSelector(getUserRefreshLoading)
 
 
+
+
+
+
+
+
     const dispatch = useDispatch()
 
-    // const system = useSelector(getSystem)
 
     useEffect(() => {
         if (userId) {
@@ -35,12 +41,17 @@ export const Layout = () => {
     }, [userId, refreshLoading])
 
 
+
+
+
+
     return (
         <>
             <Alert/>
             <Menubar/>
             <main className={cls.main}>
-                <Header/>
+
+
 
                 <div className={cls.main__content}>
                     <Outlet/>
@@ -49,3 +60,6 @@ export const Layout = () => {
         </>
     );
 };
+
+
+

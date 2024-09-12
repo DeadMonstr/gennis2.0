@@ -20,6 +20,7 @@ const initialState = {
 
     system: {},
     selectedLocations: [],
+    inited: false,
     loading: false,
     error: null
 }
@@ -50,6 +51,7 @@ const themeSwitcherSlice = createSlice({
             })
             .addCase(fetchThemeSwitcherSystemsThunk.fulfilled, (state, action) => {
                 state.systems = action.payload
+                state.inited =true
 
                 const localSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
                 if (!localSystem && !localSystem?.name) {

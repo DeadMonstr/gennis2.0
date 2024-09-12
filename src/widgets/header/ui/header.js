@@ -7,16 +7,8 @@ import {getLocations, getSelectedLocations, Location} from 'features/locations';
 import {getSystem, ThemeSwitcher} from 'features/themeSwitcher';
 import {useDebounce} from 'shared/lib/hooks/useDebounce';
 import {Button} from 'shared/ui/button';
-import {selectBranch, selectLocations} from "entities/vacancy/ui/vacancyWorkerList";
 
 
-import {Select} from "shared/ui/select";
-import {
-    fetchOnlyNewStudentsData,
-    fetchOnlyStudyingStudentsData,
-    fetchNewStudentsDataWithBranch,
-    getStudentsWithBranch, fetchStudyingStudentsDataWithBranch
-} from "entities/students";
 
 
 
@@ -24,7 +16,8 @@ import {
 import cls from './header.module.sass';
 import logo from 'shared/assets/images/logo.svg';
 import {deleteSelectedLocations} from "features/locations";
-import {BranchSwitcher,onDeleteBranch} from "features/branchSwitcher";
+import {BranchSwitcher} from "features/branchSwitcher";
+import BackButton from "shared/ui/backButton/backButton";
 
 
 
@@ -124,7 +117,9 @@ export const Header = () => {
             </div>
             <div className={cls.header__bottom}>
 
-                <Button
+
+
+                <BackButton
                     onClick={() => {
                         if (locationHistory.length) {
                             locationHistory.shift();
@@ -134,12 +129,7 @@ export const Header = () => {
                         setSearchParams({});
                         setValueData(null);
                     }}
-                    extraClass={cls.header__back}
-                    type={"simple-add"}
-                >
-                    <i className="fas fa-arrow-left-long"/>
-                    Orqaga
-                </Button>
+                />
 
                 <div className={cls.header__selected}>
                     {locations.length > 1 && selectedLocations.map(item => (

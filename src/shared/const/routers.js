@@ -1,15 +1,11 @@
 export const getRouteMain = () => 'home';
 export const getRouteTaskManager = (id) => `taskManager/${id}`;
-// export const getRouteNewStudents = (id) => `newStudents`;
-// export const getRouteDeletedStudents = (id) => `deletedStudents`;
+
 export const getRouteStudents = (id) => `students/*`;
 export const getRouteCalendar = () => `calendar/*`;
-export const getDirectorRouteStudents = () => `locations-overview`;
 export const getRouteGroups = (id) => `groups/*`;
-// export const getRouteDeletedGroups = (id) => `deletedGroups`;
 export const getRouteRegister = () => `register/:idBranch`;
 export const getRouteTeacher = (id) => `teacher/*`;
-// export const getRouteCreateGroup = () => `newStudents/createGroup`;
 export const getRouteRooms = (id) => `rooms/*`;
 export const getTeacherProfile = (id) => `teacher/teacherProfile/${id}`;
 export const getVacancyPage = (id) => `vacancyPage/${id}`
@@ -20,6 +16,8 @@ export const getProfile = (id) => `students/profile/${id}`;
 export const getRouteTimePage = (id) => `timeList/${id}`
 export const getRouteUserProfile = (id) => `profile/${id}`
 export const getEmployerPage = (id) => `employer/*`
+
+export const getEmployerCategory = () => `employer/category/*`
 export const getEmployerProfile = (id) => `employer/employerProfile/${id}`;
 
 export const getTeacherSalary = (id) => `teacher/teacherProfile/:id/teacherSalaryPage/${id}`
@@ -40,11 +38,7 @@ export const getCapitalInside = (id) => `capital/capitalBoxProfile/${id}`
 
 
 
-export const getCreateBranch = (id) => `crea
-teBranch/${id}`
-export const getCreateSystem = (id) => `createSystem/${id}`
-export const getCreateLocation = (id) => `createLocation/${id}`
-export const getCreateEducation = (id) => `createEducation/${id}`
+
 
 
 export const getLocations = (id) => `location/${id}`
