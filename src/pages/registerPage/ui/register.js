@@ -27,6 +27,7 @@ import {onAddAlertOptions} from "../../../features/alert/model/slice/alertSlice"
 import {getCategories, getLanguagesData, getSubjectsData} from "../model/registerSelector";
 import {getSystems} from "../../../features/themeSwitcher";
 import {getSystemName} from "../../../entities/editCreates";
+import {AnimatedMulti} from "../../../features/workerSelect";
 
 const userstype = {
     types: [
@@ -82,6 +83,15 @@ export const Register = () => {
     const {request} = useHttp()
     const [usernameMessage, setUsernameMessage] = useState('');
     const [isUsernameAvailable, setIsUsernameAvailable] = useState(true);
+    const safeData = Array.isArray(subjects) ? subjects : [subjects];
+    const subjectOptions = safeData?.map(subject => ({
+        value: subject.id,
+        label: subject.name,
+    }));
+
+    const handleAddSubject = (selectedSubject) => {
+        setSelectedSubject(selectedSubject)
+    }
 
     useEffect(() => {
         if (id) {
@@ -144,7 +154,6 @@ export const Register = () => {
         setLoading(true);
         const selectedTimes = shift.find(shift => shift.id === Number(selectedTime))
         const selectedLanguage = languages.find(lang => lang.id === Number(selectedLang));
-        const selectedSubjectData = subjects.find(subj => subj.id === Number(selectedSubject));
 
         let res = {
             user: {
@@ -153,7 +162,7 @@ export const Register = () => {
                 language: selectedLanguage?.id || "",
                 branch: id,
             },
-            subject: [selectedSubjectData?.id || null],
+            subject: selectedSubject.map(subject => subject.value)|| null,
         };
         let res2 = {
             ...data,
@@ -172,7 +181,7 @@ export const Register = () => {
                 }
             } else {
                 result = {
-                    subject: [selectedSubjectData?.id || null],
+                    subject: selectedSubject.map(subject => subject.value) || null,
                 }
             }
             res = {
@@ -296,13 +305,6 @@ export const Register = () => {
                             onChangeOption={setSelectedLang}
                             options={languages.map(lang => ({id: lang.id, name: lang.name}))}
                         />
-                        <Select
-                            extraClass={cls.extraClasses}
-                            name={"subject_id"}
-                            title={"Fan"}
-                            onChangeOption={setSelectedSubject}
-                            options={subjects.map(subj => ({id: subj.id, name: subj.name}))}
-                        />
                         {
                             (userSystem?.name === "school") && (
                                 <>
@@ -329,6 +331,12 @@ export const Register = () => {
                                             extraClassName={cls.resume__input}
                                         />
                                     </div>
+                                    <AnimatedMulti
+                                        options={subjectOptions}
+                                        onChange={handleAddSubject}
+                                        extraClass={cls.multiSelect}
+                                        fontSize={20}
+                                    />
                                 </>
                             )
                         }
