@@ -7,16 +7,24 @@ import {getTeacherId} from "../../../../entities/teachers";
 import cls from './teacherEdit.module.sass'
 import {Button} from "../../../../shared/ui/button";
 import {onAddAlertOptions} from "../../../alert/model/slice/alertSlice";
+import {Select} from "../../../../shared/ui/select";
+import {getCategories} from "../../../../pages/registerPage/model/registerSelector";
+import {set} from "react-hook-form";
+import {fetchCategories} from "../../../../pages/registerPage/model/registerThunk";
 
 export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
     const dispatch = useDispatch();
     const teacherID = useSelector(getTeacherId);
+    const categories = useSelector(getCategories)
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
     const [selectedFrom, setSelectedFrom] = useState()
     const [selectedTo, setSelectedTo] = useState()
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
-    const [phone, setNumber] = useState('')
-    const [age, setAge] = useState('')
+    const [phone, setNumber] = useState('');
+    const [age, setAge] = useState('');
+    const [teacherCategory, setTeacherCategory] = useState('')
+
 
     useEffect(() => {
         if (teacherID)
@@ -25,8 +33,13 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
             setSurname(teacherID.user?.surname)
             setNumber(teacherID.user?.phone)
             setAge(teacherID.user?.age)
+            setTeacherCategory(teacherID?.teacher_salary_type?.name)
         }
     }, [teacherID])
+
+    useEffect(() => {
+        dispatch(fetchCategories())
+    }, [])
 
     const handleEditTeacher = () => {
         if (!teacherID) return;
@@ -36,7 +49,8 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
                 surname: surname,
                 phone: phone,
                 age: age
-            }
+            },
+            teacher_salary_type: +teacherCategory
 
         };
         dispatch(editTeacherThunk({id: (teacherID.id), updateTeacher}))
@@ -66,6 +80,7 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
                         type={"text"}
                         extraClassName={cls.inputAge}
                         placeholder={"Ism"}
+                        title={"Ismi"}
                         onChange={(e) => setName(e.target.value)}
                         value={name}
                         // value={selectedFrom}
@@ -74,6 +89,7 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
                     <div className={cls.filter__age}>
                         <Input
                             type={"text"}
+                            title={"Familiyasi"}
                             extraClassName={cls.filter__input}
                             placeholder={"Familiya"}
                             onChange={(e) => setSurname(e.target.value)}
@@ -82,6 +98,7 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
                         />
                         <Input
                             type={"number"}
+                            title={"Telefon raqami"}
                             extraClassName={cls.filter__input}
                             placeholder={"Tel raqami"}
                             onChange={(e) => setNumber(e.target.value)}
@@ -90,12 +107,27 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
                         />
                         <Input
                             type={"text"}
+                            title={"Yoshi"}
                             extraClassName={cls.inputAge}
                             placeholder={"Yosh"}
                             onChange={(e) => setAge(e.target.value)}
                             value={age}
                             // value={selectedFrom}
                         />
+                        {
+                            (userSystem?.name === "school") && (
+                                <>
+                                    <Select
+                                        extraClass={cls.extraClasses}
+                                        name={"category"}
+                                        options={categories}
+                                        onChangeOption={setTeacherCategory}
+                                        title={"Toifa"}
+                                    />
+                                </>
+                            )
+                        }
+
                         {/*<Input*/}
                         {/*    type={"text"}*/}
                         {/*    extraClassName={cls.inputAge}*/}

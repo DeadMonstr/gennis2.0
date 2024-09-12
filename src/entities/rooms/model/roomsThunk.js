@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import {API_URL, branchQuery, headers, useHttp} from '../../../shared/api/base';
+import {API_URL, branchQuery, headers, useHttp} from 'shared/api/base';
 
 export const fetchRoomsData = createAsyncThunk(
     'roomsSlice/fetchRoomsData',
