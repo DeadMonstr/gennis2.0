@@ -22,12 +22,12 @@ import {
 
 
 import {ClassProfilePage} from "pages/School";
-import {GroupCreatePage} from "pages/groupsPage";
+import {GroupCreatePage , GroupAttendance} from "pages/groupsPage";
 import {Register} from "pages/registerPage";
 import {
     ProfileTeacherPage,
     UserProfilePage,
-    StudentProfilePage, ProfileEmployerPage, GroupProfilePage
+    StudentProfilePage, ProfileEmployerPage, GroupProfilePage,
 } from "pages/profilePage";
 import {VacancyWorkPage} from "pages/vacancyWorkPage";
 import {RoomsProfilePage} from "pages/roomsProiflePage";
@@ -80,6 +80,10 @@ export const routersConfigProfile = [
     {
         path: "groups/groupInfo/:id",
         element: <GroupProfilePage/>,
+    },
+    {
+        path: "groups/groupInfo/:id/attendance",
+        element: <GroupAttendance/>,
     },
     {
         path: getRouteClassProfile(":id"),

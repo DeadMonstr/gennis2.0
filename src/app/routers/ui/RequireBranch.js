@@ -21,7 +21,6 @@ const RequireBranch = ({children}) => {
         if (locations.length < 2 && branch?.id && idBranch) {
             navigate(`../${branch.id}` , {relative: "path"})
         } else if (locations.length < 2 && branch?.id && !id)  {
-            console.log("ureeeeeeeeeeeeeeeeeeeeeeee")
             navigate(`./${branch.id}`, {relative: "path"})
         }
     },[branch?.id,locations,navigate,idBranch])

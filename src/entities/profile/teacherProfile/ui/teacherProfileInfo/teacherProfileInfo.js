@@ -19,6 +19,7 @@ export const TeacherProfileInfo = memo(({active, setActive, setActiveModal, newI
     const teacherId = useSelector(getTeacherId)
     const [localTeacherData, setLocalTeacherData] = useState({});
 
+
     useEffect(() => {
         if (teacherId) {
             setLocalTeacherData(teacherId);
@@ -78,20 +79,21 @@ export const TeacherProfileInfo = memo(({active, setActive, setActiveModal, newI
                 </>
             }
             <Link to={`teacherSalaryPage/${teacherId?.id}`}>
-                <EditableCard
-                    extraClass={cls.info__balance}
-                >
-                    <h2>Balans</h2>
-                    <p>Summa</p>
-                    {system.type === "school" ?
+                {system.name === "center" ?
+                    <EditableCard
+                        extraClass={cls.info__balance}
+                    >
+                        <h2>Balans</h2>
+                        <p>Summa</p>
+
                         <div className={cls.info__money}>
                             <h2>$ 570.000</h2>
                             <p>$ 390.000</p>
                         </div>
-                        :
-                        null
-                    }
-                </EditableCard>
+
+
+                    </EditableCard> :
+                    null}
             </Link>
             <TeacherEdit
                 isOpen={active}

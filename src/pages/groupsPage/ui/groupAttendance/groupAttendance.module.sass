@@ -1,0 +1,68 @@
+.attendance
+  padding: 2rem
+  //width: 45%
+
+
+  .attendance_header
+    display: flex
+    gap: 2rem
+    align-items: center
+    //justify-content: space-between
+    justify-content: flex-end
+    margin-bottom: 3rem
+    padding-left: 1rem
+
+
+    h2
+      font-size: 3rem
+      //text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, .1), 0 0 5px rgba(0, 0, 0, .1), 0 1px 3px rgba(0, 0, 0, .3), 0 3px 5px rgba(0, 0, 0, .2), 0 5px 10px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .2), 0 20px 20px rgba(0, 0, 0, .15)
+      color: #202020
+
+  .attendance_icon
+    .attendance_check
+      color: green
+      font-size: 3rem
+
+    .attendance_times
+      color: red
+      font-size: 3rem
+
+.attended
+  &_table
+    margin-top: 10px
+    padding: 2rem
+    height: 30rem
+    overflow: auto
+    .attended_times
+      font-size: 3rem
+      color: red
+
+    .attended_check
+      font-size: 3rem
+      color: green
+
+  &_header
+    font-size: 1.8rem
+    padding-right: 5rem
+  &_btn
+    margin:  2rem auto
+
+
+::-webkit-scrollbar
+  width: 10px
+
+
+
+::-webkit-scrollbar-track
+  background: #d3bbbb
+  margin: 10px 0 10px 0
+  border-radius: 10px
+
+
+
+::-webkit-scrollbar-thumb
+  background: #989090
+  border-radius: 10px
+
+::-webkit-scrollbar-thumb:hover
+  background: #555

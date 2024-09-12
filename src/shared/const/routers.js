@@ -17,7 +17,7 @@ export const getRouteTimePage = (id) => `timeList/${id}`
 export const getRouteUserProfile = (id) => `profile/${id}`
 export const getEmployerPage = (id) => `employer/*`
 
-export const getEmployerCategory = () => `employer/category/*`
+// export const getEmployerCategory = () => `employer/category/*`
 export const getEmployerProfile = (id) => `employer/employerProfile/${id}`;
 
 export const getTeacherSalary = (id) => `teacher/teacherProfile/:id/teacherSalaryPage/${id}`

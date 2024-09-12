@@ -3,7 +3,7 @@ import {fetchGroupProfileNextLesson} from "entities/profile/groupProfile/model/g
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import classNames from "classnames";
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 
 import {
     GroupProfileAttendanceForm,
@@ -45,6 +45,12 @@ import cls from "./groupProfilePage.module.sass";
 import {getBranch} from "features/branchSwitcher";
 import {system} from "features/workerSelect";
 import {getSystem} from "features/themeSwitcher";
+import {Modal} from "../../../../shared/ui/modal";
+import {Select} from "../../../../shared/ui/select";
+import {Button} from "../../../../shared/ui/button";
+import {Table} from "../../../../shared/ui/table";
+import {getAttendance} from "../../model/selector/groupAttendanceSelector";
+import {onChecked} from "../../model/slice/groupAttendanceSlice";
 
 export const GroupProfilePage = () => {
 
@@ -60,6 +66,8 @@ export const GroupProfilePage = () => {
 
     const [active, setActive] = useState(false)
 
+    const [attendance, setAttendance] = useState(false)
+
     useEffect(() => {
         dispatch(fetchGroupProfile({id}))
         dispatch(fetchSubjects())
@@ -74,7 +82,7 @@ export const GroupProfilePage = () => {
     useEffect(() => {
         if (branch) {
             dispatch(fetchGroupsData({userBranchId: branch}))
-            dispatch(fetchRoomsData({id:branch}))
+            dispatch(fetchRoomsData({id: branch}))
             dispatch(fetchTeachersData({userBranchId: branch}))
         }
     }, [branch])
@@ -149,6 +157,8 @@ export const GroupProfilePage = () => {
 
     }, [branch, data, timeTable, system])
 
+
+
     if (loading) {
         return <DefaultPageLoader/>
     } else return (
@@ -164,11 +174,12 @@ export const GroupProfilePage = () => {
                 {/*<GroupProfileTeacher setActive={setActiveModal}/>*/}
                 <GroupProfileDeleteForm branch={branch} system={system}/>
                 {/*<GroupProfileStudents/>*/}
+                <GroupProfileAttendanceForm setAttendance={setAttendance} attendance={attendance}/>
+
                 {
                     system.name === "center" ? <>
                         <GroupProfileStatistics setActive={setActive}/>
-                        <GroupProfileAttendanceForm/>
-                        {/*<GroupProfileAttendance/>*/}
+                        <GroupProfileAttendance/>
                         <GroupProfileTimeForm/>
                         {/*<GroupProfileSubjectList/>*/}
                         <GroupProfileMore/>
@@ -180,6 +191,9 @@ export const GroupProfilePage = () => {
             })}>
                 <GroupProfileRating/>
             </div>
+
         </div>
     )
 }
+
+

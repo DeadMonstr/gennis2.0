@@ -28,6 +28,7 @@ import {capital} from "../entities/capital";
 import {roomDeleteSlice} from "features/roomDeleteModal/model";
 import {roomsImageAddSlice} from "features/roomImageAddModal/model";
 import {
+    groupAttendanceSlice,
     studentProfile,
     teacherProfileData
 } from "pages/profilePage";
@@ -163,7 +164,8 @@ export const store = configureStore({
         multiPageSlice,
         flowsProfileSlice,
         classSlice,
-        employerCategorySlice
+        employerCategorySlice,
+        groupAttendanceSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

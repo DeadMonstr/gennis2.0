@@ -16,7 +16,6 @@ export const employerCategorySlice = createSlice({
             state.employerCategoryData = [...state.employerCategoryData, action.payload]
         },
         changeName: (state, action) => {
-            console.log(action.payload, "id")
             state.employerCategoryData = [
                 ...state.employerCategoryData.filter(item => item.id !== action.payload.id),
                 action.payload

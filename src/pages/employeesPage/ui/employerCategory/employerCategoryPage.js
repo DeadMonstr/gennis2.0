@@ -24,7 +24,6 @@ export const EmployerCategoryPage = () => {
 
         request(`${API_URL}Teachers/salary-types/`, "POST", JSON.stringify(data), headers())
             .then(res => {
-                console.log(res)
                 setActiveCategory(!activeCategory)
                 dispatch(updateCategory(data))
                 setValue("name", "")

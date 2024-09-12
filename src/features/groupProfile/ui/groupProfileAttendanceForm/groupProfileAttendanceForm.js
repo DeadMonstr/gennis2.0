@@ -7,27 +7,28 @@ import {Table} from "shared/ui/table";
 import {Select} from "shared/ui/select";
 
 import cls from "./groupProfileAttendanceForm.module.sass";
+import {useNavigate} from "react-router";
 
 const data = [
     {
         name: "Madina",
         surname: "Abdurahmonova",
-        days: [true, false, true, true, false, true, true, false, true, true, false, true, false]
+        days: [true, false, true, true, false, true, true, false, true, true, false, true, false , true ]
     },
     {
         name: "Madina",
         surname: "Abdurahmonova",
-        days: [true, false, true, true, false, true, true, false, true, true, false, true, false]
+        days: [true, false, true, true, false, true, true, false, true, true, false, true, false , true]
     },
     {
         name: "Madina",
         surname: "Abdurahmonova",
-        days: [true, false, true, false, false, true, true, false, true, true, false, true, false]
+        days: [true, false, true, false, false, true, true, false, true, true, false, true, false , false]
     },
     {
         name: "Madina",
         surname: "Abdurahmonova",
-        days: [true, false, true, true, false, true, false, false, true, false, false, true, false]
+        days: [true, false, true, true, false, true, false, false, true, false, false, true, false , true]
     }
 
 ]
@@ -86,7 +87,9 @@ const daysData = [
     }
 ]
 
-export const GroupProfileAttendanceForm = memo(() => {
+export const GroupProfileAttendanceForm = memo(({attendance, setAttendance}) => {
+
+    const navigate = useNavigate()
 
     const [active, setActive] = useState(false)
 
@@ -152,13 +155,12 @@ export const GroupProfileAttendanceForm = memo(() => {
                 active={active}
                 setActive={setActive}
             >
-                <div>
-                    <Select
-                        title={"Til"}
-                    />
-                    <Select
-                        title={"Oy"}
-                    />
+                <div className={cls.attendance_header}>
+
+                    <Select/>
+                    <Select/>
+
+                    <div onClick={() => navigate(`attendance`)} className={`${cls.attendance_plus} fa fa-plus`}/>
                 </div>
                 <div>
                     <Table>
