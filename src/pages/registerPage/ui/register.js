@@ -266,6 +266,7 @@ export const Register = () => {
                         />
 
 
+
                         {
                             (userSystem?.name === "school") ? (
                                 <Select
@@ -277,14 +278,21 @@ export const Register = () => {
                                 />
                             ) : (
                                 <>
-                                    <Select
-                                        extraClass={cls.extraClasses}
-                                        name={"subject_id"}
-                                        onChangeOption={setSelectedSubject}
-                                        options={subjects}
+                                    <AnimatedMulti
+                                        options={subjectOptions}
+                                        onChange={handleAddSubject}
+                                        extraClass={cls.multiSelect}
+                                        fontSize={15}
                                     />
+                                    {/*<Select*/}
+                                    {/*    extraClass={cls.extraClasses}*/}
+                                    {/*    name={"subject_id"}*/}
+                                    {/*    onChangeOption={setSelectedSubject}*/}
+                                    {/*    options={subjects}*/}
+                                    {/*/>*/}
 
                                     <Select
+                                        title={"Kelish vaqti"}
                                         extraClass={cls.extraClasses}
                                         name={"shift"}
                                         onChangeOption={setSelectedTime}
@@ -304,6 +312,12 @@ export const Register = () => {
                             title={"Til"}
                             onChangeOption={setSelectedLang}
                             options={languages.map(lang => ({id: lang.id, name: lang.name}))}
+                        />
+                        <AnimatedMulti
+                            options={subjectOptions}
+                            onChange={handleAddSubject}
+                            extraClass={cls.multiSelect}
+                            fontSize={15}
                         />
                         {
                             (userSystem?.name === "school") && (
@@ -331,12 +345,6 @@ export const Register = () => {
                                             extraClassName={cls.resume__input}
                                         />
                                     </div>
-                                    <AnimatedMulti
-                                        options={subjectOptions}
-                                        onChange={handleAddSubject}
-                                        extraClass={cls.multiSelect}
-                                        fontSize={20}
-                                    />
                                 </>
                             )
                         }
