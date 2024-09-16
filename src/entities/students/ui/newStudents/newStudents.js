@@ -7,15 +7,19 @@ import cls from "entities/students/ui/newStudents/newStudents.module.sass";
 import {Table} from "shared/ui/table";
 import {StudentsFilter} from "features/filters/studentsFilter";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
+import {StudiyngStudentDelModal} from "../../../../features/studiyngStudentDelModal";
 
 export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) => {
 
     const [active, setActive] = useState(false);
+    const [studentId, setStudentId] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
     const navigation = useNavigate()
     const dispatch =  useDispatch()
     const getNewSt = useSelector(getStudentsWithBranch)
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
 
+    console.log(studentId, 'eefe')
 
 
 
@@ -48,6 +52,14 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                        }
 
                        <td>{item.user?.registered_date}</td>
+
+                       <td onClick={() => {
+                           setStudentId(item.id)
+                           setIsOpen(!isOpen)
+                       }
+                       }>
+                           <i style={{color: '#FF3737FF'}} className={`fa-solid fa-xmark ${cls.xmark}`}></i>
+                       </td>
                        {/*{*/}
                        {/*    theme ? <Input*/}
                        {/*        type={"checkbox"}*/}
@@ -86,9 +98,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                         }
 
                         <th>Reg. sana</th>
-                        {/*{*/}
-                        {/*    theme ? <th/> : null*/}
-                        {/*}*/}
+                        <th>O'chirish</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -97,7 +107,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                 </Table>
 
             </div>
-
+            <StudiyngStudentDelModal userId={studentId} onClose={setIsOpen} isOpen={isOpen}/>
             <StudentsFilter
                 active={active}
                 setActive={setActive}
