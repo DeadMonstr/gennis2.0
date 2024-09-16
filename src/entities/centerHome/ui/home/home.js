@@ -6,14 +6,14 @@ import {Button} from "shared/ui/button";
 import {Select} from "shared/ui/select";
 import {Context} from "pages/homePage";
 import {Modal} from "shared/ui/modal"
-import cls from "./home.module.sass"
+import cls from "entities/centerHome/ui/home/home.module.sass"
 import {useForm} from "react-hook-form";
 import {API_URL, headers, headersImg, useHttp} from "shared/api/base";
 import {useDispatch, useSelector} from "react-redux";
 import {getLocations} from "pages/studentsPage";
 import {Textarea} from "shared/ui/textArea";
-import {fetchedImageError, fetchedImageItems, fetchingImageItems} from "../model/homeSlice";
-import {HomeHeader} from "../homeHeader/homeHeader";
+import {fetchedImageError, fetchedImageItems, fetchingImageItems} from "entities/centerHome/model/homeSlice";
+import {HomeHeader} from "entities/centerHome/ui/homeHeader/homeHeader";
 
 const branches = [
     {name: "chirchiq"},

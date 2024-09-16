@@ -11,7 +11,7 @@ import {
     fetchClassColors,
     fetchClassNumberList,
     getSchoolClassNumbers,
-    getSchoolClassColors,
+    getSchoolClassColors, getStudyingStudentsWithBranch, getStudentsWithBranch,
 } from "entities/students";
 import {StudentsHeader} from "entities/students";
 import {StudentsFilter} from "features/filters/studentsFilter";
@@ -48,8 +48,12 @@ import {getSearchValue} from "features/searchInput";
 import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
 
 import {useParams, useSearchParams} from "react-router-dom";
-import { useHttp} from "shared/api/base";
-import {savePageTypeToLocalStorage, getPageTypeFromLocalStorage, removePageTypeFromLocalStorage} from "features/pagesType";
+import {useHttp} from "shared/api/base";
+import {
+    savePageTypeToLocalStorage,
+    getPageTypeFromLocalStorage,
+    removePageTypeFromLocalStorage
+} from "features/pagesType";
 
 const studentsFilter = [
     {name: "new_students", label: "New Students"},
@@ -80,7 +84,9 @@ export const StudentsPage = () => {
     const loadingStudyingStudents = useSelector(getLoadingStudyingStudents);
     const loadingDeletedStudents = useSelector(getLoadingDeletedStudents);
     const studyingStudents = useSelector(getStudyingStudents);
+    const filteredStudyingStudents = useSelector(getStudyingStudentsWithBranch);
     const newStudents = useSelector(getNewStudentsData);
+    const filteredNewStudents = useSelector(getStudentsWithBranch);
     const deletedStudents = useSelector(getOnlyDeletedStudents)
     const schoolClassNumbers = useSelector(getSchoolClassNumbers);
     const schoolClassColors = useSelector(getSchoolClassColors);
@@ -96,6 +102,7 @@ export const StudentsPage = () => {
     const [selectStudents, setSelectStudents] = useState([]);
     const [activeModal, setActiveModal] = useState(false);
     const [active, setActive] = useState("");
+    const [isFilter, setIsFilter] = useState("");
     const [selected, setSelected] = useState([]);
     const [currentTableData, setCurrentTableData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -107,10 +114,10 @@ export const StudentsPage = () => {
         let filteredStudents = [];
         switch (selectedRadio) {
             case "new_students":
-                filteredStudents = newStudents?.slice();
+                filteredStudents = isFilter === "new_students" ? filteredNewStudents?.slice() : newStudents?.slice();
                 break;
             case "studying_students":
-                filteredStudents = studyingStudents?.slice();
+                filteredStudents = isFilter === "studying_students" ? filteredStudyingStudents?.slice() : studyingStudents?.slice();
                 break;
             case "deleted_students":
                 filteredStudents = deletedStudents?.slice();
@@ -129,7 +136,7 @@ export const StudentsPage = () => {
                 item?.student?.user?.name.toLowerCase().includes(search.toLowerCase()) ||
                 item?.student?.user?.surname.toLowerCase().includes(search.toLowerCase()))
         );
-    }, [newStudents, studyingStudents, deletedStudents, search, selectedRadio]);
+    }, [newStudents, studyingStudents, deletedStudents, search, selectedRadio, isFilter, filteredNewStudents, filteredStudyingStudents]);
 
     useEffect(() => {
         if (userBranchId) {
@@ -172,7 +179,7 @@ export const StudentsPage = () => {
     const onSubmitFilteredByClass = (data) => {
 
         setActiveFormBtn(schoolClassNumbers.filter(item => item.id === +data)[0]?.price === 0)
-        dispatch(fetchStudentsByClass({branch:userBranchId, number: data}))
+        dispatch(fetchStudentsByClass({branch: userBranchId, number: data}))
     }
 
 
@@ -288,7 +295,12 @@ export const StudentsPage = () => {
             />
 
 
-            <StudentsFilter active={active === "filter"} setActive={setActive} activePage={selectedRadio}/>
+            <StudentsFilter
+                active={active === "filter"}
+                setActive={setActive}
+                activePage={selectedRadio}
+                isFilter={setIsFilter}
+            />
             <Modal
                 active={activeModal === "create"}
                 setActive={setActiveModal}

@@ -1,21 +1,21 @@
-import cls from "./homeAdvantages.module.sass"
+import cls from "entities/centerHome/ui/homeAdvantages/homeAdvantages.module.sass"
 import img1 from "shared/assets/images/photo_2023-11-22_16-14-45.jpg"
 import img2 from "shared/assets/images/photo_2023-11-22_16-14-53.jpg"
 import img3 from "shared/assets/images/photo_2023-11-22_16-32-58.jpg"
 import img4 from "shared/assets/images/photo_2023-11-22_16-30-42.jpg"
 import img from "shared/assets/images/login-page-4468581-3783954 1.svg";
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {Context} from "pages/homePage/ui/homePage";
+import {Context} from "pages/homePage/ui/CenterHomePage/CenterHomePage";
 import classNames from "classnames";
-import {API_URL, headers, useHttp} from "../../../../shared/api/base";
-import {Textarea} from "../../../../shared/ui/textArea";
+import {API_URL, headers, useHttp} from "shared/api/base";
+import {Textarea} from "shared/ui/textArea";
 import {useDispatch} from "react-redux";
 import {useForm} from "react-hook-form";
 import {useDropzone} from "react-dropzone";
-import {changeAdvantages} from "../model/homeSlice";
-import {Modal} from "../../../../shared/ui/modal";
-import {Button} from "../../../../shared/ui/button";
-import {Input} from "../../../../shared/ui/input";
+import {changeAdvantages} from "entities/centerHome/model/homeSlice";
+import {Modal} from "shared/ui/modal";
+import {Button} from "shared/ui/button";
+import {Input} from "shared/ui/input";
 
 const advantages = [
     {img: img1, advantagesTitle: "Co-Working Zone", advantagesSubTitle: "lorem ipsum dolor sit amet", id: 1},

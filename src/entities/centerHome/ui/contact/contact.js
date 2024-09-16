@@ -1,17 +1,17 @@
-import cls from "./contact.module.sass"
+import cls from "entities/centerHome/ui/contact/contact.module.sass"
 import {useCallback, useContext, useEffect, useRef, useState} from "react";
 import classNames from "classnames";
 import headerImg from "shared/assets/images/gennisHome.svg"
 import {Input} from "shared/ui/input";
 import {Textarea} from "shared/ui/textArea";
 import {Button} from "shared/ui/button";
-import {Context} from "pages/homePage/ui/homePage";
-import {API_URL, headers, useHttp} from "../../../../shared/api/base";
-import {changeHrefs, changeLocation} from "../model/homeSlice";
+import {Context} from "pages/homePage/ui/CenterHomePage/CenterHomePage";
+import {API_URL, headers, useHttp} from "shared/api/base";
+import {changeHrefs, changeLocation} from "entities/centerHome/model/homeSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 
-import {Modal} from "../../../../shared/ui/modal";
+import {Modal} from "shared/ui/modal";
 
 const locations = [
 

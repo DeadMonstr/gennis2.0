@@ -1,11 +1,11 @@
-import cls from "./homeHeader.module.sass"
+import cls from "entities/centerHome/ui/homeHeader/homeHeader.module.sass"
 import {Link} from "react-router-dom";
 import {useContext, useState} from "react";
 import classNames from "classnames";
 import {Button} from "shared/ui/button";
 // import {motion} from "framer-motion";
 import headerImg from "shared/assets/images/logo.svg"
-import {Context} from "pages/homePage/ui/homePage";
+import {Context} from "pages/homePage/ui/CenterHomePage/CenterHomePage";
 
 
 export const HomeHeader = ({status, setStatus}) => {

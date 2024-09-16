@@ -1,25 +1,25 @@
-import cls from "./homeNews.module.sass"
+import cls from "entities/centerHome/ui/homeNews/homeNews.module.sass"
 import Slider from "react-slick";
 import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import img from "shared/assets/images/login-page-4468581-3783954 1.svg"
 import img1 from "shared/assets/images/Rectangle 869.svg"
-import {Button} from "../../../../shared/ui/button";
-import {Context} from "pages/homePage/ui/homePage";
+import {Button} from "shared/ui/button";
+import {Context} from "pages/homePage/ui/CenterHomePage/CenterHomePage";
 import classNames from "classnames";
-import {Textarea} from "../../../../shared/ui/textArea";
+import {Textarea} from "shared/ui/textArea";
 import {useForm} from "react-hook-form";
-import {Modal} from "../../../../shared/ui/modal";
-import {Input} from "../../../../shared/ui/input";
+import {Modal} from "shared/ui/modal";
+import {Input} from "shared/ui/input";
 import {useDispatch, useSelector} from "react-redux";
-import {API_URL, useHttp} from "../../../../shared/api/base";
+import {API_URL, useHttp} from "shared/api/base";
 import {useDropzone} from "react-dropzone";
 import {
     fetchingNews,
     addNew,
     changeNew
-} from "../model/homeSlice";
+} from "entities/centerHome/model/homeSlice";
 
 const list = [1, 2, 3, 4 ]
 const newsData = [

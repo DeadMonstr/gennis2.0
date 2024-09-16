@@ -1,4 +1,4 @@
-import cls from "./homeTeachers.module.sass"
+import cls from "entities/centerHome/ui/homeTeachers/homeTeachers.module.sass"
 import profileTeacher from "shared/assets/images/login-page-4468581-3783954 1.svg"
 import profileImg from "shared/assets/images/best-shirts-men 1.svg"
 import img1 from "shared/assets/images/Rectangle 869.svg"
@@ -6,7 +6,7 @@ import img3 from "shared/assets/images/photo_2023-11-22_16-32-58.jpg"
 import img4 from "shared/assets/images/photo_2023-11-22_16-30-42.jpg"
 import React, {useContext, useEffect, useRef} from 'react';
 import Slider from 'react-slick';
-import {Context} from "../../../../pages/homePage/ui/homePage";
+import {Context} from "pages/homePage/ui/CenterHomePage/CenterHomePage";
 const teachersData = [
     {name: "sardor" , surname: 'ikromov' , teacherSubject: "english" , teacherStatus:  profileTeacher},
     {name: "sardor" , surname: 'ikromov' , teacherSubject: "english" , teacherStatus:  img3},

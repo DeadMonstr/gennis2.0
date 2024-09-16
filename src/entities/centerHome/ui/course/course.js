@@ -1,8 +1,8 @@
-import cls from "./course.module.sass"
+import cls from "entities/centerHome/ui/course/course.module.sass"
 import englishStatus from "shared/assets/images/english.status.jfif"
 import {Button} from "shared/ui/button";
 import {useContext, useEffect, useRef} from "react";
-import {Context} from "../../../../pages/homePage/ui/homePage";
+import {Context} from "pages/homePage/ui/CenterHomePage/CenterHomePage";
 const subjectData = [
     {name: 'English' , status: englishStatus},
     {name: 'English' , status: englishStatus},
