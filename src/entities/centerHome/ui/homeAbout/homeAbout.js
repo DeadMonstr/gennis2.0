@@ -1,7 +1,7 @@
-import cls from "./homeAbout.module.sass"
+import cls from "entities/centerHome/ui/homeAbout/homeAbout.module.sass"
 import ReactPlayer from "react-player";
 import {useContext, useEffect, useRef, useState} from "react";
-import {Context} from "pages/homePage/ui/homePage";
+import {Context} from "pages/homePage/ui/CenterHomePage/CenterHomePage";
 import classNames from "classnames";
 import {Modal} from "shared/ui/modal";
 import {Textarea} from "shared/ui/textArea";

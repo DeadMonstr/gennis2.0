@@ -10,14 +10,14 @@ import {
     HomeHeader,
     HomeTeachers,
     HomeAdvantages
-} from "entities/home";
+} from "entities/centerHome";
 
-import cls from "./homePage.module.sass"
+import cls from "./CenterHomePage.module.sass"
 import WebSiteLoader from "shared/ui/webSiteLoader/webSiteloader";
 
 export const Context = React.createContext()
 
-export const HomePage = () => {
+export const CenterHomePage = () => {
     const [loading, setLoading] = useState(true)
 
     const [sectionTop, setSectionTop] = useState({

@@ -7,7 +7,7 @@ import {routersConfigList} from "app/routers/config/routersConfigList";
 import {Layout} from "app/layout";
 import {Login} from "pages/loginPage";
 import {StudentProfilePage} from "pages/profilePage";
-import {HomePage} from "pages/homePage";
+import {CenterHomePage} from "pages/homePage";
 import {Register} from "pages/registerPage/ui/register";
 import {NotFoundPage} from "pages/notfoundPage/ui/notfound";
 import {ProfileTeacherPage} from "pages/profilePage";
@@ -43,7 +43,7 @@ export const AppRouter = () => {
 
                 <Route
                     path={"/"}
-                    element={<HomePage/>}
+                    element={<CenterHomePage/>}
                 />
                 <Route
                     path={"login"}

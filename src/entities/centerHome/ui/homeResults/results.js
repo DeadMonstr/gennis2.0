@@ -3,7 +3,7 @@
 // import Slick from "slick-carousel"
 //
 //
-import cls from "./results.module.sass"
+import cls from "entities/centerHome/ui/homeResults/results.module.sass"
 import resultsImg from "shared/assets/images/2024-07-09_225505.png"
 import profileImg from "shared/assets/images/best-shirts-men 1.svg"
 import React, {useContext, useEffect} from 'react';
@@ -11,7 +11,7 @@ import Slider from 'react-slick';
 
 
 import {useRef} from "react";
-import {Context} from "../../../../pages/homePage/ui/homePage";
+import {Context} from "pages/homePage/ui/CenterHomePage/CenterHomePage";
 
 //
 //
