@@ -7,7 +7,7 @@ import {routersConfigList} from "app/routers/config/routersConfigList";
 import {Layout} from "app/layout";
 import {Login} from "pages/loginPage";
 import {StudentProfilePage} from "pages/profilePage";
-import {CenterHomePage} from "pages/homePage";
+import {CenterHomePage, SchoolHomePage} from "pages/homePage";
 import {Register} from "pages/registerPage/ui/register";
 import {NotFoundPage} from "pages/notfoundPage/ui/notfound";
 import {ProfileTeacherPage} from "pages/profilePage";
@@ -43,8 +43,14 @@ export const AppRouter = () => {
 
                 <Route
                     path={"/"}
-                    element={<CenterHomePage/>}
+                    element={<SchoolHomePage/>}
                 />
+
+                {/*<Route*/}
+                {/*    path={"/"}*/}
+                {/*    element={<CenterHomePage/>}*/}
+                {/*/>*/}
+
                 <Route
                     path={"login"}
                     element={<Login/>}
