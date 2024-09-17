@@ -189,6 +189,7 @@ export const TimeTableTuronPage = () => {
     const [loading, setLoading] = useState(false)
     const [canDisabled, setCanDisabled] = useState(false)
     const [fullScreen, setFullScreen] = useState(false)
+    const [classView, setClassView] = useState(false)
     const [selectedSubject, setSelectedSubject] = useState(null)
     const [selectedGroup, setSelectedGroup] = useState(null)
     const [canSubmitLesson, setCanSubmitLesson] = useState({})
@@ -858,6 +859,7 @@ export const TimeTableTuronPage = () => {
                         setIsSelected={setIsSelected}
                         isSelected={isSelected}
                         setFullScreen={setFullScreen}
+                        setClassView={setClassView}
                         groups={groups}
                     /> : null
             }
@@ -928,7 +930,23 @@ export const TimeTableTuronPage = () => {
 
 
 
-            <Modal active={true} setActive={setFullScreen} type={"other"}>
+            <Modal active={fullScreen} setActive={setFullScreen} type={"other"}>
+
+
+
+
+                <TimeTableFullScreen
+                    rooms={rooms}
+                    times={times}
+                    hours={hours}
+                />
+
+
+            </Modal>
+
+            <Modal active={classView} setActive={setClassView} type={"other"}>
+
+
 
                 <TimeTableClassView
                     lessons={classViewData}

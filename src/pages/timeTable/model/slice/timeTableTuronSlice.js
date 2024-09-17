@@ -193,7 +193,7 @@ const TimeTableTuronSlice = createSlice({
             .addCase(fetchTimeTableClassView.fulfilled, (state, action) => {
 
 
-                state.data = action.payload.time_tables
+                state.classViewData = action.payload.time_tables
                 state.loading = false
                 state.error = null
             })
