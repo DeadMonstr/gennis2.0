@@ -14,7 +14,7 @@ import {
     getSchoolClassColors, getStudyingStudentsWithBranch, getStudentsWithBranch,
 } from "entities/students";
 import {StudentsHeader} from "entities/students";
-import {StudentsFilter} from "features/filters/studentsFilter";
+import {fetchDeletedNewStudentsThunk, getDeletedNewStudents, StudentsFilter} from "features/filters/studentsFilter";
 import {
     fetchOnlyNewStudentsData,
     fetchOnlyStudyingStudentsData,
@@ -144,6 +144,7 @@ export const StudentsPage = () => {
             dispatch(fetchLanguages())
         }
     }, [userBranchId])
+
 
 
     useEffect(() => {

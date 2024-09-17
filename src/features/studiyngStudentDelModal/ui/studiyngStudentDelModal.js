@@ -20,7 +20,7 @@ export const StudiyngStudentDelModal = ({ isOpen, onClose, userId}) => {
             dispatch(onAddAlertOptions({
                 type: "success",
                 status: true,
-                msg: "Oylik muvofaqqiyatli o'chirildi"
+                msg: "O'quvchi muvofaqqiyatli o'chirildi"
             }))
             onClose();
             dispatch(fetchOnlyNewStudentsData({id: userBranchId}));
@@ -37,12 +37,10 @@ export const StudiyngStudentDelModal = ({ isOpen, onClose, userId}) => {
                     <h1>Delete modal</h1>
                 </div>
                 <div className={cls.deleteText}>
-                    <h2>Are you sure delete this card</h2>
+                    <h2>Siz rostan ham o'quvchini o'chirmoqchimisiz</h2>
                 </div>
                 <div className={cls.deleteButtons}>
-                    {/*<Link to={`/platform/rooms`}>*/}
                     <Button extraClass={cls.deleteButton} children={"Delete"} onClick={handleDelete}/>
-                    {/*</Link>*/}
 
                     <Button extraClass={cls.cancelButton} children={"Cancel"} onClick={onClose}/>
                 </div>
