@@ -89,6 +89,7 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
         }
     }, [userSystem?.name, data])
 
+
     return (
         <>
             <EditableCard

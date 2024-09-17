@@ -42,6 +42,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                     <td onClick={() => navigation(`profile/${item.id}`)}>{item.user?.surname} {item.user?.name}</td>
                     <td>{item.user?.age}</td>
                     <td>{item.user?.language?.name}</td>
+                    <td>{item?.class_number?.number}</td>
                     <td>{item.user?.registered_date}</td>
                     <td onClick={() => {
                         setStudentId(item.id);
