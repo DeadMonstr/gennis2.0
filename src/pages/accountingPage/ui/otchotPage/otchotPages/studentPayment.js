@@ -1,10 +1,12 @@
 import {Select} from "shared/ui/select";
 import cls from "../otchot.module.sass"
-import {useCallback, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {value} from "lodash/seq";
 import {PaymentTable} from "../../../../../entities/accounting";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getClasses} from "../../../../../entities/accounting/model/selector/otchotAccountingSelector";
+import {getStudentPayment} from "../../../../../entities/accounting/model/thunk/otchotAccountingThunk";
+import {getBranch} from "../../../../../features/branchSwitcher";
 
 
 const months = [
@@ -19,6 +21,16 @@ export const StudentPayment = () => {
 
     const classes = useSelector(getClasses)
 
+    console.log(classes , "class")
+
+    const dispatch = useDispatch()
+
+    const branchID = useSelector(getBranch)
+    useEffect(() => {
+        dispatch(getStudentPayment(branchID.id))
+    }, [])
+
+    console.log(branchID.id , "branch id")
 
 
     const [month, setMonths] = useState(null)

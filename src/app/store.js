@@ -167,7 +167,7 @@ export const store = configureStore({
         flowsProfileSlice,
         classSlice,
         employerCategorySlice,
-        teacherGroupSlice,
+        // teacherGroupSlice,
         studiyngStudentDelSlice,
         groupAttendanceSlice,
         otchotAccountingSlice,

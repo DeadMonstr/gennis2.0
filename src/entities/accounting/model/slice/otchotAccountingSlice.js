@@ -1,37 +1,13 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {getStudentPayment} from "../thunk/otchotAccountingThunk";
 
 
 const initialState = {
     loading: false,
     error: false,
-    days: [],
+    years: [],
     months: [],
-    students: [
-        {
-            groupName : "1-blue",
-            accounting: [
-                {name: "sardor" , surname: "ikromov" , number: "9912321" , allDebt: 1232 , debt: 12 , payment: "cash"},
-                {name: "43243" , surname: "ikromov" , number: "9912321" , allDebt: 1232 , debt: 12 , payment: "payment"},
-                {name: "43243" , surname: "ikromov" , number: "9912321" , allDebt: 1232 , debt: 12 , payment: "payment"},
-                {name: "43243" , surname: "ikromov" , number: "9912321" , allDebt: 1232 , debt: 12 , payment: "payment"},
-                {name: "43243" , surname: "ikromov" , number: "9912321" , allDebt: 1232 , debt: 12 , payment: "payment"},
-                {name: "43243" , surname: "ikromov" , number: "9912321" , allDebt: 1232 , debt: 12 , payment: "payment"},
-                {name: "43243" , surname: "ikromov" , number: "9912321" , allDebt: 1232 , debt: 12 , payment: "payment"},
-            ]
-        },
-        {
-            groupName : "2-blue",
-            accounting: [
-                {name: "sardor" , surname: "ikromov" , number: "9912321" , allDebt: 1232 , debt: 12 , payment: "cash"},
-                {name: "sardor" , surname: "ikromov" , number: "9912321" , allDebt: 1232 , debt: 12 , payment: "payment"},
-                {name: "sardor" , surname: "ikromov" , number: "9912321" , allDebt: 1232 , debt: 12 , payment: "payment"},
-                {name: "sardor" , surname: "ikromov" , number: "9912321" , allDebt: 1232 , debt: 12 , payment: "payment"},
-                {name: "sardor" , surname: "ikromov" , number: "9912321" , allDebt: 1232 , debt: 12 , payment: "payment"},
-                {name: "sardor" , surname: "ikromov" , number: "9912321" , allDebt: 1232 , debt: 12 , payment: "payment"},
-                {name: "sardor" , surname: "ikromov" , number: "9912321" , allDebt: 1232 , debt: 12 , payment: "payment"},
-            ]
-        }
-    ],
+    students: [],
 
 }
 
@@ -40,7 +16,22 @@ const accountingOtchotSlice = createSlice({
     name: "otchotSlice",
     initialState,
     reducers: {},
-    extraReducers: builder => {}
+    extraReducers: builder =>
+        builder
+            .addCase(getStudentPayment.pending , state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(getStudentPayment.fulfilled , (state, action) => {
+                state.students =action.payload
+                console.log(action.payload , "action.payload")
+                state.loading = false
+                state.error= false
+            })
+            .addCase(getStudentPayment.rejected , state => {
+                state.loading = false
+                state.error = true
+            })
 })
 
 export default accountingOtchotSlice.reducer

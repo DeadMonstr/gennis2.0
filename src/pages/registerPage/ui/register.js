@@ -1,3 +1,4 @@
+
 import {classData} from "entities/class/model/selector/classSelector";
 import {getClassTypes} from "entities/class/model/thunk/classThunk";
 import {fetchClassNumberList, getSchoolClassNumbers} from "entities/students";
@@ -154,7 +155,6 @@ export const Register = () => {
         setLoading(true);
         const selectedTimes = shift.find(shift => shift.id === Number(selectedTime))
         const selectedLanguage = languages.find(lang => lang.id === Number(selectedLang));
-        const selectedSubjectData = subjects.find(subj => subj.id === Number(selectedSubject));
 
         let res = {
             user: {
