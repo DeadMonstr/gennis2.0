@@ -24,7 +24,7 @@ const data = [
     {
         name: "Madina",
         surname: "Abdurahmonova",
-        days: [true, false, true]
+        days: [true, false, true , true]
     }
 
 ]

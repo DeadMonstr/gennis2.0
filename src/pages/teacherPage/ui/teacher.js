@@ -15,6 +15,7 @@ import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
 import {useParams} from "react-router-dom";
 
 
+
 export const TeachersPage = () => {
     const {theme} = useTheme()
     const loading = useSelector(getTeacherLoading)
@@ -26,10 +27,11 @@ export const TeachersPage = () => {
     const userBranchId = id
 
 
-    useEffect(() => {
+    useEffect(() =>{
         if (!userBranchId) return;
         dispatch(fetchTeachersData({userBranchId}))
-    }, [dispatch, userBranchId])
+    } ,[dispatch,userBranchId])
+
 
 
     let PageSize = useMemo(() => 30, [])
@@ -37,13 +39,12 @@ export const TeachersPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [selected, setSelected] = useState()
     const [active, setActive] = useState()
-    const [isFilter, setIsFilter] = useState(false)
     const [activeSwitch, setActiveSwitch] = useState(false)
 
     const searchedUsers = useMemo(() => {
-        const filteredHeroes = isFilter ? filteredTeachersData.slice() : teachersData.slice()
+        const filteredHeroes =!filteredTeachersData || filteredTeachersData.length === 0 ? teachersData.slice() : filteredTeachersData.slice()
         setCurrentPage(1)
-        if (!search) return filteredHeroes
+        if (!search) return  filteredHeroes
         return filteredHeroes.filter(item =>
             (item?.user?.name?.toLowerCase().includes(search.toLowerCase()) ||
                 item?.user?.surname?.toLowerCase().includes(search.toLowerCase()))
@@ -79,17 +80,17 @@ export const TeachersPage = () => {
                     <h2>{activeSwitch ? "Deleted Teachers" : "Teachers"}</h2>
                     {
                         activeSwitch ?
-                            <DeletedTeachers
-                                data={teachersData}
-                                // data={searchedUsers}
-                            />
-                            :
-                            <Teachers
-                                theme={theme === "app_school_theme"}
-                                loading={getTeacherLoading}
-                                data={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
-                                // data={currentTableData}
-                            />
+                        <DeletedTeachers
+                            data={teachersData}
+                            // data={searchedUsers}
+                        />
+                        :
+                        <Teachers
+                            theme={ theme === "app_school_theme"}
+                            loading={getTeacherLoading}
+                            data={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
+                            // data={currentTableData}
+                        />
                     }
                 </div>
 
@@ -111,7 +112,6 @@ export const TeachersPage = () => {
                     setActiveSwitch={setActiveSwitch}
                     setActive={setActive}
                     active={active}
-                    isFilter={setIsFilter}
                 />
             </div>
 

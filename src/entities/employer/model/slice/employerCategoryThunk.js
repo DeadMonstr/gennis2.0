@@ -3,9 +3,9 @@ import {API_URL, headers, useHttp} from "../../../../shared/api/base";
 
 export const getEmployerCategory = createAsyncThunk(
     "employerCategory/getEmployerCategory",
-    async () => {
+    async (branchId) => {
         const {request} = useHttp()
 
-        return await request(`${API_URL}Teachers/salary-types/`, "GET", null, headers())
+        return await request(`${API_URL}Teachers/salary-types/?branch=${branchId}`, "GET", null, headers())
     }
 )

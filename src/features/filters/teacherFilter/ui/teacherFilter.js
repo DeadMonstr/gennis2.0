@@ -6,14 +6,12 @@ import {Select} from "shared/ui/select";
 import {Switch} from "shared/ui/switch";
 
 import cls from "../../filters.module.sass";
-import {fetchNewStudentsDataWithBranch, fetchStudyingStudentsDataWithBranch} from "entities/students";
+import {fetchNewStudentsDataWithBranch, fetchStudyingStudentsDataWithBranch} from "../../../../entities/students";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchSubjects, fetchLanguages, getLanguagesData, getSubjectsData} from "pages/registerPage";
-import {fetchTeachersDataWithFilter} from "entities/teachers/model/teacherThunk";
+import {fetchSubjects, fetchLanguages, getLanguagesData, getSubjectsData} from "../../../../pages/registerPage";
+import {fetchTeachersDataWithFilter} from "../../../../entities/teachers/model/teacherThunk";
 
-export const TeacherFilter = React.memo(({active, setActive, setActiveSwitch, activeSwitch, isFilter}) => {
-
-    const branch = localStorage.getItem("selectedBranch")
+export const TeacherFilter = React.memo(({active, setActive, activePage , setActiveSwitch , activeSwitch}) => {
     const dispatch = useDispatch()
     const [selectedAgeFrom, setSelectedAgeFrom] = useState()
     const [selectedAgeTo, setSelectedAgeTo] = useState()
@@ -22,55 +20,38 @@ export const TeacherFilter = React.memo(({active, setActive, setActiveSwitch, ac
     const languages = useSelector(getLanguagesData)
     const subjects = useSelector(getSubjectsData)
 
-    useEffect(() => {
-        if (selectedSubject || selectedLanguage || selectedAgeTo || selectedAgeFrom) {
-            dispatch(fetchTeachersDataWithFilter({
-                subjId: selectedSubject,
-                langId: selectedLanguage,
-                untilAge: selectedAgeTo,
-                fromAge: selectedAgeFrom,
-                userBranchId: branch
-            }))
-            isFilter(true)
-        }
-    }, [selectedSubject, selectedLanguage, selectedAgeTo, selectedAgeFrom])
-
     const onSelectSubject = (value) => {
         setSelectedSubject(value);
-        // const selectedSubjectData = subjects.find(subj => subj.id === Number(value));
-        // const subjectId = value !== "all" ? selectedSubjectData.id : "all";
-        // dispatch(fetchTeachersDataWithFilter({subjId: subjectId}))
-        //
-        // isFilter(true)
-        // setActive(false)
+        const selectedSubjectData = subjects.find(subj => subj.id === Number(value));
+        const subjectId = selectedSubjectData.id;
+        dispatch(fetchTeachersDataWithFilter({subjId: subjectId}))
+
+        setActive(false)
 
     }
-    // console.log(subjects, "fan")
 
     const onSelectLanguage = (value) => {
         setSelectedLanguage(value);
-        // const selectedLanguageData = languages.find(lang => lang.id === Number(value));
-        // const languageId = value !== "all" ? selectedLanguageData.id : "all"
-        // dispatch(fetchTeachersDataWithFilter({langId: languageId}))
-        // isFilter(true)
-        // setActive(false)
+        const selectedLanguageData = languages.find(lang => lang.id === Number(value));
+        const languageId = selectedLanguageData.id
+        dispatch(fetchTeachersDataWithFilter({langId: languageId}))
+        setActive(false)
 
     }
 
     const handleAgeFromBlur = (e) => {
         setSelectedAgeFrom(e.target.value);
-        // dispatch(fetchTeachersDataWithFilter({fromAge: e.target.value, untilAge: selectedAgeTo}))
-        //
-        // isFilter(true)
+        dispatch(fetchTeachersDataWithFilter({ fromAge: e.target.value, untilAge: selectedAgeTo }))
+
+
     }
 
     const handleAgeToBlur = (e) => {
         setSelectedAgeTo(e.target.value);
-        // dispatch(fetchTeachersDataWithFilter({fromAge: selectedAgeFrom, untilAge: e.target.value}))
-        // isFilter(true)
+        dispatch(fetchTeachersDataWithFilter({ fromAge: selectedAgeFrom, untilAge: e.target.value }))
     }
 
-    const onChangeSwitch = () => {
+    const onChangeSwitch =() =>{
         setActiveSwitch(!activeSwitch)
     }
 
@@ -92,10 +73,9 @@ export const TeacherFilter = React.memo(({active, setActive, setActiveSwitch, ac
 
                     <Select
                         title={"Fan"}
-                        options={[{name: "Hamma", id: "all"}, ...subjects]}
+                        options={subjects}
                         extraClass={cls.filter__select}
                         onChangeOption={(value) => onSelectSubject(value)}
-                        defaultValue={"all"}
                     />
 
                     <div className={cls.filter__age}>
@@ -119,11 +99,11 @@ export const TeacherFilter = React.memo(({active, setActive, setActiveSwitch, ac
 
                     <Select
                         title={"Til"}
-                        options={[{name: "Hamma", id: "all"}, ...languages]}
+                        options={languages}
                         extraClass={cls.filter__select}
                         onChangeOption={(value) => onSelectLanguage(value)}
-                        defaultValue={"all"}
                     />
+
 
 
                     <div className={cls.filter__switch}>

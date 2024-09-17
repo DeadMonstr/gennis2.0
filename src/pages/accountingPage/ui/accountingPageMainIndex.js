@@ -21,23 +21,22 @@ import {useNavigate, useParams} from "react-router";
 import {onChangeAccountingPage} from "entities/accounting/model/slice/accountingSlice";
 import {Button} from "shared/ui/button";
 import {Select} from "shared/ui/select";
-import {Radio} from "shared/ui/radio";
-import {onDeleteStudents} from "../../../entities/accounting/model/slice/studetntSlice";
-import {API_URL, headers, useHttp} from "../../../shared/api/base";
 
-import {getEmpSalary} from "../../../entities/accounting/model/thunk/employerSalary";
-import {EmployerSalaryPage} from "../index";
+import { useHttp} from "../../../shared/api/base";
+
+
+import {AccountingOtchotPage, EmployerSalaryPage} from "../index";
 import {TeacherSalaryPage} from "../index";
 import {StudentSalary} from "./accountingPages/studentSalary";
 import {Link} from "../../../shared/ui/link";
 import {AdditionalCosts} from "./accountingPages/additionalCosts";
 import {Capital} from "./accountingPages/capital";
-import {getEncashment} from "entities/accounting/model/selector/accountingSelector";
+import {getAccountingOtchot, getEncashment} from "entities/accounting/model/selector/accountingSelector";
 import {accountingThunk} from "entities/accounting/model/thunk/accountingThunk";
 import {AccountingFilter} from "features/filters/accountingFilter/accountingFilter";
 import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
-import {useSearchParams} from "react-router-dom";
-import {savePageTypeToLocalStorage, getPageTypeFromLocalStorage} from "features/pagesType";
+
+
 
 export const AccountingPageMainIndex = memo(() => {
     const types = [
@@ -50,8 +49,8 @@ export const AccountingPageMainIndex = memo(() => {
 
     return (
         <Routes>
-            <Route path={"list"} element={<MultiPage types={types} page={"accounting"} id={false}/>} />
-            <Route path={":id/*"} element={<AccountingPageMain/>} />
+            <Route path={"list"} element={<MultiPage types={types} page={"accounting"} id={false}/>}/>
+            <Route path={":id/*"} element={<AccountingPageMain/>}/>
 
         </Routes>
     )
@@ -59,80 +58,81 @@ export const AccountingPageMainIndex = memo(() => {
 
 
 const AccountingPageMain = () => {
-    let {"*": typePage} = useParams();
-    const getAccountingPage = useSelector(getAccountingSelect);
+    let {"*": typePage} = useParams()
+    const getAccountingPage = useSelector(getAccountingSelect)
 
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const {request} = useHttp();
-    const [active, setActive] = useState(false);
-    const [activeDel, setActiveDel] = useState(false);
-    const [selectedSalary, setSelectedSalary] = useState("");
-    const encashment = useSelector(getEncashment);
-    const {id} = useParams();
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const {request} = useHttp()
+    const [active, setActive] = useState(false)
+    const [activeDel, setActiveDel] = useState(false)
+    const encashment = useSelector(getEncashment)
+    const {id} = useParams()
 
-    const location = useLocation();
+    const [otchot, setOtchot] = useState(false)
 
-    useEffect(() => {
-        const savedSalary = getPageTypeFromLocalStorage("selectedSalary");
-        if (savedSalary) {
-            setSelectedSalary(savedSalary);
-        }
-    }, []);
 
     useEffect(() => {
-        if (selectedSalary) {
-            setPage(selectedSalary);
-        }
-    }, [selectedSalary]);
+        setPage(typePage)
+    }, [typePage])
+
 
     useEffect(() => {
-        dispatch(accountingThunk());
-    }, [dispatch]);
+        dispatch(accountingThunk())
+    }, [])
 
-    const setPage = useCallback((value) => {
-        dispatch(onChangeAccountingPage({value}));
-        navigate(`${value}`, {relative: "path"});
-        setSelectedSalary(value);
-        savePageTypeToLocalStorage("selectedSalary", value);
-    }, [dispatch, navigate]);
+    const setPage = useCallback((e) => {
+        dispatch(onChangeAccountingPage({value: e}))
+        navigate(`${e}`, {relative: "path"})
+    }, [navigate])
 
     const formatSalary = (payment_sum) => {
         return Number(payment_sum).toLocaleString();
     };
+    // const renderTable = renderTables()
 
     return (
+
         <div className={cls.accountingMain}>
             <div className={cls.accounting}>
                 <div className={cls.accounting__wrapper}>
                     <div className={cls.wrapper__filter}>
                         <Button type={"filter"} status={"filter"} onClick={() => setActive(!active)}>Filter</Button>
-                        <Select
-                            options={getAccountingPage}
-                            onChangeOption={setPage}
-                            defaultValue={selectedSalary}
-                            value={selectedSalary}
-                        />
+                        <Select options={getAccountingPage} onChangeOption={setPage}/>
                     </div>
+
+
                     <div className={cls.wrapper__middle}>
-                        <div className={cls.middle__box}>
-                            {encashment.payments?.map(item => (
-                                <div key={item.payment_type}>
-                                    {item?.payment_type}: {formatSalary(item.overall)}
-                                </div>
-                            ))}
-                        </div>
+                        {otchot ?
+                            <div className={cls.middle__box}>
+                                {encashment.payments?.map(item => (
+                                    <div>{item?.payment_type}: {formatSalary(item.overall)}</div>
+                                ))}
+                            </div>
+                            :
+                            null
+                        }
                         <div className={cls.typeExpenses}>
                             <Link to={`../../inkasatsiya/${id}`}>
-                                <Button>Inkasatsiya</Button>
+                                <Button>
+                                    Inkasatsiya
+                                    {/*Harajatlar to’plami*/}
+                                </Button></Link>
+                            <Link to={`otchot`}>
+                                <Button onClick={() => setOtchot(!otchot)} type={"filter"}>
+                                    buxgalteriya
+                                </Button>
                             </Link>
                         </div>
                     </div>
                 </div>
             </div>
 
+
+
             <Routes>
                 <Route
+
                     path={"studentsPayments"}
                     element={
                         <StudentSalary
@@ -143,12 +143,11 @@ const AccountingPageMain = () => {
                 />
                 <Route
                     path={"teachersSalary"}
-                    element={
-                        <TeacherSalaryPage
-                            deleted={activeDel}
-                            setDeleted={setActiveDel}
-                            path={"teachersSalary"}
-                        />
+                    element={<TeacherSalaryPage
+                        deleted={activeDel}
+                        setDeleted={setActiveDel}
+                        path={"teachersSalary"}
+                    />
                     }
                 />
                 <Route
@@ -171,19 +170,26 @@ const AccountingPageMain = () => {
                         />
                     }
                 />
-                <Route
-                    path={"capital"}
-                    element={
-                        <Capital
-                            deleted={activeDel}
-                            setDeleted={setActiveDel}
-                            path={"capital"}
-                        />
-                    }
+                <Route path={"capital"}
+                       element={
+                           <Capital
+                               deleted={activeDel}
+                               setDeleted={setActiveDel}
+                               path={"capital"}
+                           />
+                       }
+                />
+                <Route path={"otchot"}
+                       element={
+                           <AccountingOtchotPage
+
+                               path={"otchot"}
+                           />
+                       }
                 />
             </Routes>
-
-            <AccountingFilter setActive={setActive} active={active} setActiveDel={setActiveDel} activeDel={activeDel} />
+            <AccountingFilter setActive={setActive} active={active} setActiveDel={setActiveDel} activeDel={activeDel}/>
         </div>
+
     );
 }

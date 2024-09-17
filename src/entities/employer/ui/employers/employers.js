@@ -24,8 +24,6 @@ export const Employers = ({currentTableData, loading}) => {
 
     const renderEmployers = () => {
 
-        console.log(currentTableData, "currentTableData, filter epmloyees")
-
         if (loadingDef) {
             return (
                 <tr>
@@ -42,7 +40,7 @@ export const Employers = ({currentTableData, loading}) => {
         //     )
         // }
 
-        return currentTableData?.map((item, i) => {
+        return employerToRender?.map((item, i) => {
             if (typeof item === "object" && !Array.isArray(item)) {
                 return (
                     <tr>

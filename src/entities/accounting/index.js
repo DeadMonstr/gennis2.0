@@ -19,9 +19,16 @@ export {getEmployerSalary , getLoading , getDeletedEmployer} from "./model/selec
 export {getStudentPaymentes , getLoadingStudent , getDeletedStudent} from "./model/selector/student"
 export {getOverHeadType , getOverHeadLoading} from "./model/selector/additionalCosts"
 
+
+export {TeacherTable} from "./ui/accountingOtchot/teacherTable"
+export {EmpSalaryTable} from "./ui/accountingOtchot/empSalaryTable"
+export {PaymentTable} from "./ui/accountingOtchot/paymentTable"
+
+
 export {default as accountingSlice} from "./model/slice/accountingSlice"
 export {default as studentSlice} from "./model/slice/studetntSlice"
 export {default as employerSlice} from "./model/slice/employerSalary"
 export {default as teacher} from "./model/slice/teacher"
 export {default as overHeadSlice} from "./model/slice/additionalCosts"
 export {default as capitalSlice} from "./model/slice/capital"
+export {default as otchotAccountingSlice} from "./model/slice/otchotAccountingSlice"

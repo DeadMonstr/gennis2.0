@@ -135,3 +135,14 @@ export const moveToClass = createAsyncThunk(
     }
 )
 
+
+
+
+
+// export const getSchoolAttendance = createAsyncThunk(
+//     "groupProfileSlice/getSchoolAttendance",
+//     (id) => {
+//         const {request} = useHttp()
+//         return request(`${API_URL}Attendance/to_attend_school/${id}/`)
+//     }
+// )

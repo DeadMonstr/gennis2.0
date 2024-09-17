@@ -28,13 +28,9 @@ export const employersSlice = createSlice({
 
 
 
-            .addCase(fetchEmployersDataWithFilter.pending, (state) => {
-                state.loading = true
-                state.error = null
-            })
+            .addCase(fetchEmployersDataWithFilter.pending, (state) => {state.loading = true})
             .addCase(fetchEmployersDataWithFilter.fulfilled, (state, action) => {
                 state.loading = false
-                state.error = null
                 state.employerDataWithFilter = action.payload
             })
             .addCase(fetchEmployersDataWithFilter.rejected, (state) => {

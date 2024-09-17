@@ -10,6 +10,8 @@ export {CapitalOutsideHeader} from "./ui/capitalOutside/capitalOutsideHeader"
 export {CapitalInsideHeader} from './ui/capitalInside/capitalInsideHeader/capitalInsideHeader'
 export {CapitalInsideSecond} from './ui/capitalInside/capitalInsideSecond/CapitalInsideSecond'
 export {CapitalInsideProduct} from './ui/capitalInside/capitalInsideProduct/capitalInsideProduct'
+
+export {CategoryHeader} from "./ui/subCategory/categoryHeader/categoryHeader"
 //
 
 

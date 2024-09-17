@@ -2,3 +2,5 @@ export {AccountingPageMainIndex} from "pages/accountingPage/ui/accountingPageMai
 
 export {EmployerSalaryPage} from "./ui/accountingPages/employerSalary"
 export {TeacherSalaryPage} from "./ui/accountingPages/teacherSalary"
+
+export {AccountingOtchotPage} from "./ui/otchotPage/accountingOtchotPage"

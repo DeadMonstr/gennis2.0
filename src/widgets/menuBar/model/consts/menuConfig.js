@@ -143,7 +143,7 @@ export const menuConfig = [
     },
     {
         to: "accounting",
-        name: "Bugalteriya",
+        name: "Buxgalteriya ",
         icon: "fa-calculator",
         system: ["center","school"],
         roles: [ROLES.admin,ROLES.director,ROLES.programmer],
