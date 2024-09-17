@@ -1,8 +1,9 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {fetchFilteredStudents} from "./filterStudentsThunk"
+import {fetchDeletedNewStudentsThunk, fetchFilteredStudents} from "./filterStudentsThunk"
 
 const initialState = {
     students: null,
+    deletedNewStudents: [],
     loading: false,
     error: null
 }
@@ -23,6 +24,20 @@ export const filterStudentSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchFilteredStudents.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload ?? null
+            })
+
+            .addCase(fetchDeletedNewStudentsThunk.pending, state => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(fetchDeletedNewStudentsThunk.fulfilled, (state, action) => {
+                state.deletedNewStudents = action.payload
+                state.loading = false
+                state.error = null
+            })
+            .addCase(fetchDeletedNewStudentsThunk.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload ?? null
             })

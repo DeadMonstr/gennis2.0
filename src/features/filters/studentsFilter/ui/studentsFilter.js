@@ -1,36 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import classNames from "classnames";
-import { Modal } from "shared/ui/modal";
-import { Input } from "shared/ui/input";
-import { Select } from "shared/ui/select";
-import { Radio } from "shared/ui/radio";
-import { Switch } from "shared/ui/switch";
-import { getLanguagesData, getSubjectsData } from "pages/registerPage";
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+
+import {Modal} from "shared/ui/modal";
+import {Input} from "shared/ui/input";
+import {Select} from "shared/ui/select";
+import {Switch} from "shared/ui/switch";
+import {getLanguagesData, getSubjectsData} from "pages/registerPage";
+import {fetchLanguages, fetchSubjects} from "pages/registerPage";
+import {
+    fetchNewStudentsDataWithBranch,
+    fetchOnlyNewStudentsData,
+    fetchStudyingStudentsDataWithBranch
+} from "entities/students";
+
 import cls from "../../filters.module.sass";
-import { fetchLanguages, fetchSubjects } from "pages/registerPage";
-import { useDispatch, useSelector } from "react-redux";
-import {fetchNewStudentsDataWithBranch, fetchStudyingStudentsDataWithBranch} from "entities/students";
-import {getStudyingStudentsWithBranch} from "entities/students";
+import {fetchDeletedNewStudentsThunk} from "../model/filterStudentsThunk";
 
-const statusList = [
-    {
-        name: "green",
-        label: "Yashil",
-        extra: ""
-    },
-    {
-        name: "yellow",
-        label: "Sariq",
-        extra: cls.yellow
-    },
-    {
-        name: "red",
-        label: "Qizil",
-        extra: cls.red
-    }
-]
-
-export const StudentsFilter = React.memo(({ active, setActive, activePage, setData }) => {
+export const StudentsFilter = React.memo(({active, setActive, activePage, isFilter}) => {
 
     const [selectedAgeFrom, setSelectedAgeFrom] = useState("")
     const [selectedAgeTo, setSelectedAgeTo] = useState("")
@@ -38,61 +24,104 @@ export const StudentsFilter = React.memo(({ active, setActive, activePage, setDa
     const [selectedLang, setSelectedLanguage] = useState("")
     const [selectedClass, setSelectedClass] = useState("")
     const [selectedStatus, setSelectedStatus] = useState("")
+    const [isSwitch, setIsSwitch] = useState(false)
     const dispatch = useDispatch()
     const languages = useSelector(getLanguagesData)
     const subjects = useSelector(getSubjectsData)
 
+    useEffect(() => {
+        if (selectedAgeFrom || selectedAgeTo || selectedLang || selectedSubject || selectedClass) {
+            if (activePage === "studying_students") {
+                dispatch(fetchStudyingStudentsDataWithBranch({
+                    subjId: selectedSubject,
+                    langId: selectedLang,
+                    fromAge: selectedAgeFrom,
+                    untilAge: selectedAgeTo
+                }))
+                isFilter("studying_students")
+            } else {
+                dispatch(fetchNewStudentsDataWithBranch({
+                    subjId: selectedSubject,
+                    langId: selectedLang,
+                    fromAge: selectedAgeFrom,
+                    untilAge: selectedAgeTo
+                }));
+                isFilter("new_students")
+            }
+            // isFilter(true)
+        }
+    }, [selectedAgeFrom, selectedAgeTo, selectedSubject, selectedLang, selectedClass])
+
+    useEffect(() => {
+        setSelectedAgeTo("")
+        setSelectedSubject("")
+        setSelectedLanguage("")
+        setSelectedClass("")
+        setSelectedAgeFrom("")
+    }, [activePage])
+
     const onSelectSubject = (value) => {
         setSelectedSubject(value);
-        const selectedSubjectData = subjects.find(subj => subj.id === Number(value));
-        const subjectId = selectedSubjectData.id;
-        {
-            activePage === "studying_students"
-                ?
-                dispatch(fetchStudyingStudentsDataWithBranch({subjId: subjectId}))
-                :
-                dispatch(fetchNewStudentsDataWithBranch({ subjId: subjectId }));
-        }
-        setActive(false)
+        // const selectedSubjectData = subjects.find(subj => subj.id === Number(value));
+        // const subjectId = value !== "all" ? selectedSubjectData.id : "all";
+        // {
+        //     activePage === "studying_students"
+        //         ?
+        //         dispatch(fetchStudyingStudentsDataWithBranch({subjId: subjectId}))
+        //         :
+        //         dispatch(fetchNewStudentsDataWithBranch({subjId: subjectId}));
+        // }
+        // setActive(false)
     }
 
     const onSelectLanguage = (value) => {
         setSelectedLanguage(value);
-        const selectedLanguageData = languages.find(lang => lang.id === Number(value));
-        const languageId = selectedLanguageData.id
-        {
-            activePage === "studying_students"
-            ?
-                dispatch(fetchStudyingStudentsDataWithBranch({langId: languageId}))
-                :
-                dispatch(fetchNewStudentsDataWithBranch({langId: languageId}))
-        }
-        setActive(false)
+        // const selectedLanguageData = languages.find(lang => lang.id === Number(value));
+        // const languageId = value !== "all" ? selectedLanguageData.id : "all"
+        // {
+        //     activePage === "studying_students"
+        //         ?
+        //         dispatch(fetchStudyingStudentsDataWithBranch({langId: languageId}))
+        //         :
+        //         dispatch(fetchNewStudentsDataWithBranch({langId: languageId}))
+        // }
+        // setActive(false)
 
     }
 
     const handleAgeFromBlur = (e) => {
         setSelectedAgeFrom(e.target.value);
-        {
-            activePage === "studying_students"
-            ?
-                dispatch(fetchStudyingStudentsDataWithBranch({ fromAge: e.target.value, untilAge: selectedAgeTo }))
-                :
-                dispatch(fetchNewStudentsDataWithBranch({ fromAge: e.target.value, untilAge: selectedAgeTo }))
-        }
+        // {
+        //     activePage === "studying_students"
+        //         ?
+        //         dispatch(fetchStudyingStudentsDataWithBranch({fromAge: e.target.value, untilAge: selectedAgeTo}))
+        //         :
+        //         dispatch(fetchNewStudentsDataWithBranch({fromAge: e.target.value, untilAge: selectedAgeTo}))
+        // }
 
     }
 
     const handleAgeToBlur = (e) => {
         setSelectedAgeTo(e.target.value);
-        {
-            activePage === "studying_students"
-            ?
-                dispatch(fetchStudyingStudentsDataWithBranch({ fromAge: selectedAgeFrom, untilAge: e.target.value }))
-            :
-            dispatch(fetchNewStudentsDataWithBranch({ fromAge: selectedAgeFrom, untilAge: e.target.value }));
-        }
+        // {
+        //     activePage === "studying_students"
+        //         ?
+        //         dispatch(fetchStudyingStudentsDataWithBranch({fromAge: selectedAgeFrom, untilAge: e.target.value}))
+        //         :
+        //         dispatch(fetchNewStudentsDataWithBranch({fromAge: selectedAgeFrom, untilAge: e.target.value}));
+        // }
 
+    }
+
+    const handleSwitchData = () => {
+        const newState = !isSwitch;
+        setIsSwitch(newState);
+        if (newState) {
+            dispatch(fetchDeletedNewStudentsThunk());
+        } else {
+            dispatch(fetchOnlyNewStudentsData());
+        }
+        isFilter(newState ? "deleted_students" : "new_students");
     }
 
     useEffect(() => {
@@ -113,9 +142,10 @@ export const StudentsFilter = React.memo(({ active, setActive, activePage, setDa
                     {
                         activePage !== "deleted" ? <Select
                             title={"Fan"}
-                            options={subjects}
+                            options={[{name: "Hamma", id: "all"}, ...subjects]}
                             extraClass={cls.filter__select}
                             onChangeOption={(value) => onSelectSubject(value)}
+                            defaultValue={"all"}
                         /> : null
                     }
 
@@ -124,6 +154,7 @@ export const StudentsFilter = React.memo(({ active, setActive, activePage, setDa
                             title={"Sinf"}
                             extraClass={cls.filter__select}
                             onChangeOption={setSelectedClass}
+                            defaultValue={"all"}
                         /> : null
                     }
 
@@ -147,18 +178,19 @@ export const StudentsFilter = React.memo(({ active, setActive, activePage, setDa
                     </div>
                     <Select
                         title={"Til"}
-                        options={languages}
+                        options={[{name: "Hamma", id: "all"}, ...languages]}
                         extraClass={cls.filter__select}
                         onChangeOption={(value) => onSelectLanguage(value)}
+                        defaultValue={"all"}
                     />
                     <div className={cls.filter__switch}>
                         <p>O’chirilgan</p>
-                        <Switch disabled />
+                        <Switch onChangeSwitch={handleSwitchData} activeSwitch={isSwitch}/>
                     </div>
-                    <div className={cls.filter__switch}>
-                        <p>Filterlangan</p>
-                        <Switch />
-                    </div>
+                    {/*<div className={cls.filter__switch}>*/}
+                    {/*    <p>Filterlangan</p>*/}
+                    {/*    <Switch />*/}
+                    {/*</div>*/}
                 </div>
             </div>
         </Modal>

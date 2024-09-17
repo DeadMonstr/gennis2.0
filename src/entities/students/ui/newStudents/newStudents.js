@@ -5,65 +5,55 @@ import {useNavigate} from "react-router";
 import {Input} from "shared/ui/input";
 import cls from "entities/students/ui/newStudents/newStudents.module.sass";
 import {Table} from "shared/ui/table";
-import {StudentsFilter} from "features/filters/studentsFilter";
+import {getDeletedNewStudents, StudentsFilter} from "features/filters/studentsFilter";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
+import {StudiyngStudentDelModal} from "../../../../features/studiyngStudentDelModal";
 
 export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) => {
 
     const [active, setActive] = useState(false);
+    const [studentId, setStudentId] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
     const navigation = useNavigate()
     const dispatch =  useDispatch()
     const getNewSt = useSelector(getStudentsWithBranch)
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
-
+    const getDeleted = useSelector(getDeletedNewStudents)
+    console.log(getDeleted, 'eefe')
 
 
 
     const renderStudents = () => {
-
-        const studentToRender = getNewSt && getNewSt.length > 0 ? getNewSt : currentTableData
-        // if (!studentToRender || studentToRender.length === 0)
-        // {
-        //     return (
-        //         <DefaultPageLoader/>
-        //     )
-        // }
-           return studentToRender?.map((item,i) => {
-               return (
-                   <tr
-                   >
-                       <td>{i + 1}</td>
-                       <td  onClick={() => navigation(`profile/${item.id}`)}>{item.user?.surname} {item.user?.name}</td>
-                       <td>{item.user?.age}</td>
-                       <td>{item.user?.language?.name}</td>
-                       {
-                           userSystem?.name === "school" ? <>
-                               <td>{item?.class_number?.number}</td>
-                           </> : <>
-                               <td>{item.user?.phone}</td>
-                               <td>{
-                                   !item.subject[0]?.name || item.subject === 0 ? "Fani hali tanlanmagan" : item.subject[0]?.name
-                               }</td>
-                           </>
-                       }
-
-                       <td>{item.user?.registered_date}</td>
-                       {/*{*/}
-                       {/*    theme ? <Input*/}
-                       {/*        type={"checkbox"}*/}
-                       {/*        onChange={() => setSelectStudents(prev => {*/}
-                       {/*            if (prev.filter(i => i === item.id)[0]) {*/}
-                       {/*                return prev.filter(i => i !== item.id)*/}
-                       {/*            } else {*/}
-                       {/*                return [...prev, item.id]*/}
-                       {/*            }*/}
-                       {/*        })}*/}
-                       {/*    />: null*/}
-                       {/*}*/}
-                   </tr>
-               )
-           })
+        if (getDeleted && getDeleted.length > 0) {
+            return getDeleted?.map((item, i) => (
+                <tr key={item.id}>
+                    <td>{i + 1}</td>
+                    <td onClick={() => navigation(`profile/${item.id}`)}>{item.student.user.surname} {item.student.user.name}</td>
+                    <td>{item.student?.user?.age}</td>
+                    <td>{item.student?.user?.language?.name}</td>
+                    <td>{item.student?.class_number}</td>
+                    <td>{item.user?.registered_date}</td>
+                </tr>
+            ));
+        } else {
+            return currentTableData?.map((item, i) => (
+                <tr key={item.id}>
+                    <td>{i + 1}</td>
+                    <td onClick={() => navigation(`profile/${item.id}`)}>{item.user?.surname} {item.user?.name}</td>
+                    <td>{item.user?.age}</td>
+                    <td>{item.user?.language?.name}</td>
+                    <td>{item.user?.registered_date}</td>
+                    <td onClick={() => {
+                        setStudentId(item.id);
+                        setIsOpen(!isOpen);
+                    }}>
+                        <i style={{color: '#FF3737FF'}} className={`fa-solid fa-xmark ${cls.xmark}`}></i>
+                    </td>
+                </tr>
+            ));
         }
+    };
+
 
 
     const render = renderStudents()
@@ -86,9 +76,11 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                         }
 
                         <th>Reg. sana</th>
-                        {/*{*/}
-                        {/*    theme ? <th/> : null*/}
-                        {/*}*/}
+                        {
+                            getDeleted && getDeleted.length > 0 ?
+                                null :  <th>O'chirish</th>
+
+                        }
                     </tr>
                     </thead>
                     <tbody>
@@ -97,7 +89,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                 </Table>
 
             </div>
-
+            <StudiyngStudentDelModal userId={studentId} onClose={setIsOpen} isOpen={isOpen}/>
             <StudentsFilter
                 active={active}
                 setActive={setActive}

@@ -1,0 +1,1 @@
+export {SchoolHomeMain} from "./ui/schoolHomeMain/schoolHomeMain"

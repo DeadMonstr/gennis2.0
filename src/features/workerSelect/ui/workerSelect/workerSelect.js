@@ -4,7 +4,7 @@ import makeAnimated from 'react-select/animated';
 
 const animatedComponents = makeAnimated();
 
-export const AnimatedMulti = React.memo(({ options, onChange ,value, extraClass }) => {
+export const AnimatedMulti = React.memo(({ options, onChange, value, extraClass, fontSize }) => {
     const handleChange = (selectedOptions) => {
         if (onChange) {
             onChange(selectedOptions);
@@ -15,9 +15,19 @@ export const AnimatedMulti = React.memo(({ options, onChange ,value, extraClass 
         <Select
             className={extraClass}
             styles={{
-                control: (baseStyles, state) => ({
+                control: (baseStyles) => ({
                     ...baseStyles,
-                    fontSize: '20px',
+                    fontSize: fontSize ? `${fontSize}px` : '16px',
+                }),
+                option: (provided) => ({
+                    ...provided,
+                    fontSize: fontSize ? `${fontSize}px` : '16px',
+                    display: 'block',
+                    whiteSpace: 'normal',
+                }),
+                singleValue: (provided) => ({
+                    ...provided,
+                    fontSize: fontSize ? `${fontSize}px` : '16px',
                 }),
             }}
             closeMenuOnSelect={false}
