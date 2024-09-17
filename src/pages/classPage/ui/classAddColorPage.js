@@ -34,6 +34,7 @@ export const ClassAddColorPage = ({color, setEdit, edit}) => {
 
 
     }
+
     const deleteColor = () => {
         const id = edit.id
         request(`${API_URL}Class/class_colors-delete/${id}/`, "DELETE", null, headers())

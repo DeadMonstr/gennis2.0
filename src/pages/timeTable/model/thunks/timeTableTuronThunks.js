@@ -51,3 +51,12 @@ export const fetchTimeTableColors = createAsyncThunk(
         return await  request(`${API_URL}Class/class_colors/`, "GET", null, headers())
     }
 )
+
+
+export const fetchTimeTableClassView  = createAsyncThunk(
+    "TimeTableTuronSlice/fetchTimeTableClassView",
+    async (data) => {
+        const {request} = useHttp()
+        return await  request(`${API_URL}SchoolTimeTable/timetable-lessons-class/?week=${data.id}&branch=${data.branch}`, "GET", null, headers())
+    }
+)

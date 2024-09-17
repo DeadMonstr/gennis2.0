@@ -27,6 +27,7 @@ const TimeTableTuronPageFilters = (props) => {
         setFullScreen,
         isSelected,
         setIsSelected,
+        setClassView,
         groups
     } = props
 
@@ -108,8 +109,11 @@ const TimeTableTuronPageFilters = (props) => {
                     </Button>
                 </div>
 
+                <div style={{display: "flex"}}>
+                    <Button onClick={() => setFullScreen(true)}>Full screen</Button>
+                    <Button onClick={() => setClassView(true)}>Class view</Button>
+                </div>
 
-                <Button onClick={() => setFullScreen(true)}>Full screen</Button>
                 <Select
                     onChangeOption={onChangeOptionClassLesson}
                     options={groups}
