@@ -13,9 +13,9 @@ export const AccountingFilter = ({setActive, active , setActiveDel , activeDel})
                         Filter
                     </h1>
                     <div className={cls.filter__container}>
-                        {/*<Select extraClass={cls.filter_select} />*/}
-                        {/*<Select extraClass={cls.filter_select}/>*/}
-                        {/*<Select extraClass={cls.filter_select}/>*/}
+                        <Select extraClass={cls.filter_select} />
+                        <Select extraClass={cls.filter_select}/>
+                        <Select extraClass={cls.filter_select}/>
                         <div className={cls.filter__switch}>
                             <p>
                                 O'chirilganlar

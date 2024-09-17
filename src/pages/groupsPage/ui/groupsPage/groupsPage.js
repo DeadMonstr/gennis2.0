@@ -1,3 +1,4 @@
+import {getUserBranchId} from "entities/profile/userProfile";
 import {getSystem} from "features/themeSwitcher";
 import React, {useEffect, useMemo, useState} from "react";
 import {Link, useParams} from "react-router-dom";
@@ -9,8 +10,7 @@ import {
     fetchGroupsData,
     getDeletedGroupsData,
     DeletedGroups,
-    getGroupsLoading,
-    getGroupListWithFilter
+    getGroupsLoading
 } from "entities/groups";
 import {getSearchValue} from "features/searchInput";
 import {GroupsFilter} from "features/filters/groupsFilter";
@@ -27,7 +27,6 @@ export const GroupsPage = () => {
 
     const dispatch = useDispatch()
     const data = useSelector(getGroupsListData)
-    const filteredData = useSelector(getGroupListWithFilter)
     const deletedGroupsData = useSelector(getDeletedGroupsData)
     const loading = useSelector(getGroupsLoading)
     const {"*": id} = useParams()
@@ -35,7 +34,6 @@ export const GroupsPage = () => {
     const system = useSelector(getSystem)
     const [deletedGroups, setDeletedGroups] = useState([])
     const [active, setActive] = useState(false);
-    const [isFilter, setIsFilter] = useState(false)
     const [activeSwitch, setActiveSwitch] = useState(false)
     const search = useSelector(getSearchValue)
     let PageSize = useMemo(() => 50, [])
@@ -45,7 +43,7 @@ export const GroupsPage = () => {
 
 
     const searchedUsers = useMemo(() => {
-        const filteredHeroes = isFilter ? filteredData?.slice() : data?.slice()
+        const filteredHeroes = data?.slice()
         setCurrentPage(1)
 
 
@@ -54,7 +52,7 @@ export const GroupsPage = () => {
         return filteredHeroes.filter(item =>
             item.name?.toLowerCase().includes(search.toLowerCase())
         )
-    }, [data, setCurrentPage, search, isFilter, filteredData])
+    }, [data, setCurrentPage, search])
 
     useEffect(() => {
         setDeletedGroups(deletedGroupsData)
@@ -125,7 +123,6 @@ export const GroupsPage = () => {
                     setActiveSwitch={setActiveSwitch}
                     setActive={setActive}
                     active={active}
-                    isFilter={setIsFilter}
                 />
             </div>
         </MultiPage>

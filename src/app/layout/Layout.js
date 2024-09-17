@@ -9,11 +9,10 @@ import {getUserId, getUserRefreshLoading} from "pages/loginPage"
 
 import cls from "./Layout.module.sass"
 import {Alert} from "features/alert";
-import {fetchLocationsThunk, getLocations, getSelectedLocations} from "features/locations";
-import {fetchBranchesByLocationsThunk, getBranch, onDeleteBranch} from "features/branchSwitcher";
-import {fetchThemeSwitcherSystemsThunk, getSystem} from "features/themeSwitcher";
+import {getLocations, getSelectedLocations} from "features/locations";
+import {getBranch} from "features/branchSwitcher";
+import {getSystem} from "features/themeSwitcher";
 import {getBranchStatus} from "features/branchSwitcher/model/selector/brachSwitcherSelector";
-import {getSystemInited} from "features/themeSwitcher/modal/selector/themeSwitcherSystems";
 
 
 export const Layout = () => {
@@ -33,16 +32,13 @@ export const Layout = () => {
 
     const dispatch = useDispatch()
 
+    // const system = useSelector(getSystem)
 
     useEffect(() => {
         if (userId) {
             dispatch(fetchUserProfileData(userId))
         }
     }, [userId, refreshLoading])
-
-
-
-
 
 
     return (

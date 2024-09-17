@@ -74,15 +74,6 @@ export const AppRouter = () => {
                                     />
                                 )
                             }
-
-                            <Route
-                                path={"flows/flow-list"}
-                                element={<FlowListPage/>}
-                            />
-
-
-
-
                         </Route>
 
                         <Route element={<RequireHeader header={false}/>}>
@@ -99,19 +90,14 @@ export const AppRouter = () => {
                                     />
                                 )
                             }
-                            <Route
-                                path={"flows/flowsProfile/:id"}
-                                element={<FlowProfileNavigators/>}
-                            />
-
-                            <Route
-                                path={"profile"}
-                                element={<StudentProfilePage/>}
-                            />
                         </Route>
 
 
 
+                        <Route
+                            path={"profile"}
+                            element={<StudentProfilePage/>}
+                        />
 
                         {/*<Route*/}
                         {/*    path={"classProfile"}*/}
@@ -122,8 +108,19 @@ export const AppRouter = () => {
                             path={"molasses"}
                             element={<ClassMolassesPage/>}
                         />
+                        <Route
+                            path={"flows/flowsProfile/:id"}
+                            element={<FlowProfileNavigators/>}
+                        />
 
-
+                        <Route
+                            path={"flows/flow-list"}
+                            element={<FlowListPage/>}
+                        />
+                        <Route
+                            path={"classColorAdd"}
+                            element={<ClassAddColorPage/>}
+                        />
 
                         {/*<Route*/}
                         {/*    path={"calendar"}*/}

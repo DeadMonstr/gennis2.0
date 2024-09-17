@@ -5,11 +5,11 @@ import {DeletedEmployers, Employers} from "entities/employer";
 import React, {useEffect, useMemo, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {fetchEmployersData} from "entities/employer/model/slice/employersThunk";
-import {getEmployersData, getEmployerDataWithFilter} from "entities/employer/model/selector/employersSelector";
+import {getEmployersData} from "entities/employer/model/selector/employersSelector";
 import {EmployeesFilter} from "features/filters/employeesFilter";
 import {getSearchValue} from "features/searchInput";
 import {Pagination} from "features/pagination";
-import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
+import {MultiPage} from "../../../widgets/multiPage/ui/MultiPage/MultiPage";
 import {useParams} from "react-router-dom";
 import {getBranch} from "features/branchSwitcher";
 import {useNavigate} from "react-router";
@@ -20,12 +20,9 @@ export const EmployerPage = () => {
     const branch = useSelector(getBranch)
     const dispatch = useDispatch()
     const employersData = useSelector(getEmployersData)
-    const filteredEmployersData = useSelector(getEmployerDataWithFilter)
     const [activeFilter, setActiveModal] = useState(false)
-    const [isFilter, setIsFilter] = useState(false)
     const PageSize = useMemo(() => 30, []);
     const [currentPage, setCurrentPage] = useState(1);
-    const [currentTableData, setCurrentTableData] = useState([])
     const [activeSwitch, setActiveSwitch] = useState(false)
     const [activeCategory, setActiveCategory] = useState(false)
     const search = useSelector(getSearchValue);
@@ -33,25 +30,21 @@ export const EmployerPage = () => {
     const navigation = useNavigate()
     const userBranchId = id
 
-    console.log(isFilter, "isFilter")
-
     useEffect(() => {
         if (branch?.id)
-            dispatch(fetchEmployersData({branch: branch?.id}))
+        dispatch(fetchEmployersData({branch: branch?.id}))
     }, [branch?.id])
 
     const searchedEmployers = useMemo(() => {
-        const filteredEmployees = isFilter ?
-            filteredEmployersData?.filter(item => !item.deleted) :
-            employersData?.filter(item => !item.deleted);
+        const filteredRooms = employersData?.filter(item => !item.deleted) || [];
         setCurrentPage(1);
 
-        if (!search) return filteredEmployees;
+        if (!search) return filteredRooms;
 
-        return filteredEmployees.filter(item =>
+        return filteredRooms.filter(item =>
             item.user?.name?.toLowerCase().includes(search.toLowerCase())
         );
-    }, [employersData, search, isFilter, filteredEmployersData]);
+    }, [employersData, search]);
 
     const types = [
         {
@@ -76,10 +69,11 @@ export const EmployerPage = () => {
                         :
                         <>
                             <Employers
-                                currentTableData={currentTableData}
+                                currentTableData={searchedEmployers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
                             />
                             <Pagination
-                                setCurrentTableData={setCurrentTableData}
+                                setCurrentTableData={() => {
+                                }}
                                 search={search}
                                 users={searchedEmployers}
                                 setCurrentPage={setCurrentPage}
@@ -93,13 +87,8 @@ export const EmployerPage = () => {
                 }
 
 
-                <EmployeesFilter
-                    activeSwitch={activeSwitch}
-                    setActiveSwitch={setActiveSwitch}
-                    active={activeFilter}
-                    setActive={setActiveModal}
-                    isFilter={setIsFilter}
-                />
+                <EmployeesFilter activeSwitch={activeSwitch} setActiveSwitch={setActiveSwitch} active={activeFilter}
+                                 setActive={setActiveModal}/>
             </div>
         </MultiPage>
 

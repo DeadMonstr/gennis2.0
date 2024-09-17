@@ -9,29 +9,29 @@ import {Select} from "shared/ui/select";
 import cls from "./groupProfileAttendanceForm.module.sass";
 import {useNavigate} from "react-router";
 
-const data = [
-    {
-        name: "Madina",
-        surname: "Abdurahmonova",
-        days: [true, false, true, true, false, true, true, false, true, true, false, true, false , true ]
-    },
-    {
-        name: "Madina",
-        surname: "Abdurahmonova",
-        days: [true, false, true, true, false, true, true, false, true, true, false, true, false , true]
-    },
-    {
-        name: "Madina",
-        surname: "Abdurahmonova",
-        days: [true, false, true, false, false, true, true, false, true, true, false, true, false , false]
-    },
-    {
-        name: "Madina",
-        surname: "Abdurahmonova",
-        days: [true, false, true, true, false, true, false, false, true, false, false, true, false , true]
-    }
-
-]
+// const data = [
+//     {
+//         name: "Madina",
+//         surname: "Abdurahmonova",
+//         days: [true, false, true, true, false, true, false, false, true, false, false, true, false , true , false , true]
+//     },
+//     {
+//         name: "Madina",
+//         surname: "Abdurahmonova",
+//         days: [true, false, true, true, false, true, false, false, true, false, false, true, false , true , false , true]
+//     },
+//     {
+//         name: "Madina",
+//         surname: "Abdurahmonova",
+//         days: [true, false, true, true, false, true, false, false, true, false, false, true, false , true , false , true]
+//     },
+//     {
+//         name: "312323",
+//         surname: "Abdurahmonova",
+//         days: [true, false, true, true, false, true, false, false, true, false, false, true, false , true , false , true , false, true]
+//     }
+//
+// ]
 const daysData = [
     {
         number: "01",
@@ -87,19 +87,21 @@ const daysData = [
     }
 ]
 
-export const GroupProfileAttendanceForm = memo(({attendance, setAttendance}) => {
+export const GroupProfileAttendanceForm = memo(({attendance, setAttendance , data}) => {
+
+
 
     const navigate = useNavigate()
 
     const [active, setActive] = useState(false)
 
     const renderAttendance = (limit = 3) => {
-        return data.map(item =>
+        return data?.map(item =>
             <tr>
                 <td/>
-                <td>{item.name} {item.surname}</td>
+                <td>{item?.user?.name} {item?.user?.surname}</td>
                 {
-                    item.days.map((i, index) => {
+                    item?.days?.map((i, index) => {
                         if (index >= limit) return null
                         return (
                             <td>
@@ -116,6 +118,8 @@ export const GroupProfileAttendanceForm = memo(({attendance, setAttendance}) => 
     }
 
     const render = renderAttendance()
+
+    const renderModule = renderAttendance(100)
 
     return (
         <>
@@ -182,7 +186,7 @@ export const GroupProfileAttendanceForm = memo(({attendance, setAttendance}) => 
                         </tr>
                         </thead>
                         <tbody>
-                        {render}
+                        {renderModule}
                         </tbody>
                     </Table>
                 </div>

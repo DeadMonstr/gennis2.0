@@ -17,7 +17,7 @@ import {
     getEmployerSalary,
     getTeacherSalary, getInkasatsiya,
     getGroupHistory,
-    getRouteClassProfile
+    getRouteClassProfile, getOtchot
 } from "shared/const/routers";
 
 
@@ -39,6 +39,7 @@ import {GiveSalaryPage, GiveTeacherSalaryPage} from "pages/giveSalaryPage";
 import {Branch, Education, Location, System} from "entities/editCreates";
 import {Inkasatsiya} from "pages/inkasatsiyaPage";
 import {StudentProfileGroupsHistory} from "entities/profile/studentProfile";
+import {AccountingOtchotPage} from "../../../pages/accountingPage";
 
 export const routersConfigProfile = [
     {
@@ -153,6 +154,12 @@ export const routersConfigProfile = [
         name: "inkasatsiya",
         path: getInkasatsiya(":idBranch"),
         element: <Inkasatsiya/>
+    },
+
+    {
+        name: "otchoq",
+        path: getOtchot(),
+        element: <AccountingOtchotPage/>
     },
     {
         name: "History",

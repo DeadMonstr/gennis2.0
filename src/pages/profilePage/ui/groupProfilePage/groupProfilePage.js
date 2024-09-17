@@ -1,5 +1,5 @@
 import {getNextLesson} from "entities/profile/groupProfile/model/groupProfileSlice";
-import {fetchGroupProfileNextLesson} from "entities/profile/groupProfile/model/groupProfileThunk";
+import {fetchGroupProfileNextLesson, getSchoolAttendance} from "entities/profile/groupProfile/model/groupProfileThunk";
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import classNames from "classnames";
@@ -51,6 +51,7 @@ import {Button} from "../../../../shared/ui/button";
 import {Table} from "../../../../shared/ui/table";
 import {getAttendance} from "../../model/selector/groupAttendanceSelector";
 import {onChecked} from "../../model/slice/groupAttendanceSlice";
+import {getGroupAttendance} from "../../../../entities/profile/groupProfile/model/groupProfileSelector";
 
 export const GroupProfilePage = () => {
 
@@ -63,6 +64,7 @@ export const GroupProfilePage = () => {
     const {id: branch} = useSelector(getBranch)
     const system = useSelector(getSystem)
     const systemId = useSelector(getUserSystemId)
+    // const groupAttendance  = useSelector(getGroupAttendance)
 
     const [active, setActive] = useState(false)
 
@@ -70,6 +72,7 @@ export const GroupProfilePage = () => {
 
     useEffect(() => {
         dispatch(fetchGroupProfile({id}))
+        // dispatch(getSchoolAttendance(id))
         dispatch(fetchSubjects())
         dispatch(fetchLanguages())
         dispatch(fetchReasons())
@@ -158,7 +161,6 @@ export const GroupProfilePage = () => {
     }, [branch, data, timeTable, system])
 
 
-
     if (loading) {
         return <DefaultPageLoader/>
     } else return (
@@ -174,12 +176,12 @@ export const GroupProfilePage = () => {
                 {/*<GroupProfileTeacher setActive={setActiveModal}/>*/}
                 <GroupProfileDeleteForm branch={branch} system={system}/>
                 {/*<GroupProfileStudents/>*/}
-                <GroupProfileAttendanceForm setAttendance={setAttendance} attendance={attendance}/>
-
+                <GroupProfileAttendanceForm data={data.students}   setAttendance={setAttendance} attendance={attendance}/>
+                {/*<GroupProfileAttendance/>*/}
                 {
                     system.name === "center" ? <>
                         <GroupProfileStatistics setActive={setActive}/>
-                        <GroupProfileAttendance/>
+
                         <GroupProfileTimeForm/>
                         {/*<GroupProfileSubjectList/>*/}
                         <GroupProfileMore/>

@@ -19,7 +19,6 @@ export const CategoryProfile = () => {
 
     return (
         <div>
-            dasdsa312
             <CategoryProfileProfile/>
         </div>
     );

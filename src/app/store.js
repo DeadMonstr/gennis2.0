@@ -10,7 +10,7 @@ import {filteredStudents} from "features/filters/studentsFilter";
 import {filteredEmployees} from "features/filters/employeesFilter";
 import {filteredGroups} from "features/filters/groupsFilter";
 import {filteredRoomsSlice} from "features/filters/roomsFilter";
-import {deletedGroupsSlice, groupsSlice} from "entities/groups";
+import {deletedGroupsSlice, groupAttendance, groupsSlice} from "entities/groups";
 // import {user} from "entities/user";
 import {studentProfilePayment} from "entities/profile/studentProfile";
 import {studentProfileBooks} from "entities/profile/studentProfile";
@@ -45,7 +45,7 @@ import {roomImageSlice} from "features/roomImagePareModal";
 import {
     accountingSlice,
     capitalSlice,
-    employerSlice,
+    employerSlice, otchotAccountingSlice,
     overHeadSlice,
     studentSlice,
     teacher
@@ -76,7 +76,6 @@ import {locationsSlice} from "features/locations"
 import {themeSwitcherSlice} from "features/themeSwitcher"
 import {branchSwitcherSlice} from "features/branchSwitcher"
 import {multiPageSlice} from "widgets/multiPage"
-import {teacherGroupSlice} from "entities/teachers";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -166,9 +165,9 @@ export const store = configureStore({
         flowsProfileSlice,
         classSlice,
         employerCategorySlice,
-        teacherGroupSlice,
-        employerCategorySlice,
-        groupAttendanceSlice
+        groupAttendanceSlice,
+        otchotAccountingSlice,
+        groupAttendance
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

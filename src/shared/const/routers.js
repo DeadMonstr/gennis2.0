@@ -55,6 +55,9 @@ export const getAccounting = (id) => `accounting/*`
 export const getInkasatsiya = (id) => `inkasatsiya/${id}/*`
 
 
+export const getOtchot = () => `accounting/:id/otchot/*`
+
+
 export const getGroupHistory = (id) => `students/profile/history/${id}`
 
 export const getRouteClassProfile = (id) => `groups/classProfile/${id}`

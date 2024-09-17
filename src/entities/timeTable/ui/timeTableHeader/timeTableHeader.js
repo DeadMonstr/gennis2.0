@@ -32,16 +32,16 @@ export const TimeTableHeader = memo((props) => {
                 >
                     Create Time
                 </Button>
-                {/*<Select title={"Branch"}/>*/}
+                <Select title={"Branch"}/>
             </div>
-            {/*<div className={cls.header__container}>*/}
-            {/*    <Button*/}
-            {/*        onClick={() => setIsFilter(true)}*/}
-            {/*        type={"filter"}*/}
-            {/*        status={"filter"}*/}
-            {/*    >*/}
-            {/*        Filter*/}
-            {/*    </Button>*/}
+            <div className={cls.header__container}>
+                <Button
+                    onClick={() => setIsFilter(true)}
+                    type={"filter"}
+                    status={"filter"}
+                >
+                    Filter
+                </Button>
                 {/*<div className={cls.inner}>*/}
                 {/*    {*/}
                 {/*        studentsType.map(item =>*/}
@@ -55,7 +55,7 @@ export const TimeTableHeader = memo((props) => {
                 {/*        )*/}
                 {/*    }*/}
                 {/*</div>*/}
-            {/*</div>*/}
+            </div>
         </div>
     )
 })

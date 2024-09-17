@@ -2,10 +2,7 @@ import {memo} from "react";
 
 import cls from "./capitalInsideSecond.module.sass"
 import {Button} from "shared/ui/button";
-import {DefaultPageLoader} from "../../../../../shared/ui/defaultLoader";
-import {useNavigate} from "react-router";
-import {API_URL_DOC} from "../../../../../shared/api/base";
-
+import defaultImg from "shared/assets/images/defaultImg.svg"
 export const CapitalInsideSecond = memo(({capitalData, editModal, setEditModal, onDelete}) => {
 
 
@@ -13,7 +10,7 @@ export const CapitalInsideSecond = memo(({capitalData, editModal, setEditModal, 
         return (
             <div className={cls.capitalBox}>
                 <div className={cls.capitalBox_img}>
-                    <img src={`${API_URL_DOC}${capitalData.img}`} alt="iugg "/>
+                    {capitalData.img ? <img src={capitalData.img} alt=""/> : <img src={defaultImg} alt=""/>}
                 </div>
                 <div className={cls.capitalBoxInfo}>
                     <div>
