@@ -162,7 +162,7 @@ export const Register = () => {
                 language: selectedLanguage?.id || "",
                 branch: id,
             },
-            subject: selectedSubject.map(subject => subject.value)|| null,
+
         };
         let res2 = {
             ...data,
@@ -198,7 +198,8 @@ export const Register = () => {
                     total_students: 1212,
                     color: "red",
                     class_type: selectedClassType,
-                    teacher_salary_type: selectedCategory
+                    teacher_salary_type: selectedCategory,
+                    subject:  selectedSubject.map(subject => subject.value) || null,
                 };
                 registerAction = registerTeacher({res, file: res?.user?.resume[0]})
             } else {
