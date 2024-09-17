@@ -3,8 +3,8 @@
 export const CLASSROOM_API_URL = `http://localhost:3000/`
 export const CLASSROOM_API_URL_DOC = `http://192.168.0.102:8000/`
 
-export const API_URL_DOC = `/`
-export const API_URL = `http://192.168.0.102:8000/api/`
+export const API_URL_DOC = `http://192.168.0.104:8000/`
+export const API_URL = `http://192.168.0.104:8000/api/`
 // export const CLASSROOM_API_URL = `https://classroom.gennis.uz/`
 // export const CLASSROOM_API_URL_DOC = `https://classroom.gennis.uz/`
 
