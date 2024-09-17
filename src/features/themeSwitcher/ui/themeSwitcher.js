@@ -53,7 +53,6 @@ export const ThemeSwitcher = () => {
     //     }
     // },[isLocal,systems.length])
 
-    console.log(systems,"systemsssssssssssssssssss")
     if (systems?.length < 2) return
 
     return (

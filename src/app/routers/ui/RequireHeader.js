@@ -29,7 +29,7 @@ const RequireHeader = ({header = true}) => {
     },[system?.id, header])
 
     useEffect(() => {
-        if (selectedLocations.length && selectedLocations[0].id && !header) {
+        if (selectedLocations?.length && selectedLocations[0]?.id && !header) {
             dispatch(fetchBranchesByLocationsThunk(selectedLocations[0].id))
         }
     }, [selectedLocations.length,header])

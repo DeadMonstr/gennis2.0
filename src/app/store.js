@@ -76,6 +76,7 @@ import {themeSwitcherSlice} from "features/themeSwitcher"
 import {branchSwitcherSlice} from "features/branchSwitcher"
 import {multiPageSlice} from "widgets/multiPage"
 import {teacherGroupSlice} from "entities/teachers";
+import {studiyngStudentDelSlice} from "../features/studiyngStudentDelModal";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -165,7 +166,8 @@ export const store = configureStore({
         flowsProfileSlice,
         classSlice,
         employerCategorySlice,
-        teacherGroupSlice
+        teacherGroupSlice,
+        studiyngStudentDelSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

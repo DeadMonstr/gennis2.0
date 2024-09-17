@@ -29,6 +29,7 @@ import {
 import {getUserData} from "../../model/selector/studentProfileSelector";
 
 import cls from "./studentProfilePage.module.sass";
+import {getSystem} from "../../../../features/themeSwitcher";
 
 export const StudentProfilePage = () => {
 
@@ -47,10 +48,11 @@ export const StudentProfilePage = () => {
     const [activeModal, setActiveModal] = useState("")
     const [actives,setActives] = useState(false)
     const [newImage, setNewImage] = useState("")
+    const system = useSelector(getSystem)
 
     useEffect(() => {
         dispatch(fetchStudentProfileData(id))
-    }, [id])
+    }, [id , system])
 
     // if (!userData || !userData.user) {
     //     return <div>Loading...</div>;
@@ -83,6 +85,7 @@ export const StudentProfilePage = () => {
                 content={userData}
                 contract={userData}
                 newImage={newImage}
+                system={system}
             />
 
             <div

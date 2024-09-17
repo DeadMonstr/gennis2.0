@@ -28,7 +28,7 @@ export const ClassHeader = ({
                                 activeMenu,
                                 setActiveMenu
                             }) => {
-    const [color, setColor] = useState("")
+    const [color, setColor] = useState("#ffffff")
     const [activeColor, setActiveColor] = useState(false)
     const {register, handleSubmit, setValue} = useForm()
 

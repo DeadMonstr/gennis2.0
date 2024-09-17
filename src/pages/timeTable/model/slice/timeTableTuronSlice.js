@@ -1,6 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {fetchTeacherProfileData} from "pages/profilePage/model/thunk/teacherProfile.thunk";
 import {
+    fetchTimeTableClassView,
     fetchTimeTableColors,
     fetchTimeTableData, fetchTimeTableSubject, fetchTimeTableTeacher,
     fetchTimeTableTypesData,
@@ -19,6 +20,8 @@ const initialState = {
     teachers: [],
     weekDays: [],
     colors: [],
+
+    classViewData: [],
 
     day: "",
     color: "",
@@ -178,6 +181,27 @@ const TimeTableTuronSlice = createSlice({
                 state.loading = false
                 state.error = action.payload ?? null
             })
+
+
+
+            .addCase(fetchTimeTableClassView.pending, state => {
+                state.loading = true
+                state.error = null
+            })
+
+
+            .addCase(fetchTimeTableClassView.fulfilled, (state, action) => {
+
+
+                state.data = action.payload.time_tables
+                state.loading = false
+                state.error = null
+            })
+            .addCase(fetchTimeTableClassView.rejected, (state, action) => {
+                state.loading = false
+                state.error = true
+            })
+
 
 
             .addCase(fetchTimeTableData.pending, state => {

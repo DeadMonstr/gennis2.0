@@ -22,12 +22,14 @@ import {
 import {Button} from "shared/ui/button";
 import {useDispatch, useSelector} from "react-redux";
 import {
+    fetchTimeTableClassView,
     fetchTimeTableData,
     fetchTimeTableSubject,
     fetchTimeTableTeacher,
     fetchTimeTableTypesData
 } from "pages/timeTable/model/thunks/timeTableTuronThunks";
 import {
+    getTimeTableTuronClassViewData,
     getTimeTableTuronColor,
     getTimeTableTuronColors,
     getTimeTableTuronData,
@@ -47,6 +49,7 @@ import {TimeTableDragItem, TimeTableDragItems, TimeTableDropContainer} from "ent
 import {DraggableContainer} from "entities/timeTableTuron/ui/DraggableContainer/DraggableContainer";
 import {Modal} from "shared/ui/modal";
 import {TimeTableFullScreen} from "entities/timeTableTuron/ui/TimeTableFullScreen/TimeTableFullScreen";
+import {TimeTableClassView} from "entities/timeTableTuron/ui/TimeTableClassView/TimeTableClassView";
 
 const rooms = [
     "1-xona", "2-xona", "3-xona", "koca", "oshxona"
@@ -196,6 +199,7 @@ export const TimeTableTuronPage = () => {
     const color = useSelector(getTimeTableTuronColor)
     const type = useSelector(getTimeTableTuronType)
     const data = useSelector(getTimeTableTuronData)
+    const classViewData = useSelector(getTimeTableTuronClassViewData)
     const hours = useSelector(getTimeTableTuronHours)
     const groupsData = useSelector(getTimeTableTuronGroup)
     const subjectsData = useSelector(getTimeTableTuronSubjects)
@@ -211,6 +215,11 @@ export const TimeTableTuronPage = () => {
 
     useEffect(() => {
         if (day && branch) dispatch(fetchTimeTableData({id: day, type: "class", branch}))
+    }, [day, branch])
+
+
+    useEffect(() => {
+        if (day && branch) dispatch(fetchTimeTableClassView({id: day, branch}))
     }, [day, branch])
 
     useEffect(() => {
@@ -916,14 +925,21 @@ export const TimeTableTuronPage = () => {
             </DndContext>
 
 
-            <Modal active={fullScreen} setActive={setFullScreen} type={"other"}>
 
 
-                <TimeTableFullScreen
-                    rooms={rooms}
-                    times={times}
+
+            <Modal active={true} setActive={setFullScreen} type={"other"}>
+
+                <TimeTableClassView
+                    lessons={classViewData}
                     hours={hours}
+
                 />
+                {/*<TimeTableFullScreen*/}
+                {/*    rooms={rooms}*/}
+                {/*    times={times}*/}
+                {/*    hours={hours}*/}
+                {/*/>*/}
 
 
             </Modal>

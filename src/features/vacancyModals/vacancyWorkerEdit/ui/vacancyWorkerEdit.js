@@ -56,7 +56,6 @@ export const VacancyWorkerEdit = React.memo(({ active, setActive, user_id }) => 
     const handleLocationChange = (selectedLocations) => {
         setSelectedLocations(selectedLocations);
 
-        const selectedLocationIds = selectedLocations.map(location => location.value);
         // dispatch(fetLocationsForBranchesThunk(selectedLocationIds));
     };
 
