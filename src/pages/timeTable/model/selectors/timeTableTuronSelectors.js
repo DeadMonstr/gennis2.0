@@ -23,6 +23,10 @@ export const getTimeTableTuronGroup = (state) =>
 export const getTimeTableTuronData = (state) =>
     state.timeTableTuronSlice.data
 
+
+export const getTimeTableTuronClassViewData = (state) =>
+    state.timeTableTuronSlice.classViewData
+
 //
 export const getTimeTableTuronHours = (state) =>
     state.timeTableTuronSlice.hours
