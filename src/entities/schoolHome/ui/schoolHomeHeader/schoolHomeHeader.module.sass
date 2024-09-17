@@ -1,0 +1,82 @@
+.homeHeader
+  //min-height: 13rem
+  width: 100%
+  height: fit-content
+  display: flex
+  justify-content: space-between
+  align-items: center
+  position: sticky
+  top: 0
+  padding: 5rem 10rem
+  backdrop-filter: blur(10rem)
+  //background: linear-gradient(0deg, #111F4C 0%, #072E92 100%)
+  &__burger
+    font-size: 4rem
+    color: white
+    align-items: flex-end
+    display: none
+  &__logo
+    display: flex
+    align-items: center
+    gap: .5rem
+  &__list
+    display: flex
+    gap: 4rem
+    .listItem
+      color: white
+      list-style: none
+      font-size: 1.6rem
+      cursor: pointer
+      font-weight: 400
+      &.active
+        font-weight: 700
+  &__btns
+    display: flex
+    gap: 1rem
+    .aplayBtn
+      color: white
+      height: fit-content
+      font-size: 2rem
+    .loginBtn
+      height: fit-content
+      background-color: white
+      color: black
+      font-size: 2rem
+
+@media (max-width: 1440px)
+  .homeHeader
+    .logo
+      width: 6.2rem
+      height: 5.4rem
+    .logoText
+      width: 7.9rem
+      height: 5.4rem
+
+@media (max-width: 1024px)
+  .homeHeader
+    padding: 5rem
+    .loginBtn
+      font-size: 1.8rem
+    &__list
+      gap: 3rem
+      .listItem
+        font-size: 1.5rem
+
+@media (max-width: 768px)
+  .homeHeader
+    &__list
+      display: none
+    &__burger
+      display: flex
+
+@media (max-width: 430px)
+  .homeHeader
+    padding: 3rem
+    .logoText
+      display: none
+    .loginBtn
+      font-size: 1.4rem
+      height: 3.1rem
+    &__burger
+      font-size: 3rem
+
