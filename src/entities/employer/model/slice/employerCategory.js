@@ -13,6 +13,7 @@ export const employerCategorySlice = createSlice({
     initialState,
     reducers: {
         updateCategory: (state, action) => {
+
             state.employerCategoryData = [...state.employerCategoryData, action.payload]
         },
         changeName: (state, action) => {

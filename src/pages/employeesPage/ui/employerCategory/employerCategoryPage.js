@@ -6,26 +6,37 @@ import {useDispatch, useSelector} from "react-redux";
 import {getEmployerCategoryData} from "entities/employer/model/selector/employerCategory";
 import {getEmployerCategory} from "entities/employer/model/slice/employerCategoryThunk";
 import {updateCategory} from "entities/employer/model/slice/employerCategory";
+import {getBranch} from "../../../../features/branchSwitcher";
 
 
 export const EmployerCategoryPage = () => {
     const [activeCategory, setActiveCategory] = useState(false)
     const {register, handleSubmit, setValue} = useForm()
 
+
+    const branch = useSelector(getBranch)
     const employerCategory = useSelector(getEmployerCategoryData)
     const dispatch = useDispatch()
     const [edit, setEdit] = useState({})
     const {request} = useHttp()
 
+    const branchId = branch.id
+
+
     useEffect(() => {
-        dispatch(getEmployerCategory())
+        dispatch(getEmployerCategory(branchId))
     }, [])
     const createEmpCategory = (data) => {
 
-        request(`${API_URL}Teachers/salary-types/`, "POST", JSON.stringify(data), headers())
+        const res = {
+            ...data,
+            branch: branchId
+        }
+
+        request(`${API_URL}Teachers/salary-types/?branch=${branchId}`, "POST", JSON.stringify(res), headers())
             .then(res => {
                 setActiveCategory(!activeCategory)
-                dispatch(updateCategory(data))
+                dispatch(updateCategory(res))
                 setValue("name", "")
                 setValue("salary", "")
             })

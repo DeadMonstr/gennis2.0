@@ -56,8 +56,8 @@ export const EmployerPage = () => {
         <MultiPage types={types} page={"worker"}>
             <div className={cls.employer}>
                 <div className={cls.employer__header}>
-                    <Button onClick={() => setActiveModal(!activeFilter)} status={"filter"}
-                            type={"filter"}>Filter</Button>
+                    {activeCategory ? null : <Button onClick={() => setActiveModal(!activeFilter)} status={"filter"}
+                                              type={"filter"}>Filter</Button> }
                     <Button type={"simple"} onClick={() => setActiveCategory(!activeCategory)}>Toifa</Button>
                     {/*<Select/>*/}
                 </div>
