@@ -10,16 +10,16 @@ export {
     getFilteredStudentsStatus,
 } from "./model/studentsSlice"
 
-export {
-    fetchOnlyNewStudentsData,
-    fetchOnlyStudyingStudentsData,
-    fetchNewStudentsDataWithBranch,
-    fetchStudyingStudentsDataWithBranch,
-    fetchOnlyDeletedStudentsData,
-    createSchoolClass,
-    fetchNewStudentsData,
+export {fetchNewStudentsData,
     fetchClassNumberList,
     fetchClassColors
+} from "./model/studentsThunk"
+export {
+    fetchOnlyStudyingStudentsData,
+    fetchOnlyNewStudentsData,
+    fetchOnlyDeletedStudentsData,
+    createSchoolClass,
+    fetchDeletedNewStudentsThunk
 } from "./model/studentsThunk"
 export {
     getNewStudentsData,
@@ -33,9 +33,6 @@ export {
     getFilteredErrors,
     getNewStudentsLoading,
     getSchoolClassNumbers,
-    getStudentsWithBranch,
-    getStudyingStudentsWithBranch,
-    getStudyingStudentsLoading,
     getOnlyDeletedStudents
 
 } from "./model/selector/studentsSelector"

@@ -14,11 +14,4 @@ export const fetchFilteredStudents = createAsyncThunk(
     }
 )
 
-export const fetchDeletedNewStudentsThunk = createAsyncThunk(
-    'filterStudents/fetchDeletedNewStudents',
-    async () => {
-        const {request} = useHttp();
-        return await request(`${API_URL}Students/deleted-from-registered/?branch=${branchQueryId()}`, 'GET', null, headers())
-    }
-)
 

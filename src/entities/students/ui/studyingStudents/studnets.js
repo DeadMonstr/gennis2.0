@@ -1,36 +1,14 @@
 import { useNavigate } from "react-router";
 import { Table } from "shared/ui/table";
 import cls from "./studnets.module.sass";
-import { useSelector } from "react-redux";
-import { getStudyingStudentsWithBranch, getStudyingStudentsLoading } from "../../model/selector/studentsSelector";
-
-
-
-
 
 export const Students = ({ currentTableData }) => {
-    const getStStudents = useSelector(getStudyingStudentsWithBranch);
-    const loadingDef = useSelector(getStudyingStudentsLoading);
     const navigation = useNavigate();
 
     const renderStudents = () => {
-        if (loadingDef) {
-            return (
-                <tr>
-                    <td colSpan="6">Yuklanmoqda...</td>
-                </tr>
-            );
-        }
 
-        const studentsToRender = getStStudents && getStStudents.length > 0 ? getStStudents : currentTableData;
 
-        // if (!studentsToRender || studentsToRender.length === 0) {
-        //     return (
-        //        <DefaultPageLoader/>
-        //     );
-        // }
-
-        return studentsToRender?.map((item, i) => {
+        return currentTableData?.map((item, i) => {
 
                 return (
                     <tr key={item.id} onClick={() => navigation(`profile/${item.id}`)}>
@@ -47,9 +25,6 @@ export const Students = ({ currentTableData }) => {
                     </tr>
                 )
 
-            // return (
-            //
-            // )
         });
     };
 

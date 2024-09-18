@@ -11,12 +11,12 @@ import {
     fetchClassColors,
     fetchClassNumberList,
     getSchoolClassNumbers,
-    getSchoolClassColors, getStudyingStudentsWithBranch, getStudentsWithBranch,fetchOnlyNewStudentsData,
+    getSchoolClassColors,
     fetchOnlyStudyingStudentsData,
     fetchOnlyDeletedStudentsData,
     getNewStudentsData,
     getStudyingStudents,
-    getOnlyDeletedStudents
+    getOnlyDeletedStudents, fetchOnlyNewStudentsData,
 } from "entities/students";
 import {StudentsHeader} from "entities/students";
 import {StudentsFilter} from "features/filters/studentsFilter";
@@ -75,15 +75,11 @@ export const StudentsPage = () => {
     const {theme} = useTheme()
     const __THEME__ = localStorage.getItem("theme");
     const {register, handleSubmit} = useForm();
-    const localSystem = JSON.parse(localStorage.getItem(""))
-    const navigation = useNavigate()
     const loadingNewStudents = useSelector(getLoadingNewStudents);
     const loadingStudyingStudents = useSelector(getLoadingStudyingStudents);
     const loadingDeletedStudents = useSelector(getLoadingDeletedStudents);
     const studyingStudents = useSelector(getStudyingStudents);
-    const filteredStudyingStudents = useSelector(getStudyingStudentsWithBranch);
     const newStudents = useSelector(getNewStudentsData);
-    const filteredNewStudents = useSelector(getStudentsWithBranch);
     const deletedStudents = useSelector(getOnlyDeletedStudents)
     const schoolClassNumbers = useSelector(getSchoolClassNumbers);
     const schoolClassColors = useSelector(getSchoolClassColors);
@@ -92,9 +88,6 @@ export const StudentsPage = () => {
     const teachers = useSelector(getTeachers);
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
     const languages = useSelector(state => state.registerUser.languages);
-
-
-
     const [data, setData] = useState({})
     const [selectColor, setSelectColor] = useState();
     const [colorError, setColorError] = useState(false);
@@ -114,10 +107,10 @@ export const StudentsPage = () => {
         let filteredStudents = [];
         switch (selectedRadio) {
             case "new_students":
-                filteredStudents = isFilter === "new_students" ? filteredNewStudents?.slice() : newStudents?.slice();
+                filteredStudents =  newStudents?.slice() ;
                 break;
             case "studying_students":
-                filteredStudents = isFilter === "studying_students" ? filteredStudyingStudents?.slice() : studyingStudents?.slice();
+                filteredStudents = studyingStudents?.slice();
                 break;
             case "deleted_students":
                 filteredStudents = deletedStudents?.slice();
@@ -125,6 +118,7 @@ export const StudentsPage = () => {
             default:
                 filteredStudents = [];
         }
+        console.log(newStudents, 'wdefwefwef')
 
         setCurrentPage(1);
 
@@ -136,7 +130,7 @@ export const StudentsPage = () => {
                 item?.student?.user?.name.toLowerCase().includes(search.toLowerCase()) ||
                 item?.student?.user?.surname.toLowerCase().includes(search.toLowerCase()))
         );
-    }, [newStudents, studyingStudents, deletedStudents, search, selectedRadio, isFilter, filteredNewStudents, filteredStudyingStudents]);
+    }, [newStudents, studyingStudents, deletedStudents, search, selectedRadio, isFilter,]);
 
     useEffect(() => {
         if (userBranchId) {
@@ -170,11 +164,7 @@ export const StudentsPage = () => {
             system: userSystem.id
         }
         setData(res)
-        // dispatch(fetchOnlyNewStudentsData({id:userBranchId, number: data?.class_number}))
         setActive("post")
-        // dispatch(createSchoolClass({res}))
-
-        // setSelectStudents([])
     }
 
     const onSubmitFilteredByClass = (data) => {
@@ -189,10 +179,10 @@ export const StudentsPage = () => {
 
         switch (selectedRadio) {
             case "new_students":
-                dispatch(fetchOnlyNewStudentsData({id: userBranchId}));
+                dispatch(fetchOnlyNewStudentsData({userBranchId: userBranchId}));
                 break;
             case "studying_students":
-                dispatch(fetchOnlyStudyingStudentsData({id: userBranchId}));
+                dispatch(fetchOnlyStudyingStudentsData({userBranchId: userBranchId}));
                 break;
             case "deleted_students":
                 dispatch(fetchOnlyDeletedStudentsData({id: userBranchId}));
@@ -301,6 +291,7 @@ export const StudentsPage = () => {
                 setActive={setActive}
                 activePage={selectedRadio}
                 isFilter={setIsFilter}
+                branchId={userBranchId}
             />
             <Modal
                 active={activeModal === "create"}
@@ -384,12 +375,6 @@ export const StudentsPage = () => {
                                 />
                         }
 
-                        {/*<Input*/}
-                        {/*    extraClassName={cls.modal__input}*/}
-                        {/*    placeholder={"price"}*/}
-                        {/*    name={"price"}*/}
-                        {/*    register={register}*/}
-                        {/*/>*/}
                     </Form>
                 </div>
             </Modal>

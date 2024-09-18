@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {API_URL, branchQuery, headers, useHttp} from "shared/api/base";
+import {API_URL, branchQuery, branchQueryId, headers, useHttp} from "shared/api/base";
 
 
 
@@ -14,10 +14,9 @@ export const fetchNewStudentsData = createAsyncThunk(
 
 export const fetchOnlyNewStudentsData = createAsyncThunk(
     'studentsSlice/fetchOnlyNewStudentsData',
-    async (data) => {
+    async ({subjId, fromAge, untilAge, langId, userBranchId}) => {
         const {request} = useHttp()
-
-        return await request(`${API_URL}Students/new-registered-students/?branch=${data.id}${data.number ?`&number=${data.number}` : ""}`, "GET", null, headers())
+        return await request(`${API_URL}Students/new-registered-students/?subject=${subjId}&age=${fromAge}-${untilAge}&language=${langId}&branch=${branchQueryId()}`, "GET", null, headers())
     }
 )
 
@@ -29,13 +28,13 @@ export const fetchStudentsByClass = createAsyncThunk(
     }
 )
 
-// export const fetchOnlyStudyingStudentsData = createAsyncThunk(
-//     'studentsSlice/fetchOnlyStudyingStudentsData',
-//     async ({id}) => {
-//         const {request} = useHttp()
-//         return await request(`${API_URL}Students/active-students/?branch=${id}`, "GET", null, headers())
-//     }
-// )
+export const fetchOnlyStudyingStudentsData = createAsyncThunk(
+    'studentsSlice/fetchOnlyStudyingStudentsData',
+    async ({subjId, fromAge, untilAge, langId,userBranchId}) => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Students/active-students/?subject=${subjId}&age=${fromAge}-${untilAge}&language=${langId}&branch=${branchQueryId()}`, "GET", null, headers())
+    }
+)
 
 export const fetchOnlyDeletedStudentsData = createAsyncThunk(
     'studentsSlice/fetchOnlyDeletedStudentsData',
@@ -87,29 +86,11 @@ export const createSchoolClass = createAsyncThunk(
 )
 
 
-
-export const fetchNewStudentsDataWithBranch = createAsyncThunk(
-    'studentsSlice/fetchNewStudentsDataWithBranch',
-    async ({subjId, fromAge, untilAge, langId}) => {
-        const {request} = useHttp()
-        return await request(`${API_URL}Students/new-registered-students/?subject=${subjId}&age=${fromAge}-${untilAge}&language=${langId}`, "GET", null, headers())
-    }
-)
-
-export const fetchStudyingStudentsDataWithBranch = createAsyncThunk(
-    'studentsSlice/fetchStudyingStudentsDataWithBranch',
-    async ({subjId, fromAge, untilAge, langId}) => {
+export const fetchDeletedNewStudentsThunk = createAsyncThunk(
+    'studentsSlice/fetchDeletedNewStudents',
+    async () => {
         const {request} = useHttp();
-        return await request(`${API_URL}Students/active-students/?subject=${subjId}&age=${fromAge}-${untilAge}&language=${langId}`, "GET", null, headers())
-    }
-)
-
-
-export const fetchOnlyStudyingStudentsData = createAsyncThunk(
-    'studentsSlice/fetchOnlyStudyingStudentsData',
-    async ({id}) => {
-        const {request} = useHttp()
-        return await request(`${API_URL}Students/active-students/?branch=${id}`, "GET", null, headers())
+        return await request(`${API_URL}Students/deleted-from-registered/?branch=${branchQueryId()}`, 'GET', null, headers())
     }
 )
 

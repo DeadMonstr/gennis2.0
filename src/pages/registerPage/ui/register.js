@@ -164,7 +164,6 @@ export const Register = () => {
                 language: selectedLanguage?.id || "",
                 branch: id,
             },
-
         };
         let res2 = {
             ...data,
@@ -201,16 +200,13 @@ export const Register = () => {
                     color: "red",
                     class_type: selectedClassType,
                     teacher_salary_type: selectedCategory,
-                    subject:  selectedSubject.map(subject => subject.value) || null,
+                    subject: selectedSubject.map(subject => subject.value) || null,
                 };
                 registerAction = registerTeacher({res, file: res?.user?.resume[0]})
             } else {
                 res = {
                     ...res,
                     total_students: 1212,
-                    // color: "red",
-                    // class_type: selectedClassType,
-                    // toifa: selected
                 };
                 registerAction = registerTeacher(res);
             }
@@ -223,11 +219,6 @@ export const Register = () => {
         }
 
         if (registerAction) {
-            if (registerType !== 'student')
-                dispatch(registerTeacherImage({
-                    id: res?.user?.username,
-                    file: res?.user?.resume[0]
-                }))
             dispatch(registerAction).then((action) => {
                 setLoading(false);
                 if (action.type.endsWith('fulfilled')) {
@@ -235,24 +226,28 @@ export const Register = () => {
                         type: "success",
                         status: true,
                         msg: `${registerType} muvofaqqiyatli qo'shildi`
-                    }))
+                    }));
                     setSelectedLang(1);
                     setSelectedSubject(1);
                     setSelectedTime(1);
                     setSelectedProfession(1);
                     setUsernameMessage('');
                     setIsUsernameAvailable(true);
+
+                    reset();
+
                 } else {
                     dispatch(onAddAlertOptions({
                         type: "error",
                         status: true,
                         msg: "Internet yoki serverda xatolik qayta urinib ko'ring"
-                    }))
+                    }));
                     setError(true);
                 }
             });
         }
     };
+
 
     const renderFormFields = () => {
         switch (registerType) {
