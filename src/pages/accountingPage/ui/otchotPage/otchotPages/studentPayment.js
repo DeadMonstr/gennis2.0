@@ -21,7 +21,6 @@ export const StudentPayment = () => {
 
     const classes = useSelector(getClasses)
 
-    console.log(classes, "class")
 
     const dispatch = useDispatch()
 
@@ -30,12 +29,12 @@ export const StudentPayment = () => {
         dispatch(getStudentPayment(branchID.id))
     }, [])
 
-    console.log(branchID.id, "branch id")
-
 
     const [month, setMonths] = useState(null)
 
     const [year, setYear] = useState(null)
+
+    console.log(year , month , "hello")
     return (
         <div>
             <div className={cls.paymentType}>

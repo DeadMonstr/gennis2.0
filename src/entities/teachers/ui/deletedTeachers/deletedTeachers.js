@@ -1,33 +1,23 @@
-
-import cls  from "./deletedTeachers.module.sass"
+import cls from "./deletedTeachers.module.sass"
 
 import {Table} from "shared/ui/table";
+import React from "react";
+import {useNavigate} from "react-router";
 
-const teachersData = [
-    {name : "sardor" , surname: "ikromov" , username: "ikromovvv" , number: 123123 , age: 17 , subject: "none" , deleteData: "22.22.2222"},
-    {name : "sardor" , surname: "ikromov" , username: "ikromovvv" , number: 123123 , age: 17 , subject: "none" , deleteData: "22.22.2222"},
-    {name : "sardor" , surname: "ikromov" , username: "ikromovvv" , number: 123123 , age: 17 , subject: "none" , deleteData: "22.22.2222"},
-    {name : "sardor" , surname: "ikromov" , username: "ikromovvv" , number: 123123 , age: 17 , subject: "none" , deleteData: "22.22.2222"},
-    {name : "sardor" , surname: "ikromov" , username: "ikromovvv" , number: 123123 , age: 17 , subject: "none" , deleteData: "22.22.2222"},
-    {name : "sardor" , surname: "ikromov" , username: "ikromovvv" , number: 123123 , age: 17 , subject: "none" , deleteData: "22.22.2222"},
-    {name : "sardor" , surname: "ikromov" , username: "ikromovvv" , number: 123123 , age: 17 , subject: "none" , deleteData: "22.22.2222"},
-    {name : "sardor" , surname: "ikromov" , username: "ikromovvv" , number: 123123 , age: 17 , subject: "none" , deleteData: "22.22.2222"},
-    {name : "sardor" , surname: "ikromov" , username: "ikromovvv" , number: 123123 , age: 17 , subject: "none" , deleteData: "22.22.2222"},
-    {name : "sardor" , surname: "ikromov" , username: "ikromovvv" , number: 123123 , age: 17 , subject: "none" , deleteData: "22.22.2222"},
-    {name : "sardor" , surname: "ikromov" , username: "ikromovvv" , number: 123123 , age: 17 , subject: "none" , deleteData: "22.22.2222"},
-
-]
 export const DeletedTeachers = ({data}) => {
-    const renderTeacher = () =>{
-        return data.map((item , i) =>(
+
+    const navigation = useNavigate()
+    const renderTeacher = () => {
+        return data?.map((item, i) => (
             <tr>
+
                 <td>{i + 1}</td>
-                <td>{item.name} {item.surname}</td>
-                <td>{item.age}</td>
-                <td>{item.number}</td>
-                <td>{item.age}</td>
-                <td>{item.subject}</td>
-                <td>{item.deleteData}</td>
+                <td onClick={() => navigation(`teacherProfile/${item.id}`)}>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
+                <td>{item?.user?.username}</td>
+                <td>{item?.user.phone}</td>
+                <td>{item?.user.age}</td>
+                <td>{item?.subject.map(item => item.name)}</td>
+                <td>{item?.deleted_date}</td>
             </tr>
         ))
     }
