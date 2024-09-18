@@ -7,8 +7,6 @@ import {
     fetchOnlyNewStudentsData,
     fetchOnlyStudyingStudentsData,
     fetchSchoolStudents,
-    fetchNewStudentsDataWithBranch,
-    fetchStudyingStudentsDataWithBranch,
     fetchOnlyDeletedStudentsData, fetchStudentsByClass, fetchDeletedNewStudentsThunk
 } from "./studentsThunk";
 
@@ -29,9 +27,6 @@ const initialState = {
     filteredByClass: "idle",
     newStudentsStatus: "idle",
     studyingStudentsStatus: "idle",
-    branchStudents: [],
-    branchStStudents: [],
-    branchStStudentsLoading: false,
     loading: false,
     error: null
 }
@@ -72,6 +67,8 @@ export const studentsSlice = createSlice({
                 state.newStudentsStatus = "error"
             })
 
+
+
             .addCase(fetchDeletedNewStudentsThunk.pending, state => {
                 state.newStudentsStatus = "loading"
             })
@@ -83,6 +80,8 @@ export const studentsSlice = createSlice({
             .addCase(fetchDeletedNewStudentsThunk.rejected, (state, action) => {
                 state.newStudentsStatus = "error"
             })
+
+
 
             .addCase(fetchStudentsByClass.pending, state => {
                 state.filteredByClass = "loading"
@@ -184,37 +183,6 @@ export const studentsSlice = createSlice({
             })
             .addCase(fetchSchoolStudents.rejected, (state, action) => {
                 state.loading = false
-                state.error = action.payload ?? null
-            })
-
-
-            .addCase(fetchNewStudentsDataWithBranch.pending, state => {
-                state.loading = true
-                state.error = null
-            })
-            .addCase(fetchNewStudentsDataWithBranch.fulfilled, (state, action) => {
-                state.newStudentes = action.payload
-                state.loading = false
-                state.error = null
-            })
-            .addCase(fetchNewStudentsDataWithBranch.rejected, (state, action) => {
-                state.loading = false
-                state.error = action.payload ?? null
-            })
-
-
-
-            .addCase(fetchStudyingStudentsDataWithBranch.pending, state => {
-                state.branchStStudentsLoading = true
-                state.error = null
-            })
-            .addCase(fetchStudyingStudentsDataWithBranch.fulfilled, (state, action) => {
-                state.branchStStudents = action.payload
-                state.branchStStudentsLoading = false
-                state.error = null
-            })
-            .addCase(fetchStudyingStudentsDataWithBranch.rejected, (state, action) => {
-                state.branchStStudentsLoading = false
                 state.error = action.payload ?? null
             })
 })

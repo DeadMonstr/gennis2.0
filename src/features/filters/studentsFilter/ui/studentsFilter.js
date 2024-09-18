@@ -8,9 +8,8 @@ import {Switch} from "shared/ui/switch";
 import {getLanguagesData, getSubjectsData} from "pages/registerPage";
 import {fetchLanguages, fetchSubjects} from "pages/registerPage";
 import {
-    fetchNewStudentsDataWithBranch,
     fetchOnlyNewStudentsData,
-    fetchStudyingStudentsDataWithBranch
+    fetchOnlyStudyingStudentsData
 } from "entities/students";
 
 import cls from "../../filters.module.sass";
@@ -23,7 +22,6 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
     const [selectedSubject, setSelectedSubject] = useState("")
     const [selectedLang, setSelectedLanguage] = useState("")
     const [selectedClass, setSelectedClass] = useState("")
-    const [selectedStatus, setSelectedStatus] = useState("")
     const [isSwitch, setIsSwitch] = useState(false);
     const dispatch = useDispatch()
     const languages = useSelector(getLanguagesData)
@@ -32,7 +30,7 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
     useEffect(() => {
         if (selectedAgeFrom || selectedAgeTo || selectedLang || selectedSubject || selectedClass) {
             if (activePage === "studying_students") {
-                dispatch(fetchStudyingStudentsDataWithBranch({
+                dispatch(fetchOnlyStudyingStudentsData({
                     subjId: selectedSubject,
                     langId: selectedLang,
                     fromAge: selectedAgeFrom,
@@ -40,7 +38,7 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
                 }))
                 isFilter("studying_students")
             } else {
-                dispatch(fetchNewStudentsDataWithBranch({
+                dispatch(fetchOnlyNewStudentsData({
                     subjId: selectedSubject,
                     langId: selectedLang,
                     fromAge: selectedAgeFrom,
@@ -62,54 +60,21 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
 
     const onSelectSubject = (value) => {
         setSelectedSubject(value);
-        // const selectedSubjectData = subjects.find(subj => subj.id === Number(value));
-        // const subjectId = value !== "all" ? selectedSubjectData.id : "all";
-        // {
-        //     activePage === "studying_students"
-        //         ?
-        //         dispatch(fetchStudyingStudentsDataWithBranch({subjId: subjectId}))
-        //         :
-        //         dispatch(fetchNewStudentsDataWithBranch({subjId: subjectId}));
-        // }
-        // setActive(false)
     }
 
     const onSelectLanguage = (value) => {
         setSelectedLanguage(value);
-        // const selectedLanguageData = languages.find(lang => lang.id === Number(value));
-        // const languageId = value !== "all" ? selectedLanguageData.id : "all"
-        // {
-        //     activePage === "studying_students"
-        //         ?
-        //         dispatch(fetchStudyingStudentsDataWithBranch({langId: languageId}))
-        //         :
-        //         dispatch(fetchNewStudentsDataWithBranch({langId: languageId}))
-        // }
-        // setActive(false)
+
 
     }
 
     const handleAgeFromBlur = (e) => {
         setSelectedAgeFrom(e.target.value);
-        // {
-        //     activePage === "studying_students"
-        //         ?
-        //         dispatch(fetchStudyingStudentsDataWithBranch({fromAge: e.target.value, untilAge: selectedAgeTo}))
-        //         :
-        //         dispatch(fetchNewStudentsDataWithBranch({fromAge: e.target.value, untilAge: selectedAgeTo}))
-        // }
 
     }
 
     const handleAgeToBlur = (e) => {
         setSelectedAgeTo(e.target.value);
-        // {
-        //     activePage === "studying_students"
-        //         ?
-        //         dispatch(fetchStudyingStudentsDataWithBranch({fromAge: selectedAgeFrom, untilAge: e.target.value}))
-        //         :
-        //         dispatch(fetchNewStudentsDataWithBranch({fromAge: selectedAgeFrom, untilAge: e.target.value}));
-        // }
 
     }
 
@@ -120,7 +85,7 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
         if (newState) {
             dispatch(fetchDeletedNewStudentsThunk());
         } else {
-            dispatch(fetchOnlyNewStudentsData({id: branchId}));
+            dispatch(fetchOnlyNewStudentsData({userBranchId: branchId}));
         }
     }
 
@@ -188,10 +153,6 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
                         <p>O’chirilgan</p>
                         <Switch onChangeSwitch={handleSwitchData} activeSwitch={isSwitch}/>
                     </div>
-                    {/*<div className={cls.filter__switch}>*/}
-                    {/*    <p>Filterlangan</p>*/}
-                    {/*    <Switch />*/}
-                    {/*</div>*/}
                 </div>
             </div>
         </Modal>

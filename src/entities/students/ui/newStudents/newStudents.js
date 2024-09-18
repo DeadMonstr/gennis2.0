@@ -1,12 +1,8 @@
 import React, {memo, useEffect, useState} from 'react';
-import {useSelector, useDispatch} from "react-redux";
-import {fetchOnlyNewStudentsData, getNewStudentsData, getStudentsWithBranch, getNewStudentsWithSubject} from "entities/students";
 import {useNavigate} from "react-router";
-import {Input} from "shared/ui/input";
 import cls from "entities/students/ui/newStudents/newStudents.module.sass";
 import {Table} from "shared/ui/table";
-import {getDeletedNewStudents, StudentsFilter} from "features/filters/studentsFilter";
-import {DefaultPageLoader} from "shared/ui/defaultLoader";
+import {StudentsFilter} from "features/filters/studentsFilter";
 import {StudiyngStudentDelModal} from "../../../../features/studiyngStudentDelModal";
 
 export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) => {
@@ -15,8 +11,6 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
     const [studentId, setStudentId] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const navigation = useNavigate()
-    const dispatch =  useDispatch()
-    const getNewSt = useSelector(getStudentsWithBranch)
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
 
 
