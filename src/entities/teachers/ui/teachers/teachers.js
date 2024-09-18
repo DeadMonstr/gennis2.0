@@ -6,11 +6,11 @@ import {getTeacherLoading} from "../../model/selector/teacherSelector";
 import {useSelector} from "react-redux";
 import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 import {Input} from "../../../../shared/ui/input";
-import{getTeachersWithFilter} from "../../model/selector/teacherSelector";
+import {getTeachersWithFilter} from "../../model/selector/teacherSelector";
 
 import {useNavigate} from "react-router";
 
-export const Teachers = memo(({data, setSelect, select, theme}) => {
+export const Teachers = memo(({data, setSelect, select, theme, onClick , setActiveDelete , setActiveModal}) => {
     const navigation = useNavigate()
     const [checkbox, setCheckbox] = useState(false)
     const [selectId, setSelectId] = useState()
@@ -48,31 +48,40 @@ export const Teachers = memo(({data, setSelect, select, theme}) => {
                                 <p>{item.name}</p>
                             )}</div>
                         </td>
-                        <td>
-                            {item?.extra_info?.status ? <div className={cls.teacher__inner}>
-                                <div className={cls.status}>
-                                    <div className={cls.status__inner}/>
-                                </div>
-                                <Input
-                                    type={"radio"}
-                                    name={"radio"}
-                                    extraClassName={cls.teacher__input}
-                                    onChange={() => {
-                                        setSelect(item.id)
-                                        setSelectId(item.id)
-                                    }}
-                                    value={selectId === item.id}
-                                    checked={selectId === item.id}
-                                />
-                            </div> : null}
-                        </td>
+                        {item.status ?
+                            <td>
+                                <i onClick={() => {
+                                    setActiveDelete(item)
+                                    setActiveModal(true)
+                                }} className={"fa fa-times"} style={{color: "red"}}/>
+                            </td>
+                            :
+                            null
+                        }
+                        {/*<td>*/}
+                        {/*    {item?.extra_info?.status ? <div className={cls.teacher__inner}>*/}
+                        {/*        <div className={cls.status}>*/}
+                        {/*            <div className={cls.status__inner}/>*/}
+                        {/*        </div>*/}
+                        {/*        <Input*/}
+                        {/*            type={"radio"}*/}
+                        {/*            name={"radio"}*/}
+                        {/*            extraClassName={cls.teacher__input}*/}
+                        {/*            onChange={() => {*/}
+                        {/*                setSelect(item.id)*/}
+                        {/*                setSelectId(item.id)*/}
+                        {/*            }}*/}
+                        {/*            value={selectId === item.id}*/}
+                        {/*            checked={selectId === item.id}*/}
+                        {/*        />*/}
+                        {/*    </div> : null}*/}
+                        {/*</td>*/}
                     </tr>
                 )
             }
         })
 
     }
-
 
 
     const checkBoxChange = (id) => {

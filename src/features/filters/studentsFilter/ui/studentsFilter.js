@@ -7,9 +7,14 @@ import {Select} from "shared/ui/select";
 import {Switch} from "shared/ui/switch";
 import {getLanguagesData, getSubjectsData} from "pages/registerPage";
 import {fetchLanguages, fetchSubjects} from "pages/registerPage";
-import {fetchNewStudentsDataWithBranch, fetchStudyingStudentsDataWithBranch} from "entities/students";
+import {
+    fetchNewStudentsDataWithBranch,
+    fetchOnlyNewStudentsData,
+    fetchStudyingStudentsDataWithBranch
+} from "entities/students";
 
 import cls from "../../filters.module.sass";
+import {fetchDeletedNewStudentsThunk} from "../model/filterStudentsThunk";
 
 export const StudentsFilter = React.memo(({active, setActive, activePage, isFilter}) => {
 
@@ -19,6 +24,7 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
     const [selectedLang, setSelectedLanguage] = useState("")
     const [selectedClass, setSelectedClass] = useState("")
     const [selectedStatus, setSelectedStatus] = useState("")
+    const [isSwitch, setIsSwitch] = useState(false)
     const dispatch = useDispatch()
     const languages = useSelector(getLanguagesData)
     const subjects = useSelector(getSubjectsData)
@@ -107,6 +113,17 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
 
     }
 
+    const handleSwitchData = () => {
+        const newState = !isSwitch;
+        setIsSwitch(newState);
+        if (newState) {
+            dispatch(fetchDeletedNewStudentsThunk());
+        } else {
+            dispatch(fetchOnlyNewStudentsData());
+        }
+        isFilter(newState ? "deleted_students" : "new_students");
+    }
+
     useEffect(() => {
         dispatch(fetchSubjects());
     }, [dispatch]);
@@ -168,7 +185,7 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
                     />
                     <div className={cls.filter__switch}>
                         <p>O’chirilgan</p>
-                        <Switch disabled/>
+                        <Switch onChangeSwitch={handleSwitchData} activeSwitch={isSwitch}/>
                     </div>
                     {/*<div className={cls.filter__switch}>*/}
                     {/*    <p>Filterlangan</p>*/}

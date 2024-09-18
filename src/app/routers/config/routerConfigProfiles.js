@@ -17,17 +17,17 @@ import {
     getEmployerSalary,
     getTeacherSalary, getInkasatsiya,
     getGroupHistory,
-    getRouteClassProfile
+    getRouteClassProfile, getOtchot
 } from "shared/const/routers";
 
 
 import {ClassProfilePage} from "pages/School";
-import {GroupCreatePage} from "pages/groupsPage";
+import {GroupCreatePage , GroupAttendance} from "pages/groupsPage";
 import {Register} from "pages/registerPage";
 import {
     ProfileTeacherPage,
     UserProfilePage,
-    StudentProfilePage, ProfileEmployerPage, GroupProfilePage
+    StudentProfilePage, ProfileEmployerPage, GroupProfilePage,
 } from "pages/profilePage";
 import {VacancyWorkPage} from "pages/vacancyWorkPage";
 import {RoomsProfilePage} from "pages/roomsProiflePage";
@@ -39,6 +39,7 @@ import {GiveSalaryPage, GiveTeacherSalaryPage} from "pages/giveSalaryPage";
 import {Branch, Education, Location, System} from "entities/editCreates";
 import {Inkasatsiya} from "pages/inkasatsiyaPage";
 import {StudentProfileGroupsHistory} from "entities/profile/studentProfile";
+import {AccountingOtchotPage} from "../../../pages/accountingPage";
 
 export const routersConfigProfile = [
     {
@@ -80,6 +81,10 @@ export const routersConfigProfile = [
     {
         path: "groups/groupInfo/:id",
         element: <GroupProfilePage/>,
+    },
+    {
+        path: "groups/groupInfo/:id/attendance",
+        element: <GroupAttendance/>,
     },
     {
         path: getRouteClassProfile(":id"),
@@ -149,6 +154,12 @@ export const routersConfigProfile = [
         name: "inkasatsiya",
         path: getInkasatsiya(":idBranch"),
         element: <Inkasatsiya/>
+    },
+
+    {
+        name: "otchoq",
+        path: getOtchot(),
+        element: <AccountingOtchotPage/>
     },
     {
         name: "History",

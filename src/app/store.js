@@ -10,7 +10,7 @@ import {filteredStudents} from "features/filters/studentsFilter";
 import {filteredEmployees} from "features/filters/employeesFilter";
 import {filteredGroups} from "features/filters/groupsFilter";
 import {filteredRoomsSlice} from "features/filters/roomsFilter";
-import {deletedGroupsSlice, groupsSlice} from "entities/groups";
+import {deletedGroupsSlice, groupAttendance, groupsSlice} from "entities/groups";
 // import {user} from "entities/user";
 import {studentProfilePayment} from "entities/profile/studentProfile";
 import {studentProfileBooks} from "entities/profile/studentProfile";
@@ -28,6 +28,7 @@ import {capital} from "../entities/capital";
 import {roomDeleteSlice} from "features/roomDeleteModal/model";
 import {roomsImageAddSlice} from "features/roomImageAddModal/model";
 import {
+    groupAttendanceSlice,
     studentProfile,
     teacherProfileData
 } from "pages/profilePage";
@@ -44,7 +45,7 @@ import {roomImageSlice} from "features/roomImagePareModal";
 import {
     accountingSlice,
     capitalSlice,
-    employerSlice,
+    employerSlice, otchotAccountingSlice,
     overHeadSlice,
     studentSlice,
     teacher
@@ -166,8 +167,11 @@ export const store = configureStore({
         flowsProfileSlice,
         classSlice,
         employerCategorySlice,
-        teacherGroupSlice,
-        studiyngStudentDelSlice
+        // teacherGroupSlice,
+        studiyngStudentDelSlice,
+        groupAttendanceSlice,
+        otchotAccountingSlice,
+        groupAttendance
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

@@ -24,12 +24,17 @@ import {
 import {
     fetchStudentProfileData,
     changeStudentProfileData,
-    changeStudentProfileImage
+    changeStudentProfileImage, fetchClassNumberListStudentProfile, fetchLanguagesStudentProfile
 } from "../../model/thunk/studentProfileThunk";
-import {getUserData} from "../../model/selector/studentProfileSelector";
+import {
+    getStudentProfileClasses,
+    getStudentProfileLanguages,
+    getUserData
+} from "../../model/selector/studentProfileSelector";
 
 import cls from "./studentProfilePage.module.sass";
-import {getSystem} from "../../../../features/themeSwitcher";
+import {getSystem} from "features/themeSwitcher";
+import {getBranch} from "features/branchSwitcher";
 
 export const StudentProfilePage = () => {
 
@@ -37,10 +42,20 @@ export const StudentProfilePage = () => {
     const {register, handleSubmit} = useForm()
     const dispatch = useDispatch()
     const {id} = useParams()
+
+    const branch = useSelector(getBranch)
+
+
+    const userData = useSelector(getUserData)
+    const classes = useSelector(getStudentProfileClasses)
+    const languages = useSelector(getStudentProfileLanguages)
+
+
+
+
     const [selectedSubject, setSelectedSubject] = useState(null)
     const [selectedGroup, setSelectedGroup] = useState(null)
     const [selectedGroupName, setSelectedGroupName] = useState("")
-    const userData = useSelector(getUserData)
     const student_id = userData?.id
     const branch_id = userData?.user?.branch.id
     const group_id = userData?.group
@@ -48,21 +63,36 @@ export const StudentProfilePage = () => {
     const [activeModal, setActiveModal] = useState("")
     const [actives,setActives] = useState(false)
     const [newImage, setNewImage] = useState("")
+
+    const [changeSelectedClass,setChangeSelectedClass] = useState(null)
+    const [changeSelectedLang,setChangeSelectedLang] = useState(null)
+
+
+
     const system = useSelector(getSystem)
 
     useEffect(() => {
-        dispatch(fetchStudentProfileData(id))
-    }, [id , system])
+        if (id ) {
+            console.log(id)
+            dispatch(fetchStudentProfileData(id))
+            dispatch(fetchClassNumberListStudentProfile({branch: branch?.id}))
+            dispatch(fetchLanguagesStudentProfile())
+        }
+
+    }, [id , system,branch?.id])
 
     // if (!userData || !userData.user) {
     //     return <div>Loading...</div>;
     // }
 
     const onSubmitData = (data) => {
+        console.log(changeSelectedLang)
         const res = {
             user: {
-                ...data
-            }
+                ...data,
+                language: changeSelectedLang
+            },
+            class_number: changeSelectedClass
         }
         dispatch(changeStudentProfileData({id, res}))
     }
@@ -155,11 +185,15 @@ export const StudentProfilePage = () => {
                 setNewImage={onSubmitImage}
             />
             <StudentProfileChangeInfo
+                setSelectedClass={setChangeSelectedClass}
+                setSelectedLang={setChangeSelectedLang}
                 setActive={setActiveModal}
                 active={activeModal === "changeInfo"}
                 register={register}
                 onSubmit={handleSubmit(onSubmitData)}
-                currentData={userData?.user}
+                currentData={userData}
+                classes={classes}
+                languages={languages}
             />
         </div>
     )

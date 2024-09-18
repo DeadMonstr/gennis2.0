@@ -19,7 +19,7 @@ export const Students = ({ currentTableData }) => {
             );
         }
 
-        // const studentsToRender = getStStudents && getStStudents.length > 0 ? getStStudents : currentTableData;
+        const studentsToRender = getStStudents && getStStudents.length > 0 ? getStStudents : currentTableData;
 
         // if (!studentsToRender || studentsToRender.length === 0) {
         //     return (
@@ -27,7 +27,7 @@ export const Students = ({ currentTableData }) => {
         //     );
         // }
 
-        return currentTableData?.map((item, i) => {
+        return studentsToRender?.map((item, i) => {
 
                 return (
                     <tr key={item.id} onClick={() => navigation(`profile/${item.id}`)}>

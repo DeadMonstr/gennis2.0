@@ -6,6 +6,7 @@ import {Input} from "shared/ui/input";
 import {Button} from "shared/ui/button";
 
 import cls from "./studentProfileChangeInfo.module.sass";
+import {Select} from "shared/ui/select";
 
 export const StudentProfileChangeInfo = memo((props) => {
 
@@ -14,9 +15,15 @@ export const StudentProfileChangeInfo = memo((props) => {
         active,
         onSubmit,
         register,
-        currentData
+        currentData,
+        languages,
+        classes,
+        setSelectedClass,
+        setSelectedLang
     } = props
 
+
+    console.log(currentData)
 
     return (
         <Modal
@@ -30,35 +37,35 @@ export const StudentProfileChangeInfo = memo((props) => {
                         placeholder={"Ism"}
                         name={"name"}
                         register={register}
-                        value={currentData?.name}
+                        value={currentData?.user?.name}
                         required
                     />
                     <Input
                         placeholder={"Familiya"}
                         name={"surname"}
                         register={register}
-                        value={currentData?.surname}
+                        value={currentData?.user?.surname}
                         required
                     />
                     <Input
                         placeholder={"Otasinig ismi"}
                         name={"father_name"}
                         register={register}
-                        value={currentData?.father_name}
+                        value={currentData?.user?.father_name}
                         required
                     />
                     <Input
                         placeholder={"Telefon raqami"}
                         name={"phone"}
                         register={register}
-                        value={currentData?.phone}
+                        value={currentData?.user?.phone}
                         required
                     />
                     <Input
                         placeholder={"Yoshi"}
                         name={"age"}
                         register={register}
-                        value={currentData?.age}
+                        value={currentData?.user?.age}
                         required
                         type={"number"}
                     />
@@ -66,10 +73,25 @@ export const StudentProfileChangeInfo = memo((props) => {
                         placeholder={"Tug'ilgan sana"}
                         name={"birth_date"}
                         register={register}
-                        value={currentData?.birth_date}
+                        value={currentData?.user?.birth_date}
                         required
                         type={"date"}
                     />
+                    <Select
+                        title={"Sinf"}
+                        options={classes}
+                        onChangeOption={setSelectedClass}
+                        defaultValue={currentData?.class_number.id}
+                    />
+
+                    <Select
+                        title={"Til"}
+                        options={languages}
+                        onChangeOption={setSelectedLang}
+                        defaultValue={currentData?.user?.language.id}
+                    />
+
+
                 </Form>
             </div>
         </Modal>

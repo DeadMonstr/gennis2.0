@@ -11,11 +11,12 @@ import {
     fetchWeekDays,
     createWeekDays,
     moveGroup,
-    filteredStudents, fetchGroupProfileNextLesson
+    filteredStudents, fetchGroupProfileNextLesson, getSchoolAttendance
 } from "./groupProfileThunk";
 
 const initialState = {
     data: null,
+    groupAttendance: [],
     nextLessonData: null,
     filteredTeachers: null,
     filteredStudents: null,
@@ -198,6 +199,23 @@ const groupProfileSlice = createSlice({
                 // state.loading = false
                 // state.error = "error"
             })
+
+
+
+            // .addCase(getSchoolAttendance.pending, state => {
+            //     state.loading = true
+            //     state.error = null
+            // })
+            // .addCase(getSchoolAttendance.fulfilled, (state, action) => {
+            //     state.groupAttendance = action.payload
+            //     console.log(action.payload , "shaxzod kur")
+            //     state.loading = false
+            //     state.error = null
+            // })
+            // .addCase(getSchoolAttendance.rejected, (state, action) => {
+            //     state.loading = false
+            //     state.error = true
+            // })
 })
 
 export const {getNextLesson} = groupProfileSlice.actions

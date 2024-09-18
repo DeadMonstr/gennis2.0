@@ -29,6 +29,7 @@ import {AddCategoryModal, EditModal} from "features/createCapitalModal";
 import {getBranchThunk, getLocations} from "../../../../entities/editCreates";
 import {getLocationThunk} from "../../../../entities/creates/model/createThunk/createBranchThunk";
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
+import {SubCategory} from "../subCategory/subCategory";
 
 const capitalType = [
     {name: "category", label: "Category"},
@@ -136,8 +137,13 @@ export const CapitalInside = memo(() => {
                 activeMenu={activeMenu}
                 setActiveMenu={setActiveMenu}
                 categoryMenu={capitalType}
+
             />
-            {capitalItemRender}
+            {
+                activeMenu === "category" ? capitalItemRender : <SubCategory/>
+            }
+
+
             <AddCategoryModal
                 setSelectPayment={setSelectPayment}
                 register={register}

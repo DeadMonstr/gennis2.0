@@ -8,11 +8,7 @@ const pages = [
         name: "O'quvchilar tolovlari",
         disabled: false
     },
-    // {
-    //     value: "bookPayment",
-    //     name: "Kitob tolovlari",
-    //     disabled: false
-    // },
+
     {
         value: "teachersSalary",
         name: "O'qituvchilar oyligi",
@@ -23,16 +19,6 @@ const pages = [
         name: "Ishchilar oyligi",
         disabled: false
     },
-    // {
-    //     value: "studentsDiscounts",
-    //     name: "O'quvchilar chegirmalari",
-    //     disabled: false
-    // },
-    // {
-    //     value: "debtStudents",
-    //     name: "Qarzdor o'quvchilar",
-    //     disabled: false
-    // },
     {
         value: "overhead",
         name: "Qo'shimcha xarajatlar",
@@ -45,9 +31,33 @@ const pages = [
     }
 ]
 
+const otchotPages = [
+    {
+        value: "payment",
+        name: "O'quvchilar tolovlari",
+        disabled: false
+    },
 
+    {
+        value: "teacherSalary",
+        name: "O'qituvchilar oyligi",
+        disabled: false
+    },
+    {
+        value: "employerSalary",
+        name: "Ishchilar oyligi",
+        disabled: false
+    },
+    {
+        value: "all",
+        name: "Hammasi",
+        disabled: false
+    },
+
+]
 const initialState = {
     pages: pages,
+    accountingPages: otchotPages,
     loading: false,
     error: false,
     encashment: [],
@@ -59,6 +69,14 @@ const accountingSlice = createSlice({
     reducers: {
         onChangeAccountingPage: (state, action) => {
             state.pages = state.pages.map(item => {
+                if (item.value === action.payload.value) {
+                    return {...item, disabled: true}
+                }
+                return {...item, disabled: false}
+            })
+        },
+        onChangePage: (state, action) => {
+            state.accountingPages = state.accountingPages.map(item => {
                 if (item.value === action.payload.value) {
                     return {...item, disabled: true}
                 }
@@ -84,6 +102,6 @@ const accountingSlice = createSlice({
 
 })
 
-export const {onChangeAccountingPage} = accountingSlice.actions
+export const {onChangeAccountingPage , onChangePage} = accountingSlice.actions
 export default accountingSlice.reducer
 

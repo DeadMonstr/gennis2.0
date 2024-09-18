@@ -7,4 +7,6 @@ export {getGroupsListData, getGroupsLoading,getGroupListWithFilter, getGroupType
 export {fetchGroupsData, fetchGroupsDataWithFilter, fetchGroupTypeThunk} from "./model/slice/groupsThunk";
 export {getDeletedGroupsData} from "./model/selectors/deletedGroups";
 
+export {default as groupAttendance} from "./model/slice/groupsAttendanceSlice"
+
 

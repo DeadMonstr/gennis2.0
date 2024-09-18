@@ -35,7 +35,7 @@ export const StudentsHeader = ({
                 Create Class
             </Button>
             :
-            <Link to={"createGroup"}>
+            <Link to={":id/createGroup"}>
                 <Button
                     type={"filter"}
                     extraClass={cls.extraCutClass}

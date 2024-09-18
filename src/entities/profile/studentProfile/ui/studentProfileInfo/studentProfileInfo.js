@@ -5,7 +5,7 @@ import defaultUserImg from "shared/assets/images/user_image.png";
 import {API_URL_DOC} from "../../../../../shared/api/base";
 import {Button} from "../../../../../shared/ui/button";
 
-export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal, content, contract , system}) => {
+export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal, content, contract, system}) => {
     const number = content?.debt
     const formattedNumber = number?.toLocaleString();
     return (
@@ -24,7 +24,7 @@ export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal
                     alt=""
                 />
                 <div onClick={() => setActive("contract")} className={cls.subject__edit}>
-                    <i style={{fontSize: 20+"px"}} className={"fa-solid fa-file-contract"}></i>
+                    <i style={{fontSize: 20 + "px"}} className={"fa-solid fa-file-contract"}></i>
                     <p>Shartnoma</p>
                 </div>
                 <h1>{data?.username}</h1>
@@ -43,7 +43,8 @@ export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal
                             <Button onClick={() => setActive("contract")}>Qo'shish</Button>
                         ) : (
                             contract.contract.map((item, index) =>
-                                <a key={index} href={`${API_URL_DOC}${item.url}`} target="_blank" rel="noopener noreferrer">
+                                <a key={index} href={`${API_URL_DOC}${item.url}`} target="_blank"
+                                   rel="noopener noreferrer">
                                     Yuklab olish
                                 </a>
                             )
@@ -63,7 +64,7 @@ export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal
                 <p>Summa</p>
                 <div className={cls.info__money}>
                     <h2 onClick={() => setActive("balanceIn")}>$ {formattedNumber}</h2>
-                    {system.name === "school" ? <p>$ 390.000</p> : null}
+                    {system.name === "center" ? <p>$ 390.000</p> : null}
                 </div>
             </EditableCard>
         </EditableCard>

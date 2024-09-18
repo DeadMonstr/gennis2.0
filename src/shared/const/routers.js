@@ -17,7 +17,7 @@ export const getRouteTimePage = (id) => `timeList/${id}`
 export const getRouteUserProfile = (id) => `profile/${id}`
 export const getEmployerPage = (id) => `employer/*`
 
-export const getEmployerCategory = () => `employer/category/*`
+// export const getEmployerCategory = () => `employer/category/*`
 export const getEmployerProfile = (id) => `employer/employerProfile/${id}`;
 
 export const getTeacherSalary = (id) => `teacher/teacherProfile/:id/teacherSalaryPage/${id}`
@@ -53,6 +53,9 @@ export const getSystem = (id) => `system/${id}`
 export const getAccounting = (id) => `accounting/*`
 
 export const getInkasatsiya = (id) => `inkasatsiya/${id}/*`
+
+
+export const getOtchot = () => `accounting/:id/otchot/*`
 
 
 export const getGroupHistory = (id) => `students/profile/history/${id}`

@@ -11,18 +11,16 @@ import {
     fetchClassColors,
     fetchClassNumberList,
     getSchoolClassNumbers,
-    getSchoolClassColors, getStudyingStudentsWithBranch, getStudentsWithBranch,
-} from "entities/students";
-import {StudentsHeader} from "entities/students";
-import {StudentsFilter} from "features/filters/studentsFilter";
-import {
-    fetchOnlyNewStudentsData,
+    getSchoolClassColors, getStudyingStudentsWithBranch, getStudentsWithBranch,fetchOnlyNewStudentsData,
     fetchOnlyStudyingStudentsData,
     fetchOnlyDeletedStudentsData,
     getNewStudentsData,
     getStudyingStudents,
     getOnlyDeletedStudents
 } from "entities/students";
+import {StudentsHeader} from "entities/students";
+import {fetchDeletedNewStudentsThunk, getDeletedNewStudents, StudentsFilter} from "features/filters/studentsFilter";
+
 import {Pagination} from "features/pagination";
 import {Button} from "shared/ui/button";
 import {useNavigate} from "react-router";
@@ -95,6 +93,9 @@ export const StudentsPage = () => {
     const teachers = useSelector(getTeachers);
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
     const languages = useSelector(state => state.registerUser.languages);
+
+
+
     const [data, setData] = useState({})
     const [selectColor, setSelectColor] = useState();
     const [colorError, setColorError] = useState(false);
@@ -146,6 +147,7 @@ export const StudentsPage = () => {
     }, [userBranchId])
 
 
+
     useEffect(() => {
         if (userSystem?.name === "school" && userBranchId) {
             // dispatch(fetchSchoolStudents({userBranchId}))
@@ -177,8 +179,8 @@ export const StudentsPage = () => {
     }
 
     const onSubmitFilteredByClass = (data) => {
-        // console.log(schoolClassNumbers.filter(item => item.id === +data)[0]?.price)
-        setActiveFormBtn(schoolClassNumbers.filter(item => item.id === +data)[0]?.price === (0 || null))
+        console.log(schoolClassColors)
+        setActiveFormBtn(schoolClassNumbers.filter(item => item.id === +data)[0]?.price === 0 || !schoolClassNumbers.filter(item => item.id === +data)[0]?.price)
         dispatch(fetchStudentsByClass({branch: userBranchId, number: data}))
     }
 

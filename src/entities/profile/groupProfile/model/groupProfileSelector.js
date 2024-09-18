@@ -25,3 +25,7 @@ export const getFilteredGroups = (state) =>
 
 export const getWeekDays = (state) =>
     state.groupProfileSlice.weekDays
+
+
+// export const getGroupAttendance = (state) =>
+//     state.groupProfileSlice.groupAttendance

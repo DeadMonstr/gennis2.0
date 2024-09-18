@@ -37,13 +37,14 @@ export const Select = React.memo(({
             } else {
                 setSelectOption(defaultValue);
             }
+            setIsChanged(true)
         }
     }, [defaultValue]);
 
     useEffect(() => {
         if (isChanged) {
             if (!selectOption) return;
-            onChangeOption(selectOption);
+            if (onChangeOption) onChangeOption(selectOption);
             setIsChanged(false);
         }
     }, [selectOption, onChangeOption, isChanged]);
@@ -52,7 +53,7 @@ export const Select = React.memo(({
     const renderOptionsOfSelect = useCallback(() => {
         return optionsData?.map((item, index) => {
             const value = item[keyValue] || item.value || item.id || item.name || item;
-            const key = item.name || item?.number || item.days || item.user && `${item.user?.name} ${item.user?.surname}` || item;
+            const key = item.name || item?.number || item.days || item.num || item.user && `${item.user?.name} ${item.user?.surname}` || item;
 
             return (
                 <option
@@ -126,7 +127,7 @@ export const Select = React.memo(({
                     setIsChanged(true);
                 }}
             >
-                {title ? <option value={""} disabled>{title}</option> : <option value={""} disabled>Tanlang</option>}
+                {title ? <option value={""}>{title}</option> : <option value={""} disabled>Tanlang</option>}
                 {renderedOptions}
             </select>
             {status === "error" ? <span className={cls.label__error}>Error</span> : null}
