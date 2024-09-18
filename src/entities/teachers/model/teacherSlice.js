@@ -14,7 +14,13 @@ const initialState = {
 export const teachersSlice = createSlice({
     name: "teachersSlice",
     initialState,
-    reducers: {},
+    reducers: {
+
+        onDelete: (state, action) => {
+            console.log(action.payload , "hello")
+            state.teachersData = [...state.teachersData.filter(item => item.id !== action.payload)]
+        },
+    },
     extraReducers: builder => {
         builder
             .addCase(fetchTeachersData.pending , state =>{
@@ -43,5 +49,7 @@ export const teachersSlice = createSlice({
     }
 })
 
+
+export const {onDelete} = teachersSlice.actions
 
 export default teachersSlice.reducer

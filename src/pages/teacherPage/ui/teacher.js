@@ -13,7 +13,10 @@ import {getTeacherLoading} from "entities/teachers";
 import {fetchTeachersData} from "entities/teachers";
 import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
 import {useParams} from "react-router-dom";
-
+import {API_URL, headers, useHttp} from "shared/api/base";
+import {YesNo} from "shared/ui/yesNoModal";
+import {onAddAlertOptions, onDeleteAlert} from "features/alert/model/slice/alertSlice";
+import {onDelete} from "entities/teachers/model/teacherSlice";
 
 
 export const TeachersPage = () => {
@@ -27,11 +30,10 @@ export const TeachersPage = () => {
     const userBranchId = id
 
 
-    useEffect(() =>{
+    useEffect(() => {
         if (!userBranchId) return;
         dispatch(fetchTeachersData({userBranchId}))
-    } ,[dispatch,userBranchId])
-
+    }, [dispatch, userBranchId])
 
 
     let PageSize = useMemo(() => 30, [])
@@ -40,11 +42,16 @@ export const TeachersPage = () => {
     const [selected, setSelected] = useState()
     const [active, setActive] = useState()
     const [activeSwitch, setActiveSwitch] = useState(false)
+    const [activeDelete, setActiveDelete] = useState({})
+
+    const [activeModal , setActiveModal ] = useState(false)
+
+    const {request} = useHttp()
 
     const searchedUsers = useMemo(() => {
-        const filteredHeroes =!filteredTeachersData || filteredTeachersData.length === 0 ? teachersData.slice() : filteredTeachersData.slice()
+        const filteredHeroes = !filteredTeachersData || filteredTeachersData.length === 0 ? teachersData.slice() : filteredTeachersData.slice()
         setCurrentPage(1)
-        if (!search) return  filteredHeroes
+        if (!search) return filteredHeroes
         return filteredHeroes.filter(item =>
             (item?.user?.name?.toLowerCase().includes(search.toLowerCase()) ||
                 item?.user?.surname?.toLowerCase().includes(search.toLowerCase()))
@@ -57,6 +64,24 @@ export const TeachersPage = () => {
             type: "teachers"
         }
     ]
+
+    const onClick = () => {
+        const id = activeDelete.id
+        request(`${API_URL}Teachers/teachers/delete/${id}/`, "DELETE", null, headers())
+            .then(res => {
+                console.log(res)
+                dispatch(onDelete(id))
+                dispatch(onAddAlertOptions({
+                    types: "success",
+                    status: true,
+                    msg: res.msg
+                }))
+                setActiveModal(false)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
 
     return (
         <MultiPage types={types} page={"teachers"}>
@@ -80,17 +105,22 @@ export const TeachersPage = () => {
                     <h2>{activeSwitch ? "Deleted Teachers" : "Teachers"}</h2>
                     {
                         activeSwitch ?
-                        <DeletedTeachers
-                            data={teachersData}
-                            // data={searchedUsers}
-                        />
-                        :
-                        <Teachers
-                            theme={ theme === "app_school_theme"}
-                            loading={getTeacherLoading}
-                            data={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
-                            // data={currentTableData}
-                        />
+                            <DeletedTeachers
+                                data={teachersData}
+                                // data={searchedUsers}
+                            />
+                            :
+                            <Teachers
+
+                                setActiveDelete={setActiveDelete}
+                                setActiveModal={setActiveModal}
+
+                                // onClick={onClick}
+                                theme={theme === "app_school_theme"}
+                                loading={getTeacherLoading}
+                                data={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
+                                // data={currentTableData}
+                            />
                     }
                 </div>
 
@@ -115,6 +145,7 @@ export const TeachersPage = () => {
                 />
             </div>
 
+            <YesNo onDelete={onClick} activeDelete={activeModal} setActiveDelete={setActiveModal}/>
         </MultiPage>
 
     )
