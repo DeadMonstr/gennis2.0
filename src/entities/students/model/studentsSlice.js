@@ -9,7 +9,7 @@ import {
     fetchSchoolStudents,
     fetchNewStudentsDataWithBranch,
     fetchStudyingStudentsDataWithBranch,
-    fetchOnlyDeletedStudentsData, fetchStudentsByClass
+    fetchOnlyDeletedStudentsData, fetchStudentsByClass, fetchDeletedNewStudentsThunk
 } from "./studentsThunk";
 
 
@@ -69,6 +69,18 @@ export const studentsSlice = createSlice({
                 state.newStudentsStatus = "success"
             })
             .addCase(fetchOnlyNewStudentsData.rejected, (state, action) => {
+                state.newStudentsStatus = "error"
+            })
+
+            .addCase(fetchDeletedNewStudentsThunk.pending, state => {
+                state.newStudentsStatus = "loading"
+            })
+            .addCase(fetchDeletedNewStudentsThunk.fulfilled, (state, action) => {
+                state.newStudentes = action.payload
+                console.log(action.payload, 'efefewfe')
+                state.newStudentsStatus = "success"
+            })
+            .addCase(fetchDeletedNewStudentsThunk.rejected, (state, action) => {
                 state.newStudentsStatus = "error"
             })
 
@@ -181,7 +193,7 @@ export const studentsSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchNewStudentsDataWithBranch.fulfilled, (state, action) => {
-                state.branchStudents = action.payload
+                state.newStudentes = action.payload
                 state.loading = false
                 state.error = null
             })

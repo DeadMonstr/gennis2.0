@@ -14,9 +14,9 @@ import {
 } from "entities/students";
 
 import cls from "../../filters.module.sass";
-import {fetchDeletedNewStudentsThunk} from "../model/filterStudentsThunk";
+import {fetchDeletedNewStudentsThunk} from "entities/students";
 
-export const StudentsFilter = React.memo(({active, setActive, activePage, isFilter}) => {
+export const StudentsFilter = React.memo(({active, setActive, activePage, isFilter, branchId}) => {
 
     const [selectedAgeFrom, setSelectedAgeFrom] = useState("")
     const [selectedAgeTo, setSelectedAgeTo] = useState("")
@@ -24,7 +24,7 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
     const [selectedLang, setSelectedLanguage] = useState("")
     const [selectedClass, setSelectedClass] = useState("")
     const [selectedStatus, setSelectedStatus] = useState("")
-    const [isSwitch, setIsSwitch] = useState(false)
+    const [isSwitch, setIsSwitch] = useState(false);
     const dispatch = useDispatch()
     const languages = useSelector(getLanguagesData)
     const subjects = useSelector(getSubjectsData)
@@ -116,13 +116,14 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
     const handleSwitchData = () => {
         const newState = !isSwitch;
         setIsSwitch(newState);
+
         if (newState) {
             dispatch(fetchDeletedNewStudentsThunk());
         } else {
-            dispatch(fetchOnlyNewStudentsData());
+            dispatch(fetchOnlyNewStudentsData({id: branchId}));
         }
-        isFilter(newState ? "deleted_students" : "new_students");
     }
+
 
     useEffect(() => {
         dispatch(fetchSubjects());

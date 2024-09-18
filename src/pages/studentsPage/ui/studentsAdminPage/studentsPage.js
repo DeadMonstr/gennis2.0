@@ -115,7 +115,7 @@ export const StudentsPage = () => {
         let filteredStudents = [];
         switch (selectedRadio) {
             case "new_students":
-                filteredStudents = isFilter === "new_students" ? filteredNewStudents?.slice() : newStudents?.slice();
+                filteredStudents =  newStudents?.slice() ;
                 break;
             case "studying_students":
                 filteredStudents = isFilter === "studying_students" ? filteredStudyingStudents?.slice() : studyingStudents?.slice();
@@ -126,6 +126,7 @@ export const StudentsPage = () => {
             default:
                 filteredStudents = [];
         }
+        console.log(newStudents, 'wdefwefwef')
 
         setCurrentPage(1);
 
@@ -302,6 +303,7 @@ export const StudentsPage = () => {
                 setActive={setActive}
                 activePage={selectedRadio}
                 isFilter={setIsFilter}
+                branchId={userBranchId}
             />
             <Modal
                 active={activeModal === "create"}
