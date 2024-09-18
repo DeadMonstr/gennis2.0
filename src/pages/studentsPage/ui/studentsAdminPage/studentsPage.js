@@ -11,12 +11,12 @@ import {
     fetchClassColors,
     fetchClassNumberList,
     getSchoolClassNumbers,
-    getSchoolClassColors, getStudyingStudentsWithBranch, getStudentsWithBranch,fetchOnlyNewStudentsData,
+    getSchoolClassColors, getStudyingStudentsWithBranch, getStudentsWithBranch,
     fetchOnlyStudyingStudentsData,
     fetchOnlyDeletedStudentsData,
     getNewStudentsData,
     getStudyingStudents,
-    getOnlyDeletedStudents
+    getOnlyDeletedStudents, fetchNewStudentsDataWithBranch
 } from "entities/students";
 import {StudentsHeader} from "entities/students";
 import {fetchDeletedNewStudentsThunk, getDeletedNewStudents, StudentsFilter} from "features/filters/studentsFilter";
@@ -191,7 +191,7 @@ export const StudentsPage = () => {
 
         switch (selectedRadio) {
             case "new_students":
-                dispatch(fetchOnlyNewStudentsData({id: userBranchId}));
+                dispatch(fetchNewStudentsDataWithBranch({userBranchId: userBranchId}));
                 break;
             case "studying_students":
                 dispatch(fetchOnlyStudyingStudentsData({id: userBranchId}));
