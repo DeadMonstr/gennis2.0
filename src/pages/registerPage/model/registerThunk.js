@@ -6,28 +6,6 @@ const getAuthToken = () => {
     return userData ? userData : null;
 };
 
-export const fetchSubjects = createAsyncThunk(
-    'user/fetchSubjects',
-    async (_, thunkAPI) => {
-        const token = getAuthToken();
-        if (!token) {
-            return "Qayta login qilish kerak "
-        }
-        const {request} = useHttp()
-        return await request(`${API_URL}Subjects/subject/`, "GET", null, headers())
-    }
-);
-
-
-export const fetchLanguages = createAsyncThunk(
-    'user/fetchLanguages',
-    async () => {
-        const {request} = useHttp()
-        return await request(`${API_URL}Language/language/`, "GET", null, headers())
-    }
-)
-
-
 export const registerUser = createAsyncThunk(
     'user/registerUser',
     async (userData, thunkAPI) => {

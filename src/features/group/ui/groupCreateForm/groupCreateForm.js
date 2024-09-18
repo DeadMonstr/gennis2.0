@@ -14,6 +14,7 @@ import {Form} from "shared/ui/form";
 import {Input} from "shared/ui/input";
 import {Select} from "shared/ui/select";
 import {API_URL, headers, useHttp} from "shared/api/base";
+import {getLanguagesData} from "entities/oftenUsed";
 
 import cls from "./groupCreateForm.module.sass";
 
@@ -40,7 +41,7 @@ export const GroupCreateForm = memo((props) => {
     const curseTypesData = useSelector(getCurseTypesData)
     const curseLevelData = useSelector(getCurseLevelData)
     // const userBranchId = useSelector(getUserBranchId)
-    const {languages} = useSelector(state => state.registerUser)
+    const languages = useSelector(getLanguagesData)
 
     const [createStatus, setCreateStatus] = useState(false)
 

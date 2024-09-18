@@ -4,21 +4,25 @@ import { Modal } from "shared/ui/modal";
 import { Input } from "shared/ui/input";
 import { Select } from "shared/ui/select";
 import { Switch } from "shared/ui/switch";
+import {
+    fetchLanguagesData,
+    getLanguagesData
+} from "entities/oftenUsed"
 
 import cls from "../../filters.module.sass";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVacancyData, getVacancyJobs } from "../../../vacancyModals/vacancyPageAdd";
 import { fetchEmployersDataWithFilter } from "entities/employer";
-import { fetchLanguages, getLanguagesData } from "pages/registerPage";
 
 export const EmployeesFilter = React.memo(({ active, setActive, activeSwitch, setActiveSwitch }) => {
+
     const dispatch = useDispatch();
+    const languages = useSelector(getLanguagesData);
     const [selectedAgeFrom, setSelectedAgeFrom] = useState('');
     const [selectedAgeTo, setSelectedAgeTo] = useState('');
     const [selectedJob, setSelectedJob] = useState('');
     const [selectedLanguage, setSelectedLanguage] = useState('');
     const jobsData = useSelector(getVacancyJobs);
-    const languages = useSelector(getLanguagesData);
 
     const jobOptions = jobsData?.map(job => ({
         id: job.group.id,
@@ -64,11 +68,9 @@ export const EmployeesFilter = React.memo(({ active, setActive, activeSwitch, se
 
     useEffect(() => {
         dispatch(fetchVacancyData());
+        dispatch(fetchLanguagesData())
     }, [dispatch]);
 
-    useEffect(() => {
-        dispatch(fetchLanguages());
-    }, [dispatch]);
 
     return (
         <Modal

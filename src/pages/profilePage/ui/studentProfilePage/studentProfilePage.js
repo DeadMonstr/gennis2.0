@@ -1,3 +1,9 @@
+import {
+    fetchClassNumberData,
+    fetchLanguagesData,
+    getClassNumberData,
+    getLanguagesData
+} from "entities/oftenUsed";
 import {useEffect, useState} from 'react';
 import classNames from "classnames";
 import {useParams} from "react-router";
@@ -47,8 +53,8 @@ export const StudentProfilePage = () => {
 
 
     const userData = useSelector(getUserData)
-    const classes = useSelector(getStudentProfileClasses)
-    const languages = useSelector(getStudentProfileLanguages)
+    const classes = useSelector(getClassNumberData)
+    const languages = useSelector(getLanguagesData)
 
 
 
@@ -75,8 +81,10 @@ export const StudentProfilePage = () => {
         if (id ) {
             console.log(id)
             dispatch(fetchStudentProfileData(id))
-            dispatch(fetchClassNumberListStudentProfile({branch: branch?.id}))
-            dispatch(fetchLanguagesStudentProfile())
+            // dispatch(fetchClassNumberListStudentProfile({branch: branch?.id}))
+            dispatch(fetchClassNumberData({branch: branch?.id}))
+            // dispatch(fetchLanguagesStudentProfile())
+            dispatch(fetchLanguagesData())
         }
 
     }, [id , system,branch?.id])

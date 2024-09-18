@@ -5,19 +5,26 @@ import {Modal} from "shared/ui/modal";
 import {Input} from "shared/ui/input";
 import {Select} from "shared/ui/select";
 import {Switch} from "shared/ui/switch";
-import {getLanguagesData, getSubjectsData} from "pages/registerPage";
-import {fetchLanguages, fetchSubjects} from "pages/registerPage";
 import {
     fetchNewStudentsDataWithBranch,
     fetchOnlyNewStudentsData,
     fetchStudyingStudentsDataWithBranch
 } from "entities/students";
+import {
+    fetchSubjectsData,
+    fetchLanguagesData,
+    getLanguagesData,
+    getSubjectsData
+} from "entities/oftenUsed";
 
 import cls from "../../filters.module.sass";
 import {fetchDeletedNewStudentsThunk} from "../model/filterStudentsThunk";
 
 export const StudentsFilter = React.memo(({active, setActive, activePage, isFilter}) => {
 
+    const dispatch = useDispatch()
+    const languages = useSelector(getLanguagesData)
+    const subjects = useSelector(getSubjectsData)
     const [selectedAgeFrom, setSelectedAgeFrom] = useState("")
     const [selectedAgeTo, setSelectedAgeTo] = useState("")
     const [selectedSubject, setSelectedSubject] = useState("")
@@ -25,9 +32,6 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
     const [selectedClass, setSelectedClass] = useState("")
     const [selectedStatus, setSelectedStatus] = useState("")
     const [isSwitch, setIsSwitch] = useState(false)
-    const dispatch = useDispatch()
-    const languages = useSelector(getLanguagesData)
-    const subjects = useSelector(getSubjectsData)
 
     useEffect(() => {
         if (selectedAgeFrom || selectedAgeTo || selectedLang || selectedSubject || selectedClass) {
@@ -125,11 +129,10 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
     }
 
     useEffect(() => {
-        dispatch(fetchSubjects());
+        // dispatch(fetchSubjects());
+        dispatch(fetchSubjectsData())
+        dispatch(fetchLanguagesData())
     }, [dispatch]);
-    useEffect(() => {
-        dispatch(fetchLanguages())
-    }, [dispatch])
 
     return (
         <Modal

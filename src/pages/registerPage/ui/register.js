@@ -15,20 +15,31 @@ import {
     registerEmployer,
     fetchCategories, registerTeacherImage
 } from "../model/registerThunk";
-import cls from "./register.module.sass";
 import {fetchVacancyData, getVacancyJobs} from "features/vacancyModals/vacancyPageAdd";
 import {Button} from "shared/ui/button";
-import bg__img from 'shared/assets/images/reg__bg.svg';
 import {Input} from 'shared/ui/input';
 import {Textarea} from "shared/ui/textArea";
 import {Select} from "shared/ui/select";
 import {MiniLoader} from "shared/ui/miniLoader";
 import {API_URL, useHttp, headers} from "shared/api/base";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
-import {getCategories, getLanguagesData, getSubjectsData} from "../model/registerSelector";
+import {getCategories} from "../model/registerSelector";
 import {getSystems} from "../../../features/themeSwitcher";
 import {getSystemName} from "entities/editCreates";
 import {AnimatedMulti} from "features/workerSelect";
+import {
+    getSubjectsData,
+    getLanguagesData,
+    getClassNumberData,
+    getClassTypeData,
+    fetchLanguagesData,
+    fetchSubjectsData,
+    fetchClassNumberData,
+    fetchClassTypeData
+} from "entities/oftenUsed"
+
+import cls from "./register.module.sass";
+import bg__img from 'shared/assets/images/reg__bg.svg';
 
 const userstype = {
     types: [
@@ -52,6 +63,10 @@ export const Register = () => {
     })) || [];
 
 
+    const subjects = useSelector(getSubjectsData)
+    const languages = useSelector(getLanguagesData);
+    const classNumbers = useSelector(getClassNumberData)
+    const classTypes = useSelector(getClassTypeData)
     const {
         register,
         handleSubmit,
@@ -65,11 +80,8 @@ export const Register = () => {
     const {theme} = useTheme()
     const getSystem = useSelector(getSystemName)
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
-    const classNumbers = useSelector(getSchoolClassNumbers)
-    const languages = useSelector(getLanguagesData);
+    // const classNumbers = useSelector(getSchoolClassNumbers)
     const branch = localStorage.getItem("selectedBranch")
-    const subjects = useSelector(getSubjectsData)
-    const classTypes = useSelector(classData)
     const categories = useSelector(getCategories)
     const dispatch = useDispatch();
     const [error, setError] = useState(false);
@@ -86,8 +98,8 @@ export const Register = () => {
     const [isUsernameAvailable, setIsUsernameAvailable] = useState(true);
     const safeData = Array.isArray(subjects) ? subjects : [subjects];
     const subjectOptions = safeData?.map(subject => ({
-        value: subject.id,
-        label: subject.name,
+        value: subject?.id,
+        label: subject?.name,
     }));
 
     const handleAddSubject = (selectedSubject) => {
@@ -96,11 +108,16 @@ export const Register = () => {
 
     useEffect(() => {
         if (id) {
-            dispatch(fetchLanguages());
-            dispatch(fetchSubjects())
-            dispatch(getClassTypes(id))
+            // dispatch(fetchLanguages());
+            dispatch(fetchLanguagesData())
+            // dispatch(fetchSubjects())
+            dispatch(fetchSubjectsData())
+
+            // dispatch(getClassTypes(id))
+            dispatch(fetchClassTypeData({branch: id}))
+            dispatch(fetchClassNumberData({branch:id}))
+
             dispatch(fetchCategories())
-            dispatch(fetchClassNumberList({branch:id}))
         }
 
         setValue("password", 12345678)

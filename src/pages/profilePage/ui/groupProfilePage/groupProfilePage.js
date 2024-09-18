@@ -1,5 +1,4 @@
 import {getNextLesson} from "entities/profile/groupProfile/model/groupProfileSlice";
-import {fetchGroupProfileNextLesson, getSchoolAttendance} from "entities/profile/groupProfile/model/groupProfileThunk";
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import classNames from "classnames";
@@ -39,7 +38,12 @@ import {fetchTeachersData} from "entities/teachers";
 import {fetchGroupsData} from "entities/groups";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
-import {fetchLanguages, fetchSubjects} from "pages/registerPage";
+import {
+    fetchSubjectsData,
+    fetchLanguagesData,
+    fetchClassNumberData,
+    fetchClassColorData
+} from "entities/oftenUsed";
 
 import cls from "./groupProfilePage.module.sass";
 import {getBranch} from "features/branchSwitcher";
@@ -72,13 +76,14 @@ export const GroupProfilePage = () => {
 
     useEffect(() => {
         dispatch(fetchGroupProfile({id}))
-        // dispatch(getSchoolAttendance(id))
-        dispatch(fetchSubjects())
-        dispatch(fetchLanguages())
+
+        dispatch(fetchSubjectsData())
+        dispatch(fetchLanguagesData())
+        dispatch(fetchClassColorData())
+        dispatch(fetchClassNumberData({branch}))
+
         dispatch(fetchReasons())
         dispatch(fetchWeekDays())
-        dispatch(fetchClassColors())
-        dispatch(fetchClassNumberList())
     }, [])
 
 

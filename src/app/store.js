@@ -79,6 +79,10 @@ import {multiPageSlice} from "widgets/multiPage"
 import {teacherGroupSlice} from "entities/teachers";
 import {studiyngStudentDelSlice} from "../features/studiyngStudentDelModal";
 
+import {
+    oftenUsedSlice
+} from "entities/oftenUsed";
+
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
         return next({
@@ -171,7 +175,8 @@ export const store = configureStore({
         studiyngStudentDelSlice,
         groupAttendanceSlice,
         otchotAccountingSlice,
-        groupAttendance
+        groupAttendance,
+        oftenUsedSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

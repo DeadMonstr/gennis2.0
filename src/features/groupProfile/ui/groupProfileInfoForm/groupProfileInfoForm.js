@@ -21,7 +21,11 @@ import {Input} from "shared/ui/input";
 import {Modal} from "shared/ui/modal";
 import {Radio} from "shared/ui/radio";
 import {Select} from "shared/ui/select";
-import {getLanguagesData} from "pages/registerPage";
+import {
+    getLanguagesData,
+    getClassColorData,
+    getClassNumberData
+} from "entities/oftenUsed";
 import {Switch} from "shared/ui/switch";
 
 import cls from "./groupProfileInfoForm.module.sass";
@@ -45,8 +49,10 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
     const nextLesson = useSelector(getGroupProfileNextLsData)
     const languages = useSelector(getLanguagesData)
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
-    const schoolClassNumbers = useSelector(getSchoolClassNumbers)
-    const schoolClassColors = useSelector(getSchoolClassColors)
+    // const schoolClassNumbers = useSelector(getSchoolClassNumbers)
+    const schoolClassNumbers = useSelector(getClassNumberData)
+    // const schoolClassColors = useSelector(getSchoolClassColors)
+    const schoolClassColors = useSelector(getClassColorData)
 
     const [active, setActive] = useState(false)
     const [selectColor, setSelectColor] = useState()

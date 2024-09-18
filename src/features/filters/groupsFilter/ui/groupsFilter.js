@@ -5,17 +5,22 @@ import {Input} from "shared/ui/input";
 import {Select} from "shared/ui/select";
 import {Switch} from "shared/ui/switch";
 
-import cls from "../../filters.module.sass";
 import {useDispatch, useSelector} from "react-redux";
 import {getUserBranchId} from "../../../../entities/profile/userProfile";
 import {fetchTeachersData, getTeachers} from "../../../../entities/teachers";
 import {fetchGroupsDataWithFilter, fetchGroupTypeThunk, getGroupTypes} from "../../../../entities/groups";
-import {fetchSubjects, getSubjectsData} from "pages/registerPage";
+import {
+    getSubjectsData,
+    fetchSubjectsData
+} from "entities/oftenUsed";
 import {fetchTeachersDataWithFilter} from "../../../../entities/teachers/model/teacherThunk";
+
+import cls from "../../filters.module.sass";
 
 export const GroupsFilter = React.memo(({active, setActive}) => {
 
     const branch = localStorage.getItem("selectedBranch")
+    const subjects = useSelector(getSubjectsData)
     const getTeacher = useSelector(getTeachers)
     const [selectedSubject, setSelectedSubject] = useState()
     const [selectedTeacher, setSelectedTeacher] = useState()
@@ -23,7 +28,6 @@ export const GroupsFilter = React.memo(({active, setActive}) => {
     const [activeSwitch, setActiveSwitch] = useState(false)
     const dispatch = useDispatch()
     const userBranchId = useSelector(getUserBranchId)
-    const subjects = useSelector(getSubjectsData)
     const types = useSelector(getGroupTypes)
 
     useEffect(() => {
@@ -32,7 +36,8 @@ export const GroupsFilter = React.memo(({active, setActive}) => {
     }, [branch])
 
     useEffect(() => {
-        dispatch(fetchSubjects());
+        // dispatch(fetchSubjects());
+        dispatch(fetchSubjectsData())
     }, []);
 
     useEffect(() => {

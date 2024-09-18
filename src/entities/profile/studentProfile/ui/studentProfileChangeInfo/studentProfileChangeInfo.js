@@ -81,14 +81,14 @@ export const StudentProfileChangeInfo = memo((props) => {
                         title={"Sinf"}
                         options={classes}
                         onChangeOption={setSelectedClass}
-                        defaultValue={currentData?.class_number.id}
+                        defaultValue={currentData?.class_number?.id}
                     />
 
                     <Select
                         title={"Til"}
                         options={languages}
                         onChangeOption={setSelectedLang}
-                        defaultValue={currentData?.user?.language.id}
+                        defaultValue={currentData?.user?.language?.id}
                     />
 
 
