@@ -176,7 +176,7 @@ export const GroupProfilePage = () => {
                 {/*<GroupProfileTeacher setActive={setActiveModal}/>*/}
                 <GroupProfileDeleteForm branch={branch} system={system}/>
                 {/*<GroupProfileStudents/>*/}
-                <GroupProfileAttendanceForm data={data.students}   setAttendance={setAttendance} attendance={attendance}/>
+                <GroupProfileAttendanceForm data={data?.students}   setAttendance={setAttendance} attendance={attendance}/>
                 {/*<GroupProfileAttendance/>*/}
                 {
                     system.name === "center" ? <>

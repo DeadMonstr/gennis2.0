@@ -44,7 +44,7 @@ export const Select = React.memo(({
     useEffect(() => {
         if (isChanged) {
             if (!selectOption) return;
-            if (!register) onChangeOption(selectOption);
+            if (onChangeOption) onChangeOption(selectOption);
             setIsChanged(false);
         }
     }, [selectOption, onChangeOption, isChanged]);

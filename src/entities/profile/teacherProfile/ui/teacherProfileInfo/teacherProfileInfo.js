@@ -79,21 +79,21 @@ export const TeacherProfileInfo = memo(({active, setActive, setActiveModal, newI
                 </>
             }
             <Link to={`teacherSalaryPage/${teacherId?.id}`}>
-                {system.name === "center" ?
-                    <EditableCard
-                        extraClass={cls.info__balance}
-                    >
-                        <h2>Balans</h2>
-                        <p>Summa</p>
+                <EditableCard
+                    extraClass={cls.info__balance}
+                >
+                    <h2>Balans</h2>
+                    <p>Summa</p>
 
-                        <div className={cls.info__money}>
-                            <h2>$ 570.000</h2>
-                            <p>$ 390.000</p>
-                        </div>
+                    <div className={cls.info__money}>
+                        {system.name === "center" ?
+                            <h2>$ 570.000</h2> :
+                            null}
+                        <p>$ 390.000</p>
+                    </div>
 
 
-                    </EditableCard> :
-                    null}
+                </EditableCard>
             </Link>
             <TeacherEdit
                 isOpen={active}

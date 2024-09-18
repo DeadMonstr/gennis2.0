@@ -24,11 +24,11 @@ import {Textarea} from "shared/ui/textArea";
 import {Select} from "shared/ui/select";
 import {MiniLoader} from "shared/ui/miniLoader";
 import {API_URL, useHttp, headers} from "shared/api/base";
-import {onAddAlertOptions} from "../../../features/alert/model/slice/alertSlice";
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import {getCategories, getLanguagesData, getSubjectsData} from "../model/registerSelector";
 import {getSystems} from "../../../features/themeSwitcher";
-import {getSystemName} from "../../../entities/editCreates";
-import {AnimatedMulti} from "../../../features/workerSelect";
+import {getSystemName} from "entities/editCreates";
+import {AnimatedMulti} from "features/workerSelect";
 
 const userstype = {
     types: [
@@ -378,8 +378,6 @@ export const Register = () => {
                         </div>
                     </>
                 );
-            default:
-                return null;
         }
     };
 
