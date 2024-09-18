@@ -177,8 +177,8 @@ export const StudentsPage = () => {
     }
 
     const onSubmitFilteredByClass = (data) => {
-        console.log(schoolClassNumbers.filter(item => item.id === +data)[0]?.price)
-        setActiveFormBtn(schoolClassNumbers.filter(item => item.id === +data)[0]?.price === 0)
+        // console.log(schoolClassNumbers.filter(item => item.id === +data)[0]?.price)
+        setActiveFormBtn(schoolClassNumbers.filter(item => item.id === +data)[0]?.price === (0 || null))
         dispatch(fetchStudentsByClass({branch: userBranchId, number: data}))
     }
 
