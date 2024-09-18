@@ -26,3 +26,20 @@ export const changeStudentProfileImage = createAsyncThunk(
         return request(`${API_URL}Users/users/update/${id}/`, "PATCH", formData, headersImg())
     }
 )
+
+export const fetchLanguagesStudentProfile = createAsyncThunk(
+    'studentProfile/fetchLanguagesStudentProfile',
+    async () => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Language/language/`, "GET", null, headers())
+    }
+)
+
+
+export const fetchClassNumberListStudentProfile = createAsyncThunk(
+    "studentProfile/fetchClassNumberListStudentProfile",
+    async ({branch}) => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Class/class_number_list/?branch=${branch}`, "GET", null, headers())
+    }
+)

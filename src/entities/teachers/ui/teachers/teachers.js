@@ -10,7 +10,7 @@ import {getTeachersWithFilter} from "../../model/selector/teacherSelector";
 
 import {useNavigate} from "react-router";
 
-export const Teachers = memo(({data, setSelect, select, theme , setDelete , onDelete}) => {
+export const Teachers = memo(({data, setSelect, select, theme, onClick , setActiveDelete , setActiveModal}) => {
     const navigation = useNavigate()
     const [checkbox, setCheckbox] = useState(false)
     const [selectId, setSelectId] = useState()
@@ -48,11 +48,18 @@ export const Teachers = memo(({data, setSelect, select, theme , setDelete , onDe
                                 <p>{item.name}</p>
                             )}</div>
                         </td>
-                        <td>
-                            <i onClick={() => onDelete(item)} style={{color: "red"}} className={"fa fa-times"}/>
-                        </td>
+                        {item.status ?
+                            <td>
+                                <i onClick={() => {
+                                    setActiveDelete(item)
+                                    setActiveModal(true)
+                                }} className={"fa fa-times"} style={{color: "red"}}/>
+                            </td>
+                            :
+                            null
+                        }
                         {/*<td>*/}
-                        {/*     <div className={cls.teacher__inner}>*/}
+                        {/*    {item?.extra_info?.status ? <div className={cls.teacher__inner}>*/}
                         {/*        <div className={cls.status}>*/}
                         {/*            <div className={cls.status__inner}/>*/}
                         {/*        </div>*/}
@@ -67,7 +74,7 @@ export const Teachers = memo(({data, setSelect, select, theme , setDelete , onDe
                         {/*            value={selectId === item.id}*/}
                         {/*            checked={selectId === item.id}*/}
                         {/*        />*/}
-                        {/*    </div> */}
+                        {/*    </div> : null}*/}
                         {/*</td>*/}
                     </tr>
                 )
@@ -75,6 +82,7 @@ export const Teachers = memo(({data, setSelect, select, theme , setDelete , onDe
         })
 
     }
+
 
 
     const checkBoxChange = (id) => {
