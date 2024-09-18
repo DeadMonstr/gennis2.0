@@ -29,13 +29,13 @@ export const fetchStudentsByClass = createAsyncThunk(
     }
 )
 
-export const fetchOnlyStudyingStudentsData = createAsyncThunk(
-    'studentsSlice/fetchOnlyStudyingStudentsData',
-    async ({id}) => {
-        const {request} = useHttp()
-        return await request(`${API_URL}Students/active-students/?branch=${id}`, "GET", null, headers())
-    }
-)
+// export const fetchOnlyStudyingStudentsData = createAsyncThunk(
+//     'studentsSlice/fetchOnlyStudyingStudentsData',
+//     async ({id}) => {
+//         const {request} = useHttp()
+//         return await request(`${API_URL}Students/active-students/?branch=${id}`, "GET", null, headers())
+//     }
+// )
 
 export const fetchOnlyDeletedStudentsData = createAsyncThunk(
     'studentsSlice/fetchOnlyDeletedStudentsData',
@@ -105,5 +105,11 @@ export const fetchStudyingStudentsDataWithBranch = createAsyncThunk(
 )
 
 
-
+export const fetchOnlyStudyingStudentsData = createAsyncThunk(
+    'studentsSlice/fetchOnlyStudyingStudentsData',
+    async ({id}) => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Students/active-students/?branch=${id}`, "GET", null, headers())
+    }
+)
 

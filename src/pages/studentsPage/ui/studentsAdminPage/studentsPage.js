@@ -19,10 +19,9 @@ import {
     getOnlyDeletedStudents
 } from "entities/students";
 import {StudentsHeader} from "entities/students";
-import {fetchDeletedNewStudentsThunk, getDeletedNewStudents, StudentsFilter} from "features/filters/studentsFilter";
+import {StudentsFilter} from "features/filters/studentsFilter";
 
 import {Pagination} from "features/pagination";
-import {Button} from "shared/ui/button";
 import {useNavigate} from "react-router";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import {Modal} from "shared/ui/modal";
@@ -37,7 +36,7 @@ import {
     getLoadingStudyingStudents,
 
 } from "entities/students/model/selector/studentsSelector";
-import {createSchoolClass, fetchSchoolStudents, fetchStudentsByClass} from "entities/students/model/studentsThunk";
+import {fetchStudentsByClass} from "entities/students/model/studentsThunk";
 import {Radio} from "shared/ui/radio";
 import {Input} from "shared/ui/input";
 import {useTheme} from "shared/lib/hooks/useTheme";
@@ -50,7 +49,7 @@ import {useHttp} from "shared/api/base";
 import {
     savePageTypeToLocalStorage,
     getPageTypeFromLocalStorage,
-    removePageTypeFromLocalStorage
+
 } from "features/pagesType";
 
 const studentsFilter = [

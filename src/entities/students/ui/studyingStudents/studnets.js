@@ -3,7 +3,10 @@ import { Table } from "shared/ui/table";
 import cls from "./studnets.module.sass";
 import { useSelector } from "react-redux";
 import { getStudyingStudentsWithBranch, getStudyingStudentsLoading } from "../../model/selector/studentsSelector";
-import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
+
+
+
+
 
 export const Students = ({ currentTableData }) => {
     const getStStudents = useSelector(getStudyingStudentsWithBranch);

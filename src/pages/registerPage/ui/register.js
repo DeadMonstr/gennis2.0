@@ -105,6 +105,7 @@ export const Register = () => {
 
         setValue("password", 12345678)
     }, [id]);
+    console.log(registerType, 'ewefefef')
 
     useEffect(() => {
         dispatch(fetchVacancyData())
@@ -385,7 +386,7 @@ export const Register = () => {
         <div className={cls.login}>
             <div className={cls.selection}>
                 <Select
-                    defaultValue="User Type"
+                    defaultValue="student"
                     options={userstype.types}
                     onChangeOption={(value) => setValue('registerType', value)}
                 />
@@ -442,14 +443,14 @@ export const Register = () => {
                                 required
                                 name={"phone"}
                             />
-                            {registerType === 'student' &&
+                            {registerType === 'student' ?
                                 <Input
                                     register={register}
                                     placeholder="Ota-ona telefon raqami"
                                     type="number"
                                     required
                                     name={"parents_phone"}
-                                />
+                                /> : null
                             }
 
                             <Textarea

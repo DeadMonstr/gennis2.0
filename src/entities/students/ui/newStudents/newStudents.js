@@ -1,6 +1,6 @@
 import React, {memo, useEffect, useState} from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import {fetchOnlyNewStudentsData, getNewStudentsData, getStudentsWithBranch, getNewStudentsWithSubject} from "entities/students";
+import {getStudentsWithBranch} from "entities/students";
 import {useNavigate} from "react-router";
 import {Input} from "shared/ui/input";
 import cls from "entities/students/ui/newStudents/newStudents.module.sass";
