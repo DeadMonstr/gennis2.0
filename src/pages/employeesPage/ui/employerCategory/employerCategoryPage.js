@@ -28,7 +28,7 @@ export const EmployerCategoryPage = () => {
     }, [])
     const createEmpCategory = (data) => {
 
-        const res = {
+        const res = {W
             ...data,
             branch: branchId
         }

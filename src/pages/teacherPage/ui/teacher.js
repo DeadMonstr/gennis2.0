@@ -13,6 +13,7 @@ import {getTeacherLoading} from "entities/teachers";
 import {fetchTeachersData} from "entities/teachers";
 import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
 import {useParams} from "react-router-dom";
+import {API_URL, useHttp} from "../../../shared/api/base";
 
 
 
@@ -26,6 +27,14 @@ export const TeachersPage = () => {
     const {"*": id} = useParams()
     const userBranchId = id
 
+    const [deleted , setDelete] = useState({})
+
+    const {request} = useHttp()
+
+    const onDelete = (data) => {
+        console.log(data , "data")
+        request(`${API_URL}Teacher/`)
+    }
 
     useEffect(() =>{
         if (!userBranchId) return;
@@ -86,6 +95,8 @@ export const TeachersPage = () => {
                         />
                         :
                         <Teachers
+                            onDelete={onDelete}
+                            setDelete={setDelete}
                             theme={ theme === "app_school_theme"}
                             loading={getTeacherLoading}
                             data={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
