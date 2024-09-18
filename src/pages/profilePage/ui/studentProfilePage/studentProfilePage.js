@@ -103,10 +103,10 @@ export const StudentProfilePage = () => {
             class_number: changeSelectedClass
         }
         dispatch(changeStudentProfileData({id, res}))
+        setActiveModal(!activeModal)
     }
 
     const onSubmitImage = (data) => {
-
         dispatch(changeStudentProfileImage({id: userData?.user?.id, data}))
     }
 

@@ -90,8 +90,6 @@ export const StudentProfileChangeInfo = memo((props) => {
                         onChangeOption={setSelectedLang}
                         defaultValue={currentData?.user?.language?.id}
                     />
-
-
                 </Form>
             </div>
         </Modal>

@@ -1,12 +1,8 @@
 import React, {memo, useEffect, useState} from 'react';
-import {useSelector, useDispatch} from "react-redux";
-import {fetchOnlyNewStudentsData, getNewStudentsData, getStudentsWithBranch, getNewStudentsWithSubject} from "entities/students";
 import {useNavigate} from "react-router";
-import {Input} from "shared/ui/input";
 import cls from "entities/students/ui/newStudents/newStudents.module.sass";
 import {Table} from "shared/ui/table";
-import {getDeletedNewStudents, StudentsFilter} from "features/filters/studentsFilter";
-import {DefaultPageLoader} from "shared/ui/defaultLoader";
+import {StudentsFilter} from "features/filters/studentsFilter";
 import {StudiyngStudentDelModal} from "../../../../features/studiyngStudentDelModal";
 
 export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) => {
@@ -15,44 +11,55 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
     const [studentId, setStudentId] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const navigation = useNavigate()
-    const dispatch =  useDispatch()
-    const getNewSt = useSelector(getStudentsWithBranch)
-    const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
-    const getDeleted = useSelector(getDeletedNewStudents)
-    console.log(getDeleted, 'eefe')
+    const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
 
 
 
     const renderStudents = () => {
-        if (getDeleted && getDeleted.length > 0) {
-            return getDeleted?.map((item, i) => (
-                <tr key={item.id}>
-                    <td>{i + 1}</td>
-                    <td onClick={() => navigation(`profile/${item.id}`)}>{item.student.user.surname} {item.student.user.name}</td>
-                    <td>{item.student?.user?.age}</td>
-                    <td>{item.student?.user?.language?.name}</td>
-                    <td>{item.student?.class_number}</td>
-                    <td>{item.user?.registered_date}</td>
-                </tr>
-            ));
-        } else {
             return currentTableData?.map((item, i) => (
                 <tr key={item.id}>
                     <td>{i + 1}</td>
-                    <td onClick={() => navigation(`profile/${item.id}`)}>{item.user?.surname} {item.user?.name}</td>
-                    <td>{item.user?.age}</td>
-                    <td>{item.user?.language?.name}</td>
-                    <td>{item?.class_number?.number}</td>
-                    <td>{item.user?.registered_date}</td>
-                    <td onClick={() => {
-                        setStudentId(item.id);
-                        setIsOpen(!isOpen);
-                    }}>
-                        <i style={{color: '#FF3737FF'}} className={`fa-solid fa-xmark ${cls.xmark}`}></i>
+                    <td onClick={() => navigation(`profile/${item.id}`)}>
+                        {
+                            item.student ? `${item.student.user.surname}  ${item.student.user.name}` :
+                                `${item.user?.surname} ${item.user?.name}`
+                        }
                     </td>
+                    <td>
+                        {
+                            item.student ? item.student.user.age :
+                                item.user?.age
+                        }
+
+                    </td>
+                    <td>
+                        {
+                            item.student ? item.student.user.language?.name :
+                            item.user?.language?.name
+                        }
+                    </td>
+                    <td>{
+                        item.student ? item.class_number?.number :
+                        item?.class_number?.number
+
+
+                    }</td>
+                    <td>{
+
+                        item.student ? item.student.user.registered_date :
+                        item.user?.registered_date
+                    }</td>
+                    {
+                        !item.student ? <td onClick={() => {
+                            setStudentId(item.id);
+                            setIsOpen(!isOpen);
+                        }}>
+                            <i style={{color: '#FF3737FF'}} className={`fa-solid fa-xmark ${cls.xmark}`}></i>
+                        </td> : null
+                    }
+
                 </tr>
             ));
-        }
     };
 
 
@@ -78,9 +85,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
 
                         <th>Reg. sana</th>
                         {
-                            getDeleted && getDeleted.length > 0 ?
-                                null :  <th>O'chirish</th>
-
+                            <th>O'chirish</th>
                         }
                     </tr>
                     </thead>

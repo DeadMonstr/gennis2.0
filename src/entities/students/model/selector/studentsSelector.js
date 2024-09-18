@@ -52,15 +52,5 @@ export const getSchoolClassColors = (state) =>
 export const getSchoolStudents = (state) =>
     state.newStudents?.schoolStudents
 
-export const getStudentsWithBranch = (state) =>
-    state.newStudents?.branchStudents
-
-export const getStudyingStudentsWithBranch = (state) =>
-    state.newStudents?.branchStStudents
-
-export const getStudyingStudentsLoading = (state) =>
-    state.newStudents?.branchStStudentsLoading
-
-
 export const getOnlyDeletedStudents = (state) =>
     state.newStudents?.deletedStudents
