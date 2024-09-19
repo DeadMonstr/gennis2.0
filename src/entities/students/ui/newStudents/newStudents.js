@@ -84,9 +84,9 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                         }
 
                         <th>Reg. sana</th>
-                        {
-                            <th>O'chirish</th>
-                        }
+
+                        <th>O'chirish</th>
+
                     </tr>
                     </thead>
                     <tbody>

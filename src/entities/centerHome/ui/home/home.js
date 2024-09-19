@@ -9,8 +9,7 @@ import {Modal} from "shared/ui/modal"
 import cls from "entities/centerHome/ui/home/home.module.sass"
 import {useForm} from "react-hook-form";
 import {API_URL, headers, headersImg, useHttp} from "shared/api/base";
-import {useDispatch, useSelector} from "react-redux";
-import {getLocations} from "pages/studentsPage";
+import {useDispatch} from "react-redux";
 import {Textarea} from "shared/ui/textArea";
 import {fetchedImageError, fetchedImageItems, fetchingImageItems} from "entities/centerHome/model/homeSlice";
 import {HomeHeader} from "entities/centerHome/ui/homeHeader/homeHeader";
@@ -27,7 +26,6 @@ export const Home = () => {
     const {setSectionTop} = useContext(Context)
     const [changeItem, setChangeItem] = useState({})
     const [changeStatus, setChangeStatus] = useState(false)
-    const {image, locations} = useSelector(getLocations)
     const [changeImage, setChangeImage] = useState({})
     const dispatch = useDispatch()
     const sectionRef = useRef()
@@ -42,7 +40,7 @@ export const Home = () => {
     }, [setSectionTop])
 
     const onChange = () => {
-        setChangeItem(image)
+        // setChangeItem(image)
         setChangeStatus(!changeStatus)
 
     }
@@ -135,18 +133,18 @@ export const Home = () => {
                                 className={cls.home__modal_img}
                                 {...getRootProps()}
                             >
-                                {
-                                    changeImage?.path ? <img src={URL.createObjectURL(changeImage)} alt=""/>
-                                        : image?.img ? <img src={API_URL + image?.img} alt=""/>
-                                            : <>
-                                                <input
-                                                    required
-                                                    {...getInputProps()}
-                                                    type="file"
-                                                />
-                                                <i className="far fa-image"/>
-                                            </>
-                                }
+                                {/*{*/}
+                                {/*    changeImage?.path ? <img src={URL.createObjectURL(changeImage)} alt=""/>*/}
+                                {/*        : image?.img ? <img src={API_URL + image?.img} alt=""/>*/}
+                                {/*            : <>*/}
+                                {/*                <input*/}
+                                {/*                    required*/}
+                                {/*                    {...getInputProps()}*/}
+                                {/*                    type="file"*/}
+                                {/*                />*/}
+                                {/*                <i className="far fa-image"/>*/}
+                                {/*            </>*/}
+                                {/*}*/}
                             </div>
                             <form
                                 className={cls.home__modal_text}

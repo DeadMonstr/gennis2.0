@@ -16,7 +16,6 @@ import {studentProfilePayment} from "entities/profile/studentProfile";
 import {studentProfileBooks} from "entities/profile/studentProfile";
 import {studentProfileRating} from "entities/profile/studentProfile";
 import {roomsAddSlice} from "pages/roomsPage";
-import {studentsDirectorSlice} from "pages/studentsPage"
 import {timeTableListSlice} from "pages/timeTableListPage";
 import {homeSlice} from "entities/centerHome";
 import {teachers} from "entities/teachers"
@@ -107,7 +106,6 @@ export const store = configureStore({
         studentProfilePayment,
         studentProfileBooks,
         studentProfileRating,
-        studentsDirectorSlice,
         deletedGroupsSlice,
         // user,
         newStudents,
