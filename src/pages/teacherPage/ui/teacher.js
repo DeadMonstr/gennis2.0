@@ -17,6 +17,8 @@ import {API_URL, headers, useHttp} from "shared/api/base";
 import {YesNo} from "shared/ui/yesNoModal";
 import {onAddAlertOptions, onDeleteAlert} from "features/alert/model/slice/alertSlice";
 import {onDelete} from "entities/teachers/model/teacherSlice";
+import {getDeletedTeacher} from "../../../entities/teachers/model/selector/teacherSelector";
+import {fetchDeletedTeachersData} from "../../../entities/teachers/model/teacherThunk";
 
 
 export const TeachersPage = () => {
@@ -24,15 +26,18 @@ export const TeachersPage = () => {
     const loading = useSelector(getTeacherLoading)
     const search = useSelector(getSearchValue)
     const teachersData = useSelector(getTeachers)
+    const deletedTeacher = useSelector(getDeletedTeacher)
     const filteredTeachersData = useSelector(getTeachersWithFilter)
     const dispatch = useDispatch()
     const {"*": id} = useParams()
     const userBranchId = id
 
 
+
     useEffect(() => {
         if (!userBranchId) return;
         dispatch(fetchTeachersData({userBranchId}))
+        dispatch(fetchDeletedTeachersData({userBranchId}))
     }, [dispatch, userBranchId])
 
 
@@ -58,6 +63,16 @@ export const TeachersPage = () => {
         );
     }, [teachersData, filteredTeachersData, setCurrentPage, search])
 
+
+    const searchedUsersDel = useMemo(() => {
+        const filteredHeroes = !filteredTeachersData || filteredTeachersData.length === 0 ? deletedTeacher.slice() : filteredTeachersData.slice()
+        setCurrentPage(1)
+        if (!search) return filteredHeroes
+        return filteredHeroes.filter(item =>
+            (item?.user?.name?.toLowerCase().includes(search.toLowerCase()) ||
+                item?.user?.surname?.toLowerCase().includes(search.toLowerCase()))
+        );
+    }, [deletedTeacher, filteredTeachersData, setCurrentPage, search])
     const types = [
         {
             name: "O'qituvchilar",
@@ -106,7 +121,8 @@ export const TeachersPage = () => {
                     {
                         activeSwitch ?
                             <DeletedTeachers
-                                data={teachersData}
+                                data={searchedUsersDel.slice((currentPage - 1) * PageSize , currentPage * PageSize)}
+                                // data={teachersData}
                                 // data={searchedUsers}
                             />
                             :
@@ -126,7 +142,7 @@ export const TeachersPage = () => {
 
                 <Pagination
                     setCurrentTableData={setCurrentTableData}
-                    users={searchedUsers}
+                    users={activeSwitch ?  searchedUsersDel :  searchedUsers }
                     search={search}
                     setCurrentPage={setCurrentPage}
                     currentPage={currentPage}
@@ -145,7 +161,7 @@ export const TeachersPage = () => {
                 />
             </div>
 
-            <YesNo onDelete={onClick} activeDelete={activeModal} setActiveDelete={setActiveModal}/>
+            <YesNo onDelete={onClick} changingData={activeDelete?.user} activeDelete={activeModal} setActiveDelete={setActiveModal}/>
         </MultiPage>
 
     )

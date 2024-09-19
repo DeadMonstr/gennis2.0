@@ -21,7 +21,6 @@ export const StudentPayment = () => {
 
     const classes = useSelector(getClasses)
 
-    console.log(classes , "class")
 
     const dispatch = useDispatch()
 
@@ -30,20 +29,27 @@ export const StudentPayment = () => {
         dispatch(getStudentPayment(branchID.id))
     }, [])
 
-    console.log(branchID.id , "branch id")
-
 
     const [month, setMonths] = useState(null)
 
-    const [day, setDays] = useState(null)
+    const [year, setYear] = useState(null)
+
+    console.log(year , month , "hello")
     return (
         <div>
             <div className={cls.paymentType}>
-                <Select extraClass={cls.select} options={months} onChangeOption={setMonths}/>
-                <Select extraClass={cls.select} options={days} onChangeOption={setDays}/>
+                <Select extraClass={cls.select} options={classes?.dates?.map(item => item.year)}
+                        onChangeOption={setYear}/>
+                {
+                    year ?
+                        <Select
+                            extraClass={cls.select}
+                            options={classes.dates.filter(item => item.year === +year)[0].months}
+                            onChangeOption={setMonths}/>
+                        : null
+                }
+
             </div>
-
-
             <PaymentTable extraClass={cls.tableHeader} extraClassTable={cls.table} classes={classes}/>
         </div>
     );

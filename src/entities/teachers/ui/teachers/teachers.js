@@ -84,6 +84,7 @@ export const Teachers = memo(({data, setSelect, select, theme, onClick , setActi
     }
 
 
+
     const checkBoxChange = (id) => {
         setCheckbox(id)
     }

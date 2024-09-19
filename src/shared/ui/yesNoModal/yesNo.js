@@ -4,6 +4,8 @@ import {Button} from "../button";
 import {Modal} from "../modal";
 
 export const YesNo = ({activeDelete  ,setActiveDelete , changingData , onDelete}) => {
+
+
     return (
         <Modal active={activeDelete} setActive={setActiveDelete}>
             {!changingData ? <h1>Rostan ham <br></br> o'chirmoqchimisz</h1> : <div className={cls.modalHeader}>{changingData?.name} ni <br/>

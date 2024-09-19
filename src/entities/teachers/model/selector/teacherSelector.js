@@ -3,6 +3,8 @@ export const getTeachers = (state) =>
 
 
 
+export const getDeletedTeacher = (state) =>
+    state.teachers.deletedTeachers
 export const getTeacherLoading = (state) =>
     state.teachers.loading
 

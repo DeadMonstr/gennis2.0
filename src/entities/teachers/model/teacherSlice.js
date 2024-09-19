@@ -1,6 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {fetchTeachersData, fetchTeachersDataWithFilter} from "./teacherThunk";
-
+import {fetchDeletedTeachersData, fetchTeachersData, fetchTeachersDataWithFilter} from "./teacherThunk";
 
 
 const initialState = {
@@ -17,33 +16,47 @@ export const teachersSlice = createSlice({
     reducers: {
 
         onDelete: (state, action) => {
-            console.log(action.payload , "hello")
+            console.log(action.payload, "hello")
             state.teachersData = [...state.teachersData.filter(item => item.id !== action.payload)]
         },
     },
     extraReducers: builder => {
         builder
-            .addCase(fetchTeachersData.pending , state =>{
+            .addCase(fetchTeachersData.pending, state => {
                 state.loading = true
             })
-            .addCase(fetchTeachersData.fulfilled , (state , action) =>{
+            .addCase(fetchTeachersData.fulfilled, (state, action) => {
                 state.teachersData = action.payload
                 state.loading = false
             })
-            .addCase(fetchTeachersData.rejected , (state , action) =>{
+            .addCase(fetchTeachersData.rejected, (state, action) => {
                 state.error = "error"
             })
 
 
+            .addCase(fetchDeletedTeachersData.pending, state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(fetchDeletedTeachersData.fulfilled , (state, action) => {
+                state.deletedTeachers = action.payload
+                state.loading = false
+                state.error = false
+            })
+            .addCase(fetchDeletedTeachersData.rejected , state => {
+                state.loading = false
+                state.error = true
+            })
 
-            .addCase(fetchTeachersDataWithFilter.pending , state =>{
+
+            .addCase(fetchTeachersDataWithFilter.pending, state => {
                 state.loading = true
             })
-            .addCase(fetchTeachersDataWithFilter.fulfilled , (state , action) =>{
+            .addCase(fetchTeachersDataWithFilter.fulfilled, (state, action) => {
                 state.teachersDataWithFilter = action.payload
                 state.loading = false
             })
-            .addCase(fetchTeachersDataWithFilter.rejected , (state , action) =>{
+            .addCase(fetchTeachersDataWithFilter.rejected, (state, action) => {
                 state.error = "error"
             })
     }
