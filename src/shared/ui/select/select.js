@@ -15,6 +15,7 @@ export const Select = React.memo(({
                                       extraClass,
                                       register,
                                       name,
+                                      all,
                                       setValue // Bu funksiyani props orqali uzatamiz
 
                                   }) => {
@@ -22,7 +23,6 @@ export const Select = React.memo(({
     const [selectOption, setSelectOption] = useState("");
     const [optionsData, setOptionsData] = useState([]);
     const [isChanged, setIsChanged] = useState(false);
-
 
 
     useEffect(() => {

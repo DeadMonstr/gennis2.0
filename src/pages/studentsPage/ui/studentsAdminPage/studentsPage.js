@@ -29,7 +29,6 @@ import {Form} from "shared/ui/form";
 import {Select} from "shared/ui/select";
 import {fetchTeachersData, getTeachers} from "entities/teachers";
 import {useForm} from "react-hook-form";
-import {fetchLanguages} from "pages/registerPage";
 import {
     getLoadingDeletedStudents,
     getLoadingNewStudents,
@@ -40,17 +39,26 @@ import {createSchoolClass, fetchSchoolStudents, fetchStudentsByClass} from "enti
 import {Radio} from "shared/ui/radio";
 import {Input} from "shared/ui/input";
 import {useTheme} from "shared/lib/hooks/useTheme";
-import cls from "./students.module.sass"
 import {getSearchValue} from "features/searchInput";
 import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
-
 import {useParams, useSearchParams} from "react-router-dom";
+
 import {useHttp} from "shared/api/base";
 import {
     savePageTypeToLocalStorage,
     getPageTypeFromLocalStorage,
     removePageTypeFromLocalStorage
 } from "features/pagesType";
+import {
+    fetchLanguagesData,
+    fetchClassColorData,
+    fetchClassNumberData,
+    getClassNumberData,
+    getClassColorData,
+    getLanguagesData
+} from "entities/oftenUsed"
+
+import cls from "./students.module.sass"
 
 const studentsFilter = [
     {name: "new_students", label: "New Students"},
@@ -81,13 +89,13 @@ export const StudentsPage = () => {
     const studyingStudents = useSelector(getStudyingStudents);
     const newStudents = useSelector(getNewStudentsData);
     const deletedStudents = useSelector(getOnlyDeletedStudents)
-    const schoolClassNumbers = useSelector(getSchoolClassNumbers);
-    const schoolClassColors = useSelector(getSchoolClassColors);
+    const schoolClassNumbers = useSelector(getClassNumberData);
+    const schoolClassColors = useSelector(getClassColorData);
     const {"*": id} = useParams()
     const userBranchId = id
     const teachers = useSelector(getTeachers);
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
-    const languages = useSelector(state => state.registerUser.languages);
+    const languages = useSelector(getLanguagesData);
     const [data, setData] = useState({})
     const [selectColor, setSelectColor] = useState();
     const [colorError, setColorError] = useState(false);
@@ -135,7 +143,7 @@ export const StudentsPage = () => {
     useEffect(() => {
         if (userBranchId) {
             dispatch(fetchTeachersData({userBranchId}))
-            dispatch(fetchLanguages())
+            dispatch(fetchLanguagesData())
         }
     }, [userBranchId])
 
@@ -144,8 +152,8 @@ export const StudentsPage = () => {
     useEffect(() => {
         if (userSystem?.name === "school" && userBranchId) {
             // dispatch(fetchSchoolStudents({userBranchId}))
-            dispatch(fetchClassColors())
-            dispatch(fetchClassNumberList({branch: userBranchId}))
+            dispatch(fetchClassColorData())
+            dispatch(fetchClassNumberData({branch: userBranchId}))
         }
     }, [userSystem?.name, userBranchId])
 
@@ -290,7 +298,7 @@ export const StudentsPage = () => {
                 active={active === "filter"}
                 setActive={setActive}
                 activePage={selectedRadio}
-                isFilter={setIsFilter}
+                setIsFilter={setIsFilter}
                 branchId={userBranchId}
             />
             <Modal
