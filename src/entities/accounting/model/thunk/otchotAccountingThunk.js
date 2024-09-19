@@ -11,11 +11,11 @@ export const getStudentPayment = createAsyncThunk(
 )
 
 
-// export const getTeacherSalary = createAsyncThunk(
-//     "otchotSlice/getTeacherSalary",
-//     () => {
-//         const {request} = useHttp()
-//         return request(`${API_URL}Encashment/`)
-//
-//     }
-// )
+export const getTeacherSalary = createAsyncThunk(
+    "otchotSlice/getTeacherSalary",
+    () => {
+        const {request} = useHttp()
+        return request(`${API_URL}Encashment/ `)
+
+    }
+)

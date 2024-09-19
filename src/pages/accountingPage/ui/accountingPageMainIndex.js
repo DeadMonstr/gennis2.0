@@ -35,6 +35,7 @@ import {getAccountingOtchot, getEncashment} from "entities/accounting/model/sele
 import {accountingThunk} from "entities/accounting/model/thunk/accountingThunk";
 import {AccountingFilter} from "features/filters/accountingFilter/accountingFilter";
 import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
+import {getBranch} from "../../../features/branchSwitcher";
 
 
 
@@ -72,13 +73,15 @@ const AccountingPageMain = () => {
     const [otchot, setOtchot] = useState(false)
 
 
+    const branchID = useSelector(getBranch)
     useEffect(() => {
         setPage(typePage)
     }, [typePage])
 
 
+
     useEffect(() => {
-        dispatch(accountingThunk())
+        dispatch(accountingThunk({branchID: branchID.id}))
     }, [])
 
     const setPage = useCallback((e) => {
@@ -90,6 +93,7 @@ const AccountingPageMain = () => {
         return Number(payment_sum).toLocaleString();
     };
     // const renderTable = renderTables()
+    console.log(encashment)
 
     return (
 
@@ -103,14 +107,13 @@ const AccountingPageMain = () => {
 
 
                     <div className={cls.wrapper__middle}>
-                        {otchot ?
+                        {otchot ?  null :
                             <div className={cls.middle__box}>
-                                {encashment.payments?.map(item => (
+                                {encashment?.payments?.map(item => (
                                     <div>{item?.payment_type}: {formatSalary(item.overall)}</div>
                                 ))}
                             </div>
-                            :
-                            null
+
                         }
                         <div className={cls.typeExpenses}>
                             <Link to={`../../inkasatsiya/${id}`}>

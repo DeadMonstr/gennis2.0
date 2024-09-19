@@ -29,6 +29,7 @@ import {getCategories, getLanguagesData, getSubjectsData} from "../model/registe
 import {getSystems} from "../../../features/themeSwitcher";
 import {getSystemName} from "entities/editCreates";
 import {AnimatedMulti} from "features/workerSelect";
+import {getBranch} from "../../../features/branchSwitcher";
 
 const userstype = {
     types: [
@@ -85,6 +86,7 @@ export const Register = () => {
     const [usernameMessage, setUsernameMessage] = useState('');
     const [isUsernameAvailable, setIsUsernameAvailable] = useState(true);
     const safeData = Array.isArray(subjects) ? subjects : [subjects];
+    const branchID = useSelector(getBranch)
     const subjectOptions = safeData?.map(subject => ({
         value: subject.id,
         label: subject.name,
@@ -99,7 +101,7 @@ export const Register = () => {
             dispatch(fetchLanguages());
             dispatch(fetchSubjects())
             dispatch(getClassTypes(id))
-            dispatch(fetchCategories())
+            dispatch(fetchCategories(id))
             dispatch(fetchClassNumberList({branch:id}))
         }
 
