@@ -20,9 +20,9 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, setIsF
 
     const [selectedAgeFrom, setSelectedAgeFrom] = useState("")
     const [selectedAgeTo, setSelectedAgeTo] = useState("")
-    const [selectedSubject, setSelectedSubject] = useState("")
-    const [selectedLang, setSelectedLanguage] = useState("")
-    const [selectedClass, setSelectedClass] = useState("")
+    const [selectedSubject, setSelectedSubject] = useState("all")
+    const [selectedLang, setSelectedLanguage] = useState("all")
+    const [selectedClass, setSelectedClass] = useState("all")
     const [isSwitch, setIsSwitch] = useState(false);
     const dispatch = useDispatch()
     const languages = useSelector(getLanguagesData)
@@ -46,38 +46,19 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, setIsF
         }
     }
 
-    // useEffect(() => {
-    //     if (selectedAgeFrom || selectedAgeTo || selectedLang || selectedSubject || selectedClass) {
-    //         if (activePage === "studying_students") {
-    //             dispatch(fetchOnlyStudyingStudentsData({
-    //                 subjId: selectedSubject,
-    //                 langId: selectedLang,
-    //                 fromAge: selectedAgeFrom,
-    //                 untilAge: selectedAgeTo
-    //             }))
-    //             setIsFilter("studying_students")
-    //         } else {
-    //             dispatch(fetchOnlyNewStudentsData({
-    //                 subjId: selectedSubject,
-    //                 langId: selectedLang,
-    //                 fromAge: selectedAgeFrom,
-    //                 untilAge: selectedAgeTo
-    //             }));
-    //             setIsFilter("new_students")
-    //         }
-    //         // isFilter(true)
-    //     }
-    // }, [selectedAgeFrom, selectedAgeTo, selectedSubject, selectedLang, selectedClass, activePage])
+    const onSelectSubject = (value) => {
+        if (value !== selectedSubject) {
+            setSelectedSubject(value);
+            fetchStudents(selectedAgeFrom, selectedAgeTo, value, selectedLang)
+        }
+    }
 
-    const onSelectSubject = useCallback((value) => {
-        setSelectedSubject(value);
-        fetchStudents(selectedAgeFrom, selectedAgeTo, value, selectedLang)
-    }, [])
-
-    const onSelectLanguage = useCallback((value) => {
-        setSelectedLanguage(value);
-        fetchStudents(selectedAgeFrom, selectedAgeTo, selectedSubject, value)
-    }, [])
+    const onSelectLanguage =(value) => {
+        if (value !== selectedLang) {
+            setSelectedLanguage(value);
+            fetchStudents(selectedAgeFrom, selectedAgeTo, selectedSubject, value)
+        }
+    }
 
     const handleAgeFromBlur = (e) => {
         setSelectedAgeFrom(e.target.value);
@@ -120,7 +101,7 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, setIsF
                             options={[{name: "Hamma", id: "all"}, ...subjects]}
                             extraClass={cls.filter__select}
                             onChangeOption={(value) => onSelectSubject(value)}
-                            defaultValue={"all"}
+                            defaultValue={selectedSubject}
                         /> : null
                     }
 
@@ -129,7 +110,7 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, setIsF
                             title={"Sinf"}
                             extraClass={cls.filter__select}
                             onChangeOption={setSelectedClass}
-                            defaultValue={"all"}
+                            defaultValue={selectedClass}
                         /> : null
                     }
 
@@ -156,7 +137,7 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, setIsF
                         options={[{name: "Hamma", id: "all"}, ...languages]}
                         extraClass={cls.filter__select}
                         onChangeOption={(value) => onSelectLanguage(value)}
-                        defaultValue={"all"}
+                        defaultValue={selectedLang}
                     />
                     <div className={cls.filter__switch}>
                         <p>O’chirilgan</p>
