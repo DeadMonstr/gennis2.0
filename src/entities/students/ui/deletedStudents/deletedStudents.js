@@ -42,10 +42,10 @@ export const DeletedStudents = ({currentTableData}) => {
                         <td>{item?.student?.user?.name} {item?.student?.user?.surname}</td>
                         <td>{item?.student?.user?.age}</td>
                         <td>{item?.student?.user?.phone}</td>
-                        <td>{item?.group.name}</td>
+                        <td>{item?.group?.name}</td>
                         <td>{item?.student?.user?.registered_date}</td>
                         <td>{item?.deleted_date}</td>
-                        <td>{item?.group_reason.name}</td>
+                        <td>{item?.group_reason?.name}</td>
                     </tr>
                 )
             } else {
@@ -56,10 +56,10 @@ export const DeletedStudents = ({currentTableData}) => {
                             <td>{item?.student?.user?.name} {item?.student?.user?.surname}</td>
                             <td>{item?.student?.user?.age}</td>
                             <td>{item?.student?.user?.phone}</td>
-                            <td>{item?.group.name}</td>
+                            <td>{item?.group?.name}</td>
                             <td>{item?.student?.user?.registered_date}</td>
                             <td>{item?.deleted_date}</td>
-                            <td>{item?.group_reason.name}</td>
+                            <td>{item?.group_reason?.name}</td>
                         </tr>
                     )
                 } else return null

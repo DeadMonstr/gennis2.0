@@ -37,4 +37,3 @@ export {
 
 } from "./model/selector/studentsSelector"
 
-export {StudentsListDirector} from "./ui/studentsListDirector/studentsListDirector";

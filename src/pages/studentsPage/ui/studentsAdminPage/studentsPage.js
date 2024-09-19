@@ -36,7 +36,7 @@ import {
     getLoadingStudyingStudents,
 
 } from "entities/students/model/selector/studentsSelector";
-import {createSchoolClass, fetchSchoolStudents, fetchStudentsByClass} from "entities/students/model/studentsThunk";
+import {fetchStudentsByClass} from "entities/students/model/studentsThunk";
 import {Radio} from "shared/ui/radio";
 import {Input} from "shared/ui/input";
 import {useTheme} from "shared/lib/hooks/useTheme";
@@ -49,7 +49,7 @@ import {useHttp} from "shared/api/base";
 import {
     savePageTypeToLocalStorage,
     getPageTypeFromLocalStorage,
-    removePageTypeFromLocalStorage
+
 } from "features/pagesType";
 
 const studentsFilter = [

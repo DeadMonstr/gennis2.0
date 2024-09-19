@@ -19,7 +19,7 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
 
     const [selectedAgeFrom, setSelectedAgeFrom] = useState("")
     const [selectedAgeTo, setSelectedAgeTo] = useState("")
-    const [selectedSubject, setSelectedSubject] = useState("")
+    const [selectedSubject, setSelectedSubject] = useState("all")
     const [selectedLang, setSelectedLanguage] = useState("")
     const [selectedClass, setSelectedClass] = useState("")
     const [isSwitch, setIsSwitch] = useState(false);
@@ -36,7 +36,7 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
                     fromAge: selectedAgeFrom,
                     untilAge: selectedAgeTo
                 }))
-                isFilter("studying_students")
+                // isFilter("studying_students")
             } else {
                 dispatch(fetchOnlyNewStudentsData({
                     subjId: selectedSubject,
@@ -44,7 +44,7 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
                     fromAge: selectedAgeFrom,
                     untilAge: selectedAgeTo
                 }));
-                isFilter("new_students")
+                // isFilter("new_students")
             }
             // isFilter(true)
         }
@@ -106,23 +106,24 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
                 <h1>Filter</h1>
                 <div className={cls.filter__container}>
                     {
-                        activePage !== "deleted" ? <Select
-                            title={"Fan"}
-                            options={[{name: "Hamma", id: "all"}, ...subjects]}
-                            extraClass={cls.filter__select}
-                            onChangeOption={(value) => onSelectSubject(value)}
-                            defaultValue={"all"}
-                        /> : null
+                        activePage !== "deleted" ? <>
+                            <Select
+                                title={"Fan"}
+                                options={[{name: "Hamma", id: "all"}, ...subjects]}
+                                extraClass={cls.filter__select}
+                                onChangeOption={onSelectSubject}
+                                defaultValue={selectedSubject}
+                            />
+                            {/*<Select*/}
+                            {/*    title={"Sinf"}*/}
+                            {/*    extraClass={cls.filter__select}*/}
+                            {/*    onChangeOption={setSelectedClass}*/}
+                            {/*    defaultValue={"all"}*/}
+                            {/*/>*/}
+                        </> : null
                     }
 
-                    {
-                        activePage === "deleted" ? <Select
-                            title={"Sinf"}
-                            extraClass={cls.filter__select}
-                            onChangeOption={setSelectedClass}
-                            defaultValue={"all"}
-                        /> : null
-                    }
+
 
                     <div className={cls.filter__age}>
                         <Input
@@ -142,13 +143,13 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, isFilt
                             defaultValue={selectedAgeTo}
                         />
                     </div>
-                    <Select
-                        title={"Til"}
-                        options={[{name: "Hamma", id: "all"}, ...languages]}
-                        extraClass={cls.filter__select}
-                        onChangeOption={(value) => onSelectLanguage(value)}
-                        defaultValue={"all"}
-                    />
+                    {/*<Select*/}
+                    {/*    title={"Til"}*/}
+                    {/*    options={[{name: "Hamma", id: "all"}, ...languages]}*/}
+                    {/*    extraClass={cls.filter__select}*/}
+                    {/*    onChangeOption={onSelectLanguage}*/}
+                    {/*    defaultValue={"all"}*/}
+                    {/*/>*/}
                     <div className={cls.filter__switch}>
                         <p>O’chirilgan</p>
                         <Switch onChangeSwitch={handleSwitchData} activeSwitch={isSwitch}/>
