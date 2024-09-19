@@ -20,7 +20,7 @@ export const SchoolHomePage = () => {
             className={cls.schoolHome}
         >
             <div
-                onScroll={(e) => onScroll(e.target)}
+                // onScroll={(e) => onScroll(e.target)}
                 className={cls.schoolHome__header}
             >
                 <SchoolHomeHeader/>
