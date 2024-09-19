@@ -24,46 +24,65 @@ export const EmployeesFilter = React.memo(({ active, setActive, activeSwitch, se
     const [selectedLanguage, setSelectedLanguage] = useState('');
     const jobsData = useSelector(getVacancyJobs);
 
+    function fetchEmployees(job, lang, from, to) {
+        dispatch(fetchEmployersDataWithFilter({
+            jobId: job,
+            langId: lang,
+            fromAgeId: from,
+            untilageId: to
+        }));
+    }
+
     const jobOptions = jobsData?.map(job => ({
         id: job.group.id,
         name: job.group.name
     })) || [];
 
     const onSelectJob = (value) => {
-        setSelectedJob(value);
-        const selectedJobData = jobOptions.find(job => job.id === Number(value));
-        if (selectedJobData) {
-            const jobsId = selectedJobData.id;
-            dispatch(fetchEmployersDataWithFilter({ jobId: jobsId }));
+        if (value !== selectedJob) {
+
+            setSelectedJob(value);
+            fetchEmployees(value, selectedLanguage, selectedAgeFrom, selectedAgeTo)
         }
+        // const selectedJobData = jobOptions.find(job => job.id === Number(value));
+        // if (selectedJobData) {
+        //     const jobsId = selectedJobData.id;
+        //     dispatch(fetchEmployersDataWithFilter({ jobId: jobsId }));
+        // }
     };
 
     const onSelectLanguage = (value) => {
-        setSelectedLanguage(value);
-        const selectedLanguageData = languages.find(lang => lang.id === Number(value));
-        if (selectedLanguageData) {
-            const languageId = selectedLanguageData.id;
-            dispatch(fetchEmployersDataWithFilter({ langId: languageId }));
-            setActive(false);
+        if (value !== selectedLanguage) {
+
+            setSelectedLanguage(value);
+            fetchEmployees(selectedJob, value, selectedAgeFrom, selectedAgeTo)
         }
+        // const selectedLanguageData = languages.find(lang => lang.id === Number(value));
+        // if (selectedLanguageData) {
+        //     const languageId = selectedLanguageData.id;
+        //     dispatch(fetchEmployersDataWithFilter({ langId: languageId }));
+        //     setActive(false);
+        // }
     };
 
     const handleAgeFromBlur = (e) => {
         const value = e.target.value;
         setSelectedAgeFrom(value);
-        dispatch(fetchEmployersDataWithFilter({
-            fromAgeId: value,
-            untilageId: selectedAgeTo,
-        }));
+        fetchEmployees(selectedJob, selectedLanguage, value, selectedAgeTo)
+        // dispatch(fetchEmployersDataWithFilter({
+        //     fromAgeId: value,
+        //     untilageId: selectedAgeTo,
+        // }));
     };
 
     const handleAgeToBlur = (e) => {
         const value = e.target.value;
         setSelectedAgeTo(value);
-        dispatch(fetchEmployersDataWithFilter({
-            fromAgeId: selectedAgeFrom,
-            untilageId: value,
-        }));
+        fetchEmployees(selectedJob, selectedLanguage, selectedAgeFrom, value)
+        // dispatch(fetchEmployersDataWithFilter({
+        //     fromAgeId: selectedAgeFrom,
+        //     untilageId: value,
+        // }));
     };
 
     useEffect(() => {
