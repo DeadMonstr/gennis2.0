@@ -76,9 +76,9 @@ export const TeacherFilter = React.memo(({active, setActive, activePage , setAct
         // dispatch(fetchTeachersDataWithFilter({ fromAge: selectedAgeFrom, untilAge: e.target.value }))
     }
 
-    const onChangeSwitch =() =>{
-        setActiveSwitch(!activeSwitch)
-    }
+    // const onChangeSwitch =() =>{
+    //     setActiveSwitch(!activeSwitch)
+    // }
 
     useEffect(() => {
         // dispatch(fetchSubjects())
@@ -132,7 +132,7 @@ export const TeacherFilter = React.memo(({active, setActive, activePage , setAct
 
                     <div className={cls.filter__switch}>
                         <p>O’chirilgan</p>
-                        <Switch onChangeSwitch={() => onChangeSwitch()} activeSwitch={activeSwitch}/>
+                        <Switch onChangeSwitch={setActiveSwitch} activeSwitch={activeSwitch}/>
                     </div>
 
                 </div>

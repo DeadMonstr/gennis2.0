@@ -17,6 +17,9 @@ import {API_URL, headers, useHttp} from "shared/api/base";
 import {YesNo} from "shared/ui/yesNoModal";
 import {onAddAlertOptions, onDeleteAlert} from "features/alert/model/slice/alertSlice";
 import {onDelete} from "entities/teachers/model/teacherSlice";
+import {getDeletedTeacher} from "../../../entities/teachers/model/selector/teacherSelector";
+import {fetchDeletedTeachersData} from "../../../entities/teachers/model/teacherThunk";
+import {EmployerCategoryPage} from "../../employeesPage";
 
 
 export const TeachersPage = () => {
@@ -24,6 +27,7 @@ export const TeachersPage = () => {
     const loading = useSelector(getTeacherLoading)
     const search = useSelector(getSearchValue)
     const teachersData = useSelector(getTeachers)
+    const deletedTeacher = useSelector(getDeletedTeacher)
     const filteredTeachersData = useSelector(getTeachersWithFilter)
     const dispatch = useDispatch()
     const {"*": id} = useParams()
@@ -33,6 +37,7 @@ export const TeachersPage = () => {
     useEffect(() => {
         if (!userBranchId) return;
         dispatch(fetchTeachersData({userBranchId}))
+        dispatch(fetchDeletedTeachersData({userBranchId}))
     }, [dispatch, userBranchId])
 
 
@@ -43,8 +48,9 @@ export const TeachersPage = () => {
     const [active, setActive] = useState()
     const [activeSwitch, setActiveSwitch] = useState(false)
     const [activeDelete, setActiveDelete] = useState({})
+    const [activeCategory, setActiveCategory] = useState(false)
 
-    const [activeModal , setActiveModal ] = useState(false)
+    const [activeModal, setActiveModal] = useState(false)
 
     const {request} = useHttp()
 
@@ -58,6 +64,16 @@ export const TeachersPage = () => {
         );
     }, [teachersData, filteredTeachersData, setCurrentPage, search])
 
+
+    const searchedUsersDel = useMemo(() => {
+        const filteredHeroes = !filteredTeachersData || filteredTeachersData.length === 0 ? deletedTeacher.slice() : filteredTeachersData.slice()
+        setCurrentPage(1)
+        if (!search) return filteredHeroes
+        return filteredHeroes.filter(item =>
+            (item?.user?.name?.toLowerCase().includes(search.toLowerCase()) ||
+                item?.user?.surname?.toLowerCase().includes(search.toLowerCase()))
+        );
+    }, [deletedTeacher, filteredTeachersData, setCurrentPage, search])
     const types = [
         {
             name: "O'qituvchilar",
@@ -88,25 +104,34 @@ export const TeachersPage = () => {
             <div className={cls.teacher}>
 
                 <div className={cls.teacher__filter}>
-                    <Button
-                        status={"filter"}
-                        extraClass={cls.extraCutClassFilter}
-                        onClick={() => setActive(!active)}
-                        type={"filter"}
-                    >
-                        Filter
-                    </Button>
-                    <Button type={"login"} status={"timeTable"}>
-                        time table
-                    </Button>
+                    {activeCategory ? null :
+                        <Button
+                            status={"filter"}
+                            extraClass={cls.extraCutClassFilter}
+                            onClick={() => setActive(!active)}
+                            type={"filter"}
+                        >
+                            Filter
+                        </Button>}
+                    <div className={cls.header_btn}>
+                        {activeCategory ? null :
+                            <Button type={"login"} status={"timeTable"}>
+                                time table
+                            </Button>
+                        }
+                        <Button extraClass={cls.category} type={"simple"} onClick={() => setActiveCategory(!activeCategory)}>Toifa</Button>
+                    </div>
                 </div>
                 <div className={cls.table}>
 
-                    <h2>{activeSwitch ? "Deleted Teachers" : "Teachers"}</h2>
-                    {
+                    <h2>{activeCategory ? "Toifa " : activeSwitch ? "Deleted Teachers" : "Teachers"}</h2>
+                    {activeCategory ?
+                        <EmployerCategoryPage extraClass={cls.categoryItem}/>
+                        :
                         activeSwitch ?
                             <DeletedTeachers
-                                data={teachersData}
+                                data={searchedUsersDel.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
+                                // data={teachersData}
                                 // data={searchedUsers}
                             />
                             :
@@ -126,7 +151,7 @@ export const TeachersPage = () => {
 
                 <Pagination
                     setCurrentTableData={setCurrentTableData}
-                    users={searchedUsers}
+                    users={activeSwitch ? searchedUsersDel : searchedUsers}
                     search={search}
                     setCurrentPage={setCurrentPage}
                     currentPage={currentPage}
@@ -145,7 +170,8 @@ export const TeachersPage = () => {
                 />
             </div>
 
-            <YesNo onDelete={onClick} activeDelete={activeModal} setActiveDelete={setActiveModal}/>
+            <YesNo onDelete={onClick} changingData={activeDelete?.user} activeDelete={activeModal}
+                   setActiveDelete={setActiveModal}/>
         </MultiPage>
 
     )

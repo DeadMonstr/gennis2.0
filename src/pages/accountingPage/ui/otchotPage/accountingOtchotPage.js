@@ -12,6 +12,7 @@ import {Route, Routes, useNavigate, useParams} from "react-router";
 import {EmpSalary} from "./otchotPages/empSalary";
 import {StudentPayment} from "./otchotPages/studentPayment";
 import {TeacherSalary} from "./otchotPages/teacherSalary";
+import {AllPages} from "./otchotPages/allPages";
 
 export const AccountingOtchotPage = () => {
     const getAccountingPage = useSelector(getAccountingOtchot)
@@ -29,7 +30,7 @@ export const AccountingOtchotPage = () => {
             <div className={cls.accounting__wrapper}>
                 <div className={cls.wrapper__filter}>
                     <Button type={"filter"} status={"filter"} onClick={() => setActive(!active)}>Filter</Button>
-                    <Select options={getAccountingPage} onChangeOption={setPage}/>
+                    <Select defaultValue={getAccountingPage[0]?.value} options={getAccountingPage} onChangeOption={setPage}/>
                 </div>
 
 
@@ -49,6 +50,15 @@ export const AccountingOtchotPage = () => {
             </div>
 
             <Routes>
+                <Route
+
+                    path={"all"}
+                    element={
+                        <AllPages
+
+                        />
+                    }
+                />
                 <Route
 
                     path={"payment"}

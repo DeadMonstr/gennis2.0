@@ -9,7 +9,7 @@ import {updateCategory} from "entities/employer/model/slice/employerCategory";
 import {getBranch} from "../../../../features/branchSwitcher";
 
 
-export const EmployerCategoryPage = () => {
+export const EmployerCategoryPage = ({extraClass}) => {
     const [activeCategory, setActiveCategory] = useState(false)
     const {register, handleSubmit, setValue} = useForm()
 
@@ -49,7 +49,7 @@ export const EmployerCategoryPage = () => {
 
 
     return (
-        <div>
+        <div className={extraClass}>
             <EmployerCategoryHeader activeCategory={activeCategory} setActiveCategory={setActiveCategory}/>
             <EmployerCategoryLists setEdit={setEdit} salaryTypes={employerCategory} edit={edit}/>
             <CategoryModal onClick={createEmpCategory} register={register} handleSubmit={handleSubmit}

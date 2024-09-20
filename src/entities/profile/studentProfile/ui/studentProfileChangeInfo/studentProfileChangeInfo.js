@@ -88,6 +88,64 @@ export const StudentProfileChangeInfo = memo((props) => {
                         onChangeOption={setSelectedLang}
                         defaultValue={currentData?.user?.language?.id}
                     />
+
+
+
+                    <Input
+                        placeholder={"Ota-ona fio"}
+                        name={"birth_date"}
+                        register={register}
+                        value={currentData?.parents_fullname}
+                        required
+                    />
+                    {/*<Input*/}
+                    {/*    placeholder={"Tug'ilgan sana"}*/}
+                    {/*    name={"birth_date"}*/}
+                    {/*    register={register}*/}
+                    {/*    value={currentData?.user?.birth_date}*/}
+                    {/*    required*/}
+                    {/*    type={"date"}*/}
+                    {/*/>*/}
+                    {/*<Input*/}
+                    {/*    placeholder={"Tug'ilgan sana"}*/}
+                    {/*    name={"birth_date"}*/}
+                    {/*    register={register}*/}
+                    {/*    value={currentData?.user?.birth_date}*/}
+                    {/*    required*/}
+                    {/*    type={"date"}*/}
+                    {/*/>*/}
+                    {/*<Input*/}
+                    {/*    placeholder={"Tug'ilgan sana"}*/}
+                    {/*    name={"birth_date"}*/}
+                    {/*    register={register}*/}
+                    {/*    value={currentData?.user?.birth_date}*/}
+                    {/*    required*/}
+                    {/*    type={"date"}*/}
+                    {/*/>*/}
+                    {/*<Input*/}
+                    {/*    placeholder={"Tug'ilgan sana"}*/}
+                    {/*    name={"birth_date"}*/}
+                    {/*    register={register}*/}
+                    {/*    value={currentData?.user?.birth_date}*/}
+                    {/*    required*/}
+                    {/*    type={"date"}*/}
+                    {/*/>*/}
+                    {/*<Input*/}
+                    {/*    placeholder={"Tug'ilgan sana"}*/}
+                    {/*    name={"birth_date"}*/}
+                    {/*    register={register}*/}
+                    {/*    value={currentData?.user?.birth_date}*/}
+                    {/*    required*/}
+                    {/*    type={"date"}*/}
+                    {/*/>*/}
+                    {/*<Input*/}
+                    {/*    placeholder={"Tug'ilgan sana"}*/}
+                    {/*    name={"birth_date"}*/}
+                    {/*    register={register}*/}
+                    {/*    value={currentData?.user?.birth_date}*/}
+                    {/*    required*/}
+                    {/*    type={"date"}*/}
+                    {/*/>*/}
                 </Form>
             </div>
         </Modal>
