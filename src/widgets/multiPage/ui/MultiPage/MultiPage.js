@@ -31,8 +31,6 @@ export const MultiPage = ({types,children,page,id = true}) => {
 
     useEffect(() => {
         if (locations.length > 1  && page !== oldPage) {
-
-
             dispatch(onChangedPage(true))
             dispatch(onChangedOldPage(page))
         }
@@ -65,6 +63,9 @@ export const MultiPage = ({types,children,page,id = true}) => {
 
 
 
+
+
+
     if (locations.length < 2) {
         return children
     }
@@ -82,7 +83,6 @@ export const MultiPage = ({types,children,page,id = true}) => {
                     />
                     <Route path={"*"}  element={<ChildComponent  children={children}/>}/>
                 </Routes>
-
             </div>
         );
     } else {

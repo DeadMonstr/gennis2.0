@@ -44,10 +44,10 @@ export const Capital = ({deleted , setDeleted }) => {
     const {request} = useHttp()
     useEffect(() => {
         dispatch(capitalListThunk())
-        dispatch(getPaymentType())
+
         dispatch(getMonthDay())
-        dispatch(capitalDeletedListThunk())
-    }, [deleted])
+        // dispatch(capitalDeletedListThunk())
+    }, [])
 
 
 

@@ -1,3 +1,4 @@
+import {useNavigate} from "react-router";
 import {useTheme} from "shared/lib/hooks/useTheme";
 import cls from "./studentsHeader.module.sass";
 import {Link} from "react-router-dom";
@@ -23,6 +24,7 @@ export const StudentsHeader = ({
 
 
     const {theme} = useTheme()
+    const navigate = useNavigate()
 
     const renderCreateBtn = useCallback(() => {
         return theme === "app_school_theme"
@@ -35,7 +37,7 @@ export const StudentsHeader = ({
                 Create Class
             </Button>
             :
-            <Link to={":id/createGroup"}>
+            <Link to={"createGroup"}>
                 <Button
                     type={"filter"}
                     extraClass={cls.extraCutClass}
@@ -59,6 +61,15 @@ export const StudentsHeader = ({
                             Add class
                         </Button> : null
                     }
+                    {/*<Link to={"./RGBData/12"}>*/}
+                        <Button
+                            onClick={() => navigate("RGBData")}
+                            type={"filter"}
+                        >
+                            RGB-Baza
+                        </Button>
+                    {/*</Link>*/}
+
 
                 </div>
                 {/*{branches.length >= 1 ? <Select options={branches} onChangeOption={() => setSelected}*/}

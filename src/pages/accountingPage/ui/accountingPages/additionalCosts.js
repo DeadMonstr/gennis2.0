@@ -52,11 +52,11 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
     // const [alerts, setAlerts] = useState([])
     useEffect(() => {
         dispatch(getOverheadType())
-        dispatch(getPaymentType())
+        // dispatch(getPaymentType())
         dispatch(getMonthDay())
-        dispatch(overHeadDeletedList())
+        // dispatch(overHeadDeletedList())
         dispatch(overHeadList())
-    }, [deleted])
+    }, [])
 
     // useEffect(() => {
     //

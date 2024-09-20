@@ -1,9 +1,36 @@
+import {useDispatch} from "react-redux";
+
 import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
 import {Switch} from "shared/ui/switch";
+import {
+    overHeadDeletedList,
+    capitalDeletedListThunk,
+    getDeletedTeacherSalary,
+    getDeletedEmpSalary,
+    getDeletedPayment
+} from "entities/accounting";
 
 import cls from "../filters.module.sass"
-export const AccountingFilter = ({setActive, active , setActiveDel , activeDel}) => {
+
+export const AccountingFilter = ({setActive, active, setActiveDel, activeDel, activePage}) => {
+
+    const dispatch = useDispatch()
+
+    const onActive = (value) => {
+        if (activePage === "studentsPayments") {
+            dispatch(getDeletedPayment())
+        } else if (activePage === "teachersSalary") {
+            dispatch(getDeletedTeacherSalary())
+        } else if (activePage === "employeesSalary") {
+            dispatch(getDeletedEmpSalary())
+        } else if (activePage === "overhead") {
+            dispatch(overHeadDeletedList())
+        } else {
+            dispatch(capitalDeletedListThunk())
+        }
+        setActiveDel(value)
+    }
 
     return (
         <div>
@@ -13,14 +40,11 @@ export const AccountingFilter = ({setActive, active , setActiveDel , activeDel})
                         Filter
                     </h1>
                     <div className={cls.filter__container}>
-                        <Select extraClass={cls.filter_select} />
-                        <Select extraClass={cls.filter_select}/>
-                        <Select extraClass={cls.filter_select}/>
                         <div className={cls.filter__switch}>
                             <p>
                                 O'chirilganlar
                             </p>
-                            <Switch  onChangeSwitch={setActiveDel} activeSwitch={activeDel} />
+                            <Switch onChangeSwitch={onActive} activeSwitch={activeDel}/>
                         </div>
                         <div className={cls.filter__switch}>
                             <p>
