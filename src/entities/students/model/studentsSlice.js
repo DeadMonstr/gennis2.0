@@ -62,6 +62,7 @@ export const studentsSlice = createSlice({
             .addCase(fetchOnlyNewStudentsData.fulfilled, (state, action) => {
                 state.newStudentes = action.payload
                 state.newStudentsStatus = "success"
+                state.loading = false
             })
             .addCase(fetchOnlyNewStudentsData.rejected, (state, action) => {
                 state.newStudentsStatus = "error"

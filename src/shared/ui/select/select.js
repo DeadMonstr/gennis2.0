@@ -52,8 +52,8 @@ export const Select = React.memo(({
 
     const renderOptionsOfSelect = useCallback(() => {
         return optionsData?.map((item, index) => {
-            const value = item[keyValue] || item.value || item.id || item.name || item;
-            const key = item.name || item?.number || item.days || item.num || item.user && `${item.user?.name} ${item.user?.surname}` || item;
+            const value = item[keyValue] || item?.value || item?.id || item?.name || item;
+            const key = item?.name || item?.number || item?.days || item.num || item?.user && `${item.user?.name} ${item.user?.surname}` || item;
 
             return (
                 <option

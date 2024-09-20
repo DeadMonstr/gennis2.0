@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
     SchoolHomeMain,
-    SchoolHomeHeader, SchoolHomeExtracurricus
+    SchoolHomeHeader, SchoolHomeExtracurricus, SchoolParentesComment
 } from "entities/schoolHome";
 
 import cls from "./SchoolHomePage.module.sass";
@@ -27,6 +27,7 @@ export const SchoolHomePage = () => {
                 <SchoolHomeMain/>
             </div>
             <SchoolHomeExtracurricus/>
+            <SchoolParentesComment/>
         </div>
     )
 }

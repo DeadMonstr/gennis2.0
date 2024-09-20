@@ -93,7 +93,7 @@ const AccountingPageMain = () => {
         return Number(payment_sum).toLocaleString();
     };
     // const renderTable = renderTables()
-    console.log(encashment)
+
 
     return (
 
@@ -102,7 +102,7 @@ const AccountingPageMain = () => {
                 <div className={cls.accounting__wrapper}>
                     <div className={cls.wrapper__filter}>
                         <Button type={"filter"} status={"filter"} onClick={() => setActive(!active)}>Filter</Button>
-                        <Select options={getAccountingPage} onChangeOption={setPage}/>
+                        <Select defaultValue={getAccountingPage[0]?.value} options={getAccountingPage} onChangeOption={setPage}/>
                     </div>
 
 
