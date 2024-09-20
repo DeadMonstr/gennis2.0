@@ -95,7 +95,7 @@ export const StudentProfileChangeInfo = memo((props) => {
 
                     <Input
                         placeholder={"Ota-ona fio"}
-                        name={"birth_date"}
+                        name={"parents_fullname"}
                         register={register}
                         value={currentData?.parents_fullname}
                         required
