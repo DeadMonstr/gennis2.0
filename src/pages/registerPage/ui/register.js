@@ -40,6 +40,7 @@ import {
 
 import cls from "./register.module.sass";
 import bg__img from 'shared/assets/images/reg__bg.svg';
+import {getBranch} from "../../../features/branchSwitcher";
 
 const userstype = {
     types: [
@@ -97,6 +98,7 @@ export const Register = () => {
     const [usernameMessage, setUsernameMessage] = useState('');
     const [isUsernameAvailable, setIsUsernameAvailable] = useState(true);
     const safeData = Array.isArray(subjects) ? subjects : [subjects];
+    const branchID = useSelector(getBranch)
     const subjectOptions = safeData?.map(subject => ({
         value: subject?.id,
         label: subject?.name,
@@ -127,7 +129,6 @@ export const Register = () => {
     useEffect(() => {
         dispatch(fetchVacancyData())
     }, [])
-
 
 
     useEffect(() => {
@@ -166,6 +167,7 @@ export const Register = () => {
 
 
     const onSubmit = (data) => {
+        console.log(selectedClass, selectedLang ,data)
         if (!isUsernameAvailable) {
             return;
         }
@@ -195,7 +197,26 @@ export const Register = () => {
             let result;
             if (userSystem?.name === "school") {
                 result = {
-                    class_number: selectedClass
+                    class_number: selectedClass,
+                    parents_fullname: data.parents_fullname,
+                    old_school: data.old_school,
+                    parent_region: data.parent_region,
+                    district:data.district,
+
+
+                    parent_seria: data.parent_seria,
+                    parent_seria_num: data.parent_seria_num,
+
+                    region:data.region,
+
+                    born_date: data.born_date,
+                    student_seria_num:data.student_seria_num,
+                    student_seria: data.student_seria
+
+
+
+
+
                 }
             } else {
                 result = {
@@ -251,7 +272,7 @@ export const Register = () => {
                     setUsernameMessage('');
                     setIsUsernameAvailable(true);
 
-                    reset();
+                    // reset();
 
                 } else {
                     dispatch(onAddAlertOptions({
@@ -281,16 +302,45 @@ export const Register = () => {
                         />
 
 
+                        {/*<Input*/}
+                        {/*    register={register}*/}
+                        {/*    placeholder="Ota-ona telefon raqami"*/}
+                        {/*    type="number"*/}
+                        {/*    required*/}
+                        {/*    name={"parents_phone"}*/}
+                        {/*/>*/}
+
 
                         {
                             (userSystem?.name === "school") ? (
-                                <Select
-                                    extraClass={cls.extraClasses}
-                                    title={"Sinf"}
-                                    name={"class_number"}
-                                    onChangeOption={setSelectedClass}
-                                    options={classNumbers}
-                                />
+                                <>
+                                    <Select
+                                        extraClass={cls.extraClasses}
+                                        title={"Sinf"}
+                                        name={"class_number"}
+                                        onChangeOption={setSelectedClass}
+                                        options={classNumbers}
+                                    />
+                                    <Input
+                                        register={register}
+                                        placeholder="Ota-ona telefon raqami"
+                                        type="number"
+                                        required
+                                        name={"parents_phone"}
+                                    />
+                                    <Input register={register} name={"parents_fullname"}
+                                        placeholder={"ota-ona fio"}/>
+                                    <div className={cls.seriya}>
+                                        <Input register={register} name={"parent_seria"}
+                                            placeholder={"passport seriya"}/>
+                                        <Input register={register} name={"parent_seria_num"}
+                                            placeholder={"seriya raqami"} type={"number"}/>
+                                    </div>
+                                    <Input register={register} name={"born_date"}
+                                        placeholder={"tug'ilgan yili "} type={"date"}/>
+                                    <Input register={register} name={"parent_region"}
+                                        placeholder={"yashash joyi"}/>
+                                </>
                             ) : (
                                 <>
                                     <AnimatedMulti
@@ -434,6 +484,25 @@ export const Register = () => {
                                 required
                                 name={"father_name"}
                             />
+                            {userSystem.name === "school" && registerType === "student" ?
+                                <>
+                                    <div className={cls.seriya}>
+                                        <Input register={register}
+                                               name={"student_seria"}
+                                            placeholder={"seriya"}/>
+                                        <Input name={"student_seria_num"} register={register}
+                                            type={"number"} placeholder={"metrka raqami"}/>
+                                    </div>
+                                    <Input register={register} name={"old_school"}
+                                        placeholder={"kelgan maktabi"}/>
+                                    <Input register={register} name={"region"}
+                                        placeholder={"Xudud nomi"}/>
+                                    <Input  register={register} name={"district"}
+                                        placeholder={"Tuman shaxar nomi"}/>
+                                </>
+                                :
+                                null
+                            }
                             <Input
                                 register={register}
                                 placeholder="Parol"
@@ -455,7 +524,8 @@ export const Register = () => {
                                 required
                                 name={"phone"}
                             />
-                            {registerType === 'student' ?
+
+                            {userSystem.name === "center " && registerType === 'student' ?
                                 <Input
                                     register={register}
                                     placeholder="Ota-ona telefon raqami"
@@ -464,13 +534,14 @@ export const Register = () => {
                                     name={"parents_phone"}
                                 /> : null
                             }
-
                             <Textarea
                                 register={register}
                                 placeholder="Kommentariya"
                                 name={"comment"}
                             />
+
                             {renderFormFields()}
+
                             {loading ?
                                 <MiniLoader/> :
                                 <Button type={!isUsernameAvailable ? "disabled" : "submit"}

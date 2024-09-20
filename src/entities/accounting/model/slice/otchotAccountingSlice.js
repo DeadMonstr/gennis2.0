@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getStudentPayment} from "../thunk/otchotAccountingThunk";
+import {getAll, getEmployer, getStudentPayment, getTeacherSalary} from "../thunk/otchotAccountingThunk";
 
 
 const initialState = {
@@ -8,7 +8,9 @@ const initialState = {
     years: [],
     months: [],
     students: [],
-
+    teacherSalary: [],
+    employerSalary: [],
+    all: []
 }
 
 
@@ -24,11 +26,55 @@ const accountingOtchotSlice = createSlice({
             })
             .addCase(getStudentPayment.fulfilled , (state, action) => {
                 state.students =action.payload
-                console.log(action.payload , "action.payload")
+
                 state.loading = false
                 state.error= false
             })
             .addCase(getStudentPayment.rejected , state => {
+                state.loading = false
+                state.error = true
+            })
+            .addCase(getTeacherSalary.pending , state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(getTeacherSalary.fulfilled , (state, action) => {
+                state.teacherSalary =action.payload
+                state.loading = false
+                state.error= false
+            })
+            .addCase(getTeacherSalary.rejected , state => {
+                state.loading = false
+                state.error = true
+            })
+
+
+            .addCase(getEmployer.pending , state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(getEmployer.fulfilled , (state, action) => {
+                state.employerSalary =action.payload
+                state.loading = false
+                state.error= false
+            })
+            .addCase(getEmployer.rejected , state => {
+                state.loading = false
+                state.error = true
+            })
+
+
+            .addCase(getAll.pending , state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(getAll.fulfilled , (state, action) => {
+                state.all =action.payload
+                console.log(action.payload , "keldi")
+                state.loading = false
+                state.error= false
+            })
+            .addCase(getAll.rejected , state => {
                 state.loading = false
                 state.error = true
             })

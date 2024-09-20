@@ -33,6 +33,11 @@ const pages = [
 
 const otchotPages = [
     {
+        value: "all",
+        name: "Hammasi",
+        disabled: false
+    },
+    {
         value: "payment",
         name: "O'quvchilar tolovlari",
         disabled: false
@@ -48,11 +53,7 @@ const otchotPages = [
         name: "Ishchilar oyligi",
         disabled: false
     },
-    {
-        value: "all",
-        name: "Hammasi",
-        disabled: false
-    },
+
 
 ]
 const initialState = {
