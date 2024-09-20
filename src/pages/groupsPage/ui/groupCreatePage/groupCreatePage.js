@@ -51,6 +51,10 @@ import {EditableCard} from "shared/ui/editableCard";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import {MiniLoader} from "shared/ui/miniLoader";
+import {
+    fetchLanguagesData,
+    getLanguagesData
+} from "entities/oftenUsed"
 
 import cls from "./groupCreatePage.module.sass";
 
@@ -175,7 +179,7 @@ export const GroupCreatePage = () => {
                 dispatch(getCurseTypes(res))
             })
             .catch(err => console.log(err))
-        dispatch(fetchLanguages())
+        dispatch(fetchLanguagesData())
     }, [id])
 
     const renterGroups = (data) => {

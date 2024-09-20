@@ -23,8 +23,6 @@ export const StudentProfileChangeInfo = memo((props) => {
     } = props
 
 
-    console.log(currentData)
-
     return (
         <Modal
             setActive={setActive}
