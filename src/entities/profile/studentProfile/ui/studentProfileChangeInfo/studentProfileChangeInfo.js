@@ -130,14 +130,14 @@ export const StudentProfileChangeInfo = memo((props) => {
                             placeholder={"seriya"}
                             name={"parent_seria"}
                             register={register}
-                            value={currentData?.parents_seria}
+                            value={currentData?.parent_seria}
                             required
                         />
                         <Input
                             placeholder={"seriya raqami"}
                             name={"parent_seria_num"}
                             register={register}
-                            value={currentData?.parents_seria_num}
+                            value={currentData?.parent_seria_num}
                             required
                             type={"number"}
                         />

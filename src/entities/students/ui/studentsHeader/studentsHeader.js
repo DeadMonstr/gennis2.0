@@ -85,11 +85,13 @@ export const StudentsHeader = ({
                 >
                     Filter
                 </Button>
-                <Button type={"simple"}>
-                    <a style={{color: "white"}} href={`${API_URL}Students/export-students/?branch=${branchId}&format=json`}>
+                <a style={{color: "white"}} href={`${API_URL}Students/export-students/?branch=${branchId}&format=json`}>
+                    <Button type={"simple"}>
+
                         Exel
-                    </a>
-                </Button>
+
+                    </Button>
+                </a>
                 <div className={cls.mainContainer_filterPanelBox_rightFilterRadioGroupBox}>
                     {peoples.map((item, id) => (
                         <Radio

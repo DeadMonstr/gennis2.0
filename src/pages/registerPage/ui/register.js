@@ -272,7 +272,7 @@ export const Register = () => {
                     setUsernameMessage('');
                     setIsUsernameAvailable(true);
 
-                    // reset();
+                    reset();
 
                 } else {
                     dispatch(onAddAlertOptions({
