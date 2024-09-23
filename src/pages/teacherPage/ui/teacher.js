@@ -17,8 +17,8 @@ import {API_URL, headers, useHttp} from "shared/api/base";
 import {YesNo} from "shared/ui/yesNoModal";
 import {onAddAlertOptions, onDeleteAlert} from "features/alert/model/slice/alertSlice";
 import {onDelete} from "entities/teachers/model/teacherSlice";
-import {getDeletedTeacher} from "../../../entities/teachers/model/selector/teacherSelector";
-import {fetchDeletedTeachersData} from "../../../entities/teachers/model/teacherThunk";
+import {getDeletedTeacher} from "entities/teachers/model/selector/teacherSelector";
+import {fetchDeletedTeachersData} from "entities/teachers/model/teacherThunk";
 import {EmployerCategoryPage} from "../../employeesPage";
 
 
@@ -37,7 +37,7 @@ export const TeachersPage = () => {
     useEffect(() => {
         if (!userBranchId) return;
         dispatch(fetchTeachersData({userBranchId}))
-        dispatch(fetchDeletedTeachersData({userBranchId}))
+
     }, [dispatch, userBranchId])
 
 
@@ -51,29 +51,30 @@ export const TeachersPage = () => {
     const [activeCategory, setActiveCategory] = useState(false)
 
     const [activeModal, setActiveModal] = useState(false)
+    const [isFilter, setIsFilter] = useState(false)
 
     const {request} = useHttp()
 
     const searchedUsers = useMemo(() => {
-        const filteredHeroes = !filteredTeachersData || filteredTeachersData.length === 0 ? teachersData.slice() : filteredTeachersData.slice()
+        const filteredHeroes = isFilter ? filteredTeachersData.slice() : teachersData.slice()
         setCurrentPage(1)
         if (!search) return filteredHeroes
         return filteredHeroes.filter(item =>
             (item?.user?.name?.toLowerCase().includes(search.toLowerCase()) ||
                 item?.user?.surname?.toLowerCase().includes(search.toLowerCase()))
         );
-    }, [teachersData, filteredTeachersData, setCurrentPage, search])
+    }, [teachersData, filteredTeachersData, setCurrentPage, search, isFilter])
 
 
     const searchedUsersDel = useMemo(() => {
-        const filteredHeroes = !filteredTeachersData || filteredTeachersData.length === 0 ? deletedTeacher.slice() : filteredTeachersData.slice()
+        const filteredHeroes = isFilter ? filteredTeachersData.slice() : deletedTeacher.slice()
         setCurrentPage(1)
         if (!search) return filteredHeroes
         return filteredHeroes.filter(item =>
             (item?.user?.name?.toLowerCase().includes(search.toLowerCase()) ||
                 item?.user?.surname?.toLowerCase().includes(search.toLowerCase()))
         );
-    }, [deletedTeacher, filteredTeachersData, setCurrentPage, search])
+    }, [deletedTeacher, filteredTeachersData, setCurrentPage, search, isFilter])
     const types = [
         {
             name: "O'qituvchilar",
@@ -163,6 +164,7 @@ export const TeachersPage = () => {
                 />
 
                 <TeacherFilter
+                    setIsFilter={setIsFilter}
                     activeSwitch={activeSwitch}
                     setActiveSwitch={setActiveSwitch}
                     setActive={setActive}

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useParams} from "react-router-dom";
 
 import {Modal} from "shared/ui/modal";
 import {Input} from "shared/ui/input";
@@ -13,9 +14,9 @@ import {
 
 import cls from "../../filters.module.sass";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchTeachersDataWithFilter} from "entities/teachers/model/teacherThunk";
+import {fetchDeletedTeachersData, fetchTeachersDataWithFilter} from "entities/teachers/model/teacherThunk";
 
-export const TeacherFilter = React.memo(({active, setActive, activePage , setActiveSwitch , activeSwitch}) => {
+export const TeacherFilter = React.memo(({active, setActive, setIsFilter , setActiveSwitch , activeSwitch}) => {
 
     const dispatch = useDispatch()
     const languages = useSelector(getLanguagesData)
@@ -24,6 +25,7 @@ export const TeacherFilter = React.memo(({active, setActive, activePage , setAct
     const [selectedAgeTo, setSelectedAgeTo] = useState()
     const [selectedSubject, setSelectedSubject] = useState("all")
     const [selectedLanguage, setSelectedLanguage] = useState("all")
+    const {"*": id} = useParams()
 
     function fetchTeachers(sub, lang, from, to) {
         dispatch(fetchTeachersDataWithFilter({
@@ -32,6 +34,7 @@ export const TeacherFilter = React.memo(({active, setActive, activePage , setAct
             untilAge: to,
             fromAge: from
         }))
+        setIsFilter(true)
     }
 
     const onSelectSubject = (value) => {
@@ -74,6 +77,11 @@ export const TeacherFilter = React.memo(({active, setActive, activePage , setAct
         setSelectedAgeTo(e.target.value);
         fetchTeachers(selectedSubject, selectedLanguage, selectedAgeFrom, e.target.value)
         // dispatch(fetchTeachersDataWithFilter({ fromAge: selectedAgeFrom, untilAge: e.target.value }))
+    }
+
+    const onGetDelete = (value) => {
+        setActiveSwitch(value)
+        dispatch(fetchDeletedTeachersData({userBranchId: id}))
     }
 
     // const onChangeSwitch =() =>{
@@ -132,7 +140,7 @@ export const TeacherFilter = React.memo(({active, setActive, activePage , setAct
 
                     <div className={cls.filter__switch}>
                         <p>O’chirilgan</p>
-                        <Switch onChangeSwitch={setActiveSwitch} activeSwitch={activeSwitch}/>
+                        <Switch onChangeSwitch={onGetDelete} activeSwitch={activeSwitch}/>
                     </div>
 
                 </div>

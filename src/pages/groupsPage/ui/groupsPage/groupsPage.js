@@ -10,7 +10,7 @@ import {
     fetchGroupsData,
     getDeletedGroupsData,
     DeletedGroups,
-    getGroupsLoading
+    getGroupsLoading, getGroupListWithFilter
 } from "entities/groups";
 import {getSearchValue} from "features/searchInput";
 import {GroupsFilter} from "features/filters/groupsFilter";
@@ -27,6 +27,7 @@ export const GroupsPage = () => {
 
     const dispatch = useDispatch()
     const data = useSelector(getGroupsListData)
+    const getFilteredGroups = useSelector(getGroupListWithFilter)
     const deletedGroupsData = useSelector(getDeletedGroupsData)
     const loading = useSelector(getGroupsLoading)
     const {"*": id} = useParams()
@@ -35,6 +36,7 @@ export const GroupsPage = () => {
     const [deletedGroups, setDeletedGroups] = useState([])
     const [active, setActive] = useState(false);
     const [activeSwitch, setActiveSwitch] = useState(false)
+    const [isFilter, setIsFilter] = useState(false)
     const search = useSelector(getSearchValue)
     let PageSize = useMemo(() => 50, [])
     const [currentTableData, setCurrentTableData] = useState([])
@@ -43,7 +45,7 @@ export const GroupsPage = () => {
 
 
     const searchedUsers = useMemo(() => {
-        const filteredHeroes = data?.slice()
+        const filteredHeroes = isFilter ? getFilteredGroups?.slice() : data?.slice()
         setCurrentPage(1)
 
 
@@ -52,7 +54,7 @@ export const GroupsPage = () => {
         return filteredHeroes.filter(item =>
             item.name?.toLowerCase().includes(search.toLowerCase())
         )
-    }, [data, setCurrentPage, search])
+    }, [data, setCurrentPage, search, isFilter, getFilteredGroups])
 
     useEffect(() => {
         setDeletedGroups(deletedGroupsData)
@@ -119,6 +121,7 @@ export const GroupsPage = () => {
                         </>
                 }
                 <GroupsFilter
+                    setIsFilter={setIsFilter}
                     activeSwitch={activeSwitch}
                     setActiveSwitch={setActiveSwitch}
                     setActive={setActive}

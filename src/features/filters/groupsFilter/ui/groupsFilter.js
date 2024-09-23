@@ -17,7 +17,7 @@ import {fetchTeachersDataWithFilter} from "entities/teachers/model/teacherThunk"
 
 import cls from "../../filters.module.sass";
 
-export const GroupsFilter = React.memo(({active, setActive}) => {
+export const GroupsFilter = React.memo(({active, setActive, setIsFilter}) => {
 
     const branch = localStorage.getItem("selectedBranch")
     const subjects = useSelector(getSubjectsData)
@@ -37,6 +37,7 @@ export const GroupsFilter = React.memo(({active, setActive}) => {
             subjId: subject,
             userBranchId: branch
         }))
+        setIsFilter(true)
     }
 
     useEffect(() => {
@@ -47,11 +48,8 @@ export const GroupsFilter = React.memo(({active, setActive}) => {
     useEffect(() => {
         // dispatch(fetchSubjects());
         dispatch(fetchSubjectsData())
-    }, []);
-
-    useEffect(() => {
         dispatch(fetchGroupTypeThunk())
-    }, [])
+    }, []);
 
     const onSelectTeacher = (value) => {
         if (value !== selectedTeacher) {
