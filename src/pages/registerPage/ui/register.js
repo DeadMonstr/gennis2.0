@@ -251,7 +251,7 @@ export const Register = () => {
                     ...res,
                     total_students: 1212,
                     color: "red",
-                    class_type: selectedClassType,
+                    class_type: +selectedClassType,
                     teacher_salary_type: selectedCategory,
                     subject: selectedSubject.map(subject => subject.value) || null,
                 };

@@ -6,7 +6,7 @@ import {
     SchoolHomeExtracurricus,
     SchoolHomeCertificats,
     SchoolHomeAboutUs,
-    SchoolParentesComment
+    SchoolParentesComment, SchoolHomeGallery, SchoolHomeWorkUs
 } from "entities/schoolHome";
 
 import cls from "./SchoolHomePage.module.sass";
@@ -33,6 +33,8 @@ export const SchoolHomePage = () => {
             <SchoolHomeExtracurricus/>
             <SchoolHomeCertificats/>
             <SchoolHomeAboutUs/>
+            <SchoolHomeGallery/>
+            <SchoolHomeWorkUs/>
             <SchoolParentesComment/>
         </div>
     )
