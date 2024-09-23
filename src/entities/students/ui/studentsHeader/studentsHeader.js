@@ -66,7 +66,7 @@ export const StudentsHeader = ({
                             onClick={() => navigate("RGBData")}
                             type={"filter"}
                         >
-                            RGB-Baza
+                            RB-Baza
                         </Button>
                     {/*</Link>*/}
 

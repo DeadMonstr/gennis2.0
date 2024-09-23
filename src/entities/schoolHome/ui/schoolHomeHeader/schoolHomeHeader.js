@@ -34,9 +34,9 @@ const list = [
     }
 ]
 
-export const SchoolHomeHeader = memo(() => {
+export const SchoolHomeHeader = memo(({ref, setRef}) => {
 
-    // const currentHeight = useRef()
+    const currentHeight = useRef()
     const [activeSection, setActiveSection] = useState()
 
     // useEffect(() => {
@@ -60,12 +60,20 @@ export const SchoolHomeHeader = memo(() => {
 
     const render = renderSectionMenuList()
 
-    // console.log(document.heig, "innerHeight")
+    useEffect(() => {
+        console.log(ref?.current?.offsetTop, "currentHeight")
+    }, [ref])
+
+
 
     return (
         <div
+            // onWheel={(e) => {
+            //     console.log(e, "e.target")
+            //     console.log(ref?.current?.offsetTop, "currentHeight")
+            // }}
             className={cls.homeHeader}
-            // ref={currentHeight}
+            // ref={ref}
         >
             <div className={cls.homeHeader__burger}>
                 <i className="fas fa-bars"/>
