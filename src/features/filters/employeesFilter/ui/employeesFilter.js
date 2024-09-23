@@ -20,8 +20,8 @@ export const EmployeesFilter = React.memo(({ active, setActive, activeSwitch, se
     const languages = useSelector(getLanguagesData);
     const [selectedAgeFrom, setSelectedAgeFrom] = useState('');
     const [selectedAgeTo, setSelectedAgeTo] = useState('');
-    const [selectedJob, setSelectedJob] = useState('');
-    const [selectedLanguage, setSelectedLanguage] = useState('');
+    const [selectedJob, setSelectedJob] = useState('all');
+    const [selectedLanguage, setSelectedLanguage] = useState('all');
     const jobsData = useSelector(getVacancyJobs);
 
     function fetchEmployees(job, lang, from, to) {
@@ -102,9 +102,10 @@ export const EmployeesFilter = React.memo(({ active, setActive, activeSwitch, se
 
                     <Select
                         title={"Ish"}
-                        options={jobOptions}
+                        options={[{name: "Hamma", id: "all"}, ...jobOptions]}
                         extraClass={cls.filter__select}
                         onChangeOption={onSelectJob}
+                        defaultValue={selectedJob}
                     />
 
                     <div className={cls.filter__age}>
@@ -128,9 +129,10 @@ export const EmployeesFilter = React.memo(({ active, setActive, activeSwitch, se
 
                     <Select
                         title={"Til"}
-                        options={languages}
+                        options={[{name: "Hamma", id: "all"}, ...languages]}
                         extraClass={cls.filter__select}
                         onChangeOption={onSelectLanguage}
+                        defaultValue={selectedLanguage}
                     />
 
                     <div className={cls.filter__switch}>
