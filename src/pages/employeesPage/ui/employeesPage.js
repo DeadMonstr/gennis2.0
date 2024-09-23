@@ -24,7 +24,7 @@ export const EmployerPage = () => {
     const PageSize = useMemo(() => 30, []);
     const [currentPage, setCurrentPage] = useState(1);
     const [activeSwitch, setActiveSwitch] = useState(false)
-    const [activeCategory, setActiveCategory] = useState(false)
+
     const search = useSelector(getSearchValue);
     const {"*": id} = useParams()
     const navigation = useNavigate()
@@ -56,14 +56,11 @@ export const EmployerPage = () => {
         <MultiPage types={types} page={"worker"}>
             <div className={cls.employer}>
                 <div className={cls.employer__header}>
-                    {activeCategory ? null : <Button onClick={() => setActiveModal(!activeFilter)} status={"filter"}
-                                              type={"filter"}>Filter</Button> }
-                    <Button type={"simple"} onClick={() => setActiveCategory(!activeCategory)}>Toifa</Button>
+                    <Button onClick={() => setActiveModal(!activeFilter)} status={"filter"} type={"filter"}>Filter</Button>
+
                     {/*<Select/>*/}
                 </div>
-                {activeCategory ?
-                    <EmployerCategoryPage/>
-                    :
+                {
                     activeSwitch ?
                         <DeletedEmployers/>
                         :

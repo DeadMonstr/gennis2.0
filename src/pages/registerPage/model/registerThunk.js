@@ -144,6 +144,7 @@ export const fetchCategories = createAsyncThunk(
     "user/fetchCategories",
     (id) => {
         const {request} = useHttp()
+        console.log(id)
         return request(`${API_URL}Teachers/salary-types/?branch=${id}`, "GET", null, headers())
     }
 )

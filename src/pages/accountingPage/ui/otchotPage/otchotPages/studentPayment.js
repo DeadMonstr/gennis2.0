@@ -34,7 +34,7 @@ export const StudentPayment = () => {
 
     const [year, setYear] = useState(null)
 
-    console.log(year , month , "hello")
+
     return (
         <div>
             <div className={cls.paymentType}>

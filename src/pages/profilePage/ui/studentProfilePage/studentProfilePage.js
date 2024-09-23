@@ -98,9 +98,24 @@ export const StudentProfilePage = () => {
         const res = {
             user: {
                 ...data,
-                language: changeSelectedLang
+
             },
-            class_number: changeSelectedClass
+            class_number: changeSelectedClass,
+            language: changeSelectedLang,
+            parents_fullname: data.parents_fullname,
+            old_school: data.old_school,
+            parent_region: data.parent_region,
+            district:data.district,
+
+
+            parent_seria: data.parent_seria,
+            parent_seria_num: data.parent_seria_num,
+
+            region:data.region,
+
+            born_date: data.born_date,
+            student_seria_num:data.student_seria_num,
+            student_seria: data.student_seria
         }
         dispatch(changeStudentProfileData({id, res}))
         setActiveModal(!activeModal)

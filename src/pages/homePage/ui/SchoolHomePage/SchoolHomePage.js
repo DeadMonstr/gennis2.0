@@ -4,7 +4,9 @@ import {
     SchoolHomeMain,
     SchoolHomeHeader,
     SchoolHomeExtracurricus,
-    SchoolHomeCertificats
+    SchoolHomeCertificats,
+    SchoolHomeAboutUs,
+    SchoolParentesComment
 } from "entities/schoolHome";
 
 import cls from "./SchoolHomePage.module.sass";
@@ -21,15 +23,17 @@ export const SchoolHomePage = () => {
             // onScroll={(e) => onScroll(e.target)}
             className={cls.schoolHome}
         >
-            <div
-                // onScroll={(e) => onScroll(e.target)}
-                className={cls.schoolHome__header}
-            >
+            {/*<div*/}
+            {/*    onScroll={(e) => onScroll(e.target)}*/}
+            {/*    className={cls.schoolHome__header}*/}
+            {/*>*/}
                 <SchoolHomeHeader/>
                 <SchoolHomeMain/>
-            </div>
+            {/*</div>*/}
             <SchoolHomeExtracurricus/>
             <SchoolHomeCertificats/>
+            <SchoolHomeAboutUs/>
+            <SchoolParentesComment/>
         </div>
     )
 }
