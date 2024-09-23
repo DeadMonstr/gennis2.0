@@ -5,3 +5,4 @@ export {SchoolHomeCertificats} from "./ui/schoolHomeCertificats/schoolHomeCertif
 export {SchoolHomeAboutUs} from "./ui/schoolHomeAboutUs/schoolHomeAboutUs";
 
 export {SchoolParentesComment} from "./ui/schoolParentesComment/schoolParentesComment"
+export {SchoolNews} from "./ui/schoolNews/schoolNews"

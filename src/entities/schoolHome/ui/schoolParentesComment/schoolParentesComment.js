@@ -126,7 +126,7 @@ export const SchoolParentesComment = () => {
     return (
         <div className={cls.comment}>
             <div className={cls.comment_title}>
-                Parent's <br/> comment
+                Parent's <span>comment</span>
             </div>
             <div className={cls.boxes}>
 
