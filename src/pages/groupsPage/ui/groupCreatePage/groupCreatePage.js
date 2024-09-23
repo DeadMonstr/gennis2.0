@@ -97,13 +97,13 @@ export const GroupCreatePage = () => {
 
     const [activeModal, setActiveModal] = useState("")
 
-
-    useEffect(() => {
-
-        // if (theme === "app_school_theme") {
-        navigation(-1)
-        // }
-    }, [theme])
+    //
+    // useEffect(() => {
+    //
+    //     // if (theme === "app_school_theme") {
+    //     navigation(-1)
+    //     // }
+    // }, [theme])
 
 
     const onSelectStudentId = (id, subjectId) => {

@@ -126,7 +126,6 @@ export const StudentsPage = () => {
             default:
                 filteredStudents = [];
         }
-        console.log(newStudents, 'wdefwefwef')
 
         setCurrentPage(1);
 

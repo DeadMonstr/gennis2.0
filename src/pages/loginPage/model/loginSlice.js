@@ -24,6 +24,8 @@ export const loginSlice =createSlice({
                 const decodedToken = jwtDecode(action.payload.access);
                 state.userId = decodedToken.user_id; // Bu yerda user_id ni olasiz
             }
+
+
             state.role = action.payload.admin
             state.loading = false
             state.error = null
