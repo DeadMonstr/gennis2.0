@@ -89,63 +89,84 @@ export const StudentProfileChangeInfo = memo((props) => {
                         defaultValue={currentData?.user?.language?.id}
                     />
 
-
+                    <Input
+                        placeholder={"region"}
+                        name={"region"}
+                        register={register}
+                        value={currentData?.region}
+                        required
+                    />
 
                     <Input
                         placeholder={"Ota-ona fio"}
-                        name={"birth_date"}
+                        name={"parents_fullname"}
                         register={register}
                         value={currentData?.parents_fullname}
                         required
                     />
-                    {/*<Input*/}
-                    {/*    placeholder={"Tug'ilgan sana"}*/}
-                    {/*    name={"birth_date"}*/}
-                    {/*    register={register}*/}
-                    {/*    value={currentData?.user?.birth_date}*/}
-                    {/*    required*/}
-                    {/*    type={"date"}*/}
-                    {/*/>*/}
-                    {/*<Input*/}
-                    {/*    placeholder={"Tug'ilgan sana"}*/}
-                    {/*    name={"birth_date"}*/}
-                    {/*    register={register}*/}
-                    {/*    value={currentData?.user?.birth_date}*/}
-                    {/*    required*/}
-                    {/*    type={"date"}*/}
-                    {/*/>*/}
-                    {/*<Input*/}
-                    {/*    placeholder={"Tug'ilgan sana"}*/}
-                    {/*    name={"birth_date"}*/}
-                    {/*    register={register}*/}
-                    {/*    value={currentData?.user?.birth_date}*/}
-                    {/*    required*/}
-                    {/*    type={"date"}*/}
-                    {/*/>*/}
-                    {/*<Input*/}
-                    {/*    placeholder={"Tug'ilgan sana"}*/}
-                    {/*    name={"birth_date"}*/}
-                    {/*    register={register}*/}
-                    {/*    value={currentData?.user?.birth_date}*/}
-                    {/*    required*/}
-                    {/*    type={"date"}*/}
-                    {/*/>*/}
-                    {/*<Input*/}
-                    {/*    placeholder={"Tug'ilgan sana"}*/}
-                    {/*    name={"birth_date"}*/}
-                    {/*    register={register}*/}
-                    {/*    value={currentData?.user?.birth_date}*/}
-                    {/*    required*/}
-                    {/*    type={"date"}*/}
-                    {/*/>*/}
-                    {/*<Input*/}
-                    {/*    placeholder={"Tug'ilgan sana"}*/}
-                    {/*    name={"birth_date"}*/}
-                    {/*    register={register}*/}
-                    {/*    value={currentData?.user?.birth_date}*/}
-                    {/*    required*/}
-                    {/*    type={"date"}*/}
-                    {/*/>*/}
+                    <Input
+                        placeholder={"kelgan maktabi"}
+                        name={"old_school"}
+                        register={register}
+                        value={currentData?.old_school}
+                        required
+                    />
+                    <Input
+                        placeholder={"region"}
+                        name={"parent_region"}
+                        register={register}
+                        value={currentData?.parent_region}
+                        required
+                    />
+                    <Input
+                        placeholder={"xudud"}
+                        name={"district"}
+                        register={register}
+                        value={currentData?.district}
+                        required
+                    />
+                    <div className={cls.seria}>
+                        <Input
+                            placeholder={"seriya"}
+                            name={"parent_seria"}
+                            register={register}
+                            value={currentData?.parent_seria}
+                            required
+                        />
+                        <Input
+                            placeholder={"seriya raqami"}
+                            name={"parent_seria_num"}
+                            register={register}
+                            value={currentData?.parent_seria_num}
+                            required
+                            type={"number"}
+                        />
+                    </div>
+                    <Input
+                        placeholder={"Tug'ilgan sana ota-ona"}
+                        name={"born_date"}
+                        register={register}
+                        value={currentData?.born_date}
+                        required
+                        type={"date"}
+                    />
+                    <div className={cls.seria}>
+                        <Input
+                            placeholder={"metirka seriya"}
+                            name={"student_seria"}
+                            register={register}
+                            value={currentData?.student_seria}
+                            required
+                        />
+                        <Input
+                            placeholder={"metirka raqami"}
+                            name={"student_seria_num"}
+                            register={register}
+                            value={currentData?.student_seria_num}
+                            required
+                            type={"number"}
+                        />
+                    </div>
                 </Form>
             </div>
         </Modal>

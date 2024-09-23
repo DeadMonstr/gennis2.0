@@ -119,7 +119,7 @@ export const Register = () => {
             dispatch(fetchClassTypeData({branch: id}))
             dispatch(fetchClassNumberData({branch:id}))
 
-            dispatch(fetchCategories())
+            dispatch(fetchCategories(id))
         }
 
         setValue("password", 12345678)
@@ -198,13 +198,17 @@ export const Register = () => {
             if (userSystem?.name === "school") {
                 result = {
                     class_number: selectedClass,
-                    parent_region: data.parent_region,
-                    old_school: data.old_school,
                     parents_fullname: data.parents_fullname,
-                    parents_seria: data.parents_seria,
-                    parents_seria_num: data.parents_seria_num,
-                    region:data.region,
+                    old_school: data.old_school,
+                    parent_region: data.parent_region,
                     district:data.district,
+
+
+                    parent_seria: data.parent_seria,
+                    parent_seria_num: data.parent_seria_num,
+
+                    region:data.region,
+
                     born_date: data.born_date,
                     student_seria_num:data.student_seria_num,
                     student_seria: data.student_seria
@@ -268,7 +272,7 @@ export const Register = () => {
                     setUsernameMessage('');
                     setIsUsernameAvailable(true);
 
-                    // reset();
+                    reset();
 
                 } else {
                     dispatch(onAddAlertOptions({
@@ -327,9 +331,9 @@ export const Register = () => {
                                     <Input register={register} name={"parents_fullname"}
                                         placeholder={"ota-ona fio"}/>
                                     <div className={cls.seriya}>
-                                        <Input register={register} name={"parents_seria"}
+                                        <Input register={register} name={"parent_seria"}
                                             placeholder={"passport seriya"}/>
-                                        <Input register={register} name={"parents_seria_num"}
+                                        <Input register={register} name={"parent_seria_num"}
                                             placeholder={"seriya raqami"} type={"number"}/>
                                     </div>
                                     <Input register={register} name={"born_date"}

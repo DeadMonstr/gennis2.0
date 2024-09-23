@@ -7,6 +7,9 @@ import {Select} from "shared/ui/select";
 import {Radio} from "shared/ui/radio";
 import React, {useCallback, useState} from "react";
 import classNames from "classnames";
+import {API_URL, useHttp} from "../../../../shared/api/base";
+import {useSelector} from "react-redux";
+import {getBranch} from "../../../../features/branchSwitcher";
 
 export const StudentsHeader = ({
                                    onChange,
@@ -24,20 +27,29 @@ export const StudentsHeader = ({
 
 
     const {theme} = useTheme()
+    const {request} = useHttp()
+    const branchID = useSelector(getBranch)
+
+    const branchId = branchID.id
+    // const onClick = () => {
+    //     request(`${API_URL}Students/export-students/?branch=1&format=json` , "GET")
+    // }
     const navigate = useNavigate()
 
     const renderCreateBtn = useCallback(() => {
         return theme === "app_school_theme"
             ?
-            <Button
-                type={"filter"}
-                extraClass={cls.extraCutClass}
-                onClick={() => onClick("create")}
-            >
-                Create Class
-            </Button>
+            <>
+                <Button
+                    type={"filter"}
+                    extraClass={cls.extraCutClass}
+                    onClick={() => onClick("create")}
+                >
+                    Create Class
+                </Button>
+            </>
             :
-            <Link to={"createGroup"}>
+            <Link to={":id/createGroup"}>
                 <Button
                     type={"filter"}
                     extraClass={cls.extraCutClass}
@@ -84,6 +96,13 @@ export const StudentsHeader = ({
                 >
                     Filter
                 </Button>
+                <a style={{color: "white"}} href={`${API_URL}Students/export-students/?branch=${branchId}&format=json`}>
+                    <Button type={"simple"}>
+
+                        Exel
+
+                    </Button>
+                </a>
                 <div className={cls.mainContainer_filterPanelBox_rightFilterRadioGroupBox}>
                     {peoples.map((item, id) => (
                         <Radio

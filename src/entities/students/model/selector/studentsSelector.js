@@ -8,22 +8,22 @@ export const getFilteredClassStudents = (state) =>
 
 
 export const getLoadingNewStudents = (state) =>
-    state.newStudents?.newStudentsStatus;
+    state.newStudents?.newStudentsStatus
 
 export const getLoadingStudyingStudents = (state) =>
-    state.newStudents?.studyingStudentsStatus;
+    state.newStudents?.studyingStudentsStatus
 
 export const getLoadingDeletedStudents = (state) =>
-    state.newStudents?.loading;
+    state.newStudents?.loading
 
 export const getNewStudentsData = (state) =>
-    state.newStudents?.newStudentes;
+    state.newStudents?.newStudentes
 
 export const getNewStudentsLoading = (state) =>
-    state.newStudents?.newStudentsStatus;
+    state.newStudents.newStudentsStatus
 
 export const getStudyingStudents = (state) =>
-    state.newStudents?.studyingStudents;
+    state.newStudents.studyingStudents
 
 export const getFilteredStudents = (state) =>
     state.newStudents?.filteredStudents

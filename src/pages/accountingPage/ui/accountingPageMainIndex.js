@@ -36,7 +36,9 @@ import {getAccountingOtchot, getEncashment} from "entities/accounting/model/sele
 import {accountingThunk} from "entities/accounting/model/thunk/accountingThunk";
 import {AccountingFilter} from "features/filters/accountingFilter/accountingFilter";
 import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
-import {getBranch} from "features/branchSwitcher";
+import {getBranch} from "../../../features/branchSwitcher";
+import {getSelectedLocations} from "features/locations";
+import {getBranchLoading} from "features/branchSwitcher/model/selector/brachSwitcherSelector";
 
 
 
@@ -52,7 +54,7 @@ export const AccountingPageMainIndex = memo(() => {
     return (
         <Routes>
             <Route path={"list"} element={<MultiPage types={types} page={"accounting"} id={false}/>}/>
-            <Route path={":id/*"} element={<AccountingPageMain/>}/>
+            <Route path={":idBranch/*"} element={<AccountingPageMain/>}/>
 
         </Routes>
     )
@@ -97,6 +99,19 @@ const AccountingPageMain = () => {
     const formatSalary = (payment_sum) => {
         return Number(payment_sum).toLocaleString();
     };
+
+
+    const locations = useSelector(getSelectedLocations)
+    const branch = useSelector(getBranch)
+
+    useEffect(() => {
+
+
+        if (locations.length < 2 && branch?.id)  {
+            navigate(`../${branch.id}/${typePage}`, {relative: "path"})
+        }
+    },[branch?.id,locations,navigate])
+
     // const renderTable = renderTables()
 
 
