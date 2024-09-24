@@ -14,13 +14,55 @@ export const SchoolHomeMain = memo(() => {
 
     const settings = {
         infinite: false,
-        dots: true,
+        dots: window.outerWidth > 430,
         speed: 500,
-        slidesToShow: 5,
-        slidesToScroll: 1,
+        // slidesToShow: 5,
+        // slidesToScroll: 2,
         className: cls.homeSlider,
-        arrows: false
+        initialSlide: 0,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 1440,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+
+                }
+            },
+            {
+                breakpoint: 830,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+
+                }
+            },
+            {
+                breakpoint: 650,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+
+                }
+            },
+            {
+                breakpoint: 500,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
     }
+    console.log(window.outerWidth, "outerWidth")
 
     const [activeItem, setActiveItem] = useState(null)
 
@@ -28,9 +70,17 @@ export const SchoolHomeMain = memo(() => {
         return list.map(item => {
             return (
                 <div
-                    onClick={() => setActiveItem(prev =>
-                        item === prev ? null : item
-                    )}
+                    onDoubleClick={(e) => {
+                        switch (e.detail) {
+                            case 2:
+                               setActiveItem(item)
+                               break
+                            default:
+                                setActiveItem(null)
+                                break
+                        }
+
+                    }}
                     className={classNames(cls.items__inner, {
                         [cls.active]: activeItem === item
                     })}
