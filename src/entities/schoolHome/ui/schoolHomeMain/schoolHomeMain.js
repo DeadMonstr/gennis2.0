@@ -14,10 +14,12 @@ export const SchoolHomeMain = memo(() => {
 
     const settings = {
         infinite: false,
-        dots: false,
+        dots: true,
         speed: 500,
-        slidesToShow: 4,
+        slidesToShow: 5,
         slidesToScroll: 1,
+        className: cls.homeSlider,
+        arrows: false
     }
 
     const [activeItem, setActiveItem] = useState(null)
@@ -75,7 +77,9 @@ export const SchoolHomeMain = memo(() => {
                         </p>
                     </div>
                     <div className={cls.items}>
-                        <Slider {...settings}>
+                        <Slider
+                            {...settings}
+                        >
                             {render}
                         </Slider>
                     </div>
