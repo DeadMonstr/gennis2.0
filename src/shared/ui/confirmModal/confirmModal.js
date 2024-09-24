@@ -6,12 +6,12 @@ import success from "../../assets/icons/CheckCircle.svg";
 import {Button} from "../button";
 import React from "react";
 
-export const ConfirmModal = ({setActive, active, onClick, title, text, type}) => {
+export const ConfirmModal = ({setActive, active, onClick, title= "Rostanham o'chirmoqchimisiz", text, type}) => {
 
     const renderImg = () => {
         // eslint-disable-next-line default-case
         switch (type) {
-            case "delete" :
+            case "danger" :
                 return <img src={alertIcon} alt=""/>
             case "success":
                 return <img src={success} alt=""/>
@@ -28,12 +28,12 @@ export const ConfirmModal = ({setActive, active, onClick, title, text, type}) =>
                 </div>
                 {text ?
                     <div className={cls.deleteText}>
-                        <h2>{text}</h2>
+                        <span>{text}</span>
                     </div> : null
                 }
                 <div className={cls.deleteButtons}>
                     <Button extraClass={cls.deleteButton} type={type} children={"Xa"} onClick={onClick}/>
-                    <Button extraClass={cls.cancelButton} children={"Yo'q"} onClick={setActive}/>
+                    <Button extraClass={cls.cancelButton} children={"Yo'q"} onClick={() => setActive(!active)}/>
                 </div>
             </div>
         </Modal>
