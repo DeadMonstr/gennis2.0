@@ -10,17 +10,26 @@ import {fetchTeacherId, getTeacherId} from "../../../../teachers";
 import {getLoading} from "../../../../teachers/model/selector/teacherIdSelector";
 import {TeacherEdit} from "features/profileEdits/teacherEdit";
 import {DefaultLoader} from "shared/ui/defaultLoader";
+import {fetchCategories} from "../../../../../pages/registerPage/model/registerThunk";
+import {getBranch} from "../../../../../features/branchSwitcher";
+import {fetchClassNumberData, fetchClassTypeData} from "../../../../oftenUsed";
 
 export const TeacherProfileInfo = memo(({active, setActive, setActiveModal, newImage, system}) => {
 
     const loading = useSelector(getLoading)
     const dispatch = useDispatch()
-    const {id} = useParams()
+
     const teacherId = useSelector(getTeacherId)
     const [localTeacherData, setLocalTeacherData] = useState({});
+    const branchId = useSelector(getBranch)
 
+    console.log(branchId)
+    const id = branchId.id
 
     useEffect(() => {
+        dispatch(fetchClassTypeData({branch: id}))
+        dispatch(fetchClassNumberData({branch:id}))
+        dispatch(fetchCategories(id))
         if (teacherId) {
             setLocalTeacherData(teacherId);
         }
