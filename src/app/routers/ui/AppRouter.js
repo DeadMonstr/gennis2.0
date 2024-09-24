@@ -73,9 +73,10 @@ export const AppRouter = () => {
                                         path={item.path}
 
                                         element={
+                                            // item.element
                                             <RequireBranch>
                                                 {item.element}
-                                            </RequireBranch>
+                                             </RequireBranch>
                                         }
                                     />
                                 )

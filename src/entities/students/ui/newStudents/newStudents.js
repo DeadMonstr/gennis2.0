@@ -1,18 +1,18 @@
-import React, {memo, useEffect, useState} from 'react';
+import React, {memo, useState} from 'react';
 import {useNavigate} from "react-router";
 import cls from "entities/students/ui/newStudents/newStudents.module.sass";
 import {Table} from "shared/ui/table";
-import {StudentsFilter} from "features/filters/studentsFilter";
-import {StudiyngStudentDelModal, studiyngStudentDelThunk} from "../../../../features/studiyngStudentDelModal";
-import {YesNo} from "shared/ui/yesNoModal";
+
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
-import {fetchOnlyNewStudentsData} from "entities/students/model/studentsThunk";
 import {useDispatch} from "react-redux";
 import {ConfirmModal} from "shared/ui/confirmModal";
+import {API_URL, headers, useHttp} from "shared/api/base";
+import {onDeleteNewStudents} from "../../model/studentsSlice";
 
-export const NewStudents = memo(({currentTableData, setSelectStudents, theme,branchId}) => {
+export const NewStudents = memo(({currentTableData, setSelectStudents, theme, branchId}) => {
 
     const [studentId, setStudentId] = useState(false)
+    const [isDeleted, setIsDeleted] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const navigation = useNavigate()
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
@@ -43,6 +43,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme,bra
                 <td onClick={() => {
                     setStudentId(item.id);
                     setIsOpen(!isOpen);
+                    setIsDeleted(item?.deleted)
                 }}>
                     <i style={{color: '#FF3737FF'}} className={`fa-solid fa-xmark ${cls.xmark}`}></i>
                 </td>
@@ -56,17 +57,22 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme,bra
     const render = renderStudents()
 
     const dispatch = useDispatch();
+    const {request} = useHttp();
 
     const handleDelete = () => {
-        dispatch(studiyngStudentDelThunk(studentId)).then(() => {
-            dispatch(onAddAlertOptions({
-                type: "success",
-                status: true,
-                msg: "O'quvchi muvofaqqiyatli o'chirildi"
-            }))
 
-            dispatch(fetchOnlyNewStudentsData({id: branchId}));
-        });
+        request(`${API_URL}Students/students_delete/${studentId}/`, "DELETE", null, headers())
+            .then(res => {
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: res.msg
+                }))
+            })
+        setIsOpen(false)
+
+        dispatch(onDeleteNewStudents(studentId))
+
     };
 
     return (
@@ -96,12 +102,14 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme,bra
                     {render}
                     </tbody>
                 </Table>
-
             </div>
+
+
+
             <ConfirmModal
-                type={"danger"}
-                title={"O'chirmoq"}
-                text={"Studentni ochirishni hohlaysizmi"}
+                type={isDeleted ? "success" : "danger"}
+                title={!isDeleted ? "O'chirmoq" : "Qaytarmoq"}
+                text={isDeleted ? "Studentni qaytarishni hohlaysizmi" : "Studentni o'chirishni hohlaysizmi"}
                 active={isOpen}
                 setActive={setIsOpen}
                 onClick={handleDelete}
