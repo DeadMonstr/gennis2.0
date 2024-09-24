@@ -8,16 +8,16 @@ import {YesNo} from "shared/ui/yesNoModal";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import {fetchOnlyNewStudentsData} from "entities/students/model/studentsThunk";
 import {useDispatch} from "react-redux";
+import {ConfirmModal} from "shared/ui/confirmModal";
 
 export const NewStudents = memo(({currentTableData, setSelectStudents, theme,branchId}) => {
 
-    const [active, setActive] = useState(false);
     const [studentId, setStudentId] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const navigation = useNavigate()
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
 
-    console.log(currentTableData)
+
     const renderStudents = () => {
         return currentTableData?.map((item, i) => (
             <tr key={item.id}>
@@ -98,7 +98,15 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme,bra
                 </Table>
 
             </div>
-            <YesNo  setActiveDelete={setIsOpen} activeDelete={isOpen}  onDelete={handleDelete}/>
+            <ConfirmModal
+                type={"danger"}
+                title={"O'chirmoq"}
+                text={"Studentni ochirishni hohlaysizmi"}
+                active={isOpen}
+                setActive={setIsOpen}
+                onClick={handleDelete}
+            />
+            {/*<YesNo  setActiveDelete={setIsOpen} activeDelete={isOpen}  onDelete={handleDelete}/>*/}
             {/*<StudiyngStudentDelModal userId={studentId} onClose={setIsOpen} isOpen={isOpen}/>*/}
 
         </div>

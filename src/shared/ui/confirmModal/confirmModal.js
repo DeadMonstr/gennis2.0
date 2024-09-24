@@ -6,7 +6,7 @@ import success from "../../assets/icons/CheckCircle.svg";
 import {Button} from "../button";
 import React from "react";
 
-export const ConfirmModal = ({setActive, active, deleteBtn, title, text, type}) => {
+export const ConfirmModal = ({setActive, active, onClick, title, text, type}) => {
 
     const renderImg = () => {
         // eslint-disable-next-line default-case
@@ -32,7 +32,7 @@ export const ConfirmModal = ({setActive, active, deleteBtn, title, text, type}) 
                     </div> : null
                 }
                 <div className={cls.deleteButtons}>
-                    <Button extraClass={cls.deleteButton} type={type} children={"Xa"} onClick={deleteBtn}/>
+                    <Button extraClass={cls.deleteButton} type={type} children={"Xa"} onClick={onClick}/>
                     <Button extraClass={cls.cancelButton} children={"Yo'q"} onClick={setActive}/>
                 </div>
             </div>

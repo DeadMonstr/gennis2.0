@@ -11,7 +11,7 @@ import {
 
 import cls from "../../filters.module.sass";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchVacancyData, getVacancyJobs } from "../../../vacancyModals/vacancyPageAdd";
+import { fetchVacancyData, getVacancyJobs } from "../../../vacancyModals/vaca ncyPageAdd";
 import { fetchEmployersDataWithFilter } from "entities/employer";
 
 export const EmployeesFilter = React.memo(({ active, setActive, activeSwitch, setActiveSwitch }) => {
