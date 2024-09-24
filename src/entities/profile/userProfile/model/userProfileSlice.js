@@ -211,8 +211,14 @@ const userProfileSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchUserProfileData.fulfilled, (state, action) => {
+
+
+
                 state.userData = action.payload
                 state.userBranchId = action.payload.branch.id
+
+                localStorage.setItem("username",  action.payload.username)
+
                 // state.userSystemId = action.payload.user.branch.location.system.id
                 state.userPermissions = action.payload.permissions
                 state.loading = false
@@ -222,32 +228,7 @@ const userProfileSlice = createSlice({
                 state.loading = false
                 state.error = "error"
             })
-            // .addCase(changeUserProfileData.pending, state => {
-            //     state.loading = true
-            //     state.error = null
-            // })
-            // .addCase(changeUserProfileData.fulfilled, (state, action) => {
-            //     state.userData = action.payload
-            //     state.loading = false
-            //     state.error = null
-            // })
-            // .addCase(changeUserProfileData.rejected, (state, action) => {
-            //     state.loading = false
-            //     state.error = action.payload ?? null
-            // })
-            // .addCase(changeUserProfileImage.pending, state => {
-            //     state.loading = true
-            //     state.error = null
-            // })
-            // .addCase(changeUserProfileImage.fulfilled, (state, action) => {
-            //     state.userData = action.payload
-            //     state.loading = false
-            //     state.error = null
-            // })
-            // .addCase(changeUserProfileImage.rejected, (state, action) => {
-            //     state.loading = false
-            //     state.error = action.payload ?? null
-            // })
+
 })
 
 export const {

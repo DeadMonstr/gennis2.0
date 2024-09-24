@@ -44,16 +44,8 @@ export const ThemeSwitcher = () => {
     }, [system?.name])
 
 
-    // useEffect(() => {
-    //     const localSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
-    //     if (localSystem && localSystem?.id && !isLocal && systems.length) {
-    //         toggleTheme(localSystem.name === "center" ? "app_school_theme" : "app_center_theme")
-    //         setIsLocal(true)
-    //         setActive(localSystem.name === "center")
-    //     }
-    // },[isLocal,systems.length])
 
-    if (systems?.length < 2) return
+    if (systems?.length < 2|| !inited) return
 
     return (
         <MainSwitch

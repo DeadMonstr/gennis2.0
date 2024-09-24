@@ -1,5 +1,5 @@
 import {useCallback, useContext, useEffect, useState} from 'react';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useLocation, useNavigate} from "react-router";
 import classNames from "classnames";
 
@@ -16,6 +16,7 @@ import {getSelectedLocations} from "features/locations";
 import {getBranch} from "features/branchSwitcher";
 import {DefaultLoader, DefaultPageLoader} from "shared/ui/defaultLoader";
 import {MiniLoader} from "shared/ui/miniLoader";
+import {clearSystems} from "features/themeSwitcher/modal/slice/themeSwitcherSlice";
 
 export const Menubar = () => {
     const navigate = useNavigate();
@@ -34,11 +35,12 @@ export const Menubar = () => {
     const system = useSelector(getSystem)
     const selectedLocations = useSelector(getSelectedLocations)
     const branch = useSelector(getBranch)
+    const dispatch = useDispatch()
 
     const onClickExit = () => {
         navigate("/login")
-        sessionStorage.clear()
-        localStorage.clear()
+        dispatch(clearSystems())
+
     }
 
 

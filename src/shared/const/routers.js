@@ -44,7 +44,7 @@ export const getCapitalInside = (id) => `capital/capitalBoxProfile/${id}`
 export const getLocations = (id) => `location/${id}`
 export const getBranch = (id) => `branches/${id}`
 
-export const getRouteCreateGroup = () => `students/createGroup`
+export const getRouteCreateGroup = () => `createGroup`
 
 export const getEducation = (id) => `education/${id}`
 
@@ -62,5 +62,6 @@ export const getGroupHistory = (id) => `students/profile/history/${id}`
 
 export const getRouteClassProfile = (id) => `groups/classProfile/${id}`
 export const getCapitalCategoryProfile = (id) => `capital/:id/capitalBoxProfile/:id/categoryProfile/${id}`
+export const getRouteRGBData = () => `students/RGBData/*`
 
 

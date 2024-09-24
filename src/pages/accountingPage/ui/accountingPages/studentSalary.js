@@ -28,8 +28,8 @@ export const StudentSalary = ({deleted, setDeleted}) => {
 
     useEffect(() => {
         dispatch(getStudentPayment())
-        dispatch(getDeletedPayment())
-    }, [deleted])
+        // dispatch(getDeletedPayment())
+    }, [])
 
 
     const formatSalary = (payment_sum) => {

@@ -221,7 +221,7 @@ export const TimeTableTuronPage = () => {
 
     useEffect(() => {
         if (day && branch) dispatch(fetchTimeTableClassView({id: day, branch}))
-    }, [day, branch])
+    }, [day, branch,classView])
 
     useEffect(() => {
         if (type && branch) dispatch(fetchTimeTableTypesData({type, branch}))

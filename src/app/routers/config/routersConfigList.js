@@ -12,7 +12,10 @@ import {
     getCapital,
     getEmployerPage,
     getAccounting,
-    getRouteCalendar, getRouteMain, getRouteRegister,
+    getRouteCalendar,
+    getRouteMain,
+    getRouteRegister,
+    getRouteRGBData,
 } from "shared/const/routers";
 
 
@@ -32,6 +35,7 @@ import {CalendarPage} from "pages/calendarPage";
 import {TimeTableTuronPage} from "pages/timeTable";
 import {ClassMain} from "pages/classPage/ui/classMain";
 import {Register} from "pages/registerPage";
+import {RgbDataPage} from "pages/rgbDataPage";
 
 
 
@@ -152,6 +156,7 @@ export const routersConfigList = [
     //     path: getCapitalCategoryProfile(":id"),
     //     element: <CategoryProfile/>
     // },
+
     {
         name: "Registratsiya",
         path: getRouteRegister(),

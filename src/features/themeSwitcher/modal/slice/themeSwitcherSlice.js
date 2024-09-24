@@ -41,6 +41,11 @@ const themeSwitcherSlice = createSlice({
             }
 
 
+        },
+
+
+        clearSystems: (state) => {
+            state.inited = false
         }
     },
     extraReducers: builder =>
@@ -51,10 +56,15 @@ const themeSwitcherSlice = createSlice({
             })
             .addCase(fetchThemeSwitcherSystemsThunk.fulfilled, (state, action) => {
                 state.systems = action.payload
-                state.inited =true
+                state.inited = true
 
                 const localSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
-                if (!localSystem && !localSystem?.name) {
+
+
+                if (!localSystem && !localSystem?.name ) {
+
+
+
                     state.system = {
                         id: action.payload[0].id,
                         name: action.payload[0].name
@@ -65,11 +75,25 @@ const themeSwitcherSlice = createSlice({
                         name: action.payload[0].name
                     }))
                 } else {
-                    state.system = {
-                        id: localSystem.id,
-                        name: localSystem.name
+
+                    if (action.payload.some(item => item.id === +localSystem.id)) {
+                        state.system = {
+                            id: localSystem.id,
+                            name: localSystem.name
+                        }
+                    } else {
+                        state.system = {
+                            id: action.payload[0].id,
+                            name: action.payload[0].name
+                        }
+
+                        localStorage.setItem("selectedSystem", JSON.stringify({
+                            id: action.payload[0].id,
+                            name: action.payload[0].name
+                        }))
                     }
                 }
+
 
 
                 state.loading = false
@@ -84,4 +108,4 @@ const themeSwitcherSlice = createSlice({
 })
 
 export default themeSwitcherSlice.reducer
-export const {onChangeSystem} = themeSwitcherSlice.actions
+export const {onChangeSystem,clearSystems} = themeSwitcherSlice.actions

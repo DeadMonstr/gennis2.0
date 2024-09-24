@@ -9,14 +9,13 @@ import {MultiPageList} from "../MultiPageList/MultiPageList";
 import cls from "./MultiPage.module.sass"
 import {Routes} from "react-router-dom";
 import {Route, useNavigate} from "react-router";
-import {onChangedPage,onChangedOldPage} from "../../model/slice/multiPageSlice";
-import {getMultiChangePage, getMultiPageData,getMultiOldPage} from "../../model/selector/multiPageSelector";
+import {onChangedPage, onChangedOldPage} from "../../model/slice/multiPageSlice";
+import {getMultiChangePage, getMultiPageData, getMultiOldPage} from "../../model/selector/multiPageSelector";
 import {fetchMultiPageDataThunk} from "../../model/thunk/multiPageThunk";
 import {getBranch} from "features/branchSwitcher";
 
 
-
-export const MultiPage = ({types,children,page,id = true}) => {
+export const MultiPage = ({types, children, page, id = true}) => {
 
 
     const dispatch = useDispatch()
@@ -27,28 +26,27 @@ export const MultiPage = ({types,children,page,id = true}) => {
     const changedPage = useSelector(getMultiChangePage)
     const oldPage = useSelector(getMultiOldPage)
     const navigate = useNavigate()
-    const [oldLength,setOldLength] = useState(null)
+    const [oldLength, setOldLength] = useState(null)
 
     useEffect(() => {
-        if (locations.length > 1  && page !== oldPage) {
+        if (locations.length > 1 && page !== oldPage) {
 
 
             dispatch(onChangedPage(true))
             dispatch(onChangedOldPage(page))
         }
-    }, [locations.length, types,page,oldPage])
+    }, [locations.length, types, page, oldPage])
 
 
     useEffect(() => {
 
         if (!changedPage) {
-            navigate(".", { relative: "path" })
+            navigate(".", {relative: "path"})
 
         } else {
             dispatch(onChangedPage(false))
-
         }
-    },[changedPage])
+    }, [changedPage])
 
 
     useEffect(() => {
@@ -56,13 +54,18 @@ export const MultiPage = ({types,children,page,id = true}) => {
             types,
             locations
         }
-        if (locations.length > 1  && oldLength !== locations.length ) {
+        if (locations.length > 1 && oldLength !== locations.length) {
             setOldLength(locations.length)
             dispatch(fetchMultiPageDataThunk(data))
         }
-    },[oldLength,locations.length])
+    }, [oldLength, locations.length])
 
 
+    useEffect(() => {
+        if (locations.length < 2 && branch?.id ) {
+            navigate(`./${branch.id}`, {relative: "path"})
+        }
+    },[branch?.id,locations])
 
 
     if (locations.length < 2) {
@@ -80,9 +83,8 @@ export const MultiPage = ({types,children,page,id = true}) => {
                             <MultiPageList id={id} data={data}/>
                         }
                     />
-                    <Route path={"*"}  element={<ChildComponent  children={children}/>}/>
+                    <Route path={"*"} element={<ChildComponent children={children}/>}/>
                 </Routes>
-
             </div>
         );
     } else {

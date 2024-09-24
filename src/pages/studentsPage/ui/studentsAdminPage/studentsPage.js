@@ -126,7 +126,6 @@ export const StudentsPage = () => {
             default:
                 filteredStudents = [];
         }
-        console.log(newStudents, 'wdefwefwef')
 
         setCurrentPage(1);
 
@@ -263,7 +262,7 @@ export const StudentsPage = () => {
 
 
     return (
-        <MultiPage types={types} page={"students"}>
+         <MultiPage types={types} page={"students"}>
             <StudentsHeader
                 selected={selected}
                 setSelected={setSelected}
@@ -397,7 +396,6 @@ export const StudentsPage = () => {
                 data={data}
                 branch={userBranchId}
             />
-        </MultiPage>
-        // </>
+         </MultiPage>
     )
 }

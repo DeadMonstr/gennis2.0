@@ -32,9 +32,9 @@ export const EmployerSalaryPage = memo(({deleted , setDeleted }) => {
 
     useEffect(() => {
         dispatch(getEmpSalary())
-        dispatch(getPaymentType())
-        dispatch(getDeletedEmpSalary())
-    }, [deleted])
+        // dispatch(getPaymentType())
+        // dispatch(getDeletedEmpSalary())
+    }, [])
     const search = useSelector(getSearchValue)
     let PageSize = useMemo(() => 50, [])
 

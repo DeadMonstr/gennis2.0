@@ -119,7 +119,7 @@ export const Register = () => {
             dispatch(fetchClassTypeData({branch: id}))
             dispatch(fetchClassNumberData({branch:id}))
 
-            dispatch(fetchCategories())
+            dispatch(fetchCategories(id))
         }
 
         setValue("password", 12345678)

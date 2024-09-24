@@ -1,3 +1,4 @@
+import {useNavigate} from "react-router";
 import {useTheme} from "shared/lib/hooks/useTheme";
 import cls from "./studentsHeader.module.sass";
 import {Link} from "react-router-dom";
@@ -33,6 +34,7 @@ export const StudentsHeader = ({
     // const onClick = () => {
     //     request(`${API_URL}Students/export-students/?branch=1&format=json` , "GET")
     // }
+    const navigate = useNavigate()
 
     const renderCreateBtn = useCallback(() => {
         return theme === "app_school_theme"
@@ -71,6 +73,15 @@ export const StudentsHeader = ({
                             Add class
                         </Button> : null
                     }
+                    {/*<Link to={"./RGBData/12"}>*/}
+                        <Button
+                            onClick={() => navigate("RGBData")}
+                            type={"filter"}
+                        >
+                            RB-Baza
+                        </Button>
+                    {/*</Link>*/}
+
 
                 </div>
                 {/*{branches.length >= 1 ? <Select options={branches} onChangeOption={() => setSelected}*/}
