@@ -3,7 +3,8 @@ export {SchoolHomeHeader} from "./ui/schoolHomeHeader/schoolHomeHeader";
 export {SchoolHomeExtracurricus} from "./ui/schoolHomeExtracurricus/schoolHomeExtracurricus";
 export {SchoolHomeCertificats} from "./ui/schoolHomeCertificats/schoolHomeCertificats";
 export {SchoolHomeAboutUs} from "./ui/schoolHomeAboutUs/schoolHomeAboutUs";
-
+// export {SchoolHomeGallery} from './ui/schoolHomeGallery/schoolHomeGallery';
+export {SchoolHomeWorkUs} from './ui/schoolHomeWorkUs/schoolHomeWorkUs'
 export {SchoolParentesComment} from "./ui/schoolParentesComment/schoolParentesComment"
 export {SchoolNews} from "./ui/schoolNews/schoolNews"
 export {WorkUs} from "./ui/workUS/workUs"
