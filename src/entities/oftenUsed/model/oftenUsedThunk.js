@@ -40,3 +40,14 @@ export const fetchClassTypeData = createAsyncThunk(
         return request(`${API_URL}Class/class_types/?branch=${branch}`, "GET", null, headers())
     }
 )
+
+
+export const fetchCategories = createAsyncThunk(
+    "oftenUsedSlice/fetchCategories",
+    (id) => {
+        const {request} = useHttp()
+        console.log(id)
+        return request(`${API_URL}Teachers/salary-types/?branch=${id}`, "GET", null, headers())
+    }
+)
+

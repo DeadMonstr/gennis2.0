@@ -8,9 +8,10 @@ import cls from './teacherEdit.module.sass'
 import {Button} from "../../../../shared/ui/button";
 import {onAddAlertOptions} from "../../../alert/model/slice/alertSlice";
 import {Select} from "../../../../shared/ui/select";
-import {getCategories} from "../../../../pages/registerPage/model/registerSelector";
+
 import {getClassTypeData} from "../../../../entities/oftenUsed";
 import {API_URL, API_URL_DOC} from "../../../../shared/api/base";
+import {getCategories} from "../../../../entities/oftenUsed/model/oftenUsedSelector";
 
 export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
     const dispatch = useDispatch();
