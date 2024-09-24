@@ -6,6 +6,7 @@ import {Button} from "shared/ui/button";
 import cls from "./schoolHomeHeader.module.sass";
 import turonLogo from "shared/assets/logo/turonLogo.png";
 import turonLogoText from "shared/assets/logo/turonLogoText.png";
+import {Link} from "react-router-dom";
 
 const list = [
     {
@@ -76,11 +77,7 @@ export const SchoolHomeHeader = memo(() => {
             </div>
             <ul className={cls.homeHeader__list}>
                 {render}
-                {/*<li className={cls.listItem}>Education</li>*/}
-                {/*<li className={cls.listItem}>News</li>*/}
-                {/*<li className={cls.listItem}>Work with us</li>*/}
-                {/*<li className={cls.listItem}>Campus life</li>*/}
-                {/*<li className={cls.listItem}>Academic calendar</li>*/}
+n  
             </ul>
             <div className={cls.homeHeader__btns}>
                 {/*<Button*/}
@@ -89,12 +86,14 @@ export const SchoolHomeHeader = memo(() => {
                 {/*>*/}
                 {/*    Aplay*/}
                 {/*</Button>*/}
-                <Button
-                    extraClass={cls.loginBtn}
-                    type={"login"}
-                >
-                    Login
-                </Button>
+                <Link target={"_self"} to={`http://school.gennis.uz/login`}>
+                    <Button
+                        extraClass={cls.loginBtn}
+                        type={"login"}
+                    >
+                        Login
+                    </Button>
+                </Link>
             </div>
         </div>
     )

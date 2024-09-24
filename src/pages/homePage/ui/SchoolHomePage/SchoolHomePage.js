@@ -6,10 +6,11 @@ import {
     SchoolHomeExtracurricus,
     SchoolHomeCertificats,
     SchoolHomeAboutUs,
-    SchoolParentesComment, SchoolNews
+    SchoolParentesComment, SchoolNews, WorkUs, Calendar
 } from "entities/schoolHome";
 
 import cls from "./SchoolHomePage.module.sass";
+import {Footer} from "../../../../entities/schoolHome/ui/footer/footer";
 
 export const SchoolHomePage = () => {
 
@@ -35,6 +36,9 @@ export const SchoolHomePage = () => {
             <SchoolHomeAboutUs/>
             <SchoolParentesComment/>
             <SchoolNews/>
+            <WorkUs/>
+            <Calendar/>
+            <Footer/>
         </div>
     )
 }

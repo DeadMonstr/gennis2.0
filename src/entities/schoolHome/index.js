@@ -6,3 +6,5 @@ export {SchoolHomeAboutUs} from "./ui/schoolHomeAboutUs/schoolHomeAboutUs";
 
 export {SchoolParentesComment} from "./ui/schoolParentesComment/schoolParentesComment"
 export {SchoolNews} from "./ui/schoolNews/schoolNews"
+export {WorkUs} from "./ui/workUS/workUs"
+export {Calendar} from "./ui/schoolCalendar/calendar"

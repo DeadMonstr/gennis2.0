@@ -27,21 +27,25 @@ export const SchoolNews = () => {
 
     const renderTable = () => {
         return data.map((item , i ) => (
-            <div className={cls.box}>
-                <img src={item.newsImg} alt=""/>
+            <div className={cls.news_box}>
+                <div className={cls.news_img}>
+                    <img src={item.newsImg} alt=""/>
+                </div>
 
-                <div className={cls.news_date}>
-                    11/11/2022 from admin
+                <div className={cls.news_box_item}>
+                    <div className={cls.news_date}>
+                        11/11/2022 from admin
+                    </div>
+                    <div className={cls.news_title}>
+                        {item.title}
+                    </div>
+                    <div className={cls.news_descr}>
+                        {item.descr}
+                    </div>
+                    <Button>
+                        Read <i className={"fa fa-angle-right"}/>
+                    </Button>
                 </div>
-                <div className={cls.news_title}>
-                    {item.title}
-                </div>
-                <div className={cls.news_descr}>
-                    {item.descr}
-                </div>
-                <Button>
-                    Read <i className={"fa fa-angle-right"}/>
-                </Button>
             </div>
         ))
     }
