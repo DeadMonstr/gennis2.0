@@ -184,7 +184,7 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
                 setMonth={setMonth}
             />
 
-            <ConfirmModal setActive={setActiveDelete} active={activeDelete} onClick={onDelete}   type={"danger"}/>
+            <ConfirmModal setActive={setActiveDelete} active={activeDelete} onClick={onDelete} text={"It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."}   type={"danger"}/>
             {/*<YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>*/}
         </div>
     );
