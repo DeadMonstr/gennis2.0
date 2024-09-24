@@ -10,6 +10,7 @@ import {onAddAlertOptions} from "../../../alert/model/slice/alertSlice";
 import {Select} from "../../../../shared/ui/select";
 import {getCategories} from "../../../../pages/registerPage/model/registerSelector";
 import {getClassTypeData} from "../../../../entities/oftenUsed";
+import {API_URL, API_URL_DOC} from "../../../../shared/api/base";
 
 export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
     const dispatch = useDispatch();
@@ -22,6 +23,8 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
     const categories = useSelector(getCategories)
     const classTypes = useSelector(getClassTypeData)
     const [classType, setClassType] = useState('')
+
+    console.log(teacherID , "da")
     useEffect(() => {
         if (teacherID)
         {
@@ -30,11 +33,12 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
             setNumber(teacherID.user?.phone)
             setAge(teacherID.user?.age)
             setTeacherSalaryType(teacherID?.teacher_salary_type?.name)
-            setClassType(teacherID.class_type)
+            setClassType(teacherID?.class_type)
         }
     }, [teacherID])
 
-    console.log(teacherSalaryType, 'wdeffe')
+
+
     const handleEditTeacher = () => {
         if (!teacherID) return;
         const updateTeacher = {
@@ -115,19 +119,25 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
                             options={categories}
                             defaultValue={teacherSalaryType}
                             onChangeOption={setTeacherSalaryType}
-                            title={"Toifa"}
+                            // title={"Toifa"}
                         />
                         <Select
                             extraClass={cls.extraClasses}
                             name={"class_type"}
                             options={classTypes}
                             onChangeOption={setClassType}
-                            title={"Sinf turi"}
+
+                            title={classType}
+
                         />
                     </div>
 
 
+                    <div style={{display: "flex" , gap: "5px"}}>
+                        {/*<a href={API_URL_DOC+} download><Button> Resume Saqlab olish</Button></a>*/}
 
+                        <Button>Resume O'zgartirish</Button>
+                    </div>
 
                     <div className={cls.filter__switch}>
                       <div></div>

@@ -19,6 +19,7 @@ import {
 } from "../../../../entities/accounting/ui/acauntingTables/accountingTableWorkerSalary/deletedWorkerSalary";
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 import {YesNo} from "../../../../shared/ui/yesNoModal";
+import {ConfirmModal} from "../../../../shared/ui/confirmModal";
 
 export const EmployerSalaryPage = memo(({deleted , setDeleted }) => {
     const dispatch = useDispatch()
@@ -32,9 +33,9 @@ export const EmployerSalaryPage = memo(({deleted , setDeleted }) => {
 
     useEffect(() => {
         dispatch(getEmpSalary())
-        dispatch(getPaymentType())
-        dispatch(getDeletedEmpSalary())
-    }, [deleted])
+        // dispatch(getPaymentType())
+        // dispatch(getDeletedEmpSalary())
+    }, [])
     const search = useSelector(getSearchValue)
     let PageSize = useMemo(() => 50, [])
 
@@ -150,6 +151,7 @@ export const EmployerSalaryPage = memo(({deleted , setDeleted }) => {
                 />
 
             }
+
             <YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>
             {/*<Pagination*/}
             {/*    setCurrentTableData={setCurrentTableData}*/}

@@ -5,7 +5,7 @@ import {value} from "lodash/seq";
 import {PaymentTable} from "../../../../../entities/accounting";
 import {useDispatch, useSelector} from "react-redux";
 import {getClasses} from "../../../../../entities/accounting/model/selector/otchotAccountingSelector";
-import {getStudentPayment} from "../../../../../entities/accounting/model/thunk/otchotAccountingThunk";
+import {getAll, getStudentPayment} from "../../../../../entities/accounting/model/thunk/otchotAccountingThunk";
 import {getBranch} from "../../../../../features/branchSwitcher";
 
 
@@ -27,6 +27,8 @@ export const StudentPayment = () => {
     const branchID = useSelector(getBranch)
     useEffect(() => {
         dispatch(getStudentPayment(branchID.id))
+
+
     }, [])
 
 

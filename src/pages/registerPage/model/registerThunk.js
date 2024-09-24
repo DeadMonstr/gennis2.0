@@ -47,22 +47,15 @@ export const registerTeacher = createAsyncThunk(
     async ({res, file}, thunkAPI) => {
         const token = getAuthToken();
         // const formData = new FormData()
-
-
-
         // const imageObject = {
         //     data: base64Image,
         //     mimeType: 'image/jpeg', // Укажите тип изображения в зависимости от вашего изображения
         // };
         //
         // // Логирование или отправка imageObject в ваш API
-
-
-
         // formData.append("file", res?.user?.resume[0])
         delete res?.user?.resume
         // formData.append("data", JSON.stringify(res))
-
         // const postData = teacherData?.class_type ? formData : JSON.stringify(teacherData)
 
         if (!token) {

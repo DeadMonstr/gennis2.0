@@ -145,7 +145,7 @@ export const ClassTable = ({edit, classType, active, id}) => {
 
     return (
         <div>
-            {active ?
+
                 <Table>
                     <thead>
                     <tr>
@@ -161,7 +161,7 @@ export const ClassTable = ({edit, classType, active, id}) => {
                     <tbody>
                     {render}
                     </tbody>
-                </Table> : null}
+                </Table>
 
             <ClassModal
                 selectedClass={selectedClass}  // Pass selected class

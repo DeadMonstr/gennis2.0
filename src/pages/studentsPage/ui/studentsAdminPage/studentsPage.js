@@ -264,7 +264,7 @@ export const StudentsPage = () => {
     console.log("render")
 
     return (
-        <MultiPage types={types} page={"students"}>
+         <MultiPage types={types} page={"students"}>
             <StudentsHeader
                 selected={selected}
                 setSelected={setSelected}
@@ -398,7 +398,6 @@ export const StudentsPage = () => {
                 data={data}
                 branch={userBranchId}
             />
-        </MultiPage>
-        // </>
+         </MultiPage>
     )
 }

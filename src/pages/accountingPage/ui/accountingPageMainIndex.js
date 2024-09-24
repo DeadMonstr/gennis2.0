@@ -11,6 +11,7 @@ import {
     StudentsDiscount,
     getStudentsData, getEmployerSalary, getLoading
 } from "entities/accounting";
+import {getPaymentType} from "entities/capital/model/thunk/capitalThunk";
 
 import {Routes, Route, useLocation} from "react-router";
 import {memo, useCallback, useEffect, useState} from "react";
@@ -22,13 +23,13 @@ import {onChangeAccountingPage} from "entities/accounting/model/slice/accounting
 import {Button} from "shared/ui/button";
 import {Select} from "shared/ui/select";
 
-import { useHttp} from "../../../shared/api/base";
+import { useHttp} from "shared/api/base";
 
 
 import {AccountingOtchotPage, EmployerSalaryPage} from "../index";
 import {TeacherSalaryPage} from "../index";
 import {StudentSalary} from "./accountingPages/studentSalary";
-import {Link} from "../../../shared/ui/link";
+import {Link} from "shared/ui/link";
 import {AdditionalCosts} from "./accountingPages/additionalCosts";
 import {Capital} from "./accountingPages/capital";
 import {getAccountingOtchot, getEncashment} from "entities/accounting/model/selector/accountingSelector";
@@ -69,6 +70,7 @@ const AccountingPageMain = () => {
     const {request} = useHttp()
     const [active, setActive] = useState(false)
     const [activeDel, setActiveDel] = useState(false)
+    const [activePage, setActivePage] = useState(getAccountingPage[0]?.value)
     const encashment = useSelector(getEncashment)
     const {id} = useParams()
 
@@ -84,9 +86,12 @@ const AccountingPageMain = () => {
 
     useEffect(() => {
         dispatch(accountingThunk({branchID: branchID.id}))
+        dispatch(getPaymentType())
     }, [])
 
     const setPage = useCallback((e) => {
+        console.log(e, "value")
+        setActivePage(e)
         dispatch(onChangeAccountingPage({value: e}))
         navigate(`${e}`, {relative: "path"})
     }, [navigate])
@@ -206,7 +211,13 @@ const AccountingPageMain = () => {
                        }
                 />
             </Routes>
-            <AccountingFilter setActive={setActive} active={active} setActiveDel={setActiveDel} activeDel={activeDel}/>
+            <AccountingFilter
+                setActive={setActive}
+                active={active}
+                setActiveDel={setActiveDel}
+                activeDel={activeDel}
+                activePage={activePage}
+            />
         </div>
 
     );

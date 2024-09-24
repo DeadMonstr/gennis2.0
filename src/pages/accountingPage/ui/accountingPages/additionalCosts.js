@@ -30,6 +30,7 @@ import {
 } from "entities/accounting/ui/acauntingTables/accountingTableAdditionalCosts/additionalCostsDeleted";
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 import {YesNo} from "../../../../shared/ui/yesNoModal";
+import {ConfirmModal} from "../../../../shared/ui/confirmModal";
 
 export const AdditionalCosts = ( {deleted , setDeleted}) => {
     const [activeModal, setActiveModal] = useState(false)
@@ -52,11 +53,11 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
     // const [alerts, setAlerts] = useState([])
     useEffect(() => {
         dispatch(getOverheadType())
-        dispatch(getPaymentType())
+        // dispatch(getPaymentType())
         dispatch(getMonthDay())
-        dispatch(overHeadDeletedList())
+        // dispatch(overHeadDeletedList())
         dispatch(overHeadList())
-    }, [deleted])
+    }, [])
 
     // useEffect(() => {
     //
@@ -182,7 +183,9 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
                 month={month}
                 setMonth={setMonth}
             />
-            <YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>
+
+            <ConfirmModal setActive={setActiveDelete} active={activeDelete} deleteBtn={onDelete} title={`${changingData.name} ni o'chirmoqchimisiz`}  type={"danger"}/>
+            {/*<YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>*/}
         </div>
     );
 };

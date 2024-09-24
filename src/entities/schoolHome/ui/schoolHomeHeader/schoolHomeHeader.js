@@ -6,6 +6,7 @@ import {Button} from "shared/ui/button";
 import cls from "./schoolHomeHeader.module.sass";
 import turonLogo from "shared/assets/logo/turonLogo.png";
 import turonLogoText from "shared/assets/logo/turonLogoText.png";
+import {Link} from "react-router-dom";
 
 const list = [
     {
@@ -34,9 +35,9 @@ const list = [
     }
 ]
 
-export const SchoolHomeHeader = memo(() => {
+export const SchoolHomeHeader = memo(({ref, setRef}) => {
 
-    // const currentHeight = useRef()
+    const currentHeight = useRef()
     const [activeSection, setActiveSection] = useState()
 
     // useEffect(() => {
@@ -60,12 +61,20 @@ export const SchoolHomeHeader = memo(() => {
 
     const render = renderSectionMenuList()
 
-    // console.log(document.heig, "innerHeight")
+    useEffect(() => {
+        console.log(ref?.current?.offsetTop, "currentHeight")
+    }, [ref])
+
+
 
     return (
         <div
+            // onWheel={(e) => {
+            //     console.log(e, "e.target")
+            //     console.log(ref?.current?.offsetTop, "currentHeight")
+            // }}
             className={cls.homeHeader}
-            // ref={currentHeight}
+            // ref={ref}
         >
             <div className={cls.homeHeader__burger}>
                 <i className="fas fa-bars"/>
@@ -76,11 +85,7 @@ export const SchoolHomeHeader = memo(() => {
             </div>
             <ul className={cls.homeHeader__list}>
                 {render}
-                {/*<li className={cls.listItem}>Education</li>*/}
-                {/*<li className={cls.listItem}>News</li>*/}
-                {/*<li className={cls.listItem}>Work with us</li>*/}
-                {/*<li className={cls.listItem}>Campus life</li>*/}
-                {/*<li className={cls.listItem}>Academic calendar</li>*/}
+n  
             </ul>
             <div className={cls.homeHeader__btns}>
                 {/*<Button*/}
@@ -89,12 +94,14 @@ export const SchoolHomeHeader = memo(() => {
                 {/*>*/}
                 {/*    Aplay*/}
                 {/*</Button>*/}
-                <Button
-                    extraClass={cls.loginBtn}
-                    type={"login"}
-                >
-                    Login
-                </Button>
+                <Link target={"_self"} to={`http://school.gennis.uz/login`}>
+                    <Button
+                        extraClass={cls.loginBtn}
+                        type={"login"}
+                    >
+                        Login
+                    </Button>
+                </Link>
             </div>
         </div>
     )

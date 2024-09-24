@@ -85,7 +85,6 @@ export const MultiPage = ({types, children, page, id = true}) => {
                     />
                     <Route path={"*"} element={<ChildComponent children={children}/>}/>
                 </Routes>
-
             </div>
         );
     } else {

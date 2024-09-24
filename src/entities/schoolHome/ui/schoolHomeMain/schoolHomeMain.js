@@ -1,10 +1,54 @@
-import React, {memo} from 'react';
+import React, {memo, useState} from 'react';
+import classNames from "classnames";
+import Slider from "react-slick";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import cls from "./schoolHomeMain.module.sass";
 import homeImage from "shared/assets/images/homeImage.png";
 import idea from "shared/assets/icons/turonIdea.png";
 
+const list = [1, 2, 3, 4, 5, 6, 7]
+
 export const SchoolHomeMain = memo(() => {
+
+    const settings = {
+        infinite: false,
+        dots: true,
+        speed: 500,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        className: cls.homeSlider,
+        arrows: false
+    }
+
+    const [activeItem, setActiveItem] = useState(null)
+
+    const renderItems = () => {
+        return list.map(item => {
+            return (
+                <div
+                    onClick={() => setActiveItem(prev =>
+                        item === prev ? null : item
+                    )}
+                    className={classNames(cls.items__inner, {
+                        [cls.active]: activeItem === item
+                    })}
+                >
+                    <img
+                        className={cls.items__image}
+                        src={idea}
+                        alt=""
+                    />
+                    <h2 className={cls.items__title}>Creative Thinking</h2>
+                    <p className={cls.items__more}>Learn more</p>
+                </div>
+            )
+        })
+    }
+
+    const render = renderItems()
+
     return (
         <div className={cls.homeMain}>
             <div className={cls.homeMain__info}>
@@ -28,47 +72,16 @@ export const SchoolHomeMain = memo(() => {
                     <div className={cls.programsInfo}>
                         <h2 className={cls.programsInfo__title}>Programs</h2>
                         <p className={cls.programsInfo__text}>
-                            Lorem Ipsum is simply dummy text of <br/>
+                            Lorem Ipsum is simply dummy text of <br/>
                             the printing and typesetting industry.
                         </p>
                     </div>
                     <div className={cls.items}>
-                        <div className={cls.items__inner}>
-                            <img
-                                className={cls.items__image}
-                                src={idea}
-                                alt=""
-                            />
-                            <h2 className={cls.items__title}>Creative Thinking</h2>
-                            <p className={cls.items__more}>Learn more</p>
-                        </div>
-                        <div className={cls.items__inner}>
-                            <img
-                                className={cls.items__image}
-                                src={idea}
-                                alt=""
-                            />
-                            <h2 className={cls.items__title}>Creative Thinking</h2>
-                            <p className={cls.items__more}>Learn more</p>
-                        </div>
-                        <div className={cls.items__inner}>
-                            <img
-                                className={cls.items__image}
-                                src={idea}
-                                alt=""
-                            />
-                            <h2 className={cls.items__title}>Creative Thinking</h2>
-                            <p className={cls.items__more}>Learn more</p>
-                        </div>
-                        <div className={cls.items__inner}>
-                            <img
-                                className={cls.items__image}
-                                src={idea}
-                                alt=""
-                            />
-                            <h2 className={cls.items__title}>Creative Thinking</h2>
-                            <p className={cls.items__more}>Learn more</p>
-                        </div>
+                        <Slider
+                            {...settings}
+                        >
+                            {render}
+                        </Slider>
                     </div>
                 </div>
             </div>

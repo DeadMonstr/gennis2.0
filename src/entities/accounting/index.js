@@ -32,3 +32,9 @@ export {default as teacher} from "./model/slice/teacher"
 export {default as overHeadSlice} from "./model/slice/additionalCosts"
 export {default as capitalSlice} from "./model/slice/capital"
 export {default as otchotAccountingSlice} from "./model/slice/otchotAccountingSlice"
+
+export {overHeadDeletedList} from "./model/thunk/additionalCosts";
+export {capitalDeletedListThunk} from "./model/thunk/capital";
+export {getDeletedEmpSalary} from "./model/thunk/employerSalary";
+export {getDeletedPayment} from "./model/thunk/student";
+export {getDeletedTeacherSalary} from "./model/thunk/teacherSalarythunk";

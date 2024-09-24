@@ -77,10 +77,8 @@ import {branchSwitcherSlice} from "features/branchSwitcher"
 import {multiPageSlice} from "widgets/multiPage"
 import {teacherGroupSlice} from "entities/teachers";
 import {studiyngStudentDelSlice} from "../features/studiyngStudentDelModal";
-
-import {
-    oftenUsedSlice
-} from "entities/oftenUsed";
+import {oftenUsedSlice} from "entities/oftenUsed";
+import {rgbSlice} from "entities/rgbData";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -174,7 +172,8 @@ export const store = configureStore({
         groupAttendanceSlice,
         otchotAccountingSlice,
         groupAttendance,
-        oftenUsedSlice
+        oftenUsedSlice,
+        rgbSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

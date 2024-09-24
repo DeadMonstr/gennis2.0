@@ -1,35 +1,74 @@
 .aboutUs
-  padding: 5rem 10rem
+  padding: 2rem 10rem
   display: flex
   flex-direction: column
-  gap: 5rem
+  gap: 7rem
+  &__icon
+    font-size: 4rem
+    cursor: pointer
+    color: #232322
   &__title
     font-size: 3.2rem
     color: #001B61
   &__container
     width: 100%
     display: flex
-    justify-content: space-between
-    .item
-      width: 43.5rem
-      display: flex
-      flex-direction: column
-      border-radius: 1.6rem
-      //padding: 0 2rem 3rem 2rem
-      box-shadow: 0px 5.21px 10.41px 0px #0000001A,0px 19.78px 19.78px 0px #00000017,0px 43.73px 26.03px 0px #0000000D,0px 78.08px 31.23px 0px #00000003,0px 122.85px 34.36px 0px #00000000
-
-    .innerUser
+    //justify-content: space-between
+    align-items: center
+    //position: relative
+    .aboutUsSlider
       width: 100%
-      display: flex
-      justify-content: space-between
-      align-items: center
-      padding: 1rem 2rem
-      background: #001B61
-      color: white
-      &__title
-        font-size: 3.2rem
-      &__text
-        font-size: 1.6rem
-    .innerInfo
-      padding: 2rem
-    &__back
+      div
+        padding: 1rem
+        //width: 100% !important
+        display: flex
+        justify-content: center
+      ul
+        bottom: 13px
+        width: 100%
+        li, button, button:before
+          height: 10px
+          width: 30px
+          text-align: center
+        button:before
+          border-radius: 20px
+          background: black
+          font-size: 0
+      .item
+        margin: 3rem 0
+        min-width: 43.5rem
+        display: flex
+        flex-direction: column
+        border-radius: 1.6rem
+        background: #F3F5F7
+        //padding: 0 2rem 3rem 2rem
+        box-shadow: 0 5.21px 10.41px 0 #0000001A,0 19.78px 19.78px 0 #00000017,0 43.73px 26.03px 0 #0000000D,0 78.08px 31.23px 0 #00000003,0 122.85px 34.36px 0 #00000000
+        &.active
+          //position: static
+          scale: 1.1
+          //bottom: -10rem
+        .innerUser
+          width: 100%
+          display: flex
+          justify-content: space-between
+          align-items: center
+          padding: 1rem 2rem
+          background: #001B61
+          color: white
+          &__title
+            font-size: 3.2rem
+          &__text
+            font-size: 1.6rem
+        .innerInfo
+          padding: 2rem
+          display: flex
+          flex-direction: column
+          &__title
+            font-size: 3.2rem
+            color: #232322
+          &__text
+            font-size: 1.6rem
+            color: #AAAAAA
+        &__back
+          display: flex
+          justify-content: center
