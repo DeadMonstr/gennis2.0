@@ -1,0 +1,94 @@
+.school
+  height: 100%
+  gap: 2rem
+  display: flex
+  padding-top: 10rem
+  flex-direction: column
+  align-items: center
+  padding: 5rem
+  .title
+    color: #ffffff
+    font-size: 5rem
+    font-weight: bolder
+  .descr
+    font-size: 1.8rem
+    color: #FFFFFF
+    text-align: center
+    width: 70%
+.box_main
+  display: flex
+  gap: 2rem
+  justify-content: space-around
+  padding: 5rem
+  flex-wrap: wrap
+.box
+  display: flex
+  flex-direction: column
+  align-items: center
+.mainFormBox
+  width: 100%
+  justify-content: space-between
+  display: flex
+.mainLeftBox
+  width: 45%
+  //padding-top: 4rem
+  justify-content: end
+  display: flex
+  align-items: end
+  flex-direction: column
+  gap: 2rem
+.arounderBox
+  width: 100%
+  display: flex
+  justify-content: end
+  align-items: center
+  .iconDescr
+    width: 50%
+    display: flex
+    flex-direction: column
+    gap: 2rem
+    color: white
+.icon
+  width: 70%
+.mainRightBox
+  width: 50%
+  display: flex
+  padding-top: 4rem
+  flex-direction: column
+  align-items: center
+  .formBox
+    width: 60%
+    height: 110%
+    gap: 5rem
+    display: flex
+    align-items: center
+    flex-direction: column
+    padding-top: 3rem
+    background: white
+    border-radius: 20px
+    .form
+      display: flex
+      width: 40%
+      align-items: center
+      gap: 3rem
+      flex-direction: column
+      .inputMsg
+        outline: none
+        width: 100%
+        border: transparent
+        border-bottom: 1px solid black
+        border-radius: 0
+
+@media (max-width: 1000px)
+  .school
+    .descr
+      width: 80%
+@media (max-width: 850px)
+  .school
+    align-items: center
+  .mainFormBox
+    flex-direction: column
+    .descr
+      width: 90%
+      text-align: center
+      font-size: 1.6rem
