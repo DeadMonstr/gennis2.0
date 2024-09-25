@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import React, {memo, useCallback, useEffect, useRef, useState} from 'react';
+import {createPortal} from "react-dom";
 
 import {Button} from "shared/ui/button";
 
@@ -34,14 +35,10 @@ const list = [
     }
 ]
 
-export const SchoolHomeHeader = memo(({ref, setRef}) => {
+export const SchoolHomeHeader = memo(() => {
 
-    const currentHeight = useRef()
-    const [activeSection, setActiveSection] = useState()
-
-    // useEffect(() => {
-    //     console.log(currentHeight?.current?.offsetHeight, "offsetHeight")
-    // }, [currentHeight?.current?.offsetHeight])
+    const [activeSection, setActiveSection] = useState(null)
+    const [activeBurger, setActiveBurger] = useState(false)
 
     const renderSectionMenuList = useCallback(() => {
         return list.map(item => {
@@ -60,50 +57,50 @@ export const SchoolHomeHeader = memo(({ref, setRef}) => {
 
     const render = renderSectionMenuList()
 
-    useEffect(() => {
-        console.log(ref?.current?.offsetTop, "currentHeight")
-    }, [ref])
-
-
-
     return (
-        <div
-            // onWheel={(e) => {
-            //     console.log(e, "e.target")
-            //     console.log(ref?.current?.offsetTop, "currentHeight")
-            // }}
-            className={cls.homeHeader}
-            // ref={ref}
-        >
-            <div className={cls.homeHeader__burger}>
-                <i className="fas fa-bars"/>
-            </div>
-            <div className={cls.homeHeader__logo}>
-                <img className={cls.logo} src={turonLogo} alt=""/>
-                <img className={cls.logoText} src={turonLogoText} alt=""/>
-            </div>
-            <ul className={cls.homeHeader__list}>
-                {render}
-                {/*<li className={cls.listItem}>Education</li>*/}
-                {/*<li className={cls.listItem}>News</li>*/}
-                {/*<li className={cls.listItem}>Work with us</li>*/}
-                {/*<li className={cls.listItem}>Campus life</li>*/}
-                {/*<li className={cls.listItem}>Academic calendar</li>*/}
-            </ul>
-            <div className={cls.homeHeader__btns}>
-                {/*<Button*/}
-                {/*    extraClass={cls.aplayBtn}*/}
-                {/*    type={"simple-add"}*/}
-                {/*>*/}
-                {/*    Aplay*/}
-                {/*</Button>*/}
-                <Button
-                    extraClass={cls.loginBtn}
-                    type={"login"}
+        <>
+            <div
+                className={cls.homeHeader}
+            >
+                <div
+                    className={classNames(cls.homeHeader__burger, {
+                        [cls.active]: activeBurger
+                    })}
                 >
-                    Login
-                </Button>
+                    <i
+                        onClick={() => setActiveBurger(!activeBurger)}
+                        className={
+                            activeBurger ? "fas fa-times" : "fas fa-bars"
+                        }
+                    />
+                </div>
+                <div className={cls.homeHeader__logo}>
+                    <img className={cls.logo} src={turonLogo} alt=""/>
+                    <img className={cls.logoText} src={turonLogoText} alt=""/>
+                </div>
+                <ul className={cls.homeHeader__list}>
+                    {render}
+                </ul>
+                <div className={cls.homeHeader__btns}>
+                    <Button
+                        extraClass={cls.loginBtn}
+                        type={"login"}
+                    >
+                        Login
+                    </Button>
+                </div>
             </div>
-        </div>
+            <div
+                className={classNames(cls.homeMenu, {
+                    [cls.active]: activeBurger
+                })}
+            >
+                <ul className={classNames(cls.homeMenu__list, {
+                    [cls.active]: activeBurger
+                })}>
+                    {render}
+                </ul>
+            </div>
+        </>
     )
 })

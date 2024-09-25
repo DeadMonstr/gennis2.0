@@ -1,3 +1,11 @@
+.listItem
+  color: white
+  list-style: none
+  font-size: 1.6rem
+  cursor: pointer
+  font-weight: 400
+  &.active
+    font-weight: 700
 .homeHeader
   //min-height: 13rem
   width: 100%
@@ -5,7 +13,7 @@
   display: flex
   justify-content: space-between
   align-items: center
-  position: fixed
+  position: sticky
   top: 0
   z-index: 100
   padding: 5rem 10rem
@@ -16,6 +24,8 @@
     color: white
     align-items: flex-end
     display: none
+    &.active
+      width: 3.5rem
   &__logo
     display: flex
     align-items: center
@@ -23,14 +33,6 @@
   &__list
     display: flex
     gap: 4rem
-    .listItem
-      color: white
-      list-style: none
-      font-size: 1.6rem
-      cursor: pointer
-      font-weight: 400
-      &.active
-        font-weight: 700
   &__btns
     display: flex
     gap: 1rem
@@ -44,6 +46,34 @@
       color: black
       font-size: 2rem
 
+.homeMenu
+  width: 100%
+  height: 100dvh
+  background: rgba(0, 0, 0, 0.4)
+  position: fixed
+  z-index: 100
+  top: 11.4rem
+  visibility: hidden
+  &.active
+    visibility: visible
+  &__list
+    width: 60%
+    height: 100%
+    background: white
+    display: flex
+    flex-direction: column
+    justify-content: space-around
+    align-items: center
+    position: absolute
+    top: 0
+    left: -100%
+    transition: .5s
+    &.active
+      left: 0
+    li
+      color: black !important
+      font-size: 2rem !important
+
 @media (max-width: 1440px)
   .homeHeader
     .logo
@@ -55,7 +85,7 @@
 
 @media (max-width: 1024px)
   .homeHeader
-    padding: 5rem
+    padding: 3rem 5rem
     .loginBtn
       font-size: 1.8rem
     &__list
@@ -72,7 +102,10 @@
 
 @media (max-width: 430px)
   .homeHeader
-    padding: 3rem
+    padding: 1.5rem 3rem
+    &__burger
+      &.active
+        width: 2.625rem
     .logoText
       display: none
     .loginBtn
@@ -80,4 +113,8 @@
       height: 3.1rem
     &__burger
       font-size: 3rem
+  .homeMenu
+    top: 8.4rem
+    &__list
+      width: 100%
 
