@@ -182,7 +182,7 @@ export const Register = () => {
 
 
     const onSubmit = (data) => {
-        // console.log(selectedClass, selectedLang ,data)
+        // console.log(selectedClass, selectedLang ,data , "data")
         if (!isUsernameAvailable) {
             return;
         }
@@ -411,7 +411,7 @@ export const Register = () => {
                                         <h2 style={{textAlign: "left", fontSize: "2rem"}}>Resume</h2>
                                         <Input
                                             type={"file"}
-                                            name={"resume"}
+                                            name={"file"}
                                             register={register}
                                             extraClassName={cls.resume__input}
                                         />
