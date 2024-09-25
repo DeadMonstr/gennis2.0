@@ -1,11 +1,10 @@
 .school
-  height: 100%
+  height: 100dvh
   gap: 2rem
   display: flex
   padding-top: 10rem
   flex-direction: column
   align-items: center
-  padding: 5rem
   .title
     color: #ffffff
     font-size: 5rem
@@ -68,27 +67,49 @@
     border-radius: 20px
     .form
       display: flex
-      width: 40%
+      width: 80%
       align-items: center
       gap: 3rem
       flex-direction: column
       .inputMsg
         outline: none
-        width: 100%
+        width: 230px !important
         border: transparent
         border-bottom: 1px solid black
         border-radius: 0
+.submitBtn
+  width: 100%
+  background: #001B61
 
 @media (max-width: 1000px)
   .school
     .descr
       width: 80%
-@media (max-width: 850px)
+@media (max-width: 768px)
   .school
     align-items: center
+    height: 100%
   .mainFormBox
     flex-direction: column
+  .mainLeftBox
+    align-items: center
+    width: 100%
+    justify-content: center
+    .arounderBox
+      justify-content: center
     .descr
       width: 90%
       text-align: center
       font-size: 1.6rem
+  .mainRightBox
+    width: 100%
+    padding: 2rem
+  .formBox
+    width: 70% !important
+    .form
+      width: 60% !important
+      display: flex
+      align-items: center
+
+  .inputMsg
+    width: 230px !important
