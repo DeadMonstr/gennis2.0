@@ -53,6 +53,12 @@ export const studentsSlice = createSlice({
         stopFilteredStudentsLoading: (state) => {
             state.newStudentsStatus = "idle"
         },
+
+        onDeleteNewStudents: (state,action) => {
+            state.newStudentes = state.newStudentes.filter(item => item.id !== +action.payload)
+        }
+
+
     },
     extraReducers: builder =>
         builder
@@ -195,5 +201,6 @@ export const {
     getFilteredStudentsStatus,
     getCurseTypes,
     getCurseLevel,
-    stopFilteredStudentsLoading
+    stopFilteredStudentsLoading,
+    onDeleteNewStudents
 } = studentsSlice.actions

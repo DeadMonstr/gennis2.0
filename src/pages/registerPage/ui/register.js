@@ -493,7 +493,7 @@ export const Register = () => {
                                 required
                                 name={"father_name"}
                             />
-                            {userSystem.name === "school" && registerType === "student" ?
+                            {userSystem?.name  === "school" && registerType === "student" ?
                                 <>
                                     <div className={cls.seriya}>
                                         <Input register={register}
@@ -534,7 +534,7 @@ export const Register = () => {
                                 name={"phone"}
                             />
 
-                            {userSystem.name === "center " && registerType === 'student' ?
+                            {userSystem?.name  === "center " && registerType === 'student' ?
                                 <Input
                                     register={register}
                                     placeholder="Ota-ona telefon raqami"
