@@ -15,14 +15,14 @@ export const GroupsList = React.memo(({currentTableData}) => {
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
 
     const renderGroups = () => {
-        const groupsToRender = getFilteredGroups && getFilteredGroups.length > 0 ? getFilteredGroups : currentTableData
+        // const groupsToRender = getFilteredGroups && getFilteredGroups.length > 0 ? getFilteredGroups : currentTableData
         // if (!groupsToRender || groupsToRender.length === 0)
         // {
         //     return (
         //         <DefaultPageLoader/>
         //     )
         // }
-        return groupsToRender?.map((item, i) => {
+        return currentTableData?.map((item, i) => {
             return (
                 <tr onClick={() => navigate(`groupInfo/${item?.id}`)}>
                     <td>{i + 1}</td>

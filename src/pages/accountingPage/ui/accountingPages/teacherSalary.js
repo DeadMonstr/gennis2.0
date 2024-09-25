@@ -35,9 +35,9 @@ export const TeacherSalaryPage = ({deleted , setDeleted}) => {
 
 
     useEffect(() => {
-        dispatch(getPaymentType())
+        // dispatch(getPaymentType())
         dispatch(getTeacherSalary())
-        dispatch(getDeletedTeacherSalary())
+        // dispatch(getDeletedTeacherSalary())
     }, [])
 
 

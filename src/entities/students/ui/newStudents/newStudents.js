@@ -1,70 +1,79 @@
-import React, {memo, useEffect, useState} from 'react';
+import React, {memo, useState} from 'react';
 import {useNavigate} from "react-router";
 import cls from "entities/students/ui/newStudents/newStudents.module.sass";
 import {Table} from "shared/ui/table";
-import {StudentsFilter} from "features/filters/studentsFilter";
-import {StudiyngStudentDelModal} from "../../../../features/studiyngStudentDelModal";
 
-export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) => {
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
+import {useDispatch} from "react-redux";
+import {ConfirmModal} from "shared/ui/confirmModal";
+import {API_URL, headers, useHttp} from "shared/api/base";
+import {onDeleteNewStudents} from "../../model/studentsSlice";
 
-    const [active, setActive] = useState(false);
+export const NewStudents = memo(({currentTableData, setSelectStudents, theme, branchId}) => {
+
     const [studentId, setStudentId] = useState(false)
+    const [isDeleted, setIsDeleted] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const navigation = useNavigate()
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"))
 
 
-
     const renderStudents = () => {
-            return currentTableData?.map((item, i) => (
-                <tr key={item.id}>
-                    <td>{i + 1}</td>
-                    <td onClick={() => navigation(`profile/${item.id}`)}>
-                        {
-                            item.student ? `${item.student.user.surname}  ${item.student.user.name}` :
-                                `${item.user?.surname} ${item.user?.name}`
-                        }
-                    </td>
-                    <td>
-                        {
-                            item.student ? item.student.user.age :
-                                item.user?.age
-                        }
-
-                    </td>
-                    <td>
-                        {
-                            item.student ? item.student.user.language?.name :
-                            item.user?.language?.name
-                        }
-                    </td>
-                    <td>{
-                        item.student ? item.class_number?.number :
-                        item?.class_number?.number
-
-
-                    }</td>
-                    <td>{
-
-                        item.student ? item.student.user.registered_date :
-                        item.user?.registered_date
-                    }</td>
+        return currentTableData?.map((item, i) => (
+            <tr key={item.id}>
+                <td>{i + 1}</td>
+                <td onClick={() => navigation(`profile/${item.id}`)}>
                     {
-                        !item.student ? <td onClick={() => {
-                            setStudentId(item.id);
-                            setIsOpen(!isOpen);
-                        }}>
-                            <i style={{color: '#FF3737FF'}} className={`fa-solid fa-xmark ${cls.xmark}`}></i>
-                        </td> : null
-                    }
 
-                </tr>
-            ));
+                        `${item.user?.surname} ${item.user?.name}`
+                    }
+                </td>
+                <td>
+                    {item.user?.age}
+
+                </td>
+                <td>
+                    {item.user?.language?.name}
+                </td>
+                <td>
+                    {item?.class_number?.number}
+                </td>
+                <td>{item.user?.registered_date}</td>
+
+                <td onClick={() => {
+                    setStudentId(item.id);
+                    setIsOpen(!isOpen);
+                    setIsDeleted(item?.deleted)
+                }}>
+                    <i style={{color: '#FF3737FF'}} className={`fa-solid fa-xmark ${cls.xmark}`}></i>
+                </td>
+
+
+            </tr>
+        ));
     };
 
 
-
     const render = renderStudents()
+
+    const dispatch = useDispatch();
+    const {request} = useHttp();
+
+    const handleDelete = () => {
+
+        request(`${API_URL}Students/students_delete/${studentId}/`, "DELETE", null, headers())
+            .then(res => {
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: res.msg
+                }))
+            })
+        setIsOpen(false)
+
+        dispatch(onDeleteNewStudents(studentId))
+
+    };
 
     return (
         <div className={cls.mainContainer}>
@@ -93,13 +102,21 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme}) =
                     {render}
                     </tbody>
                 </Table>
-
             </div>
-            <StudiyngStudentDelModal userId={studentId} onClose={setIsOpen} isOpen={isOpen}/>
-            <StudentsFilter
-                active={active}
-                setActive={setActive}
+
+
+
+            <ConfirmModal
+                type={isDeleted ? "success" : "danger"}
+                title={!isDeleted ? "O'chirmoq" : "Qaytarmoq"}
+                text={isDeleted ? "Studentni qaytarishni hohlaysizmi" : "Studentni o'chirishni hohlaysizmi"}
+                active={isOpen}
+                setActive={setIsOpen}
+                onClick={handleDelete}
             />
+            {/*<YesNo  setActiveDelete={setIsOpen} activeDelete={isOpen}  onDelete={handleDelete}/>*/}
+            {/*<StudiyngStudentDelModal userId={studentId} onClose={setIsOpen} isOpen={isOpen}/>*/}
+
         </div>
     );
 });

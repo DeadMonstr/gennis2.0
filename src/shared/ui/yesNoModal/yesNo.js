@@ -3,7 +3,7 @@ import cls from "../../../entities/accounting/ui/acauntingTables/accountingTable
 import {Button} from "../button";
 import {Modal} from "../modal";
 
-export const YesNo = ({activeDelete  ,setActiveDelete , changingData , onDelete}) => {
+export const YesNo = ({activeDelete  ,setActiveDelete , changingData , onDelete,title}) => {
 
 
     return (

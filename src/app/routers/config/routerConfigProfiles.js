@@ -1,3 +1,4 @@
+import {RgbDataPage} from "pages/rgbDataPage";
 import {
     getRouteUserProfile,
     getVacancyWorkPage,
@@ -17,7 +18,7 @@ import {
     getEmployerSalary,
     getTeacherSalary, getInkasatsiya,
     getGroupHistory,
-    getRouteClassProfile, getOtchot
+    getRouteClassProfile, getOtchot, getRouteRGBData
 } from "shared/const/routers";
 
 
@@ -166,6 +167,13 @@ export const routersConfigProfile = [
         path: getGroupHistory(":id"),
         element: <StudentProfileGroupsHistory/>
     },
+    {
+        name: "rgbData",
+        path: getRouteRGBData(),
+        element: <RgbDataPage/>
+    },
+
+
     // {
     //     name: "capital category profile",
     //     path: getCapitalCategoryProfile(":id"),

@@ -27,7 +27,7 @@
         //color: white
   &__programs
     //margin: 0 10rem 5rem 10rem
-    padding: 2.9rem 7rem 2.9rem 6.8rem
+    padding: 0 7rem 0 6.8rem
     background: #FFFFFF1F
     display: flex
     align-items: center
@@ -36,6 +36,7 @@
     overflow: hidden
     .programsInfo
       min-width: 34rem
+      //margin-right: 3rem
       display: flex
       flex-direction: column
       gap: 2rem
@@ -46,12 +47,30 @@
         font-size: 2rem
         color: #FFFFFFBD
     .items
+      //width: 100%
       display: flex
       gap: 3rem
+      .homeSlider
+        div
+          padding: 1rem
+          width: fit-content !important
+          display: flex
+        ul
+          bottom: 13px
+          width: 60%
+          li, button, button:before
+            height: 10px
+            width: 30px
+            text-align: center
+          button:before
+            border-radius: 20px
+            background: black
+            font-size: 0
       &__inner
-        //min-width: 25rem
+        min-width: 25rem
+        max-width: fit-content !important
         cursor: pointer
-        padding: 3rem 2.1rem 3rem 2.1rem
+        padding: 3rem 2.1rem 3rem 2.1rem !important
         display: flex
         flex-direction: column
         gap: 1.4rem

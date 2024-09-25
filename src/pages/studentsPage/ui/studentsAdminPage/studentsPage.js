@@ -1,6 +1,6 @@
 import {ClassAddForm} from "features/classProfile";
 import {StudentCreateClass} from "features/studentCreateClass";
-import React, {memo, useEffect, useMemo, useState} from "react";
+import React, {memo, useCallback, useEffect, useMemo, useState} from "react";
 
 import {useDispatch, useSelector} from "react-redux";
 
@@ -126,7 +126,6 @@ export const StudentsPage = () => {
             default:
                 filteredStudents = [];
         }
-        console.log(newStudents, 'wdefwefwef')
 
         setCurrentPage(1);
 
@@ -225,6 +224,7 @@ export const StudentsPage = () => {
                 if (loadingNewStudents === "loading") return <DefaultPageLoader/>
                 return (
                     <NewStudents
+                        branchId={userBranchId}
                         theme={theme === "app_school_theme"}
                         setSelectStudents={setSelectStudents}
                         currentTableData={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
@@ -261,9 +261,10 @@ export const StudentsPage = () => {
         }
     ]
 
+    console.log("render")
 
     return (
-        <MultiPage types={types} page={"students"}>
+         <MultiPage types={types} page={"students"}>
             <StudentsHeader
                 selected={selected}
                 setSelected={setSelected}
@@ -397,7 +398,6 @@ export const StudentsPage = () => {
                 data={data}
                 branch={userBranchId}
             />
-        </MultiPage>
-        // </>
+         </MultiPage>
     )
 }

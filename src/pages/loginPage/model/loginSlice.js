@@ -23,7 +23,24 @@ export const loginSlice =createSlice({
             if (action.payload.access) {
                 const decodedToken = jwtDecode(action.payload.access);
                 state.userId = decodedToken.user_id; // Bu yerda user_id ni olasiz
+
+                const oldUserId  = localStorage.getItem('user_id');
+
+
+                console.log(oldUserId, decodedToken.user_id, "hellllllllo")
+                if (+oldUserId !== +decodedToken.user_id) {
+                    localStorage.removeItem("selectedLocations")
+                    localStorage.removeItem("selectedBranch")
+                    localStorage.removeItem("selectedSystem")
+                }
+
+
+
+                localStorage.setItem('user_id', decodedToken.user_id);
+
             }
+
+
             state.role = action.payload.admin
             state.loading = false
             state.error = null
@@ -50,6 +67,7 @@ export const loginSlice =createSlice({
                 if (action.payload.access) {
                     const decodedToken = jwtDecode(action.payload.access);
                     const userId = decodedToken.user_id; // Bu yerda user_id ni olasiz
+
                 }
                 state.role = action.payload.admin
                 state.username = action.payload

@@ -217,21 +217,12 @@ export const Register = () => {
                     old_school: data.old_school,
                     parent_region: data.parent_region,
                     district:data.district,
-
-
                     parent_seria: data.parent_seria,
                     parent_seria_num: data.parent_seria_num,
-
                     region:data.region,
-
                     born_date: data.born_date,
                     student_seria_num:data.student_seria_num,
                     student_seria: data.student_seria
-
-
-
-
-
                 }
             } else {
                 result = {
@@ -502,7 +493,7 @@ export const Register = () => {
                                 required
                                 name={"father_name"}
                             />
-                            {userSystem.name === "school" && registerType === "student" ?
+                            {userSystem?.name  === "school" && registerType === "student" ?
                                 <>
                                     <div className={cls.seriya}>
                                         <Input register={register}
@@ -543,7 +534,7 @@ export const Register = () => {
                                 name={"phone"}
                             />
 
-                            {userSystem.name === "center " && registerType === 'student' ?
+                            {userSystem?.name  === "center " && registerType === 'student' ?
                                 <Input
                                     register={register}
                                     placeholder="Ota-ona telefon raqami"
