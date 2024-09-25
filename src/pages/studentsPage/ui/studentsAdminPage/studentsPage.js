@@ -111,6 +111,8 @@ export const StudentsPage = () => {
     const search = useSelector(getSearchValue);
     let PageSize = useMemo(() => 50, []);
 
+
+    console.log(selectedRadio, deletedStudents, "st")
     const searchedUsers = useMemo(() => {
         let filteredStudents = [];
         switch (selectedRadio) {
@@ -137,7 +139,7 @@ export const StudentsPage = () => {
                 item?.student?.user?.name.toLowerCase().includes(search.toLowerCase()) ||
                 item?.student?.user?.surname.toLowerCase().includes(search.toLowerCase()))
         );
-    }, [newStudents, studyingStudents, deletedStudents, search, selectedRadio, isFilter,]);
+    }, [newStudents, studyingStudents, deletedStudents, search, selectedRadio, isFilter]);
 
     useEffect(() => {
         if (userBranchId) {

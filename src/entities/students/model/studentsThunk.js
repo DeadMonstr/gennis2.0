@@ -40,7 +40,7 @@ export const fetchOnlyDeletedStudentsData = createAsyncThunk(
     'studentsSlice/fetchOnlyDeletedStudentsData',
     async ({id}) => {
         const {request} = useHttp();
-        return await request(`${API_URL}Students/deleted-from-registered/?branch=${id}`, "GET", null, headers())
+        return await request(`${API_URL}Students/deleted-group-students/?branch=${id}`, "GET", null, headers())
     }
 )
 
