@@ -41,15 +41,15 @@ export const AppRouter = () => {
         createRoutesFromElements(
             <>
 
-                <Route
-                    path={"/"}
-                    element={<SchoolHomePage/>}
-                />
-
                 {/*<Route*/}
                 {/*    path={"/"}*/}
-                {/*    element={<CenterHomePage/>}*/}
+                {/*    element={<SchoolHomePage/>}*/}
                 {/*/>*/}
+
+                <Route
+                    path={"/"}
+                    element={<CenterHomePage/>}
+                />
 
                 <Route
                     path={"login"}
@@ -73,9 +73,10 @@ export const AppRouter = () => {
                                         path={item.path}
 
                                         element={
+                                            // item.element
                                             <RequireBranch>
                                                 {item.element}
-                                            </RequireBranch>
+                                             </RequireBranch>
                                         }
                                     />
                                 )

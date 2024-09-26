@@ -1,0 +1,56 @@
+.footer
+  background-color: #001B61
+  margin-top: 3rem
+  display: flex
+
+  flex-direction: column
+  gap: 5rem
+  &_top
+    padding: 5rem 10rem
+    display: flex
+    justify-content: space-between
+    flex-wrap: wrap
+    //margin-bottom: 2rem
+    &_item
+      color: #FFFFFF
+      h2
+        font-size: 3rem
+      ul
+        list-style: none
+        display: flex
+        flex-direction: column
+
+        gap: 2rem
+        font-size: 1.8rem
+        margin-top: 10px
+        cursor: pointer
+        li:hover
+          color: #7F7F7F
+  &_bottom
+    padding: 3rem
+    display: flex
+    justify-content: space-between
+    align-items: center
+  &_contact
+    color: #FFFFFF
+    font-size: 2rem
+
+@media (max-width: 900px)
+  .footer
+    &_top
+      &_item
+        h2
+          font-size: 2rem
+        ul
+          font-size: 1.5rem
+
+@media (max-width: 800px)
+  .footer
+    &_top
+      &_item
+        h2
+          font-size: 1.8rem
+        ul
+          font-size: 1.4rem
+    &_contact
+      font-size: 1.8rem

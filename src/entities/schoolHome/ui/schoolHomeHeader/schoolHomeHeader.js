@@ -1,12 +1,12 @@
 import classNames from "classnames";
 import React, {memo, useCallback, useEffect, useRef, useState} from 'react';
-import {createPortal} from "react-dom";
 
 import {Button} from "shared/ui/button";
 
 import cls from "./schoolHomeHeader.module.sass";
 import turonLogo from "shared/assets/logo/turonLogo.png";
 import turonLogoText from "shared/assets/logo/turonLogoText.png";
+import {Link} from "react-router-dom";
 
 const list = [
     {
@@ -60,19 +60,15 @@ export const SchoolHomeHeader = memo(() => {
     return (
         <>
             <div
+                // onWheel={(e) => {
+                //     console.log(e, "e.target")
+                //     console.log(ref?.current?.offsetTop, "currentHeight")
+                // }}
                 className={cls.homeHeader}
+                // ref={ref}
             >
-                <div
-                    className={classNames(cls.homeHeader__burger, {
-                        [cls.active]: activeBurger
-                    })}
-                >
-                    <i
-                        onClick={() => setActiveBurger(!activeBurger)}
-                        className={
-                            activeBurger ? "fas fa-times" : "fas fa-bars"
-                        }
-                    />
+                <div className={cls.homeHeader__burger}>
+                    <i className="fas fa-bars"/>
                 </div>
                 <div className={cls.homeHeader__logo}>
                     <img className={cls.logo} src={turonLogo} alt=""/>
@@ -80,14 +76,23 @@ export const SchoolHomeHeader = memo(() => {
                 </div>
                 <ul className={cls.homeHeader__list}>
                     {render}
+                    n
                 </ul>
                 <div className={cls.homeHeader__btns}>
-                    <Button
-                        extraClass={cls.loginBtn}
-                        type={"login"}
-                    >
-                        Login
-                    </Button>
+                    {/*<Button*/}
+                    {/*    extraClass={cls.aplayBtn}*/}
+                    {/*    type={"simple-add"}*/}
+                    {/*>*/}
+                    {/*    Aplay*/}
+                    {/*</Button>*/}
+                    <Link target={"_self"} to={`http://school.gennis.uz/login`}>
+                        <Button
+                            extraClass={cls.loginBtn}
+                            type={"login"}
+                        >
+                            Login
+                        </Button>
+                    </Link>
                 </div>
             </div>
             <div

@@ -32,11 +32,7 @@ const pages = [
 ]
 
 const otchotPages = [
-    {
-        value: "all",
-        name: "Hammasi",
-        disabled: false
-    },
+
     {
         value: "payment",
         name: "O'quvchilar tolovlari",
@@ -51,6 +47,11 @@ const otchotPages = [
     {
         value: "employerSalary",
         name: "Ishchilar oyligi",
+        disabled: false
+    },
+    {
+        value: "all",
+        name: "Hammasi",
         disabled: false
     },
 

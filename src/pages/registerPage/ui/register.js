@@ -41,6 +41,7 @@ import {
 import cls from "./register.module.sass";
 import bg__img from 'shared/assets/images/reg__bg.svg';
 import {getBranch} from "../../../features/branchSwitcher";
+import {getUserProfileData} from "../../../entities/profile/userProfile";
 
 const userstype = {
     types: [
@@ -98,11 +99,26 @@ export const Register = () => {
     const [usernameMessage, setUsernameMessage] = useState('');
     const [isUsernameAvailable, setIsUsernameAvailable] = useState(true);
     const safeData = Array.isArray(subjects) ? subjects : [subjects];
+    const [isDirector, setIsDirector] = useState("")
     const branchID = useSelector(getBranch)
+    const user = useSelector(getUserProfileData)
     const subjectOptions = safeData?.map(subject => ({
         value: subject?.id,
         label: subject?.name,
     }));
+
+    const filteredJobOptions = jobOptions.filter(
+        job => job.name.toLowerCase() !== 'admin' && job.name.toLowerCase() !== 'director'
+    );
+
+    useEffect(() => {
+        if (user && user?.job) {
+            setIsDirector(user.job.toString())
+        }
+    }, [user])
+
+
+
 
     const handleAddSubject = (selectedSubject) => {
         setSelectedSubject(selectedSubject)
@@ -124,7 +140,6 @@ export const Register = () => {
 
         setValue("password", 12345678)
     }, [id]);
-    console.log(registerType, 'ewefefef')
 
     useEffect(() => {
         dispatch(fetchVacancyData())
@@ -167,7 +182,7 @@ export const Register = () => {
 
 
     const onSubmit = (data) => {
-        console.log(selectedClass, selectedLang ,data)
+        // console.log(selectedClass, selectedLang ,data)
         if (!isUsernameAvailable) {
             return;
         }
@@ -202,21 +217,12 @@ export const Register = () => {
                     old_school: data.old_school,
                     parent_region: data.parent_region,
                     district:data.district,
-
-
                     parent_seria: data.parent_seria,
                     parent_seria_num: data.parent_seria_num,
-
                     region:data.region,
-
                     born_date: data.born_date,
                     student_seria_num:data.student_seria_num,
                     student_seria: data.student_seria
-
-
-
-
-
                 }
             } else {
                 result = {
@@ -236,7 +242,7 @@ export const Register = () => {
                     ...res,
                     total_students: 1212,
                     color: "red",
-                    class_type: selectedClassType,
+                    class_type: +selectedClassType,
                     teacher_salary_type: selectedCategory,
                     subject: selectedSubject.map(subject => subject.value) || null,
                 };
@@ -431,7 +437,10 @@ export const Register = () => {
                             extraClass={cls.extraClasses}
                             name={"profession"}
                             onChangeOption={setSelectedProfession}
-                            options={jobOptions}
+                            options={
+                            isDirector === 'director' ? jobOptions :
+                            filteredJobOptions
+                        }
                         />
                         <div className={cls.resume}>
                             <h2 style={{textAlign: "left", fontSize: "2rem"}}>Resume</h2>
@@ -487,7 +496,7 @@ export const Register = () => {
                                 required
                                 name={"father_name"}
                             />
-                            {userSystem.name === "school" && registerType === "student" ?
+                            {userSystem?.name  === "school" && registerType === "student" ?
                                 <>
                                     <div className={cls.seriya}>
                                         <Input register={register}
@@ -528,7 +537,7 @@ export const Register = () => {
                                 name={"phone"}
                             />
 
-                            {userSystem.name === "center " && registerType === 'student' ?
+                            {userSystem?.name  === "center " && registerType === 'student' ?
                                 <Input
                                     register={register}
                                     placeholder="Ota-ona telefon raqami"

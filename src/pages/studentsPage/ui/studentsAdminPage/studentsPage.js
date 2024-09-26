@@ -109,6 +109,8 @@ export const StudentsPage = () => {
     const [activeFormBtn, setActiveFormBtn] = useState(true)
     let PageSize = useMemo(() => 50, []);
 
+
+    console.log(selectedRadio, deletedStudents, "st")
     const searchedUsers = useMemo(() => {
         // console.log(search, "search") ||
         let filteredStudents = [];
@@ -136,7 +138,7 @@ export const StudentsPage = () => {
                 item?.student?.user?.name.toLowerCase().includes(search.toLowerCase()) ||
                 item?.student?.user?.surname.toLowerCase().includes(search.toLowerCase()))
         );
-    }, [newStudents, studyingStudents, deletedStudents, search, selectedRadio, isFilter,]);
+    }, [newStudents, studyingStudents, deletedStudents, search, selectedRadio, isFilter]);
 
     useEffect(() => {
         // console.log("render userBranchId useEffect") ||
@@ -234,6 +236,7 @@ export const StudentsPage = () => {
                 if (loadingNewStudents === "loading") return <DefaultPageLoader/>
                 return (
                     <NewStudents
+                        branchId={userBranchId}
                         theme={theme === "app_school_theme"}
                         // currentTableData={searchedUsers.slice((currentPage - 1) * PageSize, currentPage * PageSize)}
                         currentTableData={currentTableData}
@@ -279,6 +282,7 @@ export const StudentsPage = () => {
 
     console.log("render")
 
+    console.log("render")
 
     return (
         // <>

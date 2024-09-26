@@ -30,6 +30,7 @@ import {
 } from "entities/accounting/ui/acauntingTables/accountingTableAdditionalCosts/additionalCostsDeleted";
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 import {YesNo} from "../../../../shared/ui/yesNoModal";
+import {ConfirmModal} from "../../../../shared/ui/confirmModal";
 
 export const AdditionalCosts = ( {deleted , setDeleted}) => {
     const [activeModal, setActiveModal] = useState(false)
@@ -182,7 +183,9 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
                 month={month}
                 setMonth={setMonth}
             />
-            <YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>
+
+            <ConfirmModal setActive={setActiveDelete} active={activeDelete} onClick={onDelete} text={"It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."}   type={"danger"}/>
+            {/*<YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>*/}
         </div>
     );
 };

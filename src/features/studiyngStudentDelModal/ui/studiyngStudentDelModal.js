@@ -15,36 +15,26 @@ export const StudiyngStudentDelModal = ({ isOpen, onClose, userId}) => {
     const {"*": id} = useParams()
     const userBranchId = id
 
-    const handleDelete = () => {
-        dispatch(studiyngStudentDelThunk(userId)).then(() => {
-            dispatch(onAddAlertOptions({
-                type: "success",
-                status: true,
-                msg: "O'quvchi muvofaqqiyatli o'chirildi"
-            }))
-            onClose();
-            dispatch(fetchOnlyNewStudentsData({id: userBranchId}));
-        });
-    };
+
 
 
     if (!isOpen) return null;
     return (
         <Modal active={isOpen} setActive={onClose}>
-            <div className={cls.filter}>
-                <div className={cls.deleteHead}>
-                    <img src={alertIcon} alt=""/>
-                    <h1>Delete modal</h1>
-                </div>
-                <div className={cls.deleteText}>
-                    <h2>Siz rostan ham o'quvchini o'chirmoqchimisiz</h2>
-                </div>
-                <div className={cls.deleteButtons}>
-                    <Button extraClass={cls.deleteButton} children={"Delete"} onClick={handleDelete}/>
+            {/*<div className={cls.filter}>*/}
+            {/*    <div className={cls.deleteHead}>*/}
+            {/*        <img src={alertIcon} alt=""/>*/}
+            {/*        <h1>Delete modal</h1>*/}
+            {/*    </div>*/}
+            {/*    <div className={cls.deleteText}>*/}
+            {/*        <h2>Siz rostan ham o'quvchini o'chirmoqchimisiz</h2>*/}
+            {/*    </div>*/}
+            {/*    <div className={cls.deleteButtons}>*/}
+            {/*        <Button extraClass={cls.deleteButton} children={"Delete"} onClick={handleDelete}/>*/}
 
-                    <Button extraClass={cls.cancelButton} children={"Cancel"} onClick={onClose}/>
-                </div>
-            </div>
+            {/*        <Button extraClass={cls.cancelButton} children={"Cancel"} onClick={onClose}/>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
         </Modal>
     );
 };
