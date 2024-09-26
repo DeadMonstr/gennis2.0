@@ -1,1 +1,0 @@
-export {RoomDeleteModal} from './ui/roomDeleteModal'

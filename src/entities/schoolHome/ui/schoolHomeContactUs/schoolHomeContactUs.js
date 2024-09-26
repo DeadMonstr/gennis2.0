@@ -91,10 +91,11 @@ export const SchoolHomeContactUs = () => {
                     <div className={cls.mainRightBox}>
                         <div className={cls.formBox}>
                             <h1>Send message</h1>
-                            <Form extraClassname={cls.form}>
+                            <Form typeSubmit="" extraClassname={cls.form}>
                                 <Input extraClassName={cls.inputMsg} placeholder={"Full name"}/>
                                 <Input extraClassName={cls.inputMsg} type={"number"} placeholder={"Phone"}/>
                                 <Textarea extraClassName={cls.inputMsg} placeholder={"Type your message"}/>
+                                <Button children="Yuborish" extraClass={cls.submitBtn}/>
                             </Form>
                         </div>
 

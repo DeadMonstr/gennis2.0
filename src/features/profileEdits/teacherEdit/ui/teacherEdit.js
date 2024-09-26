@@ -33,11 +33,12 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
             setSurname(teacherID.user?.surname)
             setNumber(teacherID.user?.phone)
             setAge(teacherID.user?.age)
-            setTeacherSalaryType(teacherID?.teacher_salary_type?.name)
+            setTeacherSalaryType(teacherID?.teacher_salary_type)
             setClassType(teacherID?.class_type)
         }
     }, [teacherID])
 
+    console.log(teacherSalaryType, teacherID?.teacher_salary_type, 'eefefe')
 
 
     const handleEditTeacher = () => {
@@ -120,15 +121,15 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
                             options={categories}
                             defaultValue={teacherSalaryType}
                             onChangeOption={setTeacherSalaryType}
-                            // title={"Toifa"}
+                            title={"Toifa"}
                         />
                         <Select
                             extraClass={cls.extraClasses}
                             name={"class_type"}
                             options={classTypes}
                             onChangeOption={setClassType}
-
-                            title={classType}
+                            title={"Sinf"}
+                            defaultValue={classType}
 
                         />
                     </div>

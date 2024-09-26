@@ -8,6 +8,7 @@ import {useDispatch} from "react-redux";
 import {ConfirmModal} from "shared/ui/confirmModal";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {onDeleteNewStudents} from "../../model/studentsSlice";
+import {StudiyngStudentDelModal} from "../../../../features/studiyngStudentDelModal";
 
 export const NewStudents = memo(({currentTableData, setSelectStudents, theme, branchId}) => {
 
@@ -115,7 +116,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme, br
                 onClick={handleDelete}
             />
             {/*<YesNo  setActiveDelete={setIsOpen} activeDelete={isOpen}  onDelete={handleDelete}/>*/}
-            {/*<StudiyngStudentDelModal userId={studentId} onClose={setIsOpen} isOpen={isOpen}/>*/}
+
 
         </div>
     );
