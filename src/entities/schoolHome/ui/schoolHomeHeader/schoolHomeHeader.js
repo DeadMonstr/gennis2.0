@@ -67,8 +67,17 @@ export const SchoolHomeHeader = memo(() => {
                 className={cls.homeHeader}
                 // ref={ref}
             >
-                <div className={cls.homeHeader__burger}>
-                    <i className="fas fa-bars"/>
+                <div
+                    className={classNames(cls.homeHeader__burger, {
+                        [cls.active]: activeBurger
+                    })}
+                >
+                    <i
+                        onClick={() => setActiveBurger(true)}
+                        className={
+                            activeBurger ? "fas fa-times" : "fas fa-bars"
+                        }
+                    />
                 </div>
                 <div className={cls.homeHeader__logo}>
                     <img className={cls.logo} src={turonLogo} alt=""/>
@@ -76,7 +85,6 @@ export const SchoolHomeHeader = memo(() => {
                 </div>
                 <ul className={cls.homeHeader__list}>
                     {render}
-                    n
                 </ul>
                 <div className={cls.homeHeader__btns}>
                     {/*<Button*/}
@@ -100,6 +108,10 @@ export const SchoolHomeHeader = memo(() => {
                     [cls.active]: activeBurger
                 })}
             >
+                <i
+                    onClick={() => setActiveBurger(false)}
+                    className={classNames("fas fa-times", cls.homeMenu__icon)}
+                />
                 <ul className={classNames(cls.homeMenu__list, {
                     [cls.active]: activeBurger
                 })}>

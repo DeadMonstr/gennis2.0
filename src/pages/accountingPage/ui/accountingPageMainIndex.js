@@ -34,7 +34,7 @@ import {AdditionalCosts} from "./accountingPages/additionalCosts";
 import {Capital} from "./accountingPages/capital";
 import {getAccountingOtchot, getEncashment} from "entities/accounting/model/selector/accountingSelector";
 import {accountingThunk} from "entities/accounting/model/thunk/accountingThunk";
-import {AccountingFilter} from "features/filters/accountingFilter/accountingFilter";
+import {AccountingFilter} from "features/filters/accountingFilter";
 import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
 import {getBranch} from "../../../features/branchSwitcher";
 import {getSelectedLocations} from "features/locations";
