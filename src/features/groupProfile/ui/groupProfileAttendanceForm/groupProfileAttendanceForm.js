@@ -87,7 +87,7 @@ const daysData = [
     }
 ]
 
-export const GroupProfileAttendanceForm = memo(({attendance, setAttendance , data}) => {
+export const GroupProfileAttendanceForm = memo(({attendance, setAttendance , data , id}) => {
 
 
 
