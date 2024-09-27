@@ -10,9 +10,9 @@ import cls from './teacherEdit.module.sass'
 import {Button} from "../../../../shared/ui/button";
 import {onAddAlertOptions} from "../../../alert/model/slice/alertSlice";
 import {Select} from "../../../../shared/ui/select";
-import {getCategories} from "../../../../pages/registerPage/model/registerSelector";
-import {fetchSubjectsData, getClassTypeData, getSubjectsData} from "entities/oftenUsed";
-import {API_URL, API_URL_DOC} from "../../../../shared/api/base";
+
+import {fetchCategories, fetchSubjectsData, getClassTypeData, getSubjectsData , getCategories} from "entities/oftenUsed";
+
 
 export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
     const dispatch = useDispatch();
@@ -28,6 +28,8 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
     const [age, setAge] = useState('')
     const [classType, setClassType] = useState('')
     const [selectedSubjects, setSelectedSubjects] = useState([])
+
+
     const subjectOptions = subjects?.map(subject => ({
         value: subject?.id,
         label: subject?.name,

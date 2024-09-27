@@ -5,7 +5,8 @@ export {
     fetchClassNumberData,
     fetchSubjectsData,
     fetchLanguagesData,
-    fetchClassTypeData
+    fetchClassTypeData,
+    fetchCategories
 } from "./model/oftenUsedThunk";
 
 export {
@@ -23,6 +24,7 @@ export {
     getClassNumberError,
     getClassTypeData,
     getClassTypeLoading,
-    getClassTypeError
+    getClassTypeError,
+    getCategories
 } from "./model/oftenUsedSelector";
 
