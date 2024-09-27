@@ -99,13 +99,13 @@ export const Attendance = ({active, setActive}) => {
     const studentAttendance = useSelector(getAttendance)
 
 
-    useEffect(() => {
-        if (studentAttendance) {
-
-            setStudents(studentAttendance?.students)
-
-        }
-    }, [studentAttendance])
+    // useEffect(() => {
+    //     if (studentAttendance) {
+    //
+    //         setStudents(studentAttendance?.students)
+    //
+    //     }
+    // }, [studentAttendance])
 
     const [day, setDay] = useState(null)
 
@@ -113,13 +113,14 @@ export const Attendance = ({active, setActive}) => {
         setDay(data)
 
         const res = {
-            date:  `${studentAttendance.month_number}-${day}` ,
+            date: `${studentAttendance.month_number}-${data}`,
         }
 
         // console.log(res , groupId)
-        request(`${API_URL}Attendance/school-to-attend-days/${groupId}/` , "POST" , JSON.stringify(res) , headers())
+        request(`${API_URL}Attendance/school-to-attend-days/${groupId}/`, "POST", JSON.stringify(res), headers())
             .then(res => {
                 console.log(res)
+                setStudents(res.students)
             })
             .catch(err => {
                 console.log(err)
@@ -150,7 +151,8 @@ export const Attendance = ({active, setActive}) => {
                         <td>{item?.name} {item?.surname}</td>
                         <td>
                             <div className={cls.attendance_icon}>
-                                <i onClick={() => onClickYes(item?.id)} className={`${cls.attendance_check} fa fa-check`}></i>
+                                <i onClick={() => onClickYes(item?.id)}
+                                   className={`${cls.attendance_check} fa fa-check`}></i>
                                 <i className={`${cls.attendance_times} fa fa-times`}></i>
                             </div>
                         </td>
@@ -206,6 +208,18 @@ export const Attendance = ({active, setActive}) => {
         }
     }, [students])
 
+    const updateStatusStudent = ({id, requestType, requestMsg}) => {
+        setStudents(students => {
+            return students.map(item => {
+                if (id === item.id) {
+                    return {...item, requestType: requestType, requestMsg: requestMsg}
+                }
+                return item
+            })
+        })
+        console.log(id , requestType , requestMsg)
+    }
+
     const onCheckedStudents = (e) => {
         e.preventDefault()
 
@@ -213,22 +227,36 @@ export const Attendance = ({active, setActive}) => {
             if (student.attended) {
                 const data = {
 
-                    date:  `${studentAttendance.month_number}-${day}` ,
-                    students: [{...student , status: true}],
+                    date: `${studentAttendance.month_number}-${day}`,
+                    students: [{...student, status: true}],
                     group: Number(groupId),
                     teacher: studentAttendance.teachers
                     // teacherId
                 }
                 const studentId = data?.students?.map(item => item.id)
 
-
+                updateStatusStudent({id: student.id, requestType: "loading"})
                 request(`${API_URL}Attendance/to_attend_school/${studentId}/`, "POST", JSON.stringify(data), headers())
                     .then(res => {
-                        console.log(res , "res")
+                        if (res.success) {
+                            // removeSuccessStudent(res.student_id)
+                            setStudents(students => students.filter(item => item.id !== res.student_id))
+                            // dispatch(removeCheckedStudent({id:res.student_id}))
+                            setAttendendModal(false)
+
+                            // setTypeMsg("success")
+                            // setMsg(res.msg)
+                            // setActiveMessage(true)
+                        }
+                        if (res.error) {
+                            setAttendendModal(false)
+
+                            updateStatusStudent({id: res.student_id, requestType: res.requestType, requestMsg: res.msg})
+                        }
 
                     })
                     .catch(err => {
-                        console.log(err , "err")
+                        console.log(err, "err")
                     })
             }
         })
@@ -247,7 +275,8 @@ export const Attendance = ({active, setActive}) => {
                     <div className={cls.attendanceModal_header}>
 
                         {/*<Select extraClass={cls.select} options={studentAttendance?.map(item => item?.month)}/>*/}
-                        <Select extraClass={cls.select} options={studentAttendance?.weekdays} onChangeOption={onChangeDate}/>
+                        <Select extraClass={cls.select} options={studentAttendance?.weekdays}
+                                onChangeOption={onChangeDate}/>
                         <Button onClick={() => setAttendendModal(true)}>
                             Davomat qilinganlar
                         </Button>
@@ -278,7 +307,8 @@ export const Attendance = ({active, setActive}) => {
                             <h1>Studentlar davomat qilinmagan</h1> : null}
                     </div>
                     {renderCheckedStudent}
-                    {students?.filter(item => item?.attended)?.length === 0 ? null :  <Button  type={day ? "" : "disabled"} onClick={onCheckedStudents}>Kritish</Button>}
+                    {students?.filter(item => item?.attended)?.length === 0 ? null :
+                        <Button type={day ? "" : "disabled"} onClick={onCheckedStudents}>Kritish</Button>}
                 </div>
             </Modal>
         </>
