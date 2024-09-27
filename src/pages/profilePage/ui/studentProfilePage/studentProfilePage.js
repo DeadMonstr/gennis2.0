@@ -98,10 +98,10 @@ export const StudentProfilePage = () => {
         const res = {
             user: {
                 ...data,
+                language: +changeSelectedLang,
 
             },
             class_number: changeSelectedClass,
-            language: changeSelectedLang,
             parents_fullname: data.parents_fullname,
             old_school: data.old_school,
             parent_region: data.parent_region,

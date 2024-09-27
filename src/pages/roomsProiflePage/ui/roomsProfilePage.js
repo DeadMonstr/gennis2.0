@@ -15,10 +15,14 @@ import { getRoomImage } from 'features/roomImagePareModal/model';
 import { API_URL } from "shared/api/base";
 import { RoomImageParseModal } from "features/roomImagePareModal";
 import {DefaultLoader, DefaultPageLoader} from "shared/ui/defaultLoader";
+import {deleteRoomThunk} from "../../../features/roomDeleteModal/model/roomDeleteThunk";
+import {onAddAlertOptions} from "../../../features/alert/model/slice/alertSlice";
+import {ConfirmModal} from "../../../shared/ui/confirmModal";
 
 export const RoomsProfilePage = () => {
     const [switchStates, setSwitchStates] = useState({});
     const [active, setActive] = useState(false);
+    const [isDeleted, setIsDeleted] = useState(false)
     const [modal, setModal] = useState(false);
     const [window, setWindow] = useState(false);
     const [image, setImage] = useState(false);
@@ -69,7 +73,16 @@ export const RoomsProfilePage = () => {
             ...updatedRoom
         }));
     };
-
+    const handleDelete = () => {
+        dispatch(deleteRoomThunk(localRoomData?.id)).then(() => {
+            dispatch(onAddAlertOptions({
+                type: "success",
+                status: true,
+                msg: "Xona muvofaqqiyatli o'chirildi"
+            }))
+            setModal(false);
+        });
+    };
     const handleImageUpdate = () => {
         dispatch(fetchRoomImages(id));
     };
@@ -120,7 +133,14 @@ export const RoomsProfilePage = () => {
                             </div>
                             <RoomImageParseModal isOpen={window} onClose={() => setWindow(false)} roomId={localRoomData?.id} />
                             <RoomImageAddModal isOpen={image} onClose={() => setImage(false)} roomId={localRoomData?.id} onUpdate={handleImageUpdate} />
-                            <RoomDeleteModal isOpen={modal} onClose={() => setModal(false)} roomId={localRoomData?.id} />
+                            <ConfirmModal
+                                type={isDeleted ? "success" : "danger"}
+                                title={!isDeleted ? "O'chirmoq" : "Qaytarmoq"}
+                                text={isDeleted ? "Studentni qaytarishni hohlaysizmi" : "Studentni o'chirishni hohlaysizmi"}
+                                active={modal}
+                                setActive={setModal}
+                                onClick={handleDelete}
+                            />
                             {localRoomData?.id && <RoomEditModal isOpen={active} onClose={() => setActive(false)} roomId={localRoomData.id} onUpdate={handleUpdateRoom} />}
                         </div>
                 }
