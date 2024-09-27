@@ -17,6 +17,8 @@ import {getBranch} from "features/branchSwitcher";
 
 export const MultiPage = ({types, children, page, id = true}) => {
 
+    // console.log("render2")
+
 
     const dispatch = useDispatch()
 

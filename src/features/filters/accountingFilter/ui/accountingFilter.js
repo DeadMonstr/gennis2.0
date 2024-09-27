@@ -11,7 +11,7 @@ import {
     getDeletedPayment
 } from "entities/accounting";
 
-import cls from "../filters.module.sass"
+import cls from "../../filters.module.sass"
 
 export const AccountingFilter = ({setActive, active, setActiveDel, activeDel, activePage}) => {
 

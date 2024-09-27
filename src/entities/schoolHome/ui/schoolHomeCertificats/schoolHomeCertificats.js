@@ -21,11 +21,12 @@ export const SchoolHomeCertificats = memo(() => {
                         <p className={cls.item__text}>
                             Cambridge IGCSE is the world’s most popular international curriculum for 14-16 year olds,
                             leading to globally recognised and valued Cambridge IGCSE qualifications. It is part of the
-                            Cambridge Secondary 2 stage. Schools worldwide have helped develop Cambridge IGCSE, which
-                            provides excellent preparation for the Cambridge Advanced stage including Cambridge
-                            International AS and A Levels and Cambridge Pre-U, as well as other progression routes. It
-                            incorporates the best in international education for learners at this level. It develops in
-                            line with changing needs, and is regularly updated and extended.
+                            Cambridge Secondary 2 stage. Schools worldwide have helped
+                            {/*develop Cambridge IGCSE, which*/}
+                            {/*provides excellent preparation for the Cambridge Advanced stage including Cambridge*/}
+                            {/*International AS and A Levels and Cambridge Pre-U, as well as other progression routes. It*/}
+                            {/*incorporates the best in international education for learners at this level. It develops in*/}
+                            {/*line with changing needs, and is regularly updated and extended.*/}
                         </p>
                     </div>
                 </div>
@@ -42,11 +43,12 @@ export const SchoolHomeCertificats = memo(() => {
                         <p className={cls.item__text}>
                             Cambridge IGCSE is the world’s most popular international curriculum for 14-16 year olds,
                             leading to globally recognised and valued Cambridge IGCSE qualifications. It is part of the
-                            Cambridge Secondary 2 stage. Schools worldwide have helped develop Cambridge IGCSE, which
-                            provides excellent preparation for the Cambridge Advanced stage including Cambridge
-                            International AS and A Levels and Cambridge Pre-U, as well as other progression routes. It
-                            incorporates the best in international education for learners at this level. It develops in
-                            line with changing needs, and is regularly updated and extended.
+                            Cambridge Secondary 2 stage. Schools worldwide have helped
+                            {/*develop Cambridge IGCSE, which*/}
+                            {/*provides excellent preparation for the Cambridge Advanced stage including Cambridge*/}
+                            {/*International AS and A Levels and Cambridge Pre-U, as well as other progression routes. It*/}
+                            {/*incorporates the best in international education for learners at this level. It develops in*/}
+                            {/*line with changing needs, and is regularly updated and extended.*/}
                         </p>
                     </div>
                 </div>
@@ -63,11 +65,12 @@ export const SchoolHomeCertificats = memo(() => {
                         <p className={cls.item__text}>
                             Cambridge IGCSE is the world’s most popular international curriculum for 14-16 year olds,
                             leading to globally recognised and valued Cambridge IGCSE qualifications. It is part of the
-                            Cambridge Secondary 2 stage. Schools worldwide have helped develop Cambridge IGCSE, which
-                            provides excellent preparation for the Cambridge Advanced stage including Cambridge
-                            International AS and A Levels and Cambridge Pre-U, as well as other progression routes. It
-                            incorporates the best in international education for learners at this level. It develops in
-                            line with changing needs, and is regularly updated and extended.
+                            Cambridge Secondary 2 stage. Schools worldwide have helped
+                            {/*develop Cambridge IGCSE, which*/}
+                            {/*provides excellent preparation for the Cambridge Advanced stage including Cambridge*/}
+                            {/*International AS and A Levels and Cambridge Pre-U, as well as other progression routes. It*/}
+                            {/*incorporates the best in international education for learners at this level. It develops in*/}
+                            {/*line with changing needs, and is regularly updated and extended.*/}
                         </p>
                     </div>
                 </div>
@@ -84,11 +87,12 @@ export const SchoolHomeCertificats = memo(() => {
                         <p className={cls.item__text}>
                             Cambridge IGCSE is the world’s most popular international curriculum for 14-16 year olds,
                             leading to globally recognised and valued Cambridge IGCSE qualifications. It is part of the
-                            Cambridge Secondary 2 stage. Schools worldwide have helped develop Cambridge IGCSE, which
-                            provides excellent preparation for the Cambridge Advanced stage including Cambridge
-                            International AS and A Levels and Cambridge Pre-U, as well as other progression routes. It
-                            incorporates the best in international education for learners at this level. It develops in
-                            line with changing needs, and is regularly updated and extended.
+                            Cambridge Secondary 2 stage. Schools worldwide have helped
+                            {/*develop Cambridge IGCSE, which*/}
+                            {/*provides excellent preparation for the Cambridge Advanced stage including Cambridge*/}
+                            {/*International AS and A Levels and Cambridge Pre-U, as well as other progression routes. It*/}
+                            {/*incorporates the best in international education for learners at this level. It develops in*/}
+                            {/*line with changing needs, and is regularly updated and extended.*/}
                         </p>
                     </div>
                 </div>

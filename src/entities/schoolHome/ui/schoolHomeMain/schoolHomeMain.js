@@ -1,5 +1,6 @@
-import React, {memo, useState} from 'react';
+import React, {memo, useCallback, useEffect, useRef, useState} from 'react';
 import classNames from "classnames";
+import {motion, AnimatePresence} from "framer-motion";
 import Slider from "react-slick";
 
 import "slick-carousel/slick/slick.css";
@@ -14,22 +15,82 @@ export const SchoolHomeMain = memo(() => {
 
     const settings = {
         infinite: false,
-        dots: true,
+        dots: window.outerWidth > 430,
         speed: 500,
-        slidesToShow: 5,
-        slidesToScroll: 1,
+        slidesToShow: 4,
+        slidesToScroll: 3,
         className: cls.homeSlider,
-        arrows: false
+        initialSlide: 0,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 1440,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+
+                }
+            },
+            {
+                breakpoint: 830,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+
+                }
+            },
+            {
+                breakpoint: 650,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+
+                }
+            },
+            {
+                breakpoint: 500,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
     }
 
+    const carousel = useRef()
     const [activeItem, setActiveItem] = useState(null)
+    const [width,setWidth] = useState(null)
 
-    const renderItems = () => {
+    useEffect(() => {
+        setWidth(carousel.current?.scrollWidth - carousel.current?.offsetWidth)
+    },[list.length])
+
+    const renderItems = useCallback(() => {
         return list.map(item => {
             return (
-                <div
+                <motion.div
+                    transition={{duration : 1}}
+                    // onDoubleClick={(e) => {
+                    //     console.log(e.detail, "e.detail")
+                    //     switch (e.detail) {
+                    //         case 1:
+                    //             setActiveItem(null)
+                    //             break
+                    //         case 2:
+                    //            setActiveItem(item)
+                    //            break
+                    //     }
+                    //
+                    // }}
                     onClick={() => setActiveItem(prev =>
-                        item === prev ? null : item
+                        prev === item ? null : item
                     )}
                     className={classNames(cls.items__inner, {
                         [cls.active]: activeItem === item
@@ -42,24 +103,24 @@ export const SchoolHomeMain = memo(() => {
                     />
                     <h2 className={cls.items__title}>Creative Thinking</h2>
                     <p className={cls.items__more}>Learn more</p>
-                </div>
+                </motion.div>
             )
         })
-    }
+    }, [list, activeItem])
 
     const render = renderItems()
 
     return (
-        <div className={cls.homeMain}>
+        <motion.div className={cls.homeMain}>
             <div className={cls.homeMain__info}>
                 <div className={cls.info}>
                     <h1 className={cls.info__title}>Our vision</h1>
                     <p className={cls.info__text}>
-                        "Our vision at Turon International School is to be a pioneering institution in <br/>
-                        Uzbekistan, renowned for excellence in STEM and IT education. We aim to <br/>
-                        foster a community of innovative thinkers and global leaders, equipped with <br/>
-                        the knowledge and skills to shape the future. Our commitment is to provide <br/>
-                        an inspiring and technologically advanced learning environment where <br/>
+                        "Our vision at Turon International School is to be a pioneering institution in
+                        Uzbekistan, renowned for excellence in STEM and IT education. We aim to
+                        foster a community of innovative thinkers and global leaders, equipped with
+                        the knowledge and skills to shape the future. Our commitment is to provide
+                        an inspiring and technologically advanced learning environment where
                         students are empowered to
                     </p>
                 </div>
@@ -72,19 +133,32 @@ export const SchoolHomeMain = memo(() => {
                     <div className={cls.programsInfo}>
                         <h2 className={cls.programsInfo__title}>Programs</h2>
                         <p className={cls.programsInfo__text}>
-                            Lorem Ipsum is simply dummy text of <br/>
+                            Lorem Ipsum is simply dummy text of
                             the printing and typesetting industry.
                         </p>
                     </div>
-                    <div className={cls.items}>
-                        <Slider
-                            {...settings}
+                    <motion.div
+                        className={cls.items}
+                        ref={carousel}
+                    >
+                        <motion.div
+                            className={cls.items__wrapper}
+                            drag={"x"}
+                            dragConstraints={{left: -width,right: 0}}
                         >
-                            {render}
-                        </Slider>
-                    </div>
+
+                            {/*<Slider*/}
+
+                            {/*    {...settings}*/}
+                            <AnimatePresence>
+                                {render}
+                            </AnimatePresence>
+                            {/*>*/}
+                            {/*</Slider>*/}
+                        </motion.div>
+                    </motion.div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 })

@@ -9,6 +9,7 @@
   &__info
     width: 100%
     padding-left: 10rem
+    padding-right: 5rem
     display: flex
     //justify-content: space-between
     align-items: center
@@ -47,25 +48,29 @@
         font-size: 2rem
         color: #FFFFFFBD
     .items
-      //width: 100%
+      overflow: hidden
+      width: 100%
       display: flex
-      gap: 3rem
-      .homeSlider
-        div
-          padding: 1rem
-          width: fit-content !important
-          display: flex
-        ul
-          bottom: 13px
-          width: 60%
-          li, button, button:before
-            height: 10px
-            width: 30px
-            text-align: center
-          button:before
-            border-radius: 20px
-            background: black
-            font-size: 0
+      padding: 2rem
+      &__wrapper
+        display: flex
+        gap: 3rem
+      //.homeSlider
+      //  div
+      //    padding: 1rem
+      //    width: fit-content !important
+      //    display: flex
+      //  ul
+      //    bottom: 13px
+      //    width: 60%
+      //    li, button, button:before
+      //      height: 10px
+      //      width: 30px
+      //      text-align: center
+      //    button:before
+      //      border-radius: 20px
+      //      background: black
+      //      font-size: 0
       &__inner
         min-width: 25rem
         max-width: fit-content !important
@@ -93,6 +98,9 @@
   .homeMain
     &__programs
       .items
+        .homeSlider
+          ul
+            width: 40%
         &__inner
           min-width: 24.5rem
         &__title
@@ -103,8 +111,8 @@
       &__text
         font-size: 1.8rem
     .image
-      width: 63rem
-      height: 50rem
+      min-width: 63rem
+      min-height: 50rem
       display: flex
       align-items: flex-end
       img
@@ -114,7 +122,11 @@
   .homeMain
     height: 80%
     &__programs
+      gap: 0
       .items
+        .homeSlider
+          ul
+            width: 30%
         &__inner
           min-width: 21.5rem
         &__title
@@ -129,8 +141,8 @@
       &__text
         font-size: 1.4rem
     .image
-      width: 48rem
-      height: 35rem
+      min-width: 48rem
+      min-height: 35rem
     .programsInfo
       &__title
         font-size: 3rem
@@ -153,6 +165,9 @@
         &__text
           font-size: 1.6rem
       .items
+        .homeSlider
+          ul
+            width: 20%
         &__inner
           min-width: 20rem
         &__image
@@ -172,11 +187,23 @@
         &__text
           font-size: 1.2rem
     .image
-      width: 40rem
-      height: 30rem
+      min-width: 40rem
+      min-height: 30rem
     &__programs
       flex-direction: column
+      align-items: normal
+      .items
+        .homeSlider
+          ul
+            width: 15%
       .programsInfo
+        min-width: 17rem
         padding-bottom: 2rem
         border-bottom: 1px solid white
+
+@media (max-width: 375px)
+  .homeMain
+    .image
+      min-width: 33rem
+
 

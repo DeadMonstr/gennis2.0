@@ -65,6 +65,7 @@ export const Header = () => {
                 debouncedFetchData();
             } else {
                 setSearchParams({});
+                dispatch(getSearchStr(null))
             }
         }, [valueData]);
 

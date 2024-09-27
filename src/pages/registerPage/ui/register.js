@@ -263,6 +263,9 @@ export const Register = () => {
         }
 
         if (registerAction) {
+            if (registerType === 'teacher' && userSystem?.name === "school") {
+                dispatch(registerTeacherImage({id:res?.user?.username, file: res?.user?.resume[0]}))
+            }
             dispatch(registerAction).then((action) => {
                 setLoading(false);
                 if (action.type.endsWith('fulfilled')) {

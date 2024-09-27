@@ -134,7 +134,9 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
                                         title={"O'qituvchini tanlang"}
                                         options={teacherData}
                                         onChangeOption={(e) => {
-                                            getLevelData(e)
+                                            if (e) {
+                                                getLevelData(e)
+                                            }
                                             setSelectedSubjects(teacherData.filter(item => item.id === +e)[0]?.subject)
                                         }}
                                         register={register}
