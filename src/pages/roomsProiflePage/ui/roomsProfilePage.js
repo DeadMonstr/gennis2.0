@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { fetchInsideRoom } from 'features/roomsEditModal/ui/roomThunk';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useParams} from 'react-router-dom';
+import {fetchInsideRoom} from 'features/roomsEditModal/ui/roomThunk';
 import cls from './roomsProfilePage.module.sass';
 import Icon from 'shared/assets/images/room_image.svg';
-import { getLoadingStatus, getRoomsID } from 'features/roomsEditModal/model';
-import { Button } from 'shared/ui/button';
-import { Switch } from 'shared/ui/switch';
-import { RoomEditModal } from 'features/roomEditModal';
-import { RoomDeleteModal } from 'features/roomDeleteModal';
-import { RoomImageAddModal } from 'features/roomImageAddModal';
-import { fetchRoomImages } from 'features/roomImagePareModal/model/roomImageParseModalThunk';
-import { getRoomImage } from 'features/roomImagePareModal/model';
-import { API_URL } from "shared/api/base";
-import { RoomImageParseModal } from "features/roomImagePareModal";
+import {getLoadingStatus, getRoomsID} from 'features/roomsEditModal/model';
+import {Button} from 'shared/ui/button';
+import {Switch} from 'shared/ui/switch';
+import {RoomEditModal} from 'features/roomEditModal';
+import {RoomDeleteModal} from 'features/roomDeleteModal';
+import {RoomImageAddModal} from 'features/roomImageAddModal';
+import {fetchRoomImages} from 'features/roomImagePareModal/model/roomImageParseModalThunk';
+import {getRoomImage} from 'features/roomImagePareModal/model';
+import {API_URL} from "shared/api/base";
+import {RoomImageParseModal} from "features/roomImagePareModal";
 import {DefaultLoader, DefaultPageLoader} from "shared/ui/defaultLoader";
 import {deleteRoomThunk} from "../../../features/roomDeleteModal/model/roomDeleteThunk";
 import {onAddAlertOptions} from "../../../features/alert/model/slice/alertSlice";
 import {ConfirmModal} from "../../../shared/ui/confirmModal";
+import {useNavigate} from "react-router";
 
 export const RoomsProfilePage = () => {
     const [switchStates, setSwitchStates] = useState({});
@@ -27,13 +28,13 @@ export const RoomsProfilePage = () => {
     const [window, setWindow] = useState(false);
     const [image, setImage] = useState(false);
     const [localRoomData, setLocalRoomData] = useState({});
-    const { id } = useParams();
+    const {id} = useParams();
     const dispatch = useDispatch();
     const roomsID = useSelector(getRoomsID);
     const loading = useSelector(getLoadingStatus);
     const roomImageData = useSelector(getRoomImage);
     const API_URL_IMAGE = `${API_URL}media/`;
-
+    const navigate = useNavigate()
     useEffect(() => {
         if (roomsID) {
             const initialSwitchStates = {
@@ -74,20 +75,22 @@ export const RoomsProfilePage = () => {
         }));
     };
     const handleDelete = () => {
-        dispatch(deleteRoomThunk(localRoomData?.id)).then(() => {
-            dispatch(onAddAlertOptions({
-                type: "success",
-                status: true,
-                msg: "Xona muvofaqqiyatli o'chirildi"
-            }))
-            setModal(false);
-        });
+        dispatch(deleteRoomThunk(localRoomData?.id))
+            .then((res) => {
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: "Xona muvofaqqiyatli o'chirildi",
+                }))
+                setModal(false);
+                navigate(-1)
+            });
     };
     const handleImageUpdate = () => {
         dispatch(fetchRoomImages(id));
     };
 
-    return(
+    return (
         <>
             <div className={cls.container}>
                 {
@@ -95,7 +98,8 @@ export const RoomsProfilePage = () => {
                         :
                         <div className={cls.container_leftBox}>
                             <div className={cls.container_leftBox_buttonPanel}>
-                                <Button onClick={() => setModal(true)} extraClass={cls.buttonDelete} children={<i className="fa-solid fa-trash"></i>} />
+                                <Button onClick={() => setModal(true)} extraClass={cls.buttonDelete}
+                                        children={<i className="fa-solid fa-trash"></i>}/>
                             </div>
                             <div className={cls.container_leftBox_sliderBox}>
                         <span className={cls.visibleBlack} onClick={() => setImage(true)}>
@@ -103,11 +107,14 @@ export const RoomsProfilePage = () => {
                             Rasm yuklash
                         </span>
                                 {roomImageData?.length > 0 ? (
-                                    <img className={cls.container_leftBox_sliderBox_imgSlide} src={`${API_URL_IMAGE}${roomImageData[0]?.image}`} alt="Classroom Image" />
+                                    <img className={cls.container_leftBox_sliderBox_imgSlide}
+                                         src={`${API_URL_IMAGE}${roomImageData[0]?.image}`} alt="Classroom Image"/>
                                 ) : (
-                                    <img className={cls.container_leftBox_sliderBox_imgSlide} src={Icon} alt="Default Icon" />
+                                    <img className={cls.container_leftBox_sliderBox_imgSlide} src={Icon}
+                                         alt="Default Icon"/>
                                 )}
-                                <span onClick={() => setWindow(true)} className={cls.roomSlider} title={"Rasmlarni ko'rish"}>
+                                <span onClick={() => setWindow(true)} className={cls.roomSlider}
+                                      title={"Rasmlarni ko'rish"}>
                             <i className="fa-solid fa-camera"></i>
                             <h4>{roomImageData?.length}</h4>
                         </span>
@@ -115,7 +122,7 @@ export const RoomsProfilePage = () => {
 
                             <h1 className={cls.container_leftBox_roomName}>{localRoomData?.name} - xonasi</h1>
                             <span className={cls.statusRoom}>Room</span>
-                            <Button onClick={() => setActive(true)} extraClass={cls.changeButton} children={"Change"} />
+                            <Button onClick={() => setActive(true)} extraClass={cls.changeButton} children={"Change"}/>
                             <div className={cls.container_leftBox_seatsNumberBox}>
                                 <h4 className={cls.container_leftBox_seatsNumberBox_label}>O'rindiqlar soni</h4>
                                 <h2 className={cls.container_leftBox_seatsNumberBox_label}>{localRoomData?.seats_number}</h2>
@@ -131,8 +138,10 @@ export const RoomsProfilePage = () => {
                                     />
                                 </div>
                             </div>
-                            <RoomImageParseModal isOpen={window} onClose={() => setWindow(false)} roomId={localRoomData?.id} />
-                            <RoomImageAddModal isOpen={image} onClose={() => setImage(false)} roomId={localRoomData?.id} onUpdate={handleImageUpdate} />
+                            <RoomImageParseModal isOpen={window} onClose={() => setWindow(false)}
+                                                 roomId={localRoomData?.id}/>
+                            <RoomImageAddModal isOpen={image} onClose={() => setImage(false)} roomId={localRoomData?.id}
+                                               onUpdate={handleImageUpdate}/>
                             <ConfirmModal
                                 type={isDeleted ? "success" : "danger"}
                                 title={!isDeleted ? "O'chirmoq" : "Qaytarmoq"}
@@ -141,7 +150,9 @@ export const RoomsProfilePage = () => {
                                 setActive={setModal}
                                 onClick={handleDelete}
                             />
-                            {localRoomData?.id && <RoomEditModal isOpen={active} onClose={() => setActive(false)} roomId={localRoomData.id} onUpdate={handleUpdateRoom} />}
+                            {localRoomData?.id && <RoomEditModal isOpen={active} onClose={() => setActive(false)}
+                                                                 roomId={localRoomData.id}
+                                                                 onUpdate={handleUpdateRoom}/>}
                         </div>
                 }
                 <div className={cls.container_rightBox}>

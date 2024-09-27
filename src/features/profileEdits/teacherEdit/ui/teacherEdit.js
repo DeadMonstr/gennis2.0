@@ -35,6 +35,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
         label: subject?.name,
     }));
 
+
     useEffect(() => {
         dispatch(fetchSubjectsData())
     }, [])
@@ -55,8 +56,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
             )
         }
     }, [teacherID])
-
-
+    console.log(categories , classTypes)
     const handleEditTeacher = () => {
         if (!teacherID) return;
         const updateTeacher = {
@@ -86,6 +86,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
 
     if (!isOpen) return null
 
+    console.log(teacherSalaryType , classType)
     return (
         <Modal
             active={isOpen}
@@ -144,7 +145,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
                             extraClass={cls.extraClasses}
                             name={"category"}
                             options={categories}
-                            defaultValue={teacherSalaryType}
+                            defaultValue={categories[0].name}
                             onChangeOption={setTeacherSalaryType}
                             title={"Toifa"}
                         />
@@ -154,7 +155,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
                             options={classTypes}
                             onChangeOption={setClassType}
                             title={"Sinf"}
-                            defaultValue={classType}
+                            defaultValue={classTypes[0].name}
 
                         />
                     </div>
