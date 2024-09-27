@@ -36,7 +36,7 @@ export const Accordion = ({title, subtitle, children, backOpen, setBackOpen, cla
 
 
         >
-            <div onClick={toggleOpen} className={cls.header}>
+            <div  className={cls.header}>
                 <div className={cls.info}>
 
                         <span>{number}</span>
@@ -55,7 +55,7 @@ export const Accordion = ({title, subtitle, children, backOpen, setBackOpen, cla
                             return item
                         })
                     }
-                    <div className={classNames(cls.arrow, {
+                    <div onClick={toggleOpen} className={classNames(cls.arrow, {
                         [cls.active]: backOpen || open
                     })}>
                         <i className="fas fa-angle-down"></i>

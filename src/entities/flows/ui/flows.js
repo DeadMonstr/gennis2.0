@@ -124,6 +124,7 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
                                 placeholder={"Nomi"}
                                 register={register}
                                 name={"name"}
+                                required
                             />
                             {activeCheckbox ?
                                 null
@@ -158,7 +159,7 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
                                     }
                                     <Textarea
                                         placeholder={"Koment"}
-                                        required
+
                                         register={register}
                                         name={"comment"}
                                     />

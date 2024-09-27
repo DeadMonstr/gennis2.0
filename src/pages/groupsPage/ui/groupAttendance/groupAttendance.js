@@ -111,7 +111,13 @@ export const Attendance = ({active, setActive}) => {
 
     const onChangeDate = (data) => {
         setDay(data)
-        request(`${API_URL}Attendance/school-to-attend-days/` , "POST" , JSON.stringify(data) , headers())
+
+        const res = {
+            date:  `${studentAttendance.month_number}-${day}` ,
+        }
+
+        // console.log(res , groupId)
+        request(`${API_URL}Attendance/school-to-attend-days/${groupId}/` , "POST" , JSON.stringify(res) , headers())
             .then(res => {
                 console.log(res)
             })

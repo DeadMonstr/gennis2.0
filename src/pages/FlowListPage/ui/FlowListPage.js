@@ -34,7 +34,7 @@ export const FlowListPage = () => {
     const flowList = useSelector(getGroupsListData)
     const search = useSelector(getSearchValue)
 
-    let PageSize = useMemo(() => 8, [])
+    let PageSize = useMemo(() => 2, [])
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedId, setSelectedId] = useState([])
