@@ -33,7 +33,7 @@ export const ConfirmModal = ({setActive, active, onClick, title= "Rostanham o'ch
                 }
                 <div className={cls.deleteButtons}>
                     <Button extraClass={cls.deleteButton} type={type} children={"Xa"} onClick={onClick}/>
-                    <Button extraClass={cls.cancelButton} children={"Yo'q"} onClick={() => setActive(!active)}/>
+                    <Button extraClass={cls.cancelButton} type={type === "success" ? "danger" : null} children={"Yo'q"} onClick={() => setActive(!active)}/>
                 </div>
             </div>
         </Modal>

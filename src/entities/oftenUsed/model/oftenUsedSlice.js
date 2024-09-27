@@ -5,7 +5,7 @@ import {
     fetchLanguagesData,
     fetchClassColorData,
     fetchClassNumberData,
-    fetchClassTypeData
+    fetchClassTypeData, fetchCategories
 } from "./oftenUsedThunk";
 
 const initialState = {
@@ -27,6 +27,7 @@ const initialState = {
     teachers: [],
     teachersLoading: false,
     teachersError: null,
+    categories: []
 }
 
 const oftenUsedSlice = createSlice({
@@ -97,6 +98,21 @@ const oftenUsedSlice = createSlice({
                 state.classTypeError = null
             })
             .addCase(fetchClassTypeData.rejected, (state) => {
+                state.classTypeLoading = false
+                state.classTypeError = "error"
+            })
+
+
+            .addCase(fetchCategories.pending, (state) => {
+                state.classTypeLoading = true
+                state.classTypeError = null
+            })
+            .addCase(fetchCategories.fulfilled, (state, action) => {
+                state.categories = action.payload
+                state.classTypeLoading = false
+                state.classTypeError = null
+            })
+            .addCase(fetchCategories.rejected, (state) => {
                 state.classTypeLoading = false
                 state.classTypeError = "error"
             })

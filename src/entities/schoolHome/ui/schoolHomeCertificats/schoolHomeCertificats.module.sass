@@ -33,3 +33,53 @@
       font-size: 3.2rem
     &__text
       font-size: 1.6rem
+
+@media (max-width: 1440px)
+  .certificats
+    .item
+      align-items: flex-end
+      &__container
+        max-width: 110rem
+      &__image
+        left: -8.5%
+      &__inner
+        padding: 3rem 2rem 7rem 13rem
+
+@media (max-width: 1024px)
+  .certificats
+    padding: 5rem
+    .item
+      //justify-content: flex-end
+      &__container
+        max-width: 75rem
+      &__title
+        font-size: 3rem
+      &__text
+        font-size: 1.4rem
+
+@media (max-width: 768px)
+  .certificats
+    .item
+      &__container
+        max-width: 55rem
+      &__image
+        width: 12rem
+        height: 12rem
+      &__title
+        font-size: 2rem
+      &__inner
+        padding: 3rem 2rem 4rem 10rem
+
+@media (max-width: 430px)
+  .certificats
+    .item
+      gap: 5rem
+      &__container
+        flex-direction: column
+        box-shadow: none
+        padding-top: 3rem
+      &__image
+        margin-bottom: -3.7rem
+        position: unset
+      &__inner
+        padding: 0

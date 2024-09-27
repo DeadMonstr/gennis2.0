@@ -11,32 +11,22 @@ import {API_URL, useHttp} from "../../../../shared/api/base";
 import {useSelector} from "react-redux";
 import {getBranch} from "../../../../features/branchSwitcher";
 
-export const StudentsHeader = ({
-                                   onChange,
-                                   selectedRadio,
-                                   setSelectedRadio,
-                                   peoples,
-                                   active,
-                                   setActive,
-                                   branches,
-                                   selected,
-                                   setSelected,
-                                   // theme,
-                                   onClick
-                               }) => {
+export const StudentsHeader = ({onChange, selectedRadio, peoples, setActive, onClick}) => {
 
 
     const {theme} = useTheme()
     const {request} = useHttp()
     const branchID = useSelector(getBranch)
 
-    const branchId = branchID.id
+    console.log("render header")
+
     // const onClick = () => {
     //     request(`${API_URL}Students/export-students/?branch=1&format=json` , "GET")
     // }
     const navigate = useNavigate()
 
     const renderCreateBtn = useCallback(() => {
+        // console.log("render header renderCreateBtn")
         return theme === "app_school_theme"
             ?
             <>
@@ -74,12 +64,12 @@ export const StudentsHeader = ({
                         </Button> : null
                     }
                     {/*<Link to={"./RGBData/12"}>*/}
-                        <Button
-                            onClick={() => navigate("RGBData")}
-                            type={"filter"}
-                        >
-                            RB-Baza
-                        </Button>
+                    <Button
+                        onClick={() => navigate("RGBData")}
+                        type={"filter"}
+                    >
+                        RB-Baza
+                    </Button>
                     {/*</Link>*/}
 
 
@@ -96,7 +86,8 @@ export const StudentsHeader = ({
                 >
                     Filter
                 </Button>
-                <a style={{color: "white"}} href={`${API_URL}Students/export-students/?branch=${branchId}&format=json`}>
+                <a style={{color: "white"}}
+                   href={`${API_URL}Students/export-students/?branch=${branchID.id}&format=json`}>
                     <Button type={"simple"}>
 
                         Exel

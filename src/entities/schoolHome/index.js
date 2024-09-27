@@ -5,6 +5,8 @@ export {SchoolHomeCertificats} from "./ui/schoolHomeCertificats/schoolHomeCertif
 export {SchoolHomeAboutUs} from "./ui/schoolHomeAboutUs/schoolHomeAboutUs";
 export {SchoolHomeGallery} from './ui/schoolHomeGallery/schoolHomeGallery';
 export {SchoolHomeWorkUs} from './ui/schoolHomeWorkUs/schoolHomeWorkUs'
+export {SchoolHomeContact} from './ui/schoolHomeContact/schoolHomeContact'
+export {SchoolHomeContactUs} from './ui/schoolHomeContactUs/schoolHomeContactUs'
 export {SchoolParentesComment} from "./ui/schoolParentesComment/schoolParentesComment"
 export {SchoolNews} from "./ui/schoolNews/schoolNews"
 export {WorkUs} from "./ui/workUS/workUs"

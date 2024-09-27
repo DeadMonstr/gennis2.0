@@ -45,3 +45,5 @@ export const getClassTypeLoading = (state) =>
 export const getClassTypeError = (state) =>
     state.oftenUsedSlice.classTypeError
 
+export const getCategories = (state) =>
+    state.oftenUsedSlice.categories

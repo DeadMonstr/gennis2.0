@@ -75,7 +75,6 @@ import {locationsSlice} from "features/locations"
 import {themeSwitcherSlice} from "features/themeSwitcher"
 import {branchSwitcherSlice} from "features/branchSwitcher"
 import {multiPageSlice} from "widgets/multiPage"
-import {teacherGroupSlice} from "entities/teachers";
 import {studiyngStudentDelSlice} from "../features/studiyngStudentDelModal";
 import {oftenUsedSlice} from "entities/oftenUsed";
 import {rgbSlice} from "entities/rgbData";
