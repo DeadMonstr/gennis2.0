@@ -224,13 +224,11 @@ export const StudentsPage = () => {
     // console.log(searchedUsers, "searchedUsers")
 
     const renderStudents = useCallback(() => {
-        console.log("render renderStudents") //
         // console.log(loadingNewStudents, "loadingNewStudents render renderStudents") //
         // console.log(loadingDeletedStudents,"loadingDeletedStudents render renderStudents") //
         // console.log(loadingStudyingStudents,"loadingStudyingStudents render renderStudents") //
         // console.log(selectedRadio, "selectedRadio render renderStudents") //
         // console.log(currentTableData, "currentTableData render renderStudents") //
-        console.log("/////")
         switch (selectedRadio) {
             case "new_students":
                 if (loadingNewStudents === "loading") return <DefaultPageLoader/>
@@ -282,7 +280,6 @@ export const StudentsPage = () => {
 
     console.log("render")
 
-    console.log("render")
 
     return (
         // <>

@@ -73,8 +73,11 @@ export const RoomsProfilePage = () => {
             ...updatedRoom
         }));
     };
+
+
     const handleDelete = () => {
-        dispatch(deleteRoomThunk(localRoomData?.id)).then(() => {
+        dispatch(deleteRoomThunk(localRoomData?.id))
+            .then(() => {
             dispatch(onAddAlertOptions({
                 type: "success",
                 status: true,

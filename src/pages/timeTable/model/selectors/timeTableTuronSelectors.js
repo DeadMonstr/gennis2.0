@@ -20,6 +20,10 @@ export const getTimeTableTuronGroup = (state) =>
     state.timeTableTuronSlice.group
 
 
+export const getTimeTableTuronGroupStatus = (state) =>
+    state.timeTableTuronSlice.fetchStatusGroup
+
+
 export const getTimeTableTuronData = (state) =>
     state.timeTableTuronSlice.data
 

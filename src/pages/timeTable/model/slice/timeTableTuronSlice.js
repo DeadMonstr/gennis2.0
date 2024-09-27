@@ -28,6 +28,7 @@ const initialState = {
     filterClass: "",
 
     fetchStatusTeachers: "idle",
+    fetchStatusGroup: "idle",
     loading: false,
     error: null
 }
@@ -159,6 +160,7 @@ const TimeTableTuronSlice = createSlice({
             .addCase(fetchTimeTableTypesData.pending, state => {
                 state.loading = true
                 state.error = null
+                state.fetchStatusGroup = "loading"
             })
 
 
@@ -173,12 +175,14 @@ const TimeTableTuronSlice = createSlice({
                 }) || []
 
 
-
+                state.fetchStatusGroup = "success"
                 state.loading = false
                 state.error = null
             })
             .addCase(fetchTimeTableTypesData.rejected, (state, action) => {
                 state.loading = false
+                state.fetchStatusGroup = "error"
+
                 state.error = action.payload ?? null
             })
 

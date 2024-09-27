@@ -5,15 +5,15 @@ import cls from "./TimeTableDragItems.module.sass"
 import {TimeTableDragItem} from "entities/timeTableTuron/ui/TimeTableDragItem/TimeTableDragItem";
 
 import {Button} from "shared/ui/button";
+import {MiniLoader} from "shared/ui/miniLoader";
 
 
 export const TimeTableDragItems = (props) => {
 
-    const {groups, isSelected, subjects, teachers, selectedSubject,color,setSelectedSubject,type} = props
+    const {groups, isSelected, subjects, teachers, selectedSubject,color,setSelectedSubject,type,status} = props
 
 
-
-
+    console.log(groups)
 
     const filteredColors = () => {
         return groups?.filter(item => {
@@ -26,11 +26,25 @@ export const TimeTableDragItems = (props) => {
 
     const renderItems = useCallback(() => {
         if (!isSelected) {
-            if (!groups.length  ) {
+            if (!groups.length) {
                 return <h1 style={{color: 'red'}}>{type} yoq</h1>
             }
             return filteredColors()?.map(item => {
-                return <TimeTableDragItem color={item.type === "group" ? item.color.value : ""} type={"class"} item={item}>{item.name}</TimeTableDragItem>
+                return <TimeTableDragItem color={item.type === "group" ? item.color.value : ""} typeItem={type} item={item}>
+                    <p style={{ textAlign: "center"}}>{item?.name}</p>
+                    <p style={{ textAlign: "center"}}>
+                        {
+                            type === "flow" &&
+                            <>
+                                {item.subject?.name}
+                                <br/>
+                                {item.teacher?.user?.name} -
+                                {item.teacher?.user?.surname}
+                            </>
+                        }
+                    </p>
+
+                </TimeTableDragItem>
             })
         } else if (!selectedSubject) {
             if (!subjects.length ) {
@@ -51,6 +65,10 @@ export const TimeTableDragItems = (props) => {
     }, [isSelected,selectedSubject,groups,teachers,color,subjects])
 
 
+
+    if (status === "loading") {
+        return <MiniLoader/>
+    }
     return (
         <div className={cls.dragItems}>
             {selectedSubject && <Button type={"danger"} onClick={() => setSelectedSubject(null)}>Fanlar</Button>}
