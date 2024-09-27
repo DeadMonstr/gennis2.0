@@ -246,7 +246,7 @@ export const Register = () => {
                     teacher_salary_type: selectedCategory,
                     subject: selectedSubject.map(subject => subject.value) || null,
                 };
-                registerAction = registerTeacher({res, file: res?.user?.resume[0]})
+                registerAction = registerTeacher({res, file: res?.user?.resume})
             } else {
                 res = {
                     ...res,
@@ -335,17 +335,17 @@ export const Register = () => {
                                         name={"parents_phone"}
                                     />
                                     <Input register={register} name={"parents_fullname"}
-                                        placeholder={"ota-ona fio"}/>
+                                           placeholder={"ota-ona fio"}/>
                                     <div className={cls.seriya}>
                                         <Input register={register} name={"parent_seria"}
-                                            placeholder={"passport seriya"}/>
+                                               placeholder={"passport seriya"}/>
                                         <Input register={register} name={"parent_seria_num"}
-                                            placeholder={"seriya raqami"} type={"number"}/>
+                                               placeholder={"seriya raqami"} type={"number"}/>
                                     </div>
                                     <Input register={register} name={"born_date"}
-                                        placeholder={"tug'ilgan yili "} type={"date"}/>
+                                           placeholder={"tug'ilgan yili "} type={"date"}/>
                                     <Input register={register} name={"parent_region"}
-                                        placeholder={"yashash joyi"}/>
+                                           placeholder={"yashash joyi"}/>
                                 </>
                             ) : (
                                 <>
@@ -435,9 +435,9 @@ export const Register = () => {
                             name={"profession"}
                             onChangeOption={setSelectedProfession}
                             options={
-                            isDirector === 'director' ? jobOptions :
-                            filteredJobOptions
-                        }
+                                isDirector === 'director' ? jobOptions :
+                                    filteredJobOptions
+                            }
                         />
                         <div className={cls.resume}>
                             <h2 style={{textAlign: "left", fontSize: "2rem"}}>Resume</h2>
@@ -498,16 +498,16 @@ export const Register = () => {
                                     <div className={cls.seriya}>
                                         <Input register={register}
                                                name={"student_seria"}
-                                            placeholder={"seriya"}/>
+                                               placeholder={"seriya"}/>
                                         <Input name={"student_seria_num"} register={register}
-                                            type={"number"} placeholder={"metrka raqami"}/>
+                                               type={"number"} placeholder={"metrka raqami"}/>
                                     </div>
                                     <Input register={register} name={"old_school"}
-                                        placeholder={"kelgan maktabi"}/>
+                                           placeholder={"kelgan maktabi"}/>
                                     <Input register={register} name={"region"}
-                                        placeholder={"Xudud nomi"}/>
+                                           placeholder={"Xudud nomi"}/>
                                     <Input  register={register} name={"district"}
-                                        placeholder={"Tuman shaxar nomi"}/>
+                                            placeholder={"Tuman shaxar nomi"}/>
                                 </>
                                 :
                                 null

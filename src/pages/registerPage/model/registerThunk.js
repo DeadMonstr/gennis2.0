@@ -1,3 +1,4 @@
+
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {API_URL, headers, headersImg, useHttp} from "shared/api/base";
 
@@ -83,6 +84,7 @@ export const registerTeacher = createAsyncThunk(
             return data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);
+            console.log(error)
         }
     }
 );

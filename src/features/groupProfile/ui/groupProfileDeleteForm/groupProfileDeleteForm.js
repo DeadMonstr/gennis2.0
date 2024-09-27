@@ -154,6 +154,7 @@ export const GroupProfileDeleteForm = memo(({branch,system}) => {
     }
 
     const onSubmitAddStudents = () => {
+
         const place = userSystem?.name === "center" ? "guruh" : "sinf"
         dispatch(changeGroupProfile({
             data: {

@@ -80,7 +80,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme, br
         <div className={cls.mainContainer}>
             <div className={cls.mainContainer_tablePanelBox}>
                 <Table>
-                    <thead>
+                    <thead className={cls.thead}>
                     <tr>
                         <th>№</th>
                         <th>Full name</th>
