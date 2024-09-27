@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import {memo, useMemo, useState} from "react";
+import {memo, useEffect, useMemo, useState} from "react";
 import {Accordion} from "shared/ui/accardion/accardion";
 import cls from './flowList.module.sass'
 import {Table} from "shared/ui/table";
@@ -8,8 +8,13 @@ import {Pagination} from "features/pagination";
 import {useSelector} from "react-redux";
 import {getSearchValue} from "features/searchInput";
 
-export const FlowList = memo(({flowList, number, onChangeSingle, onChangeAll}) => {
+export const FlowList = memo(({flowList, number, onChangeSingle, onChangeAll, currentPage}) => {
 
+    const [isAccordion, setIsAccordion] = useState(false)
+
+    useEffect(() => {
+        setIsAccordion(false)
+    }, [currentPage])
 
     const renderFlowList = () => {
         return flowList?.students?.map((item, i) => (
@@ -44,6 +49,8 @@ export const FlowList = memo(({flowList, number, onChangeSingle, onChangeAll}) =
     return (
         <div className={cls.flowList}>
             <Accordion
+                setBackOpen={setIsAccordion}
+                backOpen={isAccordion}
                 number={number + 1}
                 title={`${flowList?.class_number?.number} ${flowList?.color?.name}`}
                 subtitle={
