@@ -124,6 +124,7 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
                                 placeholder={"Nomi"}
                                 register={register}
                                 name={"name"}
+                                required
                             />
                             {activeCheckbox ?
                                 null
@@ -133,7 +134,9 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
                                         title={"O'qituvchini tanlang"}
                                         options={teacherData}
                                         onChangeOption={(e) => {
-                                            getLevelData(e)
+                                            if (e) {
+                                                getLevelData(e)
+                                            }
                                             setSelectedSubjects(teacherData.filter(item => item.id === +e)[0]?.subject)
                                         }}
                                         register={register}
@@ -158,7 +161,6 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
                                     }
                                     <Textarea
                                         placeholder={"Koment"}
-                                        required
                                         register={register}
                                         name={"comment"}
                                     />

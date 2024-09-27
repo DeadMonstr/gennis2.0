@@ -1,4 +1,6 @@
+import {AnimatedMulti} from "features/workerSelect";
 import React, {useEffect, useState} from 'react';
+// import {} from ""
 import {useDispatch, useSelector} from "react-redux";
 import {editTeacherThunk} from "../../../../entities/teachers";
 import {Modal} from "shared/ui/modal";
@@ -9,35 +11,48 @@ import {Button} from "../../../../shared/ui/button";
 import {onAddAlertOptions} from "../../../alert/model/slice/alertSlice";
 import {Select} from "../../../../shared/ui/select";
 import {getCategories} from "../../../../pages/registerPage/model/registerSelector";
-import {getClassTypeData} from "../../../../entities/oftenUsed";
+import {fetchSubjectsData, getClassTypeData, getSubjectsData} from "entities/oftenUsed";
 import {API_URL, API_URL_DOC} from "../../../../shared/api/base";
 
-export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
+export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
     const dispatch = useDispatch();
     const teacherID = useSelector(getTeacherId);
+    const categories = useSelector(getCategories)
+    const classTypes = useSelector(getClassTypeData)
+    const subjects = useSelector(getSubjectsData)
+
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
     const [teacherSalaryType, setTeacherSalaryType] = useState('');
     const [phone, setNumber] = useState('')
     const [age, setAge] = useState('')
-    const categories = useSelector(getCategories)
-    const classTypes = useSelector(getClassTypeData)
     const [classType, setClassType] = useState('')
+    const [selectedSubjects, setSelectedSubjects] = useState([])
+    const subjectOptions = subjects?.map(subject => ({
+        value: subject?.id,
+        label: subject?.name,
+    }));
 
-    console.log(teacherID , "da")
     useEffect(() => {
-        if (teacherID)
-        {
+        dispatch(fetchSubjectsData())
+    }, [])
+
+    useEffect(() => {
+        if (teacherID) {
             setName(teacherID.user?.name)
             setSurname(teacherID.user?.surname)
             setNumber(teacherID.user?.phone)
             setAge(teacherID.user?.age)
             setTeacherSalaryType(teacherID?.teacher_salary_type)
             setClassType(teacherID?.class_type)
+            setSelectedSubjects(
+                teacherID?.subject?.map(subject => ({
+                    value: subject?.id,
+                    label: subject?.name,
+                }))
+            )
         }
     }, [teacherID])
-
-    console.log(teacherSalaryType, teacherID?.teacher_salary_type, 'eefefe')
 
 
     const handleEditTeacher = () => {
@@ -50,9 +65,11 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
                 age: age
             },
             teacher_salary_type: teacherSalaryType,
-            class_type: classType
+            class_type: classType,
+            subject: selectedSubjects.map(item => item?.value)
 
         };
+        console.log(updateTeacher, "updateTeacher")
         dispatch(editTeacherThunk({id: (teacherID.id), updateTeacher}))
             .then(() => {
                 onUpdate(updateTeacher)
@@ -114,6 +131,13 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
                             value={age}
                             // value={selectedFrom}
                         />
+                        <AnimatedMulti
+                            options={subjectOptions}
+                            onChange={setSelectedSubjects}
+                            extraClass={cls.multiSelect}
+                            value={selectedSubjects}
+                            fontSize={15}
+                        />
                         <Select
                             extraClass={cls.extraClasses}
                             name={"category"}
@@ -134,15 +158,16 @@ export const TeacherEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
                     </div>
 
 
-                    <div style={{display: "flex" , gap: "5px"}}>
+                    <div style={{display: "flex", gap: "5px"}}>
                         {/*<a href={API_URL_DOC+} download><Button> Resume Saqlab olish</Button></a>*/}
 
                         <Button>Resume O'zgartirish</Button>
                     </div>
 
                     <div className={cls.filter__switch}>
-                      <div></div>
-                        <Button extraClass={cls.submitBtn} type={"submit"} children={"Button"} onClick={handleEditTeacher}/>
+                        <div></div>
+                        <Button extraClass={cls.submitBtn} type={"submit"} children={"Button"}
+                                onClick={handleEditTeacher}/>
                     </div>
 
                 </div>
