@@ -182,6 +182,7 @@ export const FlowListPage = () => {
     const renderFlowList = () => {
         return currentTableData.map((item, i) => (
             <FlowList
+                currentPage={currentPage}
                 key={i}
                 flowList={item}
                 onChangeAll={onChangeAll}

@@ -65,7 +65,7 @@ export const Accordion = ({title, subtitle, children, backOpen, setBackOpen, cla
             <div
                 style={
                     backOpen || open
-                        ? {height: contentHeight.current.scrollHeight}
+                        ? {height: contentHeight.current?.scrollHeight}
                         : {height: "0px"}
                 }
                 ref={contentHeight}
