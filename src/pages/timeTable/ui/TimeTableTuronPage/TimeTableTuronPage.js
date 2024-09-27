@@ -35,7 +35,7 @@ import {
     getTimeTableTuronData,
     getTimeTableTuronDay,
     getTimeTableTuronFilterClass,
-    getTimeTableTuronGroup,
+    getTimeTableTuronGroup, getTimeTableTuronGroupStatus,
     getTimeTableTuronHours,
     getTimeTableTuronSubjects,
     getTimeTableTuronTeachers,
@@ -204,6 +204,7 @@ export const TimeTableTuronPage = () => {
     const classViewData = useSelector(getTimeTableTuronClassViewData)
     const hours = useSelector(getTimeTableTuronHours)
     const groupsData = useSelector(getTimeTableTuronGroup)
+    const groupsDataStatus = useSelector(getTimeTableTuronGroupStatus)
     const subjectsData = useSelector(getTimeTableTuronSubjects)
     const teachersData = useSelector(getTimeTableTuronTeachers)
     const teachersStatus = useSelector(getTimeTableTuronTeachersStatus)
@@ -216,7 +217,7 @@ export const TimeTableTuronPage = () => {
 
 
     useEffect(() => {
-        if (day && branch) dispatch(fetchTimeTableData({id: day, type: "class", branch}))
+        if (day && branch) dispatch(fetchTimeTableData({id: day, branch}))
     }, [day, branch])
 
 
@@ -320,10 +321,6 @@ export const TimeTableTuronPage = () => {
     },[rooms.length,filteredClass,type])
 
 
-    // const showAlert = (type, message) => {
-    //     const newAlert = {id: Date.now(), type, message};
-    //     setAlerts([...alerts, newAlert]);
-    //
     // };
 
 
@@ -887,6 +884,7 @@ export const TimeTableTuronPage = () => {
                     teachers={teachers}
                     color={color}
                     type={type}
+                    status={groupsDataStatus}
                 />
 
 
