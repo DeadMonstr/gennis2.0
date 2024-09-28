@@ -7,6 +7,7 @@ import { Button } from 'shared/ui/button';
 import cls from './roomEditModal.module.sass';
 import { getRoomsID } from "../../roomsEditModal/model";
 import {onAddAlertOptions} from "../../alert/model/slice/alertSlice";
+import {API_URL, headers, useHttp} from "../../../shared/api/base";
 
 export const RoomEditModal = ({ isOpen, onClose, roomId, onUpdate }) => {
     const dispatch = useDispatch();
@@ -23,6 +24,8 @@ export const RoomEditModal = ({ isOpen, onClose, roomId, onUpdate }) => {
         }
     }, [room]);
 
+
+    const {request } = useHttp()
     const handleEditRoom = () => {
         if (!roomId) return;
         const updatedRoom = {
@@ -30,6 +33,16 @@ export const RoomEditModal = ({ isOpen, onClose, roomId, onUpdate }) => {
             seats_number: parseInt(seatCount, 10),
             electronic_board: electronicBoard,
         };
+
+
+        // request(`${API_URL}Rooms/rooms_update/${roomId}/`, 'PATCH', JSON.stringify(data) , headers())
+        //     .then(res => {
+        //         console.log(res)
+        //
+        //     })
+        //     .catch(err => {
+        //         console.log(err)
+        //     })
 
         dispatch(editRoomThunk({ id: roomId, updatedRoom }))
             .then(() => {

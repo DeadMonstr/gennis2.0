@@ -1,12 +1,16 @@
 import {useDispatch, useSelector} from "react-redux";
-import {getAttendance, getAttended} from "../../../profilePage/model/selector/groupAttendanceSelector";
+import {
+    getAttendance,
+    getAttendanceList,
+    getAttended
+} from "../../../profilePage/model/selector/groupAttendanceSelector";
 import cls from "./groupAttendance.module.sass";
 import {Select} from "shared/ui/select";
 import {Table} from "shared/ui/table";
 import React, {useCallback, useEffect, useState} from "react";
 import {Button} from "shared/ui/button";
 import {Modal} from "shared/ui/modal";
-import {getAttendanceThunk} from "../../../../entities/groups/model/slice/groupsAttendanceThunk";
+import {fetchGroupAttendend, getAttendanceThunk} from "../../../../entities/groups/model/slice/groupsAttendanceThunk";
 import {useParams} from "react-router";
 import {API_URL, headers, useHttp} from "../../../../shared/api/base";
 import {months} from "../../../calendarPage/ui/calendarDetail";
@@ -19,7 +23,15 @@ export const GroupAttendance = () => {
     const [attended, setAttended] = useState(false)
     const [activeModal, setActiveModal] = useState(false)
 
+    const attendanceList = useSelector(getAttendanceList)
 
+    const {id} = useParams()
+
+    console.log(id , attendanceList)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(fetchGroupAttendend(id))
+    }, [])
     const renderTable = () => {
         // return studentAttendance?.map((item, i) => (
         //     <tr>
@@ -217,7 +229,7 @@ export const Attendance = ({active, setActive}) => {
                 return item
             })
         })
-        console.log(id , requestType , requestMsg)
+        console.log(id, requestType, requestMsg)
     }
 
     const onCheckedStudents = (e) => {
@@ -238,22 +250,10 @@ export const Attendance = ({active, setActive}) => {
                 updateStatusStudent({id: student.id, requestType: "loading"})
                 request(`${API_URL}Attendance/to_attend_school/${studentId}/`, "POST", JSON.stringify(data), headers())
                     .then(res => {
-                        if (res.success) {
-                            // removeSuccessStudent(res.student_id)
-                            setStudents(students => students.filter(item => item.id !== res.student_id))
-                            // dispatch(removeCheckedStudent({id:res.student_id}))
-                            setAttendendModal(false)
+                        setStudents(students => students.filter(item => item.id !== res.id))
+                        console.log(students)
 
-                            // setTypeMsg("success")
-                            // setMsg(res.msg)
-                            // setActiveMessage(true)
-                        }
-                        if (res.error) {
-                            setAttendendModal(false)
-
-                            updateStatusStudent({id: res.student_id, requestType: res.requestType, requestMsg: res.msg})
-                        }
-
+                        setAttendendModal(false)
                     })
                     .catch(err => {
                         console.log(err, "err")

@@ -4,7 +4,7 @@ import classNames from "classnames";
 import cls from "./select.module.sass"
 import {value} from "lodash/seq";
 
-export const Select = React.memo(({
+export const  Select = React.memo(({
                                       options,
                                       keyValue,
                                       required,
@@ -23,8 +23,6 @@ export const Select = React.memo(({
     const [selectOption, setSelectOption] = useState("");
     const [optionsData, setOptionsData] = useState([]);
     const [isChanged, setIsChanged] = useState(false);
-
-    console.log(defaultValue, 'default')
 
 
     useEffect(() => {
@@ -129,7 +127,9 @@ export const Select = React.memo(({
                     setIsChanged(true);
                 }}
             >
-                {title ? <option value={""}>{title}</option> : <option value={""} disabled>Tanlang</option>}
+                <option value={""} disabled>Tanlang</option>
+
+                {/*{title ? <option value={""}>{title}</option> : <option value={""} disabled>Tanlang</option>}*/}
                 {renderedOptions}
             </select>
             {status === "error" ? <span className={cls.label__error}>Error</span> : null}

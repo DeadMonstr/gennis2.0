@@ -14,7 +14,7 @@ import {fetchRoomsData} from "entities/rooms";
 import {onAddAlertOptions} from "../../alert/model/slice/alertSlice";
 import {branchQueryId} from "../../../shared/api/base";
 
-export const RoomModal = ({isOpen, onClose,branch}) => {
+export const RoomModal = ({isOpen, onClose, branch}) => {
     const [groupName, setGroupName] = useState('');
     const [seatCount, setSeatCount] = useState('');
     const [electronicBoard, setElectronicBoard] = useState(false);
@@ -31,11 +31,15 @@ export const RoomModal = ({isOpen, onClose,branch}) => {
             branch: branchQueryId(),
         };
 
-        dispatch(roomsAddThunk(newRoom)).then((action) => {
-            if (roomsAddThunk.fulfilled.match(action)) {
-                dispatch(addRoom(action.payload));
-            }
-        });
+        dispatch(roomsAddThunk(newRoom))
+            .then((action) => {
+                if (roomsAddThunk.fulfilled.match(action)) {
+                    dispatch(addRoom(action.payload));
+                }
+            });
+
+        setGroupName("")
+        setSeatCount("")
         dispatch(onAddAlertOptions({
             type: "success",
             status: true,
