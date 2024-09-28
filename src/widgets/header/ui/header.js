@@ -60,14 +60,25 @@ export const Header = () => {
         }
     }, [pathname]);
 
-    useEffect(() => {
-            if (valueData) {
-                debouncedFetchData();
-            } else {
-                setSearchParams({});
-                dispatch(getSearchStr(null))
-            }
-        }, [valueData]);
+    // useEffect(() => {
+    //         if (valueData) {
+    //             debouncedFetchData();
+    //         } else {
+    //             setSearchParams({});
+    //             dispatch(getSearchStr(null))
+    //         }
+    //     }, [valueData]);
+
+    const onChangeSearch = (value) => {
+        console.log(value, "value")
+        if (value) {
+            setValueData(value)
+            debouncedFetchData();
+        } else {
+            setSearchParams({});
+            dispatch(getSearchStr(null))
+        }
+    }
 
 
 
@@ -105,7 +116,7 @@ export const Header = () => {
                 <img className={cls.header__logo} src={logo} alt=""/>
                 <SearchPlatformInput
                     defaultSearch={valueData ?? searchParams.get('search')}
-                    onSearch={setValueData}
+                    onSearch={onChangeSearch}
                 />
                 <div className={cls.inner}>
                     <ThemeSwitcher/>
