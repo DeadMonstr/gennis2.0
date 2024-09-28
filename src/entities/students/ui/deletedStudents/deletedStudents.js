@@ -23,9 +23,7 @@ export const DeletedStudents = ({currentTableData}) => {
     useEffect(() =>{
         dispatch(fetchReasons())
     },[])
-
-    console.log(currentTableData , "table")
-
+    
     const renderDeletedStudents = () => {
 
         // if (!currentTableData || currentTableData.length === 0)
