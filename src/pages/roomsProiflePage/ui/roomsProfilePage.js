@@ -90,6 +90,7 @@ export const RoomsProfilePage = () => {
         dispatch(fetchRoomImages(id));
     };
 
+
     return (
         <>
             <div className={cls.container}>
@@ -98,8 +99,11 @@ export const RoomsProfilePage = () => {
                         :
                         <div className={cls.container_leftBox}>
                             <div className={cls.container_leftBox_buttonPanel}>
-                                <Button onClick={() => setModal(true)} extraClass={cls.buttonDelete}
-                                        children={<i className="fa-solid fa-trash"></i>}/>
+                                {localRoomData.can_delete ?
+                                    <Button onClick={() => setModal(true)} extraClass={cls.buttonDelete}
+                                    children={<i className="fa-solid fa-trash"></i>}/> : null
+                                }
+
                             </div>
                             <div className={cls.container_leftBox_sliderBox}>
                         <span className={cls.visibleBlack} onClick={() => setImage(true)}>
