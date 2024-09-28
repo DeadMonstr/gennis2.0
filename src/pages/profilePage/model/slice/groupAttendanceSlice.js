@@ -1,35 +1,47 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {fetchGroupAttendend, getAttendanceThunk} from "../../../../entities/groups/model/slice/groupsAttendanceThunk";
 
 const initialState = {
     loading: false,
     error: false,
-    attendance: [
-        {name: "Sardor", surname: "ikromov", id: 1},
-        {name: "Sardor", surname: "ikromov", id: 2},
-        {name: "Sardor", surname: "ikromov", id: 3}
-    ],
-    attended: [
-        {name: "Sardor", surname: "ikromov", id: 1 , status: true},
-        {name: "Sardor", surname: "ikromov", id: 2 , status: false},
-        {name: "Sardor", surname: "ikromov", id: 2 , status: false},
-        {name: "Sardor", surname: "ikromov", id: 2 , status: false},
-        {name: "Sardor", surname: "ikromov", id: 3 , status: true},
-        {name: "Sardor", surname: "ikromov", id: 3 , status: true},
-        {name: "Sardor", surname: "ikromov", id: 3 , status: true},
-    ]
+    attendance: [],
+    attendanceList: []
 }
 
 const groupAttendance = createSlice({
     name: "groupAttendance",
     initialState,
-    reducers: {
-        onChecked: (state, action) => {
-            state.attendance = state.attendance.filter(item => item.id !== action.payload.id)
-        }
-    },
-    extraReducers: builder => {}
+    reducers: {},
+    extraReducers: builder =>
+        builder
+            .addCase(getAttendanceThunk.pending , state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(getAttendanceThunk.fulfilled , (state, action) => {
+                state.attendance = action.payload
+                state.loading = false
+                state.error = false
+            })
+            .addCase(getAttendanceThunk.rejected , state => {
+                state.error = true
+                state.loading  =false
+            })
+
+            .addCase(fetchGroupAttendend.pending , state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(fetchGroupAttendend.fulfilled , (state, action) => {
+                state.attendanceList = action.payload
+                state.loading = false
+                state.error = false
+            })
+            .addCase(fetchGroupAttendend.rejected , state => {
+                state.error = true
+                state.loading  =false
+            })
 })
 
-export const {onChecked} = groupAttendance.actions
 export default groupAttendance.reducer
 

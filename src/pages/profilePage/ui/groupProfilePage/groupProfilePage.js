@@ -56,6 +56,7 @@ import {Table} from "../../../../shared/ui/table";
 import {getAttendance} from "../../model/selector/groupAttendanceSelector";
 import {onChecked} from "../../model/slice/groupAttendanceSlice";
 import {getGroupAttendance} from "../../../../entities/profile/groupProfile/model/groupProfileSelector";
+import {getAttendanceThunk} from "../../../../entities/groups/model/slice/groupsAttendanceThunk";
 
 export const GroupProfilePage = () => {
 
@@ -70,12 +71,16 @@ export const GroupProfilePage = () => {
     const systemId = useSelector(getUserSystemId)
     // const groupAttendance  = useSelector(getGroupAttendance)
 
+
+
+
     const [active, setActive] = useState(false)
 
     const [attendance, setAttendance] = useState(false)
 
     useEffect(() => {
         dispatch(fetchGroupProfile({id}))
+
 
         dispatch(fetchSubjectsData())
         dispatch(fetchLanguagesData())
@@ -181,7 +186,7 @@ export const GroupProfilePage = () => {
                 {/*<GroupProfileTeacher setActive={setActiveModal}/>*/}
                 <GroupProfileDeleteForm branch={branch} system={system}/>
                 {/*<GroupProfileStudents/>*/}
-                <GroupProfileAttendanceForm data={data?.students}   setAttendance={setAttendance} attendance={attendance}/>
+                <GroupProfileAttendanceForm  data={data?.students} setAttendance={setAttendance} attendance={attendance}/>
                 {/*<GroupProfileAttendance/>*/}
                 {
                     system.name === "center" ? <>

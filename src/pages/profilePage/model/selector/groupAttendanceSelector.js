@@ -1,5 +1,4 @@
 export const getAttendance = (state) =>
     state.groupAttendanceSlice.attendance
-
-export const getAttended = (state) =>
-    state.groupAttendanceSlice.attended
+export const getAttendanceList = (state) =>
+    state.groupAttendanceSlice.attendanceList

@@ -161,6 +161,7 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
                                     }
                                     <Textarea
                                         placeholder={"Koment"}
+
                                         register={register}
                                         name={"comment"}
                                     />

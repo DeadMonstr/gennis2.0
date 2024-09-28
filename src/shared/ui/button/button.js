@@ -11,6 +11,7 @@ import Filter from "shared/assets/Filtericons/Filter.svg";
 export const Button = React.memo(({id,children, onClick, type, disabled, status, extraClass, editPlus}) => {
     return (
         <button
+
             id={id}
             form={id}
             onClick={onClick}
@@ -26,7 +27,7 @@ export const Button = React.memo(({id,children, onClick, type, disabled, status,
                 [cls.filter]: type === "filter",
                 [cls.editPlus]: type === "editPlus",
             })}
-            disabled={disabled}
+            disabled={type === "disabled" ? disabled : disabled}
         >
             {status === "timeTable" ? <img src={timeTable} alt=""/> : null}
             {status === "filter" ? <img src={Filter} alt=""/> : null}

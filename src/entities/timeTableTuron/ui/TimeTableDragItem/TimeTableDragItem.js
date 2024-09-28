@@ -9,7 +9,7 @@ import cls from "./TimeTableDragItem.module.sass"
 export const TimeTableDragItem = (props) => {
 
 
-    const {item,children,color} = props
+    const {item,children,color,typeItem} = props
 
 
 
@@ -26,9 +26,10 @@ export const TimeTableDragItem = (props) => {
             }}
             id={item.dndId}
             extraClass={cls.dnd}
-
         >
-            <div className={cls.class}  style={{backgroundColor: color || null}}>
+
+
+            <div className={cls.class}  style={{backgroundColor: color || null,  fontSize : typeItem === "flow" ? "1.2rem" : null}}>
                 {children}
             </div>
         </Draggable>

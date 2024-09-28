@@ -80,7 +80,6 @@ export const FlowList = memo(({flowList, number, onChangeSingle, onChangeAll, cu
                     {renderFlowList()}
                     </tbody>
                 </Table>
-
             </Accordion>
         </div>
     )

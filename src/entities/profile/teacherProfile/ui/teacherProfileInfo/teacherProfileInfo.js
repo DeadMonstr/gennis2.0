@@ -10,9 +10,11 @@ import {fetchTeacherId, getTeacherId} from "../../../../teachers";
 import {getLoading} from "../../../../teachers/model/selector/teacherIdSelector";
 import {TeacherEdit} from "features/profileEdits/teacherEdit";
 import {DefaultLoader} from "shared/ui/defaultLoader";
-import {fetchCategories} from "../../../../../pages/registerPage/model/registerThunk";
+
 import {getBranch} from "../../../../../features/branchSwitcher";
 import {fetchClassNumberData, fetchClassTypeData} from "../../../../oftenUsed";
+import {fetchCategories} from "../../../../oftenUsed/model/oftenUsedThunk";
+
 
 export const TeacherProfileInfo = memo(({active, setActive, setActiveModal, newImage, system}) => {
 

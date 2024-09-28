@@ -10,9 +10,9 @@ import cls from './teacherEdit.module.sass'
 import {Button} from "../../../../shared/ui/button";
 import {onAddAlertOptions} from "../../../alert/model/slice/alertSlice";
 import {Select} from "../../../../shared/ui/select";
-import {getCategories} from "../../../../pages/registerPage/model/registerSelector";
-import {fetchSubjectsData, getClassTypeData, getSubjectsData} from "entities/oftenUsed";
-import {API_URL, API_URL_DOC} from "../../../../shared/api/base";
+
+import {fetchCategories, fetchSubjectsData, getClassTypeData, getSubjectsData , getCategories} from "entities/oftenUsed";
+
 
 export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
     const dispatch = useDispatch();
@@ -28,10 +28,13 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
     const [age, setAge] = useState('')
     const [classType, setClassType] = useState('')
     const [selectedSubjects, setSelectedSubjects] = useState([])
+
+
     const subjectOptions = subjects?.map(subject => ({
         value: subject?.id,
         label: subject?.name,
     }));
+
 
     useEffect(() => {
         dispatch(fetchSubjectsData())
@@ -53,8 +56,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
             )
         }
     }, [teacherID])
-
-
+    console.log(categories , classTypes)
     const handleEditTeacher = () => {
         if (!teacherID) return;
         const updateTeacher = {
@@ -84,6 +86,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
 
     if (!isOpen) return null
 
+    console.log(teacherSalaryType , classType)
     return (
         <Modal
             active={isOpen}
@@ -142,7 +145,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
                             extraClass={cls.extraClasses}
                             name={"category"}
                             options={categories}
-                            defaultValue={teacherSalaryType}
+                            defaultValue={categories[0].name}
                             onChangeOption={setTeacherSalaryType}
                             title={"Toifa"}
                         />
@@ -152,7 +155,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
                             options={classTypes}
                             onChangeOption={setClassType}
                             title={"Sinf"}
-                            defaultValue={classType}
+                            defaultValue={classTypes[0].name}
 
                         />
                     </div>

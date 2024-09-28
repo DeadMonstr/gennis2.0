@@ -87,7 +87,7 @@ const daysData = [
     }
 ]
 
-export const GroupProfileAttendanceForm = memo(({attendance, setAttendance , data}) => {
+export const GroupProfileAttendanceForm = memo(({attendance, setAttendance , data , id}) => {
 
 
 
@@ -119,13 +119,12 @@ export const GroupProfileAttendanceForm = memo(({attendance, setAttendance , dat
 
     const render = renderAttendance()
 
-    const renderModule = renderAttendance(100)
 
     return (
         <>
             <EditableCard
                 extraClass={cls.attendance}
-                onClick={() => setActive(true)}
+                onClick={() => navigate(`attendance`)}
             >
                 <h1>Davomat</h1>
                 <div className={cls.attendance__contauner}>
@@ -155,42 +154,6 @@ export const GroupProfileAttendanceForm = memo(({attendance, setAttendance , dat
                     </Table>
                 </div>
             </EditableCard>
-            <Modal
-                active={active}
-                setActive={setActive}
-            >
-                <div className={cls.attendance_header}>
-
-                    <Select/>
-                    <Select/>
-
-                    <div onClick={() => navigate(`attendance`)} className={`${cls.attendance_plus} fa fa-plus`}/>
-                </div>
-                <div>
-                    <Table>
-                        <thead>
-                        <tr>
-                            <th/>
-                            <th>Ism Familya</th>
-                            {
-                                daysData.map(item => {
-                                    return (
-                                        <th>
-                                            <div className={cls.days}>
-                                                <h2>{item.number}</h2>
-                                            </div>
-                                        </th>
-                                    )
-                                })
-                            }
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {renderModule}
-                        </tbody>
-                    </Table>
-                </div>
-            </Modal>
         </>
     )
 })
