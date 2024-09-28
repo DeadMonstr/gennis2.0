@@ -9,10 +9,11 @@ import {getUserId, getUserRefreshLoading} from "pages/loginPage"
 
 import cls from "./Layout.module.sass"
 import {Alert} from "features/alert";
-import {getLocations, getSelectedLocations} from "features/locations";
-import {getBranch} from "features/branchSwitcher";
-import {getSystem} from "features/themeSwitcher";
+import {fetchLocationsThunk, getLocations, getSelectedLocations} from "features/locations";
+import {fetchBranchesByLocationsThunk, getBranch, onDeleteBranch} from "features/branchSwitcher";
+import {fetchThemeSwitcherSystemsThunk, getSystem} from "features/themeSwitcher";
 import {getBranchStatus} from "features/branchSwitcher/model/selector/brachSwitcherSelector";
+import {getSystemInited} from "features/themeSwitcher/modal/selector/themeSwitcherSystems";
 
 
 export const Layout = () => {
@@ -23,6 +24,10 @@ export const Layout = () => {
     const userId = useSelector(getUserId)
     const refreshLoading = useSelector(getUserRefreshLoading)
 
+    const inited = useSelector(getSystemInited)
+    const selectedLocations = useSelector(getSelectedLocations)
+    const locations = useSelector(getLocations)
+    const system = useSelector(getSystem)
 
 
 
@@ -39,6 +44,28 @@ export const Layout = () => {
             dispatch(fetchUserProfileData(userId))
         }
     }, [userId, refreshLoading])
+
+    useEffect(() => {
+        if (!inited) {
+            dispatch(fetchThemeSwitcherSystemsThunk())
+        }
+    }, [inited])
+
+
+    useEffect(() => {
+        if (system.id)
+            dispatch(fetchLocationsThunk(system.id))
+    },[system.id])
+
+
+    useEffect(() => {
+        if (selectedLocations[0]?.id) {
+            dispatch(fetchBranchesByLocationsThunk(selectedLocations[0].id))
+        } else {
+            dispatch(onDeleteBranch())
+        }
+    }, [selectedLocations[0]?.id])
+
 
 
     return (

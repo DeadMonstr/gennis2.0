@@ -29,10 +29,10 @@ export const Location = ({systemId}) => {
     const dispatch = useDispatch();
 
 
-    useEffect(() => {
-        if (systemId)
-        dispatch(fetchLocationsThunk(systemId))
-    },[systemId])
+    // useEffect(() => {
+    //     if (systemId)
+    //     dispatch(fetchLocationsThunk(systemId))
+    // },[systemId])
 
 
     // useEffect(() => {
