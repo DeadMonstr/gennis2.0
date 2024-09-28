@@ -35,6 +35,7 @@ export const RoomsProfilePage = () => {
     const roomImageData = useSelector(getRoomImage);
     const API_URL_IMAGE = `${API_URL}media/`;
     const navigate = useNavigate()
+
     useEffect(() => {
         if (roomsID) {
             const initialSwitchStates = {
