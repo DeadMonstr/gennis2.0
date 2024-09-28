@@ -12,10 +12,19 @@ export const getAttendanceThunk  =createAsyncThunk(
     }
 )
 
-export const fetchAttendanceStudent = createAsyncThunk(
-    "groupAttendance/fetchAttendanceStudent",
-    ()=> {
+// export const fetchAttendanceStudent = createAsyncThunk(
+//     "groupAttendance/fetchAttendanceStudent",
+//     ()=> {
+//         const {request} = useHttp()
+//         return request(`${API_URL}`)
+//     }
+// )
+
+export const fetchGroupAttendend = createAsyncThunk(
+    "groupAttendance/fetchGroupAttendend",
+    (id) => {
         const {request} = useHttp()
-        return request(`${API_URL}`)
+        return request(`${API_URL}Attendance/attendance_list_school/${id}/`, "GET" , null , headers())
+
     }
 )

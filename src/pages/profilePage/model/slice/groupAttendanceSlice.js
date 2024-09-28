@@ -1,10 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getAttendanceThunk} from "../../../../entities/groups/model/slice/groupsAttendanceThunk";
+import {fetchGroupAttendend, getAttendanceThunk} from "../../../../entities/groups/model/slice/groupsAttendanceThunk";
 
 const initialState = {
     loading: false,
     error: false,
-    attendance: []
+    attendance: [],
+    attendanceList: []
 }
 
 const groupAttendance = createSlice({
@@ -23,6 +24,20 @@ const groupAttendance = createSlice({
                 state.error = false
             })
             .addCase(getAttendanceThunk.rejected , state => {
+                state.error = true
+                state.loading  =false
+            })
+
+            .addCase(fetchGroupAttendend.pending , state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(fetchGroupAttendend.fulfilled , (state, action) => {
+                state.attendanceList = action.payload
+                state.loading = false
+                state.error = false
+            })
+            .addCase(fetchGroupAttendend.rejected , state => {
                 state.error = true
                 state.loading  =false
             })
