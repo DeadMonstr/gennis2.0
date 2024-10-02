@@ -1,7 +1,3 @@
-
-import {classData} from "entities/class/model/selector/classSelector";
-import {getClassTypes} from "entities/class/model/thunk/classThunk";
-import {fetchClassNumberList, getSchoolClassNumbers} from "entities/students";
 import React, {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
