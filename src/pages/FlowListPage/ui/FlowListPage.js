@@ -152,7 +152,7 @@ export const FlowListPage = () => {
     const onCreateFlow = () => {
         let idArr = []
         selectedId.map(item => {
-            item.students.map(i => idArr.push(i))
+            item?.students?.map(i => idArr.push(i))
         })
         const res = localStorage.getItem("flowData")
         const data = {
