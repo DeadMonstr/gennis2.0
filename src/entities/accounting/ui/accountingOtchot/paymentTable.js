@@ -37,7 +37,7 @@ export const PaymentTable = ({classes, extraClass, extraClassTable}) => {
                     <th>No</th>
                     <th>Ism Familiya</th>
                     <th>Tel raqami</th>
-                    <th>Umumiy qarz</th>
+                    <th>Oylik qarz</th>
                     <th>Qolgan qarz</th>
                     <th>Cash</th>
                     <th>Bank</th>

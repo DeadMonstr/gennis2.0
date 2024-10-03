@@ -12,10 +12,7 @@ import {Button} from "shared/ui/button";
 import {Modal} from "shared/ui/modal";
 import {fetchGroupAttendend, getAttendanceThunk} from "../../../../entities/groups/model/slice/groupsAttendanceThunk";
 import {useParams} from "react-router";
-import {API_URL, headers, useHttp} from "../../../../shared/api/base";
-import {months} from "../../../calendarPage/ui/calendarDetail";
-import {value} from "lodash/seq";
-import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
+import {API_URL, headers, useHttp} from "shared/api/base";
 
 export const GroupAttendance = () => {
 
@@ -23,29 +20,77 @@ export const GroupAttendance = () => {
     const [attended, setAttended] = useState(false)
     const [activeModal, setActiveModal] = useState(false)
 
+    const [month, setMonths] = useState(null)
+
+    const [year, setYear] = useState(null)
     const attendanceList = useSelector(getAttendanceList)
 
     const {id} = useParams()
 
-    console.log(id , attendanceList)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchGroupAttendend(id))
     }, [])
+
+
+    const checkTrueFalse = (data) => {
+        if (data) {
+            return data?.map(item => {
+                if (item.status === true) {
+                    return (
+                        <td className="date true">
+                            <i className="fas fa-check"></i>
+                        </td>
+                    )
+                }
+                if (item.status === false) {
+                    return (
+                        <td className="date false">
+                            <i className="fas fa-times"></i>
+                            <div className="popup">
+                                {item.reason}
+                            </div>
+                        </td>
+                    )
+                }
+                if (item.status === "") {
+                    return (
+                        <td className="date true"></td>
+                    )
+                }
+            })
+        }
+
+    }
+
     const renderTable = () => {
-        // return studentAttendance?.map((item, i) => (
-        //     <tr>
-        //         <td>{i + 1}</td>
-        //         <td>{item.name} {item.surname}</td>
-        //         <td/>
-        //         <td>
-        //             <div className={cls.attendance_icon}>
-        //                 <i onClick={() => onClick(item)} className={`${cls.attendance_check} fa fa-check`}></i>
-        //                 <i className={`${cls.attendance_times} fa fa-times`}></i>
-        //             </div>
-        //         </td>
-        //     </tr>
-        // ))
+        return attendanceList?.students?.students?.map((item, i) => (
+            <tr>
+                <td>{i + 1}</td>
+                <td>{item?.name} {item?.surname}</td>
+                {/*<td/>*/}
+                {checkTrueFalse(item.days)}
+                {/*<>*/}
+                {/*    {item?.days?.map(itemDays => {*/}
+                {/*        console.log(itemDays, "fijsd")*/}
+                {/*        return (*/}
+                {/*            <td>*/}
+                {/*                {itemDays.status === true ?*/}
+                {/*                    <i className={`${cls.attendance_check} fa fa-check`}></i> :*/}
+                {/*                    <i className={`${cls.attendance_times} fa fa-times`}></i>*/}
+                {/*                }*/}
+                {/*            </td>*/}
+                {/*        )*/}
+                {/*    })}*/}
+                {/*</>*/}
+                {/*<td>*/}
+                {/*    <div className={cls.attendance_icon}>*/}
+                {/*        <i onClick={() => onClick(item)} className={`${cls.attendance_check} fa fa-check`}></i>*/}
+                {/*        <i className={`${cls.attendance_times} fa fa-times`}></i>*/}
+                {/*    </div>*/}
+                {/*</td>*/}
+            </tr>
+        ))
     }
 
     const render = renderTable()
@@ -54,7 +99,18 @@ export const GroupAttendance = () => {
             <div className={cls.attendance_header}>
                 <h2>Davomat </h2>
                 <div className={cls.attendance_end}>
-                    <Select/>
+                    <div className={cls.attendance_end_select}>
+                        <Select extraClass={cls.select} options={attendanceList?.students?.years?.map(item => item?.year)}
+                                onChangeOption={setYear}/>
+                        {
+                            year ?
+                                <Select
+                                    extraClass={cls.select}
+                                    options={attendanceList?.students?.years?.filter(item => item?.year === +year)[0]?.month}
+                                    onChangeOption={setMonths}/>
+                                : null
+                        }
+                    </div>
                     <div onClick={() => setActiveModal(!activeModal)} className={`${cls.attendance_plus} fa fa-plus`}/>
                 </div>
             </div>
@@ -65,17 +121,7 @@ export const GroupAttendance = () => {
                     <tr>
                         <th/>
                         <th>Ism Familya</th>
-                        {/*{*/}
-                        {/*    daysData.map(item => {*/}
-                        {/*        return (*/}
-                        {/*            <th>*/}
-                        {/*                <div className={cls.days}>*/}
-                        {/*                    <h2>{item.number}</h2>*/}
-                        {/*                </div>*/}
-                        {/*            </th>*/}
-                        {/*        )*/}
-                        {/*    })*/}
-                        {/*}*/}
+                        {attendanceList?.students?.days.map(item => <th>{item}</th>)}
                     </tr>
                     </thead>
                     <tbody>
@@ -220,13 +266,16 @@ export const Attendance = ({active, setActive}) => {
         }
     }, [students])
 
-    const updateStatusStudent = ({id, requestType, requestMsg}) => {
+    const updateStatusStudent = ({id, requestType, requestMsg,}) => {
         setStudents(students => {
             return students.map(item => {
                 if (id === item.id) {
+
                     return {...item, requestType: requestType, requestMsg: requestMsg}
+                    console.log(item , "item")
                 }
                 return item
+
             })
         })
         console.log(id, requestType, requestMsg)
@@ -247,7 +296,7 @@ export const Attendance = ({active, setActive}) => {
                 }
                 const studentId = data?.students?.map(item => item.id)
 
-                updateStatusStudent({id: student.id, requestType: "loading"})
+                updateStatusStudent({id: student.id, requestType: "loading",})
                 request(`${API_URL}Attendance/to_attend_school/${studentId}/`, "POST", JSON.stringify(data), headers())
                     .then(res => {
                         setStudents(students => students.filter(item => item.id !== res.id))

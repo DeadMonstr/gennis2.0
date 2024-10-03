@@ -19,6 +19,7 @@ export const AllPages = () => {
     const [month, setMonths] = useState(null)
 
     const [year, setYear] = useState(null)
+
     return (
         <div>
             <div className={cls.paymentType}>
