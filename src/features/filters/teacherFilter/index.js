@@ -1,2 +1,2 @@
 export {TeacherFilter} from "./ui/teacherFilter";
-export {default as filteredTeachers} from "./model/filterTeacherSlice"
+export {default as filteredTeachersSlice} from "./model/filterTeacherSlice"

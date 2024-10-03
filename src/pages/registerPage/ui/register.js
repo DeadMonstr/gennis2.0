@@ -234,7 +234,7 @@ export const Register = () => {
                 parents_number: data.parents_phone,
                 ...result
             };
-            console.log(res, "log12")
+
             registerAction = registerUser(res);
         }
         else if (registerType === 'teacher') {

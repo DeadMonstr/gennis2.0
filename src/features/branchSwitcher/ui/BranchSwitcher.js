@@ -19,13 +19,13 @@ export const BranchSwitcher = ({location}) => {
     const dispatch = useDispatch();
 
 
-    useEffect(() => {
-        if (location?.id) {
-            dispatch(fetchBranchesByLocationsThunk(location.id))
-        } else {
-            dispatch(onDeleteBranch())
-        }
-    }, [location?.id])
+    // useEffect(() => {
+    //     if (location?.id) {
+    //         dispatch(fetchBranchesByLocationsThunk(location.id))
+    //     } else {
+    //         dispatch(onDeleteBranch())
+    //     }
+    // }, [location?.id])
 
 
     const changeSelectedBranches = useCallback((id) => {

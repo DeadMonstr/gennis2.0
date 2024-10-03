@@ -3,6 +3,10 @@ import {fetchFilteredGroups} from "./filterGroupsThunk"
 
 const initialState = {
     groups: null,
+    teacherId: null,
+    subjectId: null,
+    typeId: null,
+    isDelete: false,
     loading: false,
     error: null
 }
@@ -10,7 +14,20 @@ const initialState = {
 export const filterGroupsSlices = createSlice({
     name: "filterGroups",
     initialState,
-    reducers: {},
+    reducers: {
+        getTeacherId: (state, action) => {
+            state.teacherId = action.payload
+        },
+        getSubjectId: (state, action) => {
+            state.subjectId = action.payload
+        },
+        getTypeId: (state, action) => {
+            state.typeId = action.payload
+        },
+        getIsDelete: (state, action) => {
+            state.isDelete = action.payload
+        }
+    },
     extraReducers: builder =>
         builder
             .addCase(fetchFilteredGroups.pending, state => {
@@ -29,3 +46,9 @@ export const filterGroupsSlices = createSlice({
 })
 
 export default filterGroupsSlices.reducer
+export const {
+    getTeacherId,
+    getSubjectId,
+    getTypeId,
+    getIsDelete
+} = filterGroupsSlices.actions

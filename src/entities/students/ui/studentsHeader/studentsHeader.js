@@ -18,8 +18,6 @@ export const StudentsHeader = ({onChange, selectedRadio, peoples, setActive, onC
     const {request} = useHttp()
     const branchID = useSelector(getBranch)
 
-    console.log("render header")
-
     // const onClick = () => {
     //     request(`${API_URL}Students/export-students/?branch=1&format=json` , "GET")
     // }

@@ -23,11 +23,11 @@ export const ThemeSwitcher = () => {
     const [isLocal, setIsLocal] = useState(false)
 
 
-    useEffect(() => {
-        if (!inited) {
-            dispatch(fetchThemeSwitcherSystemsThunk())
-        }
-    }, [inited])
+    // useEffect(() => {
+    //     if (!inited) {
+    //         dispatch(fetchThemeSwitcherSystemsThunk())
+    //     }
+    // }, [inited])
 
 
     const onClick = (status) => {

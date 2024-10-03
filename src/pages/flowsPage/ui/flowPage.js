@@ -104,10 +104,10 @@ export const FlowsPage = () => {
                     setCurrentPage(page)
                 }}
                 type={"custom"}/>
-            {/*<FlowAddForm*/}
-            {/*    active={active}*/}
-            {/*    setActive={setActive}*/}
-            {/*/>*/}
+            <FlowAddForm
+                active={active}
+                setActive={setActive}
+            />
         </div>
     )
 }

@@ -110,7 +110,6 @@ export const StudentsPage = () => {
     let PageSize = useMemo(() => 50, []);
 
 
-    console.log(selectedRadio, deletedStudents, "st")
     const searchedUsers = useMemo(() => {
         // console.log(search, "search") ||
         let filteredStudents = [];
@@ -177,7 +176,6 @@ export const StudentsPage = () => {
     }
 
     const onSubmitFilteredByClass = (data) => {
-        console.log(schoolClassColors)
         setActiveFormBtn(schoolClassNumbers.filter(item => item.id === +data)[0]?.price === 0 || !schoolClassNumbers.filter(item => item.id === +data)[0]?.price)
         dispatch(fetchStudentsByClass({branch: userBranchId, number: data}))
     }
@@ -277,8 +275,6 @@ export const StudentsPage = () => {
             }
         ]
     }, [])
-
-    console.log("render")
 
 
     return (
