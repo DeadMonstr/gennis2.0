@@ -2,6 +2,7 @@ import classNames from "classnames";
 import {FlowList} from "entities/flowList";
 import {fetchGroupsData, getGroupsListData} from "entities/groups";
 import {getUserBranchId} from "entities/profile/userProfile";
+import {getBranch} from "features/branchSwitcher";
 import {useDispatch, useSelector} from "react-redux";
 import {flowListThunk, getFlowList} from "entities/flows";
 import {useParams} from "react-router-dom";
@@ -19,8 +20,9 @@ export const FlowListPage = () => {
 
     const {request} = useHttp()
     const dispatch = useDispatch()
-    const {"*": id} = useParams()
-    const userBranchId = id
+    const id = useSelector(getBranch)
+    // const {"*": id} = useParams()
+    const userBranchId = id?.id
     const navigate= useNavigate()
 
     useEffect(() => {
@@ -160,6 +162,8 @@ export const FlowListPage = () => {
             students: idArr,
             classes: []
         }
+
+        console.log(res, "onCreateFlow")
 
 
         // dispatch(flowListThunk({data}))
