@@ -21,6 +21,7 @@ import {YesNo} from "../../../../../shared/ui/yesNoModal/yesNo";
 import {StudentPaymentDates} from "../../../../../features/studentPaymentDates";
 import {onAddAlertOptions} from "../../../../../features/alert/model/slice/alertSlice";
 import {fetchStudentProfileData} from "../../../../../pages/profilePage/model/thunk/studentProfileThunk";
+import {SimplePopup} from "../../../../../shared/ui/popup";
 
 export const StudentProfileAmountPath = memo(({active, setActive}) => {
     const pathArray = window.location.pathname.split('/');
@@ -170,15 +171,39 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                         </div>
                         <p>Kitoblar</p>
                     </div>
+                    <div
+                        className={classNames(cls.items__inner, {
+                            [cls.active]: activeState !== "balanceBackLog"
+                        })}
+                        onClick={() => setActiveState("balanceBackLog")}
+                        style={{background: "#E0F8FF", border: ".1rem solid #20A5CA"}}
+                    >
+                        <h2 style={{color: "#20A5CA"}}>Qarzdorlik</h2>
+                    </div>
                 </div>
                 {
                     activeState ?
                         <div className={cls.table}>
                             <div className={cls.table__header}>
-                                <Button children={change ? "Amaldagi" : "O'chirilganlar"}
-                                        extraClass={change ? cls.buttonDel2 : cls.buttonDel}
-                                        onClick={() => setChange(!change)}/>
-                                {change ? null : <StudentPaymentDates/>}
+                                {
+                                activeState === "balanceBackLog" ?
+                                <div className={cls.popup}>
+                                    <SimplePopup
+                                        popupContent={
+                                        <div className={cls.popupContent}>
+                                            <h3>Qo'shish</h3>
+                                        </div>
+                                        }
+                                        triggerContent={<span className={cls.popupDiv}>∘∘∘</span>}
+                                    />
+                                </div> :
+                                    <>
+                                        <Button children={change ? "Amaldagi" : "O'chirilganlar"}
+                                                extraClass={change ? cls.buttonDel2 : cls.buttonDel}
+                                                onClick={() => setChange(!change)}/>
+                                        <StudentPaymentDates/>
+                                    </>
+                                }
                             </div>
                             <div className={cls.table__content}>
                                 {
@@ -195,7 +220,7 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                                         <tbody>
                                         {renderIn}
                                         </tbody>
-                                    </Table> : <Table>
+                                    </Table> : activeState === "balanceOut" ? <Table>
                                         <thead>
                                         <tr>
                                             <th>Turi</th>
@@ -206,7 +231,19 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                                         <tbody>
                                         {renderOut}
                                         </tbody>
-                                    </Table>
+                                    </Table> : activeState === "balanceBackLog" ?
+                                        <Table>
+                                            <thead>
+                                            <tr>
+                                                <th>Turi</th>
+                                                <th>To’lov</th>
+                                                <th>Sana</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <th>Mqswd</th>
+                                            </tbody>
+                                        </Table> : null
                                 }
                             </div>
                         </div>
