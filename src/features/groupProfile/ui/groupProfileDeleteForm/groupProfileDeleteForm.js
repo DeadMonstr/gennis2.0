@@ -24,7 +24,7 @@ import {
     amountService,
     amountTypes
 } from "entities/profile/studentProfile";
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {useTheme} from "shared/lib/hooks/useTheme";
 import {EditableCard} from "shared/ui/editableCard";
 import {Modal} from "shared/ui/modal";
@@ -55,7 +55,7 @@ const deleteTypeList = [
     }
 ]
 
-export const GroupProfileDeleteForm = memo(({branch,system}) => {
+export const GroupProfileDeleteForm = memo(({branch, system}) => {
 
     const {
         register,
@@ -65,6 +65,7 @@ export const GroupProfileDeleteForm = memo(({branch,system}) => {
     const {theme} = useTheme()
     const {id} = useParams()
     const dispatch = useDispatch()
+    const navigation = useNavigate()
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
     const userBranchId = useSelector(getUserBranchId)
     const data = useSelector(getGroupProfileData)
@@ -77,7 +78,7 @@ export const GroupProfileDeleteForm = memo(({branch,system}) => {
     useEffect(() => {
         if (data && branch) {
             dispatch(filteredStudents({
-                userBranchId:branch,
+                userBranchId: branch,
                 group_id: data?.id,
                 res: {ignore_students: data?.students.map(item => item.id)}
             }))
@@ -97,7 +98,6 @@ export const GroupProfileDeleteForm = memo(({branch,system}) => {
 
     const [searchValue, setSearchValue] = useState("")
     const [currentTeachersData, setCurrentTeachersData] = useState([])
-
 
 
     const searched = useMemo(() => {
@@ -137,7 +137,7 @@ export const GroupProfileDeleteForm = memo(({branch,system}) => {
                 students: select
             }
             dispatch(moveToClass({branch, id, res}))
-            msg= `O'quvchilar boshqa sinfga o'tqazildi`
+            msg = `O'quvchilar boshqa sinfga o'tqazildi`
         } else {
             const res = {
                 ...data,
@@ -186,7 +186,11 @@ export const GroupProfileDeleteForm = memo(({branch,system}) => {
                     />
                 </td>
                 <td>
-                    <img src={defaultUserImg} alt=""/>
+                    <img
+                        onClick={() => navigation(`../students/profile/${item.id}`)}
+                        src={defaultUserImg}
+                        alt=""
+                    />
                 </td>
                 <td>{item?.user?.name} {item?.user?.surname}</td>
                 <td>
@@ -235,7 +239,10 @@ export const GroupProfileDeleteForm = memo(({branch,system}) => {
         return searched?.map(item =>
             <tr>
                 <td>
-                    <img src={defaultUserImg} alt=""/>
+                    <img
+                        src={defaultUserImg}
+                        alt=""
+                    />
                 </td>
                 <td>{item?.user?.name}</td>
                 <td>{item?.user?.surname}</td>
@@ -530,7 +537,7 @@ export const GroupProfileDeleteForm = memo(({branch,system}) => {
                             <th>Ism</th>
                             <th>Familya</th>
                             {
-                                system.name === "center" ? <th>Fanlar</th>: <th>Sinf</th>
+                                system.name === "center" ? <th>Fanlar</th> : <th>Sinf</th>
                             }
 
                             <th>Status</th>
