@@ -83,7 +83,7 @@ export const Register = () => {
     const categories = useSelector(getCategories)
     const dispatch = useDispatch();
     const [error, setError] = useState(false);
-    const [selectedLang, setSelectedLang] = useState(1);
+    const [selectedLang, setSelectedLang] = useState(null);
     const [selectedSubject, setSelectedSubject] = useState(1);
     const [selectedTime, setSelectedTime] = useState(1);
     const [selectedProfession, setSelectedProfession] = useState(1);
@@ -114,8 +114,6 @@ export const Register = () => {
     }, [user])
 
 
-
-
     const handleAddSubject = (selectedSubject) => {
         setSelectedSubject(selectedSubject)
     }
@@ -129,7 +127,7 @@ export const Register = () => {
 
             // dispatch(getClassTypes(id))
             dispatch(fetchClassTypeData({branch: id}))
-            dispatch(fetchClassNumberData({branch:id}))
+            dispatch(fetchClassNumberData({branch: id}))
 
             dispatch(fetchCategories(id))
         }
@@ -185,24 +183,26 @@ export const Register = () => {
 
         setLoading(true);
         const selectedTimes = shift.find(shift => shift.id === Number(selectedTime))
-        const selectedLanguage = languages.find(lang => lang.id === Number(selectedLang));
+        // const selectedLanguage = languages.find(lang => lang.id === Number(selectedLang));
 
+        let registerAction
         let res = {
             user: {
                 ...data,
                 observer: true,
-                language: selectedLanguage?.id || "",
+                language: selectedLang,
+                // language: selectedLanguage?.id || "",
                 branch: id,
             },
         };
         let res2 = {
             ...data,
             observer: true,
-            language: selectedLanguage?.id || "",
+            language: selectedLang,
+            // language: selectedLanguage?.id || "",
             branch: id,
         };
 
-        let registerAction;
 
         if (registerType === 'student') {
             let result;
@@ -212,12 +212,12 @@ export const Register = () => {
                     parents_fullname: data.parents_fullname,
                     old_school: data.old_school,
                     parent_region: data.parent_region,
-                    district:data.district,
+                    district: data.district,
                     parent_seria: data.parent_seria,
                     parent_seria_num: data.parent_seria_num,
-                    region:data.region,
+                    region: data.region,
                     born_date: data.born_date,
-                    student_seria_num:data.student_seria_num,
+                    student_seria_num: data.student_seria_num,
                     student_seria: data.student_seria
                 }
             } else {
@@ -231,8 +231,10 @@ export const Register = () => {
                 parents_number: data.parents_phone,
                 ...result
             };
+            console.log(res, "log12")
             registerAction = registerUser(res);
-        } else if (registerType === 'teacher') {
+        }
+        else if (registerType === 'teacher') {
             if (userSystem?.name === "school") {
                 res = {
                     ...res,
@@ -248,6 +250,8 @@ export const Register = () => {
                     ...res,
                     total_students: 1212,
                 };
+                console.log(res , "log")
+
                 registerAction = registerTeacher(res);
             }
         } else if (registerType === 'employer') {
@@ -258,10 +262,11 @@ export const Register = () => {
             registerAction = registerEmployer(res2);
         }
 
-        if (registerAction) {
+      if (registerAction) {
             if (registerType === 'teacher' && userSystem?.name === "school") {
-                dispatch(registerTeacherImage({id:res?.user?.username, file: res?.user?.resume[0]}))
+                dispatch(registerTeacherImage({id:res?.user?.username, file: res?.user?.resume  }))
             }
+
             dispatch(registerAction).then((action) => {
                 setLoading(false);
                 if (action.type.endsWith('fulfilled')) {
@@ -270,12 +275,13 @@ export const Register = () => {
                         status: true,
                         msg: `${registerType} muvofaqqiyatli qo'shildi`
                     }));
-                    setSelectedLang(1);
+                    setSelectedLang(selectedLang);
                     setSelectedSubject(1);
                     setSelectedTime(1);
                     setSelectedProfession(1);
                     setUsernameMessage('');
                     setIsUsernameAvailable(true);
+
 
                     reset();
 
@@ -292,6 +298,7 @@ export const Register = () => {
     };
 
 
+
     const renderFormFields = () => {
         switch (registerType) {
             case 'student':
@@ -303,7 +310,7 @@ export const Register = () => {
                             name={"language"}
                             onChangeOption={setSelectedLang}
                             options={languages}
-                            defaultValue={1}
+                            defaultValue={languages[0]?.id}
                         />
 
 
@@ -378,10 +385,11 @@ export const Register = () => {
                     <>
                         <Select
                             extraClass={cls.extraClasses}
-                            name={"language"}
                             title={"Til"}
+                            name={"language"}
                             onChangeOption={setSelectedLang}
-                            options={languages.map(lang => ({id: lang.id, name: lang.name}))}
+                            options={languages}
+                            defaultValue={languages[0]?.id}
                         />
                         <AnimatedMulti
                             options={subjectOptions}
@@ -425,9 +433,11 @@ export const Register = () => {
                     <>
                         <Select
                             extraClass={cls.extraClasses}
+                            title={"Til"}
                             name={"language"}
                             onChangeOption={setSelectedLang}
                             options={languages}
+                            defaultValue={languages[0]?.id}
                         />
                         <Select
                             extraClass={cls.extraClasses}
@@ -492,7 +502,7 @@ export const Register = () => {
                                 required
                                 name={"father_name"}
                             />
-                            {userSystem?.name  === "school" && registerType === "student" ?
+                            {userSystem?.name === "school" && registerType === "student" ?
                                 <>
                                     <div className={cls.seriya}>
                                         <Input register={register}
@@ -505,8 +515,8 @@ export const Register = () => {
                                            placeholder={"kelgan maktabi"}/>
                                     <Input register={register} name={"region"}
                                            placeholder={"Xudud nomi"}/>
-                                    <Input  register={register} name={"district"}
-                                            placeholder={"Tuman shaxar nomi"}/>
+                                    <Input register={register} name={"district"}
+                                           placeholder={"Tuman shaxar nomi"}/>
                                 </>
                                 :
                                 null
@@ -533,7 +543,7 @@ export const Register = () => {
                                 name={"phone"}
                             />
 
-                            {userSystem?.name  === "center " && registerType === 'student' ?
+                            {userSystem?.name === "center " && registerType === 'student' ?
                                 <Input
                                     register={register}
                                     placeholder="Ota-ona telefon raqami"

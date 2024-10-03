@@ -39,7 +39,7 @@ export const Students = ({ currentTableData }) => {
                         <th>Yosh</th>
                         <th>Telefon nomer</th>
                         <th>Guruh</th>
-                        <th>Guruh narxi</th>
+                        <th>Guruh </th>
                     </tr>
                     </thead>
                     <tbody>

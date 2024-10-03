@@ -61,7 +61,7 @@ export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal
                 onClick={() => setActive("balance")}
             >
                 <h2>Balans</h2>
-                <p>Summa</p>
+                <p>Umumiy qarzi</p>
                 <div className={cls.info__money}>
                     <h2 onClick={() => setActive("balanceIn")}>$ {formattedNumber}</h2>
                     {system.name === "center" ? <p>$ 390.000</p> : null}

@@ -150,7 +150,7 @@ export const RoomsProfilePage = () => {
                             <ConfirmModal
                                 type={isDeleted ? "success" : "danger"}
                                 title={!isDeleted ? "O'chirmoq" : "Qaytarmoq"}
-                                text={isDeleted ? "Studentni qaytarishni hohlaysizmi" : "Studentni o'chirishni hohlaysizmi"}
+                                text={isDeleted ? "Studentni qaytarishni hohlaysizmi" : "Xonani o'chirishni hohlaysizmi"}
                                 active={modal}
                                 setActive={setModal}
                                 onClick={handleDelete}
