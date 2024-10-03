@@ -12,6 +12,8 @@ export const FlowList = memo(({flowList, number, onChangeSingle, onChangeAll, cu
 
     const [isAccordion, setIsAccordion] = useState(false)
 
+    console.log(flowList, "flowList")
+
     useEffect(() => {
         setIsAccordion(false)
     }, [currentPage])

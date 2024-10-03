@@ -5,10 +5,10 @@ import {groupProfileSlice} from "entities/profile/groupProfile";
 import {searchSlice} from "features/searchInput";
 import {registerUser} from "pages/registerPage";
 import {loginSlice} from "pages/loginPage";
-import {filteredTeachers} from "features/filters/teacherFilter";
-import {filteredStudents} from "features/filters/studentsFilter";
-import {filteredEmployees} from "features/filters/employeesFilter";
-import {filteredGroups} from "features/filters/groupsFilter";
+import {filteredTeachersSlice} from "features/filters/teacherFilter";
+import {filteredStudentsSlice} from "features/filters/studentsFilter";
+import {filteredEmployeesSlice} from "features/filters/employeesFilter";
+import {filteredGroupsSlice} from "features/filters/groupsFilter";
 import {filteredRoomsSlice} from "features/filters/roomsFilter";
 import {deletedGroupsSlice, groupAttendance, groupsSlice} from "entities/groups";
 // import {user} from "entities/user";
@@ -78,6 +78,7 @@ import {multiPageSlice} from "widgets/multiPage"
 import {studiyngStudentDelSlice} from "../features/studiyngStudentDelModal";
 import {oftenUsedSlice} from "entities/oftenUsed";
 import {rgbSlice} from "entities/rgbData";
+import {accountingFilterSlice} from "features/filters/accountingFilter";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -94,11 +95,12 @@ export const store = configureStore({
         searchSlice,
         registerUser,
         loginSlice,
-        filteredTeachers,
-        filteredStudents,
-        filteredEmployees,
-        filteredGroups,
+        filteredTeachersSlice,
+        filteredStudentsSlice,
+        filteredEmployeesSlice,
+        filteredGroupsSlice,
         filteredRoomsSlice,
+        accountingFilterSlice,
         groupsSlice,
         studentProfilePayment,
         studentProfileBooks,

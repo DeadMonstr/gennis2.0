@@ -61,13 +61,24 @@ export const Header = () => {
     }, [pathname]);
 
     useEffect(() => {
-            if (valueData) {
-                debouncedFetchData();
-            } else {
-                setSearchParams({});
-                dispatch(getSearchStr(null))
-            }
-        }, [valueData]);
+        if (valueData) {
+            fetchSearchData();
+        } else {
+            setSearchParams({});
+            dispatch(getSearchStr(null))
+        }
+    }, [valueData]);
+
+    // const onChangeSearch = (value) => {
+    //     console.log(value, "value")
+    //     if (value) {
+    //         setValueData(value)
+    //         fetchSearchData(value);
+    //     } else {
+    //         setSearchParams({});
+    //         dispatch(getSearchStr(null))
+    //     }
+    // }
 
 
 

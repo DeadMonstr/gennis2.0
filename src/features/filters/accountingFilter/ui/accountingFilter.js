@@ -1,3 +1,4 @@
+import {useState} from "react";
 import {useDispatch} from "react-redux";
 
 import {Modal} from "shared/ui/modal";
@@ -10,12 +11,28 @@ import {
     getDeletedEmpSalary,
     getDeletedPayment
 } from "entities/accounting";
+import {
+    fetchIsArchive,
+    fetchIsDelete
+} from "../model/accountingFilterSlice";
 
 import cls from "../../filters.module.sass"
 
 export const AccountingFilter = ({setActive, active, setActiveDel, activeDel, activePage}) => {
 
     const dispatch = useDispatch()
+    const [isDelete, setIsDelete] = useState(false)
+    const [isArchive, setIsArchive] = useState(false)
+
+    const onDelete = (value) => {
+        setIsDelete(value)
+        dispatch(fetchIsDelete(value))
+    }
+
+    const onArchive = (value) => {
+        setIsArchive(value)
+        dispatch(fetchIsArchive(value))
+    }
 
     const onActive = (value) => {
         if (activePage === "studentsPayments") {
