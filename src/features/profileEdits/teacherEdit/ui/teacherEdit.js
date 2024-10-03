@@ -56,7 +56,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
             )
         }
     }, [teacherID])
-    console.log(categories , classTypes)
+
     const handleEditTeacher = () => {
         if (!teacherID) return;
         const updateTeacher = {
@@ -67,7 +67,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
                 age: age
             },
             teacher_salary_type: teacherSalaryType,
-            class_type: classType,
+            class_type: +classType,
             subject: selectedSubjects.map(item => item?.value)
 
         };
@@ -86,7 +86,6 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
 
     if (!isOpen) return null
 
-    console.log(teacherSalaryType , classType)
     return (
         <Modal
             active={isOpen}
@@ -145,7 +144,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
                             extraClass={cls.extraClasses}
                             name={"category"}
                             options={categories}
-                            defaultValue={categories[0].name}
+                            defaultValue={teacherSalaryType?.id ?? teacherSalaryType}
                             onChangeOption={setTeacherSalaryType}
                             title={"Toifa"}
                         />
@@ -155,7 +154,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
                             options={classTypes}
                             onChangeOption={setClassType}
                             title={"Sinf"}
-                            defaultValue={classTypes[0].name}
+                            defaultValue={classType}
 
                         />
                     </div>
