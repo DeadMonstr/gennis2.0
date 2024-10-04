@@ -1,6 +1,6 @@
 import React from 'react';
 import { Unstable_Popup as BasePopup } from '@mui/base/Unstable_Popup';
-import { styled } from '@mui/system';
+import {styled} from "@mui/system";
 
 export const SimplePopup = ({ triggerContent, popupContent }) => {
     const [anchor, setAnchor] = React.useState(null);
