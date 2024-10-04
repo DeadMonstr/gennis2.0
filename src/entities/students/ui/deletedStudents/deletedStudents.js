@@ -33,14 +33,14 @@ export const DeletedStudents = ({currentTableData}) => {
     const {request} = useHttp()
     const handleDelete = () => {
 
-        // request(`${API_URL}Students/students_delete/${id}/`, "DELETE", null, headers())
-        //     .then(res => {
-        //         dispatch(onAddAlertOptions({
-        //             type: "success",
-        //             status: true,
-        //             msg: res.msg
-        //         }))
-        //     })
+        request(`${API_URL}Students/students_delete/${id}/`, "DELETE", null, headers())
+            .then(res => {
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: res.msg
+                }))
+            })
         setActive(false)
         dispatch(onDeleteGroupStudentBack(id))
 
