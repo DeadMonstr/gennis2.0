@@ -16,7 +16,7 @@ export const StudentPaymentDates = () => {
 
     useEffect(() => {
         dispatch(studentPaymentDataThunk(lastId));
-    }, [lastId, dispatch]);
+    }, [lastId]);
 
     useEffect(() => {
         if (date) {
@@ -48,7 +48,7 @@ export const StudentPaymentDates = () => {
                 data: {year: +selectedYear, month: +selectedMonth}
             }));
         }
-    }, [selectedYear, selectedMonth]);
+    }, [lastId,selectedYear, selectedMonth]);
 
     const handleYearChange = (selectedYear) => {
         setSelectedYear(selectedYear);
