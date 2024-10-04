@@ -93,9 +93,9 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
             payment: radioSelect.id,
             ...data
         }
+        console.log(res)
         request(`${API_URL}Overhead/overheads/create/`, "POST", JSON.stringify(res), headers())
             .then(res => {
-
                 setActiveModal(false)
                 setValue("name", "")
                 setValue("price", "")
@@ -205,10 +205,10 @@ export const AddAdditionalCosts = (props) => {
         onAdd,
         register,
         radioSelect,
-        setRadioSelect,
+
         onChangeRadio,
         monthDay,
-        day,
+
         setDay,
         month,
         setMonth
@@ -221,7 +221,7 @@ export const AddAdditionalCosts = (props) => {
 
             <Form extraClassname={cls.form} onSubmit={handleSubmit(onAdd)}>
 
-                <Select options={option} defaultValue={option[0]?.name} onChangeOption={(e) => {
+                <Select options={option} defaultValue={option[0]?.id} onChangeOption={(e) => {
                     onChange({
                         name: e,
                         id: e

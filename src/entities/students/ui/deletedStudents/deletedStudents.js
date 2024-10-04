@@ -8,6 +8,10 @@ import {useNavigate} from "react-router";
 import {Table} from "shared/ui/table";
 
 import cls from "./deletedStudents.module.sass";
+import {API_URL, headers, useHttp} from "../../../../shared/api/base";
+import {ConfirmModal} from "../../../../shared/ui/confirmModal";
+import {onDeleteGroupStudentBack} from "../../model/studentsSlice";
+import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 
 
 export const DeletedStudents = ({currentTableData}) => {
@@ -16,15 +20,34 @@ export const DeletedStudents = ({currentTableData}) => {
 
     const reasons = useSelector(getReasons)
     const [activeMenu, setActiveMenu] = useState("all")
-    const [currentReasons , setCurrentReasons] = useState([])
-    const [deletedStudentsData , setDeletedStudents] = useState([])
+    const [currentReasons, setCurrentReasons] = useState([])
+    const [deletedStudentsData, setDeletedStudents] = useState([])
     const navigation = useNavigate()
+    const [active, setActive] = useState(false)
+    const [id, setId] = useState(false)
 
-    useEffect(() =>{
+    useEffect(() => {
         dispatch(fetchReasons())
-    },[])
-    
+    }, [])
+
+    const {request} = useHttp()
+    const handleDelete = () => {
+
+        // request(`${API_URL}Students/students_delete/${id}/`, "DELETE", null, headers())
+        //     .then(res => {
+        //         dispatch(onAddAlertOptions({
+        //             type: "success",
+        //             status: true,
+        //             msg: res.msg
+        //         }))
+        //     })
+        setActive(false)
+        dispatch(onDeleteGroupStudentBack(id))
+
+    };
+
     const renderDeletedStudents = () => {
+
 
         // if (!currentTableData || currentTableData.length === 0)
         // {
@@ -33,24 +56,32 @@ export const DeletedStudents = ({currentTableData}) => {
         //     )
         // }
 
-        return currentTableData?.map((item,  i) =>{
+        return currentTableData?.map((item, i) => {
             if (activeMenu === "all") {
                 return (
-                    <tr  onClick={() => navigation(`profile/${item.id}`)}>
+                    <tr>
                         <td>{i + 1}</td>
-                        <td>{item?.student?.user?.name} {item?.student?.user?.surname}</td>
+                        <td onClick={() => navigation(`profile/${item?.student?.id}`)}>{item?.student?.user?.name} {item?.student?.user?.surname}</td>
                         <td>{item?.student?.user?.age}</td>
                         <td>{item?.student?.user?.phone}</td>
                         <td>{item?.group?.name}</td>
                         <td>{item?.student?.user?.registered_date}</td>
                         <td>{item?.deleted_date}</td>
                         <td>{item?.group_reason?.name}</td>
+                        <td>
+                            <div onClick={() => {
+                                setId(item.student.id)
+                                setActive(true)
+                            }}>
+                                <i className={"fa fa-times"}/>
+                            </div>
+                        </td>
                     </tr>
                 )
             } else {
                 if (item?.group_reason?.id === activeMenu) {
                     return (
-                        <tr  onClick={() => navigation(`profile/${item.id}`)}>
+                        <tr onClick={() => navigation(`profile/${item.id}`)}>
                             <td>{i + 1}</td>
                             <td>{item?.student?.user?.name} {item?.student?.user?.surname}</td>
                             <td>{item?.student?.user?.age}</td>
@@ -107,6 +138,7 @@ export const DeletedStudents = ({currentTableData}) => {
                         <th>Reg.sana</th>
                         <th>O'chir.sana</th>
                         <th>Sabab</th>
+                        <th/>
                     </tr>
                     </thead>
                     <tbody>
@@ -116,6 +148,8 @@ export const DeletedStudents = ({currentTableData}) => {
                 </Table>
             </div>
 
+            <ConfirmModal onClick={handleDelete} title={"Qaytarish"} text={"Studentni rostanham qaytarmoqchimisiz"}
+                          type={"danger"} active={active} setActive={setActive}/>
         </div>
 
     );

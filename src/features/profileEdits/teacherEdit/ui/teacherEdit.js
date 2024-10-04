@@ -67,7 +67,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
                 age: age
             },
             teacher_salary_type: teacherSalaryType,
-            class_type: +classType,
+            class_type: classType,
             subject: selectedSubjects.map(item => item?.value)
 
         };
