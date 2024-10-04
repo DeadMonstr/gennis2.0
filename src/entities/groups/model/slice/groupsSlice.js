@@ -25,6 +25,7 @@ export const groupsSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchGroupsData.fulfilled, (state, action) => {
+                console.log(action.payload, "action.payload")
                 state.data = action.payload
                 state.loading = false
                 state.error = null

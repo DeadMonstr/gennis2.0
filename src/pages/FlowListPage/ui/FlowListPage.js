@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import {FlowList} from "entities/flowList";
-import {fetchGroupsData, getGroupsListData} from "entities/groups";
+import {fetchGroupsData, getGroupsListData, getGroupsLoading} from "entities/groups";
 import {getUserBranchId} from "entities/profile/userProfile";
 import {getBranch} from "features/branchSwitcher";
 import {useDispatch, useSelector} from "react-redux";
@@ -8,6 +8,7 @@ import {flowListThunk, getFlowList} from "entities/flows";
 import {useParams} from "react-router-dom";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {Button} from "shared/ui/button";
+import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import cls from "./FlowListPage.module.sass";
 import {Input} from "shared/ui/input";
 import {Pagination} from "features/pagination";
@@ -23,7 +24,7 @@ export const FlowListPage = () => {
     const id = useSelector(getBranch)
     // const {"*": id} = useParams()
     const userBranchId = id?.id
-    const navigate= useNavigate()
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (userBranchId) {
@@ -34,9 +35,10 @@ export const FlowListPage = () => {
 
     // const flowList = useSelector(getFlowList)
     const flowList = useSelector(getGroupsListData)
+    const loading = useSelector(getGroupsLoading)
     const search = useSelector(getSearchValue)
 
-    let PageSize = useMemo(() => 8, [])
+    let PageSize = useMemo(() => 50, [])
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedId, setSelectedId] = useState([])
@@ -50,7 +52,7 @@ export const FlowListPage = () => {
         return filteredHeroes.filter(item =>
             item.name?.toLowerCase().includes(search.toLowerCase())
         )
-    }, [flowList, setCurrentPage, search])
+    }, [flowList])
 
     const onChangeAll = (classId) => {
         setCurrentTableData(prev => prev.map(item => {
@@ -163,13 +165,7 @@ export const FlowListPage = () => {
             classes: []
         }
 
-        console.log(res, "onCreateFlow")
-
-
-        // dispatch(flowListThunk({data}))
-
-
-        request(`${API_URL}Flow/flow-list-create/` , "POST" , JSON.stringify(data) , headers())
+        request(`${API_URL}Flow/flow-list-create/`, "POST", JSON.stringify(data), headers())
             .then(res => {
                 dispatch(onAddAlertOptions({
                     type: "success",
@@ -197,7 +193,9 @@ export const FlowListPage = () => {
             />
         ))
     }
+
     const render = renderFlowList()
+
     return (
         <div className={cls.flow}>
             <div className={cls.flowListHeader}>
@@ -206,34 +204,38 @@ export const FlowListPage = () => {
                     <span>Sinf Raqami</span>
                 </div>
             </div>
-            <div className={cls.table}>
-                <div>
-                    {render}
-                </div>
-                <div
-                    className={classNames(cls.table__footer, {
-                        [cls.active]: PageSize <= searchedUsers.length
-                    })}
-                >
-                    <Pagination
-                        setCurrentTableData={setCurrentTableData}
-                        users={searchedUsers}
-                        currentPage={currentPage}
-                        pageSize={PageSize}
-                        onPageChange={page => {
-                            setCurrentPage(page)
-                        }}
-                    />
-                    <Button
-                        extraClass={cls.table__btn}
-                        onClick={onCreateFlow}
-                        type={selectedId.filter(item => item?.students?.length > 0)[0] ? "" : "disabled"}
-                        disabled={selectedId.filter(item => item?.students?.length > 0)[0] ? "" : "disabled"}
-                    >
-                        Create
-                    </Button>
-                </div>
-            </div>
+            {
+                loading ? <DefaultPageLoader/> :
+                    <div className={cls.table}>
+                        <div>
+                            {render}
+                        </div>
+                        <div
+                            className={classNames(cls.table__footer, {
+                                [cls.active]: PageSize <= searchedUsers.length
+                            })}
+                        >
+                            <Pagination
+                                setCurrentTableData={setCurrentTableData}
+                                users={searchedUsers}
+                                currentPage={currentPage}
+                                pageSize={PageSize}
+                                onPageChange={page => {
+                                    setCurrentPage(page)
+                                }}
+                            />
+                            <Button
+                                extraClass={cls.table__btn}
+                                onClick={onCreateFlow}
+                                type={selectedId.filter(item => item?.students?.length > 0)[0] ? "" : "disabled"}
+                                disabled={selectedId.filter(item => item?.students?.length > 0)[0] ? "" : "disabled"}
+                            >
+                                Create
+                            </Button>
+                        </div>
+                    </div>
+            }
+
 
         </div>
     )

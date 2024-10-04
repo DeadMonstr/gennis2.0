@@ -215,7 +215,7 @@ const userProfileSlice = createSlice({
 
 
                 state.userData = action.payload
-                state.userBranchId = action.payload.branch.id
+                state.userBranchId = action.payload?.branch?.id
 
                 localStorage.setItem("username",  action.payload.username)
 

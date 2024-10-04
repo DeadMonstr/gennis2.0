@@ -1,6 +1,8 @@
 import classNames from "classnames";
+import {getGroupsLoading} from "entities/groups";
 import {memo, useEffect, useMemo, useState} from "react";
 import {Accordion} from "shared/ui/accardion/accardion";
+import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import cls from './flowList.module.sass'
 import {Table} from "shared/ui/table";
 import {Input} from "shared/ui/input";
@@ -11,8 +13,6 @@ import {getSearchValue} from "features/searchInput";
 export const FlowList = memo(({flowList, number, onChangeSingle, onChangeAll, currentPage}) => {
 
     const [isAccordion, setIsAccordion] = useState(false)
-
-    console.log(flowList, "flowList")
 
     useEffect(() => {
         setIsAccordion(false)
