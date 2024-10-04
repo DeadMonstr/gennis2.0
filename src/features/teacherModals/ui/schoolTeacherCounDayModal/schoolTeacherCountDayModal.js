@@ -6,18 +6,23 @@ import {Input} from "../../../../shared/ui/input";
 import {useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
 import {schoolTeacherDayThunk} from "../../model/schoolTeacherDayThunk";
+import {useParams} from "react-router-dom";
+import {fetchTeacherSalaryThunk} from "../../../../entities/teacherSalary";
 
 export const SchoolTeacherCountDayModal = memo(({setEditMode, editMode, teacherId}) => {
 
     const {register, handleSubmit} = useForm()
     const [day, setDay] = useState("")
     const dispatch = useDispatch()
+    const {id} = useParams()
 
     const handleAddDay = () => {
         const data = {
             worked_days: day
         }
         dispatch(schoolTeacherDayThunk({id: teacherId, data:data}))
+        dispatch(fetchTeacherSalaryThunk(id))
+        setEditMode(false)
 
     }
 

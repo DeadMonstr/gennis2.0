@@ -1,3 +1,6 @@
+import {classData} from "entities/class/model/selector/classSelector";
+import {getClassTypes} from "entities/class/model/thunk/classThunk";
+import {fetchClassNumberList, getSchoolClassNumbers} from "entities/students";
 import React, {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
@@ -231,7 +234,7 @@ export const Register = () => {
                 parents_number: data.parents_phone,
                 ...result
             };
-            console.log(res, "log12")
+
             registerAction = registerUser(res);
         }
         else if (registerType === 'teacher') {

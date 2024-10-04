@@ -56,6 +56,11 @@ export const studentsSlice = createSlice({
 
         onDeleteNewStudents: (state,action) => {
             state.newStudentes = state.newStudentes.filter(item => item.id !== +action.payload)
+        },
+
+        onDeleteGroupStudentBack: (state,action) => {
+            state.deletedStudents = state.deletedStudents.filter(item => item.id !== action.payload)
+            console.log(action.payload , "log")
         }
 
 
@@ -202,5 +207,6 @@ export const {
     getCurseTypes,
     getCurseLevel,
     stopFilteredStudentsLoading,
-    onDeleteNewStudents
+    onDeleteNewStudents,
+    onDeleteGroupStudentBack
 } = studentsSlice.actions

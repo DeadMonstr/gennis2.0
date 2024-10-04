@@ -15,7 +15,6 @@ export const getTeacherSalary = createAsyncThunk(
     "otchotSlice/getTeacherSalary",
     (branchID) => {
         const {request} = useHttp()
-        console.log(branchID , "id")
         return request(`${API_URL}Encashment/teacher_salary/?branch=${branchID}` , "GET" , null , headers())
 
     }

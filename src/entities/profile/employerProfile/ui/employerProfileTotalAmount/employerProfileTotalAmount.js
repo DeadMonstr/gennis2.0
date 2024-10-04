@@ -154,6 +154,7 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
                                             defaultValue={comment}
                                             onChange={(e) => setComment(e.target.value)}
                                         />
+
                                     </div>
                                 </Form>
                             </>

@@ -40,6 +40,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     const [payment, setPayment] = useState(1);
     const dispatch = useDispatch();
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"));
+    // const [date , setDate] = useState(null)
     const {theme} = useTheme();
     const {request} = useHttp();
 
@@ -72,6 +73,8 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                 ...data
             }
             const response = await request(`${API_URL}Students/student_payment_month/${student_id}/${selectMonth}/`, "POST", JSON.stringify(newPaymentSchool), headers());
+            console.log(newPaymentSchool , "log")
+
             dispatch(onAddAlertOptions({
                 type: "success",
                 status: true,
@@ -240,6 +243,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                                         onChange={(e) => setPaymentSum(e.target.value)}
                                         type={"number"}
                                     />
+                                    <Input type={"date"} register={register} name={"date"}/>
                                 </div>
                             </Form>
                         </>
