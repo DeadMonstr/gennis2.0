@@ -257,6 +257,15 @@ export const FlowProfileNavigators = memo(() => {
                         name={"name"}
                         required
                     />
+                    <Select
+                        extraClass={cls.form__input}
+                        options={data?.teacher?.subject}
+                        title={"Fan"}
+                        register={register}
+                        name={"subject"}
+                        defaultValue={data?.subject?.id}
+                        required
+                    />
                     {
                         level.length ? <Select
                             extraClass={cls.form__input}
@@ -264,9 +273,11 @@ export const FlowProfileNavigators = memo(() => {
                             title={"Level"}
                             register={register}
                             name={"level"}
+                            defaultValue={data?.level?.id}
                             required
                         /> : null
                     }
+
                     {/*<Input*/}
                     {/*    extraClassName={}*/}
                     {/*    placeholder={}*/}
