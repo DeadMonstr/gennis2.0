@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {fetchFlows, flowListThunk} from "./flowsThunk";
+import {fetchFilterFlow, fetchFlows, flowListThunk} from "./flowsThunk";
 
 
 const initialState = {
@@ -115,6 +115,18 @@ export const flowsSlice = createSlice({
                 state.flowsStatus = "success"
             })
             .addCase(fetchFlows.rejected, (state, action) => {
+                state.flowsStatus = "error"
+            })
+
+            .addCase(fetchFilterFlow.pending, state => {
+                state.flowsStatus = "loading"
+            })
+            .addCase(fetchFilterFlow.fulfilled, (state, action) => {
+                state.flows = action.payload
+                // state.flows = action.payload.results
+                state.flowsStatus = "success"
+            })
+            .addCase(fetchFilterFlow.rejected, (state, action) => {
                 state.flowsStatus = "error"
             })
 

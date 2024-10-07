@@ -79,6 +79,7 @@ import {studiyngStudentDelSlice} from "../features/studiyngStudentDelModal";
 import {oftenUsedSlice} from "entities/oftenUsed";
 import {rgbSlice} from "entities/rgbData";
 import {accountingFilterSlice} from "features/filters/accountingFilter";
+import {flowFilterSlice} from "features/filters/flowFilter";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -174,7 +175,8 @@ export const store = configureStore({
         otchotAccountingSlice,
         groupAttendance,
         oftenUsedSlice,
-        rgbSlice
+        rgbSlice,
+        flowFilterSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

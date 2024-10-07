@@ -83,6 +83,7 @@ export const TeacherProfileInfo = memo(({active, setActive, setActiveModal, newI
                         <p>Telefon raqami: <span>{teacherId.user?.phone}</span></p>
                         <p>Yoshi: <span>{teacherId.user?.age}</span></p>
                         <p>Tug'ilgan sana: <span>{teacherId.user?.birth_date}</span></p>
+                        <p>Darslik soat: <span>{teacherId?.working_hours}</span></p>
                         <div className={cls.info__addInfo}>
                             <i className="fas fa-plus"/>
                         </div>

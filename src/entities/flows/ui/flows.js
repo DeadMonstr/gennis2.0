@@ -1,4 +1,5 @@
 import {getCurseLevel} from "entities/students/model/studentsSlice";
+import {FlowFilter} from "features/filters/flowFilter";
 import {Table} from "shared/ui/table";
 import cls from "pages/flowsPage/ui/flowsPage.module.sass";
 import {Button} from "shared/ui/button";
@@ -26,6 +27,7 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
     } = useForm()
     const [activeFlow, setActiveFlow] = useState(false)
     const [addFlow, setAddFlow] = useState(false)
+    const [filter, setFilter] = useState(false)
 
     const [selectedSubjects, setSelectedSubjects] = useState([])
     const dispatch = useDispatch()
@@ -79,13 +81,26 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
     return (
         <div className={cls.flowMain}>
             <div className={cls.flow__filter}>
-                <Button onClick={() => setActiveFlow(!activeFlow)} type={"simple"}>Create Flow</Button>
                 <Button
+                    onClick={()=> setFilter(!filter)}
                     type={"simple-add"}
-                    onClick={() => setActive(true)}
                 >
-                    Add Flow
+                    Filter
                 </Button>
+                <div className={cls.flowMain__wrapper}>
+                    <Button
+                        onClick={() => setActiveFlow(!activeFlow)}
+                        type={"simple"}
+                    >
+                        Create Flow
+                    </Button>
+                    <Button
+                        type={"simple-add"}
+                        onClick={() => setActive(true)}
+                    >
+                        Add Flow
+                    </Button>
+                </div>
             </div>
             <Table>
                 <thead>
@@ -183,6 +198,10 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
                 </div>
 
             </Modal>
+            <FlowFilter
+                active={filter}
+                setActive={setFilter}
+            />
         </div>
     );
 };
