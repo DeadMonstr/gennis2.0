@@ -21,7 +21,7 @@ import {
     studentPaymentTypeChangeThunk,
     studentBookOrderListThunk,
     getMonthDataThunk,
-    getMonthPrice
+    getMonthPrice, fetchStudentDebtorData
 
 } from "./studentPaymentThunk";
 
@@ -371,6 +371,7 @@ const studentPaymentSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message;
             })
+            .addCase(fetchStudentDebtorData.pen)
 
 
 

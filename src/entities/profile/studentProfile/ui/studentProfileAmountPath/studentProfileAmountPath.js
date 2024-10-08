@@ -50,9 +50,7 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                 }))
                 dispatch(fetchStudentProfileData(lastId))
                 dispatch(studentPaymentListThunk(lastId));
-            }
-
-            else {
+            } else {
 
                 dispatch(onAddAlertOptions({
                     tpye: "error",
@@ -114,8 +112,9 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
 
     const renderOutData = () => {
         if (!bookPaymnetList || bookPaymnetList.length === 0) {
-            return <div style={{width: 232+"%", display: 'flex', alignItems: "center", justifyContent: "center"}}>
-                <h1 style={{alignSelf: "center", marginLeft: 20+"rem", marginTop: 12+"rem", color: "#dddddd"}}>Kitob sotib olinmagan</h1>
+            return <div style={{width: 232 + "%", display: 'flex', alignItems: "center", justifyContent: "center"}}>
+                <h1 style={{alignSelf: "center", marginLeft: 20 + "rem", marginTop: 12 + "rem", color: "#dddddd"}}>Kitob
+                    sotib olinmagan</h1>
             </div>
         }
 
@@ -128,8 +127,19 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
         );
     };
 
+    const renderDebtorData = () => {
+        return [].map(item => {
+            return (
+                <tr>
+                    <td></td>
+                </tr>
+            )
+        })
+    }
+
     const renderIn = renderInData();
     const renderOut = renderOutData();
+    const renderDebtor = renderDebtorData()
 
     return (
         <EditableCard
@@ -186,23 +196,23 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                         <div className={cls.table}>
                             <div className={cls.table__header}>
                                 {
-                                activeState === "balanceBackLog" ?
-                                <div className={cls.popup}>
-                                    <SimplePopup
-                                        popupContent={
-                                        <div className={cls.popupContent}>
-                                            <h3>Qo'shish</h3>
-                                        </div>
-                                        }
-                                        triggerContent={<span className={cls.popupDiv}>∘∘∘</span>}
-                                    />
-                                </div> :
-                                    <>
-                                        <Button children={change ? "Amaldagi" : "O'chirilganlar"}
-                                                extraClass={change ? cls.buttonDel2 : cls.buttonDel}
-                                                onClick={() => setChange(!change)}/>
-                                        <StudentPaymentDates/>
-                                    </>
+                                    activeState === "balanceBackLog" ?
+                                        <div className={cls.popup}>
+                                            <SimplePopup
+                                                popupContent={
+                                                    <div className={cls.popupContent}>
+                                                        <h3>Qo'shish</h3>
+                                                    </div>
+                                                }
+                                                triggerContent={<span className={cls.popupDiv}>∘∘∘</span>}
+                                            />
+                                        </div> :
+                                        <>
+                                            <Button children={change ? "Amaldagi" : "O'chirilganlar"}
+                                                    extraClass={change ? cls.buttonDel2 : cls.buttonDel}
+                                                    onClick={() => setChange(!change)}/>
+                                            <StudentPaymentDates/>
+                                        </>
                                 }
                             </div>
                             <div className={cls.table__content}>
@@ -241,7 +251,7 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <th>Mqswd</th>
+                                            {renderDebtor}
                                             </tbody>
                                         </Table> : null
                                 }
