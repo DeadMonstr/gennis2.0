@@ -76,7 +76,7 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
 
         const {id} = value
 
-        if (id === "9") {
+        if (overHeadType.filter(item => item.id === +id)[0]?.name === "Boshqa") {
             setShowAdditionalFields(true)
 
         } else {
