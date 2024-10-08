@@ -30,6 +30,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
     const [classType, setClassType] = useState('')
     const [selectedSubjects, setSelectedSubjects] = useState([])
     const [colorChange, setColorChange] = useState("black")
+    const [classTime, setClassTime] = useState()
 
 
     const subjectOptions = subjects?.map(subject => ({
@@ -44,6 +45,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
 
     useEffect(() => {
         if (teacherID) {
+            setClassTime(teacherID?.working_hours)
             setName(teacherID.user?.name)
             setSurname(teacherID.user?.surname)
             setNumber(teacherID.user?.phone)
@@ -71,7 +73,8 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
             teacher_salary_type: teacherSalaryType,
             class_type: classType,
             subject: selectedSubjects.map(item => item?.value),
-            color: colorChange
+            color: colorChange,
+            working_hours: +classTime
 
         };
 
@@ -161,6 +164,15 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
                             title={"Sinf"}
                             defaultValue={classType}
 
+                        />
+                        <Input
+                            type={"number"}
+                            title={"Darslik soat"}
+                            extraClassName={cls.filter__input}
+                            placeholder={"Darslik soat"}
+                            onChange={(e) => setClassTime(e.target.value)}
+                            value={classTime}
+                            // value={selectedTo}
                         />
 
                         <div>

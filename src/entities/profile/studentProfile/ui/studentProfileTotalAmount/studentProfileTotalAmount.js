@@ -73,7 +73,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                 ...data
             }
             const response = await request(`${API_URL}Students/student_payment_month/${student_id}/${selectMonth}/`, "POST", JSON.stringify(newPaymentSchool), headers());
-            console.log(newPaymentSchool , "log")
+            console.log(newPaymentSchool, "log")
 
             dispatch(onAddAlertOptions({
                 type: "success",
@@ -152,8 +152,6 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     }
 
 
-
-
     const renderAmountServiceTypes = useCallback(() => {
         return amountService.map(item =>
             <div className={cls.items__inner} key={item}>
@@ -202,7 +200,10 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                 <div className={cls.form}>
                     <h1>{activeService}</h1>
                     {activeService === "To'lov" && (
-                        <>
+                        <Form
+                            onSubmit={handleSubmit(handleAddPayment)}
+                            extraClassname={cls.form__wrapper}
+                        >
                             {(theme === "app_school_theme" || userSystem?.id === 2) && (
                                 <Select
                                     extraClass={cls.monthSelect}
@@ -212,6 +213,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                                         setSelectedMonth(value);
                                         onSelect(value);
                                     }}
+                                    required
                                 />
                             )}
                             <div className={cls.items}>
@@ -233,20 +235,24 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                                     style={{left: `${listPretcent[activePaymentType]}%`}}
                                 />
                             </div>
-                            <Form onSubmit={handleSubmit(handleAddPayment)}>
-                                <div className={cls.form__inner}>
-                                    <p>{activeService} miqdori</p>
-                                    <Input
-                                        {...register("amount")}
-                                        placeholder={"Summa"}
-                                        value={paymentSum || selectPrice.price}
-                                        onChange={(e) => setPaymentSum(e.target.value)}
-                                        type={"number"}
-                                    />
-                                    <Input type={"date"} register={register} name={"date"}/>
-                                </div>
-                            </Form>
-                        </>
+                            <div className={cls.form__inner}>
+                                <p>{activeService} miqdori</p>
+                                <Input
+                                    extraClassName={cls.form__inout}
+                                    {...register("amount")}
+                                    placeholder={"Summa"}
+                                    value={paymentSum || selectPrice.price}
+                                    onChange={(e) => setPaymentSum(e.target.value)}
+                                    type={"number"}
+                                />
+                                <Input
+                                    extraClassName={cls.form__inout}
+                                    type={"date"}
+                                    register={register}
+                                    name={"date"}
+                                />
+                            </div>
+                        </Form>
                     )}
                     {activeService === "Xayriya" && (
                         <Form onSubmit={handleSubmit(handleAddCharity)}>

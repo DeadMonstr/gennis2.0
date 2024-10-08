@@ -10,7 +10,7 @@ import {ImageCrop} from "features/imageCrop";
 import {changeStudentProfileImage} from "../../model/thunk/studentProfileThunk";
 
 import cls from "./profileTeacherPage.module.sass"
-import {getSystem} from "../../../../features/themeSwitcher";
+import {getSystem} from "features/themeSwitcher";
 export const ContextStuPro = createContext(null)
 
 export const ProfileTeacherPage = () => {
