@@ -22,6 +22,8 @@ import {
 } from "../model/timeTableListThunk/timeTableListThunk";
 
 import cls from "./timeTableListPage.module.sass";
+import {API_URL, headers, useHttp} from "../../../shared/api/base";
+import {onDelete} from "../../../entities/teachers/model/teacherSlice";
 
 export const TimeTableListPage = () => {
 
@@ -75,6 +77,27 @@ export const TimeTableListPage = () => {
         setCurrentStatus(true)
     }
 
+    const {request} = useHttp()
+    const onDeleteTimeTable = () => {
+
+        request(`${API_URL}SchoolTimeTable/hours-list-update/${isChange.id}`, "DELETE", null, headers())
+            .then(res => {
+                console.log(res)
+                dispatch(onDelete(isChange.id))
+                dispatch(onAddAlertOptions({
+                    status: true,
+                    type: "success",
+                    msg: res.msg
+                }))
+                setIsChange(false)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+
+    }
+
     return (
         <div className={cls.timeTable}>
             <TimeTableHeader
@@ -111,6 +134,7 @@ export const TimeTableListPage = () => {
                 setActive={setIsChange}
                 onSubmit={onSubmitChange}
                 loading={loading}
+                onDelete={onDeleteTimeTable}
             />
         </div>
     )

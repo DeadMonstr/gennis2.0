@@ -790,17 +790,17 @@ export const TimeTableTuronPage = () => {
 
 
     useEffect(() => {
-        if (Object.keys(canSubmitLesson).length) {
+        if (Object.keys(canSubmitLesson)?.length) {
 
 
             const data = {
-                lesson: canSubmitLesson.id,
-                [canSubmitLesson.group.type]: canSubmitLesson.group.id,
+                lesson: canSubmitLesson?.id,
+                [canSubmitLesson?.group.type]: canSubmitLesson.group.id,
                 // group: canSubmitLesson.group.id,
-                subject: canSubmitLesson.subject.id,
-                hours: canSubmitLesson.hours,
-                teacher: canSubmitLesson.teacher.id,
-                room: canSubmitLesson.room,
+                subject: canSubmitLesson?.subject?.id,
+                hours: canSubmitLesson?.hours,
+                teacher: canSubmitLesson?.teacher?.id,
+                room: canSubmitLesson?.room,
                 week: +day,
                 branch: branch
             }
@@ -809,16 +809,16 @@ export const TimeTableTuronPage = () => {
             request(`${API_URL}SchoolTimeTable/timetable-list-${canSubmitLesson?.id ? "update" : "create"}/${canSubmitLesson?.id ? canSubmitLesson?.id : ""}`, canSubmitLesson?.id ? "PATCH" : "POST", JSON.stringify(data), headers())
                 .then(res => {
 
-                    setRooms(rooms => rooms.map(item => {
+                    setRooms(rooms => rooms?.map(item => {
 
 
-                        if (item.id === canSubmitLesson.room) {
+                        if (item.id === canSubmitLesson?.room) {
 
-                            const newLessons = item.lessons.map(lesson => {
-                                if (lesson.dndId === canSubmitLesson.dndId) {
+                            const newLessons = item?.lessons?.map(lesson => {
+                                if (lesson?.dndId === canSubmitLesson?.dndId) {
                                     return {
                                         ...lesson,
-                                        id: res.lesson.id
+                                        id: res?.lesson?.id
                                     }
                                 }
                                 return lesson

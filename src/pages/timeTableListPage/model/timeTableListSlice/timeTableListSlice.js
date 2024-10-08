@@ -24,6 +24,10 @@ const TimeTableSlice = createSlice({
         //     state.loading = false
         //     state.error = null
         // }
+        onDelete: (state , action) => {
+            state.data= [...state.data.filter(item => item.id !== action.payload)]
+            console.log(action.payload , "hello")
+        }
     },
     extraReducers: builder =>
         builder
@@ -72,4 +76,4 @@ const TimeTableSlice = createSlice({
 })
 
 export default TimeTableSlice.reducer
-export const {changeTime} = TimeTableSlice.actions
+export const {changeTime , onDelete} = TimeTableSlice.actions

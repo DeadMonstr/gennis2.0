@@ -39,7 +39,7 @@ export const TimeTableList = memo((props) => {
     const render = renderTimeTableList()
 
     function compareById(a, b) {
-        return a.id - b.id;
+        return a.order - b.order;
     }
 
     return loading ? <DefaultLoader/> :

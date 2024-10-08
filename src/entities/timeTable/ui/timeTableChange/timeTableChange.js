@@ -17,7 +17,8 @@ export const TimeTableChange = memo((props) => {
         active,
         setActive,
         onSubmit,
-        loading
+        loading,
+        onDelete
     } = props
 
     let startTime = useMemo(() => active?.start_time, [active])
@@ -38,7 +39,7 @@ export const TimeTableChange = memo((props) => {
             setActive={setActive}
         >
             <Form
-                onSubmit={handleSubmit(onSubmit)}
+
                 typeSubmit={""}
             >
                 <div className={cls.change}>
@@ -80,12 +81,22 @@ export const TimeTableChange = memo((props) => {
                     />
                     {
                         loading ? <MiniLoader/> :
-                            <Button
-                                extraClass={cls.change__btn}
-                                type={"simple"}
-                            >
-                                O'zgartirish
-                            </Button>
+                            <div style={{display: "flex" , gap: "1rem"}}>
+                                <Button
+                                    onClick={handleSubmit(onSubmit)}
+                                    extraClass={cls.change__btn}
+                                    type={"simple"}
+                                >
+                                    O'zgartirish
+                                </Button>
+                                <Button
+                                    onClick={handleSubmit(onDelete)}
+                                    extraClass={cls.change__btn}
+                                    type={"danger"}
+                                >
+                                    O'chirish
+                                </Button>
+                            </div>
                     }
 
                 </div>
