@@ -49,7 +49,7 @@ export const StudentsPayments = ({
                 <td>{i + 1}</td>
                 <td>{item?.student?.user?.name} {item?.student?.user?.surname}</td>
                 <td>{formatSalary(item.payment_sum)}</td>
-                <td>{item.added_data}</td>
+                <td>{item.date}</td>
                 <td>
                     <div style={{
                         border: "1px solid",
