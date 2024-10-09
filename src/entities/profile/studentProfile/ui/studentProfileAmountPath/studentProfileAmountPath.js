@@ -89,7 +89,7 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                     {item.status === false ? <td>To'lov</td> : <td>Chegirma</td>}
                 </td>
                 <td>{item.payment_sum}</td>
-                <td>{item.added_data}</td>
+                <td>{item.date}</td>
                 <td>
                     <div onClick={() => setModal(!modal)}
                          className={classNames(cls.inner, {

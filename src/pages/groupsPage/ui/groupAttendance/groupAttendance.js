@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {
     getAttendance,
     getAttendanceList,
-    getAttended
+    getLoading
 } from "../../../profilePage/model/selector/groupAttendanceSelector";
 import cls from "./groupAttendance.module.sass";
 import {Select} from "shared/ui/select";
@@ -10,9 +10,13 @@ import {Table} from "shared/ui/table";
 import React, {useCallback, useEffect, useState} from "react";
 import {Button} from "shared/ui/button";
 import {Modal} from "shared/ui/modal";
-import {fetchGroupAttendend, getAttendanceThunk} from "../../../../entities/groups/model/slice/groupsAttendanceThunk";
+import {fetchGroupAttendend, getAttendanceThunk} from "entities/groups/model/slice/groupsAttendanceThunk";
 import {useParams} from "react-router";
 import {API_URL, headers, useHttp} from "shared/api/base";
+import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
+import {Form} from "../../../../shared/ui/form";
+import {Textarea} from "../../../../shared/ui/textArea";
+import {useForm} from "react-hook-form";
 
 export const GroupAttendance = () => {
 
@@ -24,6 +28,7 @@ export const GroupAttendance = () => {
 
     const [year, setYear] = useState(null)
     const attendanceList = useSelector(getAttendanceList)
+    const loading = useSelector(getLoading)
 
     const {id} = useParams()
 
@@ -36,19 +41,26 @@ export const GroupAttendance = () => {
     const checkTrueFalse = (data) => {
         if (data) {
             return data?.map(item => {
+                console.log(item.reason, 'log item')
                 if (item.status === true) {
                     return (
                         <td className="date true">
-                            <i className="fas fa-check"></i>
+                            <i style={{color: "green", fontSize: "3rem"}} className={` fas fa-check`}></i>
                         </td>
                     )
                 }
                 if (item.status === false) {
                     return (
-                        <td className="date false">
-                            <i className="fas fa-times"></i>
-                            <div className="popup">
-                                {item.reason}
+                        <td>
+                            <div className={cls.th}>
+                                <i className={`fas fa-times ${cls.check}`}></i>
+                                {item.reason ?
+                                    <div className={cls.popup}>
+                                        {item.reason}
+                                    </div>
+                                    :
+                                    null
+                                }
                             </div>
                         </td>
                     )
@@ -69,29 +81,13 @@ export const GroupAttendance = () => {
                 <td>{i + 1}</td>
                 <td>{item?.name} {item?.surname}</td>
                 {/*<td/>*/}
+
                 {checkTrueFalse(item.days)}
-                {/*<>*/}
-                {/*    {item?.days?.map(itemDays => {*/}
-                {/*        console.log(itemDays, "fijsd")*/}
-                {/*        return (*/}
-                {/*            <td>*/}
-                {/*                {itemDays.status === true ?*/}
-                {/*                    <i className={`${cls.attendance_check} fa fa-check`}></i> :*/}
-                {/*                    <i className={`${cls.attendance_times} fa fa-times`}></i>*/}
-                {/*                }*/}
-                {/*            </td>*/}
-                {/*        )*/}
-                {/*    })}*/}
-                {/*</>*/}
-                {/*<td>*/}
-                {/*    <div className={cls.attendance_icon}>*/}
-                {/*        <i onClick={() => onClick(item)} className={`${cls.attendance_check} fa fa-check`}></i>*/}
-                {/*        <i className={`${cls.attendance_times} fa fa-times`}></i>*/}
-                {/*    </div>*/}
-                {/*</td>*/}
+
             </tr>
         ))
     }
+
 
     const render = renderTable()
     return (
@@ -100,14 +96,19 @@ export const GroupAttendance = () => {
                 <h2>Davomat </h2>
                 <div className={cls.attendance_end}>
                     <div className={cls.attendance_end_select}>
-                        <Select extraClass={cls.select} options={attendanceList?.students?.years?.map(item => item?.year)}
-                                onChangeOption={setYear}/>
+                        <Select extraClass={cls.select}
+                                options={attendanceList?.students?.years?.map(item => item?.year)}
+                                onChangeOption={setYear}
+                                defaultValue={attendanceList?.students?.years[0]?.year}
+                        />
                         {
                             year ?
                                 <Select
                                     extraClass={cls.select}
                                     options={attendanceList?.students?.years?.filter(item => item?.year === +year)[0]?.month}
-                                    onChangeOption={setMonths}/>
+                                    onChangeOption={setMonths}
+                                    defaultValue={attendanceList?.students?.years[0]?.month}
+                                />
                                 : null
                         }
                     </div>
@@ -125,7 +126,7 @@ export const GroupAttendance = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {render}
+                    {loading ? <DefaultPageLoader/> : render}
                     </tbody>
                 </Table>
             </div>
@@ -144,6 +145,11 @@ export const Attendance = ({active, setActive}) => {
 
     const {request} = useHttp()
     const [attendendModal, setAttendendModal] = useState(false)
+    const [reason, setReason] = useState("")
+    const [activeModal, setActiveModal] = useState(false)
+    const [studentId, setStudentId] = useState()
+
+    const {register, handleSubmit, setValue} = useForm()
 
     const [students, setStudents] = useState([])
 
@@ -156,14 +162,6 @@ export const Attendance = ({active, setActive}) => {
 
     const studentAttendance = useSelector(getAttendance)
 
-
-    // useEffect(() => {
-    //     if (studentAttendance) {
-    //
-    //         setStudents(studentAttendance?.students)
-    //
-    //     }
-    // }, [studentAttendance])
 
     const [day, setDay] = useState(null)
 
@@ -201,23 +199,43 @@ export const Attendance = ({active, setActive}) => {
     }
 
     const renderTable = () => {
-        return students?.map((item, i) => {
-            if (!item.attended) {
-                return (
-                    <tr>
-                        <td>{i + 1}</td>
-                        <td>{item?.name} {item?.surname}</td>
-                        <td>
-                            <div className={cls.attendance_icon}>
-                                <i onClick={() => onClickYes(item?.id)}
-                                   className={`${cls.attendance_check} fa fa-check`}></i>
-                                <i className={`${cls.attendance_times} fa fa-times`}></i>
-                            </div>
-                        </td>
-                    </tr>
-                )
-            }
-        })
+        if (students?.length > 0) {
+            return students?.map((item, i) => {
+                if (!item.attended) {
+                    return (
+                        <tr>
+                            <td>{i + 1}</td>
+                            <td>{item?.name} {item?.surname}</td>
+                            <td>
+                                <div className={cls.attendance_icon}>
+                                    <i onClick={() => onClickYes(item?.id)}
+                                       className={`${cls.attendance_check} fa fa-check`}></i>
+
+                                    <div
+                                        onClick={() => {
+                                            setActiveModal(true)
+                                            setStudentId(item.id)
+                                        }}
+                                        className="check__btn no"
+                                    >
+                                        <i className={`${cls.attendance_times} fa fa-times`}/>
+                                    </div>
+
+                                </div>
+                            </td>
+                        </tr>
+                    )
+                }
+            })
+        } else {
+            return (
+                <>
+                    <td/>
+                    <td> {day ?"Bu kunda hamma studentlar davomat qilingan" : "Studentlar yo'q (kun tanlang)" }</td>
+
+                </>
+            )
+        }
     }
 
     const returnStudent = (id) => {
@@ -237,7 +255,9 @@ export const Attendance = ({active, setActive}) => {
 
 
             return students.map(item => {
+                console.log(item.reason, "log")
                 if (item.attended) {
+
                     return (
                         <div className={cls.checkedStudents__item} onClick={() => returnStudent(item.id)}>
                             <div className={cls.infoStudent}>
@@ -256,7 +276,12 @@ export const Attendance = ({active, setActive}) => {
                                             <i className={`fas fa-minus-circle ${cls.red}`}/>
                                     }
                                 </div>
+
                             </div>
+                            {
+                                item.reason ?
+                                    <div className={cls.reason}>{item.reason}</div> : null
+                            }
                         </div>
                     )
                 }
@@ -272,7 +297,7 @@ export const Attendance = ({active, setActive}) => {
                 if (id === item.id) {
 
                     return {...item, requestType: requestType, requestMsg: requestMsg}
-                    console.log(item , "item")
+                    console.log(item, "item")
                 }
                 return item
 
@@ -281,6 +306,19 @@ export const Attendance = ({active, setActive}) => {
         console.log(id, requestType, requestMsg)
     }
 
+    const onSubmitAbsent = (data) => {
+        console.log(data, "lkog")
+        setValue("reason" , "")
+        setStudents(students => {
+            return students.map(item => {
+                if (item.id === studentId) {
+                    return {...item, attended: true, typeChecked: "no", reason: data.reason, date: {day}, scores: {}}
+                }
+                return item
+            })
+        })
+        setActiveModal(false)
+    }
     const onCheckedStudents = (e) => {
         e.preventDefault()
 
@@ -289,18 +327,18 @@ export const Attendance = ({active, setActive}) => {
                 const data = {
 
                     date: `${studentAttendance.month_number}-${day}`,
-                    students: [{...student, status: true}],
+                    students: [{...student, status: !student.reason}],
                     group: Number(groupId),
                     teacher: studentAttendance.teachers
                     // teacherId
                 }
+                console.log(data)
                 const studentId = data?.students?.map(item => item.id)
 
                 updateStatusStudent({id: student.id, requestType: "loading",})
                 request(`${API_URL}Attendance/to_attend_school/${studentId}/`, "POST", JSON.stringify(data), headers())
                     .then(res => {
                         setStudents(students => students.filter(item => item.id !== res.id))
-                        console.log(students)
 
                         setAttendendModal(false)
                     })
@@ -314,6 +352,7 @@ export const Attendance = ({active, setActive}) => {
 
     const render = renderTable()
     const renderCheckedStudent = renderCheckedStudents()
+    console.log(reason)
     return (
         <>
             <Modal active={active} setActive={setActive}>
@@ -325,7 +364,7 @@ export const Attendance = ({active, setActive}) => {
 
                         {/*<Select extraClass={cls.select} options={studentAttendance?.map(item => item?.month)}/>*/}
                         <Select extraClass={cls.select} options={studentAttendance?.weekdays}
-                                onChangeOption={onChangeDate}/>
+                                onChangeOption={onChangeDate} defaultValue={day}/>
                         <Button onClick={() => setAttendendModal(true)}>
                             Davomat qilinganlar
                         </Button>
@@ -357,7 +396,23 @@ export const Attendance = ({active, setActive}) => {
                     </div>
                     {renderCheckedStudent}
                     {students?.filter(item => item?.attended)?.length === 0 ? null :
-                        <Button type={day ? "" : "disabled"} onClick={onCheckedStudents}>Kritish</Button>}
+                        <Button extraClass={cls.button} type={day ? "" : "disabled"}
+                                onClick={onCheckedStudents}>Kritish</Button>}
+                </div>
+            </Modal>
+
+
+            <Modal id={"1"} active={activeModal} setActive={setActiveModal}>
+                <div className={cls.text}>Izoh qoldirish <br/> <div>( student kegan yoki kemaganligi haqida )</div> </div>
+                <div className={cls.absent}>
+                    <Form onSubmit={handleSubmit(onSubmitAbsent)}>
+                        <Textarea
+                            register={register}
+                            name={"reason"}
+                            id="comment"
+                        />
+                        {/*<Button onClick={onSubmitAbsent}>Click</Button>*/}
+                    </Form>
                 </div>
             </Modal>
         </>

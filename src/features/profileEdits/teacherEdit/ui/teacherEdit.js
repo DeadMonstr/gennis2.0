@@ -12,6 +12,7 @@ import {onAddAlertOptions} from "../../../alert/model/slice/alertSlice";
 import {Select} from "../../../../shared/ui/select";
 
 import {fetchCategories, fetchSubjectsData, getClassTypeData, getSubjectsData , getCategories} from "entities/oftenUsed";
+import {HexColorPicker} from "react-colorful";
 
 
 export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
@@ -28,6 +29,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
     const [age, setAge] = useState('')
     const [classType, setClassType] = useState('')
     const [selectedSubjects, setSelectedSubjects] = useState([])
+    const [colorChange, setColorChange] = useState("black")
     const [classTime, setClassTime] = useState()
 
 
@@ -71,9 +73,11 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
             teacher_salary_type: teacherSalaryType,
             class_type: classType,
             subject: selectedSubjects.map(item => item?.value),
+            color: colorChange,
             working_hours: +classTime
 
         };
+
         console.log(updateTeacher, "updateTeacher")
         dispatch(editTeacherThunk({id: (teacherID.id), updateTeacher}))
             .then(() => {
@@ -88,6 +92,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
     }
 
     if (!isOpen) return null
+
 
     return (
         <Modal
@@ -169,6 +174,12 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
                             value={classTime}
                             // value={selectedTo}
                         />
+
+                        <div>
+                            <div style={{display: "flex" , gap: "1rem" , alignItems: "center" , marginBottom: "10px"}}><h3>Rang qushish :</h3> <div style={{backgroundColor: colorChange ? colorChange : "black" , width: "30px" , height: "30px" , borderRadius: "5px" , boxShadow: colorChange === "#ffffff" ? "0 0 5px 0" : null}}></div></div>
+                            <HexColorPicker style={{width: "30rem", height: "15rem"}} color={colorChange}
+                                            onChange={setColorChange}/>
+                        </div>
                     </div>
 
 

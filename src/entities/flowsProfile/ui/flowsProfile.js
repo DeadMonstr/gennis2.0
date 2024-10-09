@@ -55,6 +55,7 @@ export const FlowProfileNavigators = memo(() => {
     const level = useSelector(getCurseLevelData)
 
     const [activeTeacher, setActiveTeacher] = useState("")
+    const [subject  ,setSubject] = useState(null)
 
     useEffect(() => {
         dispatch(fetchFlowProfileData({id}))
@@ -110,8 +111,10 @@ export const FlowProfileNavigators = memo(() => {
     const onSubmitChange = (data) => {
         const res = {
             ...data,
+            subject: subject
             // color: selectColor
         }
+        console.log(res, "log")
         dispatch(changeFlowProfile({
             // status: activeSwitch,
             // data: res,
@@ -257,25 +260,36 @@ export const FlowProfileNavigators = memo(() => {
                         name={"name"}
                         required
                     />
+                    {/*<Select*/}
+                    {/*    extraClass={cls.form__input}*/}
+                    {/*    options={data?.teacher?.subject}*/}
+                    {/*    title={"Fan"}*/}
+                    {/*    register={register}*/}
+                    {/*    name={"subject"}*/}
+                    {/*    defaultValue={data?.subject?.id}*/}
+                    {/*    // defaultValue={data?.subject?.id}*/}
+                    {/*    required*/}
+                    {/*/>*/}
                     <Select
                         extraClass={cls.form__input}
                         options={data?.teacher?.subject}
                         title={"Fan"}
-                        register={register}
-                        name={"subject"}
                         defaultValue={data?.subject?.id}
+                        onChangeOption={setSubject}
+                        // defaultValue={data?.subject?.id}
                         required
                     />
                     {
-                        level.length ? <Select
-                            extraClass={cls.form__input}
-                            options={level}
-                            title={"Level"}
-                            register={register}
-                            name={"level"}
-                            defaultValue={data?.level?.id}
-                            required
-                        /> : null
+                        level.length ?
+                            <Select
+                                extraClass={cls.form__input}
+                                options={level}
+                                title={"Level"}
+                                register={register}
+                                name={"level"}
+                                defaultValue={data?.level?.id}
+                                required
+                            /> : null
                     }
 
                     {/*<Input*/}

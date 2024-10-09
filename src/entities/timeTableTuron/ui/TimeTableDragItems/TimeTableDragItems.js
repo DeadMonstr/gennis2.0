@@ -30,13 +30,13 @@ export const TimeTableDragItems = (props) => {
                 return <h1 style={{color: 'red'}}>{type} yoq</h1>
             }
             return filteredColors()?.map(item => {
-                return <TimeTableDragItem color={item.type === "group" ? item.color.value : ""} typeItem={type} item={item}>
+                return <TimeTableDragItem color={item.type === "group" ? item?.color?.value : ""} typeItem={type} item={item}>
                     <p style={{ textAlign: "center"}}>{item?.name}</p>
                     <p style={{ textAlign: "center"}}>
                         {
                             type === "flow" &&
                             <>
-                                {item.subject?.name}
+                                {item?.subject?.name}
                                 <br/>
                                 {item.teacher?.user?.name} -
                                 {item.teacher?.user?.surname}
@@ -47,12 +47,12 @@ export const TimeTableDragItems = (props) => {
                 </TimeTableDragItem>
             })
         } else if (!selectedSubject) {
-            if (!subjects.length ) {
+            if (!subjects?.length ) {
                 return <h1 style={{color: 'red'}}>Fanlar yoq</h1>
             }
 
             return subjects.map(item => {
-                return <TimeTableDragItem type={"subject"} item={item}>{item.name}</TimeTableDragItem>
+                return <TimeTableDragItem type={"subject"} item={item}>{item?.name}</TimeTableDragItem>
             })
         } else {
 
