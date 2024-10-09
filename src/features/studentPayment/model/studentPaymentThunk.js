@@ -196,9 +196,9 @@ export const getMonthDataThunk = createAsyncThunk(
 
 export const fetchStudentDebtorData = createAsyncThunk(
     "studentPaymentSlice/fetchStudentDebtorData",
-    () => {
+    (id) => {
         const {request} = useHttp()
-        return request(`${API_URL}`, "GET", null, headers())
+        return request(`${API_URL}Students/missing_month/${id}`, "GET", null, headers())
     }
 )
 

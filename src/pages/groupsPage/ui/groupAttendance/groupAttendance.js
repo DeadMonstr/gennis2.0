@@ -403,7 +403,7 @@ export const Attendance = ({active, setActive}) => {
 
 
             <Modal id={"1"} active={activeModal} setActive={setActiveModal}>
-                <div className={cls.text}>Izoh qoldirish <br/> <div>( student kegan yoki kemaganligi haqida )</div> </div>
+                <div className={cls.text}>Izoh qoldirish <br/> <div>( student kemaganligi haqida )</div> </div>
                 <div className={cls.absent}>
                     <Form onSubmit={handleSubmit(onSubmitAbsent)}>
                         <Textarea

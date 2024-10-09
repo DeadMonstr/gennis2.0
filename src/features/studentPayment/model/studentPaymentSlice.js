@@ -48,6 +48,7 @@ const initialState = {
     paymentType: [],
     booksList: [],
     getMonthData: [],
+    debtStudent: [],
     loading: false,
     error: null
 }
@@ -371,9 +372,19 @@ const studentPaymentSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message;
             })
-            .addCase(fetchStudentDebtorData.pen)
-
-
+            .addCase(fetchStudentDebtorData.pending, state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(fetchStudentDebtorData.fulfilled, (state, action) => {
+                state.debtStudent = action.payload
+                state.loading = false
+                state.error = false
+            })
+            .addCase(fetchStudentDebtorData.rejected, state => {
+                state.loading = false
+                state.error = true
+            })
 
 
     }
