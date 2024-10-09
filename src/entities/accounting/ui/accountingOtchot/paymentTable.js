@@ -6,7 +6,7 @@ export const PaymentTable = ({classes, extraClass, extraClassTable}) => {
 
         return classes?.class?.map((item, i) => (
             <>
-                <h2 className={extraClass}>{item.class_number} {item.class_color}</h2>
+                {item.students.length >= 1 ? <h2 className={extraClass}>{item.class_number} {item.class_color}</h2> : null}
 
                 {item?.students.map((itemIn, i) => (
 

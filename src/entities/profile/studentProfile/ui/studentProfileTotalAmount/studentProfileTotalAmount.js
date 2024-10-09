@@ -19,6 +19,8 @@ import {getMonthDataThunk, getMonthData} from "features/studentPayment";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import {fetchStudentProfileData} from "pages/profilePage/model/thunk/studentProfileThunk";
+import {getSystem} from "../../../../../features/themeSwitcher";
+import {getMonth} from "../../../../../features/studentPayment/model/selectors/selectors";
 
 
 const listPretcent = [-1, 34.8, 70.4];
@@ -30,7 +32,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     const [activeService, setActiveService] = useState(amountService[0]);
     const [selectPrice, setSelectPrice] = useState(0);
     const [selectMonth, setSelectedMonth] = useState(0);
-    const [getMonth, setGetMonth] = useState(0)
+    const [getMonths, setGetMonth] = useState(0)
     const [activePaymentType, setActivePaymentType] = useState(0);
     const [option, setOption] = useState(0);
     const [paymentSum, setPaymentSum] = useState(0);
@@ -40,8 +42,12 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     const [payment, setPayment] = useState(1);
     const dispatch = useDispatch();
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"));
+    const [discountCharity , setDiscountCharity] = useState(0)
     // const [date , setDate] = useState(null)
+    const month = useSelector(getMonth)
+
     const {theme} = useTheme();
+    const system = useSelector(getSystem)
     const {request} = useHttp();
 
     useEffect(() => {
@@ -62,9 +68,10 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     };
 
     const handleAddPayment = async (data) => {
+        window.location.reload()
         if (theme === "app_school_theme") {
             const newPaymentSchool = {
-                id: Number(getMonth),
+                id: Number(getMonths),
                 student: student_id,
                 payment_type: payment,
                 payment_sum: paymentSum ? Number(paymentSum) : selectPrice.price,
@@ -81,7 +88,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                 msg: "O'quvchi uchun to'lov muvofaqqiyatli o'tdi"
             }));
             dispatch(fetchStudentProfileData(student_id))
-            setPaymentSum(0);
+            dispatch(getMonthDataThunk(student_id))
             setSelectedMonth(0);
             reset()
             return response;
@@ -95,6 +102,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                 ...data
             };
             const response = await request(`${API_URL}Students/student_payment_create/`, "POST", JSON.stringify(newPayment), headers());
+
             dispatch(onAddAlertOptions({
                 type: "success",
                 status: true,
@@ -149,6 +157,23 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
 
     const onSubmitPassword = (data) => {
 
+    }
+
+    const postStudentCharity = () => {
+        console.log(discountCharity , student_id)
+        request(`${API_URL}Students/discount/`, "POST", JSON.stringify({discount: discountCharity , student: student_id}), headers())
+            .then(res => {
+                console.log(res)
+                // setDiscountCharity(0)
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: res.msg
+                }));
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
 
@@ -237,13 +262,15 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                             </div>
                             <div className={cls.form__inner}>
                                 <p>{activeService} miqdori</p>
-                                <Input
-                                    extraClassName={cls.form__inout}
+                                <input
+                                    className={classNames(cls.input,)}
                                     {...register("amount")}
                                     placeholder={"Summa"}
-                                    value={paymentSum || selectPrice.price}
-                                    onChange={(e) => setPaymentSum(e.target.value)}
+                                    defaultValue={selectPrice.price}
+                                    // onChange={(e) => setPaymentSum(e.target.value)}
                                     type={"number"}
+                                    max={selectPrice.price} step="1" min="0"
+
                                 />
                                 <Input
                                     extraClassName={cls.form__inout}
@@ -254,8 +281,26 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                             </div>
                         </Form>
                     )}
-                    {activeService === "Xayriya" && (
-                        <Form onSubmit={handleSubmit(handleAddCharity)}>
+                    {activeService === "Xayriya" && system.name === "school" ?
+
+                        <Form onSubmit={handleSubmit(postStudentCharity)}>
+                            <div className={cls.form__container}>
+                                <div className={cls.form__inner}>
+                                    <p>{activeService} miqdori</p>
+                                    <Input
+                                        {...register("discount")}
+                                        placeholder={"Summa"}
+                                        type={"number"}
+                                        defaultValue={month.data[0].discount}
+                                        onChange={(e) => setDiscountCharity(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                        </Form>
+
+                        :
+
+                        system.name === "school" ? null : <Form onSubmit={handleSubmit(handleAddCharity)}>
                             <div className={cls.form__container}>
                                 <Select
                                     extraClass={cls.form__select}
@@ -274,7 +319,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                                 </div>
                             </div>
                         </Form>
-                    )}
+                    }
                     {activeService === "Chegirma" && (
                         <Form onSubmit={handleSubmit(handleAddDiscount)}>
                             <div className={cls.form__inner}>

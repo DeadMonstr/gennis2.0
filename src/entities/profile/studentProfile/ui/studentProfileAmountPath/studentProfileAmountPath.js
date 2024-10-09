@@ -22,8 +22,14 @@ import {StudentPaymentDates} from "../../../../../features/studentPaymentDates";
 import {onAddAlertOptions} from "../../../../../features/alert/model/slice/alertSlice";
 import {fetchStudentProfileData} from "../../../../../pages/profilePage/model/thunk/studentProfileThunk";
 import {SimplePopup} from "../../../../../shared/ui/popup";
+import {Modal} from "../../../../../shared/ui/modal";
+import {Select} from "../../../../../shared/ui/select";
+import {useParams} from "react-router";
+import {getMonth} from "../../../../../features/studentPayment/model/selectors/selectors";
+import {API_URL, headers, useHttp} from "../../../../../shared/api/base";
+import {fetchStudentDebtorData} from "../../../../../features/studentPayment/model/studentPaymentThunk";
 
-export const StudentProfileAmountPath = memo(({active, setActive}) => {
+export const StudentProfileAmountPath = memo(({active, setActive }) => {
     const pathArray = window.location.pathname.split('/');
     const lastId = pathArray[pathArray.length - 1];
     const booksList = useSelector(getBooksData);
@@ -38,6 +44,16 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
     const [portal, setPortal] = useState(false);
     const [modal, setModal] = useState(false);
     const [change, setChange] = useState(false);
+    const month = useSelector(getMonth)
+
+
+
+    const {id} = useParams()
+
+
+
+
+
 
 
     const handleDelete = () => {
@@ -128,10 +144,19 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
     };
 
     const renderDebtorData = () => {
-        return [].map(item => {
+        return month?.data?.map((item , i) => {
             return (
                 <tr>
-                    <td></td>
+                    <td>{i +1}</td>
+                    <td>{item?.month}</td>
+                    <td>{item?.total_debt}</td>
+                    <td>{item?.remaining_debt}</td>
+                    <td>{item?.discount}</td>
+
+                    <td>{item?.cash}</td>
+                    <td>{item?.click}</td>
+                    <td>{item?.bank}</td>
+
                 </tr>
             )
         })
@@ -198,14 +223,7 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                                 {
                                     activeState === "balanceBackLog" ?
                                         <div className={cls.popup}>
-                                            <SimplePopup
-                                                popupContent={
-                                                    <div className={cls.popupContent}>
-                                                        <h3>Qo'shish</h3>
-                                                    </div>
-                                                }
-                                                triggerContent={<span className={cls.popupDiv}>∘∘∘</span>}
-                                            />
+                                            <AddDebt studentId={id} month={month}/>
                                         </div> :
                                         <>
                                             <Button children={change ? "Amaldagi" : "O'chirilganlar"}
@@ -242,18 +260,27 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                                         {renderOut}
                                         </tbody>
                                     </Table> : activeState === "balanceBackLog" ?
-                                        <Table>
-                                            <thead>
-                                            <tr>
-                                                <th>Turi</th>
-                                                <th>To’lov</th>
-                                                <th>Sana</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {renderDebtor}
-                                            </tbody>
-                                        </Table> : null
+                                        <div className={cls.tableDebt}>
+                                            <Table>
+                                                <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Oy</th>
+                                                    <th>Umumiy qarz</th>
+                                                    <th>Qolgan qarz</th>
+                                                    <th>Chegirma</th>
+
+                                                    <th>Cash</th>
+                                                    <th>Click</th>
+                                                    <th>Bank</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {renderDebtor}
+                                                </tbody>
+                                            </Table>
+                                        </div>
+                                        : null
                                 }
                             </div>
                         </div>
@@ -274,3 +301,47 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
         </EditableCard>
     );
 });
+
+
+const AddDebt = ({month , studentId}) => {
+
+
+
+
+    const [months , setMonths] = useState(null)
+
+
+    const [activeModal, setActiveModal] = useState(false)
+
+    const {request} = useHttp()
+    const dispatch = useDispatch()
+    const onClick = () => {
+
+
+        request(`${API_URL}Students/missing_month_post/${studentId}/`  , "POST" , JSON.stringify({month: months}) , headers())
+            .then(res => {
+                console.log(res)
+                dispatch(fetchStudentDebtorData(studentId))
+                dispatch(onAddAlertOptions({
+                    status: true,
+                    type: "success",
+                    msg: res.msg
+                }))
+                setActiveModal(false)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+    console.log(month)
+    return (
+        <>
+            <Button onClick={() => setActiveModal(!activeModal)}>Qo'shish</Button>
+
+            <Modal active={activeModal} setActive={setActiveModal}>
+                <Select options={month.month} onChangeOption={setMonths}/>
+                <Button extraClass={cls.buttonAdd} onClick={onClick}>Qo'shish</Button>
+            </Modal>
+        </>
+    )
+}

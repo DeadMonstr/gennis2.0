@@ -41,6 +41,7 @@ import {
 import cls from "./studentProfilePage.module.sass";
 import {getSystem} from "features/themeSwitcher";
 import {getBranch} from "features/branchSwitcher";
+import {fetchStudentDebtorData} from "../../../../features/studentPayment/model/studentPaymentThunk";
 
 export const StudentProfilePage = () => {
 
@@ -79,8 +80,9 @@ export const StudentProfilePage = () => {
 
     useEffect(() => {
         if (id ) {
-            console.log(id)
             dispatch(fetchStudentProfileData(id))
+
+            dispatch(fetchStudentDebtorData(id))
             // dispatch(fetchClassNumberListStudentProfile({branch: branch?.id}))
             dispatch(fetchClassNumberData({branch: branch?.id}))
             // dispatch(fetchLanguagesStudentProfile())
@@ -178,6 +180,7 @@ export const StudentProfilePage = () => {
                     group_id={group_id}
                 />
                 <StudentProfileAmountPath
+                    data={userData}
                     active={active}
                     setActive={setActive}
                 />
