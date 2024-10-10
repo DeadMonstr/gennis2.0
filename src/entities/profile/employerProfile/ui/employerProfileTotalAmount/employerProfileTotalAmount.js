@@ -24,7 +24,7 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
     const {register, handleSubmit} = useForm()
     const [activeService, setActiveService] = useState(amountService[0])
     const [activePaymentType, setActivePaymentType] = useState(0)
-    const [salary, setSalary] = useState(0);
+    const [salary, setSalary] = useState(null);
     const [branch, setBranch] = useState(1)
     const [payment, setPayment] = useState(1)
     const [comment, setComment] = useState('')
@@ -92,26 +92,26 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
             titleType={""}
             onClick={() => setActive("balance")}
         >
-            <div className={cls.amount__header}>
-                <div className={cls.items}>
-                    <div className={cls.items__inner}>
-                        <img src={money} alt=""/>
-                        <p>12 000 000</p>
-                    </div>
-                    <div className={cls.items__inner}>
-                        <img src={creditCard} alt=""/>
-                        <p>11 000 000</p>
-                    </div>
-                    <div className={cls.items__inner}>
-                        <img src={bank} alt=""/>
-                        <p>11 000 000</p>
-                    </div>
-                </div>
-            </div>
+            {/*<div className={cls.amount__header}>*/}
+            {/*    <div className={cls.items}>*/}
+            {/*        <div className={cls.items__inner}>*/}
+            {/*            <img src={money} alt=""/>*/}
+            {/*            <p>12 000 000</p>*/}
+            {/*        </div>*/}
+            {/*        <div className={cls.items__inner}>*/}
+            {/*            <img src={creditCard} alt=""/>*/}
+            {/*            <p>11 000 000</p>*/}
+            {/*        </div>*/}
+            {/*        <div className={cls.items__inner}>*/}
+            {/*            <img src={bank} alt=""/>*/}
+            {/*            <p>11 000 000</p>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
             <div className={cls.amount__content}>
-                <div className={cls.items}>
-                    {renderAmountService}
-                </div>
+                {/*<div className={cls.items}>*/}
+                {/*    {renderAmountService}*/}
+                {/*</div>*/}
                 <div className={cls.form}>
                     <h1>{activeService}</h1>
                     {
@@ -145,6 +145,7 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
                                             type={"number"}
                                             defaultValue={salary}
                                             onChange={(e) => setSalary(e.target.value)}
+                                            required
                                         />
                                         <Input
                                             title={"Sababi"}

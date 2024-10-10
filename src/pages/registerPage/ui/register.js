@@ -76,7 +76,8 @@ export const Register = () => {
         reset
     } = useForm();
     const {idBranch: id} = useParams()
-    const registerType = watch("registerType", "student");
+    const [registerType, setRegisterType] = useState("student")
+    // const registerType = watch("registerType", "student");
     const username = watch("username", "");
     const {theme} = useTheme()
     const getSystem = useSelector(getSystemName)
@@ -236,8 +237,7 @@ export const Register = () => {
             };
 
             registerAction = registerUser(res);
-        }
-        else if (registerType === 'teacher') {
+        } else if (registerType === 'teacher') {
             if (userSystem?.name === "school") {
                 res = {
                     ...res,
@@ -253,7 +253,7 @@ export const Register = () => {
                     ...res,
                     total_students: 1212,
                 };
-                console.log(res , "log")
+                console.log(res, "log")
 
                 registerAction = registerTeacher(res);
             }
@@ -265,9 +265,9 @@ export const Register = () => {
             registerAction = registerEmployer(res2);
         }
 
-      if (registerAction) {
+        if (registerAction) {
             if (registerType === 'teacher' && userSystem?.name === "school") {
-                dispatch(registerTeacherImage({id:res?.user?.username, file: res?.user?.resume  }))
+                dispatch(registerTeacherImage({id: res?.user?.username, file: res?.user?.resume}))
             }
 
             dispatch(registerAction).then((action) => {
@@ -287,6 +287,7 @@ export const Register = () => {
 
 
                     reset();
+                    // reset({ password: "12345678" });
 
                 } else {
                     dispatch(onAddAlertOptions({
@@ -296,10 +297,11 @@ export const Register = () => {
                     }));
                     setError(true);
                 }
+                // setValue("password", 12345678)
+
             });
         }
     };
-
 
 
     const renderFormFields = () => {
@@ -469,9 +471,11 @@ export const Register = () => {
         <div className={cls.login}>
             <div className={cls.selection}>
                 <Select
-                    defaultValue="student"
+                    // name={"registerType"}
+                    // register={register}
+                    defaultValue={registerType}
                     options={userstype.types}
-                    onChangeOption={(value) => setValue('registerType', value)}
+                    onChangeOption={setRegisterType}
                 />
             </div>
             <div className={cls.login__boxes}>
@@ -527,6 +531,7 @@ export const Register = () => {
                             <Input
                                 register={register}
                                 placeholder="Parol"
+                                // defaultValue={"12345678"}
                                 required
                                 type={"password"}
                                 name={"password"}

@@ -9,7 +9,7 @@ export const getRouteTeacher = (id) => `teacher/*`;
 export const getRouteRooms = (id) => `rooms/*`;
 export const getTeacherProfile = (id) => `teacher/teacherProfile/${id}`;
 export const getVacancyPage = (id) => `vacancyPage/${id}`
-export const getVacancyWorkPage = (id) => `vacancyPage/vacancyWorkPage/${id}`
+export const getVacancyWorkPage = (id) => `vacancyPage/:id/vacancyWorkPage/${id}`
 export const getRoomsProfilePage = (id) => `rooms/roomsProfilePage/${id}`
 
 export const getProfile = (id) => `students/profile/${id}`;

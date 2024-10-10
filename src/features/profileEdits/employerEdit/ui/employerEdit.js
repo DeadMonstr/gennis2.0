@@ -8,7 +8,7 @@ import cls from './employerEdit.module.sass'
 import {Button} from "../../../../shared/ui/button";
 import {onAddAlertOptions} from "../../../alert/model/slice/alertSlice";
 
-export const EmployerEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
+export const EmployerEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
     const dispatch = useDispatch();
     const employerID = useSelector(getEmployerId);
     const [selectedFrom, setSelectedFrom] = useState()
@@ -17,23 +17,25 @@ export const EmployerEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
     const [surname, setSurname] = useState('');
     const [phone, setNumber] = useState('')
     const [age, setAge] = useState('')
+    const [money, setMoney] = useState('')
     useEffect(() => {
-        if (employerID)
-        {
+        if (employerID) {
             setName(employerID?.user?.name)
             setSurname(employerID?.user?.surname)
             setNumber(employerID?.user?.phone)
-            setAge(employerID?.user?.age)
+            setAge(employerID?.user?.birth_date)
+            setMoney(employerID?.salary)
         }
     }, [employerID])
 
     const handleEditTeacher = () => {
         if (!employerID) return;
         const updateEmployer = {
-                name: name,
-                surname: surname,
-                phone: phone,
-                age: age
+            name: name,
+            surname: surname,
+            phone: phone,
+            birth_date: age,
+            money: money
 
 
         };
@@ -86,12 +88,19 @@ export const EmployerEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
                             // value={selectedTo}
                         />
                         <Input
-                            type={"text"}
+                            type={"date"}
                             extraClassName={cls.inputAge}
-                            placeholder={"Yosh"}
+                            placeholder={"Tug'ilgan yili"}
                             onChange={(e) => setAge(e.target.value)}
                             value={age}
                             // value={selectedFrom}
+                        />
+                        <Input
+                            type={"number"}
+                            extraClassName={cls.inputAge}
+                            placeholder={"Oylik"}
+                            onChange={(e) => setMoney(e.target.value)}
+                            value={money}
                         />
                         {/*<Input*/}
                         {/*    type={"text"}*/}
@@ -103,11 +112,10 @@ export const EmployerEdit = ({ isOpen, onClose, onUpdate, teacherId}) => {
                     </div>
 
 
-
-
                     <div className={cls.filter__switch}>
-                      <div></div>
-                        <Button extraClass={cls.submitBtn} type={"submit"} children={"Button"} onClick={handleEditTeacher}/>
+                        <div></div>
+                        <Button extraClass={cls.submitBtn} type={"submit"} children={"Button"}
+                                onClick={handleEditTeacher}/>
                     </div>
 
                 </div>

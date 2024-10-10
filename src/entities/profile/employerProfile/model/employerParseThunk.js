@@ -13,7 +13,7 @@ export const editEmployerThunk = createAsyncThunk (
     "employerEditSlice/editTeacherThunk",
     async ({id, updateEmployer}) => {
         const {request} = useHttp();
-        return await request(`${API_URL}Users/users/update/${id}/`, "PATCH", JSON.stringify(updateEmployer))
+        return await request(`${API_URL}Users/users/update/${id}/`, "PATCH", JSON.stringify(updateEmployer), headers())
     }
 )
 
