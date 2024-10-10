@@ -79,7 +79,7 @@ const TimeTableTuronSlice = createSlice({
             })
             .addCase(fetchTimeTableSubject.fulfilled, (state, action) => {
                 if (action.payload.length > 0) {
-                    state.subjects = action.payload.map((item,index) => {
+                    state.subjects = action.payload.map((item, index) => {
                         return {
                             ...item,
                             dndId: `subject-${item.id}`,
@@ -109,7 +109,7 @@ const TimeTableTuronSlice = createSlice({
             .addCase(fetchTimeTableTeacher.fulfilled, (state, action) => {
 
 
-                state.teachers = action.payload.map((item,index) => {
+                state.teachers = action.payload.map((item, index) => {
                     return {
                         ...item,
                         dndId: `teacher-${item.id}`,
@@ -119,8 +119,6 @@ const TimeTableTuronSlice = createSlice({
 
 
                 state.fetchStatusTeachers = "success"
-
-
 
 
                 state.loading = false
@@ -147,7 +145,7 @@ const TimeTableTuronSlice = createSlice({
                         name: item.name_uz
                     }
                 })
-                state.day = action.payload.today
+                state.day = action.payload  
                 state.loading = false
                 state.error = null
             })
@@ -165,7 +163,7 @@ const TimeTableTuronSlice = createSlice({
 
 
             .addCase(fetchTimeTableTypesData.fulfilled, (state, action) => {
-                state.group = action.payload.map((item,index) => {
+                state.group = action.payload.map((item, index) => {
                     return {
                         ...item,
                         dndId: `${item.type}-${item.id}`,
@@ -187,7 +185,6 @@ const TimeTableTuronSlice = createSlice({
             })
 
 
-
             .addCase(fetchTimeTableClassView.pending, state => {
                 state.loading = true
                 state.error = null
@@ -205,7 +202,6 @@ const TimeTableTuronSlice = createSlice({
                 state.loading = false
                 state.error = true
             })
-
 
 
             .addCase(fetchTimeTableData.pending, state => {
@@ -277,4 +273,9 @@ const TimeTableTuronSlice = createSlice({
 })
 
 export default TimeTableTuronSlice.reducer
-export const {onChangeTypeTimeTable,onChangeDayTimeTable,onChangeColorTimeTable,onChangeFilterClassTimeTable} = TimeTableTuronSlice.actions
+export const {
+    onChangeTypeTimeTable,
+    onChangeDayTimeTable,
+    onChangeColorTimeTable,
+    onChangeFilterClassTimeTable
+} = TimeTableTuronSlice.actions

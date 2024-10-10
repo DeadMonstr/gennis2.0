@@ -82,7 +82,9 @@ const TimeTableTuronPageFilters = (props) => {
 
     const onChangeOption = (item) => {
         dispatch(onChangeDayTimeTable(item))
+        localStorage.setItem("item", item)
     }
+
 
     const onChangeOptionClassLesson = (item) => {
         dispatch(onChangeFilterClassTimeTable(item))

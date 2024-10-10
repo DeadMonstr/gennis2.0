@@ -43,6 +43,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     const dispatch = useDispatch();
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"));
     const [discountCharity , setDiscountCharity] = useState(0)
+    const [reasonCharity , setReasonCharity] = useState(0)
     // const [date , setDate] = useState(null)
     const month = useSelector(getMonth)
 
@@ -56,6 +57,12 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
         }
     }, [student_id, dispatch]);
 
+
+    const [amount, setAmount] = useState(selectPrice.price);
+    const handleChange = (e) => {
+        const inputValue = Math.min(Math.max(e.target.value, 0), selectPrice.price  );
+        setAmount(inputValue);
+    };
     const onSelect = async (selectedMonthId) => {
         setGetMonth(selectedMonthId)
         const data = {
@@ -109,7 +116,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                 msg: response.msg
             }));
 
-            setPaymentSum(0);
+            setPaymentSum("");
             return response;
         }
 
@@ -161,7 +168,8 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
 
     const postStudentCharity = () => {
         console.log(discountCharity , student_id)
-        request(`${API_URL}Students/discount/`, "POST", JSON.stringify({discount: discountCharity , student: student_id}), headers())
+
+        request(`${API_URL}Students/discount/`, "POST", JSON.stringify({discount: discountCharity , student: student_id , reason: reasonCharity}), headers())
             .then(res => {
                 console.log(res)
                 // setDiscountCharity(0)
@@ -262,14 +270,17 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                             </div>
                             <div className={cls.form__inner}>
                                 <p>{activeService} miqdori</p>
+                                {/*{selectPrice.price}*/}
                                 <input
                                     className={classNames(cls.input,)}
                                     {...register("amount")}
-                                    placeholder={"Summa"}
-                                    defaultValue={selectPrice.price}
-                                    // onChange={(e) => setPaymentSum(e.target.value)}
+                                    placeholder={`Summa : ${selectPrice.price ? selectPrice.price  : 0}`}
+                                    value={amount}
+                                    onChange={handleChange}
                                     type={"number"}
-                                    max={selectPrice.price} step="1" min="0"
+                                    max={selectPrice.price}
+                                    step="1"
+                                    min="0"
 
                                 />
                                 <Input
@@ -291,8 +302,14 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                                         {...register("discount")}
                                         placeholder={"Summa"}
                                         type={"number"}
-                                        defaultValue={month.data[0].discount}
+                                        defaultValue={month?.data[0]?.discount}
                                         onChange={(e) => setDiscountCharity(e.target.value)}
+                                    />
+                                    <Input
+                                        {...register("reason")}
+                                        placeholder={"Sababi"}
+                                        defaultValue={month?.data[0]?.reason}
+                                        onChange={(e) => setReasonCharity(e.target.value)}
                                     />
                                 </div>
                             </div>

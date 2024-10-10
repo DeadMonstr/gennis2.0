@@ -4,9 +4,20 @@ import cls from "./studentProfileInfo.module.sass";
 import defaultUserImg from "shared/assets/images/user_image.png";
 import {API_URL_DOC} from "../../../../../shared/api/base";
 import {Button} from "../../../../../shared/ui/button";
+import {Table} from "../../../../../shared/ui/table";
 
-export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal, content, contract, system}) => {
+export const StudentProfileInfo = memo(({
+                                            setActive,
+                                            data,
+                                            active,
+                                            setActiveModal,
+                                            content,
+                                            contract,
+                                            system,
+                                            month
+                                        }) => {
     const number = content?.debt
+    console.log(month, "m")
     const formattedNumber = number?.toLocaleString();
     return (
         <EditableCard
@@ -37,6 +48,7 @@ export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal
                 <p>Telefon raqami: <span>{data?.phone}</span></p>
                 <p>Yoshi: <span>{data?.age}</span></p>
                 <p>Tug'ilgan sana: <span>{data?.birth_date}</span></p>
+
                 <p>Shartnoma: <span>
                     {
                         !contract || !contract.contract || contract.contract.length === 0 ? (
@@ -51,6 +63,9 @@ export const StudentProfileInfo = memo(({setActive, data, active, setActiveModal
                         )
                     }
                 </span></p>
+                <p>Chegirma : <span>{month?.data?.map(item => (<span>{item.discount}</span>))}</span></p>
+                <p>Chegirma Sababi : <span>{month?.data?.map(item => (<span>{item.reason}</span>))}</span></p>
+                {/*<p>Xayriya Sababi : <span>{month?.data[0]?.reason ? month?.data[0]?.reason : null}</span></p>*/}
                 <div className={cls.info__addInfo}>
                     <i className="fas fa-plus"/>
                 </div>

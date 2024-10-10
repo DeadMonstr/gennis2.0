@@ -41,7 +41,9 @@ import {
 import cls from "./studentProfilePage.module.sass";
 import {getSystem} from "features/themeSwitcher";
 import {getBranch} from "features/branchSwitcher";
-import {fetchStudentDebtorData} from "../../../../features/studentPayment/model/studentPaymentThunk";
+import {fetchStudentDebtorData, getMonthDataThunk} from "../../../../features/studentPayment/model/studentPaymentThunk";
+import {getMonthData} from "../../../../features/studentPayment";
+import {getMonth} from "../../../../features/studentPayment/model/selectors/selectors";
 
 export const StudentProfilePage = () => {
 
@@ -51,6 +53,8 @@ export const StudentProfilePage = () => {
     const {id} = useParams()
 
     const branch = useSelector(getBranch)
+
+    const month = useSelector(getMonth)
 
 
     const userData = useSelector(getUserData)
@@ -87,6 +91,8 @@ export const StudentProfilePage = () => {
             dispatch(fetchClassNumberData({branch: branch?.id}))
             // dispatch(fetchLanguagesStudentProfile())
             dispatch(fetchLanguagesData())
+            dispatch(getMonthDataThunk(id));
+
         }
 
     }, [id , system,branch?.id])
@@ -141,6 +147,7 @@ export const StudentProfilePage = () => {
                 contract={userData}
                 newImage={newImage}
                 system={system}
+                month={month}
             />
 
             <div
