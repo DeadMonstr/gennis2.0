@@ -27,6 +27,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
     const [teacherSalaryType, setTeacherSalaryType] = useState('');
     const [phone, setNumber] = useState('')
     const [age, setAge] = useState('')
+    const [money, setMoney] = useState("")
     const [classType, setClassType] = useState('')
     const [selectedSubjects, setSelectedSubjects] = useState([])
     const [colorChange, setColorChange] = useState("black")
@@ -45,11 +46,12 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
 
     useEffect(() => {
         if (teacherID) {
+            setMoney(teacherID?.person_tage)
             setClassTime(teacherID?.working_hours)
             setName(teacherID.user?.name)
             setSurname(teacherID.user?.surname)
             setNumber(teacherID.user?.phone)
-            setAge(teacherID.user?.age)
+            setAge(teacherID.user?.birth_date)
             setTeacherSalaryType(teacherID?.teacher_salary_type)
             setClassType(teacherID?.class_type)
             setSelectedSubjects(
@@ -74,7 +76,8 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
             class_type: classType,
             subject: selectedSubjects.map(item => item?.value),
             color: colorChange,
-            working_hours: +classTime
+            working_hours: +classTime,
+            person_tage: +money
 
         };
 
@@ -133,13 +136,21 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
                             // value={selectedTo}
                         />
                         <Input
-                            type={"text"}
+                            type={"date"}
                             extraClassName={cls.inputAge}
-                            placeholder={"Yosh"}
-                            title={"Yosh"}
+                            placeholder={"Tug'ilgan yili"}
+                            title={"Tug'ilgan yili"}
                             onChange={(e) => setAge(e.target.value)}
                             value={age}
                             // value={selectedFrom}
+                        />
+                        <Input
+                            type={"text"}
+                            extraClassName={cls.inputAge}
+                            placeholder={"Ustama foiz"}
+                            title={"Ustama foiz"}
+                            onChange={(e) => setMoney(e.target.value)}
+                            value={money}
                         />
                         <AnimatedMulti
                             options={subjectOptions}
