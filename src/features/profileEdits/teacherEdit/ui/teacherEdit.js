@@ -1,6 +1,5 @@
 import {AnimatedMulti} from "features/workerSelect";
 import React, {useEffect, useState} from 'react';
-// import {} from ""
 import {useDispatch, useSelector} from "react-redux";
 import {editTeacherThunk} from "../../../../entities/teachers";
 import {Modal} from "shared/ui/modal";
@@ -27,7 +26,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
     const [teacherSalaryType, setTeacherSalaryType] = useState('');
     const [phone, setNumber] = useState('')
     const [age, setAge] = useState('')
-    const [money, setMoney] = useState("")
+    const [money, setMoney] = useState(null)
     const [classType, setClassType] = useState('')
     const [selectedSubjects, setSelectedSubjects] = useState([])
     const [colorChange, setColorChange] = useState("black")
@@ -46,7 +45,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
 
     useEffect(() => {
         if (teacherID) {
-            setMoney(teacherID?.person_tage)
+            setMoney(teacherID?.salary_percentage)
             setClassTime(teacherID?.working_hours)
             setName(teacherID.user?.name)
             setSurname(teacherID.user?.surname)
@@ -77,11 +76,10 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
             subject: selectedSubjects.map(item => item?.value),
             color: colorChange,
             working_hours: +classTime,
-            person_tage: +money
+            salary_percentage: +money
 
         };
 
-        console.log(updateTeacher, "updateTeacher")
         dispatch(editTeacherThunk({id: (teacherID.id), updateTeacher}))
             .then(() => {
                 onUpdate(updateTeacher)
@@ -145,7 +143,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
                             // value={selectedFrom}
                         />
                         <Input
-                            type={"text"}
+                            type={"number"}
                             extraClassName={cls.inputAge}
                             placeholder={"Ustama foiz"}
                             title={"Ustama foiz"}
