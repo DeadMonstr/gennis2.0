@@ -60,7 +60,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
 
     const [amount, setAmount] = useState(selectPrice.price);
     const handleChange = (e) => {
-        const inputValue = Math.min(Math.max(e.target.value, 0), selectPrice.price  );
+        const inputValue = Math.min(Math.max(e.target.value, 0), selectPrice.price);
         setAmount(inputValue);
     };
     const onSelect = async (selectedMonthId) => {
