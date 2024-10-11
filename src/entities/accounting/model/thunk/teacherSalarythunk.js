@@ -3,17 +3,17 @@ import {API_URL, headers, useHttp} from "../../../../shared/api/base";
 
 export const getTeacherSalary = createAsyncThunk(
     "teacherSalary/getTeacherSalary",
-    async () => {
+    async (branchID) => {
         const {request} =useHttp()
-        return await request(`${API_URL}Teachers/teacher-salary-list/?status=False` , "GET" , null , headers())
+        return await request(`${API_URL}Teachers/teacher-salary-list/?status=False&branch=${branchID.id}` , "GET" , null , headers())
     }
 )
 
 export const getDeletedTeacherSalary = createAsyncThunk(
     "teacherSalary/getDeletedTeacherSalary",
-    async () => {
+    async (branchID) => {
         const {request} =useHttp()
-        return await request(`${API_URL}Teachers/teacher-salary-list/?status=True` , "GET" , null , headers())
+        return await request(`${API_URL}Teachers/teacher-salary-list/?status=True&branch=${branchID.id}` , "GET" , null , headers())
     }
 )
 

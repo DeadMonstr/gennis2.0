@@ -30,9 +30,10 @@ import {
 import {
     fetchStudentProfileData,
     changeStudentProfileData,
-    changeStudentProfileImage, fetchClassNumberListStudentProfile, fetchLanguagesStudentProfile
+    changeStudentProfileImage, fetchClassNumberListStudentProfile, fetchLanguagesStudentProfile, fetchStudentCharity
 } from "../../model/thunk/studentProfileThunk";
 import {
+    getCharity,
     getStudentProfileClasses,
     getStudentProfileLanguages,
     getUserData
@@ -60,6 +61,7 @@ export const StudentProfilePage = () => {
     const userData = useSelector(getUserData)
     const classes = useSelector(getClassNumberData)
     const languages = useSelector(getLanguagesData)
+    const charity = useSelector(getCharity)
 
 
 
@@ -86,6 +88,7 @@ export const StudentProfilePage = () => {
         if (id ) {
             dispatch(fetchStudentProfileData(id))
 
+            dispatch(fetchStudentCharity(id))
             dispatch(fetchStudentDebtorData(id))
             // dispatch(fetchClassNumberListStudentProfile({branch: branch?.id}))
             dispatch(fetchClassNumberData({branch: branch?.id}))
@@ -96,6 +99,7 @@ export const StudentProfilePage = () => {
         }
 
     }, [id , system,branch?.id])
+
 
     // if (!userData || !userData.user) {
     //     return <div>Loading...</div>;
@@ -148,6 +152,7 @@ export const StudentProfilePage = () => {
                 newImage={newImage}
                 system={system}
                 month={month}
+                charity={charity}
             />
 
             <div

@@ -28,7 +28,7 @@ export const AllTable = ({allTable}) => {
     return (
         <div>
             <Select options={option} onChangeOption={setSelected} defaultValue={"w"}/>
-            {renderPayment()}
+            {/*{renderPayment()}*/}
         </div>
     );
 };

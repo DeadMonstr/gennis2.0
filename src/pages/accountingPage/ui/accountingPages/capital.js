@@ -25,6 +25,7 @@ import {
 import cls from "../accountingPageMain.module.sass"
 import {YesNo} from "shared/ui/yesNoModal";
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
+import {getBranch} from "../../../../features/branchSwitcher";
 
 export const Capital = ({deleted , setDeleted }) => {
     const capitalList = useSelector(getCapitalList)
@@ -38,12 +39,12 @@ export const Capital = ({deleted , setDeleted }) => {
     const [changingData, setChangingData] = useState({})
     const [activeDelete, setActiveDelete] = useState(false)
     const {register, setValue, handleSubmit} = useForm()
-
+    let branchID = useSelector(getBranch)
     const monthDay = useSelector(getMonthDays)
 
     const {request} = useHttp()
     useEffect(() => {
-        dispatch(capitalListThunk())
+        dispatch(capitalListThunk(branchID))
 
         dispatch(getMonthDay())
         // dispatch(capitalDeletedListThunk())

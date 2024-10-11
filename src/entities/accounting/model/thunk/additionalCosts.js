@@ -20,16 +20,16 @@ export const getMonthDay = createAsyncThunk(
 
 export const overHeadList = createAsyncThunk(
     "overHeadSlice/overHeadList",
-    async () => {
+    async (branchId) => {
         const {request} = useHttp()
-        return await request(`${API_URL}Overhead/overheads/?status=False` , "GET" , null , headers())
+        return await request(`${API_URL}Overhead/overheads/?status=False&branch=${branchId.id}/` , "GET" , null , headers())
     }
 )
 
 export const overHeadDeletedList = createAsyncThunk(
     "overHeadSlice/overHeadDeletedList",
-    async () => {
+    async (branchId) => {
         const {request} = useHttp()
-        return await request(`${API_URL}Overhead/overheads/?status=True` , "GET" , null , headers())
+        return await request(`${API_URL}Overhead/overheads/?status=True&branch=${branchId.id}/` , "GET" , null , headers())
     }
 )

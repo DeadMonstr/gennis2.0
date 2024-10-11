@@ -4,17 +4,17 @@ import {API_URL, headers, useHttp} from "../../../../shared/api/base";
 
 export const getStudentPayment = createAsyncThunk(
     "studentSlice/getStudentPayment",
-    async () => {
+    async (branchID) => {
         const {request} = useHttp()
-        return await request(`${API_URL}Students/student_payment_list/` , 'GET' , null , headers())
+        return await request(`${API_URL}Students/student_payment_list/?branch=${branchID.id}/` , 'GET' , null , headers())
     }
 )
 
 
 export const getDeletedPayment = createAsyncThunk(
     "studentSlice/getDeletedPayment",
-    async () => {
+    async (branchId) => {
         const {request} = useHttp()
-        return await request(`${API_URL}Students/student_payment_deleted_list/` , 'GET' , null , headers())
+        return await request(`${API_URL}Students/student_payment_deleted_list/?branch=${branchId.id}/` , 'GET' , null , headers())
     }
 )

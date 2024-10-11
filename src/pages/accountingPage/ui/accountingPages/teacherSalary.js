@@ -19,6 +19,7 @@ import {
 } from "entities/accounting/ui/acauntingTables/accountingTableTeacherSalary/deletedTeacherSalary";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import {YesNo} from "shared/ui/yesNoModal";
+import {getBranch} from "../../../../features/branchSwitcher";
 
 export const TeacherSalaryPage = ({deleted , setDeleted}) => {
 
@@ -31,12 +32,13 @@ export const TeacherSalaryPage = ({deleted , setDeleted}) => {
     const getPaymentTypes = useSelector(getCapitalTypes)
 
     const [activeDelete, setActiveDelete] = useState(false)
+    let branchID = useSelector(getBranch)
     const {request} = useHttp()
 
 
     useEffect(() => {
         // dispatch(getPaymentType())
-        dispatch(getTeacherSalary())
+        dispatch(getTeacherSalary(branchID))
         // dispatch(getDeletedTeacherSalary())
     }, [])
 

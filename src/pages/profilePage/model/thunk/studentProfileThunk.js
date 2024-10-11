@@ -43,3 +43,12 @@ export const fetchClassNumberListStudentProfile = createAsyncThunk(
         return await request(`${API_URL}Class/class_number_list/?branch=${branch}`, "GET", null, headers())
     }
 )
+
+
+export const fetchStudentCharity = createAsyncThunk(
+    "studentProfile/fetchStudentCharity",
+    (id) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Students/student_charities/${id}/` , "GET" , null , headers())
+    }
+)

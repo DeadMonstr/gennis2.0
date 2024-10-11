@@ -1,25 +1,22 @@
 import React, {memo, useEffect, useMemo, useState} from "react";
-import {getDeletedEmpSalary, getEmpSalary} from "../../../../entities/accounting/model/thunk/employerSalary";
+import {getEmpSalary} from "entities/accounting/model/thunk/employerSalary";
 import {useDispatch, useSelector} from "react-redux";
 import {EmployeeSalary, getDeletedEmployer, getEmployerSalary, getLoading} from "entities/accounting";
-import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
-import {getSearchValue} from "../../../../features/searchInput";
-import {Pagination} from "../../../../features/pagination";
-import {API_URL, headers, useHttp} from "../../../../shared/api/base";
+import {DefaultPageLoader} from "shared/ui/defaultLoader";
+import {getSearchValue} from "features/searchInput";
+
+import {API_URL, headers, useHttp} from "shared/api/base";
 import {changePaymentType, onDeleteEmployerSalary} from "entities/accounting/model/slice/employerSalary";
-import {Modal} from "../../../../shared/ui/modal";
-import {Button} from "../../../../shared/ui/button";
-import cls from "../accountingPageMain.module.sass"
-import {Select} from "../../../../shared/ui/select";
-import {getPaymentData} from "../../../../entities/profile/studentProfile";
-import {getPaymentType} from "../../../../entities/capital/model/thunk/capitalThunk";
-import {getCapitalTypes} from "../../../../entities/capital";
+
+import {getCapitalTypes} from "entities/capital";
 import {
     DeletedWorkerSalary
-} from "../../../../entities/accounting/ui/acauntingTables/accountingTableWorkerSalary/deletedWorkerSalary";
-import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
-import {YesNo} from "../../../../shared/ui/yesNoModal";
-import {ConfirmModal} from "../../../../shared/ui/confirmModal";
+} from "entities/accounting/ui/acauntingTables/accountingTableWorkerSalary/deletedWorkerSalary";
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
+import {YesNo} from "shared/ui/yesNoModal";
+import {useParams} from "react-router";
+import {getBranch} from "../../../../features/branchSwitcher";
+
 
 export const EmployerSalaryPage = memo(({deleted , setDeleted }) => {
     const dispatch = useDispatch()
@@ -30,38 +27,23 @@ export const EmployerSalaryPage = memo(({deleted , setDeleted }) => {
     const loading = useSelector(getLoading)
     const {request} = useHttp()
     const [activeDelete, setActiveDelete] = useState(false)
-
+    let branchID = useSelector(getBranch)
     useEffect(() => {
-        dispatch(getEmpSalary())
+        dispatch(getEmpSalary(branchID))
         // dispatch(getPaymentType())
         // dispatch(getDeletedEmpSalary())
     }, [])
-    const search = useSelector(getSearchValue)
-    let PageSize = useMemo(() => 50, [])
+
 
     const [changingData, setChangingData] = useState({})
     const getCapitalType = useSelector(getCapitalTypes)
 
-    const [currentTableData, setCurrentTableData] = useState([])
-    const [currentPage, setCurrentPage] = useState(1);
     const sum1 = getDeletedEmployerSalary.reduce((a, c) => a + parseFloat(c.salary || 0), 0);
     const sum2 = getSalary.reduce((a, c) => a + parseFloat(c.salary || 0), 0);
     const formatSalary = (salary) => {
         return Number(salary).toLocaleString();
     };
 
-    // const searchedUsers = useMemo(() => {
-    //     const filteredHeroes = getSalary?.slice()
-    //     setCurrentPage(1)
-    //
-    //
-    //     if (!search) return filteredHeroes
-    //
-    //     return filteredHeroes.filter(item =>
-    //         item.name?.toLowerCase().includes(search.toLowerCase())
-    //     )
-    //
-    // }, [getSalary, getDeletedEmployerSalary, setCurrentPage, search])
 
 
     const onDelete = (data) => {
@@ -87,16 +69,22 @@ export const EmployerSalaryPage = memo(({deleted , setDeleted }) => {
 
     const onChange = (newPaymentType) => {
         const {id} = changingData;
-        if (!newPaymentType) return;
-        dispatch(changePaymentType({id: id, payment_types: newPaymentType}));
-        // request(`${API_URL}Users/salaries/update/${id}/`, "PATCH", JSON.stringify({payment_types: newPaymentType}), headers())
-        //     .then(res => {
-
-        //
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     });
+        // if (!newPaymentType) return;
+        // dispatch(changePaymentType({id: id, payment_types: Number(newPaymentType)}));
+        request(`${API_URL}Users/salaries/update/${id}/`, "PATCH", JSON.stringify({payment_types: Number(newPaymentType)}), headers())
+            .then(res => {
+                console.log(res)
+                window.location.reload()
+            })
+            .catch(err => {
+                console.log(err);
+                dispatch(onAddAlertOptions({
+                    status: "error",
+                    type: true,
+                    msg: "Serverda hatolik"
+                }))
+                setChangePayment(false)
+            });
 
 
     }
@@ -153,17 +141,7 @@ export const EmployerSalaryPage = memo(({deleted , setDeleted }) => {
             }
 
             <YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>
-            {/*<Pagination*/}
-            {/*    setCurrentTableData={setCurrentTableData}*/}
-            {/*    users={searchedUsers}*/}
-            {/*    setCurrentPage={setCurrentPage}*/}
-            {/*    currentPage={currentPage}*/}
-            {/*    pageSize={PageSize}*/}
-            {/*    onPageChange={page => {*/}
-            {/*        setCurrentPage(page)*/}
-            {/*    }}*/}
-            {/*    type={"custom"}*/}
-            {/*/>*/}
+
         </div>
     );
 })

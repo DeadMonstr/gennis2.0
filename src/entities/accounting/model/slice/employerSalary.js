@@ -16,7 +16,14 @@ const employerSlice = createSlice({
             state.employerSalary = state.employerSalary.filter(item => item.id !== action.payload.id)
         },
         changePaymentType: (state, action) => {
-            state.employerSalary = state.employerSalary.filter(item => item.id !== action.payload.id)
+
+            console.log(action.payload)
+            // state.employerSalary = state.employerSalary.map(item => {
+            //     if (item.id === action.payload.id) {
+            //         return {...item, payment_types: action.payload.payment_types}
+            //     }
+            //     return item
+            // })
         },
 
     },
@@ -28,6 +35,7 @@ const employerSlice = createSlice({
             })
             .addCase(getEmpSalary.fulfilled , (state, action) => {
                 state.employerSalary = action.payload
+                console.log(action.payload , "emp")
                 state.loading = false
                 state.error = false
             })

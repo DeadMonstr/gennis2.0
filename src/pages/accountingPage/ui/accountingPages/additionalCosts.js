@@ -31,6 +31,7 @@ import {
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 import {YesNo} from "../../../../shared/ui/yesNoModal";
 import {ConfirmModal} from "../../../../shared/ui/confirmModal";
+import {getBranch} from "../../../../features/branchSwitcher";
 
 export const AdditionalCosts = ( {deleted , setDeleted}) => {
     const [activeModal, setActiveModal] = useState(false)
@@ -50,13 +51,14 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
     const [activeDelete, setActiveDelete] = useState(false)
     const [changingData, setChangingData] = useState({})
     const overheadDeletedList = useSelector(getOverHeadDeletedList)
+    let branchID = useSelector(getBranch)
     // const [alerts, setAlerts] = useState([])
     useEffect(() => {
         dispatch(getOverheadType())
         // dispatch(getPaymentType())
         dispatch(getMonthDay())
         // dispatch(overHeadDeletedList())
-        dispatch(overHeadList())
+        dispatch(overHeadList(branchID))
     }, [])
 
     // useEffect(() => {

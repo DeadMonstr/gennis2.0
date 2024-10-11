@@ -14,7 +14,8 @@ export const StudentProfileInfo = memo(({
                                             content,
                                             contract,
                                             system,
-                                            month
+                                            month,
+                                            charity
                                         }) => {
     const number = content?.debt
     console.log(month, "m")
@@ -63,8 +64,8 @@ export const StudentProfileInfo = memo(({
                         )
                     }
                 </span></p>
-                <p>Chegirma : <span>{month?.data?.map(item => (<span>{item.discount}</span>))}</span></p>
-                <p>Chegirma Sababi : <span>{month?.data?.map(item => (<span>{item.reason}</span>))}</span></p>
+                <p>Chegirma : <span>{charity.charity_sum}</span></p>
+                <p>Chegirma Sababi : <span>{charity.name}</span></p>
                 {/*<p>Xayriya Sababi : <span>{month?.data[0]?.reason ? month?.data[0]?.reason : null}</span></p>*/}
                 <div className={cls.info__addInfo}>
                     <i className="fas fa-plus"/>

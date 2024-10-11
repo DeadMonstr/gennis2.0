@@ -10,3 +10,7 @@ export const getStudentProfileClasses = (state) =>
 
 export const getStudentProfileLanguages = (state) =>
     state.studentProfile.languages
+
+
+export const getCharity  = (state) =>
+    state.studentProfile.charity

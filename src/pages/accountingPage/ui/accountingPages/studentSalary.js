@@ -14,6 +14,7 @@ import {
 } from "entities/accounting/ui/acauntingTables/accountingTableStudent/deletedStudentPayment";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import {YesNo} from "shared/ui/yesNoModal";
+import {getBranch} from "../../../../features/branchSwitcher";
 
 
 export const StudentSalary = ({deleted, setDeleted}) => {
@@ -24,10 +25,11 @@ export const StudentSalary = ({deleted, setDeleted}) => {
     const [activeDelete, setActiveDelete] = useState(false)
     const [changingData, setChangingData] = useState({})
     const deletedStudentPayment = useSelector(getDeletedStudent)
+    let branchID = useSelector(getBranch)
 
 
     useEffect(() => {
-        dispatch(getStudentPayment())
+        dispatch(getStudentPayment(branchID))
         // dispatch(getDeletedPayment())
     }, [])
 

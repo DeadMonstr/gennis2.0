@@ -20,20 +20,21 @@ export const AllPages = () => {
 
     const [year, setYear] = useState(null)
 
+    console.log(all ,"dasd")
     return (
         <div>
-            <div className={cls.paymentType}>
-                <Select extraClass={cls.select} options={all?.dates?.map(item => item.year)}
-                        onChangeOption={setYear}/>
-                {
-                    year ?
-                        <Select
-                            extraClass={cls.select}
-                            options={all.dates.filter(item => item.year === +year)[0].months}
-                            onChangeOption={setMonths}/>
-                        : null
-                }
-            </div>
+            {/*<div className={cls.paymentType}>*/}
+            {/*    <Select extraClass={cls.select} options={all?.dates?.map(item => item.year)}*/}
+            {/*            onChangeOption={setYear}/>*/}
+            {/*    {*/}
+            {/*        year ?*/}
+            {/*            <Select*/}
+            {/*                extraClass={cls.select}*/}
+            {/*                options={all.dates.filter(item => item.year === +year)[0].months}*/}
+            {/*                onChangeOption={setMonths}/>*/}
+            {/*            : null*/}
+            {/*    }*/}
+            {/*</div>*/}
 
             <AllTable allTable={all}/>
         </div>

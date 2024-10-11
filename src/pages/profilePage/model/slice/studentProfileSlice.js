@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 import {
-    changeStudentProfileData, fetchClassNumberListStudentProfile, fetchLanguagesStudentProfile,
+    changeStudentProfileData, fetchClassNumberListStudentProfile, fetchLanguagesStudentProfile, fetchStudentCharity,
     fetchStudentProfileData
 } from "../thunk/studentProfileThunk";
 
@@ -11,6 +11,8 @@ const initialState = {
 
     languages: [],
     classes: [],
+
+    charity: [],
 
 
     error: null
@@ -75,6 +77,22 @@ const StudentProfileSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchClassNumberListStudentProfile.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload ?? null
+            })
+
+
+
+            .addCase(fetchStudentCharity.pending, state => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(fetchStudentCharity.fulfilled, (state, action) => {
+                state.charity = action.payload
+                state.loading = false
+                state.error = null
+            })
+            .addCase(fetchStudentCharity.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload ?? null
             })

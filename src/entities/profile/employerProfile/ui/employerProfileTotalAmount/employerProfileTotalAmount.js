@@ -31,7 +31,7 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
     const dispatch = useDispatch()
     const userData = useSelector(getSalaryInsideSource)
 
-    const handleAddSalary = async () => {
+    const handleAddSalary = async (data) => {
         const newSalary = {
             salary: Number(salary),
             comment: comment,
@@ -40,8 +40,10 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
             permission: permission_id,
             payment_types: payment,
             user: user_id,
-            branch: branch
+            branch: branch,
+            ...data
         };
+
 
         try {
             const action = await dispatch(giveEmployerSalaryThunk(newSalary));
@@ -154,6 +156,15 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
                                             type={"text"}
                                             defaultValue={comment}
                                             onChange={(e) => setComment(e.target.value)}
+                                        />
+                                        <Input
+                                            title={"Kuni"}
+                                            register={register}
+                                            name={"date"}
+                                            placeholder={"Kuni"}
+                                            type={"date"}
+                                            // defaultValue={comment}
+                                            // onChange={(e) => setComment(e.target.value)}
                                         />
 
                                     </div>
