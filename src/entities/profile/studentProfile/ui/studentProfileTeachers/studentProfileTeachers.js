@@ -1,9 +1,13 @@
 import React, {memo, useCallback} from 'react';
+import {useNavigate} from "react-router";
 import {EditableCard} from "shared/ui/editableCard";
 import cls from "./studentProfileTeachers.module.sass";
 import defaultUserImage from "shared/assets/images/user_image.png";
 import {API_URL_DOC} from "shared/api/base";
 export const StudentProfileTeachers = memo(({data}) => {
+
+    const navigation = useNavigate()
+
     const API_URL_IMAGE = `${API_URL_DOC}`;
     const renderGroupTeachers = useCallback(() => {
         const teachers = Array.isArray(data)
@@ -14,8 +18,16 @@ export const StudentProfileTeachers = memo(({data}) => {
 
         return teachers.map((item, index) => (
             <div key={index} className={cls.items__inner}>
-                {!item.user?.profile_img ? <img src={defaultUserImage}/> :
-                    <img className={cls.userImage} src={`${API_URL_IMAGE}${item.user?.profile_img}`} alt=""/>
+                {!item.user?.profile_img ? <img
+                        onClick={() => navigation(`../teacher/teacherProfile/${item?.id}`)}
+                        src={defaultUserImage}
+                    /> :
+                    <img
+                        onClick={() => navigation(`../teacher/teacherProfile/${item?.id}`)}
+                        className={cls.userImage}
+                        src={`${API_URL_IMAGE}${item.user?.profile_img}`}
+                        alt=""
+                    />
                 }
 
                 <h3>{item.user?.name} {item.user?.surname}</h3>

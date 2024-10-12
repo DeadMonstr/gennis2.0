@@ -1,16 +1,16 @@
-import {Table} from "../../../../shared/ui/table";
-import {Select} from "../../../../shared/ui/select";
 import {useState} from "react";
-import {value} from "lodash/seq";
 
+import {Table} from "shared/ui/table";
+import {Select} from "shared/ui/select";
+import {value} from "lodash/seq";
 
 
 export const AllTable = ({allTable}) => {
 
     const option = allTable?.payment_results?.map(item => ({
-            name: item.payment_type
-        }))
-    const [selected , setSelected] = useState(null)
+        name: item.payment_type
+    }))
+    const [selected, setSelected] = useState(null)
     const renderPayment = () => {
         switch (selected) {
             // case "cash" :
@@ -26,7 +26,13 @@ export const AllTable = ({allTable}) => {
     }
 
     return (
-        <div>
+        <div
+            style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "1rem"
+            }}
+        >
             <Select options={option} onChangeOption={setSelected} defaultValue={"w"}/>
             {/*{renderPayment()}*/}
         </div>
@@ -35,12 +41,12 @@ export const AllTable = ({allTable}) => {
 
 
 const TableCash = ({alltable}) => {
-const allTable = alltable?.payment_results[0]
+    const allTable = alltable?.payment_results
 
-    console.log(allTable)
+    console.log(alltable?.payment_results)
     // const render = renderTable()
-
-    return(
+    if (!allTable) return null
+    return (
 
         <Table>
             <thead>
@@ -58,13 +64,13 @@ const allTable = alltable?.payment_results[0]
             <tr>
                 <td/>
 
-                <td>{allTable?.students?.student_total_payment}</td>
-                <td>{allTable?.teachers?.teacher_total_salary}</td>
-                <td>{allTable?.overheads?.total_overhead_payment}</td>
-                <td>{allTable?.capitals?.total_capital}</td>
+                <td>{allTable[0]?.students?.student_total_payment}</td>
+                <td>{allTable[0]?.teachers?.teacher_total_salary}</td>
+                <td>{allTable[0]?.overheads?.total_overhead_payment}</td>
+                <td>{allTable[0]?.capitals?.total_capital}</td>
                 <td/>
                 {/*<td>{allTable.capitals.total_capital}</td>*/}
-                <td>{allTable?.payment_total}</td>
+                <td>{allTable[0]?.payment_total}</td>
             </tr>
             {/*{render}*/}
             </tbody>
@@ -78,7 +84,7 @@ const TableClick = ({alltable}) => {
     console.log(allTable)
     // const render = renderTable()
 
-    return(
+    return (
 
         <Table>
             <thead>
@@ -118,7 +124,7 @@ const TableBank = ({alltable}) => {
     console.log(allTable)
     // const render = renderTable()
 
-    return(
+    return (
 
         <Table>
             <thead>
