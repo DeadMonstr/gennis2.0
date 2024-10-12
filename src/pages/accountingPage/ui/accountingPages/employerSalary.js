@@ -45,6 +45,7 @@ export const EmployerSalaryPage = memo(({deleted , setDeleted }) => {
     };
 
 
+    console.log(changingData)
 
     const onDelete = (data) => {
         const {id} = changingData
@@ -68,25 +69,26 @@ export const EmployerSalaryPage = memo(({deleted , setDeleted }) => {
     }
 
     const onChange = (newPaymentType) => {
+        console.log(newPaymentType)
         const {id} = changingData;
         // if (!newPaymentType) return;
-        // dispatch(changePaymentType({id: id, payment_types: Number(newPaymentType)}));
+
         request(`${API_URL}Users/salaries/update/${id}/`, "PATCH", JSON.stringify({payment_types: Number(newPaymentType)}), headers())
             .then(res => {
                 console.log(res)
-                window.location.reload()
+                // window.location.reload()
+                setChangePayment(false)
+                dispatch(changePaymentType({id: id, payment_types: getCapitalType.filter(item => item.id === +newPaymentType)[0] , changingData}));
             })
             .catch(err => {
                 console.log(err);
-                dispatch(onAddAlertOptions({
-                    status: "error",
-                    type: true,
-                    msg: "Serverda hatolik"
-                }))
-                setChangePayment(false)
+                // dispatch(onAddAlertOptions({
+                //     status: "error",
+                //     type: true,
+                //     msg: "Serverda hatolik"
+                // }))
+                // setChangePayment(false)
             });
-
-
     }
 
 

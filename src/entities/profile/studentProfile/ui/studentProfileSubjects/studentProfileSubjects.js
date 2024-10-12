@@ -26,7 +26,7 @@ export const StudentProfileSubjects = memo(({ setActive, data, onSelectSubject }
 
         return subjects?.map(item =>
             <div onClick={() => {
-                navigation(`/platform/groups/1/groupInfo/${item.groupId}`)
+                navigation(`/platform/groups/groupInfo/${item.groupId}`)
                 onSelectSubject(item.id)
             }} key={item?.id} className={cls.item}>
                 <div className={cls.item__inner}>

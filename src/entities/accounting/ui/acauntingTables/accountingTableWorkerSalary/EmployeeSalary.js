@@ -30,6 +30,8 @@ export const EmployeeSalary = ({
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
 
+    const[payment , setPayment] = useState(null)
+
     const searchedUsers = useMemo(() => {
         const filteredHeroes = filteredSalary?.slice()
         setCurrentPage(1)
@@ -41,14 +43,16 @@ export const EmployeeSalary = ({
             item.name?.toLowerCase().includes(search.toLowerCase())
         )
     }, [filteredSalary, setCurrentPage, search])
-    const onDeleteModal = (data) => {
-        setActiveDelete(true)
+    // const onDeleteModal = (data) => {
+    //     setActiveDelete(true)
+    //
+    // }
 
-    }
+    // const changePaymentType = (data) => {
+    //     setChangePayment(true)
+    // }
 
-    const changePaymentType = (data) => {
-        setChangePayment(true)
-    }
+
 
     const renderFilteredSalary = () => {
         return currentTableData.map((item, i) => (
@@ -67,13 +71,19 @@ export const EmployeeSalary = ({
                                 name: item.user.name,
                                 surname: item.user.surname,
                                 payment_types: item.payment_types.name,
+                                item
                             });
-                            changePaymentType({
-                                id: item.id,
-                                name: item.user.name,
-                                surname: item.user.surname,
-                                payment_types: item.payment_types.name,
+                            setPayment({
+                                payment_types: item.payment_types,
+
                             })
+                                setChangePayment(true)
+                            // changePaymentType({
+                            //     id: item.id,
+                            //     name: item.user.name,
+                            //     surname: item.user.surname,
+                            //     payment_types: item.payment_types.name,
+                            // })
                         }} className={cls.cash}>
                             {item?.payment_types?.name}
                         </div>
@@ -82,12 +92,13 @@ export const EmployeeSalary = ({
                         <div>
                             <Button
                                 onClick={() => {
-                                    onDeleteModal({
-                                        id: item.id,
-                                        name: item.user.name,
-                                        surname: item.user.surname,
-                                        payment_types: item.payment_types.name,
-                                    })
+                                        setActiveDelete(true)
+                                    // onDeleteModal({
+                                    //     id: item.id,
+                                    //     name: item.user.name,
+                                    //     surname: item.user.surname,
+                                    //     payment_types: item.payment_types.name,
+                                    // })
                                     setChangingData({
                                         id: item.id,
                                         name: item.user.name,
@@ -134,8 +145,8 @@ export const EmployeeSalary = ({
 
                     <h2>To'lov turini uzgartirish</h2>
                     <div className={cls.changeType}>
-                        <Select title={changingData.payment_types} options={getCapitalType}
-                                onChangeOption={(value) => onChange(value)}/>
+                        <Select  options={getCapitalType}
+                                onChangeOption={onChange}/>
                         {/*<Button onClick={onChange}>Tastiqlash</Button>*/}
                     </div>
                 </Modal>

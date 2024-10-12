@@ -154,6 +154,8 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
                                             {...register("comment")}
                                             placeholder={"Sababi"}
                                             type={"text"}
+                                            name={"comment"}
+                                            register={register}
                                             defaultValue={comment}
                                             onChange={(e) => setComment(e.target.value)}
                                         />

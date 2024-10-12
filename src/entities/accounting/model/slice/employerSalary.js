@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getEmpSalary , getDeletedEmpSalary} from "../thunk/employerSalary";
+import {getEmpSalary, getDeletedEmpSalary} from "../thunk/employerSalary";
 
 const initialState = {
     loading: false,
@@ -11,48 +11,54 @@ const initialState = {
 const employerSlice = createSlice({
     name: "employerSlice",
     initialState,
-    reducers : {
+    reducers: {
         onDeleteEmployerSalary: (state, action) => {
             state.employerSalary = state.employerSalary.filter(item => item.id !== action.payload.id)
         },
         changePaymentType: (state, action) => {
 
-            console.log(action.payload)
-            // state.employerSalary = state.employerSalary.map(item => {
-            //     if (item.id === action.payload.id) {
-            //         return {...item, payment_types: action.payload.payment_types}
-            //     }
-            //     return item
-            // })
+            console.log(action.payload, "action")
+            state.employerSalary = state.employerSalary.map(item => {
+                if (item.id === +action.payload.id) {
+                    console.log(item.id, action.payload.id, " item")
+                    return {
+                        id: action.payload.id ,
+                        payment_types: action.payload.payment_types,
+                        user: action.payload.changingData.item.user,
+                        user_salary: action.payload.changingData.item.user_salary
+                    }
+                }
+                return item
+            })
         },
 
     },
     extraReducers: builder =>
         builder
-            .addCase(getEmpSalary.pending , state => {
+            .addCase(getEmpSalary.pending, state => {
                 state.loading = true
                 state.error = false
             })
-            .addCase(getEmpSalary.fulfilled , (state, action) => {
+            .addCase(getEmpSalary.fulfilled, (state, action) => {
                 state.employerSalary = action.payload
-                console.log(action.payload , "emp")
+                console.log(action.payload, "emp")
                 state.loading = false
                 state.error = false
             })
-            .addCase(getEmpSalary.rejected , (state , action) => {
+            .addCase(getEmpSalary.rejected, (state, action) => {
                 state.loading = false
                 state.error = true
             })
-            .addCase(getDeletedEmpSalary.pending , state => {
+            .addCase(getDeletedEmpSalary.pending, state => {
                 state.loading = true
                 state.error = false
             })
-            .addCase(getDeletedEmpSalary.fulfilled , (state, action) => {
+            .addCase(getDeletedEmpSalary.fulfilled, (state, action) => {
                 state.deletedEmployerSalary = action.payload
                 state.loading = false
                 state.error = false
             })
-            .addCase(getDeletedEmpSalary.rejected , state => {
+            .addCase(getDeletedEmpSalary.rejected, state => {
                 state.error = true
                 state.loading = false
             })
@@ -60,4 +66,4 @@ const employerSlice = createSlice({
 })
 
 export const {onDeleteEmployerSalary, changePaymentType} = employerSlice.actions
-export default  employerSlice.reducer
+export default employerSlice.reducer

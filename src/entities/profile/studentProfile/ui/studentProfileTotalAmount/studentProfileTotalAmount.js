@@ -42,7 +42,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     const [payment, setPayment] = useState(1);
     const dispatch = useDispatch();
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"));
-    const [discountCharity , setDiscountCharity] = useState(0)
+    const [discountCharity , setDiscountCharity] = useState("")
     const [reasonCharity , setReasonCharity] = useState(0)
     // const [date , setDate] = useState(null)
     const month = useSelector(getMonth)
@@ -166,10 +166,17 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
 
     }
 
-    const postStudentCharity = () => {
-        console.log(discountCharity , student_id)
 
-        request(`${API_URL}Students/discount/`, "POST", JSON.stringify({discount: discountCharity , student: student_id , reason: reasonCharity}), headers())
+    const postStudentCharity = (data) => {
+        console.log(data)
+
+        const res = {
+            discount: data.discount,
+            reason: data.reason,
+            student: student_id
+        }
+
+        request(`${API_URL}Students/discount/`, "POST", JSON.stringify(res), headers())
             .then(res => {
                 console.log(res)
                 // setDiscountCharity(0)
@@ -299,17 +306,19 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                                 <div className={cls.form__inner}>
                                     <p>{activeService} miqdori</p>
                                     <Input
-                                        {...register("discount")}
+                                        register={register}
+                                        name={"discount"}
                                         placeholder={"Summa"}
                                         type={"number"}
-                                        defaultValue={month?.data[0]?.discount}
-                                        onChange={(e) => setDiscountCharity(e.target.value)}
+                                        value={month?.data[0]?.discount}
+                                        // onChange={(e) => setDiscountCharity(e.target.value)}
                                     />
                                     <Input
-                                        {...register("reason")}
+                                        register={register}
+                                        name={"reason"}
                                         placeholder={"Sababi"}
-                                        defaultValue={month?.data[0]?.reason}
-                                        onChange={(e) => setReasonCharity(e.target.value)}
+                                        value={month?.data[0]?.reason}
+                                        // onChange={(e) => setReasonCharity(e.target.value)}
                                     />
                                 </div>
                             </div>

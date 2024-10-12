@@ -10,6 +10,7 @@ import {getBranch} from "../../../../../features/branchSwitcher";
 import {API_URL, headers, useHttp} from "../../../../../shared/api/base";
 import {useForm} from "react-hook-form";
 import {Form} from "../../../../../shared/ui/form";
+import {onAddAlertOptions} from "../../../../../features/alert/model/slice/alertSlice";
 
 
 export const StudentPayment = () => {
@@ -23,6 +24,8 @@ export const StudentPayment = () => {
     const dispatch = useDispatch()
     const {register, handleSubmit} = useForm()
 
+    const [res, setRes] = useState(null)
+
     const {request} = useHttp()
     const branchID = useSelector(getBranch)
     useEffect(() => {
@@ -34,39 +37,42 @@ export const StudentPayment = () => {
             }), headers())
                 .then(res => {
                     dispatch(getStudentPayment(branchID.id))
-                    console.log(res)
+                    setRes(res)
                 })
                 .catch(err => {
-                    console.log(err)
+                    dispatch(onAddAlertOptions({
+                        status: "error",
+                        type: true,
+                        msg: "Serverda hatolik"
+                    }))
                 })
         }
-    }, [month , year])
-
-
+    }, [year, month])
 
     return (
         <div>
             <div className={cls.paymentType}>
 
-                    <Select
-                        register={register}
-                        extraClass={cls.select}
-                        name={"year"}
-                        options={classes?.dates?.map(item => item?.year)}
-                        onChangeOption={setYear}
-                    />
+                <Select
+                    register={register}
+                    extraClass={cls.select}
+                    name={"year"}
+                    options={classes?.dates?.map(item => item?.year)}
+                    onChangeOption={setYear}
+                />
 
-                    {year ? <Select
-                        register={register}
-                        name={"month"}
-                        extraClass={cls.select}
-                        options={classes?.dates?.filter(item => item.year === +year)[0]?.months}
-                        onChangeOption={setMonths}
-                    /> : null}
+                {year ? <Select
+                    register={register}
+                    name={"month"}
+                    extraClass={cls.select}
+                    options={classes?.dates?.filter(item => item.year === +year)[0]?.months}
+                    onChangeOption={setMonths}
+                /> : null}
 
 
             </div>
-            <PaymentTable extraClass={cls.tableHeader} extraClassTable={cls.table} classes={classes}/>
+
+            <PaymentTable extraClass={cls.tableHeader} extraClassTable={cls.table} classes={res ? res : classes}/>
         </div>
     );
 };
