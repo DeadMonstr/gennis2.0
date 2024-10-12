@@ -215,6 +215,7 @@ export const AddAdditionalCosts = (props) => {
     } = props;
 
     console.log(monthDay, "monthDay")
+    console.log(month, "month")
 
 
     return (
@@ -252,6 +253,7 @@ export const AddAdditionalCosts = (props) => {
                     title={'Oy'}
                     defaultValue={monthDay[0]?.name}
                     options={monthDay}
+                    keyValue={"name"}
                     onChangeOption={setMonth}
                 />
                 <Select
