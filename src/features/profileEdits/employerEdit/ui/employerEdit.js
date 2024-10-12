@@ -57,7 +57,7 @@ export const EmployerEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
             setNumber(employerID?.user?.phone)
             setAge(employerID?.user?.birth_date)
             setMoney(employerID?.salary)
-            setSelectedJob(employerID?.group)
+            setSelectedJob(employerID?.group?.id)
         }
     }, [employerID])
 
@@ -68,8 +68,8 @@ export const EmployerEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
             surname: surname,
             phone: phone,
             birth_date: age,
-            money: money
-
+            money: money,
+            profession: +selectedJob
 
         };
         dispatch(editEmployerThunk({id: (employerID.user?.id), updateEmployer}))
@@ -139,7 +139,7 @@ export const EmployerEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
                             extraClass={cls.inputAge}
                             options={jobs}
                             onChangeOption={setSelectedJob}
-                            defaultValue={selectedJob?.id}
+                            defaultValue={selectedJob}
                         />
                         {/*<Input*/}
                         {/*    type={"text"}*/}
