@@ -20,3 +20,6 @@ export const getUserSystemId = (state) =>
 
 export const getUserPermission = (state) =>
     state.userProfileSlice.userPermissions
+
+export const getUserJob = (state) =>
+    state.userProfileSlice.userJob

@@ -1,5 +1,8 @@
+import {getUserJob} from "entities/profile/userProfile";
+import {fetchVacancyData, getVacancyJobs} from "features/vacancyModals/vacancyPageAdd";
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import {Select} from "shared/ui/select";
 import {editEmployerThunk, fetchEmployerId} from "../../../../entities/profile/employerProfile";
 import {Modal} from "shared/ui/modal";
 import {Input} from "shared/ui/input";
@@ -11,6 +14,8 @@ import {onAddAlertOptions} from "../../../alert/model/slice/alertSlice";
 export const EmployerEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
     const dispatch = useDispatch();
     const employerID = useSelector(getEmployerId);
+    const data = useSelector(getVacancyJobs)
+    const userJob = useSelector(getUserJob)
     const [selectedFrom, setSelectedFrom] = useState()
     const [selectedTo, setSelectedTo] = useState()
     const [name, setName] = useState('');
@@ -18,6 +23,33 @@ export const EmployerEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
     const [phone, setNumber] = useState('')
     const [age, setAge] = useState('')
     const [money, setMoney] = useState('')
+    const [selectedJob, setSelectedJob] = useState(null)
+    const [jobs, setJobs] = useState([])
+
+    useEffect(() => {
+        dispatch(fetchVacancyData())
+    }, [])
+
+    useEffect(() => {
+        if (data && selectedJob) {
+            setJobs(() => {
+                if (userJob === "director") {
+                    return data.map(item => ({
+                        id: item?.group?.id,
+                        name: item?.group?.name
+                    }))
+                } else {
+                    return data
+                        .filter(item => item?.name !== "director" && item?.name !== "admin")
+                        .map(item => ({
+                            id: item?.group?.id,
+                            name: item?.group?.name
+                        }))
+                }
+            })
+        }
+    }, [data])
+
     useEffect(() => {
         if (employerID) {
             setName(employerID?.user?.name)
@@ -25,6 +57,7 @@ export const EmployerEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
             setNumber(employerID?.user?.phone)
             setAge(employerID?.user?.birth_date)
             setMoney(employerID?.salary)
+            setSelectedJob(employerID?.group?.id)
         }
     }, [employerID])
 
@@ -35,8 +68,8 @@ export const EmployerEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
             surname: surname,
             phone: phone,
             birth_date: age,
-            money: money
-
+            money: money,
+            profession: +selectedJob
 
         };
         dispatch(editEmployerThunk({id: (employerID.user?.id), updateEmployer}))
@@ -101,6 +134,12 @@ export const EmployerEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
                             placeholder={"Oylik"}
                             onChange={(e) => setMoney(e.target.value)}
                             value={money}
+                        />
+                        <Select
+                            extraClass={cls.inputAge}
+                            options={jobs}
+                            onChangeOption={setSelectedJob}
+                            defaultValue={selectedJob}
                         />
                         {/*<Input*/}
                         {/*    type={"text"}*/}

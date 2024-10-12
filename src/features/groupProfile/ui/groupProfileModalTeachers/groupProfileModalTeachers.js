@@ -8,7 +8,7 @@ import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import {system} from "features/workerSelect";
 import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {useTheme} from "shared/lib/hooks/useTheme";
 
 import {EditableCard} from "shared/ui/editableCard";
@@ -24,6 +24,7 @@ import defaultUserImg from "shared/assets/images/user_image.png";
 export const GroupProfileModalTeachers = memo(({branch}) => {
 
     // const branch = localStorage.getItem("selectedBranch")
+    const navigation = useNavigate()
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
     const userBranchId = useSelector(getUserBranchId)
     const dispatch = useDispatch()
@@ -78,7 +79,10 @@ export const GroupProfileModalTeachers = memo(({branch}) => {
         return searched?.map(item =>
             <tr>
                 <td>
-                    <img src={defaultUserImg} alt=""/>
+                    <img
+                        src={defaultUserImg}
+                        alt=""
+                    />
                 </td>
                 <td>{item?.user?.name}</td>
                 <td>{item?.user?.surname}</td>
@@ -126,6 +130,7 @@ export const GroupProfileModalTeachers = memo(({branch}) => {
                 <div className={cls.teacher__container}>
                     <div className={cls.teacher__info}>
                         <img
+                            onClick={() => navigation(`../teacher/teacherProfile/${profileData?.teacher[0]?.id}`)}
                             className={cls.teacher__image}
                             src={
                                 profileData?.teacher[0]?.user?.profile_img ??

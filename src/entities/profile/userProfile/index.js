@@ -14,5 +14,6 @@ export {
     getUserSystemId,
     getUserProfileData,
     getUserSalaryInnerData,
-    getUserSalaryData
+    getUserSalaryData,
+    getUserJob
 } from "./model/userProfileSelector";
