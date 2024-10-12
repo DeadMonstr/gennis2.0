@@ -58,3 +58,6 @@ export const getMonthData = (state) =>
 
 export const getMonth = (state) =>
     state.studentPaymentSlice.debtStudent
+
+export const getCherityMonth = (state) =>
+    state.studentPaymentSlice.month

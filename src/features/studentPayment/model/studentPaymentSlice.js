@@ -21,7 +21,7 @@ import {
     studentPaymentTypeChangeThunk,
     studentBookOrderListThunk,
     getMonthDataThunk,
-    getMonthPrice, fetchStudentDebtorData
+    getMonthPrice, fetchStudentDebtorData, fetchStudentCharityMonth
 
 } from "./studentPaymentThunk";
 
@@ -50,7 +50,8 @@ const initialState = {
     getMonthData: [],
     debtStudent: [],
     loading: false,
-    error: null
+    error: null,
+    month: []
 }
 
 const studentPaymentSlice = createSlice({
@@ -382,6 +383,21 @@ const studentPaymentSlice = createSlice({
                 state.error = false
             })
             .addCase(fetchStudentDebtorData.rejected, state => {
+                state.loading = false
+                state.error = true
+            })
+
+            .addCase(fetchStudentCharityMonth.pending, state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(fetchStudentCharityMonth.fulfilled, (state, action) => {
+                state.month = action.payload
+                console.log(action.payload , "action payload")
+                state.loading = false
+                state.error = false
+            })
+            .addCase(fetchStudentCharityMonth.rejected, state => {
                 state.loading = false
                 state.error = true
             })
