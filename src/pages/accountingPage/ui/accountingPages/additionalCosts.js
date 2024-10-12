@@ -214,9 +214,6 @@ export const AddAdditionalCosts = (props) => {
         setMonth
     } = props;
 
-    console.log(monthDay, "monthDay")
-    console.log(month, "month")
-
 
     return (
 
