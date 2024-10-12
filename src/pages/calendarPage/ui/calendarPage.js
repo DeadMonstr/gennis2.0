@@ -31,18 +31,19 @@ export const CalendarPage = () => {
     const currentYear = new Date().getFullYear()
 
 
+    console.log(isChanged, "isChanged main")
 
     const onSubmitAdd = (data) => {
         let res;
 
-        setData({...data, ...active})
+        setData({...data, ...active, color: data?.color ?? "black"})
 
         if (active?.length) {
-            res = {...data, days: active}
+            res = {...data, days: active, color: data?.color ?? "black"}
         } else if (active?.selected?.length) {
-            res = {...data, days: active?.selected}
+            res = {...data, days: active?.selected, color: data?.color ?? "black"}
         } else {
-            res = {...data, ...active}
+            res = {...data, ...active, color: data?.color ?? "black"}
         }
 
 
