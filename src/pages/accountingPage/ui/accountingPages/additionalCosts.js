@@ -251,14 +251,13 @@ export const AddAdditionalCosts = (props) => {
 
                 <Select
                     title={'Oy'}
-                    defaultValue={monthDay[0]?.name}
+                    defaultValue={monthDay[0]?.value}
                     options={monthDay}
-                    keyValue={"name"}
                     onChangeOption={setMonth}
                 />
                 <Select
                     title={'Kun'}
-                    options={monthDay.filter(item => item?.name === month)[0]?.days}
+                    options={monthDay.filter(item => item?.value === month)[0]?.days}
                     onChangeOption={setDay}
                 />
             </Form>
