@@ -19,7 +19,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import classNames from "classnames";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import defaultUserImg from "shared/assets/images/user_image.png";
 
@@ -44,6 +44,7 @@ export const FlowProfileStudentsForm = ({activeTeacher, setActiveTeacher}) => {
         register,
         handleSubmit
     } = useForm()
+    const navigation = useNavigate()
     const data = useSelector(getFlowsProfileData)
     const flows = useSelector(getFlows)
     const filteredStudents = useSelector(getFlowsProfileFilteredStudents)
@@ -167,9 +168,15 @@ export const FlowProfileStudentsForm = ({activeTeacher, setActiveTeacher}) => {
         return data?.students?.map(item =>
             <tr>
                 <td>
-                    <img src={item.img ?? defaultUserImg} alt=""/>
+                    <img
+                        onClick={() => navigation(`../students/profile/${item?.id}`)}
+                        src={item.img ?? defaultUserImg}
+                        alt=""
+                    />
                 </td>
-                <td>{`${item?.user?.surname} ${item?.user?.name}`}</td>
+                <td>
+                    {`${item?.user?.surname} ${item?.user?.name}`}
+                </td>
                 <td>{item?.user?.phone}</td>
                 <td>{item?.parents_number}</td>
                 <td>

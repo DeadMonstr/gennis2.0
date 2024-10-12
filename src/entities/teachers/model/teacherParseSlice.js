@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { editTeacherThunk, fetchTeacherId} from "./teacherParseThunk";
+import {editTeacherThunk, fetchDropStudents, fetchTeacherId} from "./teacherParseThunk";
 
 const initialState = {
     teacherId: [],
+    students: [],
+    studentsLoading: false,
     loading: false,
     error: null
 };
@@ -33,6 +35,20 @@ export const teacherParseSlice = createSlice({
             .addCase(editTeacherThunk.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
+            })
+
+            .addCase(fetchDropStudents.pending, state => {
+                state.studentsLoading = true
+                state.error = null
+            })
+            .addCase(fetchDropStudents.fulfilled, (state, action) => {
+                state.students = action.payload
+                state.studentsLoading = false
+                state.error = null
+            })
+            .addCase(fetchDropStudents.rejected, state => {
+                state.studentsLoading = false
+                state.error = "error"
             })
 
 

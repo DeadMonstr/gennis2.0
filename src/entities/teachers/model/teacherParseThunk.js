@@ -26,3 +26,11 @@ export const changeTeacherProfileImage = createAsyncThunk(
         return request(`${API_URL}Users/users/update/${id}/`, "PATCH", formData, headersImg())
     }
 )
+
+export const fetchDropStudents = createAsyncThunk (
+    "teacherEditSlice/fetchDropStudents",
+    async ({id}) => {
+        const {request} = useHttp();
+        return await request(`${API_URL}Teachers/group-student/${id}/`, "GET", null, headers())
+    }
+)
