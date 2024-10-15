@@ -3,6 +3,10 @@ import {studentSlice} from "../../index";
 export const getAccountingSelect = (state) =>
     state.accountingSlice?.pages
 
+
+export const getAccountingActivePage = (state) =>
+    state.accountingSlice?.activePage
+
 export const getAccountingOtchot = (state) =>
     state.accountingSlice?.accountingPages
 

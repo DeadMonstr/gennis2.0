@@ -87,7 +87,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                 student: student_id,
                 payment_type: payment,
                 status: false,
-                payment_sum: Number(paymentSum),
+                payment_sum: paymentSum ? Number(paymentSum) : selectPrice.price,
                 branch: branch_id,
                 ...data
             }
@@ -112,6 +112,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                 student: student_id,
                 payment_type: payment,
 
+                payment_sum: paymentSum,
                 status: false,
                 branch: branch_id,
                 ...data
@@ -152,7 +153,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
         const newDiscount = {
             student: student_id,
             payment_type: 1,
-            payment_sum: discount,
+            payment_sum: Number(discount),
             status: true,
             branch: branch_id,
             ...data,
@@ -290,9 +291,10 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                                 <Input
                                     {...register("amount")}
                                     placeholder={"Summa"}
-                                    // value={paymentSum || selectPrice.price}
+                                    value={paymentSum || selectPrice.price}
                                     onChange={(e) => setPaymentSum(e.target.value)}
                                     type={"number"}
+
                                 />
                                 {/*<Input*/}
                                 {/*    extraClassName={cls.form__inout}*/}
@@ -377,7 +379,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                                 <p>{activeService} miqdori</p>
                                 <Select extraClass={cls.select} options={getMonthCharity} onChangeOption={setCharityMonth}/>
                                 <Input
-                                    {...register("amount")}
+                                    {...register("payment_sum")}
                                     register={register}
 
                                     placeholder={"Summa"}

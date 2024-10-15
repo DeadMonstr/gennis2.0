@@ -23,7 +23,7 @@ import {
     getMonthDays, getOverHeadDeletedList,
     getOverHeadList,
 } from "entities/accounting/model/selector/additionalCosts";
-import {onDeleteOverhead} from "entities/accounting/model/slice/additionalCosts";
+import {onChangePaymentType, onDeleteOverhead} from "entities/accounting/model/slice/additionalCosts";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import {
     AdditionalCostsDeleted
@@ -32,6 +32,7 @@ import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSli
 import {YesNo} from "../../../../shared/ui/yesNoModal";
 import {ConfirmModal} from "../../../../shared/ui/confirmModal";
 import {getBranch} from "../../../../features/branchSwitcher";
+import {changePaymentType} from "../../../../entities/accounting/model/slice/employerSalary";
 
 export const AdditionalCosts = ( {deleted , setDeleted}) => {
     const [activeModal, setActiveModal] = useState(false)
@@ -51,6 +52,12 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
     const [activeDelete, setActiveDelete] = useState(false)
     const [changingData, setChangingData] = useState({})
     const overheadDeletedList = useSelector(getOverHeadDeletedList)
+    const [changePayment, setChangePayment] = useState(false)
+
+
+    const getCapitalType = useSelector(getCapitalTypes)
+
+    const [changePaymentType , setChangePaymentType] = useState(null)
     let branchID = useSelector(getBranch)
     // const [alerts, setAlerts] = useState([])
     useEffect(() => {
@@ -91,7 +98,7 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
             type: select.id,
             month: month,
             day: day,
-            branch: 1,
+            branch: branchID.id,
             payment: radioSelect.id,
             ...data
         }
@@ -135,6 +142,31 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
                 console.log(err)
             })
     }
+
+
+    const onChangePayment = (newPaymentType) => {
+        console.log(newPaymentType)
+        const {id} = changePaymentType;
+        dispatch(onChangePaymentType({id: id, payment: getCapitalType.filter(item => item.id === +newPaymentType)[0] , changePaymentType}));
+        // if (!newPaymentType) return;
+
+        // request(`${API_URL}Users/salaries/update/${id}/`, "PATCH", JSON.stringify({payment_types: Number(newPaymentType)}), headers())
+        //     .then(res => {
+        //         console.log(res)
+        //         // window.location.reload()
+        //         setChangePayment(false)
+        //
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //         // dispatch(onAddAlertOptions({
+        //         //     status: "error",
+        //         //     type: true,
+        //         //     msg: "Serverda hatolik"
+        //         // }))
+        //         // setChangePayment(false)
+        //     });
+    }
     const sum1 = overheadList.reduce((a, c) => a + parseFloat(c.price || 0), 0);
     const sum2 = overheadDeletedList.reduce((a, c) => a + parseFloat(c.price || 0), 0);
 
@@ -162,6 +194,11 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
                     activeDelete={activeDelete} extraclassName={cls.table}
                     additionalCosts={overheadList}
                     paymentStyle={cls.typeItem}
+                    setChangePayment={setChangePayment}
+                   changePayment={changePayment}
+                    getCapitalType={getCapitalType}
+                    onChange={onChangePayment}
+                    setChangePaymentType={setChangePaymentType}
                 />
             }
             <AddAdditionalCosts

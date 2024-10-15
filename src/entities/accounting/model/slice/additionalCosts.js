@@ -17,6 +17,22 @@ export const overHeadSlice = createSlice({
         onDeleteOverhead: (state, action) => {
             state.overHeadList = state.overHeadList.filter(item => item.id !== action.payload.id)
         },
+
+        onChangePaymentType: (state ,action) => {
+            console.log(action.payload)
+            state.overHeadList = state.overHeadList.map(item => {
+                if (item.id === +action.payload.id) {
+                    console.log(item.id, action.payload.id, " item")
+                    // return {
+                    //     id: action.payload.id ,
+                    //     payment_types: action.payload.payment_types,
+                    //     user: action.payload.changingData.item.user,
+                    //     user_salary: action.payload.changingData.item.user_salary
+                    // }
+                }
+                return item
+            })
+        }
     },
     extraReducers: builder =>
         builder
@@ -74,5 +90,5 @@ export const overHeadSlice = createSlice({
             })
 })
 
-export const {onDeleteOverhead} = overHeadSlice.actions
+export const {onDeleteOverhead , onChangePaymentType} = overHeadSlice.actions
 export default overHeadSlice.reducer

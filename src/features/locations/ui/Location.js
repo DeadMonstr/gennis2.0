@@ -23,6 +23,7 @@ export const Location = ({systemId}) => {
     const selectedLocations = useSelector(getSelectedLocations)
     const loading = useSelector(getLocationLoading)
 
+
     const [isLocal,setIsSetLocal] = useState(false)
 
 

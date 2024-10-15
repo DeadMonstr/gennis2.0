@@ -13,8 +13,8 @@ import {
 } from "entities/accounting";
 import {getPaymentType} from "entities/capital/model/thunk/capitalThunk";
 
-import {Routes, Route, useLocation} from "react-router";
-import {memo, useCallback, useEffect, useState} from "react";
+import {Routes, Route, useLocation, Navigate} from "react-router";
+import React, {memo, useCallback, useEffect, useState} from "react";
 import cls from './accountingPageMain.module.sass';
 
 import {useDispatch, useSelector} from "react-redux";
@@ -32,7 +32,11 @@ import {StudentSalary} from "./accountingPages/studentSalary";
 import {Link} from "shared/ui/link";
 import {AdditionalCosts} from "./accountingPages/additionalCosts";
 import {Capital} from "./accountingPages/capital";
-import {getAccountingOtchot, getEncashment} from "entities/accounting/model/selector/accountingSelector";
+import {
+    getAccountingActivePage,
+    getAccountingOtchot,
+    getEncashment
+} from "entities/accounting/model/selector/accountingSelector";
 import {accountingThunk} from "entities/accounting/model/thunk/accountingThunk";
 import {AccountingFilter} from "features/filters/accountingFilter";
 import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
@@ -56,23 +60,28 @@ export const AccountingPageMainIndex = memo(() => {
             <Route path={"list"} element={<MultiPage types={types} page={"accounting"} id={false}/>}/>
             <Route path={":idBranch/*"} element={<AccountingPageMain/>}/>
 
+
+
         </Routes>
     )
 });
 
 
-const AccountingPageMain = () => {
+export const AccountingPageMain = () => {
     let {"*": typePage} = useParams()
     const getAccountingPage = useSelector(getAccountingSelect)
+    console.log(getAccountingPage , "pages")
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {request} = useHttp()
     const [active, setActive] = useState(false)
     const [activeDel, setActiveDel] = useState(false)
-    const [activePage, setActivePage] = useState(getAccountingPage[0]?.value)
+    // const [activePage, setActivePage] = useState(getAccountingPage[0]?.value)
     const encashment = useSelector(getEncashment)
+    const activePage = useSelector(getAccountingActivePage)
     const {id} = useParams()
+    const location = useLocation()
 
     const [otchot, setOtchot] = useState(false)
 
@@ -83,17 +92,19 @@ const AccountingPageMain = () => {
     }, [typePage])
 
 
-
     useEffect(() => {
         dispatch(accountingThunk({branchID: branchID.id}))
         dispatch(getPaymentType())
     }, [])
 
+    useEffect(() => {
+        navigate(`${activePage}`)
+    },[activePage,navigate,location.pathname])
+
     const setPage = useCallback((e) => {
-        console.log(e, "value")
-        setActivePage(e)
+        // setActivePage(e)
         dispatch(onChangeAccountingPage({value: e}))
-        navigate(`${e}`, {relative: "path"})
+
     }, [navigate])
 
     const formatSalary = (payment_sum) => {
@@ -105,9 +116,7 @@ const AccountingPageMain = () => {
     const branch = useSelector(getBranch)
 
     useEffect(() => {
-
-
-        if (locations.length < 2 && branch?.id)  {
+        if (locations.length < 2 && branch?.id && typePage)  {
             navigate(`../${branch.id}/${typePage}`, {relative: "path"})
         }
     },[branch?.id,locations,navigate])
@@ -122,7 +131,7 @@ const AccountingPageMain = () => {
                 <div className={cls.accounting__wrapper}>
                     <div className={cls.wrapper__filter}>
                         <Button type={"filter"} status={"filter"} onClick={() => setActive(!active)}>Filter</Button>
-                        <Select  options={getAccountingPage} onChangeOption={setPage}/>
+                        <Select defaultValue={getAccountingPage[0].value}  options={getAccountingPage} onChangeOption={setPage}/>
                     </div>
 
 

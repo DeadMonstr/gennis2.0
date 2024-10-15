@@ -81,6 +81,7 @@ export const AppRouter = () => {
                                     />
                                 )
                             }
+
                         </Route>
 
                         <Route element={<RequireHeader header={false}/>}>

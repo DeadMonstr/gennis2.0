@@ -60,6 +60,7 @@ const otchotPages = [
 const initialState = {
     pages: pages,
     accountingPages: otchotPages,
+    activePage: "studentsPayments",
     loading: false,
     error: false,
     encashment: [],
@@ -72,6 +73,7 @@ const accountingSlice = createSlice({
         onChangeAccountingPage: (state, action) => {
             state.pages = state.pages.map(item => {
                 if (item.value === action.payload.value) {
+                    state.activePage = action.payload.value
                     return {...item, disabled: true}
                 }
                 return {...item, disabled: false}

@@ -7,6 +7,7 @@ import {Modal} from "../../../../../shared/ui/modal";
 import {Pagination} from "../../../../../features/pagination";
 import {useSelector} from "react-redux";
 import {getSearchValue} from "../../../../../features/searchInput";
+import {useNavigate} from "react-router";
 
 export const TeachersSalary = ({
                                    teacherSalary,
@@ -97,13 +98,15 @@ export const TeachersSalary = ({
     //         </>
     //     ))
     // }
+    const navigation = useNavigate();
+
 
     const renderTeacherSalary = () => {
         return currentTableData?.map((item, index) => (
             <tbody>
             <tr key={item.id}>
                 <td>{index + 1}</td>
-                <td>{item?.teacher?.user?.name} {item?.teacher?.user?.surname}</td>
+                <td onClick={() => navigation(`../../../teacher/teacherProfile/${item.id}`)}>{item?.teacher?.user?.name} {item?.teacher?.user?.surname}</td>
                 <td>{item?.salary}</td>
                 <td>{item?.comment}</td>
                 <td>{item?.date}</td>

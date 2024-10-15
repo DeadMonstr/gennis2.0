@@ -7,18 +7,20 @@ import {Pagination} from "../../../../../features/pagination";
 import {useSelector} from "react-redux";
 import {getSearchValue} from "../../../../../features/searchInput";
 import {MiniLoader} from "../../../../../shared/ui/miniLoader";
+import {Select} from "../../../../../shared/ui/select";
 
 export const AccountingAdditionalCosts = ({
-                                              activeDelete,
                                               additionalCosts,
                                               extraclassName,
                                               setActiveDelete,
                                               setChangingData,
-                                              changingData,
-                                              onDelete,
                                               formatSalary,
-                                              loading,
-                                              paymentStyle
+                                              paymentStyle,
+                                              setChangePaymentType,
+                                              setChangePayment,
+                                              changePayment,
+                                              getCapitalType,
+                                              onChange
                                           }) => {
     const search = useSelector(getSearchValue)
     let PageSize = useMemo(() => 50, [])
@@ -36,9 +38,6 @@ export const AccountingAdditionalCosts = ({
             item.name?.toLowerCase().includes(search.toLowerCase())
         )
     }, [additionalCosts, setCurrentPage, search])
-    const onDeleteModal = (data) => {
-        setActiveDelete(true)
-    }
 
 
     const renderOverHeadList = () => {
@@ -48,16 +47,21 @@ export const AccountingAdditionalCosts = ({
                 <td>{item.name}</td>
                 <td>{formatSalary(item.price)}</td>
                 <td>{item.created}</td>
-                <td><div className={paymentStyle}>{item.payment.name}</div></td>
+                <td>
+                    <div
+                        onClick={() => {
+                            setChangePaymentType(item)
+                            setChangePayment(true)
+                        }}
+
+
+                        className={paymentStyle}>{item.payment.name}</div>
+                </td>
                 <td>
                     <div>
                         <Button
                             onClick={() => {
-                                onDeleteModal({
-                                    id: item.id,
-                                    name: item.name,
-
-                                })
+                                setActiveDelete(true)
                                 setChangingData({
                                     id: item.id,
                                     name: item.name,
@@ -94,6 +98,15 @@ export const AccountingAdditionalCosts = ({
                     </tbody>
                 </Table>
             </div>
+
+            <Modal active={changePayment} setActive={setChangePayment}>
+
+                <h2>To'lov turini uzgartirish</h2>
+                <div className={cls.changeType}>
+                    <Select options={getCapitalType} onChangeOption={onChange}/>
+                    {/*<Button onClick={onChange}>Tastiqlash</Button>*/}
+                </div>
+            </Modal>
             <Pagination
                 setCurrentTableData={setCurrentTableData}
                 users={searchedUsers}

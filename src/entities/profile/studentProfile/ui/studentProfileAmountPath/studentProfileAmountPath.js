@@ -28,8 +28,13 @@ import {useParams} from "react-router";
 import {getMonth} from "../../../../../features/studentPayment/model/selectors/selectors";
 import {API_URL, headers, useHttp} from "../../../../../shared/api/base";
 import {fetchStudentDebtorData} from "../../../../../features/studentPayment/model/studentPaymentThunk";
+import {Form} from "../../../../../shared/ui/form";
+import {Input} from "../../../../../shared/ui/input";
+import {useForm} from "react-hook-form";
+import {onChange} from "../../../../../features/studentPayment/model/studentPaymentSlice";
 
-export const StudentProfileAmountPath = memo(({active, setActive }) => {
+
+export const StudentProfileAmountPath = memo(({active, setActive}) => {
     const pathArray = window.location.pathname.split('/');
     const lastId = pathArray[pathArray.length - 1];
     const booksList = useSelector(getBooksData);
@@ -47,13 +52,13 @@ export const StudentProfileAmountPath = memo(({active, setActive }) => {
     const month = useSelector(getMonth)
 
 
+    const [modalActive, setActiveModal] = useState(false)
+    const [itemChange, setItemChange] = useState({})
+
+    const {register, handleSubmit, setValue} = useForm()
+
 
     const {id} = useParams()
-
-
-
-
-
 
 
     const handleDelete = () => {
@@ -96,6 +101,7 @@ export const StudentProfileAmountPath = memo(({active, setActive }) => {
         dispatch(studentBookOrderListThunk(lastId));
     }, [lastId, dispatch]);
 
+    console.log(itemChange, "item")
 
     const renderInData = () => {
         const listToRender = change ? getDeletedLists : getPaymentLists
@@ -144,14 +150,22 @@ export const StudentProfileAmountPath = memo(({active, setActive }) => {
     };
 
     const renderDebtorData = () => {
-        return month?.data?.map((item , i) => {
+        return month?.data?.map((item, i) => {
             return (
                 <tr>
-                    <td>{i +1}</td>
-                    <td>{item?.month}</td>
+                    <td>{i + 1}</td>
+                    <td
+                        onClick={() => {
+                            setValue("payment_sum", item.discount_sum)
+                            setValue("reason", item.discount_reason)
+                            setActiveModal(true)
+                            setItemChange(item.discount_id)
+                        }}>{item?.month}</td>
                     <td>{item?.total_debt}</td>
                     <td>{item?.remaining_debt}</td>
                     <td>{item?.discount}</td>
+                    <td>{item?.discount_sum}</td>
+                    <td>{item?.discount_reason}</td>
 
                     <td>{item?.cash}</td>
                     <td>{item?.click}</td>
@@ -166,6 +180,19 @@ export const StudentProfileAmountPath = memo(({active, setActive }) => {
     const renderOut = renderOutData();
     const renderDebtor = renderDebtorData()
 
+    const {request} = useHttp()
+    const onChangeCharity = (data) => {
+        console.log(data)
+        request(`${API_URL}Students/charity_month/${itemChange}/`, "PUT", JSON.stringify(data), headers())
+            .then(res => {
+                setActiveModal(false)
+                dispatch(onChange({id: itemChange , payment_sum: data.payment_sum , reason: data.reason}))
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
     return (
         <EditableCard
             extraClass={classNames(cls.path, {
@@ -268,7 +295,9 @@ export const StudentProfileAmountPath = memo(({active, setActive }) => {
                                                     <th>Oy</th>
                                                     <th>Umumiy qarz</th>
                                                     <th>Qolgan qarz</th>
+                                                    <th>Xayriya</th>
                                                     <th>Chegirma</th>
+                                                    <th>Chegirma sababi</th>
 
                                                     <th>Cash</th>
                                                     <th>Click</th>
@@ -298,17 +327,34 @@ export const StudentProfileAmountPath = memo(({active, setActive }) => {
                 paymentId={selectedSalary}
                 studentId={lastId}
             />
+
+            <Modal active={modalActive} setActive={setActiveModal}>
+                <div style={{padding: "3rem"}}>
+                    <Form onSubmit={handleSubmit(onChangeCharity)}>
+                        <Input
+                            register={register}
+                            name={"payment_sum"}
+                            type={"number"}
+                            // value={itemChange.discount_sum}
+                        />
+                        <Input
+                            register={register}
+                            // value={itemChange.discount_reason}
+                            name={"reason"}
+                        />
+                    </Form>
+                </div>
+            </Modal>
         </EditableCard>
+
     );
 });
 
 
-const AddDebt = ({month , studentId}) => {
+const AddDebt = ({month, studentId}) => {
 
 
-
-
-    const [months , setMonths] = useState(null)
+    const [months, setMonths] = useState(null)
 
 
     const [activeModal, setActiveModal] = useState(false)
@@ -318,7 +364,7 @@ const AddDebt = ({month , studentId}) => {
     const onClick = () => {
 
 
-        request(`${API_URL}Students/missing_month_post/${studentId}/`  , "POST" , JSON.stringify({month: months}) , headers())
+        request(`${API_URL}Students/missing_month_post/${studentId}/`, "POST", JSON.stringify({month: months}), headers())
             .then(res => {
                 console.log(res)
                 dispatch(fetchStudentDebtorData(studentId))
@@ -342,6 +388,7 @@ const AddDebt = ({month , studentId}) => {
                 <Select options={month.month} onChangeOption={setMonths}/>
                 <Button extraClass={cls.buttonAdd} onClick={onClick}>Qo'shish</Button>
             </Modal>
+
         </>
     )
 }

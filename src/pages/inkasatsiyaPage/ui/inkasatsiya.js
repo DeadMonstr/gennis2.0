@@ -30,7 +30,7 @@ const filter = [
 export const Inkasatsiya = () => {
     const dispatch = useDispatch()
     const paymentType = useSelector(getCapitalTypes)
-    const [activeMenu, setActiveMenu] = useState(filter[0].name)
+    const [activeMenu, setActiveMenu] = useState(filter)
     const navigate = useNavigate()
     let {locationId} = useParams()
     const [to, setTo] = useState([])

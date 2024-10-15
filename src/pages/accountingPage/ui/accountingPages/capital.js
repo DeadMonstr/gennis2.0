@@ -57,7 +57,7 @@ export const Capital = ({deleted , setDeleted }) => {
         const res = {
             day: day,
             month: month,
-            branch: 1,
+            branch: branchID.id,
             payment_type: radio.id,
 
             ...data

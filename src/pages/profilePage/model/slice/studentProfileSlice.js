@@ -21,7 +21,16 @@ const initialState = {
 const StudentProfileSlice = createSlice({
     name: "studentProfile",
     initialState,
-    reducers: {},
+    reducers: {
+        // onChange: (state, action) => {
+        //     console.log(action.payload)
+        //     state.data = [
+        //         ...state.data.filter(item => item.id !== action.payload.id, action.payload),
+        //     ]
+        // }
+
+
+    },
     extraReducers: builder =>
         builder
             .addCase(fetchStudentProfileData.pending, state => {
@@ -82,7 +91,6 @@ const StudentProfileSlice = createSlice({
             })
 
 
-
             .addCase(fetchStudentCharity.pending, state => {
                 state.loading = true
                 state.error = null
@@ -97,5 +105,6 @@ const StudentProfileSlice = createSlice({
                 state.error = action.payload ?? null
             })
 })
+
 
 export default StudentProfileSlice.reducer

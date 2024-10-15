@@ -7,6 +7,7 @@ import {Select} from "../../../../../shared/ui/select";
 import {Pagination} from "../../../../../features/pagination";
 import {useSelector} from "react-redux";
 import {getSearchValue} from "../../../../../features/searchInput";
+import {useNavigate} from "react-router";
 
 
 export const StudentsPayments = ({
@@ -39,6 +40,7 @@ export const StudentsPayments = ({
 
 
 
+    const navigation = useNavigate();
 
     const onDeleteModal = (data) => {
         setActiveDelete(true)
@@ -47,7 +49,7 @@ export const StudentsPayments = ({
         return currentTableData.map((item, i) => (
             <tr>
                 <td>{i + 1}</td>
-                <td>{item?.student?.user?.name} {item?.student?.user?.surname}</td>
+                <td onClick={() => navigation(`../../../students/profile/${item.student.id}`)}>{item?.student?.user?.name} {item?.student?.user?.surname}</td>
                 <td>{formatSalary(item.payment_sum)}</td>
                 <td>{item.date}</td>
                 <td>

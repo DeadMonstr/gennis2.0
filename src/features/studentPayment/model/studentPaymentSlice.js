@@ -57,7 +57,21 @@ const initialState = {
 const studentPaymentSlice = createSlice({
     name: "studentPaymentSlice",
     initialState,
-    reducers: {},
+    reducers: {
+
+        onChange : (state , action) =>{
+            state.month.data = state?.month.data?.map(item => {
+                if (item.id === +action.payload.id){
+                    return {
+                        ...item,
+                        payment_sum: action.payload.payment_sum,
+                        payment_reason: action.payload.payment_reason,
+                    }
+                }
+                return item
+            })
+        }
+    },
     extraReducers: builder => {
         builder
             .addCase(studentPaymentThunk.pending, (state) => {
@@ -405,5 +419,5 @@ const studentPaymentSlice = createSlice({
 
     }
 });
-
+export const {onChange} = studentPaymentSlice.actions
 export default studentPaymentSlice.reducer
