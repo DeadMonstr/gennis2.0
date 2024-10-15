@@ -13,7 +13,7 @@ import {
 } from "entities/accounting";
 import {getPaymentType} from "entities/capital/model/thunk/capitalThunk";
 
-import {Routes, Route, useLocation, Navigate} from "react-router";
+import {Routes, Route, useLocation, Navigate, useMatches} from "react-router";
 import React, {memo, useCallback, useEffect, useState} from "react";
 import cls from './accountingPageMain.module.sass';
 
@@ -23,7 +23,7 @@ import {onChangeAccountingPage} from "entities/accounting/model/slice/accounting
 import {Button} from "shared/ui/button";
 import {Select} from "shared/ui/select";
 
-import { useHttp} from "shared/api/base";
+import {useHttp} from "shared/api/base";
 
 
 import {AccountingOtchotPage, EmployerSalaryPage} from "../index";
@@ -45,7 +45,6 @@ import {getSelectedLocations} from "features/locations";
 import {getBranchLoading} from "features/branchSwitcher/model/selector/brachSwitcherSelector";
 
 
-
 export const AccountingPageMainIndex = memo(() => {
     const types = [
         {name: "Students Payments", type: "studentsPayments"},
@@ -59,7 +58,6 @@ export const AccountingPageMainIndex = memo(() => {
         <Routes>
             <Route path={"list"} element={<MultiPage types={types} page={"accounting"} id={false}/>}/>
             <Route path={":idBranch/*"} element={<AccountingPageMain/>}/>
-
 
 
         </Routes>
@@ -115,11 +113,14 @@ export const AccountingPageMain = () => {
     const locations = useSelector(getSelectedLocations)
     const branch = useSelector(getBranch)
 
-    useEffect(() => {
-        if (locations.length < 2 && branch?.id && typePage)  {
-            navigate(`../${branch.id}/${typePage}`, {relative: "path"})
-        }
-    },[branch?.id,locations,navigate])
+    // useEffect(() => {
+    //     if (locations.length < 2 && branch?.id && typePage)  {
+    //         navigate(`../${branch.id}/${typePage}`, {relative: "path"})
+    //     }
+    // },[branch?.id,locations,navigate])
+
+    console.log(branch, "branch")
+    console.log(locations, "locations")
 
     // const renderTable = renderTables()
 
@@ -136,7 +137,7 @@ export const AccountingPageMain = () => {
 
 
                     <div className={cls.wrapper__middle}>
-                        {otchot ?  null :
+                        {otchot ? null :
                             <div className={cls.middle__box}>
                                 {encashment?.payments?.map(item => (
                                     <div>{item?.payment_type}: {formatSalary(item.overall)}</div>
@@ -159,7 +160,6 @@ export const AccountingPageMain = () => {
                     </div>
                 </div>
             </div>
-
 
 
             <Routes>
@@ -218,6 +218,10 @@ export const AccountingPageMain = () => {
                                path={"otchot"}
                            />
                        }
+                />
+                <Route
+                    index
+                    element={<Navigate to={"studentsPayments"}/>}
                 />
             </Routes>
             <AccountingFilter

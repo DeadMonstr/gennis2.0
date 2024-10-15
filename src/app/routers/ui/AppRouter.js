@@ -71,7 +71,6 @@ export const AppRouter = () => {
                                     <Route
                                         key={index}
                                         path={item.path}
-
                                         element={
                                             // item.element
                                             <RequireBranch>
