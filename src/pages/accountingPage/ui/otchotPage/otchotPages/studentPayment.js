@@ -50,13 +50,11 @@ export const StudentPayment = ({formatSalary}) => {
     }, [year, month])
 
 
-
-
     return (
         <div>
             <div className={cls.paymentType}>
 
-                <div style={{display: "flex" , gap: "2rem"}}>
+                <div style={{display: "flex", gap: "2rem"}}>
                     <Select
                         register={register}
                         extraClass={cls.select}
@@ -76,18 +74,29 @@ export const StudentPayment = ({formatSalary}) => {
 
                 <div className={cls.otchot__main}>
                     <div className={cls.otchot}>
-                        Umumiy to'lov : {formatSalary(res ? res?.total_sum : classes?.total_sum) }
+                        Umumiy qarz <br/> {formatSalary(res ? res?.total_debt : classes?.total_debt)}
                     </div>
                     <div className={cls.otchot}>
-                        Umumiy qarz  : {formatSalary(res ? res?.total_debt : classes?.total_debt) }
+                        Qolgan qarz <br/> {formatSalary(res ? res?.reaming_debt : classes?.reaming_debt)}
                     </div>
+
+
                     <div className={cls.otchot}>
-                        Qolgan qarz  : {formatSalary(res ? res?.reaming_debt : classes?.reaming_debt) }
+                       Chegirma 1-yillik <br/> {formatSalary(res ? res?.total_dis : classes?.total_dis)}
+                    </div>
+
+                    <div className={cls.otchot}>
+                        Chegirma 1-martalik  <br/> {formatSalary(res ? res?.total_discount : classes?.total_discount)}
+                    </div>
+
+                    <div className={cls.otchot}>
+                        Umumiy to'lov <br/> {formatSalary(res ? res?.total_sum : classes?.total_sum)}
                     </div>
                 </div>
             </div>
 
-            <PaymentTable format={formatSalary} extraClass={cls.tableHeader} extraClassTable={cls.table} classes={res ? res : classes}/>
+            <PaymentTable format={formatSalary} extraClass={cls.tableHeader} extraClassTable={cls.table}
+                          classes={res ? res : classes}/>
         </div>
     );
 };

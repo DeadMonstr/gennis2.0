@@ -17,6 +17,8 @@ export const PaymentTable = ({classes, extraClass, extraClassTable , format}) =>
                         <td>{itemIn.phone}</td>
                         <td>{format(itemIn.total_debt)}</td>
                         <td>-{format(itemIn.remaining_debt)}</td>
+                        <td>{format(itemIn.total_dis)}</td>
+                        <td>{format(itemIn.total_discount)}</td>
                         <td>{format(itemIn.cash)}</td>
                         <td>{format(itemIn.bank)}</td>
                         <td>{format(itemIn.click)}</td>
@@ -39,6 +41,8 @@ export const PaymentTable = ({classes, extraClass, extraClassTable , format}) =>
                     <th>Tel raqami</th>
                     <th>Oylik qarz</th>
                     <th>Qolgan qarz</th>
+                    <th>Chegirma (1-yillik)</th>
+                    <th>Chegirma (1-martalik)</th>
                     <th>Cash</th>
                     <th>Bank</th>
                     <th>Click</th>
