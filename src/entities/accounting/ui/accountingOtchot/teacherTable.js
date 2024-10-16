@@ -1,6 +1,6 @@
 import {Table} from "../../../../shared/ui/table";
 
-export const TeacherTable = ({teacherSalary}) => {
+export const TeacherTable = ({teacherSalary , formatSalary}) => {
 
     const renderTable = () => {
         return teacherSalary?.salary?.map((item, i) => (
@@ -9,12 +9,12 @@ export const TeacherTable = ({teacherSalary}) => {
                 <td>{item?.name} {item?.surname}</td>
                 <td>{item?.phone}</td>
                 <td>{item?.subject}</td>
-                <td>{item?.total_salary}</td>
-                <td>{item?.taken_salary}</td>
-                <td>{item?.remaining_salary}</td>
-                <td>{item?.click}</td>
-                <td>{item?.bank}</td>
-                <td>{item?.cash}</td>
+                <td>{formatSalary(item?.total_salary)}</td>
+                <td>{formatSalary(item?.taken_salary)}</td>
+                <td>{formatSalary(item?.remaining_salary)}</td>
+                <td>{formatSalary(item.cash)}</td>
+                <td>{formatSalary(item.bank)}</td>
+                <td>{formatSalary(item.click)}</td>
 
             </tr>
         ))
@@ -34,9 +34,9 @@ export const TeacherTable = ({teacherSalary}) => {
                     <th>Umimiy oylik</th>
                     <th>Olingan oylik</th>
                     <th>Qolgan oylik</th>
-                    <th>Click</th>
-                    <th>Bank</th>
                     <th>Cash</th>
+                    <th>Bank</th>
+                    <th>Click</th>
                 </tr>
                 </thead>
                 <tbody>

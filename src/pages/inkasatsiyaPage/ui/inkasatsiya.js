@@ -30,7 +30,7 @@ const filter = [
 export const Inkasatsiya = () => {
     const dispatch = useDispatch()
     const paymentType = useSelector(getCapitalTypes)
-    const [activeMenu, setActiveMenu] = useState(filter)
+    const [activeMenu, setActiveMenu] = useState(filter[0].name)
     const navigate = useNavigate()
     let {locationId} = useParams()
     const [to, setTo] = useState([])
@@ -101,7 +101,7 @@ export const Inkasatsiya = () => {
             {student.overall ? <div className={cls.overalMain}>Umumiy : {formatSalary(student.overall)}</div> : null}
             <div className={cls.overal}>
                 {totalMoney()}
-                <div style={{alignSelf: "flex-end"}}>
+                <div className={cls.inkasatsiya}>
                     <AccountingHeader activeMenu={activeMenu} paymentType={paymentType} to={to} setTo={setTo} ot={ot}
                                       setOt={setOt} setSelectedRadio={setSelectedRadio} radio={radio}/>
                 </div>

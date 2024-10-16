@@ -7,7 +7,7 @@ import cls from "../otchot.module.sass";
 import {Select} from "../../../../../shared/ui/select";
 import {EmpSalaryTable, TeacherTable} from "../../../../../entities/accounting";
 
-export const EmpSalary = () => {
+export const EmpSalary = ({formatSalary}) => {
     const dispatch = useDispatch()
     const branch = useSelector(getBranch)
 
@@ -38,7 +38,7 @@ export const EmpSalary = () => {
                     }
 
                 </div>
-                <EmpSalaryTable employerSalary={employerSalary}/>
+                <EmpSalaryTable formatSalary={formatSalary} employerSalary={employerSalary}/>
             </div>
         </div>
     );

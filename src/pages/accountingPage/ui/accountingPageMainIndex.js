@@ -152,7 +152,7 @@ export const AccountingPageMain = () => {
                                 </Button></Link>
                             <Link to={`otchot`}>
                                 <Button onClick={() => setOtchot(!otchot)} type={"filter"}>
-                                    buxgalteriya
+                                    otchot
                                 </Button>
                             </Link>
                         </div>

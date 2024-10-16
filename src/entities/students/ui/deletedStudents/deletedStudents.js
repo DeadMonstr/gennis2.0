@@ -33,7 +33,7 @@ export const DeletedStudents = ({currentTableData}) => {
     const {request} = useHttp()
     const handleDelete = () => {
 
-        request(`${API_URL}Students/students_delete/${id}/`, "DELETE", null, headers())
+        request(`${API_URL}Students/delete-student-from-deleted/${id}/`, "DELETE", null, headers())
             .then(res => {
                 dispatch(onAddAlertOptions({
                     type: "success",

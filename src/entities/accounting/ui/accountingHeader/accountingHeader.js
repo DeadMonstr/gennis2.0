@@ -1,8 +1,6 @@
 import cls from "./accountingHeader.module.sass"
 import {Input} from "shared/ui/input";
 import {Radio} from "shared/ui/radio";
-import {useEffect} from "react";
-import {inkasatsiyaThunk} from "../../../inkasatsiya/model/inkasatsiyaThunk";
 import {useDispatch} from "react-redux";
 
 

@@ -13,7 +13,7 @@ import {Form} from "../../../../../shared/ui/form";
 import {onAddAlertOptions} from "../../../../../features/alert/model/slice/alertSlice";
 
 
-export const StudentPayment = () => {
+export const StudentPayment = ({formatSalary}) => {
 
     const classes = useSelector(getClasses)
 
@@ -49,30 +49,45 @@ export const StudentPayment = () => {
         }
     }, [year, month])
 
+
+
+
     return (
         <div>
             <div className={cls.paymentType}>
 
-                <Select
-                    register={register}
-                    extraClass={cls.select}
-                    name={"year"}
-                    options={classes?.dates?.map(item => item?.year)}
-                    onChangeOption={setYear}
-                />
+                <div style={{display: "flex" , gap: "2rem"}}>
+                    <Select
+                        register={register}
+                        extraClass={cls.select}
+                        name={"year"}
+                        options={classes?.dates?.map(item => item?.year)}
+                        onChangeOption={setYear}
+                    />
 
-                {year ? <Select
-                    register={register}
-                    name={"month"}
-                    extraClass={cls.select}
-                    options={classes?.dates?.filter(item => item.year === +year)[0]?.months}
-                    onChangeOption={setMonths}
-                /> : null}
+                    {year ? <Select
+                        register={register}
+                        name={"month"}
+                        extraClass={cls.select}
+                        options={classes?.dates?.filter(item => item.year === +year)[0]?.months}
+                        onChangeOption={setMonths}
+                    /> : null}
+                </div>
 
-
+                <div className={cls.otchot__main}>
+                    <div className={cls.otchot}>
+                        Umumiy to'lov : {formatSalary(res ? res?.total_sum : classes?.total_sum) }
+                    </div>
+                    <div className={cls.otchot}>
+                        Umumiy qarz  : {formatSalary(res ? res?.total_debt : classes?.total_debt) }
+                    </div>
+                    <div className={cls.otchot}>
+                        Qolgan qarz  : {formatSalary(res ? res?.reaming_debt : classes?.reaming_debt) }
+                    </div>
+                </div>
             </div>
 
-            <PaymentTable extraClass={cls.tableHeader} extraClassTable={cls.table} classes={res ? res : classes}/>
+            <PaymentTable format={formatSalary} extraClass={cls.tableHeader} extraClassTable={cls.table} classes={res ? res : classes}/>
         </div>
     );
 };

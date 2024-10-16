@@ -1,6 +1,6 @@
 import {Table} from "../../../../shared/ui/table";
 
-export const PaymentTable = ({classes, extraClass, extraClassTable}) => {
+export const PaymentTable = ({classes, extraClass, extraClassTable , format}) => {
 
     const renderTable = () => {
 
@@ -15,11 +15,11 @@ export const PaymentTable = ({classes, extraClass, extraClassTable}) => {
                         <td>{i + 1}</td>
                         <td>{itemIn.name} {itemIn.surname}</td>
                         <td>{itemIn.phone}</td>
-                        <td>{itemIn.total_debt}</td>
-                        <td>{itemIn.remaining_debt}</td>
-                        <td>{itemIn.cash}</td>
-                        <td>{itemIn.bank}</td>
-                        <td>{itemIn.click}</td>
+                        <td>{format(itemIn.total_debt)}</td>
+                        <td>-{format(itemIn.remaining_debt)}</td>
+                        <td>{format(itemIn.cash)}</td>
+                        <td>{format(itemIn.bank)}</td>
+                        <td>{format(itemIn.click)}</td>
                     </tr>
                     </tbody>
 

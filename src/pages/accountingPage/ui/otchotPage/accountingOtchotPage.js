@@ -15,6 +15,9 @@ import {TeacherSalary} from "./otchotPages/teacherSalary";
 import {AllPages} from "./otchotPages/allPages";
 
 export const AccountingOtchotPage = () => {
+    const formatSalary = (salary) => {
+        return Number(salary).toLocaleString();
+    };
     const getAccountingPage = useSelector(getAccountingOtchot)
     const [active, setActive] = useState(false)
     const dispatch = useDispatch()
@@ -64,6 +67,7 @@ export const AccountingOtchotPage = () => {
                     path={"payment"}
                     element={
                         <StudentPayment
+                            formatSalary={formatSalary}
 
                         />
                     }
@@ -71,8 +75,7 @@ export const AccountingOtchotPage = () => {
                 <Route
                     path={"teacherSalary"}
                     element={<TeacherSalary
-
-                        path={"teacherSalary"}
+                        formatSalary={formatSalary}
                     />
                     }
                 />
@@ -80,7 +83,8 @@ export const AccountingOtchotPage = () => {
                     path={"employerSalary"}
                     element={
                         <EmpSalary
-                            path={"employeesSalary"}
+                            formatSalary={formatSalary}
+
                         />
                     }
                 />

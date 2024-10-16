@@ -7,7 +7,7 @@ import {getTeacherSalary} from "../../../../../entities/accounting/model/thunk/o
 import {getBranch} from "../../../../../features/branchSwitcher";
 import {getSalary} from "../../../../../entities/accounting/model/selector/otchotAccountingSelector";
 
-export const TeacherSalary = () => {
+export const TeacherSalary = ({formatSalary}) => {
 
     const dispatch = useDispatch()
     const branchId = useSelector(getBranch)
@@ -40,7 +40,7 @@ export const TeacherSalary = () => {
                     }
 
                 </div>
-                <TeacherTable teacherSalary={teacherSalary}/>
+                <TeacherTable formatSalary={formatSalary} teacherSalary={teacherSalary}/>
             </div>
         </div>
     );
