@@ -4,6 +4,7 @@ import {getSelectedLocations} from "features/locations";
 import {getBranch} from "features/branchSwitcher";
 import {getBranchLoading, getBranchStatus} from "features/branchSwitcher/model/selector/brachSwitcherSelector";
 import {useLocation, useNavigate, useParams} from "react-router";
+import {useSearchParams} from "react-router-dom";
 import {DefaultLoader, DefaultPageLoader} from "shared/ui/defaultLoader";
 import {MiniLoader} from "shared/ui/miniLoader";
 

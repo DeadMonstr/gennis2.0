@@ -167,7 +167,7 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
         //         // setChangePayment(false)
         //     });
     }
-    const sum1 = overheadList.reduce((a, c) => a + parseFloat(c.price || 0), 0);
+    const sum1 = overheadList?.reduce((a, c) => a + parseFloat(c.price || 0), 0);
     const sum2 = overheadDeletedList.reduce((a, c) => a + parseFloat(c.price || 0), 0);
 
     const formatSalary = (salary) => {
