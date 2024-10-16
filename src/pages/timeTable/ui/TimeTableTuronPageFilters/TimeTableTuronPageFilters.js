@@ -21,7 +21,7 @@ import {
 import {fetchTimeTableColors, fetchTimeTableWeekDays} from "pages/timeTable/model/thunks/timeTableTuronThunks";
 
 
-const TimeTableTuronPageFilters = (props) => {
+const TimeTableTuronPageFilters = React.memo((props) => {
 
     const {
         setFullScreen,
@@ -41,10 +41,7 @@ const TimeTableTuronPageFilters = (props) => {
     const colors = useSelector(getTimeTableTuronColors)
     const color = useSelector(getTimeTableTuronColor)
 
-    useEffect(() => {
-        dispatch(fetchTimeTableWeekDays())
-        dispatch(fetchTimeTableColors())
-    }, [])
+
 
     const onChangeColor = (id) => {
 
@@ -136,6 +133,6 @@ const TimeTableTuronPageFilters = (props) => {
 
         </div>
     );
-};
+}) ;
 
 export default TimeTableTuronPageFilters;

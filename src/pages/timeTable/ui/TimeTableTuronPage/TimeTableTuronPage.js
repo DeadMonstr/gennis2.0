@@ -22,17 +22,17 @@ import {
 import {Button} from "shared/ui/button";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    fetchTimeTableClassView,
+    fetchTimeTableClassView, fetchTimeTableColors,
     fetchTimeTableData,
     fetchTimeTableSubject,
     fetchTimeTableTeacher,
-    fetchTimeTableTypesData
+    fetchTimeTableTypesData, fetchTimeTableWeekDays
 } from "pages/timeTable/model/thunks/timeTableTuronThunks";
 import {
     getTimeTableTuronClassViewData,
     getTimeTableTuronColor,
     getTimeTableTuronColors,
-    getTimeTableTuronData,
+    getTimeTableTuronData, getTimeTableTuronDataStatus,
     getTimeTableTuronDay,
     getTimeTableTuronFilterClass,
     getTimeTableTuronGroup, getTimeTableTuronGroupStatus,
@@ -51,6 +51,7 @@ import {DraggableContainer} from "entities/timeTableTuron/ui/DraggableContainer/
 import {Modal} from "shared/ui/modal";
 import {TimeTableFullScreen} from "entities/timeTableTuron/ui/TimeTableFullScreen/TimeTableFullScreen";
 import {TimeTableClassView} from "entities/timeTableTuron/ui/TimeTableClassView/TimeTableClassView";
+import {MiniLoader} from "shared/ui/miniLoader";
 
 const rooms = [
     "1-xona", "2-xona", "3-xona", "koca", "oshxona"
@@ -78,105 +79,6 @@ const times = [
 
 export const TimeTableTuronPage = () => {
 
-    // const [rooms, setRooms] = useState([
-    //     {
-    //         id: 1,
-    //         name: "room 1",
-    //         lessons: [
-    //             {
-    //                 dndId: "container-1",
-    //                 group: {},
-    //                 teacher: {},
-    //                 subject: {},
-    //                 room: 1,
-    //                 time: {
-    //                     index: 1,
-    //                     to: "7:00",
-    //                     from: "8:00"
-    //                 },
-    //                 isSelected: false,
-    //                 isDisabled: false
-    //             },
-    //             {
-    //                 dndId: "container-2",
-    //                 group: {},
-    //                 teacher: {},
-    //                 subject: {},
-    //                 room: 1,
-    //                 time: {
-    //                     index: 1,
-    //                     to: "8:00",
-    //                     from: "9:00"
-    //                 },
-    //                 isSelected: false,
-    //                 isDisabled: false
-    //             },
-    //             {
-    //                 dndId: "container-3",
-    //                 group: {},
-    //                 teacher: {},
-    //                 subject: {},
-    //                 room: 1,
-    //                 time: {
-    //                     index: 1,
-    //                     to: "9:00",
-    //                     from: "10:00"
-    //                 },
-    //                 isSelected: false,
-    //                 isDisabled: false
-    //             }
-    //         ]
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "room 2",
-    //         lessons: [
-    //             {
-    //                 dndId: "container-4",
-    //                 group: {},
-    //                 teacher: {},
-    //                 subject: {},
-    //                 room: 2,
-    //                 time: {
-    //                     index: 1,
-    //                     to: "7:00",
-    //                     from: "8:00"
-    //                 },
-    //                 isSelected: false,
-    //                 isDisabled: false
-    //             },
-    //             {
-    //                 dndId: "container-5",
-    //                 group: {},
-    //                 teacher: {},
-    //                 subject: {},
-    //                 room: 2,
-    //                 time: {
-    //                     index: 1,
-    //                     to: "8:00",
-    //                     from: "9:00"
-    //                 },
-    //                 isSelected: false,
-    //                 isDisabled: false
-    //             },
-    //             {
-    //                 dndId: "container-6",
-    //                 group: {},
-    //                 teacher: {},
-    //                 subject: {},
-    //                 room: 2,
-    //                 time: {
-    //                     index: 1,
-    //                     to: "9:00",
-    //                     from: "10:00"
-    //                 },
-    //                 isSelected: false,
-    //                 isDisabled: false
-    //             }
-    //         ]
-    //     }
-    // ])
-
 
     const [groups, setGroups] = useState([])
 
@@ -201,6 +103,7 @@ export const TimeTableTuronPage = () => {
     const color = useSelector(getTimeTableTuronColor)
     const type = useSelector(getTimeTableTuronType)
     const data = useSelector(getTimeTableTuronData)
+    const dataStatus = useSelector(getTimeTableTuronDataStatus)
     const classViewData = useSelector(getTimeTableTuronClassViewData)
     const hours = useSelector(getTimeTableTuronHours)
     const groupsData = useSelector(getTimeTableTuronGroup)
@@ -214,6 +117,12 @@ export const TimeTableTuronPage = () => {
 
 
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchTimeTableWeekDays())
+        dispatch(fetchTimeTableColors())
+    }, [])
+
 
 
     useEffect(() => {
@@ -847,6 +756,9 @@ export const TimeTableTuronPage = () => {
     const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
 
 
+
+
+
     return (
         <div className={cls.timeTable}>
 
@@ -888,16 +800,24 @@ export const TimeTableTuronPage = () => {
                 />
 
 
-                <TimeTableDropContainer
-                    onDoubleClickContainer={onDoubleClickContainer}
-                    onDeleteContainer={onDeleteContainer}
-                    rooms={rooms}
-                    times={times}
-                    hours={hours}
-                    canDisabled={canDisabled}
-                    startItem={startItem}
-                    // containers={containers}
-                />
+
+                {
+                    dataStatus === "loading" ?
+                        <MiniLoader/>
+                        :
+
+                        <TimeTableDropContainer
+                            onDoubleClickContainer={onDoubleClickContainer}
+                            onDeleteContainer={onDeleteContainer}
+                            rooms={rooms}
+                            times={times}
+                            hours={hours}
+                            canDisabled={canDisabled}
+                            startItem={startItem}
+                            // containers={containers}
+                        />
+
+                }
 
 
                 <DragOverlay>

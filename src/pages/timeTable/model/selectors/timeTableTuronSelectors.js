@@ -28,6 +28,9 @@ export const getTimeTableTuronData = (state) =>
     state.timeTableTuronSlice.data
 
 
+export const getTimeTableTuronDataStatus = (state) =>
+    state.timeTableTuronSlice.fetchStatusData
+
 export const getTimeTableTuronClassViewData = (state) =>
     state.timeTableTuronSlice.classViewData
 
