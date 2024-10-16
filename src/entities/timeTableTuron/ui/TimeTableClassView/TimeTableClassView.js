@@ -139,7 +139,7 @@ export const TimeTableClassView = (props) => {
             >
 
                 <div className={cls.wrapper}>
-                    <TransformComponent>
+                    <TransformComponent wrapperStyle={{width: '100%', height: "100%"}}>
 
                         <div className={cls.header}>
                             {

@@ -29,6 +29,7 @@ const initialState = {
 
     fetchStatusTeachers: "idle",
     fetchStatusGroup: "idle",
+    fetchStatusData: "idle",
     loading: false,
     error: null
 }
@@ -210,6 +211,7 @@ const TimeTableTuronSlice = createSlice({
 
             .addCase(fetchTimeTableData.pending, state => {
                 state.loading = true
+                state.fetchStatusData = "loading"
                 state.error = null
             })
 
@@ -217,6 +219,7 @@ const TimeTableTuronSlice = createSlice({
             .addCase(fetchTimeTableData.fulfilled, (state, action) => {
 
                 let indexContainer = 1
+
 
                 state.data = action.payload.time_tables.map(room => {
 
@@ -267,11 +270,15 @@ const TimeTableTuronSlice = createSlice({
                 })
 
                 state.hours = action.payload.hours_list
+                state.fetchStatusData = "success"
+
                 state.loading = false
                 state.error = null
             })
             .addCase(fetchTimeTableData.rejected, (state, action) => {
                 state.loading = false
+                state.fetchStatusData = "error"
+
                 state.error = action.payload ?? null
             })
 })
