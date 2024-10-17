@@ -3,7 +3,7 @@ import {getEmpSalary} from "entities/accounting/model/thunk/employerSalary";
 import {useDispatch, useSelector} from "react-redux";
 import {EmployeeSalary, getDeletedEmployer, getEmployerSalary, getLoading} from "entities/accounting";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
-import {getSearchValue} from "features/searchInput";
+
 
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {changePaymentType, onDeleteEmployerSalary} from "entities/accounting/model/slice/employerSalary";
@@ -13,9 +13,9 @@ import {
     DeletedWorkerSalary
 } from "entities/accounting/ui/acauntingTables/accountingTableWorkerSalary/deletedWorkerSalary";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
-import {YesNo} from "shared/ui/yesNoModal";
-import {useParams} from "react-router";
+
 import {getBranch} from "../../../../features/branchSwitcher";
+import {ConfirmModal} from "../../../../shared/ui/confirmModal";
 
 
 export const EmployerSalaryPage = memo(({deleted , setDeleted }) => {
@@ -141,8 +141,8 @@ export const EmployerSalaryPage = memo(({deleted , setDeleted }) => {
                 />
 
             }
-
-            <YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>
+            <ConfirmModal setActive={setActiveDelete} active={activeDelete} onClick={onDelete} title={`Rostanham ${changingData.name} ni o'chirmoqchimisiz `}   type={"danger"}/>
+            {/*<YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>*/}
 
         </div>
     );

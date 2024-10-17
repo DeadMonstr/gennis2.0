@@ -40,7 +40,7 @@ export const EmployeeSalary = ({
         if (!search) return filteredHeroes
 
         return filteredHeroes.filter(item =>
-            item.name?.toLowerCase().includes(search.toLowerCase())
+        item?.user?.name.toLowerCase().includes(search.toLowerCase())
         )
     }, [filteredSalary, setCurrentPage, search])
     // const onDeleteModal = (data) => {

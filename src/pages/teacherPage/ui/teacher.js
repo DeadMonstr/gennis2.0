@@ -14,12 +14,13 @@ import {fetchTeachersData} from "entities/teachers";
 import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
 import {useParams} from "react-router-dom";
 import {API_URL, headers, useHttp} from "shared/api/base";
-import {YesNo} from "shared/ui/yesNoModal";
-import {onAddAlertOptions, onDeleteAlert} from "features/alert/model/slice/alertSlice";
+
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import {onDelete} from "entities/teachers/model/teacherSlice";
 import {getDeletedTeacher} from "entities/teachers/model/selector/teacherSelector";
-import {fetchDeletedTeachersData} from "entities/teachers/model/teacherThunk";
+
 import {EmployerCategoryPage} from "../../employeesPage";
+import {ConfirmModal} from "../../../shared/ui/confirmModal";
 
 
 export const TeachersPage = () => {
@@ -172,8 +173,7 @@ export const TeachersPage = () => {
                 />
             </div>
 
-            <YesNo onDelete={onClick} changingData={activeDelete?.user} activeDelete={activeModal}
-                   setActiveDelete={setActiveModal}/>
+            <ConfirmModal setActive={setActiveModal} active={activeModal} onClick={onClick}   type={"danger"}/>
         </MultiPage>
 
     )

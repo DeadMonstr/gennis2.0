@@ -1,5 +1,5 @@
 import {Button} from "shared/ui/button";
-import {RequirePermission} from "shared/ui/requirePermission";
+
 
 export const CapitalOutsideHeader = ({caunt , active , setActiveModal, isCanAdd}) => {
     return (

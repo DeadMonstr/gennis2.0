@@ -13,6 +13,7 @@ export const ClassAddColorPage = ({color, setEdit, edit}) => {
     const {register, handleSubmit, setValue} = useForm()
     const [changeName, setChangeName] = useState(false)
     const dispatch = useDispatch()
+    const [activeColor, setActiveColor] = useState(false)
     const {request} = useHttp()
     const [colorChange, setColorChange] = useState("")
 
@@ -42,6 +43,7 @@ export const ClassAddColorPage = ({color, setEdit, edit}) => {
 
                 dispatch(onDelete({id: id}))
                 setChangeName(!changeName)
+                setActiveColor(false)
                 dispatch(onAddAlertOptions({
                     msg: res.msg,
                     status: true,
@@ -64,7 +66,7 @@ export const ClassAddColorPage = ({color, setEdit, edit}) => {
             />
             {/*<ClassColorAddTable/>*/}
 
-            <ColorModal edit={edit} changeName={changeName} setChangeName={setChangeName} changeColor={changeColor}
+            <ColorModal setActive={setActiveColor} active={activeColor} edit={edit} changeName={changeName} setChangeName={setChangeName} changeColor={changeColor}
                         handleSubmit={handleSubmit} register={register} colorChange={colorChange}
                         setColorChange={setColorChange} deleteColor={deleteColor}/>
         </>

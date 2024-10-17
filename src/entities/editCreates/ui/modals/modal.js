@@ -4,8 +4,7 @@ import {Button} from "shared/ui/button";
 import cls from "../location/locations.module.sass"
 import {Form} from "../../../../shared/ui/form";
 import {Select} from "../../../../shared/ui/select";
-import {YesNo} from "../../../../shared/ui/yesNoModal";
-import {useState} from "react";
+import {ConfirmModal} from "../../../../shared/ui/confirmModal";
 
 
 export const ModalLocation = ({
@@ -36,7 +35,7 @@ export const ModalLocation = ({
                     </div>
                 </Form>
             </Modal>
-            <YesNo onDelete={onDelete} activeDelete={activeDel} setActiveDelete={activeDel}/>
+            <ConfirmModal setActive={setActiveDel} active={activeDel} onClick={onDelete}   type={"danger"}/>
         </div>
     );
 };
@@ -62,7 +61,7 @@ export const ModalSystem = ({
                     </div>
                 </Form>
             </Modal>
-            <YesNo onDelete={onDelete} activeDelete={activeDel} setActiveDelete={setActiveDel}/>
+            <ConfirmModal setActive={setActiveDel} active={activeDel} onClick={onDelete}   type={"danger"}/>
         </div>
     );
 };
@@ -95,7 +94,7 @@ export const ModalBranch = ({
                     </div>
                 </Form>
             </Modal>
-            <YesNo onDelete={onDelete} activeDelete={activeDel} setActiveDelete={setActiveDel}/>
+            <ConfirmModal setActive={setActiveDel} active={activeDel} onClick={onDelete}   type={"danger"}/>
         </div>
     );
 };
@@ -113,7 +112,8 @@ export const ModalEducation = ({activeModal, setActive, register, handleSubmit, 
                     </div>
                 </Form>
             </Modal>
-            <YesNo onDelete={onDelete} activeDelete={activeDel} setActiveDelete={setActiveDel}/>
+            <ConfirmModal setActive={setActiveDel} active={activeDel} onClick={onDelete}   type={"danger"}/>
+            {/*<YesNo onDelete={onDelete} activeDelete={activeDel} setActiveDelete={setActiveDel}/>*/}
         </div>
     );
 };

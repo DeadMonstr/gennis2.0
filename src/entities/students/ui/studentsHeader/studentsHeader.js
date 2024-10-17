@@ -3,10 +3,10 @@ import {useTheme} from "shared/lib/hooks/useTheme";
 import cls from "./studentsHeader.module.sass";
 import {Link} from "react-router-dom";
 import {Button} from "shared/ui/button";
-import {Select} from "shared/ui/select";
+
 import {Radio} from "shared/ui/radio";
 import React, {useCallback, useState} from "react";
-import classNames from "classnames";
+
 import {API_URL, useHttp} from "../../../../shared/api/base";
 import {useSelector} from "react-redux";
 import {getBranch} from "../../../../features/branchSwitcher";
@@ -15,7 +15,6 @@ export const StudentsHeader = ({onChange, selectedRadio, peoples, setActive, onC
 
 
     const {theme} = useTheme()
-    const {request} = useHttp()
     const branchID = useSelector(getBranch)
 
     // const onClick = () => {

@@ -156,7 +156,9 @@ export const ClassHeader = ({
                 setCreateColor={setCreateColor}
                 handleSubmit={handleSubmit}
                 addColor={addColor}
-                register={register}/>
+                register={register}
+
+            />
         </div>
     )
 }

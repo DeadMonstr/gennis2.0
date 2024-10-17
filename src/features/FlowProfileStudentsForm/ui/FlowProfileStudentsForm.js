@@ -24,16 +24,17 @@ import {API_URL, headers, useHttp} from "shared/api/base";
 import defaultUserImg from "shared/assets/images/user_image.png";
 
 import {Button} from "shared/ui/button";
-import {DefaultPageLoader} from "shared/ui/defaultLoader";
+
 import {Form} from "shared/ui/form";
 import {Input} from "shared/ui/input";
 import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
 import {Switch} from "shared/ui/switch";
 import {Table} from "shared/ui/table";
-import {YesNo} from "shared/ui/yesNoModal";
+
 
 import cls from "./FlowProfileStudentsForm.module.sass";
+import {ConfirmModal} from "../../../shared/ui/confirmModal";
 
 export const FlowProfileStudentsForm = ({activeTeacher, setActiveTeacher}) => {
 
@@ -541,12 +542,8 @@ export const FlowProfileStudentsForm = ({activeTeacher, setActiveTeacher}) => {
                     />
                 </Form>
             </Modal>
-            <YesNo
-                activeDelete={deleteId}
-                setActiveDelete={setDeleteId}
-                changingData={deleteId?.user}
-                onDelete={onSubmitDelete}
-            />
+            <ConfirmModal setActive={setDeleteId} active={deleteId} onClick={onSubmitDelete}   type={"danger"}/>
+
         </>
     )
 }

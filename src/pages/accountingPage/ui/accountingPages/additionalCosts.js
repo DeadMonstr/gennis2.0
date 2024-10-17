@@ -17,7 +17,7 @@ import {
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {getCapitalTypes} from "entities/capital";
 import {Radio} from "shared/ui/radio";
-import {getPaymentType} from "entities/capital/model/thunk/capitalThunk";
+
 import {useForm} from "react-hook-form";
 import {
     getMonthDays, getOverHeadDeletedList,
@@ -29,10 +29,10 @@ import {
     AdditionalCostsDeleted
 } from "entities/accounting/ui/acauntingTables/accountingTableAdditionalCosts/additionalCostsDeleted";
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
-import {YesNo} from "../../../../shared/ui/yesNoModal";
+
 import {ConfirmModal} from "../../../../shared/ui/confirmModal";
 import {getBranch} from "../../../../features/branchSwitcher";
-import {changePaymentType} from "../../../../entities/accounting/model/slice/employerSalary";
+
 
 export const AdditionalCosts = ( {deleted , setDeleted}) => {
     const [activeModal, setActiveModal] = useState(false)
@@ -223,7 +223,7 @@ export const AdditionalCosts = ( {deleted , setDeleted}) => {
                 setMonth={setMonth}
             />
 
-            <ConfirmModal setActive={setActiveDelete} active={activeDelete} onClick={onDelete} text={"It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."}   type={"danger"}/>
+            <ConfirmModal setActive={setActiveDelete} active={activeDelete} onClick={onDelete} title={`Rostanham ${changingData.name} ni o'chirmoqchimisiz `}   type={"danger"}/>
             {/*<YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>*/}
         </div>
     );

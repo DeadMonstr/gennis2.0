@@ -10,7 +10,7 @@ import {
     CapitalModal
 } from "entities/accounting/ui/acauntingTables/accountingTableCapitalCosts/capitalModal";
 import {getCapitalTypes} from "entities/capital";
-import {getPaymentType} from "entities/capital/model/thunk/capitalThunk";
+
 import {getMonthDays} from "entities/accounting/model/selector/additionalCosts";
 import {getMonthDay} from "entities/accounting/model/thunk/additionalCosts";
 import {useForm} from "react-hook-form";
@@ -23,9 +23,10 @@ import {
 } from "entities/accounting/ui/acauntingTables/accountingTableCapitalCosts/capitalDeleted";
 
 import cls from "../accountingPageMain.module.sass"
-import {YesNo} from "shared/ui/yesNoModal";
+
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
 import {getBranch} from "../../../../features/branchSwitcher";
+import {ConfirmModal} from "../../../../shared/ui/confirmModal";
 
 export const Capital = ({deleted , setDeleted }) => {
     const capitalList = useSelector(getCapitalList)
@@ -113,7 +114,8 @@ export const Capital = ({deleted , setDeleted }) => {
             <CapitalModal radioSelect={radio} setRadio={setRadio} register={register} onAdd={onAdd}
                           handleSubmit={handleSubmit} monthDay={monthDay} setMonth={setMonth} setDay={setDay} day={day}
                           month={month} setActive={setActiveModal} activeModal={activeModal} radio={paymentType}/>
-            <YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>
+            <ConfirmModal setActive={setActiveDelete} active={activeDelete} onClick={onDelete} title={`Rostanham ${changingData.name} ni o'chirmoqchimisiz `}   type={"danger"}/>
+            {/*<YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>*/}
         </div>
     );
 };

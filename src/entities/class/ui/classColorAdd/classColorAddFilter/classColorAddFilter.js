@@ -3,7 +3,7 @@ import classNames from "classnames";
 import {useState} from "react";
 
 
-export const ClassColorAddFilter = ({color, setEdit, edit, setChangeName, changeName , setValue}) => {
+export const ClassColorAddFilter = ({color, setEdit, setChangeName, changeName , setValue}) => {
 
     // const color1rgb = hexToRgb(item?.teacher[0]?.color ? item?.teacher[0]?.color : "#ffffff");
     //

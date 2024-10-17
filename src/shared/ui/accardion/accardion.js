@@ -3,7 +3,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import cls from "./accordion.module.sass"
 
 import classNames from "classnames";
-import {Input} from "../input";
+
 
 
 export const Accordion = ({title, subtitle, children, backOpen, setBackOpen, clazz, btns , number}) => {

@@ -68,7 +68,6 @@ export const AccountingPageMainIndex = memo(() => {
 export const AccountingPageMain = () => {
     let {"*": typePage} = useParams()
     const getAccountingPage = useSelector(getAccountingSelect)
-    console.log(getAccountingPage , "pages")
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -119,8 +118,6 @@ export const AccountingPageMain = () => {
     //     }
     // },[branch?.id,locations,navigate])
 
-    console.log(branch, "branch")
-    console.log(locations, "locations")
 
     // const renderTable = renderTables()
 

@@ -14,6 +14,7 @@ import {classItem, updateClassItem} from "entities/class/model/thunk/classThunk"
 
 import {useHttp} from "shared/api/base";
 import {useDispatch} from "react-redux";
+import {ConfirmModal} from "../../../../shared/ui/confirmModal";
 
 export const ClassModal = ({
 
@@ -216,8 +217,9 @@ export const ColorModal = ({
                                register,
                                color,
                                setColor,
-                               active,
                                setActive,
+                               active,
+
                                changeName,
                                setChangeName,
                                changeColor,
@@ -226,6 +228,9 @@ export const ColorModal = ({
                                deleteColor,
                                edit
                            }) => {
+
+
+
     return (
         <>
             <Modal active={createColor} setActive={setCreateColor}>
@@ -240,7 +245,7 @@ export const ColorModal = ({
                                 <div style={{fontSize: "2rem"}}>{color}</div>
                                 {/*<div className={cls.modalBox} style={{background: color}}></div>*/}
                             </div>
-                            <HexColorPicker  style={{width: "30rem", height: "15rem"}} color={color}
+                            <HexColorPicker style={{width: "30rem", height: "15rem"}} color={color}
                                             onChange={setColor}/>
                             {/*<div style={{display: "flex" , flexWrap: "wrap",width: "30rem"}}>*/}
                             {/*    /!*<Button onClick={() => setColor("#c6ad23")}>Choose gold</Button>*!/*/}
@@ -278,10 +283,13 @@ export const ColorModal = ({
                         </div>
                         <div style={{display: "flex", gap: "2rem"}}>
                             <Button onClick={handleSubmit(changeColor)}>Rangni o'zgartirish</Button>
-                            {edit?.status ? <Button onClick={handleSubmit(deleteColor)} type={"danger"}>Rangni
+                            {edit?.status ? <Button onClick={handleSubmit(() => setActive(!active))} type={"danger"}>Rangni
                                 O'chirish</Button> : null}
                         </div>
+                        <ConfirmModal setActive={setActive} active={active} onClick={handleSubmit(deleteColor)}
+                                      type={"danger"}/>
                     </Form>
+
 
                 </div>
             </Modal>

@@ -1,20 +1,21 @@
 import {Pagination} from "features/pagination";
 import React, {useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getSearchValue} from "features/searchInput";
+
 import {getLoadingStudent, StudentsPayments, getDeletedStudent} from "entities/accounting";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {onDeleteStudents} from "entities/accounting/model/slice/studetntSlice";
-import {Button} from "shared/ui/button";
+
 import {getStudentPaymentes} from "entities/accounting";
-import {getDeletedPayment, getStudentPayment} from "entities/accounting/model/thunk/student";
+import { getStudentPayment} from "entities/accounting/model/thunk/student";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import {
     DeletedStudentPayment
 } from "entities/accounting/ui/acauntingTables/accountingTableStudent/deletedStudentPayment";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
-import {YesNo} from "shared/ui/yesNoModal";
+
 import {getBranch} from "../../../../features/branchSwitcher";
+import {ConfirmModal} from "../../../../shared/ui/confirmModal";
 
 
 export const StudentSalary = ({deleted, setDeleted}) => {
@@ -93,8 +94,9 @@ export const StudentSalary = ({deleted, setDeleted}) => {
                 />
 
             }
-            <YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete}
-                   changingData={changingData}/>
+            <ConfirmModal setActive={setActiveDelete} active={activeDelete} onClick={onDelete} title={`Rostanham ${changingData.name} ni o'chirmoqchimisiz `}   type={"danger"}/>
+            {/*<YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete}*/}
+            {/*       changingData={changingData}/>*/}
 
         </div>
     );

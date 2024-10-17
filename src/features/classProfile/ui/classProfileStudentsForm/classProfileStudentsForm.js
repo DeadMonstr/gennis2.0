@@ -12,10 +12,11 @@ import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
 import {Table} from "shared/ui/table";
 import {Input} from "shared/ui/input";
-import {YesNo} from "shared/ui/yesNoModal";
+
 
 import cls from "./classProfileStudentsForm.module.sass";
 import defaultUser from "shared/assets/images/user_image.png";
+import {ConfirmModal} from "../../../../shared/ui/confirmModal";
 
 export const ClassProfileStudentsForm = memo(() => {
 
@@ -237,12 +238,14 @@ export const ClassProfileStudentsForm = memo(() => {
                     Add
                 </Button>
             </Modal>
-            <YesNo
-                activeDelete={deleteId}
-                setActiveDelete={setDeleteId}
-                changingData={deleteId?.user}
-                onDelete={onSubmitDelete}
-            />
+
+            <ConfirmModal setActive={setDeleteId} active={deleteId} onClick={onSubmitDelete} title={`Rostanham ${deleteId.user} ni o'chirmoqchimisiz `}   type={"danger"}/>
+            {/*<YesNo*/}
+            {/*    activeDelete={deleteId}*/}
+            {/*    setActiveDelete={setDeleteId}*/}
+            {/*    changingData={deleteId?.user}*/}
+            {/*    onDelete={onSubmitDelete}*/}
+            {/*/>*/}
         </>
     )
 })

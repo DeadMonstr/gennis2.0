@@ -17,21 +17,22 @@ import {
     studentPaymentListDeleteGetThunk, StudentPaymentEditModal, studentBookOrderListThunk, getBookPaymentsList
 } from "features/studentPayment";
 import {Button} from "shared/ui/button";
-import {YesNo} from "../../../../../shared/ui/yesNoModal/yesNo";
-import {StudentPaymentDates} from "../../../../../features/studentPaymentDates";
-import {onAddAlertOptions} from "../../../../../features/alert/model/slice/alertSlice";
-import {fetchStudentProfileData} from "../../../../../pages/profilePage/model/thunk/studentProfileThunk";
-import {SimplePopup} from "../../../../../shared/ui/popup";
-import {Modal} from "../../../../../shared/ui/modal";
-import {Select} from "../../../../../shared/ui/select";
+
+import {StudentPaymentDates} from "features/studentPaymentDates";
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
+import {fetchStudentProfileData} from "pages/profilePage/model/thunk/studentProfileThunk";
+
+import {Modal} from "shared/ui/modal";
+import {Select} from "shared/ui/select";
 import {useParams} from "react-router";
-import {getMonth} from "../../../../../features/studentPayment/model/selectors/selectors";
-import {API_URL, headers, useHttp} from "../../../../../shared/api/base";
-import {fetchStudentDebtorData} from "../../../../../features/studentPayment/model/studentPaymentThunk";
-import {Form} from "../../../../../shared/ui/form";
-import {Input} from "../../../../../shared/ui/input";
+import {getMonth} from "features/studentPayment/model/selectors/selectors";
+import {API_URL, headers, useHttp} from "shared/api/base";
+import {fetchStudentDebtorData} from "features/studentPayment/model/studentPaymentThunk";
+import {Form} from "shared/ui/form";
+import {Input} from "shared/ui/input";
 import {useForm} from "react-hook-form";
-import {onChange} from "../../../../../features/studentPayment/model/studentPaymentSlice";
+import {onChange} from "features/studentPayment/model/studentPaymentSlice";
+import {ConfirmModal} from "../../../../../shared/ui/confirmModal";
 
 
 export const StudentProfileAmountPath = memo(({active, setActive}) => {
@@ -316,9 +317,10 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                         : null
                 }
                 {!change && (
-                    <YesNo
-                        onDelete={handleDelete}
-                        activeDelete={portal} setActiveDelete={() => setPortal(!portal)}/>
+                    // <YesNo
+                    //     onDelete={handleDelete}
+                    //     activeDelete={portal} setActiveDelete={() => setPortal(!portal)}/>
+                    <ConfirmModal setActive={setPortal} active={portal} onClick={handleDelete}   type={"danger"}/>
                 )}
             </div>
             <StudentPaymentEditModal
@@ -379,7 +381,6 @@ const AddDebt = ({month, studentId}) => {
                 console.log(err)
             })
     }
-    console.log(month)
     return (
         <>
             <Button onClick={() => setActiveModal(!activeModal)}>Qo'shish</Button>

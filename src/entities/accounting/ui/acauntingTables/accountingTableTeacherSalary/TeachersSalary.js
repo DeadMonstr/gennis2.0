@@ -34,7 +34,7 @@ export const TeachersSalary = ({
         if (!search) return filteredHeroes
 
         return filteredHeroes.filter(item =>
-            item.name?.toLowerCase().includes(search.toLowerCase())
+            item?.teacher?.user?.name?.toLowerCase().includes(search.toLowerCase())
         )
     }, [teacherSalary, setCurrentPage, search])
     const formatSalary = (salary) => {

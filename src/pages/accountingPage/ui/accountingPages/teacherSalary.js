@@ -18,8 +18,9 @@ import {
     DeletedTeacherSalary
 } from "entities/accounting/ui/acauntingTables/accountingTableTeacherSalary/deletedTeacherSalary";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
-import {YesNo} from "shared/ui/yesNoModal";
+
 import {getBranch} from "../../../../features/branchSwitcher";
+import {ConfirmModal} from "../../../../shared/ui/confirmModal";
 
 export const TeacherSalaryPage = ({deleted , setDeleted}) => {
 
@@ -104,8 +105,8 @@ export const TeacherSalaryPage = ({deleted , setDeleted}) => {
             {/*        <Select options={getPaymentTypes} onChangeOption={onChangeType} title={changingData.payment_types}/>*/}
             {/*    </div>*/}
             {/*</Modal>*/}
-
-            <YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>
+            <ConfirmModal setActive={setActiveDelete} active={activeDelete} onClick={onDelete} title={`Rostanham ${changingData.name} ni o'chirmoqchimisiz `}   type={"danger"}/>
+            {/*<YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>*/}
             <Modal active={changePayment} setActive={setChangePayment}>
                 <div className={cls.changeType}>
                     <Select
