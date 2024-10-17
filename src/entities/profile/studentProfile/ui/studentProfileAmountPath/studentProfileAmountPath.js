@@ -21,7 +21,6 @@ import {YesNo} from "../../../../../shared/ui/yesNoModal/yesNo";
 import {StudentPaymentDates} from "../../../../../features/studentPaymentDates";
 import {onAddAlertOptions} from "../../../../../features/alert/model/slice/alertSlice";
 import {fetchStudentProfileData} from "../../../../../pages/profilePage/model/thunk/studentProfileThunk";
-import {SimplePopup} from "../../../../../shared/ui/popup";
 import {Modal} from "../../../../../shared/ui/modal";
 import {Select} from "../../../../../shared/ui/select";
 import {useParams} from "react-router";

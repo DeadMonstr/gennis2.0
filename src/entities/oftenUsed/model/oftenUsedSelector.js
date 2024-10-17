@@ -47,3 +47,22 @@ export const getClassTypeError = (state) =>
 
 export const getCategories = (state) =>
     state.oftenUsedSlice.categories
+
+
+export const getGroupsSelect = (state) =>
+    state.oftenUsedSlice.groups
+
+export const getGroupsSelectLoading = (state) =>
+    state.oftenUsedSlice.groupsLoading
+
+export const getGroupsSelectError = (state) =>
+    state.oftenUsedSlice.groupsError
+
+export const getTeachersSelect = (state) =>
+    state.oftenUsedSlice.teachers
+
+export const getTeachersSelectLoading = (state) =>
+    state.oftenUsedSlice.teachersLoading
+
+export const getTeachersSelectError = (state) =>
+    state.oftenUsedSlice.teachersError
