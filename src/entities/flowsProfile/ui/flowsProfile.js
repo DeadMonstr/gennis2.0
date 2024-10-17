@@ -36,6 +36,7 @@ import defaultUser from "shared/assets/images/user_image.png";
 import defaultRoom from "shared/assets/images/room.png";
 import coin from "shared/assets/images/coin.png";
 import {FlowProfileStudentsList} from "./flowsProfileItem";
+import {ConfirmModal} from "../../../shared/ui/confirmModal";
 
 export const FlowProfileNavigators = memo(() => {
 
@@ -53,6 +54,7 @@ export const FlowProfileNavigators = memo(() => {
     const loading = useSelector(getFlowsProfileStatus)
     const userBranchId = useSelector(getUserBranchId)
     const level = useSelector(getCurseLevelData)
+    const [deleteId , setDeleteId] = useState(false)
 
     const [activeTeacher, setActiveTeacher] = useState("")
     const [subject  ,setSubject] = useState(null)
@@ -242,7 +244,7 @@ export const FlowProfileNavigators = memo(() => {
                 <h1>Ma’lumot o’zgartirish</h1>
                 <Button
                     extraClass={cls.infoModal__btn}
-                    onClick={onDelete}
+                    onClick={() => setDeleteId(!deleteId)}
                     type={"danger"}
                 >
                     Delete group
@@ -302,6 +304,9 @@ export const FlowProfileNavigators = memo(() => {
                     {/*/>*/}
                     <Button id={"formChange"} extraClass={cls.infoModal__btn}>Change</Button>
                 </Form>
+                <ConfirmModal setActive={setDeleteId} active={deleteId} onClick={onDelete} title={`Rostanham o'chirmoqchimisiz `}   type={"danger"}/>
+
+
             </Modal>
         </div>
     )

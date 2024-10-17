@@ -1,10 +1,13 @@
-import {memo} from "react";
+import {memo, useState} from "react";
 
 import cls from "./capitalInsideSecond.module.sass"
 import {Button} from "shared/ui/button";
 import defaultImg from "shared/assets/images/defaultImg.svg"
+import {ConfirmModal} from "../../../../../shared/ui/confirmModal";
+
 export const CapitalInsideSecond = memo(({capitalData, editModal, setEditModal, onDelete}) => {
 
+    const [deleteId, setDeleteId] = useState(false)
 
     const capitalDataRender = () => {
         return (
@@ -24,7 +27,7 @@ export const CapitalInsideSecond = memo(({capitalData, editModal, setEditModal, 
                             Download File
                         </Button>
 
-                        <Button onClick={onDelete} type={"danger"}>O’chirish</Button>
+                        <Button onClick={() => setDeleteId(!deleteId)} type={"danger"}>O’chirish</Button>
                     </div>
                 </div>
             </div>
@@ -42,6 +45,9 @@ export const CapitalInsideSecond = memo(({capitalData, editModal, setEditModal, 
             <div className={cls.capitalInfo__wrapper}>
                 {render}
             </div>
+            <ConfirmModal setActive={setDeleteId} active={deleteId} onClick={onDelete}
+                          title={`Rostanham ni o'chirmoqchimisiz `} type={"danger"}/>
+
         </div>
     );
 })

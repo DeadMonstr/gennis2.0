@@ -31,6 +31,7 @@ import {Switch} from "shared/ui/switch";
 import cls from "./groupProfileInfoForm.module.sass";
 import nextImage from "shared/assets/images/groupImage.png";
 import defaultUserImg from "shared/assets/images/user_image.png";
+import {ConfirmModal} from "../../../../shared/ui/confirmModal";
 
 
 export const GroupProfileInfoForm = memo(({system,branch}) => {
@@ -57,6 +58,7 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
     const [active, setActive] = useState(false)
     const [selectColor, setSelectColor] = useState()
     const [activeSwitch, setActiveSwitch] = useState(data?.status ?? false)
+    const [deleteID , setDelete] = useState(false)
 
     const onSubmitChange = (data) => {
         const res = {
@@ -169,7 +171,7 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
                 <h1>Ma’lumot o’zgartirish</h1>
                 <Button
                     extraClass={cls.infoModal__btn}
-                    onClick={onDelete}
+                    onClick={() => setDelete(!deleteID)}
                     type={"danger"}
                 >
                     Delete group
@@ -263,6 +265,8 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
                     </div>
                     <Button id={"formChange"} extraClass={cls.infoModal__btn}>Change</Button>
                 </Form>
+                <ConfirmModal setActive={setDelete} active={deleteID} onClick={onDelete} title={`Rostanham o'chirmoqchimisiz`}   type={"danger"}/>
+
             </Modal>
         </>
     )

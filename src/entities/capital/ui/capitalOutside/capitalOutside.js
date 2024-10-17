@@ -28,6 +28,7 @@ export const CapitalOutside = memo(({capitalData, isCanView}) => {
                 ))}
 
             </div>
+
         </div>
     );
 });
