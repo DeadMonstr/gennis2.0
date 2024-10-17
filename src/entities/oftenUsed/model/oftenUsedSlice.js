@@ -5,7 +5,7 @@ import {
     fetchLanguagesData,
     fetchClassColorData,
     fetchClassNumberData,
-    fetchClassTypeData, fetchCategories
+    fetchClassTypeData, fetchCategories, fetchGroupsForSelect, fetchTeachersForSelect
 } from "./oftenUsedThunk";
 
 const initialState = {
@@ -27,7 +27,14 @@ const initialState = {
     teachers: [],
     teachersLoading: false,
     teachersError: null,
-    categories: []
+    categories: [],
+    groupsLoading: false,
+    groupsError: null,
+    groups: [],
+
+
+
+
 }
 
 const oftenUsedSlice = createSlice({
@@ -115,6 +122,36 @@ const oftenUsedSlice = createSlice({
             .addCase(fetchCategories.rejected, (state) => {
                 state.classTypeLoading = false
                 state.classTypeError = "error"
+            })
+
+
+            .addCase(fetchGroupsForSelect.pending, (state) => {
+                state.groupsLoading = true
+                state.groupsError = null
+            })
+            .addCase(fetchGroupsForSelect.fulfilled, (state, action) => {
+                state.groups = action.payload
+                state.groupsLoading = false
+                state.groupsError = null
+            })
+            .addCase(fetchGroupsForSelect.rejected, (state) => {
+                state.groupsLoading = false
+                state.groupsError = "error"
+            })
+
+
+            .addCase(fetchTeachersForSelect.pending, (state) => {
+                state.teachersLoading = true
+                state.teachersError = null
+            })
+            .addCase(fetchTeachersForSelect.fulfilled, (state, action) => {
+                state.teachers = action.payload
+                state.teachersLoading = false
+                state.teachersError = null
+            })
+            .addCase(fetchTeachersForSelect.rejected, (state) => {
+                state.teachersLoading = false
+                state.teachersError = "error"
             })
 })
 

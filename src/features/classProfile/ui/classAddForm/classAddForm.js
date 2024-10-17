@@ -27,12 +27,15 @@ import {Form} from "shared/ui/form";
 import {Table} from "shared/ui/table";
 
 import cls from "./classAddForm.module.sass";
+import {fetchGroupsForSelect} from "entities/oftenUsed/model/oftenUsedThunk";
+import {getGroupsSelect} from "entities/oftenUsed/model/oftenUsedSelector";
 
 export const ClassAddForm = memo((props) => {
 
     const {
         setActive,
-        active
+        active,
+        branch
     } = props
 
     const {request} = useHttp()
@@ -41,11 +44,11 @@ export const ClassAddForm = memo((props) => {
         register,
         handleSubmit
     } = useForm()
-    const groupData = useSelector(getGroupsListData)
+
+    const groupData = useSelector(getGroupsSelect)
     const loading = useSelector(getGroupProfileLoading)
     const students = useSelector(getGroupProfileFilteredStudents)
     const data = useSelector(getGroupProfileData)
-    const branch = localStorage.getItem("selectedBranch")
     const systemId = useSelector(getUserSystemId)
     const timeTable = useSelector(getTimeTable)
 
@@ -98,7 +101,7 @@ export const ClassAddForm = memo((props) => {
 
     useEffect(() => {
         if (branch)
-            dispatch(fetchGroupsData({userBranchId: branch}))
+            dispatch(fetchGroupsForSelect(branch))
     }, [branch])
 
     // useEffect(() => {

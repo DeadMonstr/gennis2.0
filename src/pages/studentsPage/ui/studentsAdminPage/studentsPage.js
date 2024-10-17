@@ -59,6 +59,8 @@ import {
 } from "entities/oftenUsed"
 
 import cls from "./students.module.sass"
+import {getTeachersSelect} from "entities/oftenUsed/model/oftenUsedSelector";
+import {fetchTeachersForSelect} from "entities/oftenUsed/model/oftenUsedThunk";
 
 const studentsFilter = [
     {name: "new_students", label: "New Students"},
@@ -87,7 +89,7 @@ export const StudentsPage = () => {
     const search = useSelector(getSearchValue);
     const schoolClassNumbers = useSelector(getClassNumberData);
     const schoolClassColors = useSelector(getClassColorData);
-    const teachers = useSelector(getTeachers);
+    const teachers = useSelector(getTeachersSelect);
     const languages = useSelector(getLanguagesData);
     const studyingStudents = useSelector(getStudyingStudents);
     const newStudents = useSelector(getNewStudentsData);
@@ -142,7 +144,7 @@ export const StudentsPage = () => {
     useEffect(() => {
         // console.log("render userBranchId useEffect") ||
         if (userBranchId) {
-            dispatch(fetchTeachersData({userBranchId}))
+            dispatch(fetchTeachersForSelect(userBranchId))
             dispatch(fetchLanguagesData())
         }
     }, [userBranchId])
@@ -366,7 +368,6 @@ export const StudentsPage = () => {
                         {
                             schoolClassColors.length <= 3 ?
                                 <div className={cls.modal__radios}>
-
                                     {
                                         schoolClassColors?.map(item => {
                                             return (
@@ -386,7 +387,6 @@ export const StudentsPage = () => {
                                                 </div>
                                             )
                                         })
-
                                     }
                                 </div>
                                 :
@@ -399,11 +399,11 @@ export const StudentsPage = () => {
                                     register={register}
                                 />
                         }
-
                     </Form>
                 </div>
             </Modal>
             <ClassAddForm
+                branch={userBranchId}
                 setActive={setActiveModal}
                 active={activeModal === "add"}
             />

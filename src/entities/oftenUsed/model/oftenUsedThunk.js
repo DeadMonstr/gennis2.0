@@ -46,8 +46,23 @@ export const fetchCategories = createAsyncThunk(
     "oftenUsedSlice/fetchCategories",
     (id) => {
         const {request} = useHttp()
-        console.log(id)
         return request(`${API_URL}Teachers/salary-types/?branch=${id}`, "GET", null, headers())
+    }
+)
+
+export const fetchGroupsForSelect = createAsyncThunk(
+    "oftenUsedSlice/fetchGroupsForSelect",
+    (id) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Group/add/class/filtered/?branch=${id}`, "GET", null, headers())
+    }
+)
+
+export const fetchTeachersForSelect = createAsyncThunk(
+    "oftenUsedSlice/fetchTeachersForSelect",
+    (id) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Group/create/class/teachers/?branch=${id}`, "GET", null, headers())
     }
 )
 
