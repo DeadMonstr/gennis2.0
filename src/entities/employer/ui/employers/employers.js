@@ -46,24 +46,24 @@ export const Employers = ({currentTableData, loading}) => {
                     <tr>
                         <td>{i + 1}</td>
                         <Link to={`employerProfile/${item?.id}`}>
-                            <td>{item?.user.name} {item?.user.surname}</td>
+                            <td>{item?.name} {item?.surname}</td>
                         </Link>
-                        <td>{item?.user.phone}</td>
-                        <td>{item?.user.age}</td>
-                        <td>{item?.group.name}</td>
+                        <td>{item?.phone}</td>
+                        <td>{item?.age}</td>
+                        <td>{item?.job}</td>
                         <td>
                             {item.status ?
                                 <div
                                     onClick={() => setClickedCheckbox(arr => {
-                                        if (clickedCheckbox.includes(item?.user.id)) {
-                                            return [...arr.filter(i => i !== item?.user.id)]
-                                        } else return [...arr, item?.user.id]
+                                        if (clickedCheckbox.includes(item?.id)) {
+                                            return [...arr.filter(i => i !== item?.id)]
+                                        } else return [...arr, item?.id]
                                     })}
-                                    className={clickedCheckbox.includes(item?.user.id)
+                                    className={clickedCheckbox.includes(item?.id)
                                         ?
                                         cls.checkbox__checked : cls.checkbox__minus
                                     }>
-                                    {clickedCheckbox.includes(item?.user.id) ?
+                                    {clickedCheckbox.includes(item?.id) ?
                                         <i className={"fa fa-check"}/> :
                                         <i className={"fa fa-minus"}/>
                                     }

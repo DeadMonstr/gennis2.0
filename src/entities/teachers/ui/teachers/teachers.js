@@ -38,14 +38,14 @@ export const Teachers = memo(({data, setSelect, select, theme, onClick , setActi
 
                     <tr key={i}>
                         <td>{i + 1}</td>
-                        <td onClick={() => navigation(`teacherProfile/${item.id}`)}>{item.user.name === "tok" || item.user.name === "tot" ? null : item.user.name} {item.user.surname}</td>
-                        <td>{item?.user?.username}</td>
-                        <td>{item.user.phone}</td>
-                        <td>{item.user.age}</td>
+                        <td onClick={() => navigation(`teacherProfile/${item.id}`)}>{item.name} {item.surname}</td>
+                        <td>{item?.username}</td>
+                        <td>{item?.phone}</td>
+                        <td>{item?.age}</td>
                         <td>
                             <div
-                                className={item.subject.length ? cls.teacher__language : null}>{item.subject.map(item =>
-                                <p>{item.name}</p>
+                                className={item?.subject?.length ? cls.teacher__language : null}>{item?.subject?.map(item =>
+                                <p>{item?.name}</p>
                             )}</div>
                         </td>
                         {item.status ?

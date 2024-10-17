@@ -17,7 +17,7 @@ export const AccountingCapitalCosts = ({capitalData  ,setChangingData  , setActi
                 <td>{item?.name}</td>
                 <td>{item?.price}</td>
                 <td>{item?.added_date}</td>
-                <td>{item.payment_type?.name}</td>
+                <td>{item.payment_type}</td>
                 <td>
                     <div>
                         <Button

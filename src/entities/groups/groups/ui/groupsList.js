@@ -36,9 +36,9 @@ export const GroupsList = React.memo(({currentTableData}) => {
                             </> :
                             // null
                             <>
-                                <td>{`${item?.teacher?.user?.surname} ${item?.teacher?.user?.name}`}</td>
-                                <td>{item?.students?.length}</td>
-                                <td>{`${item?.class_number?.number}-${item?.color?.name}`}</td>
+                                <td>{`${item.teacher}`}</td>
+                                <td>{item?.count}</td>
+                                {/*<td>{`${item?.class_number?.number}-${item?.color?.name}`}</td>*/}
                             </>
                     }
 
@@ -79,7 +79,6 @@ export const GroupsList = React.memo(({currentTableData}) => {
                         <th>Sinf nomi</th>
                         <th>O’qituvchi ism familiya</th>
                         <th>Studentlar soni</th>
-                        <th>Sinf</th>
                         {/*<th>Guruh narxi</th>*/}
                         <th>Status</th>
                     </tr>

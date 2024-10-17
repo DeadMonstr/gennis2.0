@@ -55,7 +55,7 @@ export const AccountingAdditionalCosts = ({
                         }}
 
 
-                        className={paymentStyle}>{item.payment.name}</div>
+                        className={paymentStyle}>{item.payment}</div>
                 </td>
                 <td>
                     <div>

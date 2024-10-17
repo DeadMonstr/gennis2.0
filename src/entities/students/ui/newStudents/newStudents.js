@@ -34,7 +34,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme, br
 
                 </td>
                 <td>
-                    {item.user?.language?.name}
+                    {item?.user?.language}
                 </td>
                 <td>
                     {item?.class_number?.number}

@@ -46,7 +46,7 @@ export const StudentsPayments = ({
         return currentTableData.map((item, i) => (
             <tr>
                 <td>{i + 1}</td>
-                <td onClick={() => navigation(`../../../students/profile/${item.student.id}`)}>{item?.student?.user?.name} {item?.student?.user?.surname}</td>
+                <td onClick={() => navigation(`../../../students/profile/${item.student.id}`)}>{item?.student_name} {item?.student_surname}</td>
                 <td>{formatSalary(item.payment_sum)}</td>
                 <td>{item.date}</td>
                 <td>
@@ -57,7 +57,7 @@ export const StudentsPayments = ({
                         borderRadius: "15px",
                         textTransform: "capitalize",
                         cursor: "pointer"
-                    }}>{item?.payment_type?.name}</div>
+                    }}>{item?.payment_type_name}</div>
                 </td>
                 <td>
                     <div>
@@ -65,13 +65,13 @@ export const StudentsPayments = ({
                             onClick={() => {
                                 onDeleteModal({
                                     id: item.id,
-                                    name: item?.student?.user?.name,
-                                    surname: item?.student?.user?.surname
+                                    name: item?.student_name,
+                                    surname: item?.student_surname
                                 })
                                 setChangingData({
                                     id: item.id,
-                                    name: item?.student?.user?.name,
-                                    surname: item?.student?.user?.surname
+                                    name: item?.student_name,
+                                    surname: item?.student_surname
                                 })
                             }
                             }

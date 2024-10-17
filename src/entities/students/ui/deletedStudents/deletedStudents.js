@@ -61,11 +61,11 @@ export const DeletedStudents = ({currentTableData}) => {
                 return (
                     <tr>
                         <td>{i + 1}</td>
-                        <td onClick={() => navigation(`profile/${item?.student?.id}`)}>{item?.student?.user?.name} {item?.student?.user?.surname}</td>
-                        <td>{item?.student?.user?.age}</td>
-                        <td>{item?.student?.user?.phone}</td>
+                        <td onClick={() => navigation(`profile/${item?.student?.id}`)}>{item?.student?.name} {item?.student?.surname}</td>
+                        <td>{item?.student?.age}</td>
+                        <td>{item?.student?.phone}</td>
                         <td>{item?.group?.name}</td>
-                        <td>{item?.student?.user?.registered_date}</td>
+                        <td>{item?.student?.registered_date}</td>
                         <td>{item?.deleted_date}</td>
                         <td>{item?.group_reason?.name}</td>
                         <td>
@@ -83,13 +83,21 @@ export const DeletedStudents = ({currentTableData}) => {
                     return (
                         <tr onClick={() => navigation(`profile/${item.id}`)}>
                             <td>{i + 1}</td>
-                            <td>{item?.student?.user?.name} {item?.student?.user?.surname}</td>
-                            <td>{item?.student?.user?.age}</td>
-                            <td>{item?.student?.user?.phone}</td>
+                            <td>{item?.student?.name} {item?.student?.surname}</td>
+                            <td>{item?.student?.age}</td>
+                            <td>{item?.student?.phone}</td>
                             <td>{item?.group?.name}</td>
-                            <td>{item?.student?.user?.registered_date}</td>
+                            <td>{item?.student?.registered_date}</td>
                             <td>{item?.deleted_date}</td>
                             <td>{item?.group_reason?.name}</td>
+                            <td>
+                                <div onClick={() => {
+                                    setId(item.student.id)
+                                    setActive(true)
+                                }}>
+                                    <i className={"fa fa-times"}/>
+                                </div>
+                            </td>
                         </tr>
                     )
                 } else return null
