@@ -82,7 +82,7 @@ export const FlowProfileNavigators = memo(() => {
 
     useEffect(() => {
         if (data)
-            request(`${API_URL}Subjects/level-for-subject/${data?.subject?.id}/`, "GET", null, headers())
+            request(`${API_URL}Subjects/level-for-subject/${data?.subject_id}/`, "GET", null, headers())
                 .then(res => {
 
                     dispatch(getCurseLevel(res))
@@ -167,8 +167,8 @@ export const FlowProfileNavigators = memo(() => {
                     <div className={cls.navigatorsItem__border}/>
                     <div className={cls.navigatorsItem__info}>
                         <img className={cls.navigatorsItem__image} src={defaultUser} alt=""/>
-                        <h2>{`${data?.teacher?.user?.surname} ${data?.teacher?.user?.name}`}</h2>
-                        <h2 className={cls.navigatorsItem__subject}>{data?.subject?.name}</h2>
+                        <h2>{`${data?.teacher?.surname} ${data?.teacher?.name}`}</h2>
+                        <h2 className={cls.navigatorsItem__subject}>{data?.subject_name}</h2>
                         <i
                             className={classNames("fas fa-edit", cls.navigatorsItem__iconPosition)}
                             onClick={() => setActiveTeacher("changeTeacher")}
@@ -190,9 +190,9 @@ export const FlowProfileNavigators = memo(() => {
                             {data?.name}
                         </h2>
                         {
-                            data?.level ? <h2 className={cls.navigatorsItem__inner}>
+                            data?.level_name ? <h2 className={cls.navigatorsItem__inner}>
                                 <span>Level: </span>
-                                {data?.level?.name}
+                                {data?.level_name}
                             </h2> : null
                         }
                         <h2 className={cls.navigatorsItem__inner}>
