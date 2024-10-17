@@ -175,18 +175,18 @@ export const FlowProfileStudentsForm = ({activeTeacher, setActiveTeacher}) => {
                     />
                 </td>
                 <td>
-                    {`${item?.user?.surname} ${item?.user?.name}`}
+                    {`${item?.surname} ${item?.name}`}
                 </td>
-                <td>{item?.user?.phone}</td>
-                <td>{item?.parents_number}</td>
+                <td>{item?.phone}</td>
+                <td>{item?.parents_phone}</td>
                 <td>
                     <div
                         className={classNames(cls.studentsList__status, {
-                            [cls.red]: Number(item.money) < 0,
-                            [cls.yellow]: Number(item.money) > 0 && Number(item.money) < 100000,
+                            [cls.red]: Number(item.balance) < 0,
+                            [cls.yellow]: Number(item.balance) > 0 && Number(item.balance) < 100000,
                         })}
                     >
-                        {item.money}
+                        {item?.balance}
                     </div>
                 </td>
                 {

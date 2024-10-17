@@ -60,16 +60,16 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
                     <td>{i + 1}</td>
                     <td>{item?.name}</td>
                     <td>
-                        {item?.subject?.name}
+                        {item?.subject_name}
                         {
-                            item?.level ? `/ ${item?.level?.name}` : null
+                            item?.level_name ? ` / ${item?.level_name}` : null
                         }
                     </td>
-                    <td>{item?.students?.length}</td>
+                    <td>{item?.student_count}</td>
                     <td>
                         {
-                            `${item?.teacher?.user?.surname}   
-                            ${item?.teacher?.user?.name}`
+                            `${item?.teacher_name}   
+                            ${item?.teacher_surname}`
                         }
                     </td>
                 </tr>
