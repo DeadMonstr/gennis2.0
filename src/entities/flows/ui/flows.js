@@ -16,7 +16,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 
 
-export const Flows = ({currentTableData, teacherData, loading, levelData, getLevelData, setActive,branchId}) => {
+export const Flows = ({currentTableData, teacherData, loading, levelData, getLevelData, setActive, branchId}) => {
 
     const navigate = useNavigate()
 
@@ -67,10 +67,10 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
                     </td>
                     <td>{item?.student_count}</td>
                     <td>
-                        {
-                            `${item?.teacher_name}   
-                            ${item?.teacher_surname}`
-                        }
+
+                        {item?.teacher_name}
+                        {item?.teacher_surname}
+
                     </td>
                 </tr>
             )
@@ -82,7 +82,7 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
         <div className={cls.flowMain}>
             <div className={cls.flow__filter}>
                 <Button
-                    onClick={()=> setFilter(!filter)}
+                    onClick={() => setFilter(!filter)}
                     type={"simple-add"}
                 >
                     Filter
