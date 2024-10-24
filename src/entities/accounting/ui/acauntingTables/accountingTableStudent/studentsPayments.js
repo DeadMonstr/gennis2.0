@@ -33,7 +33,7 @@ export const StudentsPayments = ({
         if (!search) return filteredHeroes
 
         return filteredHeroes.filter(item =>
-            item?.student?.user?.name?.toLowerCase().includes(search.toLowerCase())
+            item?.student_name?.toLowerCase().includes(search.toLowerCase())
         )
     }, [studentData, setCurrentPage, search])
 

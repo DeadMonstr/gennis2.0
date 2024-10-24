@@ -61,6 +61,7 @@ import {
 import cls from "./students.module.sass"
 import {getTeachersSelect} from "entities/oftenUsed/model/oftenUsedSelector";
 import {fetchTeachersForSelect} from "entities/oftenUsed/model/oftenUsedThunk";
+import {getSystem} from "../../../../features/themeSwitcher";
 
 const studentsFilter = [
     {name: "new_students", label: "New Students"},
@@ -109,6 +110,8 @@ export const StudentsPage = () => {
     const [currentTableData, setCurrentTableData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [activeFormBtn, setActiveFormBtn] = useState(true)
+
+    const system = useSelector(getSystem)
     let PageSize = useMemo(() => 50, []);
 
 
@@ -331,13 +334,15 @@ export const StudentsPage = () => {
                         extraClassname={cls.modal__form}
                         typeSubmit={activeFormBtn ? "" : "inside"}
                     >
-                        <Input
-                            required
-                            extraClassName={cls.modal__input}
-                            placeholder={"Sinf nomi"}
-                            name={"name"}
-                            register={register}
-                        />
+                        {
+                            system.name === "school" ? null : <Input
+                                required
+                                extraClassName={cls.modal__input}
+                                placeholder={"Sinf nomi"}
+                                name={"name"}
+                                register={register}
+                            />
+                        }
                         <Select
                             required
                             extraClass={cls.modal__select}

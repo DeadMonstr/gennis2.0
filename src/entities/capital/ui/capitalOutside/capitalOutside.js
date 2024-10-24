@@ -14,7 +14,7 @@ export const CapitalOutside = memo(({capitalData, isCanView}) => {
                 {capitalData?.map((item, i) =>  (
                     <div onClick={() => navigation(`capitalBoxProfile/${item.id}`)} className={cls.capital__box}>
                         <div className={cls.capital__img}>
-                            { item.img ? <img src={`${API_URL_DOC}${item.img}`} alt=""/> : <img src={defaultImg} alt=""/>}
+                            { item.img ? <img src={`${API_URL_DOC}${item.img}`} alt=""/> : <img  src={defaultImg} alt=""/>}
                         </div>
                         <div className={cls.capital__descr}>
                             <h3 className={cls.capital__title}>

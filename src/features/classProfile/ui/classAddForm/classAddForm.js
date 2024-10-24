@@ -101,6 +101,7 @@ export const ClassAddForm = memo((props) => {
 
     useEffect(() => {
         if (branch)
+
             dispatch(fetchGroupsForSelect(branch))
     }, [branch])
 
