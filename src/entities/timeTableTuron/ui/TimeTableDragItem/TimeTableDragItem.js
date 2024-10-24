@@ -14,12 +14,6 @@ export const TimeTableDragItem = (props) => {
 
 
 
-
-
-
-
-
-
     return (
         <Draggable
             data={{
