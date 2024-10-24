@@ -13,7 +13,7 @@ export const TimeTableDragItems = (props) => {
     const {groups, isSelected, subjects, teachers, selectedSubject,color,setSelectedSubject,type,status} = props
 
 
-    console.log(groups)
+    console.log(groups, "groups")
 
     const filteredColors = () => {
         return groups?.filter(item => {
@@ -38,8 +38,8 @@ export const TimeTableDragItems = (props) => {
                             <>
                                 {item?.subject?.name}
                                 <br/>
-                                {item.teacher?.user?.name} -
-                                {item.teacher?.user?.surname}
+                                {item.teacher?.name} -
+                                {item.teacher?.surname}
                             </>
                         }
                     </p>
@@ -59,7 +59,7 @@ export const TimeTableDragItems = (props) => {
 
 
             return teachers.map(item => {
-                return <TimeTableDragItem type={"teacher"} item={item}>{item?.user?.name} {item?.user?.surname}</TimeTableDragItem>
+                return <TimeTableDragItem type={"teacher"} item={item}>{item?.name} {item?.surname}</TimeTableDragItem>
             })
         }
     }, [isSelected,selectedSubject,groups,teachers,color,subjects])

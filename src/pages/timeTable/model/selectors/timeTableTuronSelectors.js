@@ -3,6 +3,9 @@ export const getTimeTableTuronDay = (state) =>
     state.timeTableTuronSlice.day
 
 
+export const getTimeTableTuronDate = (state) =>
+    state.timeTableTuronSlice.date
+
 export const getTimeTableTuronColors = (state) =>
     state.timeTableTuronSlice.colors
 

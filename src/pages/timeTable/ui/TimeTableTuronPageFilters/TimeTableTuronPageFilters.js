@@ -7,18 +7,19 @@ import {Select} from "shared/ui/select";
 import classNames from "classnames";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    onChangeColorTimeTable,
+    onChangeColorTimeTable, onChangeDateTimeTable,
     onChangeDayTimeTable, onChangeFilterClassTimeTable,
     onChangeTypeTimeTable
 } from "../../model/slice/timeTableTuronSlice";
 import {
     getTimeTableTuronColor,
-    getTimeTableTuronColors,
+    getTimeTableTuronColors, getTimeTableTuronDate,
     getTimeTableTuronDay,
     getTimeTableTuronType,
     getTimeTableTuronWeekDays
 } from "pages/timeTable/model/selectors/timeTableTuronSelectors";
 import {fetchTimeTableColors, fetchTimeTableWeekDays} from "pages/timeTable/model/thunks/timeTableTuronThunks";
+import {Input} from "shared/ui/input";
 
 
 const TimeTableTuronPageFilters = React.memo((props) => {
@@ -36,16 +37,21 @@ const TimeTableTuronPageFilters = React.memo((props) => {
     const dispatch = useDispatch()
 
     const type = useSelector(getTimeTableTuronType)
-    const weekDays = useSelector(getTimeTableTuronWeekDays)
-    const day = useSelector(getTimeTableTuronDay)
     const colors = useSelector(getTimeTableTuronColors)
     const color = useSelector(getTimeTableTuronColor)
+    const date = useSelector(getTimeTableTuronDate)
+
+
 
 
 
     const onChangeColor = (id) => {
-
         dispatch(onChangeColorTimeTable(id))
+    }
+
+
+    const onChangeDate = (date) => {
+        dispatch(onChangeDateTimeTable(date))
 
     }
 
@@ -77,15 +83,11 @@ const TimeTableTuronPageFilters = React.memo((props) => {
     const renderColor = renderColorTypes()
 
 
-    const onChangeOption = (item) => {
-        dispatch(onChangeDayTimeTable(item))
-        localStorage.setItem("item", item)
-    }
-
 
     const onChangeOptionClassLesson = (item) => {
         dispatch(onChangeFilterClassTimeTable(item))
     }
+
 
     return (
         <div className={cls.filters}>
@@ -118,12 +120,16 @@ const TimeTableTuronPageFilters = React.memo((props) => {
                     options={groups}
                     title={"filter"}
                 />
-                <Select
-                    defaultValue={day}
-                    onChangeOption={onChangeOption}
-                    // title={"Kun tanlang"}
-                    options={weekDays}
+
+
+
+                <Input
+                    type={"date"}
+                    value={date}
+                    onChange={(e) => onChangeDate(e.target.value)}
+
                 />
+
             </div>
             {
                 type === "group" && !isSelected && <div className={cls.colorList}>

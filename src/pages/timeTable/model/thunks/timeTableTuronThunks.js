@@ -23,7 +23,7 @@ export const fetchTimeTableData = createAsyncThunk(
     "TimeTableTuronSlice/fetchTimeTableData",
     async (data) => {
         const {request} = useHttp()
-        return await  request(`${API_URL}SchoolTimeTable/timetable-lessons/?week=${data.id}&branch=${data.branch}`, "GET", null, headers())
+        return await  request(`${API_URL}SchoolTimeTable/timetable-lessons/?date=${data.date}&branch=${data.branch}`, "GET", null, headers())
     }
 )
 
@@ -40,7 +40,7 @@ export const fetchTimeTableTeacher = createAsyncThunk(
     "TimeTableTuronSlice/fetchTimeTableTeacher",
     async ({subject, branch}) => {
         const {request} = useHttp()
-        return await  request(`${API_URL}Teachers/teachers-for-subject/?branch=${branch}&subject=${subject}`, "GET", null, headers())
+        return await  request(`${API_URL}Teachers/teachers-for-subject-time/?branch=${branch}&subject=${subject}`, "GET", null, headers())
     }
 )
 
@@ -57,6 +57,6 @@ export const fetchTimeTableClassView  = createAsyncThunk(
     "TimeTableTuronSlice/fetchTimeTableClassView",
     async (data) => {
         const {request} = useHttp()
-        return await  request(`${API_URL}SchoolTimeTable/timetable-lessons-class/?week=${data.id}&branch=${data.branch}`, "GET", null, headers())
+        return await  request(`${API_URL}SchoolTimeTable/timetable-lessons-class/?date=${data.date}&branch=${data.branch}`, "GET", null, headers())
     }
 )

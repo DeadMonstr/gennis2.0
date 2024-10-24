@@ -20,6 +20,7 @@ const initialState = {
     teachers: [],
     weekDays: [],
     colors: [],
+    date: new Date().toLocaleDateString('en-CA'),
 
     classViewData: [],
 
@@ -54,6 +55,10 @@ const TimeTableTuronSlice = createSlice({
 
         onChangeColorTimeTable: (state, action) => {
             state.color = action.payload
+        },
+
+        onChangeDateTimeTable: (state, action) => {
+            state.date = action.payload
         },
     },
     extraReducers: builder =>
@@ -131,28 +136,6 @@ const TimeTableTuronSlice = createSlice({
                 state.loading = false
                 state.error = action.payload ?? null
                 state.fetchStatusTeachers = "error"
-            })
-
-
-            .addCase(fetchTimeTableWeekDays.pending, state => {
-                state.loading = true
-                state.error = null
-            })
-
-            .addCase(fetchTimeTableWeekDays.fulfilled, (state, action) => {
-                state.weekDays = action.payload.days.map(item => {
-                    return {
-                        id: item.id,
-                        name: item.name_uz
-                    }
-                })
-                state.day = action.payload.today
-                state.loading = false
-                state.error = null
-            })
-            .addCase(fetchTimeTableWeekDays.rejected, (state, action) => {
-                state.loading = false
-                state.error = action.payload ?? null
             })
 
 
@@ -284,5 +267,6 @@ export const {
     onChangeTypeTimeTable,
     onChangeDayTimeTable,
     onChangeColorTimeTable,
-    onChangeFilterClassTimeTable
+    onChangeFilterClassTimeTable,
+    onChangeDateTimeTable
 } = TimeTableTuronSlice.actions

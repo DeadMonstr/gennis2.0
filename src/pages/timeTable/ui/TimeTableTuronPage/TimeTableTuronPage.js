@@ -26,14 +26,13 @@ import {
     fetchTimeTableData,
     fetchTimeTableSubject,
     fetchTimeTableTeacher,
-    fetchTimeTableTypesData, fetchTimeTableWeekDays
+    fetchTimeTableTypesData
 } from "pages/timeTable/model/thunks/timeTableTuronThunks";
 import {
     getTimeTableTuronClassViewData,
     getTimeTableTuronColor,
     getTimeTableTuronColors,
-    getTimeTableTuronData, getTimeTableTuronDataStatus,
-    getTimeTableTuronDay,
+    getTimeTableTuronData, getTimeTableTuronDataStatus, getTimeTableTuronDate,
     getTimeTableTuronFilterClass,
     getTimeTableTuronGroup, getTimeTableTuronGroupStatus,
     getTimeTableTuronHours,
@@ -99,7 +98,6 @@ export const TimeTableTuronPage = () => {
     const [rooms, setRooms] = useState([])
 
 
-    const day = useSelector(getTimeTableTuronDay)
     const color = useSelector(getTimeTableTuronColor)
     const type = useSelector(getTimeTableTuronType)
     const data = useSelector(getTimeTableTuronData)
@@ -112,27 +110,28 @@ export const TimeTableTuronPage = () => {
     const teachersData = useSelector(getTimeTableTuronTeachers)
     const teachersStatus = useSelector(getTimeTableTuronTeachersStatus)
     const filteredClass = useSelector(getTimeTableTuronFilterClass)
-    const {id: branch} = useSelector(getBranch)
+    const date = useSelector(getTimeTableTuronDate)
 
+
+    const {id: branch} = useSelector(getBranch)
 
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchTimeTableWeekDays())
         dispatch(fetchTimeTableColors())
     }, [])
 
 
 
     useEffect(() => {
-        if (day && branch) dispatch(fetchTimeTableData({id: day, branch}))
-    }, [day, branch])
+        if (date && branch) dispatch(fetchTimeTableData({date, branch}))
+    }, [date, branch])
 
 
     useEffect(() => {
-        if (day && branch) dispatch(fetchTimeTableClassView({id: day, branch}))
-    }, [day, branch,classView])
+        if (date && branch) dispatch(fetchTimeTableClassView({date, branch}))
+    }, [date, branch,classView])
 
     useEffect(() => {
         if (type && branch) dispatch(fetchTimeTableTypesData({type, branch}))
@@ -240,6 +239,7 @@ export const TimeTableTuronPage = () => {
         setCanDisabled(true)
         if (activeTypeItem === "container") {
             onFalseSelected()
+
             const roomId = active.data.current.room
             setStartItem(rooms.filter(item => item.id === roomId)[0].lessons.filter(item => item.dndId === active.id)[0])
         } else if (activeTypeItem === "group") {
@@ -257,7 +257,7 @@ export const TimeTableTuronPage = () => {
 
         const data = {
             hour,
-            day,
+            date,
             checked_id: id,
             room,
             type
@@ -350,13 +350,13 @@ export const TimeTableTuronPage = () => {
                         id: filteredActiveItem.id,
                         room: filteredOverItem.room,
                         hour: filteredOverItem.hours,
-                        day: day
+                        date
                     },
                     {
                         id: filteredOverItem.id,
                         room: filteredActiveItem.room,
                         hour: filteredActiveItem.hours,
-                        day: day
+                        date
                     }
                 ])
 
@@ -367,7 +367,7 @@ export const TimeTableTuronPage = () => {
                         id: filteredActiveItem.id,
                         room: filteredOverItem.room,
                         hour: filteredOverItem.hours,
-                        day: day
+                        date
                     }
                 ])
 
@@ -492,8 +492,6 @@ export const TimeTableTuronPage = () => {
                         const newLessons = room.lessons.map(container => {
                             if (container.dndId === over.id) {
                                 if (container.items) {
-
-
                                     let have
 
                                     if (activeTypeItem === "group") {
@@ -710,8 +708,8 @@ export const TimeTableTuronPage = () => {
                 hours: canSubmitLesson?.hours,
                 teacher: canSubmitLesson?.teacher?.id,
                 room: canSubmitLesson?.room,
-                week: +day,
-                branch: branch
+                branch: branch,
+                date
             }
 
 
@@ -758,7 +756,6 @@ export const TimeTableTuronPage = () => {
 
 
 
-
     return (
         <div className={cls.timeTable}>
 
@@ -798,9 +795,6 @@ export const TimeTableTuronPage = () => {
                     type={type}
                     status={groupsDataStatus}
                 />
-
-
-
                 {
                     dataStatus === "loading" ?
                         <MiniLoader/>
@@ -829,7 +823,7 @@ export const TimeTableTuronPage = () => {
                                     item={startItem}
 
                                 >
-                                    {startItem.user.name} {startItem.user.surname}
+                                    {startItem.name} {startItem.surname}
                                 </TimeTableDragItem>
                                 : startItem?.dndId ?
                                     <TimeTableDragItem

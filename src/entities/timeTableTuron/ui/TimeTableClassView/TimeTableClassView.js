@@ -123,9 +123,10 @@ export const TimeTableClassView = (props) => {
 
             <TransformWrapper
                 onTransformed={(e) => handleScaleChange(e)}
-                initialScale={1}
+                initialScale={0.6}
                 // pinch={{number: 5}}
                 doubleClick={{disabled: true}}
+
                 // centerOnInit={true}
                 minScale={0.2}
                 maxScale={5}

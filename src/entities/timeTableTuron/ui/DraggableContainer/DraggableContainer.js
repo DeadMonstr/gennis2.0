@@ -54,7 +54,7 @@ export const DraggableContainer = (props) => {
                 canChange &&
                 <>
                     {
-                        !!item?.teacher?.user?.name &&
+                        !!item?.teacher?.name &&
                         <Grip
                             {...listeners}
                             className={cls.handle}
@@ -76,8 +76,8 @@ export const DraggableContainer = (props) => {
                 <div className={cls.info}>
                     <span>{item.subject.name}</span>
                     {
-                        !!item?.teacher?.user?.name &&
-                        <span>{item.teacher?.user?.name} {item?.teacher?.user?.surname}</span>
+                        !!item?.teacher?.name &&
+                        <span>{item.teacher?.name} {item?.teacher?.surname}</span>
                     }
                 </div>
             }
