@@ -8,6 +8,7 @@ import {Button} from "shared/ui/button";
 import {MiniLoader} from "shared/ui/miniLoader";
 
 import cls from "./timeTableCreate.module.sass";
+import {Select} from "shared/ui/select";
 
 export const TimeTableCreate = memo((props) => {
 
@@ -19,6 +20,18 @@ export const TimeTableCreate = memo((props) => {
         onSubmit,
         loading
     } = props
+
+
+    const optionsType = [
+        {
+            name: "Yuqori",
+            value: "high"
+        },
+        {
+            name: "Boshlang'ich",
+            value: "initial"
+        },
+    ]
 
     return (
         <Modal
@@ -61,6 +74,12 @@ export const TimeTableCreate = memo((props) => {
                         register={register}
                         name={"name"}
                         required
+                    />
+                    <Select
+                        name={"type"}
+                        register={register}
+                        required
+                        options={optionsType}
                     />
                     {
                         loading ? <MiniLoader/> :

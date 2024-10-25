@@ -7,6 +7,10 @@ import cls from "./TimeTableClassView.module.sass"
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import {DraggableContainer} from "entities/timeTableTuron/ui/DraggableContainer/DraggableContainer";
 import classNames from "classnames";
+import {fetchTimeTableClassHours} from "pages/timeTable/model/thunks/timeTableTuronThunks";
+import {useDispatch, useSelector} from "react-redux";
+import {Button} from "shared/ui/button";
+
 function hexToBrightness(hex) {
     // Remove the hash at the start if it's there
     hex = hex.replace(/^#/, '');
@@ -23,24 +27,23 @@ function hexToBrightness(hex) {
 
 export const TimeTableClassView = (props) => {
 
-    const {lessons, hours} = props
+    const {lessons, classHours} = props
 
     const [renderedFlows, setRenderedFlows] = useState([])
     const [isFlows, setIsFLows] = useState(false)
-
-
+    const [activeType, setActiveType] = useState('initial')
 
 
     useEffect(() => {
 
 
-        if (lessons.length) {
+        if (lessons[activeType]?.length) {
 
             const flows = []
 
-            for (let i = 0; i < lessons.length; i++) {
+            for (let i = 0; i < lessons[activeType].length; i++) {
 
-                const containerLessons = lessons[i]
+                const containerLessons = lessons[activeType][i]
 
                 for (let m = 0; m < containerLessons.lessons.length; m++) {
 
@@ -68,31 +71,28 @@ export const TimeTableClassView = (props) => {
         }
 
 
-    }, [lessons])
+    }, [lessons,activeType])
 
 
-    const renderContainers = useCallback((containers,parentId) => {
+    const renderContainers = useCallback((containers, parentId) => {
         if (isFlows && containers.length) {
-
-
+            console.log(containers, "containerssssssss")
 
             return containers.map(item => {
-
-
 
 
                 if (item.is_flow) {
 
 
-                        return (
-                            <Container
-                                isFlow={true}
-                                canRender={renderedFlows.some(flow => flow.flow === item.group.id && flow.group === parentId)}
-                                renderedFlows={renderedFlows}
-                                setRenderedFlows={setRenderedFlows}
-                                item={item}
-                            />
-                        )
+                    return (
+                        <Container
+                            isFlow={true}
+                            canRender={renderedFlows.some(flow => flow.flow === item.group.id && flow.group === parentId)}
+                            renderedFlows={renderedFlows}
+                            setRenderedFlows={setRenderedFlows}
+                            item={item}
+                        />
+                    )
 
                 }
 
@@ -116,18 +116,26 @@ export const TimeTableClassView = (props) => {
         setScale(event.instance.transformState.scale);
     }
 
+
+    console.log(lessons[activeType])
+
     return (
         <div
             className={cls.fullscreen}
         >
 
+
+            <div className={cls.btns}>
+                <Button type={activeType === 'initial' ? 'simple' : "simple-add"}
+                        onClick={() => setActiveType('initial')}>Boshlang'ich</Button>
+                <Button type={activeType === 'high' ? 'simple' : "simple-add"}
+                        onClick={() => setActiveType('high')}>Yuqori</Button>
+            </div>
+
             <TransformWrapper
                 onTransformed={(e) => handleScaleChange(e)}
                 initialScale={0.6}
-                // pinch={{number: 5}}
                 doubleClick={{disabled: true}}
-
-                // centerOnInit={true}
                 minScale={0.2}
                 maxScale={5}
                 panning={{
@@ -138,38 +146,41 @@ export const TimeTableClassView = (props) => {
                     excluded: []
                 }}
             >
-
                 <div className={cls.wrapper}>
                     <TransformComponent wrapperStyle={{width: '100%', height: "100%"}}>
 
                         <div className={cls.header}>
                             {
-                                hours.map(item => {
+                                classHours[activeType]?.map(item => {
                                     return (
                                         <div className={cls.item}>
-                                            <span style={{transform: `scale(${1 / scale})`}}>
-                                                {item.start_time}-{item.end_time}
-                                            </span>
-
+                                                    <span style={{transform: `scale(${1 / scale})`}}>
+                                                        {item.start_time}-{item.end_time}
+                                                    </span>
                                         </div>
                                     )
                                 })
+
+
                             }
                         </div>
 
 
                         <div className={cls.footer}>
                             {
-                                lessons.map(item => {
+                                lessons[activeType]?.map(item => {
                                     return (
                                         <div className={cls.rooms}>
-                                            <div className={cls.room} style={{backgroundColor:  `${item.color}`, color: hexToBrightness(item.color) > 125 ? "black" : "white"}}>
+                                            <div className={cls.room} style={{
+                                                backgroundColor: `${item.color}`,
+                                                color: hexToBrightness(item.color) > 125 ? "black" : "white"
+                                            }}>
                                                 <span style={{transform: `scale(${1 / scale})`}}>
                                                     {item.name}
                                                 </span>
                                             </div>
                                             <div className={cls.containers}>
-                                                {renderContainers(item.lessons,item.id)}
+                                                {renderContainers(item.lessons, item.id)}
                                             </div>
                                         </div>
                                     )
@@ -191,10 +202,9 @@ export const TimeTableClassView = (props) => {
 const Container = (props) => {
 
 
-    const {item, isFlow,canRender} = props
+    const {item, isFlow, canRender} = props
 
     const style = isFlow && {height: item.group.classes.length * 70 + "px", position: "absolute", zIndex: 20}
-
 
 
     if (isFlow && !canRender) {
@@ -217,16 +227,16 @@ const Container = (props) => {
                         [cls.isFlow]: isFlow
                     })}
                 >
-                    <h1> { isFlow ? item.group.name : item.room.name}</h1>
+                    <h1> {isFlow ? item.group.name : item.room.name}</h1>
                     {
                         !!item?.subject?.name ?
-                        <div className={cls.info}>
-                            <span>{item.subject.name}</span>
-                            {
-                                !!item?.teacher?.name &&
-                                <span>{item.teacher?.name} {item?.teacher?.surname}</span>
-                            }
-                        </div> : null
+                            <div className={cls.info}>
+                                <span>{item.subject.name}</span>
+                                {
+                                    !!item?.teacher?.name &&
+                                    <span>{item.teacher?.name} {item?.teacher?.surname}</span>
+                                }
+                            </div> : null
                     }
 
                 </div>

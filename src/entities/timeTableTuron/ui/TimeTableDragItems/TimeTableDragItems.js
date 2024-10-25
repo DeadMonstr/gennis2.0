@@ -36,10 +36,10 @@ export const TimeTableDragItems = (props) => {
                         {
                             type === "flow" &&
                             <>
-                                {item?.subject?.name}
+                                {item?.subject_info?.name}
                                 <br/>
-                                {item.teacher?.name} -
-                                {item.teacher?.surname}
+                                {item.teacher_info?.name} -
+                                {item.teacher_info?.surname}
                             </>
                         }
                     </p>

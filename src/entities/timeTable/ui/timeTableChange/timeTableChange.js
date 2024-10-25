@@ -8,6 +8,7 @@ import {Button} from "shared/ui/button";
 import {MiniLoader} from "shared/ui/miniLoader";
 
 import cls from "./timeTableChange.module.sass";
+import {Select} from "shared/ui/select";
 
 export const TimeTableChange = memo((props) => {
 
@@ -25,13 +26,27 @@ export const TimeTableChange = memo((props) => {
     let finishTime = useMemo(() => active?.end_time, [active])
     let order = useMemo(() => active?.order, [active])
     let name = useMemo(() => active?.name, [active])
+    let type = useMemo(() => active?.type, [active])
 
     useEffect(() => {
         setValue("start_time", startTime)
         setValue("end_time", finishTime)
         setValue("order", order)
         setValue("name", name)
+        setValue("type", type)
     }, [active])
+
+
+    const optionsType = [
+        {
+            name: "Yuqori",
+            value: "high"
+        },
+        {
+            name: "Boshlang'ich",
+            value: "initial"
+        },
+    ]
 
     return (
         <Modal
@@ -78,6 +93,14 @@ export const TimeTableChange = memo((props) => {
                         name={"name"}
                         // value={name}
                         required
+                    />
+
+                    <Select
+                        name={"type"}
+                        register={register}
+                        required
+                        options={optionsType}
+                        defaultValue={type}
                     />
                     {
                         loading ? <MiniLoader/> :
