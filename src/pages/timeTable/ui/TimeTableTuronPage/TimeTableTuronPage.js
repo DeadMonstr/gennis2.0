@@ -22,6 +22,7 @@ import {
 import {Button} from "shared/ui/button";
 import {useDispatch, useSelector} from "react-redux";
 import {
+    fetchTimeTableClassHours,
     fetchTimeTableClassView, fetchTimeTableColors,
     fetchTimeTableData,
     fetchTimeTableSubject,
@@ -29,6 +30,7 @@ import {
     fetchTimeTableTypesData
 } from "pages/timeTable/model/thunks/timeTableTuronThunks";
 import {
+    getTimeTableTuronClassHours,
     getTimeTableTuronClassViewData,
     getTimeTableTuronColor,
     getTimeTableTuronColors,
@@ -111,6 +113,8 @@ export const TimeTableTuronPage = () => {
     const teachersStatus = useSelector(getTimeTableTuronTeachersStatus)
     const filteredClass = useSelector(getTimeTableTuronFilterClass)
     const date = useSelector(getTimeTableTuronDate)
+    const classHours = useSelector(getTimeTableTuronClassHours)
+
 
 
     const {id: branch} = useSelector(getBranch)
@@ -130,7 +134,10 @@ export const TimeTableTuronPage = () => {
 
 
     useEffect(() => {
-        if (date && branch) dispatch(fetchTimeTableClassView({date, branch}))
+        if (date && branch && classView) {
+            dispatch(fetchTimeTableClassView({date, branch}))
+            dispatch(fetchTimeTableClassHours())
+        }
     }, [date, branch,classView])
 
     useEffect(() => {
@@ -799,7 +806,6 @@ export const TimeTableTuronPage = () => {
                     dataStatus === "loading" ?
                         <MiniLoader/>
                         :
-
                         <TimeTableDropContainer
                             onDoubleClickContainer={onDoubleClickContainer}
                             onDeleteContainer={onDeleteContainer}
@@ -860,12 +866,12 @@ export const TimeTableTuronPage = () => {
             <Modal active={classView} setActive={setClassView} type={"other"}>
 
 
-
                 <TimeTableClassView
                     lessons={classViewData}
-                    hours={hours}
-
+                    classHours={classHours}
                 />
+
+
                 {/*<TimeTableFullScreen*/}
                 {/*    rooms={rooms}*/}
                 {/*    times={times}*/}
