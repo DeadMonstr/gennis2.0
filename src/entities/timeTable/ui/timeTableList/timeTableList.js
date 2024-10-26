@@ -23,6 +23,7 @@ export const TimeTableList = memo((props) => {
                 <td>{item.start_time?.slice(0, 5)}</td>
                 <td>{item.end_time?.slice(0, 5)}</td>
                 <td>{item.name}</td>
+                <td></td>
                 <td>
                     <i
                         onClick={() => {
@@ -53,6 +54,7 @@ export const TimeTableList = memo((props) => {
                         <th>Boshlanish vaqt</th>
                         <th>Tugash vaqti</th>
                         <th>Name</th>
+                        <th>Sinf</th>
                         <th/>
                     </tr>
                     </thead>

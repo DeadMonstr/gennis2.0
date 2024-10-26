@@ -47,3 +47,12 @@ export const getClassTypeError = (state) =>
 
 export const getCategories = (state) =>
     state.oftenUsedSlice.categories
+
+export const getClassInputData = (state) =>
+    state.oftenUsedSlice.classInput
+
+export const getClassInputLoading = (state) =>
+    state.oftenUsedSlice.classInputLoading
+
+export const getClassInputError = (state) =>
+    state.oftenUsedSlice.classInputError

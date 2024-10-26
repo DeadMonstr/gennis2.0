@@ -46,8 +46,15 @@ export const fetchCategories = createAsyncThunk(
     "oftenUsedSlice/fetchCategories",
     (id) => {
         const {request} = useHttp()
-        console.log(id)
         return request(`${API_URL}Teachers/salary-types/?branch=${id}`, "GET", null, headers())
+    }
+)
+
+export const fetchClassInput = createAsyncThunk(
+    "oftenUsedSlice/fetchHoverClass",
+    () => {
+        const {request} = useHttp()
+        return request(`${API_URL}SchoolTimeTable/hours-list-type/`, "GET", null, headers())
     }
 )
 
