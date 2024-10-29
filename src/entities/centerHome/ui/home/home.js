@@ -35,6 +35,8 @@ export const Home = () => {
         setValue("name", changeItem?.name)
         setValue("text", changeItem?.text)
     }, [changeItem])
+
+
     useEffect(() => {
         setSectionTop(cur => ({...cur, home: sectionRef?.current?.offsetTop}))
     }, [setSectionTop])

@@ -38,7 +38,7 @@ export const Teachers = memo(({data, setSelect, select, theme, onClick , setActi
 
                     <tr key={i}>
                         <td>{i + 1}</td>
-                        <td onClick={() => navigation(`teacherProfile/${item.id}`)}>{item.name} {item.surname}</td>
+                        <td onClick={() => navigation(`teacherProfile/${item.id}`)}>{item?.name} {item?.surname}</td>
                         <td>{item?.username}</td>
                         <td>{item?.phone}</td>
                         <td>{item?.age}</td>
