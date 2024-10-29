@@ -13,7 +13,9 @@ export const TeacherSalaryList = ({ currentTableData, currentPage, PageSize }) =
     const navigation = useNavigate()
     const themes = theme === "app_school_theme"
     const [editMode, setEditMode] = useState(false)
-    const [teacherId, setTeacherId] = useState(null)
+    const [teacherData, setTeacherData] = useState(null)
+
+
     const renderStudents = () => {
         return safeData.map((item, index) => (
             <tr key={index + 1}>
@@ -27,7 +29,7 @@ export const TeacherSalaryList = ({ currentTableData, currentPage, PageSize }) =
                         onClick={() =>
                         {
                             setEditMode(() => !editMode)
-                            setTeacherId(item?.id)
+                            setTeacherData(item)
                         }}
                         extraClass={cls.buttonHelper}
 
@@ -59,7 +61,7 @@ export const TeacherSalaryList = ({ currentTableData, currentPage, PageSize }) =
                 {renderStudents()}
                 </tbody>
             </Table>
-            <SchoolTeacherCountDayModal setEditMode={setEditMode} editMode={editMode} teacherId={teacherId}/>
+            <SchoolTeacherCountDayModal setEditMode={setEditMode} editMode={editMode} teacherData={teacherData}/>
         </>
 
     );

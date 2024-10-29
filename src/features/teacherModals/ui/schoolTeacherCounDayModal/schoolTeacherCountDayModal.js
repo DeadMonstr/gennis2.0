@@ -9,7 +9,7 @@ import {schoolTeacherDayThunk} from "../../model/schoolTeacherDayThunk";
 import {useParams} from "react-router-dom";
 import {fetchTeacherSalaryThunk} from "../../../../entities/teacherSalary";
 
-export const SchoolTeacherCountDayModal = memo(({setEditMode, editMode, teacherId}) => {
+export const SchoolTeacherCountDayModal = memo(({setEditMode, editMode, teacherData}) => {
 
     const {register, handleSubmit} = useForm()
     const [day, setDay] = useState("")
@@ -18,12 +18,13 @@ export const SchoolTeacherCountDayModal = memo(({setEditMode, editMode, teacherI
 
     const handleAddDay = () => {
         const data = {
-            worked_days: day
+            worked_hours: day
         }
-        dispatch(schoolTeacherDayThunk({id: teacherId, data:data}))
+
+
+        dispatch(schoolTeacherDayThunk({id: teacherData.id, data:data}))
         dispatch(fetchTeacherSalaryThunk(id))
         setEditMode(false)
-
     }
 
     return (
@@ -32,7 +33,8 @@ export const SchoolTeacherCountDayModal = memo(({setEditMode, editMode, teacherI
                 <h1>O'qituvchining kelgan kunlari</h1>
                 <Form onSubmit={handleSubmit(handleAddDay)}>
                     <Input
-                        placeholder="Kun kiriting"
+                        placeholder="Soat kiriting"
+                        defaultValue={teacherData?.worked_hours}
                         type={"number"}
                         {...register("day")}
                         onChange={(e) => setDay(e.target.value)}
