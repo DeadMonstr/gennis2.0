@@ -61,8 +61,8 @@ export const TeachersPage = () => {
         setCurrentPage(1)
         if (!search) return filteredHeroes
         return filteredHeroes.filter(item =>
-            (item?.user?.name?.toLowerCase().includes(search.toLowerCase()) ||
-                item?.user?.surname?.toLowerCase().includes(search.toLowerCase()))
+            (item?.name?.toLowerCase().includes(search.toLowerCase()) ||
+                item?.surname?.toLowerCase().includes(search.toLowerCase()))
         );
     }, [teachersData, filteredTeachersData, setCurrentPage, search, isFilter])
 
@@ -72,8 +72,8 @@ export const TeachersPage = () => {
         setCurrentPage(1)
         if (!search) return filteredHeroes
         return filteredHeroes.filter(item =>
-            (item?.user?.name?.toLowerCase().includes(search.toLowerCase()) ||
-                item?.user?.surname?.toLowerCase().includes(search.toLowerCase()))
+            (item?.name?.toLowerCase().includes(search.toLowerCase()) ||
+                item?.surname?.toLowerCase().includes(search.toLowerCase()))
         );
     }, [deletedTeacher, filteredTeachersData, setCurrentPage, search, isFilter])
     const types = [
