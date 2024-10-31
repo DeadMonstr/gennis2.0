@@ -14,7 +14,6 @@ const initialState = {
 
     type: 'group',
     hours: [],
-    classHours: {},
     data: [],
     group: [],
     flows: [],
@@ -260,23 +259,6 @@ const TimeTableTuronSlice = createSlice({
 
                 state.error = action.payload ?? null
             })
-
-
-
-            .addCase(fetchTimeTableClassHours.pending, state => {
-                state.loading = true
-                state.error = null
-            })
-            .addCase(fetchTimeTableClassHours.fulfilled, (state, action) => {
-                state.classHours = action.payload
-                state.loading = false
-                state.error = null
-            })
-            .addCase(fetchTimeTableClassHours.rejected, (state, action) => {
-                state.loading = false
-                state.error = action.payload ?? null
-            })
-
 })
 
 export default TimeTableTuronSlice.reducer

@@ -7,7 +7,6 @@ import cls from "./TimeTableClassView.module.sass"
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import {DraggableContainer} from "entities/timeTableTuron/ui/DraggableContainer/DraggableContainer";
 import classNames from "classnames";
-import {fetchTimeTableClassHours} from "pages/timeTable/model/thunks/timeTableTuronThunks";
 import {useDispatch, useSelector} from "react-redux";
 import {Button} from "shared/ui/button";
 
@@ -27,30 +26,20 @@ function hexToBrightness(hex) {
 
 export const TimeTableClassView = (props) => {
 
-    const {lessons, classHours} = props
+    const {lessons, hours} = props
 
     const [renderedFlows, setRenderedFlows] = useState([])
     const [isFlows, setIsFLows] = useState(false)
-    const [activeType, setActiveType] = useState('initial')
 
 
     useEffect(() => {
-
-
-        if (lessons[activeType]?.length) {
-
+        if (lessons?.length) {
             const flows = []
-
-            for (let i = 0; i < lessons[activeType].length; i++) {
-
-                const containerLessons = lessons[activeType][i]
-
+            for (let i = 0; i < lessons.length; i++) {
+                const containerLessons = lessons[i]
                 for (let m = 0; m < containerLessons.lessons.length; m++) {
-
                     const item = containerLessons.lessons[m]
-
                     if (item.is_flow) {
-
                         if (!flows.some(flow => flow.flow === item.group.id)) {
                             flows.push({
                                 group: containerLessons.id,
@@ -58,25 +47,16 @@ export const TimeTableClassView = (props) => {
                             })
                         }
                     }
-
-
                 }
             }
-
-
             setRenderedFlows(flows)
             setIsFLows(true)
-
-
         }
-
-
-    }, [lessons,activeType])
+    }, [lessons])
 
 
     const renderContainers = useCallback((containers, parentId) => {
         if (isFlows && containers.length) {
-            console.log(containers, "containerssssssss")
 
             return containers.map(item => {
 
@@ -110,6 +90,8 @@ export const TimeTableClassView = (props) => {
         }
 
     }, [isFlows])
+
+
     const [scale, setScale] = useState()
 
     function handleScaleChange(event) {
@@ -117,20 +99,12 @@ export const TimeTableClassView = (props) => {
     }
 
 
-    console.log(lessons[activeType])
+    console.log(lessons, "lessons")
 
     return (
         <div
             className={cls.fullscreen}
         >
-
-
-            <div className={cls.btns}>
-                <Button type={activeType === 'initial' ? 'simple' : "simple-add"}
-                        onClick={() => setActiveType('initial')}>Boshlang'ich</Button>
-                <Button type={activeType === 'high' ? 'simple' : "simple-add"}
-                        onClick={() => setActiveType('high')}>Yuqori</Button>
-            </div>
 
             <TransformWrapper
                 onTransformed={(e) => handleScaleChange(e)}
@@ -151,7 +125,7 @@ export const TimeTableClassView = (props) => {
 
                         <div className={cls.header}>
                             {
-                                classHours[activeType]?.map(item => {
+                                hours?.map(item => {
                                     return (
                                         <div className={cls.item}>
                                                     <span style={{transform: `scale(${1 / scale})`}}>
@@ -168,7 +142,7 @@ export const TimeTableClassView = (props) => {
 
                         <div className={cls.footer}>
                             {
-                                lessons[activeType]?.map(item => {
+                                lessons?.map(item => {
                                     return (
                                         <div className={cls.rooms}>
                                             <div className={cls.room} style={{
@@ -238,10 +212,8 @@ const Container = (props) => {
                                 }
                             </div> : null
                     }
-
                 </div>
             }
-
         </div>
     )
 }

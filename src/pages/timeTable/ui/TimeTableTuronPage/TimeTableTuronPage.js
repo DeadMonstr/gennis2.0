@@ -22,7 +22,6 @@ import {
 import {Button} from "shared/ui/button";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    fetchTimeTableClassHours,
     fetchTimeTableClassView, fetchTimeTableColors,
     fetchTimeTableData,
     fetchTimeTableSubject,
@@ -113,7 +112,6 @@ export const TimeTableTuronPage = () => {
     const teachersStatus = useSelector(getTimeTableTuronTeachersStatus)
     const filteredClass = useSelector(getTimeTableTuronFilterClass)
     const date = useSelector(getTimeTableTuronDate)
-    const classHours = useSelector(getTimeTableTuronClassHours)
 
 
 
@@ -136,7 +134,6 @@ export const TimeTableTuronPage = () => {
     useEffect(() => {
         if (date && branch && classView) {
             dispatch(fetchTimeTableClassView({date, branch}))
-            dispatch(fetchTimeTableClassHours())
         }
     }, [date, branch,classView])
 
@@ -868,7 +865,7 @@ export const TimeTableTuronPage = () => {
 
                 <TimeTableClassView
                     lessons={classViewData}
-                    classHours={classHours}
+                    hours={hours}
                 />
 
 

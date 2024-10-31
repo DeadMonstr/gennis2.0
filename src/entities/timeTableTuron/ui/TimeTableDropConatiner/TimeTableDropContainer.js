@@ -87,7 +87,6 @@ const Container = (props) => {
         onDoubleClickContainer(item.room, item.dndId)
     }
 
-    console.log(item)
 
 
     return (
