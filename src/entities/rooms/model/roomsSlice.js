@@ -13,7 +13,14 @@ export const roomsSlice = createSlice(
     {
         name: "roomsSlice",
         initialState,
-        reducers: {},
+        reducers: {
+            onAddRooms: (state , action) => {
+                console.log(action.payload)
+                state.roomsData = [...state.roomsData, action.payload]
+
+            }
+
+        },
         extraReducers: builder =>
             builder
                 .addCase(fetchRoomsData.pending, state => {
@@ -23,14 +30,15 @@ export const roomsSlice = createSlice(
                 .addCase(fetchRoomsData.fulfilled,( state, action )=> {
                     state.loading = false;
                     state.roomsData = action.payload
+                    console.log(action.payload)
                     state.roomsStatus = 'success'
-
-
                 })
                 .addCase(fetchRoomsData.rejected, state => {
                     state.error = "error"
                 })
     }
 )
+
+export const {onAddRooms} = roomsSlice.actions
 
 export default roomsSlice.reducer

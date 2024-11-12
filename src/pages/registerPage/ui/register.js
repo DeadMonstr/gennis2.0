@@ -185,6 +185,7 @@ export const Register = () => {
         }
 
         setLoading(true);
+        console.log(data)
         const selectedTimes = shift.find(shift => shift.id === Number(selectedTime))
         const selectedLanguage = languages.find(lang => lang.id === Number(selectedLang));
 
@@ -279,6 +280,8 @@ export const Register = () => {
                     setIsUsernameAvailable(true);
 
                     reset();
+                    setValue("password", 12345678)
+
 
                 } else {
                     dispatch(onAddAlertOptions({
@@ -290,6 +293,7 @@ export const Register = () => {
                 }
             });
         }
+
     };
 
 
@@ -516,6 +520,7 @@ export const Register = () => {
                                 register={register}
                                 placeholder="Parol"
                                 required
+                                // defaultValue={"1234567189"}
                                 type={"password"}
                                 name={"password"}
                             />
