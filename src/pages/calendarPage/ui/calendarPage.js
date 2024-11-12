@@ -30,9 +30,6 @@ export const CalendarPage = () => {
     const [isChanged, setIsChanged] = useState(false)
     const currentYear = new Date().getFullYear()
 
-
-    console.log(isChanged, "isChanged main")
-
     const onSubmitAdd = (data) => {
         let res;
 

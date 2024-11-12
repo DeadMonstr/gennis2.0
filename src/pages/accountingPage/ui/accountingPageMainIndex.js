@@ -13,8 +13,9 @@ import {
 } from "entities/accounting";
 import {getPaymentType} from "entities/capital/model/thunk/capitalThunk";
 
-import {Routes, Route, useLocation, Navigate, useMatches} from "react-router";
-import React, {memo, useCallback, useEffect, useState} from "react";
+import {Routes, Route, useLocation, Navigate, useMatches, Outlet} from "react-router";
+import React, {memo, useCallback, useEffect, useMemo, useState} from "react";
+import {getMultiOldLength} from "widgets/multiPage/model/selector/multiPageSelector";
 import cls from './accountingPageMain.module.sass';
 
 import {useDispatch, useSelector} from "react-redux";
@@ -40,48 +41,53 @@ import {
 import {accountingThunk} from "entities/accounting/model/thunk/accountingThunk";
 import {AccountingFilter} from "features/filters/accountingFilter";
 import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
-import {getBranch} from "../../../features/branchSwitcher";
+import {getBranch} from "features/branchSwitcher";
 import {getSelectedLocations} from "features/locations";
 import {getBranchLoading} from "features/branchSwitcher/model/selector/brachSwitcherSelector";
 
 
-export const AccountingPageMainIndex = memo(() => {
-    const types = [
-        {name: "Students Payments", type: "studentsPayments"},
-        {name: "Teacher Salary", type: "teachersSalary"},
-        {name: "Employer Salary", type: "employeesSalary"},
-        {name: "overhead", type: "overhead"},
-        {name: "capital", type: "capital"},
-    ]
-
-    return (
-        <Routes>
-            <Route path={"list"} element={<MultiPage types={types} page={"accounting"} id={false}/>}/>
-            <Route path={":idBranch/*"} element={<AccountingPageMain/>}/>
-
-
-        </Routes>
-    )
-});
+// export const AccountingPageMainIndex = memo(() => {
+//     const types = [
+//         {name: "Students Payments", type: "studentsPayments"},
+//         {name: "Teacher Salary", type: "teachersSalary"},
+//         {name: "Employer Salary", type: "employeesSalary"},
+//         {name: "overhead", type: "overhead"},
+//         {name: "capital", type: "capital"},
+//     ]
+//
+//     return (
+//         <Routes>
+//             <Route path={"list"} element={<MultiPage types={types} page={"accounting"} id={false}/>}/>
+//             <Route path={"/*"} element={<AccountingPageMain/>}/>
+//
+//
+//         </Routes>
+//     )
+// });
 
 
 export const AccountingPageMain = () => {
     let {"*": typePage} = useParams()
     const getAccountingPage = useSelector(getAccountingSelect)
-    console.log(getAccountingPage , "pages")
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {request} = useHttp()
     const [active, setActive] = useState(false)
     const [activeDel, setActiveDel] = useState(false)
+    const [multiPageActive, setMultiPageActive] = useState(false)
+    const [oldMultiPageActive, setOldMultiPageActive] = useState(false)
     // const [activePage, setActivePage] = useState(getAccountingPage[0]?.value)
     const encashment = useSelector(getEncashment)
     const activePage = useSelector(getAccountingActivePage)
+    const oldLength = useSelector(getMultiOldLength)
+    const locations = useSelector(getSelectedLocations)
+
     const {id} = useParams()
     const location = useLocation()
 
     const [otchot, setOtchot] = useState(false)
+    const [oldActivePage, setOldActivePage] = useState(activePage ?? getAccountingPage[0].value)
 
 
     const branchID = useSelector(getBranch)
@@ -96,8 +102,14 @@ export const AccountingPageMain = () => {
     }, [])
 
     useEffect(() => {
-        navigate(`${activePage}`)
-    },[activePage,navigate,location.pathname])
+        if (oldActivePage !== activePage) {
+            navigate(`${activePage}`)
+            setOldActivePage(activePage)
+        } else if (location.search)
+            navigate(location.search.slice(6, location.search.length))
+        else if (locations.length < 2)
+            navigate(`${activePage}`)
+    }, [activePage, navigate, location.pathname, location.search, locations.length])
 
     const setPage = useCallback((e) => {
         // setActivePage(e)
@@ -109,129 +121,161 @@ export const AccountingPageMain = () => {
         return Number(payment_sum).toLocaleString();
     };
 
+    useEffect(() => {
+        console.log(oldLength, "oldLength")
+        if (!!oldLength && oldLength !== locations.length && locations.length >= 2) {
+            navigate('./', {relative: "path"})
+        }
+    }, [oldLength, locations.length])
 
-    const locations = useSelector(getSelectedLocations)
+
     const branch = useSelector(getBranch)
 
     // useEffect(() => {
-    //     if (locations.length < 2 && branch?.id && typePage)  {
-    //         navigate(`../${branch.id}/${typePage}`, {relative: "path"})
+    //     if (locations.length < 2 && typePage)  {
+    //         console.log(true, 2)
+    //         console.log(locations.length < 2)
+    //         console.log(locations.length)
+    //         navigate(typePage, {relative: "path"})
     //     }
-    // },[branch?.id,locations,navigate])
+    // },[locations.length,navigate])
 
-    console.log(branch, "branch")
-    console.log(locations, "locations")
+    // useEffect(() => {
+    //     console.log(oldMultiPageActive, "oldMultiPageActive")
+    //     console.log(multiPageActive, "multiPageActive")
+    //     if (multiPageActive !== oldMultiPageActive && locations.length >= 2) {
+    //         navigate('../')
+    //         setMultiPageActive(false)
+    //         setOldMultiPageActive(true)
+    //     } else if (!multiPageActive !== oldMultiPageActive && locations.length >= 2) {
+    //         setMultiPageActive(true)
+    //         setOldMultiPageActive(false)
+    //     }
+    // }, [locations.length, multiPageActive, oldMultiPageActive])
 
     // const renderTable = renderTables()
+
+    const types = useMemo(() => [
+        {name: "Students Payments", type: "studentsPayments"},
+        {name: "Teacher Salary", type: "teachersSalary"},
+        {name: "Employer Salary", type: "employeesSalary"},
+        {name: "overhead", type: "overhead"},
+        {name: "capital", type: "capital"},
+    ], [])
 
 
     return (
 
-        <div className={cls.accountingMain}>
-            <div className={cls.accounting}>
-                <div className={cls.accounting__wrapper}>
-                    <div className={cls.wrapper__filter}>
-                        <Button type={"filter"} status={"filter"} onClick={() => setActive(!active)}>Filter</Button>
-                        <Select defaultValue={getAccountingPage[0].value}  options={getAccountingPage} onChangeOption={setPage}/>
-                    </div>
+        <MultiPage types={types} page={"accounting"} isMultiPage={true}>
+            <div className={cls.accountingMain}>
+                <div className={cls.accounting}>
+                    <div className={cls.accounting__wrapper}>
+                        <div className={cls.wrapper__filter}>
+                            <Button type={"filter"} status={"filter"} onClick={() => setActive(!active)}>Filter</Button>
+                            <Select defaultValue={activePage ?? getAccountingPage[0].value} options={getAccountingPage}
+                                    onChangeOption={setPage}/>
+                        </div>
 
 
-                    <div className={cls.wrapper__middle}>
-                        {otchot ? null :
-                            <div className={cls.middle__box}>
-                                {encashment?.payments?.map(item => (
-                                    <div>{item?.payment_type}: {formatSalary(item.overall)}</div>
-                                ))}
+                        <div className={cls.wrapper__middle}>
+                            {otchot ? null :
+                                <div className={cls.middle__box}>
+                                    {encashment?.payments?.map(item => (
+                                        <div>{item?.payment_type}: {formatSalary(item.overall)}</div>
+                                    ))}
+                                </div>
+
+                            }
+                            <div className={cls.typeExpenses}>
+                                <Link to={`../../inkasatsiya`}>
+                                    <Button>
+                                        Inkasatsiya
+                                        {/*Harajatlar to’plami*/}
+                                    </Button></Link>
+                                <Link to={`otchot`}>
+                                    <Button onClick={() => setOtchot(!otchot)} type={"filter"}>
+                                        buxgalteriya
+                                    </Button>
+                                </Link>
                             </div>
-
-                        }
-                        <div className={cls.typeExpenses}>
-                            <Link to={`../../inkasatsiya/${id}`}>
-                                <Button>
-                                    Inkasatsiya
-                                    {/*Harajatlar to’plami*/}
-                                </Button></Link>
-                            <Link to={`otchot`}>
-                                <Button onClick={() => setOtchot(!otchot)} type={"filter"}>
-                                    buxgalteriya
-                                </Button>
-                            </Link>
                         </div>
                     </div>
                 </div>
-            </div>
+                <Outlet/>
 
+                <Routes>
+                    <Route
 
-            <Routes>
-                <Route
-
-                    path={"studentsPayments"}
-                    element={
-                        <StudentSalary
-                            deleted={activeDel}
-                            setDeleted={setActiveDel}
-                        />
-                    }
-                />
-                <Route
-                    path={"teachersSalary"}
-                    element={<TeacherSalaryPage
-                        deleted={activeDel}
-                        setDeleted={setActiveDel}
-                        path={"teachersSalary"}
+                        path={"studentsPayments"}
+                        element={
+                            <StudentSalary
+                                deleted={activeDel}
+                                setDeleted={setActiveDel}
+                            />
+                        }
                     />
-                    }
-                />
-                <Route
-                    path={"employeesSalary"}
-                    element={
-                        <EmployerSalaryPage
+                    <Route
+                        path={"teachersSalary"}
+                        element={<TeacherSalaryPage
                             deleted={activeDel}
                             setDeleted={setActiveDel}
-                            path={"employeesSalary"}
+                            path={"teachersSalary"}
                         />
-                    }
-                />
-                <Route
-                    path={"overhead"}
-                    element={
-                        <AdditionalCosts
-                            path={"overhead"}
-                            deleted={activeDel}
-                            setDeleted={setActiveDel}
-                        />
-                    }
-                />
-                <Route path={"capital"}
-                       element={
-                           <Capital
-                               deleted={activeDel}
-                               setDeleted={setActiveDel}
-                               path={"capital"}
-                           />
-                       }
-                />
-                <Route path={"otchot"}
-                       element={
-                           <AccountingOtchotPage
+                        }
+                    />
+                    <Route
+                        path={"employeesSalary"}
+                        element={
+                            <EmployerSalaryPage
+                                deleted={activeDel}
+                                setDeleted={setActiveDel}
+                                path={"employeesSalary"}
+                            />
+                        }
+                    />
+                    <Route
+                        path={"overhead"}
+                        element={
+                            <AdditionalCosts
+                                path={"overhead"}
+                                deleted={activeDel}
+                                setDeleted={setActiveDel}
+                            />
+                        }
+                    />
+                    <Route path={"capital"}
+                           element={
+                               <Capital
+                                   deleted={activeDel}
+                                   setDeleted={setActiveDel}
+                                   path={"capital"}
+                               />
+                           }
+                    />
+                    <Route path={"otchot"}
+                           element={
+                               <AccountingOtchotPage
 
-                               path={"otchot"}
-                           />
-                       }
+                                   path={"otchot"}
+                               />
+                           }
+                    />
+
+                    {/*<Route*/}
+                    {/*    index*/}
+                    {/*    element={<Navigate to={"studentsPayments"}/>}*/}
+                    {/*/>*/}
+
+                </Routes>
+                <AccountingFilter
+                    setActive={setActive}
+                    active={active}
+                    setActiveDel={setActiveDel}
+                    activeDel={activeDel}
+                    activePage={activePage}
                 />
-                <Route
-                    index
-                    element={<Navigate to={"studentsPayments"}/>}
-                />
-            </Routes>
-            <AccountingFilter
-                setActive={setActive}
-                active={active}
-                setActiveDel={setActiveDel}
-                activeDel={activeDel}
-                activePage={activePage}
-            />
-        </div>
+            </div>
+        </MultiPage>
 
     );
 }

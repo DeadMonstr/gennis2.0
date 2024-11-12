@@ -59,8 +59,12 @@ export const EmployeeSalary = ({
             <>
                 <tbody>
                 <tr>
-                    <td onClick={() => navigate(`./profile/${item.id}`)}>{i + 1}</td>
-                    <td>{item?.user?.name} {item.user.surname}</td>
+                    <td>{i + 1}</td>
+                    <td
+                        onClick={() => navigate(`../../employer/employerProfile/${item?.user?.id}`)}
+                    >
+                        {item?.user?.name} {item.user.surname}
+                    </td>
                     <td>{item?.salary}</td>
                     <td>{item?.date}</td>
                     <td>{item?.user?.job?.length ? item?.user?.job : "ish turi mavjud emas"}</td>

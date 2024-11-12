@@ -1,3 +1,4 @@
+import {getBranch, getBranches} from "features/branchSwitcher";
 import {ClassAddForm} from "features/classProfile";
 import {StudentCreateClass} from "features/studentCreateClass";
 import React, {memo, useCallback, useEffect, useMemo, useState} from "react";
@@ -81,7 +82,8 @@ export const StudentsPage = () => {
     const [searchParams] = useSearchParams();
     const {register, handleSubmit} = useForm();
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
-    const {"*": id} = useParams()
+    // const {"*": id} = useParams()
+    const {id} = useSelector(getBranch)
     const userBranchId = id
 
     const search = useSelector(getSearchValue);

@@ -49,7 +49,12 @@ export const StudentsPayments = ({
         return currentTableData.map((item, i) => (
             <tr>
                 <td>{i + 1}</td>
-                <td onClick={() => navigation(`../../../students/profile/${item.student.id}`)}>{item?.student?.user?.name} {item?.student?.user?.surname}</td>
+                <td
+                    onClick={() =>
+                        navigation(`../../students/profile/${item.student.id}`, {relative: "path"})}
+                >
+                    {item?.student?.user?.name} {item?.student?.user?.surname}
+                </td>
                 <td>{formatSalary(item.payment_sum)}</td>
                 <td>{item.date}</td>
                 <td>

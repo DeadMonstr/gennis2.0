@@ -1,4 +1,5 @@
 import {getUserBranchId} from "entities/profile/userProfile";
+import {getBranch} from "features/branchSwitcher";
 import {getSystem} from "features/themeSwitcher";
 import React, {useEffect, useMemo, useState} from "react";
 import {Link, useParams} from "react-router-dom";
@@ -30,7 +31,8 @@ export const GroupsPage = () => {
     const getFilteredGroups = useSelector(getGroupListWithFilter)
     const deletedGroupsData = useSelector(getDeletedGroupsData)
     const loading = useSelector(getGroupsLoading)
-    const {"*": id} = useParams()
+    // const {"*": id} = useParams()
+    const {id} = useSelector(getBranch)
     const userBranchId = id
     const system = useSelector(getSystem)
     const [deletedGroups, setDeletedGroups] = useState([])

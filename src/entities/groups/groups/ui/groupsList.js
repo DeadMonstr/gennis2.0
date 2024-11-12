@@ -36,7 +36,7 @@ export const GroupsList = React.memo(({currentTableData}) => {
                             </> :
                             // null
                             <>
-                                <td>{`${item?.teacher[0]?.user?.surname} ${item?.teacher[0]?.user?.name}`}</td>
+                                <td>{`${item?.teacher?.user?.surname} ${item?.teacher?.user?.name}`}</td>
                                 <td>{item?.students?.length}</td>
                                 <td>{`${item?.class_number?.number}-${item?.color?.name}`}</td>
                             </>

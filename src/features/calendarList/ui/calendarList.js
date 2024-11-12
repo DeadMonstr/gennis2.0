@@ -1,10 +1,11 @@
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import {deleteDayType} from "pages/calendarPage/model/calendarSlice";
-import {memo, useCallback, useEffect, useState} from 'react';
+import React, {memo, useCallback, useEffect, useState} from 'react';
 
 import {CalendarListItem} from "entities/calendar";
 import {useDispatch} from "react-redux";
 import {API_URL, headers, useHttp} from "shared/api/base";
+import {ConfirmModal} from "shared/ui/confirmModal";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
 
 import cls from "./calendarList.module.sass";
@@ -17,28 +18,33 @@ export const CalendarList = (props) => {
         loading,
         data,
         onSubmit,
-        onDelete,
         isChanged,
         setIsChanged,
-        // onSubmitDelete
     } = props
 
     const {request} = useHttp()
     const dispatch = useDispatch()
     const [selected, setSelected] = useState([])
+    const [isDeleted, setIsDeleted] = useState(false)
+    const [deleteData, setDeleteData] = useState(null)
 
-    const onSubmitDelete = (data) => {
-        request(`${API_URL}Calendar/delete-type/`, "DELETE", JSON.stringify({days: data}), headers())
+    const onSubmitDelete = () => {
+        request(`${API_URL}Calendar/delete-type/`, "DELETE", JSON.stringify({days: deleteData}), headers())
             .then(res => {
                 dispatch(deleteDayType(res))
                 dispatch(onAddAlertOptions({
                     type: "success",
                     status: true,
-                    msg: `${res.length > 1 ? "Kunlar": "Kun"} o'chirildi`
+                    msg: `${res.length > 1 ? "Kunlar" : "Kun"} o'chirildi`
                 }))
+                setIsDeleted(false)
             })
             .catch(err => console.log(err))
-        // dispatch(deleteDayType())
+    }
+
+    const onDelete = (data) => {
+        setDeleteData(data)
+        setIsDeleted(true)
     }
 
     useEffect(() => {
@@ -55,71 +61,7 @@ export const CalendarList = (props) => {
         }
     }, [isChanged, selected])
 
-    // useEffect(() => {
-    //     if (selected.length && !isChanged) {
-    //         setActive(obj => ({
-    //             ...obj,
-    //             days: selected
-    //         }))
-    //     }
-    // }, [selected, isChanged])
-
-    const onActiveDays = (id, value, trueActive, setTrueActive, setDemoActive, i, selected, obj) => {
-        // let newArr = trueActive.map((item, index) => {
-        //     if (item?.startId && !item?.finishId) {
-        //         const startID = item.startId < id ? item.startId : id
-        //         const finishID = item.startId < id ? id : item.startId
-        //         // if (trueActive.filter(i => {
-        //         //     // console.log(startID <= i.id && finishID >= i.id)
-        //         //     // console.log(startID, "startID")
-        //         //     // console.log(i.finishId, "i.id")
-        //         //     // console.log(i.finishId, "i.id")
-        //         //     // console.log(finishID, "finishID")
-        //         //     // console.log(item.startId <= i.startId, "start")
-        //         //     // console.log(item.finishId >= i.finishId, "finish")
-        //         //     // console.log(i.finishId, "i.finishId")
-        //         //     // console.log(item.finishId, "item.finishId")
-        //         //     // console.log(i, "i")
-        //         //     return item.startId <= i.startId && item?.finishId ? item.finishId : id >= i.finishId
-        //         // })[0]) {
-        //         //     console.log(true, 1)
-        //         //     return item
-        //         // } else {
-        //             setActive(obj => ({
-        //                 ...obj,
-        //                 finishValue: value,
-        //                 startId: startID,
-        //                 finishId: finishID,
-        //                 selected: selected
-        //             }))
-        //             console.log(true)
-        //             return {
-        //                 startId: startID,
-        //                 finishId: finishID
-        //             }
-        //         // }
-        //     } else if (!item?.startId && trueActive[index - 1]?.finishId !== id) {
-        //         if (trueActive.filter(i => id <= i.id && id >= i.id)[0]) {
-        //             console.log(true, 2)
-        //             return item
-        //         } else {
-        //             setActive({id: i, startValue: value, startId: id})
-        //             return {startId: id}
-        //         }
-        //     } else {
-        //         return item
-        //     }
-        // })
-        // const newActives =
-        //     newArr[newArr.length - 1].startId && newArr[newArr.length - 1].finishId ? [...newArr, {}] : newArr
-        // setTrueActive(newActives)
-        // setDemoActive([])
-        // if (newArr[newArr.length - 1].startId && newArr[newArr.length - 1].finishId) {
-        //     setTrueActive([{}])
-        //     setDemoActive([])
-        // }
-        // console.log(selected, "selected ewgdf sg")
-
+    const onActiveDays = (id, value, trueActive, setTrueActive, setDemoActive) => {
         let newArr = trueActive.map((item, index) => {
             if (item.startId && !item?.finishId) {
                 const startID = item.startId < id ? item.startId : id
@@ -141,19 +83,17 @@ export const CalendarList = (props) => {
             }
         })
         const newActives =
-            newArr[newArr.length - 1].startId && newArr[newArr.length - 1].finishId ? [...newArr, {}] : newArr
+            newArr[newArr.length - 1].startId && newArr[newArr.length - 1].finishId
+                ? [...newArr, {}] : newArr
         setTrueActive(newActives)
         setDemoActive([])
     }
-
-    // console.log(selected, 'wewegweg')
 
     function sortWeeksDays(arr, startDay) {
         let newArr = [...arr]?.sort(compareById)
         let i = 0
         let arrContainer = []
         let totalArr = []
-        // console.log(arr ,"arr")
         const whileCount = (newArr.length + startDay) <= 35 ? 35 : 42
 
         while (i < whileCount) {
@@ -194,7 +134,7 @@ export const CalendarList = (props) => {
                     onSubmit={onSubmit}
                     isChanged={isChanged}
                     setIsChanged={setIsChanged}
-                    onSubmitDelete={onSubmitDelete}
+                    onSubmitDelete={onDelete}
                 />
             )
         })
@@ -203,8 +143,16 @@ export const CalendarList = (props) => {
     const render = loading ? <DefaultPageLoader/> : renderMonthList()
 
     return (
-        <div className={cls.calendarList}>
-            {render}
-        </div>
+        <>
+            <div className={cls.calendarList}>
+                {render}
+            </div>
+            <ConfirmModal
+                type={"danger"}
+                active={isDeleted}
+                setActive={setIsDeleted}
+                onClick={onSubmitDelete}
+            />
+        </>
     )
 }

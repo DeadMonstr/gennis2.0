@@ -1,3 +1,4 @@
+import {getBranch} from "features/branchSwitcher";
 import React, {useMemo, useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Button} from 'shared/ui/button';
@@ -24,7 +25,8 @@ export const Rooms = () => {
     const dispatch = useDispatch();
     const roomsData = useSelector(getRoomsData);
     const loading = useSelector(getLoading);
-    const {"*": id} = useParams();
+    // const {"*": id} = useParams();
+    const {id} = useSelector(getBranch)
     const userBranchId = id
 
     useEffect(() => {

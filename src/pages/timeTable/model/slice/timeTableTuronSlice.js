@@ -145,7 +145,7 @@ const TimeTableTuronSlice = createSlice({
                         name: item.name_uz
                     }
                 })
-                state.day = action.payload  
+                state.day = action.payload.today
                 state.loading = false
                 state.error = null
             })

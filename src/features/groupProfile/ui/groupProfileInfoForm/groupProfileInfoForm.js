@@ -15,6 +15,7 @@ import {
 import {getSchoolClassColors, getSchoolClassNumbers} from "entities/students";
 import {useTheme} from "shared/lib/hooks/useTheme";
 import {Button} from "shared/ui/button";
+import {ConfirmModal} from "shared/ui/confirmModal";
 import {EditableCard} from "shared/ui/editableCard";
 import {Form} from "shared/ui/form";
 import {Input} from "shared/ui/input";
@@ -54,6 +55,7 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
     // const schoolClassColors = useSelector(getSchoolClassColors)
     const schoolClassColors = useSelector(getClassColorData)
 
+    const [isDeleted, setIsDeleted] = useState(false)
     const [active, setActive] = useState(false)
     const [selectColor, setSelectColor] = useState()
     const [activeSwitch, setActiveSwitch] = useState(data?.status ?? false)
@@ -169,7 +171,7 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
                 <h1>Ma’lumot o’zgartirish</h1>
                 <Button
                     extraClass={cls.infoModal__btn}
-                    onClick={onDelete}
+                    onClick={()=>setIsDeleted(true)}
                     type={"danger"}
                 >
                     Delete group
@@ -264,6 +266,12 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
                     <Button id={"formChange"} extraClass={cls.infoModal__btn}>Change</Button>
                 </Form>
             </Modal>
+            <ConfirmModal
+                type={"danger"}
+                active={isDeleted}
+                setActive={setIsDeleted}
+                onClick={onDelete}
+            />
         </>
     )
 })

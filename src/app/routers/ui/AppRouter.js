@@ -61,7 +61,7 @@ export const AppRouter = () => {
                 />
 
 
-                <Route element={<RequireAuth/>}>
+                {/*<Route element={<RequireAuth/>}>*/}
 
                     <Route path={"platform/*"} element={<Layout />}>
 
@@ -72,10 +72,10 @@ export const AppRouter = () => {
                                         key={index}
                                         path={item.path}
                                         element={
-                                            // item.element
-                                            <RequireBranch>
-                                                {item.element}
-                                             </RequireBranch>
+                                            item.element
+                                            // <RequireBranch>
+                                            //     {item.element}
+                                            //  </RequireBranch>
                                         }
                                     />
                                 )
@@ -90,9 +90,10 @@ export const AppRouter = () => {
                                         key={index}
                                         path={item.path}
                                         element={
-                                            <RequireBranch>
-                                                {item.element}
-                                            </RequireBranch>
+                                            item.element
+                                            // <RequireBranch>
+                                            //     {item.element}
+                                            // </RequireBranch>
                                         }
                                     />
                                 )
@@ -137,10 +138,10 @@ export const AppRouter = () => {
 
                         <Route
                             index
-                            element={<Navigate to={"register/*"}/>}
+                            element={<Navigate to={"register"}/>}
                         />
                     </Route>
-                </Route>
+                {/*</Route>*/}
 
                 <Route
                     path={"*"}
