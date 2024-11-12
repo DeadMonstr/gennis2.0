@@ -136,6 +136,7 @@ export const ClassModal = ({
         })
     }, [totalHours])
 
+
     useEffect(() => {
         let hours = 0
         totalHours.map(item => {
