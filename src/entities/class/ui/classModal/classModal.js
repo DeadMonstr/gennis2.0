@@ -5,7 +5,7 @@ import {Form} from "shared/ui/form";
 import {useForm} from "react-hook-form";
 import {Select} from "shared/ui/select";
 import cls from "../classTable/classTable.module.sass"
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {HexColorPicker} from "react-colorful";
 import {AnimatedMulti} from "features/workerSelect";
 import {value} from "lodash/seq";
@@ -54,7 +54,7 @@ export const ClassModal = ({
         }
         const idClass = editClass
 
-        setValue("curriculum_hours", "")
+        // setValue("curriculum_hours", "")
         setValue("price", "")
         dispatch(updateClassItem({idClass, res}))
         setEditClass(!editClass)
@@ -64,6 +64,7 @@ export const ClassModal = ({
 
 
     const [optionsSubject, setOptionsSubject] = useState([])
+    const [totalHours, setTotalHours] = useState([])
 
 
     useEffect(() => {
@@ -87,6 +88,66 @@ export const ClassModal = ({
             })))
 
     }, [selectOptions])
+
+    useEffect(() => {
+        if (selectedSubject?.length && !totalHours?.length)
+            setTotalHours(selectedSubject?.map(item => ({
+                name: item.label,
+                hours: 0
+            })))
+        else if (selectedSubject?.length)
+            setTotalHours(prev =>
+                selectedSubject.map(inner => {
+                    if (prev.some(item => item.name === inner.label)[0]) {
+                        
+                    }
+                })
+                // prev => [...prev, {
+                //     name: selectedSubject[selectedSubject.length - 1]?.label,
+                //     hours: 0
+                // }]
+            )
+    }, [selectedSubject])
+
+    const onChangeTotalHours = (name, hours) => {
+        setTotalHours(prev => prev.map(item => {
+            // console.log(item, "item")
+            if (item?.name === name) {
+                // console.log(item, "item ")
+                return {
+                    name: item?.name,
+                    hours: hours
+                }
+            } else return item
+        }))
+    }
+
+    const renderSubjects = useCallback(() => {
+        return totalHours?.map(item => {
+            return (
+                <Input
+                    title={`${item?.name} dars soat`}
+                    type={"number"}
+                    defaultValue={item?.hours}
+                    onChange={(e) => onChangeTotalHours(item?.name, e.target.value)}
+                />
+            )
+        })
+    }, [totalHours])
+
+    useEffect(() => {
+        let hours = 0
+        totalHours.map(item => {
+            console.log(item.hours, "item.hours")
+            hours += +item.hours
+        })
+        setValue("curriculum_hours", hours)
+        console.log(hours, "hours")
+    }, [totalHours])
+
+    console.log(totalHours, "totalHours")
+
+
     return (
         <>
             <Modal active={activeEdit} setActive={setActiveEdit}>
@@ -122,8 +183,13 @@ export const ClassModal = ({
                 <h2>Ma’lumotlarni o’zgartirish </h2>
                 <div>
                     <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>
-                        <Input name={"curriculum_hours"} register={register} type={"number"}
-                               placeholder={"darslar soati"}/>
+                        <Input
+                            name={"curriculum_hours"}
+                            register={register}
+                            type={"number"}
+                            placeholder={"darslar soati"}
+                            disabled
+                        />
                         <Input name={"price"} register={register} type={"number"} placeholder={"narxi"}/>
                         {/*<Select onChangeOption={onChangeSelect} options={subject}/>*/}
 
@@ -136,6 +202,9 @@ export const ClassModal = ({
                         {/*        itemSubject.name*/}
                         {/*    ))*/}
                         {/*))}*/}
+                        <div className={cls.container}>
+                            {renderSubjects()}
+                        </div>
                         <Button>
                             Tastiqlash
                         </Button>
@@ -228,7 +297,6 @@ export const ColorModal = ({
                                deleteColor,
                                edit
                            }) => {
-
 
 
     return (
