@@ -151,6 +151,8 @@ export const ClassModal = ({
     console.log(totalHours, "totalHours")
 
 
+
+
     return (
         <>
             <Modal active={activeEdit} setActive={setActiveEdit}>
