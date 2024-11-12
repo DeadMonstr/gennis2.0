@@ -109,6 +109,7 @@ export const ClassModal = ({
             )
     }, [selectedSubject])
 
+
     const onChangeTotalHours = (name, hours) => {
         setTotalHours(prev => prev.map(item => {
             // console.log(item, "item")
