@@ -25,9 +25,18 @@ export const ClassPage = ({setEdit, edit, activeEdit, setActiveEdit, activeMenu,
         <>
             <ClassFilter classesType={classes} setActiveEdit={setActiveEdit} edit={edit} setEdit={setEdit}
                          active={activeMenu} setActive={setActiveMenu}/>
-            {loading ? <DefaultPageLoader/> : <ClassTable id={id} active={activeMenu} classType={classType}
-                                                          selectBox={selectBox}
-                                                          setSelectBox={setSelectBox} edit={edit}/>}
+            {loading
+                ?
+                <DefaultPageLoader/>
+                :
+                <ClassTable
+                    id={id}
+                    active={activeMenu}
+                    classType={classType}
+                    selectBox={selectBox}
+                    setSelectBox={setSelectBox} edit={edit}
+                />
+            }
             {/*<Button onClick={onClick}>Tastiqlash</Button>*/}
         </>
     )
