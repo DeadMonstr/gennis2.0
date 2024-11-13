@@ -1,17 +1,14 @@
 import {Table} from "shared/ui/table";
-import {ClassModal} from "../classModal/classModal";
 import React, {useEffect, useState} from "react";
-import {useForm} from "react-hook-form";
 import cls from "./classTable.module.sass"
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {useDispatch, useSelector} from "react-redux";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
-import {fetchClassSubjects} from "../../model/thunk/classThunk";
 import {classSubjects} from "../../model/selector/classSelector";
-import {classItem, updateClassItem} from "../../model/thunk/classThunk";
-import {data} from "../../../calendar";
-import {onChangeClassStatus, onDeleteSubject} from "../../model/slice/classSlice";
+
+import {onChangeClassStatus} from "../../model/slice/classSlice";
 import classNames from "classnames";
+import {ClassTableEdit} from "../../../../features/classModals/ui";
 
 
 export const ClassTable = ({edit, classType}) => {
@@ -20,7 +17,6 @@ export const ClassTable = ({edit, classType}) => {
     const subjects = useSelector(classSubjects)
     const {request} = useHttp()
     const dispatch = useDispatch()
-    const [selectedSubject, setSelectedSubject] = useState([])
     const [selectedClass, setSelectedClass] = useState(null);
     useEffect(() => {
         if (editClass) {
@@ -28,39 +24,6 @@ export const ClassTable = ({edit, classType}) => {
             setSelectedClass(selected);
         }
     }, [editClass, classType]);
-
-
-    // const onChangeClass = (data) => {
-    //
-    //
-    //     const res = {
-    //         subjects: selectedSubject.map(item => (
-    //             // name: item.label,
-    //             item.value
-    //         )),
-    //         ...data
-    //     }
-    //     const idClass = editClass
-    //     //
-    //     // setValue("curriculum_hours", "")
-    //     // setValue("price", "")
-    //     dispatch(updateClassItem({idClass, res}))
-    //     setEditClass(!editClass)
-    //     dispatch(classItem(1))
-    //
-    // }
-
-    // const onDeleteSub = (id) => {
-    //
-    //     dispatch(onDeleteSubject(id))
-
-    //
-    // }
-
-    // const checkedItem = (id) => {
-    //     const filteredCheckbox = clickedCheckbox.filter(item => item !== id)
-    //     setClickedCheckbox([...filteredCheckbox, id])
-    // }
 
 
 
@@ -154,19 +117,16 @@ export const ClassTable = ({edit, classType}) => {
                     </tbody>
                 </Table>
 
-            <ClassModal
-                selectedClass={selectedClass}
-                selectedSubject={selectedSubject}
-                setSelectedSubject={setSelectedSubject}
-                extraClassForm={cls.extraClassForm}
-                extraClassSelect={cls.select}
-                extraClassBtn={cls.btn}
-                editClass={editClass}
-                setEditClass={setEditClass}
+            <ClassTableEdit
+
                 // register={register}
-                changedItem={changedItem}
+                setEditClass={setEditClass}
                 selectOptions={subjects}
+                editClass={editClass}
+                changedItem={changedItem}
                 edit={edit}
+
+
             />
         </div>
     )
