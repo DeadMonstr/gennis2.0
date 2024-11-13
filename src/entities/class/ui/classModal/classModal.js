@@ -3,18 +3,19 @@ import {Input} from "shared/ui/input";
 import {Button} from "shared/ui/button";
 import {Form} from "shared/ui/form";
 import {useForm} from "react-hook-form";
-import {Select} from "shared/ui/select";
+
 import cls from "../classTable/classTable.module.sass"
 import {useEffect, useState} from "react";
 import {HexColorPicker} from "react-colorful";
 import {AnimatedMulti} from "features/workerSelect";
-import {value} from "lodash/seq";
 
-import {classItem, updateClassItem} from "entities/class/model/thunk/classThunk";
+
+import {updateClassItem} from "entities/class/model/thunk/classThunk";
 
 import {useHttp} from "shared/api/base";
 import {useDispatch} from "react-redux";
 import {ConfirmModal} from "../../../../shared/ui/confirmModal";
+
 
 export const ClassModal = ({
 
@@ -58,8 +59,6 @@ export const ClassModal = ({
         setValue("price", "")
         dispatch(updateClassItem({idClass, res}))
         setEditClass(!editClass)
-        dispatch(classItem(id))
-
     }
 
 
@@ -125,17 +124,10 @@ export const ClassModal = ({
                         <Input name={"curriculum_hours"} register={register} type={"number"}
                                placeholder={"darslar soati"}/>
                         <Input name={"price"} register={register} type={"number"} placeholder={"narxi"}/>
-                        {/*<Select onChangeOption={onChangeSelect} options={subject}/>*/}
-
                         <div className={cls.selectBox}>
                             <AnimatedMulti extraClass={cls.select} value={selectedSubject} options={optionsSubject}
                                            onChange={setSelectedSubject}/>
                         </div>
-                        {/*{options?.map(item => (*/}
-                        {/*    item.subjects.map(itemSubject => (*/}
-                        {/*        itemSubject.name*/}
-                        {/*    ))*/}
-                        {/*))}*/}
                         <Button>
                             Tastiqlash
                         </Button>
@@ -143,67 +135,6 @@ export const ClassModal = ({
 
                 </div>
             </Modal>
-            {/*<Modal active={addClass} setActive={setAddClass}>*/}
-            {/*    <h2>Sinf turi yaratish </h2>*/}
-            {/*    <div>*/}
-            {/*        <Form extraClassname={cls.extraClassForm} onSubmit={handleSubmit(createClass)}>*/}
-            {/*            <Input placeholder={"sinf nomi"} name={"name"} register={register}/>*/}
-            {/*        </Form>*/}
-            {/*    </div>*/}
-            {/*</Modal>*/}
-
-            {/*<Modal active={editClass} setActive={setEditClass}>*/}
-            {/*    <h2>Ma’lumotlarni o’zgartirish</h2>*/}
-            {/*    <div>*/}
-            {/*        <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>*/}
-            {/*            <Input name={"curriculum_hours"} register={register} type={"number"} placeholder={"darslar soati"}/>*/}
-            {/*            <Input name={"price"} register={register} type={"number"} placeholder={"narxi"}/>*/}
-            {/*            /!*<Select onChangeOption={onChangeSelect} options={subject}/>*!/*/}
-
-            {/*            <div className={cls.selectBox}>*/}
-            {/*                <AnimatedMulti extraClass={cls.select} options={option} onChange={setSelectedSubject}/>*/}
-            {/*            </div>*/}
-            {/*            /!*{options?.map(item => (*!/*/}
-            {/*            /!*    item.subjects.map(itemSubject => (*!/*/}
-            {/*            /!*        itemSubject.name*!/*/}
-            {/*            /!*    ))*!/*/}
-            {/*            /!*))}*!/*/}
-            {/*            <Button>*/}
-            {/*                Tastiqlash*/}
-            {/*            </Button>*/}
-            {/*        </Form>*/}
-
-            {/*    </div>*/}
-            {/*</Modal>*/}
-
-            {/*<Modal active={editClass} setActive={setEditClass}>*/}
-            {/*    <h2>Ma’lumotlarni o’zgartirish</h2>*/}
-            {/*    <div>*/}
-            {/*        <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>*/}
-            {/*            <Input name={"curriculum_hours"} register={register} type={"number"}/>*/}
-
-            {/*            <div className={cls.extraClassSelect}>*/}
-            {/*                <AnimatedMulti options={option} onChange={setSelectedSubject}/>*/}
-            {/*            </div>*/}
-
-            {/*            <div className={cls.extraClassForm}>*/}
-            {/*                /!* Selected subjects list *!/*/}
-            {/*                /!*{*!/*/}
-            {/*                /!*    selectedSubject.map((subject, index) => (*!/*/}
-            {/*                /!*        <div key={index}>*!/*/}
-            {/*                /!*            <span>{subject.label}</span>*!/*/}
-            {/*                /!*        </div>*!/*/}
-            {/*                /!*    ))*!/*/}
-            {/*                /!*}*!/*/}
-            {/*            </div>*/}
-
-            {/*            <Button>*/}
-            {/*                Tastiqlash*/}
-            {/*            </Button>*/}
-            {/*        </Form>*/}
-            {/*    </div>*/}
-            {/*</Modal>*/}
-
         </>
     )
 }
@@ -247,12 +178,6 @@ export const ColorModal = ({
                             </div>
                             <HexColorPicker style={{width: "30rem", height: "15rem"}} color={color}
                                             onChange={setColor}/>
-                            {/*<div style={{display: "flex" , flexWrap: "wrap",width: "30rem"}}>*/}
-                            {/*    /!*<Button onClick={() => setColor("#c6ad23")}>Choose gold</Button>*!/*/}
-                            {/*    <Button onClick={() => setColor("#22C55E")}>Choose green</Button>*/}
-                            {/*    <Button onClick={() => setColor("#2563EB")}>Choose blue</Button>*/}
-                            {/*</div>*/}
-
                         </div>
                     </Form>
                 </div>
@@ -289,8 +214,6 @@ export const ColorModal = ({
                         <ConfirmModal setActive={setActive} active={active} onClick={handleSubmit(deleteColor)}
                                       type={"danger"}/>
                     </Form>
-
-
                 </div>
             </Modal>
         </>

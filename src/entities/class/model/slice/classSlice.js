@@ -38,7 +38,23 @@ const classSlice = createSlice({
                 }
                 return item
             })
+        },
+
+        onUpdateClass: (state , action) => {
+            console.log(action.payload)
+            state.classItems = state.classItems.map(item => {
+                if (item.id === action.payload.id) {
+                    return {
+                        ...item,
+                        price : action.payload.price,
+                        curriculum_hours : action.payload.curriculum_hours,
+                        subjects: action.payload.subjects
+                    }
+                }
+                return item
+            })
         }
+
     },
     extraReducers: builder =>
         builder
@@ -216,6 +232,6 @@ const classSlice = createSlice({
 
 })
 
-export const {onDelete, onDeleteTypes,onChangeClassStatus} = classSlice.actions
+export const {onDelete, onDeleteTypes,onChangeClassStatus , onUpdateClass} = classSlice.actions
 
 export default classSlice.reducer

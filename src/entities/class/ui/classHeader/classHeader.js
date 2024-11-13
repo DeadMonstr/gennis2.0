@@ -133,8 +133,6 @@ export const ClassHeader = ({
 
                     </div>}
             </div>
-
-
             <ClassModal
                 edit={edit}
                 handleSubmit={handleSubmit}
@@ -145,8 +143,9 @@ export const ClassHeader = ({
                 setActiveEdit={setActiveEdit}
                 addClass={addClass}
                 setAddClass={setAddClass}
-                onDelete={onDelete}/>
+                onDelete={onDelete}
 
+            />
             <ColorModal
                 color={color}
                 setColor={setColor}
