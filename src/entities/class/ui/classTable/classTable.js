@@ -4,11 +4,12 @@ import cls from "./classTable.module.sass"
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {useDispatch, useSelector} from "react-redux";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
-import {classSubjects} from "../../model/selector/classSelector";
+import {classItemLoading, classSubjects} from "../../model/selector/classSelector";
 
 import {onChangeClassStatus} from "../../model/slice/classSlice";
 import classNames from "classnames";
 import {ClassTableEdit} from "../../../../features/classModals/ui";
+import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 
 
 export const ClassTable = ({edit, classType}) => {
@@ -17,6 +18,7 @@ export const ClassTable = ({edit, classType}) => {
     const subjects = useSelector(classSubjects)
     const {request} = useHttp()
     const dispatch = useDispatch()
+    const loading = useSelector(classItemLoading)
     const [selectedClass, setSelectedClass] = useState(null);
     useEffect(() => {
         if (editClass) {
@@ -113,7 +115,9 @@ export const ClassTable = ({edit, classType}) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {render}
+                    {
+                        loading ? <DefaultPageLoader/> : render
+                    }
                     </tbody>
                 </Table>
 

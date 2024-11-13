@@ -11,7 +11,7 @@ export const ClassPage = ({setEdit, edit, activeEdit, setActiveEdit, activeMenu,
 
     const [selectBox, setSelectBox] = useState([])
 
-    const loading = useSelector(classItemLoading)
+
 
 
     const classType = useSelector(classItems)
@@ -24,10 +24,7 @@ export const ClassPage = ({setEdit, edit, activeEdit, setActiveEdit, activeMenu,
         <>
             <ClassFilter classesType={classes} setActiveEdit={setActiveEdit} edit={edit} setEdit={setEdit}
                          active={activeMenu} setActive={setActiveMenu}/>
-            {loading
-                ?
-                <DefaultPageLoader/>
-                :
+
                 <ClassTable
                     id={id}
                     active={activeMenu}
@@ -35,7 +32,7 @@ export const ClassPage = ({setEdit, edit, activeEdit, setActiveEdit, activeMenu,
                     selectBox={selectBox}
                     setSelectBox={setSelectBox} edit={edit}
                 />
-            }
+
             {/*<Button onClick={onClick}>Tastiqlash</Button>*/}
         </>
     )

@@ -14,6 +14,8 @@ import {updateClassItem} from "entities/class/model/thunk/classThunk";
 
 
 import {useDispatch} from "react-redux";
+import {API_URL, headers, useHttp} from "../../../../shared/api/base";
+import {onUpdateClass} from "../../../../entities/class/model/slice/classSlice";
 
 
 
@@ -35,11 +37,13 @@ export const ClassTableEdit = ({
     const {register, handleSubmit, setValue} = useForm()
     const dispatch = useDispatch()
 
+    const {request} = useHttp()
+
     const changeInfo = (data) => {
 
         const id = edit.id
 
-        const res = {
+        const res1 = {
             subjects: selectedSubject.map(item => (
                 // name: item.label,
                 item.value
@@ -50,7 +54,15 @@ export const ClassTableEdit = ({
 
         setValue("curriculum_hours", "")
         setValue("price", "")
-        dispatch(updateClassItem({idClass, res}))
+        // dispatch(updateClassItem({idClass, res}))
+        request(`${API_URL}Class/class_number_update/${idClass}/`, "PUT", JSON.stringify(res1), headers())
+            .then(res => {
+                dispatch(onUpdateClass(res))
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
         setEditClass(!editClass)
     }
 
@@ -81,7 +93,6 @@ export const ClassTableEdit = ({
     }, [selectOptions])
 
     const onChangeSubjectPrice = (id, hours) => {
-        // console.log(hours)
         setSelectedSubject(subjects => subjects.map(item => {
             if (item.value === id && hours !== item?.hours) {
                 return {
@@ -98,7 +109,6 @@ export const ClassTableEdit = ({
             <Modal active={editClass} setActive={setEditClass}>
                 <h2>Ma’lumotlarni o’zgartirish </h2>
                 <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>
-
                     <div className={cls.container}>
                         <div>
 
@@ -135,8 +145,6 @@ export const ClassTableEdit = ({
                             }
                         </div>
                     </div>
-
-
                     <Button>
                         Tastiqlash
                     </Button>

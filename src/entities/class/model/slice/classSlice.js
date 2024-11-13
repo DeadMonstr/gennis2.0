@@ -41,7 +41,6 @@ const classSlice = createSlice({
         },
 
         onUpdateClass: (state , action) => {
-            console.log(action.payload)
             state.classItems = state.classItems.map(item => {
                 if (item.id === action.payload.id) {
                     return {
@@ -53,7 +52,8 @@ const classSlice = createSlice({
                 }
                 return item
             })
-        }
+        },
+
 
     },
     extraReducers: builder =>
@@ -126,6 +126,7 @@ const classSlice = createSlice({
                 state.loading = false
                 state.error = false
                 state.classItems = action.payload
+
 
             })
             .addCase(classItem.rejected, state => {
