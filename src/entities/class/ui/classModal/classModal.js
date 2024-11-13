@@ -119,22 +119,54 @@ export const ClassModal = ({
 
             <Modal active={editClass} setActive={setEditClass}>
                 <h2>Ma’lumotlarni o’zgartirish </h2>
-                <div>
-                    <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>
-                        <Input name={"curriculum_hours"} register={register} type={"number"}
-                               placeholder={"darslar soati"}/>
-                        <Input name={"price"} register={register} type={"number"} placeholder={"narxi"}/>
-                        <div className={cls.selectBox}>
-                            <AnimatedMulti extraClass={cls.select} value={selectedSubject} options={optionsSubject}
-                                           onChange={setSelectedSubject}/>
-                        </div>
-                        <Button>
-                            Tastiqlash
-                        </Button>
-                    </Form>
+                <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>
 
-                </div>
+                    <div className={cls.container}>
+                        <div>
+
+                            <Input
+                                name={"price"}
+                                register={register}
+                                type={"number"}
+                                placeholder={"narxi"}
+                            />
+
+                            <div className={cls.selectBox}>
+                                <AnimatedMulti
+                                    extraClass={cls.select}
+                                    value={selectedSubject}
+                                    options={optionsSubject}
+                                    onChange={setSelectedSubject}
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            {
+                                selectedSubject.map(item => {
+                                    return (
+                                        <Input
+                                            defaultValue={item.hours}
+                                            type={"number"}
+                                            title={item.label}
+                                            onChange={
+                                                (e) => onChangeSubjectPrice(item.value, e.target.value)
+                                            }
+                                        />
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+
+
+                    <Button>
+                        Tastiqlash
+                    </Button>
+                </Form>
+
             </Modal>
+
+
         </>
     )
 }
@@ -150,7 +182,6 @@ export const ColorModal = ({
                                setColor,
                                setActive,
                                active,
-
                                changeName,
                                setChangeName,
                                changeColor,
@@ -159,7 +190,6 @@ export const ColorModal = ({
                                deleteColor,
                                edit
                            }) => {
-
 
 
     return (
@@ -178,6 +208,8 @@ export const ColorModal = ({
                             </div>
                             <HexColorPicker style={{width: "30rem", height: "15rem"}} color={color}
                                             onChange={setColor}/>
+
+
                         </div>
                     </Form>
                 </div>
@@ -195,16 +227,10 @@ export const ColorModal = ({
                             <div className={cls.color}>
                                 <h2>Tanlangan rang :</h2>
                                 <div style={{fontSize: "2rem"}}>{colorChange ? colorChange : edit?.value}</div>
-                                {/*<div className={cls.modalBox} style={{background: colorChange}}></div>*/}
                             </div>
-                            {/*<Input/>*/}
                             <HexColorPicker style={{width: "30rem", height: "15rem"}} color={edit?.value}
                                             onChange={setColorChange}/>
-                            {/*<div style={{display: "flex" , flexWrap: "wrap",width: "30rem"}}>*/}
-                            {/*    /!*<Button onClick={() => setColor("#c6ad23")}>Choose gold</Button>*!/*/}
-                            {/*    <Button onClick={() => setColor("#22C55E")}>Choose green</Button>*/}
-                            {/*    <Button onClick={() => setColor("#2563EB")}>Choose blue</Button>*/}
-                            {/*</div>*/}
+
                         </div>
                         <div style={{display: "flex", gap: "2rem"}}>
                             <Button onClick={handleSubmit(changeColor)}>Rangni o'zgartirish</Button>
@@ -214,6 +240,8 @@ export const ColorModal = ({
                         <ConfirmModal setActive={setActive} active={active} onClick={handleSubmit(deleteColor)}
                                       type={"danger"}/>
                     </Form>
+
+
                 </div>
             </Modal>
         </>

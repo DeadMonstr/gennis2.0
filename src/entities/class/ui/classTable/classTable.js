@@ -14,7 +14,7 @@ import {onChangeClassStatus, onDeleteSubject} from "../../model/slice/classSlice
 import classNames from "classnames";
 
 
-export const ClassTable = ({edit, classType, active, id}) => {
+export const ClassTable = ({edit, classType}) => {
     const [editClass, setEditClass] = useState(false)
     const [changedItem, setChangedItem] = useState({})
     const subjects = useSelector(classSubjects)
@@ -28,6 +28,41 @@ export const ClassTable = ({edit, classType, active, id}) => {
             setSelectedClass(selected);
         }
     }, [editClass, classType]);
+
+
+    // const onChangeClass = (data) => {
+    //
+    //
+    //     const res = {
+    //         subjects: selectedSubject.map(item => (
+    //             // name: item.label,
+    //             item.value
+    //         )),
+    //         ...data
+    //     }
+    //     const idClass = editClass
+    //     //
+    //     // setValue("curriculum_hours", "")
+    //     // setValue("price", "")
+    //     dispatch(updateClassItem({idClass, res}))
+    //     setEditClass(!editClass)
+    //     dispatch(classItem(1))
+    //
+    // }
+
+    // const onDeleteSub = (id) => {
+    //
+    //     dispatch(onDeleteSubject(id))
+
+    //
+    // }
+
+    // const checkedItem = (id) => {
+    //     const filteredCheckbox = clickedCheckbox.filter(item => item !== id)
+    //     setClickedCheckbox([...filteredCheckbox, id])
+    // }
+
+
 
     const onChange = ({id , type}) => {
 
