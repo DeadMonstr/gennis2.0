@@ -12,7 +12,6 @@ const roomsAddSlice = createSlice({
     initialState,
     reducers: {
         addRoom: (state, action) => {
-
             state.rooms.push(action.payload);
         },
     },

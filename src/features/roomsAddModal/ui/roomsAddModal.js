@@ -12,7 +12,8 @@ import {Select} from "shared/ui/select";
 import {value} from "lodash/seq";
 import {fetchRoomsData} from "entities/rooms";
 import {onAddAlertOptions} from "../../alert/model/slice/alertSlice";
-import {branchQueryId} from "../../../shared/api/base";
+import {API_URL, branchQueryId, headers, useHttp} from "../../../shared/api/base";
+import {onAddRooms} from "../../../entities/rooms/model/roomsSlice";
 
 export const RoomModal = ({isOpen, onClose, branch}) => {
     const [groupName, setGroupName] = useState('');
@@ -21,6 +22,7 @@ export const RoomModal = ({isOpen, onClose, branch}) => {
     const dispatch = useDispatch();
     const getBranches = useSelector(getLocations)
     const {"*": id} = useParams()
+    const {request} = useHttp()
 
     const handleAddRoom = () => {
         const newRoom = {
@@ -31,20 +33,36 @@ export const RoomModal = ({isOpen, onClose, branch}) => {
             branch: branchQueryId(),
         };
 
-        dispatch(roomsAddThunk(newRoom))
-            .then((action) => {
-                if (roomsAddThunk.fulfilled.match(action)) {
-                    dispatch(addRoom(action.payload));
-                }
-            });
+        // dispatch(roomsAddThunk(newRoom))
+        //     .then((action) => {
+        //         if (roomsAddThunk.fulfilled.match(action)) {
+        //             dispatch(addRoom(action.payload));
+
+        //         }
+        //     });
+
+        request(`${API_URL}Rooms/rooms_create/`, "POST", JSON.stringify(newRoom), headers())
+            .then(res => {
+                dispatch(onAddRooms(res))
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: "Xona muvofaqqiyatli qo'shildi"
+                }))
+                console.log(res)
+            })
+            .catch(err => {
+                dispatch(onAddAlertOptions({
+                    type: "error",
+                    status: true,
+                    msg: "Serverda hatolik "
+                }))
+            })
+
 
         setGroupName("")
         setSeatCount("")
-        dispatch(onAddAlertOptions({
-            type: "success",
-            status: true,
-            msg: "Xona muvofaqqiyatli qo'shildi"
-        }))
+
         dispatch(fetchRoomsData({id}));
         onClose();
     };

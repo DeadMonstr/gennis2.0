@@ -1,21 +1,26 @@
 import {HexColorPicker} from "react-colorful";
 
 import cls from "./classHeader.module.sass"
-import {Select} from "shared/ui/select";
+
 import {useState} from "react";
-import {Modal} from "shared/ui/modal";
+
 import {Button} from "shared/ui/button";
-import {ClassModal, ColorModal} from "../classModal/classModal";
-import {set, useForm} from "react-hook-form";
-import {Switch} from "../../../../shared/ui/switch";
+import {useForm} from "react-hook-form";
+
 import {ClassSwitch} from "../../../../pages/classPage/ui/switch/switch";
 import {API_URL, headers, useHttp} from "../../../../shared/api/base";
 import {useDispatch} from "react-redux";
 import {createClassType, createColor, updateClassType} from "../../model/thunk/classThunk";
-import {useParams} from "react-router";
-import {data} from "../../../calendar";
+
 import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSlice";
-import {onDelete, onDeleteTypes} from "../../model/slice/classSlice";
+import {onDeleteTypes} from "../../model/slice/classSlice";
+import {
+    ClassColorAdd,
+
+    ClassHeaderAdd,
+    ClassHeaderEdit,
+
+} from "../../../../features/classModals/ui";
 
 
 export const ClassHeader = ({
@@ -29,8 +34,6 @@ export const ClassHeader = ({
                                 setActiveMenu
                             }) => {
     const [color, setColor] = useState("#ffffff")
-    const [activeColor, setActiveColor] = useState(false)
-    const {register, handleSubmit, setValue} = useForm()
 
     const {request} = useHttp()
 
@@ -42,11 +45,12 @@ export const ClassHeader = ({
 
     const [active, setActive] = useState(false)
     const [createColorModal, setCreateColor] = useState(false)
+    const {register, handleSubmit, setValue} = useForm()
 
     const editClassName = (data) => {
         const {id} = edit
         setActiveEdit(!activeEdit)
-        setValue("name", data.name)
+
 
         dispatch(updateClassType({id, data}))
 
@@ -55,7 +59,7 @@ export const ClassHeader = ({
     const createClass = (data) => {
         dispatch(createClassType(data))
         setAddClass(!addClass)
-        setValue("name", "")
+
 
     }
 
@@ -81,7 +85,7 @@ export const ClassHeader = ({
             ...data
         }
         setCreateColor(!createColorModal)
-        setValue("name", "")
+
         dispatch(createColor(res))
 
     }
@@ -135,30 +139,28 @@ export const ClassHeader = ({
             </div>
 
 
-            <ClassModal
-                edit={edit}
-                handleSubmit={handleSubmit}
-                register={register}
-                onClick={editClassName}
-                createClass={createClass}
-                activeEdit={activeEdit}
-                setActiveEdit={setActiveEdit}
-                addClass={addClass}
-                setAddClass={setAddClass}
-                onDelete={onDelete}/>
-
-            <ColorModal
+            <ClassColorAdd
                 color={color}
                 setColor={setColor}
-                active={activeColor}
-                setActive={setActiveColor}
                 createColor={createColorModal}
                 setCreateColor={setCreateColor}
-                handleSubmit={handleSubmit}
                 addColor={addColor}
-                register={register}
-
             />
+            <ClassHeaderAdd
+                createClass={createClass}
+                addClass={addClass}
+                setAddClass={setAddClass}
+            />
+            <ClassHeaderEdit
+                edit={edit}
+                onClick={editClassName}
+                activeEdit={activeEdit}
+                setActiveEdit={setActiveEdit}
+                onDelete={onDelete}
+            />
+
+
+
         </div>
     )
 }

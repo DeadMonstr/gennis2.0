@@ -37,7 +37,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme, br
                     {item?.user?.language}
                 </td>
                 <td>
-                    {item?.class_number?.number}
+                    {item?.class_number}-sinf
                 </td>
                 <td>{item.user?.registered_date}</td>
 

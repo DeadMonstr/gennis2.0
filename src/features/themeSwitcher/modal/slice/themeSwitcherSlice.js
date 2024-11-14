@@ -66,13 +66,13 @@ const themeSwitcherSlice = createSlice({
 
 
                     state.system = {
-                        id: action.payload[0].id,
-                        name: action.payload[0].name
+                        id: action.payload[0]?.id,
+                        name: action.payload[0]?.name
                     }
 
                     localStorage.setItem("selectedSystem", JSON.stringify({
-                        id: action.payload[0].id,
-                        name: action.payload[0].name
+                        id: action.payload[0]?.id,
+                        name: action.payload[0]?.name
                     }))
                 } else {
 
@@ -83,13 +83,13 @@ const themeSwitcherSlice = createSlice({
                         }
                     } else {
                         state.system = {
-                            id: action.payload[0].id,
-                            name: action.payload[0].name
+                            id: action.payload[0]?.id,
+                            name: action.payload[0]?.name
                         }
 
                         localStorage.setItem("selectedSystem", JSON.stringify({
-                            id: action.payload[0].id,
-                            name: action.payload[0].name
+                            id: action.payload[0]?.id,
+                            name: action.payload[0]?.name
                         }))
                     }
                 }

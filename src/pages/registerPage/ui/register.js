@@ -1,4 +1,3 @@
-
 import React, {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
@@ -88,7 +87,7 @@ export const Register = () => {
     const [selectedSubject, setSelectedSubject] = useState(1);
     const [selectedTime, setSelectedTime] = useState(1);
     const [selectedProfession, setSelectedProfession] = useState(1);
-    const [selectedClass, setSelectedClass] = useState()
+    const [selectedClass, setSelectedClass] = useState(1)
     const [selectedClassType, setSelectedClassType] = useState()
     const [selectedCategory, setSelectedCategory] = useState()
     const [loading, setLoading] = useState(false);
@@ -104,6 +103,8 @@ export const Register = () => {
         label: subject?.name,
     }));
 
+
+
     const filteredJobOptions = jobOptions.filter(
         job => job.name.toLowerCase() !== 'admin' && job.name.toLowerCase() !== 'director'
     );
@@ -113,8 +114,6 @@ export const Register = () => {
             setIsDirector(user.job.toString())
         }
     }, [user])
-
-
 
 
     const handleAddSubject = (selectedSubject) => {
@@ -130,7 +129,7 @@ export const Register = () => {
 
             // dispatch(getClassTypes(id))
             dispatch(fetchClassTypeData({branch: id}))
-            dispatch(fetchClassNumberData({branch:id}))
+            dispatch(fetchClassNumberData({branch: id}))
 
             dispatch(fetchCategories(id))
         }
@@ -150,13 +149,13 @@ export const Register = () => {
                     const response = await request(`${API_URL}Users/username-check/`, "POST", JSON.stringify({username}), headers());
 
                     const data = await response
-                    if (data.exists) {
+                    if (data.exists === true) {
                         setUsernameMessage(<p className={cls.errorMess}>
                             <i className="fa-solid fa-circle-exclamation" style={{color: "#f15c5c"}}></i>
                             Username band
                         </p>);
                         setIsUsernameAvailable(false);
-                    } else {
+                    } else if (data.exists === false) {
                         setUsernameMessage(<p className={cls.successMess}>
                             <i className="fa-solid fa-circle-check"></i>
                             Username bo'sh
@@ -177,14 +176,15 @@ export const Register = () => {
         }
     }, [username]);
 
+    console.log(selectedClass , selectedLang)
 
     const onSubmit = (data) => {
         // console.log(selectedClass, selectedLang ,data , "data")
         if (!isUsernameAvailable) {
             return;
         }
-
         setLoading(true);
+
         const selectedTimes = shift.find(shift => shift.id === Number(selectedTime))
         const selectedLanguage = languages.find(lang => lang.id === Number(selectedLang));
 
@@ -192,7 +192,7 @@ export const Register = () => {
             user: {
                 ...data,
                 observer: true,
-                language: selectedLanguage?.id || "",
+                language: selectedLanguage?.id,
                 branch: id,
             },
         };
@@ -213,12 +213,12 @@ export const Register = () => {
                     parents_fullname: data.parents_fullname,
                     old_school: data.old_school,
                     parent_region: data.parent_region,
-                    district:data.district,
+                    district: data.district,
                     parent_seria: data.parent_seria,
                     parent_seria_num: data.parent_seria_num,
-                    region:data.region,
+                    region: data.region,
                     born_date: data.born_date,
-                    student_seria_num:data.student_seria_num,
+                    student_seria_num: data.student_seria_num,
                     student_seria: data.student_seria
                 }
             } else {
@@ -261,7 +261,7 @@ export const Register = () => {
 
         if (registerAction) {
             if (registerType === 'teacher' && userSystem?.name === "school") {
-                dispatch(registerTeacherImage({id:res?.user?.username, file: res?.user?.resume}))
+                dispatch(registerTeacherImage({id: res?.user?.username, file: res?.user?.resume}))
             }
             dispatch(registerAction).then((action) => {
                 setLoading(false);
@@ -271,15 +271,35 @@ export const Register = () => {
                         status: true,
                         msg: `${registerType} muvofaqqiyatli qo'shildi`
                     }));
-                    setSelectedLang(1);
+                    // setSelectedLang(1);
                     setSelectedSubject(1);
                     setSelectedTime(1);
+                    // setSelectedClass(null)
                     setSelectedProfession(1);
                     setUsernameMessage('');
                     setIsUsernameAvailable(true);
+                    // reset()
+                    // reset({password: "12345678"},  );
 
-                    reset();
 
+                    setValue("name" , "")
+                    setValue("surname" , "")
+                    setValue("username" , "")
+                    setValue("parents_fullname" , "")
+                    setValue("parent_seria" , "")
+                    setValue("parent_seria_num" , "")
+                    setValue("parent_region" , "")
+                    setValue("born_date" , "")
+                    setValue("father_name" , "")
+                    setValue("parents_phone" , "")
+                    setValue("phone" , "")
+                    setValue("student_seria_num" , "")
+                    setValue("student_seria" , "")
+                    setValue("old_school" , "")
+                    setValue("region" , "")
+                    setValue("district" , "")
+                    setValue("birth_date" , "")
+                    setValue("comment" , "")
                 } else {
                     dispatch(onAddAlertOptions({
                         type: "error",
@@ -287,6 +307,7 @@ export const Register = () => {
                         msg: "Internet yoki serverda xatolik qayta urinib ko'ring"
                     }));
                     setError(true);
+                    setLoading(false);
                 }
             });
         }
@@ -304,7 +325,7 @@ export const Register = () => {
                             name={"language"}
                             onChangeOption={setSelectedLang}
                             options={languages}
-                            defaultValue={1}
+                            defaultValue={languages[0]?.id}
                         />
 
 
@@ -326,6 +347,7 @@ export const Register = () => {
                                         name={"class_number"}
                                         onChangeOption={setSelectedClass}
                                         options={classNumbers}
+                                        defaultValue={classNumbers[0]?.id}
                                     />
                                     <Input
                                         register={register}
@@ -382,7 +404,8 @@ export const Register = () => {
                             name={"language"}
                             title={"Til"}
                             onChangeOption={setSelectedLang}
-                            options={languages.map(lang => ({id: lang.id, name: lang.name}))}
+                            options={languages}
+                            // defaultValue={languages[0]?.id}
                         />
                         <AnimatedMulti
                             options={subjectOptions}
@@ -493,7 +516,7 @@ export const Register = () => {
                                 required
                                 name={"father_name"}
                             />
-                            {userSystem?.name  === "school" && registerType === "student" ?
+                            {userSystem?.name === "school" && registerType === "student" ?
                                 <>
                                     <div className={cls.seriya}>
                                         <Input register={register}
@@ -506,8 +529,8 @@ export const Register = () => {
                                            placeholder={"kelgan maktabi"}/>
                                     <Input register={register} name={"region"}
                                            placeholder={"Xudud nomi"}/>
-                                    <Input  register={register} name={"district"}
-                                            placeholder={"Tuman shaxar nomi"}/>
+                                    <Input register={register} name={"district"}
+                                           placeholder={"Tuman shaxar nomi"}/>
                                 </>
                                 :
                                 null
@@ -534,7 +557,7 @@ export const Register = () => {
                                 name={"phone"}
                             />
 
-                            {userSystem?.name  === "center " && registerType === 'student' ?
+                            {userSystem?.name === "center " && registerType === 'student' ?
                                 <Input
                                     register={register}
                                     placeholder="Ota-ona telefon raqami"
@@ -570,16 +593,6 @@ export const Register = () => {
 };
 
 
-
-
-
-
-
-
-
-
-
-//
 //
 //
 // import {classData} from "entities/class/model/selector/classSelector";

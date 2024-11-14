@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {fetchFilteredRooms} from "./filterRoomsThunk"
+import {rooms} from "../../../../entities/rooms";
 
 const initialState = {
     rooms: null,
@@ -19,6 +20,7 @@ export const filterRoomsSlices = createSlice({
             })
             .addCase(fetchFilteredRooms.fulfilled, (state, action) => {
                 state.rooms = action.payload
+                console.log(rooms , "hello")
                 state.loading = false
                 state.error = null
             })

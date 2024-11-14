@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { fetchTeacherSalaryIdThunk, fetchTeacherSalaryThunk } from "./teacherSalaryThunk";
+import {createSlice} from "@reduxjs/toolkit";
+import {fetchTeacherSalaryIdThunk, fetchTeacherSalaryThunk} from "./teacherSalaryThunk";
 import {giveTeacherSalaryThunk} from "../../../features/giveSalary/giveSalary/model/giveTeacherSalaryThunk";
 
 const initialState = {
@@ -13,7 +13,11 @@ export const teacherSalarySlice = createSlice({
     name: "teacherSalarySlice",
     initialState,
     reducers: {
-        // You can add any additional reducers here if needed
+        onChangeSalary: (state, action) => {
+            state.salaryDatas = [...state.salaryDatas=action.payload]
+            // state.salaryDatas = action.payload
+            console.log(action.payload)
+        }
     },
     extraReducers: builder => {
         builder
@@ -28,6 +32,7 @@ export const teacherSalarySlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message;
             })
+
             .addCase(fetchTeacherSalaryIdThunk.pending, (state) => {
                 state.loading = true;
             })
@@ -52,5 +57,7 @@ export const teacherSalarySlice = createSlice({
             });
     }
 });
+
+export const {onChangeSalary} = teacherSalarySlice.actions
 
 export default teacherSalarySlice.reducer;

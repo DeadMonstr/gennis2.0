@@ -53,6 +53,7 @@ export const fetchCategories = createAsyncThunk(
 export const fetchGroupsForSelect = createAsyncThunk(
     "oftenUsedSlice/fetchGroupsForSelect",
     (id) => {
+        console.log(id , "id")
         const {request} = useHttp()
         return request(`${API_URL}Group/add/class/filtered/?branch=${id}`, "GET", null, headers())
     }
