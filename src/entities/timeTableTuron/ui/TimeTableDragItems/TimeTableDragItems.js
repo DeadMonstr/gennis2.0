@@ -52,7 +52,7 @@ export const TimeTableDragItems = (props) => {
             }
 
             return subjects.map(item => {
-                return <TimeTableDragItem type={"subject"} item={item}>{item?.name}</TimeTableDragItem>
+                return <TimeTableDragItem type={"subject"} item={item}>{item?.name} - {item.hours}</TimeTableDragItem>
             })
         } else {
 

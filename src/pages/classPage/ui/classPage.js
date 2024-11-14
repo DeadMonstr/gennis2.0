@@ -6,16 +6,15 @@ import {classItemLoading, classItems} from "entities/class/model/selector/classS
 import {useHttp} from "shared/api/base";
 import {DefaultPageLoader} from "../../../shared/ui/defaultLoader";
 
-export const ClassPage = ({setEdit, edit, activeEdit, setActiveEdit, activeMenu, setActiveMenu, classes}) => {
+export const ClassPage = ({setEdit, edit, setActiveEdit, activeMenu, setActiveMenu, classes}) => {
 
     const {request} = useHttp()
     const [selectBox, setSelectBox] = useState([])
 
-    const loading = useSelector(classItemLoading)
 
 
     const dispatch = useDispatch()
-    const classType = useSelector(classItems)
+    // const classType = useSelector(classItems)
 
 
     const id = edit.id
@@ -25,18 +24,18 @@ export const ClassPage = ({setEdit, edit, activeEdit, setActiveEdit, activeMenu,
         <>
             <ClassFilter classesType={classes} setActiveEdit={setActiveEdit} edit={edit} setEdit={setEdit}
                          active={activeMenu} setActive={setActiveMenu}/>
-            {loading
-                ?
-                <DefaultPageLoader/>
-                :
+            {/*{loading*/}
+            {/*    ?*/}
+            {/*    <DefaultPageLoader/>*/}
+            {/*    :*/}
                 <ClassTable
                     id={id}
                     active={activeMenu}
-                    classType={classType}
                     selectBox={selectBox}
-                    setSelectBox={setSelectBox} edit={edit}
+                    setSelectBox={setSelectBox}
+                    edit={edit}
                 />
-            }
+            {/*}*/}
             {/*<Button onClick={onClick}>Tastiqlash</Button>*/}
         </>
     )

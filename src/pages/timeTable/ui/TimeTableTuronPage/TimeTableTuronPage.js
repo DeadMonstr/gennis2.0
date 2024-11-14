@@ -114,7 +114,6 @@ export const TimeTableTuronPage = () => {
     const date = useSelector(getTimeTableTuronDate)
 
 
-
     const {id: branch} = useSelector(getBranch)
 
 
@@ -123,7 +122,6 @@ export const TimeTableTuronPage = () => {
     useEffect(() => {
         dispatch(fetchTimeTableColors())
     }, [])
-
 
 
     useEffect(() => {
@@ -136,6 +134,7 @@ export const TimeTableTuronPage = () => {
             dispatch(fetchTimeTableClassView({date, branch}))
         }
     }, [date, branch,classView])
+
 
     useEffect(() => {
         if (type && branch) dispatch(fetchTimeTableTypesData({type, branch}))
@@ -257,7 +256,7 @@ export const TimeTableTuronPage = () => {
 
 
     const {request} = useHttp()
-    const canSet = async (hour, id, room, type) => {
+    const canSet = async (hour, id, room, type, overItem) => {
 
         const data = {
             hour,
@@ -267,11 +266,21 @@ export const TimeTableTuronPage = () => {
             type
         }
 
+
+        if (type === "subject") {
+            data.group_id = overItem.group.id
+        }
+
         setLoading(true)
 
         const res = await request(`${API_URL}SchoolTimeTable/can-set${type === "flow" ? "-flow" : ""}/?branch=${branch}`, "POST", JSON.stringify(data), headers())
             .then(res => {
                 setLoading(false)
+
+
+                if (type === "subject") {
+                    setSelectedSubject(null)
+                }
 
                 dispatch(onAddMultipleAlertOptions(res.msg.map(item => ({
                     type: "error",
@@ -476,19 +485,24 @@ export const TimeTableTuronPage = () => {
             let filteredActiveItem
 
 
+            console.log(activeTypeItem, active.id, "activeItem")
+            console.log(subjects)
+
             if (activeTypeItem === "group" || activeTypeItem === "flow") {
                 filteredActiveItem = groups.filter(item => item.dndId === active.id)[0]
+            } else if (activeTypeItem === "subject") {
+                filteredActiveItem = subjects.filter(item => item.dndId === active.id)[0]
             } else {
                 filteredActiveItem = teachers.filter(item => item.dndId === active.id)[0]
             }
 
-            if (activeTypeItem !== "subject") {
-
-                const checked = await canSet(filteredOverItem.hours, filteredActiveItem.id, filteredOverItem.room, activeTypeItem)
 
 
-                if (!checked) return;
-            }
+            const checked = await canSet(filteredOverItem.hours, filteredActiveItem.id, filteredOverItem.room, activeTypeItem, filteredOverItem )
+
+
+            if (!checked) return;
+
 
             await setRooms(rooms =>
                 rooms.map(room => {
@@ -675,6 +689,8 @@ export const TimeTableTuronPage = () => {
                                 .then(res => {
 
                                 })
+
+                            setSelectedGroup(null)
                         }
                         return {
                             ...container,
@@ -719,12 +735,8 @@ export const TimeTableTuronPage = () => {
 
             request(`${API_URL}SchoolTimeTable/timetable-list-${canSubmitLesson?.id ? "update" : "create"}/${canSubmitLesson?.id ? canSubmitLesson?.id : ""}`, canSubmitLesson?.id ? "PATCH" : "POST", JSON.stringify(data), headers())
                 .then(res => {
-
                     setRooms(rooms => rooms?.map(item => {
-
-
                         if (item.id === canSubmitLesson?.room) {
-
                             const newLessons = item?.lessons?.map(lesson => {
                                 if (lesson?.dndId === canSubmitLesson?.dndId) {
                                     return {
@@ -746,10 +758,15 @@ export const TimeTableTuronPage = () => {
                     }))
 
 
+                    dispatch(fetchTimeTableSubject(canSubmitLesson.group.id))
+
+
                 })
                 .then(() => {
                     setCanSubmitLesson({})
                 })
+
+
 
         }
     }, [canSubmitLesson])

@@ -7,21 +7,21 @@ import {API_URL, headers, useHttp} from "shared/api/base";
 import {useDispatch, useSelector} from "react-redux";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import {fetchClassSubjects} from "../../model/thunk/classThunk";
-import {classSubjects} from "../../model/selector/classSelector";
+import {classNewItems, classSubjects} from "../../model/selector/classSelector";
 import {classItem, updateClassItem} from "../../model/thunk/classThunk";
 import {data} from "../../../calendar";
 import {onChangeClassStatus, onDeleteSubject} from "../../model/slice/classSlice";
 import classNames from "classnames";
 
 
-export const ClassTable = ({edit, classType}) => {
-    const [editClass, setEditClass] = useState(false)
+export const ClassTable = ({edit}) => {
 
-    const [clickedCheckbox, setClickedCheckbox] = useState([])
+    const [editClass, setEditClass] = useState(false)
 
     const [changedItem, setChangedItem] = useState({})
 
     const subjects = useSelector(classSubjects)
+    const classItems = useSelector(classNewItems)
 
     const {request} = useHttp()
     const dispatch = useDispatch()
@@ -31,15 +31,14 @@ export const ClassTable = ({edit, classType}) => {
 
     useEffect(() => {
         if (editClass) {
-            const selected = classType.find(item => item.id === editClass);
+            const selected = classItems.find(item => item.id === editClass);
             setSelectedClass(selected);
         }
-    }, [editClass, classType]);
+    }, [editClass, classItems]);
 
 
     // const onChangeClass = (data) => {
-    //
-    //
+
     //     const res = {
     //         subjects: selectedSubject.map(item => (
     //             // name: item.label,
@@ -74,10 +73,12 @@ export const ClassTable = ({edit, classType}) => {
     const onChange = ({id , type}) => {
 
         const res = {
-            class_types: !type ? edit.id : null,
+            status: !type,
+            class_type_id: edit.id,
+            class_number_id: id
         }
 
-        request(`${API_URL}Class/class_number_update/${id}/`, "PUT", JSON.stringify(res), headers())
+        request(`${API_URL}Class/class_number_update_status/`, "POST", JSON.stringify(res), headers())
             .then(res => {
                 dispatch(onChangeClassStatus({id}))
                 dispatch(onAddAlertOptions({
@@ -98,7 +99,7 @@ export const ClassTable = ({edit, classType}) => {
 
 
     const renderTable = () => {
-        return classType.map((item, i) => {
+        return classItems.map((item, i) => {
 
             return <tr>
                 <td>{i + 1}</td>
@@ -106,12 +107,11 @@ export const ClassTable = ({edit, classType}) => {
                 <td>
                     <div className={cls.subject__main}>
                         {item?.subjects.map(itemSubject => (
-                            <span className={cls.subject}> {itemSubject.name}</span>
+                            <span className={cls.subject}> {itemSubject.name}-{itemSubject.hours}</span>
                         ))}
                     </div>
                 </td>
                 <td>{item.price}</td>
-                <td>{item?.curriculum_hours}</td>
                 <td style={{width: "3rem"}}>
                     <div className={cls.items}>
 
@@ -121,7 +121,8 @@ export const ClassTable = ({edit, classType}) => {
                                 [cls.active] : item.status
                             })}
                         >
-                            {item.status ?
+                            {
+                                item.status ?
                                 <i className={`fa fa-check `}/> :
                                 <i className={`fa fa-minus`}/>
 
@@ -153,7 +154,6 @@ export const ClassTable = ({edit, classType}) => {
                         <th>Sinf Raqami</th>
                         <th>Fanlari</th>
                         <th>Narxi</th>
-                        <th>Dars soati</th>
                         <th/>
 
                     </tr>

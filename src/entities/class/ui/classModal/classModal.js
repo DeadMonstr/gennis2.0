@@ -10,7 +10,7 @@ import {HexColorPicker} from "react-colorful";
 import {AnimatedMulti} from "features/workerSelect";
 import {value} from "lodash/seq";
 
-import {classItem, updateClassItem} from "entities/class/model/thunk/classThunk";
+import {classItem, getClassNewNumberList, updateClassItem} from "entities/class/model/thunk/classThunk";
 
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {useDispatch} from "react-redux";
@@ -44,7 +44,6 @@ export const ClassModal = ({
 
     const changeInfo = (data) => {
 
-        const id = edit.id
 
         const res = {
             subjects: selectedSubject,
@@ -56,9 +55,8 @@ export const ClassModal = ({
         setValue("curriculum_hours", "")
         setValue("price", "")
         dispatch(updateClassItem({idClass, res}))
+        // dispatch(getClassNewNumberList(idClass))
         setEditClass(!editClass)
-        dispatch(classItem(id))
-
     }
 
 
@@ -88,7 +86,7 @@ export const ClassModal = ({
 
     useEffect(() => {
         if (editClass) {
-            request(`${API_URL}Class/class_number_subject_list?id=${editClass}`, "GET", null, headers())
+            request(`${API_URL}Class/class_subjects?id=${editClass}`, "GET", null, headers())
                 .then(res => {
 
                     setSelectedSubject(res.hours.map(item => ({
@@ -113,6 +111,8 @@ export const ClassModal = ({
             return item
         }))
     }
+
+    console.log(selectedSubject)
 
     return (
         <>
@@ -172,7 +172,7 @@ export const ClassModal = ({
                                 selectedSubject.map(item => {
                                     return (
                                         <Input
-                                            defaultValue={item.hours}
+                                            value={item.hours}
                                             type={"number"}
                                             title={item.label}
                                             onChange={
