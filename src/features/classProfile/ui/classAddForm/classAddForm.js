@@ -57,7 +57,6 @@ export const ClassAddForm = memo((props) => {
     const [selectedId, setSelectedId] = useState([])
     const [searchValue, setSearchValue] = useState("")
 
-    console.log(groupData)
     const onSubmit = (data) => {
         dispatch(fetchGroupProfile({id: data?.class}))
         setActiveModal(true)
