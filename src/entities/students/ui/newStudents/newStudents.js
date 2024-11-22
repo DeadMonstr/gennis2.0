@@ -34,7 +34,7 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme, br
 
                 </td>
                 <td>
-                    {item?.user?.language}
+                    {item.deleted ? item.user?.language.name : item.user?.language}
                 </td>
                 <td>
                     {item?.class_number}-sinf
@@ -61,7 +61,6 @@ export const NewStudents = memo(({currentTableData, setSelectStudents, theme, br
     const {request} = useHttp();
 
     const handleDelete = () => {
-
         request(`${API_URL}Students/students_delete/${studentId}/`, "DELETE", null, headers())
             .then(res => {
                 dispatch(onAddAlertOptions({

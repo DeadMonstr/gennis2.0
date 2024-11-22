@@ -88,9 +88,9 @@ export const createSchoolClass = createAsyncThunk(
 
 export const fetchDeletedNewStudentsThunk = createAsyncThunk(
     'studentsSlice/fetchDeletedNewStudents',
-    async () => {
+    async (branchId) => {
         const {request} = useHttp();
-        return await request(`${API_URL}Students/deleted-from-registered/?branch=${branchQueryId()}`, 'GET', null, headers())
+        return await request(`${API_URL}Students/deleted-from-registered/?branch=${branchId}`, 'GET', null, headers())
     }
 )
 
