@@ -13,7 +13,6 @@ export const TimeTableDragItems = (props) => {
     const {groups, isSelected, subjects, teachers, selectedSubject,color,setSelectedSubject,type,status} = props
 
 
-    console.log(subjects, "groups")
 
     const filteredColors = () => {
         return groups?.filter(item => {
