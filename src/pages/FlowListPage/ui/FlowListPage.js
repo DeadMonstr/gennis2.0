@@ -39,9 +39,14 @@ export const FlowListPage = () => {
     const search = useSelector(getSearchValue)
 
     let PageSize = useMemo(() => 50, [])
+
     const [currentTableData, setCurrentTableData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedId, setSelectedId] = useState([])
+
+
+    console.log(flowList, "flowlist")
+
 
     const searchedUsers = useMemo(() => {
         const filteredHeroes = flowList?.slice()
@@ -63,9 +68,10 @@ export const FlowListPage = () => {
                         isCheck: false,
                         id: item.id,
                         students: item.students.map(item => ({
+                            ...item,
                             isCheck: false,
                             id: item.id,
-                            user: item.user
+
                         })),
                         class_number: item.class_number,
                         color: item.color
@@ -92,9 +98,9 @@ export const FlowListPage = () => {
                         isCheck: true,
                         id: item.id,
                         students: item.students.map(item => ({
+                            ...item,
                             isCheck: true,
                             id: item.id,
-                            user: item.user
                         })),
                         class_number: item.class_number,
                         color: item.color
@@ -105,6 +111,8 @@ export const FlowListPage = () => {
     }
 
     const onChangeSingle = (studentId, classId) => {
+
+
         setSelectedId(prev => {
             if (prev.filter(i => i?.classId === +classId)[0]) {
                 return prev.map(i => {
@@ -112,19 +120,23 @@ export const FlowListPage = () => {
                         return {
                             classId: i?.classId,
                             students: i?.students.includes(+studentId)
-                                ?
-                                i.students.filter(item => item !== +studentId)
+                                ? i.students.filter(item => item !== +studentId)
                                 :
                                 [...i.students, +studentId]
                         }
                     }
                 })
-            } else return [...prev, {
-                classId: +classId,
-                students: [+studentId]
-            }]
+            } else {
+                return [...prev, {
+                    classId: +classId,
+                    students: [+studentId]
+                }]
+            }
         })
     }
+
+    console.log(selectedId, "selectedId")
+    console.log(currentTableData, "currnetTbale")
 
     useEffect(() => {
         setCurrentTableData(prev => prev.map(item => {
@@ -136,14 +148,15 @@ export const FlowListPage = () => {
                     students: item.students.map(i => {
                         if (filtered?.students?.includes(i.id)) {
                             return {
+                                ...i,
                                 isCheck: true,
                                 id: i.id,
-                                user: i.user
+
                             }
                         } else return {
+                            ...i,
                             isCheck: false,
                             id: i.id,
-                            user: i.user
                         }
                     }),
                     class_number: item.class_number,
@@ -235,8 +248,6 @@ export const FlowListPage = () => {
                         </div>
                     </div>
             }
-
-
         </div>
     )
 }

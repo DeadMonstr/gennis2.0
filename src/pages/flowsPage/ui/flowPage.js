@@ -21,6 +21,7 @@ import {fetchTeachersData, getTeachers} from "entities/teachers";
 import {useForm} from "react-hook-form";
 import {getFlowsLoading} from "entities/flows/model/selector/flowsSelector";
 import {getBranch} from "features/branchSwitcher";
+import {MultiPage} from "widgets/multiPage/ui/MultiPage/MultiPage";
 
 
 export const FlowsPage = () => {
@@ -41,6 +42,7 @@ export const FlowsPage = () => {
     const level = useSelector(getCurseLevelData)
 
 
+
     const [active, setActive] = useState(false)
 
     const searchedFlow = useMemo(() => {
@@ -58,8 +60,8 @@ export const FlowsPage = () => {
 
 
     useEffect(() => {
-        dispatch(fetchFlows())
-    }, [])
+        dispatch(fetchFlows(userBranchId?.id))
+    }, [userBranchId])
 
 
     useEffect(() => {
@@ -77,38 +79,55 @@ export const FlowsPage = () => {
     }
 
 
+
+    const types = useMemo(() => {
+        // console.log("render types") ||
+        return [
+            {
+                name: "Flows",
+                type: "flows"
+            },
+        ]
+    }, [])
+
+
     return (
-        <div className={cls.flow}>
-            <div className={cls.flow__header}>
+        <MultiPage types={types} page={"students"}>
 
-                {/*<div className={cls.flow__location}>*/}
-                {/*    <Select/>*/}
-                {/*</div>*/}
+            <div className={cls.flow}>
+                <div className={cls.flow__header}>
 
+                    {/*<div className={cls.flow__location}>*/}
+                    {/*    <Select/>*/}
+                    {/*</div>*/}
+
+                </div>
+                <Flows
+                    branchId={userBranchId?.id}
+                    currentTableData={currentTableData}
+                    loading={flowsLoading}
+                    teacherData={teachers}
+                    levelData={level}
+                    getLevelData={getLevelData}
+                    setActive={setActive}
+                />
+                <Pagination
+                    setCurrentTableData={setCurrentTableData}
+                    users={searchedFlow}
+                    setCurrentPage={setCurrentPage}
+                    currentPage={currentPage}
+                    pageSize={PageSize}
+                    onPageChange={page => {
+                        setCurrentPage(page)
+                    }}
+                    type={"custom"}/>
+                <FlowAddForm
+                    userBranchId={userBranchId.id}
+                    active={active}
+                    setActive={setActive}
+                />
             </div>
-            <Flows
-                branchId={userBranchId?.id}
-                currentTableData={currentTableData}
-                loading={flowsLoading}
-                teacherData={teachers}
-                levelData={level}
-                getLevelData={getLevelData}
-                setActive={setActive}
-            />
-            <Pagination
-                setCurrentTableData={setCurrentTableData}
-                users={searchedFlow}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-                pageSize={PageSize}
-                onPageChange={page => {
-                    setCurrentPage(page)
-                }}
-                type={"custom"}/>
-            <FlowAddForm
-                active={active}
-                setActive={setActive}
-            />
-        </div>
+        </MultiPage>
+
     )
 }

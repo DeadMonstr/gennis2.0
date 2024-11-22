@@ -3,106 +3,38 @@ import {Input} from "shared/ui/input";
 import {Button} from "shared/ui/button";
 import {Form} from "shared/ui/form";
 import {useForm} from "react-hook-form";
-
-import cls from "../classModal.module.sass"
+import {Select} from "shared/ui/select";
+import cls from "../classTable/classTable.module.sass"
 import {useEffect, useState} from "react";
-
+import {HexColorPicker} from "react-colorful";
 import {AnimatedMulti} from "features/workerSelect";
+import {value} from "lodash/seq";
 
+import {classItem, getClassNewNumberList, updateClassItem} from "entities/class/model/thunk/classThunk";
 
-import {updateClassItem} from "entities/class/model/thunk/classThunk";
-
-
-import {useDispatch} from "react-redux";
 import {API_URL, headers, useHttp} from "shared/api/base";
-import {onUpdateClass} from "entities/class/model/slice/classSlice";
+import {useDispatch} from "react-redux";
+import {ConfirmModal} from "../../../../shared/ui/confirmModal";
 
 
-
-export const ClassTableEdit = ({
+export const ClassModal = ({
 
                                selectOptions,
+                               activeEdit,
+                               setActiveEdit,
+                               onClick,
+                               setAddClass,
+                               addClass,
+                               createClass,
                                editClass,
                                setEditClass,
                                edit,
                                changedItem,
-
+                               onDelete,
 
                            }) => {
 
 
-    // const [selectedSubject, setSelectedSubject] = useState([])
-    //
-    //
-    // const {register, handleSubmit, setValue} = useForm()
-    // const dispatch = useDispatch()
-    //
-    // const {request} = useHttp()
-    //
-    // const changeInfo = (data) => {
-    //
-    //     const id = edit.id
-    //
-    //     const res1 = {
-    //         subjects: selectedSubject.map(item => (
-    //             // name: item.label,
-    //             item.value
-    //         )),
-    //         ...data
-    //     }
-    //     const idClass = editClass
-    //
-    //     setValue("curriculum_hours", "")
-    //     setValue("price", "")
-    //     // dispatch(updateClassItem({idClass, res}))
-    //     request(`${API_URL}Class/class_number_update/${idClass}/`, "PUT", JSON.stringify(res1), headers())
-    //         .then(res => {
-    //             dispatch(onUpdateClass(res))
-    //         })
-    //         .catch(err => {
-    //             console.log(err)
-    //         })
-    //
-    //     setEditClass(!editClass)
-    // }
-    //
-    //
-    // const [optionsSubject, setOptionsSubject] = useState([])
-    //
-    //
-    // useEffect(() => {
-    //     if (changedItem?.id) {
-    //
-    //         setSelectedSubject(changedItem.subjects.map(item => ({
-    //             value: item.id,
-    //             label: item.name
-    //         })))
-    //         setValue("curriculum_hours", changedItem.curriculum_hours)
-    //         setValue("price", changedItem.price)
-    //
-    //     }
-    // }, [changedItem?.id])
-    //
-    // useEffect(() => {
-    //     if (selectOptions?.length)
-    //         setOptionsSubject(selectOptions?.map(item => ({
-    //             value: item.id,
-    //             label: item.name
-    //         })))
-    //
-    // }, [selectOptions])
-    //
-    // const onChangeSubjectPrice = (id, hours) => {
-    //     setSelectedSubject(subjects => subjects.map(item => {
-    //         if (item.value === id && hours !== item?.hours) {
-    //             return {
-    //                 ...item,
-    //                 hours
-    //             }
-    //         }
-    //         return item
-    //     }))
-    // }
     const [selectedSubject, setSelectedSubject] = useState([])
 
 
@@ -120,7 +52,9 @@ export const ClassTableEdit = ({
         }
 
         const idClass = editClass
-        setValue("price", selectedSubject.price)
+
+        setValue("curriculum_hours", "")
+        setValue("price", "")
         dispatch(updateClassItem({idClass, res}))
         // dispatch(getClassNewNumberList(idClass))
         setEditClass(!editClass)
@@ -179,18 +113,48 @@ export const ClassTableEdit = ({
         }))
     }
 
+    console.log(selectedSubject)
+
     return (
         <>
+            <Modal active={activeEdit} setActive={setActiveEdit}>
+                <div className={cls.modalHeader}> {edit?.name} <span>ni o'zgartirish</span></div>
+                <div>
+                    <Form typeSubmit={""} extraClassname={cls.extraClassForm}>
+                        <Input name={"name"} register={register}/>
+                        <div className={cls.modalBtn}>
+                            <Button onClick={handleSubmit(onClick)}>
+                                Tastiqlash
+                            </Button>
+                            <Button onClick={handleSubmit(onDelete)} type={"danger"}>
+                                O'chirish
+                                <i className={"fa fa-trash"}/>
+                            </Button>
+                        </div>
+                    </Form>
+                </div>
+            </Modal>
+
+
+            <Modal active={addClass} setActive={setAddClass}>
+                <h2>Sinf turi yaratish </h2>
+                <div>
+                    <Form extraClassname={cls.extraClassForm} onSubmit={handleSubmit(createClass)}>
+                        <Input placeholder={"sinf nomi"} name={"name"} register={register}/>
+                    </Form>
+                </div>
+            </Modal>
+
             <Modal active={editClass} setActive={setEditClass}>
                 <h2>Ma’lumotlarni o’zgartirish </h2>
                 <Form extraClassname={cls.extraClassForm} typeSubmit={""} onSubmit={handleSubmit(changeInfo)}>
+
                     <div className={cls.container}>
                         <div>
 
                             <Input
                                 name={"price"}
                                 register={register}
-                                value={selectedSubject.price}
                                 type={"number"}
                                 placeholder={"narxi"}
                             />
@@ -204,7 +168,7 @@ export const ClassTableEdit = ({
                                 />
                             </div>
                         </div>
-                        <div className={cls.input}>
+                        <div>
                             {
                                 selectedSubject.map(item => {
                                     return (
@@ -221,6 +185,8 @@ export const ClassTableEdit = ({
                             }
                         </div>
                     </div>
+
+
                     <Button>
                         Tastiqlash
                     </Button>
@@ -232,4 +198,5 @@ export const ClassTableEdit = ({
         </>
     )
 }
+
 

@@ -13,7 +13,7 @@ export const TimeTableDragItems = (props) => {
     const {groups, isSelected, subjects, teachers, selectedSubject,color,setSelectedSubject,type,status} = props
 
 
-    console.log(groups, "groups")
+    console.log(subjects, "groups")
 
     const filteredColors = () => {
         return groups?.filter(item => {
@@ -52,7 +52,7 @@ export const TimeTableDragItems = (props) => {
             }
 
             return subjects.map(item => {
-                return <TimeTableDragItem type={"subject"} item={item}>{item?.name}</TimeTableDragItem>
+                return <TimeTableDragItem type={"subject"} item={item}>{item?.name} - {item.hours}</TimeTableDragItem>
             })
         } else {
 

@@ -55,7 +55,6 @@ export const updateClassItem = createAsyncThunk(
     async ({idClass, res}) => {
         const {request} = useHttp()
         return await request(`${API_URL}Class/class_number_update/${idClass}/`, "PUT", JSON.stringify(res), headers())
-
     }
 )
 
@@ -92,5 +91,15 @@ export const fetchClassSubjects = createAsyncThunk(
     async () => {
         const {request} = useHttp()
         return await request(`${API_URL}Subjects/subject/`, "GET", null, headers())
+    }
+)
+
+
+
+export const getClassNewNumberList = createAsyncThunk(
+    "classSlice/getClassNewNumberList",
+    async ({branchId,id}) => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Class/class_number_subject_list?branch=${branchId}&id=${id}`, "GET", null, headers())
     }
 )
