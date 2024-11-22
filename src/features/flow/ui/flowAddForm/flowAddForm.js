@@ -23,7 +23,7 @@ export const FlowAddForm = memo((props) => {
 
     const {
         active,
-        setActive
+        setActive,
     } = props
 
     const dispatch = useDispatch()
@@ -41,7 +41,7 @@ export const FlowAddForm = memo((props) => {
     const [selectedId, setSelectedId] = useState([])
 
     useEffect(() => {
-        dispatch(fetchFlows())
+        dispatch(fetchFlows(userBranchId))
     }, [])
 
 

@@ -160,7 +160,6 @@ export const TimeTableTuronPage = () => {
 
 
     useEffect(() => {
-        if (!subjectsData.length) return;
         setSubjects(subjectsData)
     }, [subjectsData])
 
@@ -278,7 +277,7 @@ export const TimeTableTuronPage = () => {
                 setLoading(false)
 
 
-                if (type === "subject") {
+                if (type === "subject" && !res.status) {
                     setSelectedSubject(null)
                 }
 
@@ -485,9 +484,6 @@ export const TimeTableTuronPage = () => {
             let filteredActiveItem
 
 
-            console.log(activeTypeItem, active.id, "activeItem")
-            console.log(subjects)
-
             if (activeTypeItem === "group" || activeTypeItem === "flow") {
                 filteredActiveItem = groups.filter(item => item.dndId === active.id)[0]
             } else if (activeTypeItem === "subject") {
@@ -576,8 +572,8 @@ export const TimeTableTuronPage = () => {
                                             ...container,
                                             id: null,
                                             group: isActiveItem,
-                                            subject: isActiveItem.subject,
-                                            teacher: isActiveItem.teacher
+                                            subject: isActiveItem.subject_info,
+                                            teacher: isActiveItem.teacher_info
                                         })
 
 
@@ -585,8 +581,8 @@ export const TimeTableTuronPage = () => {
                                             ...container,
                                             id: null,
                                             group: isActiveItem,
-                                            subject: isActiveItem.subject,
-                                            teacher: isActiveItem.teacher
+                                            subject: isActiveItem.subject_info,
+                                            teacher: isActiveItem.teacher_info
                                         }
                                     }
 
@@ -598,7 +594,6 @@ export const TimeTableTuronPage = () => {
                                 }
                             }
                             return container
-
                         })
 
                         return {
@@ -720,7 +715,9 @@ export const TimeTableTuronPage = () => {
         if (Object.keys(canSubmitLesson)?.length) {
 
 
-            const data = {
+
+
+            let data = {
                 lesson: canSubmitLesson?.id,
                 [canSubmitLesson?.group.type]: canSubmitLesson.group.id,
                 // group: canSubmitLesson.group.id,
@@ -731,6 +728,15 @@ export const TimeTableTuronPage = () => {
                 branch: branch,
                 date
             }
+
+
+            if (canSubmitLesson?.group.type === "flow") {
+                data.teacher = canSubmitLesson?.group?.teacher_info?.id
+                data.subject = canSubmitLesson?.group?.subject_info?.id
+            }
+
+
+            console.log(canSubmitLesson)
 
 
             request(`${API_URL}SchoolTimeTable/timetable-list-${canSubmitLesson?.id ? "update" : "create"}/${canSubmitLesson?.id ? canSubmitLesson?.id : ""}`, canSubmitLesson?.id ? "PATCH" : "POST", JSON.stringify(data), headers())
