@@ -45,8 +45,6 @@ export const FlowListPage = () => {
     const [selectedId, setSelectedId] = useState([])
 
 
-    console.log(flowList, "flowlist")
-
 
     const searchedUsers = useMemo(() => {
         const filteredHeroes = flowList?.slice()

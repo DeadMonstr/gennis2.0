@@ -35,7 +35,7 @@ import {onChange} from "features/studentPayment/model/studentPaymentSlice";
 import {ConfirmModal} from "../../../../../shared/ui/confirmModal";
 
 
-export const StudentProfileAmountPath = memo(({active, setActive}) => {
+export const StudentProfileAmountPath = memo(({active, setActive,job}) => {
     const pathArray = window.location.pathname.split('/');
     const lastId = pathArray[pathArray.length - 1];
     const booksList = useSelector(getBooksData);
@@ -45,11 +45,19 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
     const getPaymentLists = useSelector(getDatasWithPost);
     const getBookPayments = useSelector(getBookPaymentsList);
     const dispatch = useDispatch();
+
+    const [changedData,setChangedData] = useState(null)
     const [activeState, setActiveState] = useState("");
     const [selectedSalary, setSelectedSalary] = useState(null);
     const [portal, setPortal] = useState(false);
     const [modal, setModal] = useState(false);
     const [change, setChange] = useState(false);
+    const [canDelete, setCanDelete] = useState(false);
+
+    // const {} = useSelector(state => state.)
+
+
+
     const month = useSelector(getMonth)
 
 
@@ -82,8 +90,22 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
             }
             setPortal(false);
         });
-
     };
+    
+    
+    const onDeleteDebtMonth = () => {
+        request(`${API_URL}Attendance/attendance_per_month_delete/${changedData}`, "DELETE",null, headers())
+            .then(res => {
+                console.log(res)
+                dispatch(fetchStudentDebtorData(id))
+            })
+        setCanDelete(false)
+
+        console.log(id, "iddddd")
+
+
+
+    }
 
     useEffect(() => {
         if (!change) {
@@ -102,7 +124,6 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
         dispatch(studentBookOrderListThunk(lastId));
     }, [lastId, dispatch]);
 
-    console.log(itemChange, "item")
 
     const renderInData = () => {
         const listToRender = change ? getDeletedLists : getPaymentLists
@@ -167,11 +188,19 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                     <td>{item?.discount}</td>
                     <td>{item?.discount_sum}</td>
                     <td>{item?.discount_reason}</td>
-
                     <td>{item?.cash}</td>
                     <td>{item?.click}</td>
                     <td>{item?.bank}</td>
-
+                    <td>
+                        <i
+                            onClick={() => {
+                                setChangedData(item.id)
+                                setCanDelete(true)
+                            }}
+                            style={{color: '#FF3737FF'}}
+                            className={`fa-solid fa-xmark `}
+                        ></i>
+                    </td>
                 </tr>
             )
         })
@@ -183,7 +212,6 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
 
     const {request} = useHttp()
     const onChangeCharity = (data) => {
-        console.log(data)
         request(`${API_URL}Students/charity_month/${itemChange}/`, "PUT", JSON.stringify(data), headers())
             .then(res => {
                 setActiveModal(false)
@@ -194,6 +222,7 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                 console.log(err)
             })
     }
+
     return (
         <EditableCard
             extraClass={classNames(cls.path, {
@@ -303,6 +332,7 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                                                     <th>Cash</th>
                                                     <th>Click</th>
                                                     <th>Bank</th>
+                                                    <th></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -317,10 +347,13 @@ export const StudentProfileAmountPath = memo(({active, setActive}) => {
                         : null
                 }
                 {!change && (
-                    // <YesNo
-                    //     onDelete={handleDelete}
-                    //     activeDelete={portal} setActiveDelete={() => setPortal(!portal)}/>
+
                     <ConfirmModal setActive={setPortal} active={portal} onClick={handleDelete}   type={"danger"}/>
+                )}
+
+                {job === "director" && (
+
+                    <ConfirmModal setActive={setCanDelete} active={canDelete} onClick={onDeleteDebtMonth}   type={"danger"}/>
                 )}
             </div>
             <StudentPaymentEditModal
@@ -364,8 +397,6 @@ const AddDebt = ({month, studentId}) => {
     const {request} = useHttp()
     const dispatch = useDispatch()
     const onClick = () => {
-
-
         request(`${API_URL}Students/missing_month_post/${studentId}/`, "POST", JSON.stringify({month: months}), headers())
             .then(res => {
                 console.log(res)

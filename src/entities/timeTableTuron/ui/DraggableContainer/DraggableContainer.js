@@ -70,7 +70,7 @@ export const DraggableContainer = (props) => {
                 </>
             }
 
-            <h1>{item.group.name}</h1>
+            <h1>{item.group?.class_name || item.group?.name}</h1>
             {
                 !!item?.subject?.name &&
                 <div className={cls.info}>
