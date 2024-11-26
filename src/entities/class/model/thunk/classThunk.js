@@ -54,7 +54,7 @@ export const updateClassItem = createAsyncThunk(
     "classSlice/updateClassItem",
     async ({idClass, res}) => {
         const {request} = useHttp()
-        return await request(`${API_URL}Class/class_number_update/${idClass}/`, "PATCH", JSON.stringify(res), headers())
+        return await request(`${API_URL}Class/class_number_update/${idClass}/`, "PUT", JSON.stringify(res), headers())
 
     }
 )

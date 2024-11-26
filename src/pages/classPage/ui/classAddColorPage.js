@@ -1,12 +1,12 @@
-import {ClassColorAddFilter, ClassColorAddTable} from "entities/class";
+import {ClassColorAddFilter} from "entities/class";
 import {useState} from "react";
 import {API_URL, headers, useHttp} from "shared/api/base";
-import {ColorModal} from "../../../entities/class/ui/classModal/classModal";
 import {useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
 import {updateColor} from "../../../entities/class/model/thunk/classThunk";
 import {onAddAlertOptions} from "../../../features/alert/model/slice/alertSlice";
 import {onDelete} from "../../../entities/class/model/slice/classSlice";
+import { ClassColorEdit} from "../../../features/classModals/ui";
 
 export const ClassAddColorPage = ({color, setEdit, edit}) => {
 
@@ -17,11 +17,13 @@ export const ClassAddColorPage = ({color, setEdit, edit}) => {
     const {request} = useHttp()
     const [colorChange, setColorChange] = useState("")
 
+
     const changeColor = (data) => {
         const id = edit.id
 
+        console.log(id)
         const res = {
-            value: colorChange,
+            value: colorChange ? colorChange : edit.value,
             ...data
         }
         dispatch(updateColor({id, res}))
@@ -64,11 +66,23 @@ export const ClassAddColorPage = ({color, setEdit, edit}) => {
                 setChangeName={setChangeName}
                 setValue={setValue}
             />
-            {/*<ClassColorAddTable/>*/}
 
-            <ColorModal setActive={setActiveColor} active={activeColor} edit={edit} changeName={changeName} setChangeName={setChangeName} changeColor={changeColor}
-                        handleSubmit={handleSubmit} register={register} colorChange={colorChange}
-                        setColorChange={setColorChange} deleteColor={deleteColor}/>
+
+
+
+            <ClassColorEdit
+                setActive={setActiveColor}
+                active={activeColor}
+                edit={edit}
+                changeName={changeName}
+                setChangeName={setChangeName}
+                changeColor={changeColor}
+                handleSubmit={handleSubmit}
+                register={register}
+                colorChange={colorChange}
+                setColorChange={setColorChange}
+                deleteColor={deleteColor}
+            />
         </>
     );
 };

@@ -75,7 +75,7 @@ export const StudentsFilter = React.memo(({active, setActive, activePage, setIsF
         setIsSwitch(newState);
 
         if (newState) {
-            dispatch(fetchDeletedNewStudentsThunk());
+            dispatch(fetchDeletedNewStudentsThunk(branchId));
         } else {
             dispatch(fetchOnlyNewStudentsData({userBranchId: branchId}));
         }

@@ -1,73 +1,31 @@
 import {Table} from "shared/ui/table";
-import {ClassModal} from "../classModal/classModal";
 import React, {useEffect, useState} from "react";
-import {useForm} from "react-hook-form";
 import cls from "./classTable.module.sass"
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {useDispatch, useSelector} from "react-redux";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
-import {fetchClassSubjects} from "../../model/thunk/classThunk";
-import {classSubjects} from "../../model/selector/classSelector";
-import {classItem, updateClassItem} from "../../model/thunk/classThunk";
-import {data} from "../../../calendar";
-import {onChangeClassStatus, onDeleteSubject} from "../../model/slice/classSlice";
+import {classItemLoading, classSubjects} from "../../model/selector/classSelector";
+
+import {onChangeClassStatus} from "../../model/slice/classSlice";
 import classNames from "classnames";
+import {ClassTableEdit} from "../../../../features/classModals/ui";
+import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 
 
-export const ClassTable = ({edit, classType, active, id}) => {
+export const ClassTable = ({edit, classType}) => {
     const [editClass, setEditClass] = useState(false)
-
-    const [clickedCheckbox, setClickedCheckbox] = useState([])
-
     const [changedItem, setChangedItem] = useState({})
-
     const subjects = useSelector(classSubjects)
-
     const {request} = useHttp()
     const dispatch = useDispatch()
-    const [selectedSubject, setSelectedSubject] = useState([])
+    const loading = useSelector(classItemLoading)
     const [selectedClass, setSelectedClass] = useState(null);
-
-
     useEffect(() => {
         if (editClass) {
             const selected = classType.find(item => item.id === editClass);
             setSelectedClass(selected);
         }
     }, [editClass, classType]);
-    // const onChangeClass = (data) => {
-    //
-    //
-    //     const res = {
-    //         subjects: selectedSubject.map(item => (
-    //             // name: item.label,
-    //             item.value
-    //         )),
-    //         ...data
-    //     }
-    //     const idClass = editClass
-    //     //
-    //     // setValue("curriculum_hours", "")
-    //     // setValue("price", "")
-    //     dispatch(updateClassItem({idClass, res}))
-    //     setEditClass(!editClass)
-    //     dispatch(classItem(1))
-    //
-    // }
-
-    // const onDeleteSub = (id) => {
-    //
-    //     dispatch(onDeleteSubject(id))
-
-    //
-    // }
-
-    // const checkedItem = (id) => {
-    //     const filteredCheckbox = clickedCheckbox.filter(item => item !== id)
-    //     setClickedCheckbox([...filteredCheckbox, id])
-    //
-    //
-    // }
 
 
 
@@ -91,9 +49,7 @@ export const ClassTable = ({edit, classType, active, id}) => {
                 console.log(err)
             })
     }
-    // const sortItemsByStatus = (items) => {
-    //     // return [...items].sort((a, b) => b.status - a.status);
-    // };
+
 
 
 
@@ -159,146 +115,23 @@ export const ClassTable = ({edit, classType, active, id}) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {render}
+                    {
+                        loading ? <DefaultPageLoader/> : render
+                    }
                     </tbody>
                 </Table>
 
-            <ClassModal
-                selectedClass={selectedClass}  // Pass selected class
-                selectedSubject={selectedSubject}
-                setSelectedSubject={setSelectedSubject}
-                // changeInfo={onChangeClass}
-                // selectOptions={selectOptions}
-                extraClassForm={cls.extraClassForm}
-                extraClassSelect={cls.select}
-                extraClassBtn={cls.btn}
-                editClass={editClass}
-                setEditClass={setEditClass}
+            <ClassTableEdit
+
                 // register={register}
-                changedItem={changedItem}
+                setEditClass={setEditClass}
                 selectOptions={subjects}
+                editClass={editClass}
+                changedItem={changedItem}
                 edit={edit}
-                // handleSubmit={handleSubmit}
-                // onDeleteSub={onDeleteSub}
+
+
             />
         </div>
     )
 }
-{/*{item?.status ?*/
-}
-
-{/*    <div*/
-}
-{/*        onClick={() =>*/
-}
-{/*            checkedItem(item.id)*/
-}
-{/*        }*/
-}
-{/*        className={*/
-}
-{/*            clickedCheckbox.includes(item?.id)*/
-}
-{/*                ? cls.checkbox__minus : cls.checkbox__checked*/
-}
-
-{/*        }*/
-}
-{/*    >*/
-}
-{/*        {clickedCheckbox.includes(item?.id) ? (*/
-}
-
-{/*        ) : (*/
-}
-{/*            <i onClick={() => console.log("hello")} className={`fa fa-check ${cls.check}`}/>*/
-}
-{/*        )}*/
-}
-
-{/*    </div>*/
-}
-{/*    :*/
-}
-{/*    <div*/
-}
-{/*        onClick={() =>*/
-}
-{/*            checkedItem(item.id)*/
-}
-{/*        }*/
-}
-{/*        className={*/
-}
-{/*            clickedCheckbox.includes(item?.id)*/
-}
-{/*                ? cls.checkbox__checked*/
-}
-{/*                : cls.checkbox__minus*/
-}
-{/*        }*/
-}
-{/*    >*/
-}
-{/*        {clickedCheckbox.includes(item?.id) ? (*/
-}
-{/*            <i onClick={() => onChange({id: item.id})} className={`fa fa-check ${cls.check}`}/>*/
-}
-{/*        ) : (*/
-}
-
-{/*        )}*/
-}
-
-
-{/*    </div>*/
-}
-{/*}*/
-}
-
-//
-// (?
-// <div className={cls.items}>
-//     <div className={cls.checkbox__checked}>
-//         <i  className={`fa fa-check ${cls.check}`}/>
-//
-//     </div>
-
-//
-// </div>
-//     <div className={cls.items}>
-//         <div
-//             onClick={() =>
-//                 setClickedCheckbox((arr) => {
-//                     if (clickedCheckbox.includes(item?.id)) {
-//                         return [...arr.filter((id) => id !== item?.id)];
-//                     } else return [...arr, item?.id];
-//                 })
-//             }
-//             className={
-//                 clickedCheckbox.includes(item?.id)
-//                     ? cls.checkbox__minus : cls.checkbox__checked
-//
-//             }
-//         >
-//             {clickedCheckbox.includes(item?.id) ? (
-//                 <i
-//                     className={`fa fa-minus ${cls.minus}`}
-//                     onClick={() => onChange({id: item.id})}
-//                 />
-//             ) : (
-//                 <i onClick={() => onChange({id: item.id})}
-//                    className={`fa fa-check ${cls.check}`}/>
-//             )}
-//         </div>
-//         <i
-//             onClick={() => {
-//                 setEditClass(item.id)
-//                 setChangedItem(item)
-//
-//             }}
-//             className={"fa fa-pen"}
-//         />
-//     </div>
-// )
-// : ()
