@@ -11,3 +11,5 @@ export {SchoolParentesComment} from "./ui/schoolParentesComment/schoolParentesCo
 export {SchoolNews} from "./ui/schoolNews/schoolNews"
 export {WorkUs} from "./ui/workUS/workUs"
 export {Calendar} from "./ui/schoolCalendar/calendar"
+
+export {SchoolCurricular} from "./ui/schoolCurricular/schoolCurricular";

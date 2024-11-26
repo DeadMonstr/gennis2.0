@@ -1,0 +1,1 @@
+export {SchoolVisionMission} from "./ui/schoolVisionMission/schoolVisionMission";

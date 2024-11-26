@@ -8,8 +8,9 @@ import {
     SchoolHomeAboutUs,
     SchoolHomeContact,
     SchoolParentesComment, SchoolHomeGallery, SchoolHomeWorkUs,
-    SchoolNews, WorkUs, Calendar, SchoolHomeContactUs
+    SchoolNews, WorkUs, Calendar, SchoolHomeContactUs, SchoolCurricular
 } from "entities/schoolHome";
+import {SchoolVisionMission} from "features/schoolHome";
 
 import cls from "./SchoolHomePage.module.sass";
 import {Footer} from "../../../../entities/schoolHome/ui/footer/footer";
@@ -43,20 +44,22 @@ export const SchoolHomePage = () => {
             {/*    className={cls.schoolHome__header}*/}
             {/*>*/}
                 <SchoolHomeHeader ref={currentHeight}/>
-                <SchoolHomeMain/>
+                {/*<SchoolHomeMain/>*/}
             {/*</div>*/}
-            <SchoolHomeExtracurricus/>
-            <SchoolHomeCertificats/>
-            <SchoolHomeAboutUs/>
-            <SchoolHomeGallery/>
-            <SchoolHomeWorkUs/>
-            <SchoolHomeContact/>
-            <SchoolHomeContactUs/>
-            <SchoolParentesComment/>
-            <SchoolNews/>
-            <WorkUs/>
-            <Calendar/>
-            <Footer/>
+            {/*<SchoolHomeExtracurricus/>*/}
+            {/*<SchoolHomeCertificats/>*/}
+            {/*<SchoolHomeAboutUs/>*/}
+            {/*<SchoolHomeGallery/>*/}
+            {/*<SchoolHomeWorkUs/>*/}
+            {/*<SchoolHomeContact/>*/}
+            {/*<SchoolHomeContactUs/>*/}
+            {/*<SchoolParentesComment/>*/}
+            {/*<SchoolNews/>*/}
+            {/*<WorkUs/>*/}
+            {/*<Calendar/>*/}
+            {/*<Footer/>*/}
+            {/*<SchoolVisionMission/>*/}
+            <SchoolCurricular/>
         </div>
     )
 }
