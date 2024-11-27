@@ -4,9 +4,9 @@ import {API_URL, headers, useHttp} from "shared/api/base";
 
 export const fetchFlows = createAsyncThunk(
     "flowsSlice/fetchFlows",
-    async () => {
+    async (userBranchId) => {
         const {request} = useHttp()
-        return await request(`${API_URL}Flow/flow-list/`, "GET", null, headers())
+        return await request(`${API_URL}Flow/flow-list/?branch=${userBranchId}`, "GET", null, headers())
     }
 )
 

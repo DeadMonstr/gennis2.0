@@ -87,7 +87,6 @@ export const TimeTableListPage = () => {
 
         request(`${API_URL}SchoolTimeTable/hours-list-update/${isChange.id}`, "DELETE", null, headers())
             .then(res => {
-                console.log(res)
                 dispatch(onDelete(isChange.id))
                 dispatch(onAddAlertOptions({
                     status: true,

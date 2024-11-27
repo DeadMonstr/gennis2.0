@@ -18,3 +18,7 @@ export const colorItem = (state) =>
 
 export const classSubjects = (state) =>
     state.classSlice?.subjects
+
+
+export const classNewItems = (state) =>
+    state.classSlice?.classNewItems

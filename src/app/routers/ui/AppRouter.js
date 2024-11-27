@@ -10,27 +10,27 @@ import {StudentProfilePage} from "pages/profilePage";
 import {CenterHomePage, SchoolHomePage} from "pages/homePage";
 import {Register} from "pages/registerPage/ui/register";
 import {NotFoundPage} from "pages/notfoundPage/ui/notfound";
-import {ProfileTeacherPage} from "pages/profilePage";
-import {TeacherSalaryPage} from "pages/teacherSalaryPage";
-import {GiveSalaryPage} from "pages/giveSalaryPage";
-import {ClassProfilePage} from "pages/School";
+
 import {ClassMolassesPage} from "pages/School";
-import {EmployerPage} from "pages/employeesPage"
+
 import {useTheme} from "shared/lib/hooks/useTheme";
 
 import "app/styles/index.sass"
-import {GroupCreatePage} from "entities/students";
-import {VacancyPage} from "pages/vacancyPage";
-import {RoomsProfilePage} from "pages/roomsProiflePage";
-import {FlowsPage} from "pages/flowsPage";
+
 import {FlowProfileNavigators} from "entities/flowsProfile";
 import {FlowListPage} from "pages/FlowListPage";
 import {ClassAddColorPage, ClassPage} from "pages/classPage";
-// import {T} from "pages/timeTable";
+
 import {CalendarPage} from "pages/calendarPage";
 import RequireBranch from "app/routers/ui/RequireBranch";
 import RequireHeader from "app/routers/ui/RequireHeader";
 import {routersConfigProfile} from "app/routers/config/routerConfigProfiles";
+import {
+    SchoolHomeAboutUs,
+    SchoolHomeCertificats,
+    SchoolHomeContact,
+    SchoolHomeHeader
+} from "../../../entities/schoolHome";
 
 
 export const AppRouter = () => {
@@ -51,6 +51,8 @@ export const AppRouter = () => {
                 {/*    element={<CenterHomePage/>}*/}
                 {/*/>*/}
 
+
+
                 <Route
                     path={"login"}
                     element={<Login/>}
@@ -61,9 +63,9 @@ export const AppRouter = () => {
                 />
 
 
-                {/*<Route element={<RequireAuth/>}>*/}
+                <Route element={<RequireAuth/>}>
 
-                    <Route path={"platform/*"} element={<Layout />}>
+                    <Route path={"platform/*"} element={<Layout/>}>
 
                         <Route element={<RequireHeader/>}>
                             {
@@ -72,10 +74,10 @@ export const AppRouter = () => {
                                         key={index}
                                         path={item.path}
                                         element={
-                                            item.element
-                                            // <RequireBranch>
-                                            //     {item.element}
-                                            //  </RequireBranch>
+                                            // item.element
+                                            <RequireBranch>
+                                                {item.element}
+                                            </RequireBranch>
                                         }
                                     />
                                 )
@@ -90,10 +92,9 @@ export const AppRouter = () => {
                                         key={index}
                                         path={item.path}
                                         element={
-                                            item.element
-                                            // <RequireBranch>
-                                            //     {item.element}
-                                            // </RequireBranch>
+                                            <RequireBranch>
+                                                {item.element}
+                                            </RequireBranch>
                                         }
                                     />
                                 )
@@ -101,6 +102,9 @@ export const AppRouter = () => {
                         </Route>
 
 
+                        {/*<Route element={<SchoolHomeHeader/>}>*/}
+                        {/*    <Route element={<SchoolHomeAboutUs/>} path={"aboutUs"}/>*/}
+                        {/*</Route>*/}
 
                         <Route
                             path={"profile"}
@@ -138,10 +142,10 @@ export const AppRouter = () => {
 
                         <Route
                             index
-                            element={<Navigate to={"register"}/>}
+                            element={<Navigate to={"register/*"}/>}
                         />
                     </Route>
-                {/*</Route>*/}
+                </Route>
 
                 <Route
                     path={"*"}

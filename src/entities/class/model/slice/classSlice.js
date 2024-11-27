@@ -1,11 +1,15 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
     classItem,
-    createClassType, createColor, deleteTypes, fetchClassSubjects,
+    createClassType,
+    createColor,
+    fetchClassSubjects,
+    getClassNewNumberList,
     getClassTypeNumber,
     getClassTypes,
     getColor, updateClassItem,
-    updateClassType, updateColor
+    updateClassType,
+    updateColor
 } from "../thunk/classThunk";
 
 const initialState = {
@@ -15,7 +19,9 @@ const initialState = {
     classTypeNumber: [],
     classItems: [],
     color: [],
-    subjects: []
+    subjects: [],
+
+    classNewItems: []
 }
 
 const classSlice = createSlice({
@@ -29,7 +35,7 @@ const classSlice = createSlice({
             state.classData = state.classData.filter(item => item.id !== action.payload.id)
         },
         onChangeClassStatus : (state , action) =>{
-            state.classItems = state.classItems.map(item => {
+            state.classNewItems = state.classNewItems.map(item => {
                 if (item.id === action.payload.id){
                     return {
                         ...item,
@@ -143,12 +149,11 @@ const classSlice = createSlice({
                 state.loading = false
                 state.error = false
 
-                state.classItems = state.classItems.map(item => {
+                state.classNewItems = state.classNewItems.map(item => {
                     if (item.id === action.payload.id) {
                         return {
                             ...item,
                             price : action.payload.price,
-                            curriculum_hours : action.payload.curriculum_hours,
                             subjects: action.payload.subjects
                         }
                     }
@@ -231,6 +236,22 @@ const classSlice = createSlice({
                 state.error = true
             })
 
+
+            .addCase(getClassNewNumberList.pending, state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(getClassNewNumberList.fulfilled, (state, action) => {
+                state.classNewItems = action.payload
+                state.loading = false
+                state.error = false
+
+
+            })
+            .addCase(getClassNewNumberList.rejected, state => {
+                state.loading = false
+                state.error = true
+            })
 })
 
 export const {onDelete, onDeleteTypes,onChangeClassStatus , onUpdateClass} = classSlice.actions

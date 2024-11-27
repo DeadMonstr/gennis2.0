@@ -6,10 +6,13 @@ import {Button} from "shared/ui/button";
 // import {motion} from "framer-motion";
 import headerImg from "shared/assets/images/logo.svg"
 import {Context} from "pages/homePage/ui/CenterHomePage/CenterHomePage";
+import {useNavigate} from "react-router";
 
 
 export const HomeHeader = ({status, setStatus}) => {
     const {sectionTop} = useContext(Context)
+
+
 
     const [activeItem, setActiveItem] = useState("home")
     const [activeBar, setActiveBar] = useState(false)
@@ -18,7 +21,8 @@ export const HomeHeader = ({status, setStatus}) => {
         {
             name: "home",
             title: "Bosh sahifa",
-            type: "btn"
+            type: "btn",
+
         },
         {
             name: "about",
@@ -107,6 +111,7 @@ export const HomeHeader = ({status, setStatus}) => {
                                 onClick={() => {
                                     toLink(sectionTop[item.name])
                                     setActiveItem(item.name)
+
                                 }}
                             >
                                 {item.title}

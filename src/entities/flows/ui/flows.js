@@ -42,6 +42,7 @@ export const Flows = ({currentTableData, teacherData, loading, levelData, getLev
             branch: branchId,
             // subject: teacherData.filter(item => item.id === +data?.teacher)[0]?.subject[0]?.id
         }
+
         localStorage.setItem("flowData", JSON.stringify(res))
         navigate("flow-list")
     }

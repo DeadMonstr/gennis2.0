@@ -114,7 +114,6 @@ export const TimeTableTuronPage = () => {
     const date = useSelector(getTimeTableTuronDate)
 
 
-
     const {id: branch} = useSelector(getBranch)
 
 
@@ -123,7 +122,6 @@ export const TimeTableTuronPage = () => {
     useEffect(() => {
         dispatch(fetchTimeTableColors())
     }, [])
-
 
 
     useEffect(() => {
@@ -136,6 +134,7 @@ export const TimeTableTuronPage = () => {
             dispatch(fetchTimeTableClassView({date, branch}))
         }
     }, [date, branch,classView])
+
 
     useEffect(() => {
         if (type && branch) dispatch(fetchTimeTableTypesData({type, branch}))
@@ -161,7 +160,6 @@ export const TimeTableTuronPage = () => {
 
 
     useEffect(() => {
-        if (!subjectsData.length) return;
         setSubjects(subjectsData)
     }, [subjectsData])
 
@@ -257,7 +255,7 @@ export const TimeTableTuronPage = () => {
 
 
     const {request} = useHttp()
-    const canSet = async (hour, id, room, type) => {
+    const canSet = async (hour, id, room, type, overItem) => {
 
         const data = {
             hour,
@@ -267,11 +265,21 @@ export const TimeTableTuronPage = () => {
             type
         }
 
+
+        if (type === "subject") {
+            data.group_id = overItem.group.id
+        }
+
         setLoading(true)
 
         const res = await request(`${API_URL}SchoolTimeTable/can-set${type === "flow" ? "-flow" : ""}/?branch=${branch}`, "POST", JSON.stringify(data), headers())
             .then(res => {
                 setLoading(false)
+
+
+                if (type === "subject" && !res.status) {
+                    setSelectedSubject(null)
+                }
 
                 dispatch(onAddMultipleAlertOptions(res.msg.map(item => ({
                     type: "error",
@@ -478,17 +486,19 @@ export const TimeTableTuronPage = () => {
 
             if (activeTypeItem === "group" || activeTypeItem === "flow") {
                 filteredActiveItem = groups.filter(item => item.dndId === active.id)[0]
+            } else if (activeTypeItem === "subject") {
+                filteredActiveItem = subjects.filter(item => item.dndId === active.id)[0]
             } else {
                 filteredActiveItem = teachers.filter(item => item.dndId === active.id)[0]
             }
 
-            if (activeTypeItem !== "subject") {
-
-                const checked = await canSet(filteredOverItem.hours, filteredActiveItem.id, filteredOverItem.room, activeTypeItem)
 
 
-                if (!checked) return;
-            }
+            const checked = await canSet(filteredOverItem.hours, filteredActiveItem.id, filteredOverItem.room, activeTypeItem, filteredOverItem )
+
+
+            if (!checked) return;
+
 
             await setRooms(rooms =>
                 rooms.map(room => {
@@ -562,8 +572,8 @@ export const TimeTableTuronPage = () => {
                                             ...container,
                                             id: null,
                                             group: isActiveItem,
-                                            subject: isActiveItem.subject,
-                                            teacher: isActiveItem.teacher
+                                            subject: isActiveItem.subject_info,
+                                            teacher: isActiveItem.teacher_info
                                         })
 
 
@@ -571,8 +581,8 @@ export const TimeTableTuronPage = () => {
                                             ...container,
                                             id: null,
                                             group: isActiveItem,
-                                            subject: isActiveItem.subject,
-                                            teacher: isActiveItem.teacher
+                                            subject: isActiveItem.subject_info,
+                                            teacher: isActiveItem.teacher_info
                                         }
                                     }
 
@@ -584,7 +594,6 @@ export const TimeTableTuronPage = () => {
                                 }
                             }
                             return container
-
                         })
 
                         return {
@@ -675,6 +684,8 @@ export const TimeTableTuronPage = () => {
                                 .then(res => {
 
                                 })
+
+                            setSelectedGroup(null)
                         }
                         return {
                             ...container,
@@ -704,7 +715,9 @@ export const TimeTableTuronPage = () => {
         if (Object.keys(canSubmitLesson)?.length) {
 
 
-            const data = {
+
+
+            let data = {
                 lesson: canSubmitLesson?.id,
                 [canSubmitLesson?.group.type]: canSubmitLesson.group.id,
                 // group: canSubmitLesson.group.id,
@@ -717,14 +730,19 @@ export const TimeTableTuronPage = () => {
             }
 
 
+            if (canSubmitLesson?.group.type === "flow") {
+                data.teacher = canSubmitLesson?.group?.teacher_info?.id
+                data.subject = canSubmitLesson?.group?.subject_info?.id
+            }
+
+
+            console.log(canSubmitLesson)
+
+
             request(`${API_URL}SchoolTimeTable/timetable-list-${canSubmitLesson?.id ? "update" : "create"}/${canSubmitLesson?.id ? canSubmitLesson?.id : ""}`, canSubmitLesson?.id ? "PATCH" : "POST", JSON.stringify(data), headers())
                 .then(res => {
-
                     setRooms(rooms => rooms?.map(item => {
-
-
                         if (item.id === canSubmitLesson?.room) {
-
                             const newLessons = item?.lessons?.map(lesson => {
                                 if (lesson?.dndId === canSubmitLesson?.dndId) {
                                     return {
@@ -746,10 +764,15 @@ export const TimeTableTuronPage = () => {
                     }))
 
 
+                    dispatch(fetchTimeTableSubject(canSubmitLesson.group.id))
+
+
                 })
                 .then(() => {
                     setCanSubmitLesson({})
                 })
+
+
 
         }
     }, [canSubmitLesson])

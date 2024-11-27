@@ -3,8 +3,7 @@ import {useCallback, useState} from "react";
 import classNames from "classnames";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {useDispatch, useSelector} from "react-redux";
-import {classItem} from "../../model/thunk/classThunk";
-import {classItems} from "../../model/selector/classSelector";
+import {classItem, getClassNewNumberList} from "../../model/thunk/classThunk";
 import {useParams} from "react-router";
 
 // const data = [
@@ -33,10 +32,8 @@ import {useParams} from "react-router";
 //     }
 // ]
 
-export const ClassFilter = ({classesType, active, setActive, edit, setEdit}) => {
+export const ClassFilter = ({classesType, active, setActive, setEdit}) => {
 
-    const {request} = useHttp()
-    const className = useSelector(classItems)
     const dispatch = useDispatch()
 
     const {"*": id} = useParams()
@@ -44,8 +41,8 @@ export const ClassFilter = ({classesType, active, setActive, edit, setEdit}) => 
 
     const userBranchId = id
     const onClick = useCallback((id) => {
-        dispatch(classItem({branchId: userBranchId, id: id}))
-
+        // dispatch(classItem({branchId: userBranchId, id: id}))
+        dispatch(getClassNewNumberList({branchId: userBranchId, id: id}))
     }, [userBranchId])
 
     function compareById(a, b) {
@@ -56,7 +53,6 @@ export const ClassFilter = ({classesType, active, setActive, edit, setEdit}) => 
         <div className={cls.classFilter}>
             <div className={cls.classFilter__wrapper}>
                 <ul>
-
                     {[...classesType].sort(compareById)?.map((item, i) => {
                         return (
                             <li
@@ -83,10 +79,7 @@ export const ClassFilter = ({classesType, active, setActive, edit, setEdit}) => 
                             </li>
                         )
                     })}
-
                 </ul>
-
-
             </div>
         </div>
     )

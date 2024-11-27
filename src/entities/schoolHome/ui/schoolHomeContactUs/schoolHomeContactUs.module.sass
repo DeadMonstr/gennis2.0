@@ -73,18 +73,23 @@
       flex-direction: column
       .inputMsg
         outline: none
-        width: 230px !important
+        //width: 230px !important
         border: transparent
         border-bottom: 1px solid black
         border-radius: 0
 .submitBtn
   width: 100%
   background: #001B61
-
+@media (max-width: 1200px)
+  .inputMsg
+    width: 24rem!important
 @media (max-width: 1000px)
   .school
     .descr
       width: 80%
+@media (max-width: 815px)
+  .inputMsg
+    width: 15rem!important
 @media (max-width: 768px)
   .school
     align-items: center
