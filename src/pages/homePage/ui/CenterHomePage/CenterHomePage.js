@@ -9,16 +9,21 @@ import {
     HomeAbout,
     HomeHeader,
     HomeTeachers,
-    HomeAdvantages
+    HomeAdvantages,
 } from "entities/centerHome";
 
 import cls from "./CenterHomePage.module.sass"
 import WebSiteLoader from "shared/ui/webSiteLoader/webSiteloader";
+import {useSelector} from "react-redux";
+
+
 
 export const Context = React.createContext()
 
 export const CenterHomePage = () => {
     const [loading, setLoading] = useState(true)
+
+
 
     const [sectionTop, setSectionTop] = useState({
         home: null,

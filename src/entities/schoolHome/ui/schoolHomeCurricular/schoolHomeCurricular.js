@@ -1,0 +1,196 @@
+import cls from "./schoolCurricular.module.sass"
+import {useState} from "react";
+import classNames from "classnames";
+
+
+import editIcon from "shared/assets/icons/PencilLine.svg"
+import addIcon from "shared/assets/icons/PlusCircle.svg"
+
+const item = [
+    {name: "curricular", label: "Curricular",},
+    {name: "dissCurricular", label: "Extra Curricular"},
+]
+export const SchoolHomeCurricular = ({
+                                         data,
+                                         setActive,
+                                         setDeleteId,
+                                         setActiveEdit,
+                                         setValue,
+                                         setActiveExtraCurricular,
+                                         extraCurricularData,
+                                         setActiveExtraCurricularEdit,
+                                         setDeleteIdExtra
+
+                                     }) => {
+
+
+    const [active, setActiveItem] = useState(item[0].name)
+
+
+    const switchTable = () => {
+        switch (active) {
+
+            case "curricular" :
+                return <Curricular setValue={setValue} data={data} setActiveEdit={setActiveEdit}
+                                   setDeleteId={setDeleteId}/>
+            case "dissCurricular" :
+                return <DissCurricular setValue={setValue} setDeleteIdExtra={setDeleteIdExtra}
+                                       extraCurricularData={extraCurricularData}
+                                       setActiveExtraCurricularEdit={setActiveExtraCurricularEdit}/>
+
+        }
+    }
+
+
+    return (
+        <div className={cls.main}>
+
+
+            <div className={cls.main__header}>
+                {item.map((item, i) => (
+                    <div className={classNames(cls.main__header_title, {
+                        [cls.active]: active === item.name
+                    })} onClick={() => setActiveItem(item.name)}>
+                        {item.label}
+                    </div>
+                ))}
+
+
+                {active === "curricular" ?
+                    <div onClick={() => setActive(true)} className={cls.main__header_add}>
+                        <img src={addIcon} alt=""/>
+                    </div> :
+                    <div onClick={() => setActiveExtraCurricular(true)} className={cls.main__header_add}>
+                        <img src={addIcon} alt=""/>
+
+                    </div>
+                }
+            </div>
+
+
+            {switchTable()}
+
+        </div>
+    );
+};
+
+
+export const Curricular = ({data, setDeleteId, setActiveEdit, setValue}) => {
+
+    const renderData = () => {
+        return data?.map(item => (
+            <div className={cls.curricular__wrapper_box}>
+
+                <div onClick={() => {
+
+                    setValue("name", item.name)
+
+                    setValue("text", item.text)
+                    // setValue("date" , item.date)
+                    setDeleteId(item)
+                    setActiveEdit(true)
+                }}
+                     className={cls.curricular__wrapper_edit}
+
+                >
+                    <img src={editIcon} alt=""/>
+                </div>
+
+                <div className={cls.curricular__wrapper_box_title}>
+                    {item.class}
+                    <span>
+                        {item.name}
+                    </span>
+                </div>
+                <div className={cls.curricular__wrapper_box_img}>
+                    <img src={item.img} alt=""/>
+                </div>
+
+                <div className={cls.curricular__wrapper_box_descr}>
+                    {item.text}
+                </div>
+            </div>
+        ))
+    }
+
+
+    const render = renderData()
+
+
+    return (
+        <div className={cls.curricular}>
+
+            <div className={cls.curricular__title}>
+                Curricular
+            </div>
+
+
+            <div className={cls.curricular__wrapper}>
+
+                {render}
+            </div>
+
+        </div>
+    )
+}
+
+
+export const DissCurricular = ({extraCurricularData, setActiveExtraCurricularEdit, setDeleteIdExtra, setValue}) => {
+
+
+    const renderData = () => {
+        return extraCurricularData.map(item => (
+            <div className={cls.curricular__extraBox}>
+
+                <div onClick={() => {
+                    setValue("subject_name" , item.subject_name)
+                    setValue("descr" , item.descr)
+                    setDeleteIdExtra(item)
+                    setActiveExtraCurricularEdit(true)
+                }}
+                     className={cls.curricular__wrapper_edit}
+
+                >
+                    <img src={editIcon} alt=""/>
+                </div>
+                <div className={cls.curricular__extraBox_img}>
+                    <img src={item.img} alt=""/>
+                </div>
+
+
+                <div className={cls.curricular__extraBox_title}>
+                    <div className={cls.curricular__extraBox_descr}>
+                        {item.descr}
+                    </div>
+                    <div className={cls.curricular__extraBox_box}>
+                        <i className="fas fa-chevron-down"/>
+                    </div>
+
+
+                    {item.subject_name}
+                </div>
+
+
+            </div>
+        ))
+    }
+
+
+    const render = renderData()
+
+    return (
+        <div className={cls.curricular}>
+
+            <div className={cls.curricular__title}>
+                Extra Curricular
+            </div>
+
+
+            <div className={cls.curricular__wrapper}>
+                {render}
+
+            </div>
+
+        </div>
+    )
+}

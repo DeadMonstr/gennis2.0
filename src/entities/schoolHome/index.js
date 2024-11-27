@@ -11,3 +11,21 @@ export {SchoolParentesComment} from "./ui/schoolParentesComment/schoolParentesCo
 export {SchoolNews} from "./ui/schoolNews/schoolNews"
 export {WorkUs} from "./ui/workUS/workUs"
 export {Calendar} from "./ui/schoolCalendar/calendar"
+
+export {SchoolHomeStudentProfile} from "./ui/schoolHomeStudentProfile/schoolHomeStudentProfile"
+
+export {SchoolHomeLatestNew} from "./ui/schoolHomeLastestNew/schoolHomeLatestNew"
+
+
+
+export {getSchoolProfileData} from "./model/selector/schoolHomeStudentProfileSelector"
+
+
+export {SchoolHomeCurricular} from "./ui/schoolHomeCurricular/schoolHomeCurricular"
+
+export {default as schoolProfileSlice} from "./model/slice/schoolHomeStudentProfileSlice"
+export {default as schoolLatestSlice} from "./model/slice/SchoolHomeLatestNewSlice"
+
+
+
+export {default as schoolCurricularSlice} from "./model/slice/schoolCurricularSlice"

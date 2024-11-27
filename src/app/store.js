@@ -80,6 +80,7 @@ import {oftenUsedSlice} from "entities/oftenUsed";
 import {rgbSlice} from "entities/rgbData";
 import {accountingFilterSlice} from "features/filters/accountingFilter";
 import {flowFilterSlice} from "features/filters/flowFilter";
+import {schoolCurricularSlice, schoolLatestSlice, schoolProfileSlice} from "../entities/schoolHome";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -176,7 +177,10 @@ export const store = configureStore({
         groupAttendance,
         oftenUsedSlice,
         rgbSlice,
-        flowFilterSlice
+        flowFilterSlice,
+        schoolProfileSlice,
+        schoolLatestSlice,
+        schoolCurricularSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

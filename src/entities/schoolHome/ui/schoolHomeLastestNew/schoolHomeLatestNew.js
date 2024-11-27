@@ -1,0 +1,72 @@
+import cls from "./schoolHomeLastestNew.module.sass"
+
+
+
+
+import editIcon from "shared/assets/icons/edittTuron.svg"
+import addIcon from "shared/assets/icons/PlusCircle.svg"
+
+
+export const SchoolHomeLatestNew = ({data , setValue , setEdit , add , setAdd , setDeleteId}) => {
+
+
+    const renderData = () => {
+        return data.map(item => (
+            <div className={cls.main__box}>
+                <div className={cls.main__box_img}>
+
+                    <div onClick={() => {
+                        setEdit(true)
+                        setValue("name", item.name)
+                        setValue("text", item.text)
+                        setValue("date" , item.date)
+                        setDeleteId(item)
+                    }}
+                         className={cls.main__edit}
+                    >
+                        <img src={editIcon} alt=""/>
+                    </div>
+                    <img src={item?.img} alt=""/>
+                </div>
+
+                <div className={cls.main__box_main}>
+                    <div className={cls.main__box_date}>
+                        {item.date}
+                    </div>
+
+                    <div className={cls.main__box_title}>
+
+                        {item?.name}
+                    </div>
+                    <div className={cls.main__box_descr}>
+
+                        {item?.text}
+                    </div>
+                </div>
+            </div>
+        ))
+    }
+    const render = renderData()
+
+    return (
+        <div className={cls.main}>
+            <div className={cls.main__header}>
+                <div className={cls.main__title}>
+                    Latest news
+                </div>
+
+
+                <div className={cls.main__add} onClick={() => setAdd(!add)}>
+                    <img src={addIcon} alt=""/>
+                </div>
+            </div>
+            <div className={cls.main__wrapper}>
+                {render}
+            </div>
+
+        </div>
+    );
+};
+
+
+

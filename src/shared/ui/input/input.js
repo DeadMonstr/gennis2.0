@@ -26,12 +26,12 @@ export const Input = React.memo(({
     const [showPassword, setShowPassword] = useState(false);
     const [silk, setSilk] = useState("");
 
-    console.log(showPassword)
+
     return register ? (
         <label style={style} className={cls.inputLabel} htmlFor={name}>
-            {title || subTitle || placeholder ? (
+            {title || subTitle   ? (
                 <div className={cls.info}>
-                    {(title || placeholder) && <span>{title ? title : placeholder}</span>}
+                    {(title) && <span>{title}</span>}
                     {subTitle && <span>{subTitle}</span>}
                 </div>
             ) : null}

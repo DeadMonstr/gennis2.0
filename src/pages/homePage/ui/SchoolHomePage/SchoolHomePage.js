@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 
 import {
     SchoolHomeMain,
@@ -7,17 +7,48 @@ import {
     SchoolHomeCertificats,
     SchoolHomeAboutUs,
     SchoolHomeContact,
-    SchoolParentesComment, SchoolHomeGallery, SchoolHomeWorkUs,
-    SchoolNews, WorkUs, Calendar, SchoolHomeContactUs
+    SchoolParentesComment,
+    SchoolHomeGallery,
+    SchoolHomeWorkUs,
+    SchoolNews,
+    WorkUs,
+    Calendar,
+    SchoolHomeContactUs,
+    SchoolHomeStudentProfile,
+    getSchoolProfileData,
+    SchoolHomeLatestNew, SchoolHomeCurricular
 } from "entities/schoolHome";
 
 import cls from "./SchoolHomePage.module.sass";
 import {Footer} from "../../../../entities/schoolHome/ui/footer/footer";
 import {Contact} from "../../../../entities/centerHome";
+import {useSelector} from "react-redux";
+import {
+    SchoolHomeCurriculamModal,
+    SchoolHomeLatestEditModal,
+    schoolHomeLatestEditModal,
+    SchoolHomeLatestNewModal,
+    SchoolHomeStudentEditModal,
+    SchoolHomeStudentProfileModal
+} from "../../../../features/schoolHome";
+import {useForm} from "react-hook-form";
+import {getSchoolLatestSlice} from "../../../../entities/schoolHome/model/selector/schoolLatestSelector";
+
 
 export const SchoolHomePage = () => {
 
+
+
+
+
+
+
     const currentHeight = useRef()
+    const [add, setAdd] = useState(false)
+    const [edit, setEdit] = useState(false)
+
+
+    const [addLatestNew, setAddLatestNew] = useState(false)
 
     // const onScroll = (target) => {
     //     console.log(true)
@@ -39,24 +70,44 @@ export const SchoolHomePage = () => {
             className={cls.schoolHome}
         >
             {/*<div*/}
-            {/*    onScroll={(e) => onScroll(e.target)}*/}
+            {/*    // onScroll={(e) => onScroll(e.target)}*/}
             {/*    className={cls.schoolHome__header}*/}
             {/*>*/}
-                <SchoolHomeHeader ref={currentHeight}/>
-                <SchoolHomeMain/>
+            <SchoolHomeHeader ref={currentHeight}/>
+            {/*<SchoolHomeMain/>*/}
             {/*</div>*/}
-            <SchoolHomeExtracurricus/>
-            <SchoolHomeCertificats/>
-            <SchoolHomeAboutUs/>
-            <SchoolHomeGallery/>
-            <SchoolHomeWorkUs/>
-            <SchoolHomeContact/>
-            <SchoolHomeContactUs/>
-            <SchoolParentesComment/>
-            <SchoolNews/>
-            <WorkUs/>
-            <Calendar/>
-            <Footer/>
+            {/*/!*<SchoolHomeExtracurricus/>*!/*/}
+            {/*<SchoolHomeCertificats/>*/}
+            {/*<SchoolHomeAboutUs/>*/}
+            {/*<SchoolHomeGallery/>*/}
+            {/*/!*<SchoolHomeWorkUs/>*!/*/}
+            {/*<SchoolHomeContact/>*/}
+            {/*<SchoolHomeContactUs/>*/}
+            {/*/!*<SchoolParentesComment/>*!/*/}
+            {/*<SchoolNews/>*/}
+            {/*<WorkUs/>*/}
+            {/*/!*<Calendar/>*!/*/}
+            {/*<Footer/>*/}
+
+
+
+
+
+
+
+            <SchoolHomeStudentProfileModal/>
+
+
+
+
+            {/*<SchoolHomeLatestNewModal/>*/}
+
+
+
+
+
+            {/*<SchoolHomeCurriculamModal/>*/}
+
         </div>
     )
 }

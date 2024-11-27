@@ -7,11 +7,13 @@ import cls from "./schoolHomeHeader.module.sass";
 import turonLogo from "shared/assets/logo/turonLogo.png";
 import turonLogoText from "shared/assets/logo/turonLogoText.png";
 import {Link} from "react-router-dom";
+import {useNavigate} from "react-router";
 
 const list = [
     {
         name: "aboutUs",
-        label: "About us"
+        label: "About us",
+        path: "aboutUs"
     },
     {
         name: "education",
@@ -37,6 +39,8 @@ const list = [
 
 export const SchoolHomeHeader = memo(() => {
 
+    const navigate =  useNavigate()
+
     const [activeSection, setActiveSection] = useState(null)
     const [activeBurger, setActiveBurger] = useState(false)
 
@@ -44,7 +48,10 @@ export const SchoolHomeHeader = memo(() => {
         return list.map(item => {
             return (
                 <li
-                    onClick={() => setActiveSection(item.name)}
+                    onClick={() => {
+                        setActiveSection(item.name)
+                        navigate(item.path)
+                    }}
                     className={classNames(cls.listItem, {
                         [cls.active]: item.name === activeSection
                     })}
