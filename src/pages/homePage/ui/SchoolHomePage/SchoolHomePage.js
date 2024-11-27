@@ -8,7 +8,7 @@ import {
     SchoolHomeAboutUs,
     SchoolHomeContact,
     SchoolParentesComment, SchoolHomeGallery, SchoolHomeWorkUs,
-    SchoolNews, WorkUs, Calendar, SchoolHomeContactUs, SchoolCurricular
+    SchoolNews, WorkUs, Calendar, SchoolHomeContactUs
 } from "entities/schoolHome";
 import {SchoolVisionMission} from "features/schoolHome";
 
