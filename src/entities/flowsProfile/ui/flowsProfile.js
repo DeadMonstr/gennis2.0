@@ -22,6 +22,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {Button} from "shared/ui/button";
+import {ConfirmModal} from "shared/ui/confirmModal";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import {Form} from "shared/ui/form";
 import {Input} from "shared/ui/input";
@@ -58,6 +59,7 @@ export const FlowProfileNavigators = memo(() => {
 
     const [activeTeacher, setActiveTeacher] = useState("")
     const [subject  ,setSubject] = useState(null)
+    const [isDeleted, setIsDeleted] = useState(false)
 
     useEffect(() => {
         dispatch(fetchFlowProfileData({id}))
@@ -90,7 +92,7 @@ export const FlowProfileNavigators = memo(() => {
                 .catch(err => console.log(err))
     }, [data])
 
-    const onDelete = () => {
+    const onSubmitDelete = () => {
         request(`${API_URL}Flow/flow-delete/${id}`, "DELETE", null, headers())
             .then(res => {
                 navigate(-2)
@@ -108,6 +110,10 @@ export const FlowProfileNavigators = memo(() => {
                 }))
             })
         // dispatch(deleteGroupProfile({id}))
+    }
+
+    const onDelete = () => {
+        setIsDeleted(true)
     }
 
     const onSubmitChange = (data) => {
@@ -308,6 +314,12 @@ export const FlowProfileNavigators = memo(() => {
 
 
             </Modal>
+            <ConfirmModal
+                type={"danger"}
+                active={isDeleted}
+                setActive={setIsDeleted}
+                onClick={onSubmitDelete}
+            />
         </div>
     )
 })

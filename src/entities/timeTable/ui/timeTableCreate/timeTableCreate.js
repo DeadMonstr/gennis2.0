@@ -1,5 +1,7 @@
-import {memo} from 'react';
+import {AnimatedMulti} from "features/workerSelect";
+import {memo, useEffect, useState} from 'react';
 import {useForm} from "react-hook-form";
+import {useDispatch} from "react-redux";
 
 import {Modal} from "shared/ui/modal";
 import {Form} from "shared/ui/form";
@@ -12,9 +14,8 @@ import {Select} from "shared/ui/select";
 
 export const TimeTableCreate = memo((props) => {
 
-    const {register, handleSubmit} = useForm()
-
     const {
+        classInput,
         active,
         setActive,
         onSubmit,
@@ -33,13 +34,29 @@ export const TimeTableCreate = memo((props) => {
         },
     ]
 
+    const {
+        register,
+        handleSubmit,
+        reset
+    } = useForm()
+
+    const [selectedCI, setSelectedCI] = useState(null)
+    const [classInputData, setClassInputData] = useState([])
+
+    useEffect(() => {
+        setClassInputData(classInput.map(item => ({value: item.id, label: item.name})))
+    }, [classInput])
+
     return (
         <Modal
             active={active}
             setActive={setActive}
         >
             <Form
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={handleSubmit((data) => {
+                    onSubmit({...data, types: selectedCI.map(item => item.value)})
+                    reset()
+                })}
                 typeSubmit={""}
             >
                 <div className={cls.create}>
@@ -80,6 +97,12 @@ export const TimeTableCreate = memo((props) => {
                         register={register}
                         required
                         options={optionsType}
+                    />
+                    <AnimatedMulti
+                        options={classInputData}
+                        onChange={setSelectedCI}
+                        value={selectedCI}
+                        fontSize={15}
                     />
                     {
                         loading ? <MiniLoader/> :

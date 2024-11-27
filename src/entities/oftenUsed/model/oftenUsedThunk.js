@@ -50,6 +50,14 @@ export const fetchCategories = createAsyncThunk(
     }
 )
 
+export const fetchClassInput = createAsyncThunk(
+    "oftenUsedSlice/fetchHoverClass",
+    () => {
+        const {request} = useHttp()
+        return request(`${API_URL}SchoolTimeTable/hours-list-type/`, "GET", null, headers())
+    }
+)
+
 export const fetchGroupsForSelect = createAsyncThunk(
     "oftenUsedSlice/fetchGroupsForSelect",
     (id) => {

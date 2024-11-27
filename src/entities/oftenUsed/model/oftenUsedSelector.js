@@ -66,3 +66,13 @@ export const getTeachersSelectLoading = (state) =>
 
 export const getTeachersSelectError = (state) =>
     state.oftenUsedSlice.teachersError
+
+
+export const getClassInputData = (state) =>
+    state.oftenUsedSlice.classInput
+
+export const getClassInputLoading = (state) =>
+    state.oftenUsedSlice.classInputLoading
+
+export const getClassInputError = (state) =>
+    state.oftenUsedSlice.classInputError

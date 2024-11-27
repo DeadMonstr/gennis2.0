@@ -106,7 +106,11 @@ export const TeachersSalary = ({
             <tbody>
             <tr key={item.id}>
                 <td>{index + 1}</td>
-                <td onClick={() => navigation(`../../../teacher/teacherProfile/${item.id}`)}>{item?.teacher?.user?.name} {item?.teacher?.user?.surname}</td>
+                <td
+                    onClick={() => navigation(`../../teacher/teacherProfile/${item?.teacher?.id}`, {relative: "path"})}
+                >
+                    {item?.teacher?.user?.name} {item?.teacher?.user?.surname}
+                </td>
                 <td>{item?.salary}</td>
                 <td>{item?.comment}</td>
                 <td>{item?.date}</td>

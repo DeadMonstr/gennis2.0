@@ -1,19 +1,19 @@
 export const getRouteMain = () => 'home';
-export const getRouteTaskManager = (id) => `taskManager/${id}`;
+export const getRouteTaskManager = (id) => `taskManager`;
 
 export const getRouteStudents = (id) => `students/*`;
 export const getRouteCalendar = () => `calendar/*`;
 export const getRouteGroups = (id) => `groups/*`;
-export const getRouteRegister = () => `register/:idBranch`;
+export const getRouteRegister = () => `register`;
 export const getRouteTeacher = (id) => `teacher/*`;
 export const getRouteRooms = (id) => `rooms/*`;
 export const getTeacherProfile = (id) => `teacher/teacherProfile/${id}`;
-export const getVacancyPage = (id) => `vacancyPage/${id}`
-export const getVacancyWorkPage = (id) => `vacancyPage/:id/vacancyWorkPage/${id}`
+export const getVacancyPage = (id) => `vacancyPage`
+export const getVacancyWorkPage = (id) => `vacancyPage/vacancyWorkPage/${id}`
 export const getRoomsProfilePage = (id) => `rooms/roomsProfilePage/${id}`
 
 export const getProfile = (id) => `students/profile/${id}`;
-export const getRouteTimePage = (id) => `timeList/${id}`
+export const getRouteTimePage = (id) => `timeList`
 export const getRouteUserProfile = (id) => `profile/${id}`
 export const getEmployerPage = (id) => `employer/*`
 
@@ -29,7 +29,7 @@ export const getClass = () => `class/*`
 
 export const getFlow = (id) => `flows/*`
 
-export const getContract = (id) => `contract/${id}`
+export const getContract = (id) => `contract`
 
 export const getCapital = (id) => `capital/*`
 
@@ -52,10 +52,10 @@ export const getEducation = (id) => `education/${id}`
 export const getSystem = (id) => `system/${id}`
 export const getAccounting = (id) => `accounting/*`
 
-export const getInkasatsiya = (id) => `inkasatsiya/${id}/*`
+export const getInkasatsiya = (id) => `inkasatsiya/*`
 
 
-export const getOtchot = () => `accounting/:id/otchot/*`
+export const getOtchot = () => `accounting/otchot/*`
 
 
 export const getGroupHistory = (id) => `students/profile/history/${id}`

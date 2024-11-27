@@ -26,6 +26,7 @@ import {
 } from "entities/profile/studentProfile";
 import {useNavigate, useParams} from "react-router";
 import {useTheme} from "shared/lib/hooks/useTheme";
+import {ConfirmModal} from "shared/ui/confirmModal";
 import {EditableCard} from "shared/ui/editableCard";
 import {Modal} from "shared/ui/modal";
 import {Form} from "shared/ui/form";
@@ -75,6 +76,9 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
     const groups = useSelector(getFilteredGroups)
     const reasons = useSelector(getReasons)
 
+    const [isDeleted, setIsDeleted] = useState(false)
+    const [dataDeleted, setDataDeleted] = useState(null)
+
     useEffect(() => {
         if (data && branch) {
             dispatch(filteredStudents({
@@ -109,11 +113,11 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
         )
     }, [students, searchValue])
 
-    const onSubmitDelete = (dataForm) => {
+    const onSubmitDelete = () => {
         const place = userSystem?.name === "center" ? "guruh" : "sinf"
         const selectedStudent = data?.students?.filter(item => item.id === selectDeleteId)[0]?.user
         const res = {
-            ...dataForm,
+            ...dataDeleted,
             students: [selectDeleteId],
             update_method: "remove_students"
         }
@@ -127,6 +131,12 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
             status: true,
             msg: `${selectedStudent?.name} ${selectedStudent?.surname} ${place}dan o'chirildi`
         }))
+        setIsDeleted(false)
+    }
+
+    const onDelete = (data) => {
+        setDataDeleted(data)
+        setIsDeleted(true)
     }
 
     const onSubmitMove = (data) => {
@@ -347,7 +357,7 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
                 <h1>O’chirish</h1>
                 <Form
                     extraClassname={cls.deleteForm__form}
-                    onSubmit={handleSubmit(onSubmitDelete)}
+                    onSubmit={handleSubmit(onDelete)}
                     typeSubmit={""}
                 >
                     <Select
@@ -555,6 +565,12 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
                     Add
                 </Button>
             </Modal>
+            <ConfirmModal
+                type={"danger"}
+                active={isDeleted}
+                setActive={setIsDeleted}
+                onClick={onSubmitDelete}
+            />
         </>
     )
 })
