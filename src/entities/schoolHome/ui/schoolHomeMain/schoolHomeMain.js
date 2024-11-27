@@ -131,6 +131,9 @@ export const SchoolHomeMain = memo(() => {
             <div className={cls.wrapper}>
                 <div className={cls.homeMain__programs}>
                     <div className={cls.programsInfo}>
+                        <div className={cls.programsInfo__mainEdit}>
+                            <i className="fas fa-edit"/>
+                        </div>
                         <h2 className={cls.programsInfo__title}>Programs</h2>
                         <p className={cls.programsInfo__text}>
                             Lorem Ipsum is simply dummy text of

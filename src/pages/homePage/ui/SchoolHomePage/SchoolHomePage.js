@@ -44,22 +44,22 @@ export const SchoolHomePage = () => {
             {/*    className={cls.schoolHome__header}*/}
             {/*>*/}
                 <SchoolHomeHeader ref={currentHeight}/>
-                {/*<SchoolHomeMain/>*/}
+                <SchoolHomeMain/>
             {/*</div>*/}
-            {/*<SchoolHomeExtracurricus/>*/}
-            {/*<SchoolHomeCertificats/>*/}
-            {/*<SchoolHomeAboutUs/>*/}
-            {/*<SchoolHomeGallery/>*/}
-            {/*<SchoolHomeWorkUs/>*/}
-            {/*<SchoolHomeContact/>*/}
-            {/*<SchoolHomeContactUs/>*/}
-            {/*<SchoolParentesComment/>*/}
-            {/*<SchoolNews/>*/}
-            {/*<WorkUs/>*/}
-            {/*<Calendar/>*/}
-            {/*<Footer/>*/}
+            <SchoolHomeExtracurricus/>
+            <SchoolHomeCertificats/>
+            <SchoolHomeAboutUs/>
+            <SchoolHomeGallery/>
+            <SchoolHomeWorkUs/>
+            <SchoolHomeContact/>
+            <SchoolHomeContactUs/>
+            <SchoolParentesComment/>
+            <SchoolNews/>
+            <WorkUs/>
+            <Calendar/>
+            <Footer/>
             {/*<SchoolVisionMission/>*/}
-            <SchoolCurricular/>
+            {/*<SchoolCurricular/>*/}
         </div>
     )
 }
