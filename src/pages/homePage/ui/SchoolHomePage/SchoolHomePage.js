@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {
     SchoolHomeMain,
@@ -22,7 +22,7 @@ import {
 import cls from "./SchoolHomePage.module.sass";
 import {Footer} from "../../../../entities/schoolHome/ui/footer/footer";
 import {Contact} from "../../../../entities/centerHome";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {
     SchoolGalleryModal, SchoolHomeCertificatsModal,
     SchoolHomeCurriculamModal,
@@ -34,6 +34,12 @@ import {
 } from "../../../../features/schoolHome";
 import {useForm} from "react-hook-form";
 import {getSchoolLatestSlice} from "../../../../entities/schoolHome/model/selector/schoolLatestSelector";
+import {
+    SchoolLeadershipTeamModal
+} from "../../../../features/schoolHome/ui/SchoolLeadershipTeamModal/SchoolLeadershipTeamModal";
+import {fetchHomePage} from "../../../../entities/schoolHome/model/thunk/getHomePageSelector";
+import {getHomePageType} from "../../../../entities/schoolHome/model/selector/getHomePageSelector";
+import {type} from "@testing-library/user-event/dist/type";
 
 
 export const SchoolHomePage = () => {
@@ -50,6 +56,17 @@ export const SchoolHomePage = () => {
 
 
     const [addLatestNew, setAddLatestNew] = useState(false)
+
+
+
+    const types = useSelector(getHomePageType)
+
+    const dispatch = useDispatch()
+
+
+    useEffect(() => {
+        dispatch(fetchHomePage())
+    } , [])
 
     // const onScroll = (target) => {
     //     console.log(true)
@@ -95,10 +112,15 @@ export const SchoolHomePage = () => {
 
 
 
+            <SchoolHomeCurriculamModal  type={types}/>
+
+
+            {/*<SchoolHomeStudentProfileModal types={types}/>*/}
 
 
 
-            <SchoolHomeStudentProfileModal/>
+
+            {/*<SchoolHomeLatestNewModal types={types}/>*/}
 
 
 
@@ -108,6 +130,11 @@ export const SchoolHomePage = () => {
 
 
 
+
+
+
+
+            {/*<SchoolLeadershipTeamModal type={types}/>*/}
 
             <SchoolHomeCurriculamModal/>
 

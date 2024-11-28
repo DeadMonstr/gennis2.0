@@ -24,7 +24,8 @@ export const SchoolHomeStudentProfile = ({data , setValue , setEdit , add , setA
                     >
                         <img src={editIcon} alt=""/>
                     </div>
-                    <img src={item?.img} alt=""/>
+                    <img src={item?.images.map(item => item.image)} alt=""/>
+
                 </div>
 
                 <div className={cls.main__box_title}>

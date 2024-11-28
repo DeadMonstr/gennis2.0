@@ -1,29 +1,10 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-import imgProfile from "shared/assets/images/turonStudent.svg"
-import imgProfile2 from "shared/assets/images/turonStudent2.svg"
+
+import {getStudentProfile} from "../thunk/schoolStudentProfileThunk";
 
 const initialState = {
-    data: [
-        {
-            name: "What is Lorem Ipsum?",
-            text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
-            img: imgProfile,
-            id: 1
-        },
-        {
-            name: "What is Lorem Ipsum?",
-            text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
-            img: imgProfile2,
-            id: 2
-        },
-        {
-            name: "What is Lorem Ipsum?",
-            text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
-            img: imgProfile,
-            id: 3
-        },
-    ]
+    data: []
 }
 
 
@@ -43,7 +24,22 @@ const schoolProfileSlice = createSlice({
 
     },
     initialState,
-    extraReducers: builder => {}
+    extraReducers: builder =>
+        builder
+            .addCase(getStudentProfile.pending, state => {
+                state.loading = true
+                state.error = false
+
+            })
+            .addCase(getStudentProfile.fulfilled, (state , action) => {
+                state.loading = false
+                state.data = action.payload
+                state.error = false
+            })
+            .addCase(getStudentProfile.rejected, state => {
+                state.loading = false
+                state.error = true
+            })
 })
 
 export const {onAdd , onDelete , onEdit} = schoolProfileSlice.actions

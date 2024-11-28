@@ -80,7 +80,13 @@ import {oftenUsedSlice} from "entities/oftenUsed";
 import {rgbSlice} from "entities/rgbData";
 import {accountingFilterSlice} from "features/filters/accountingFilter";
 import {flowFilterSlice} from "features/filters/flowFilter";
-import {schoolCurricularSlice, schoolLatestSlice, schoolProfileSlice} from "../entities/schoolHome";
+import {
+    getHomePageSlice,
+    schoolCurricularSlice,
+    schoolLatestSlice,
+    schoolLeaderSheapSlice,
+    schoolProfileSlice
+} from "../entities/schoolHome";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -180,7 +186,9 @@ export const store = configureStore({
         flowFilterSlice,
         schoolProfileSlice,
         schoolLatestSlice,
-        schoolCurricularSlice
+        schoolCurricularSlice,
+        schoolLeaderSheapSlice,
+        getHomePageSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

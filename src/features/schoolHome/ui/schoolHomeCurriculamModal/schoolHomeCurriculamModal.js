@@ -1,31 +1,31 @@
-import React, {useState} from "react";
-import {SchoolHomeCurricular} from "../../../../entities/schoolHome";
+import React, {useEffect, useState} from "react";
+import {SchoolHomeCurricular} from "entities/schoolHome";
 import {useDispatch, useSelector} from "react-redux";
 import {
     getCurricularData,
     getExtraCurricularData
-} from "../../../../entities/schoolHome/model/selector/schoolCurricularSelector";
-import {Modal} from "../../../../shared/ui/modal";
-import {Input} from "../../../../shared/ui/input";
+} from "entities/schoolHome/model/selector/schoolCurricularSelector";
+import {Modal} from "shared/ui/modal";
+import {Input} from "shared/ui/input";
 
 
 import cls from "./schoolHomeCurriculamModal.module.sass"
-import {Textarea} from "../../../../shared/ui/textArea";
-import backImg from "../../../../shared/assets/icons/skew870.svg";
+import {Textarea} from "shared/ui/textArea";
+import backImg from "shared/assets/icons/skew870.svg";
 import {useDropzone} from "react-dropzone";
 import defImg from "shared/assets/images/Image Placeholder.svg"
-import {Button} from "../../../../shared/ui/button";
+import {Button} from "shared/ui/button";
 import {useForm} from "react-hook-form";
 
 import {
     onAddCurricular,
     onDeleteCurricular,
     onEditCurricular, onExtraAddCurricular, onExtraDeleteCurricular, onExtraEditCurricular
-} from "../../../../entities/schoolHome/model/slice/schoolCurricularSlice";
-import {onAdd} from "../../../../entities/schoolHome/model/slice/SchoolHomeLatestNewSlice";
-import {onDelete, onEdit} from "../../../../entities/schoolHome/model/slice/schoolHomeStudentProfileSlice";
+} from "entities/schoolHome/model/slice/schoolCurricularSlice";
+import {API_URL, header, headerImg, useHttp} from "shared/api/base";
+import {getCurriculum, getExtraCurriculum} from "entities/schoolHome/model/thunk/curriculumThunk";
 
-export const SchoolHomeCurriculamModal = () => {
+export const SchoolHomeCurriculamModal = ({type}) => {
 
     const curricularData = useSelector(getCurricularData)
     const extraCurricularData = useSelector(getExtraCurricularData)
@@ -42,17 +42,31 @@ export const SchoolHomeCurriculamModal = () => {
     const [extraCurricular, setActiveExtraCurricular] = useState(false)
     const [extraCurricularEdit, setActiveExtraCurricularEdit] = useState(false)
 
+    const dispatch = useDispatch()
+
+
+    useEffect(() => {
+       dispatch(getCurriculum())
+       dispatch(getExtraCurriculum())
+    }, [])
+
+
 
     return (
         <div>
             <SchoolHomeCurricular
+
+                data={curricularData}
+                extraCurricularData={extraCurricularData}
+
+
                 setValue={setValue}
                 setActiveEdit={setActiveEdit}
                 setDeleteId={setDeleteId}
                 setActive={setActiveAdd}
-                data={curricularData}
+
                 setActiveExtraCurricular={setActiveExtraCurricular}
-                extraCurricularData={extraCurricularData}
+
                 setActiveExtraCurricularEdit={setActiveExtraCurricularEdit}
                 setDeleteIdExtra={setDeleteIdExtra}
             />
@@ -71,6 +85,9 @@ export const SchoolHomeCurriculamModal = () => {
                 setActive={setActiveEdit}
                 active={activeEdit}
             />
+
+
+
 
 
             <SchoolExtraCurriculumAdd
@@ -93,6 +110,8 @@ export const SchoolCurriculumAdd = ({active, setActive}) => {
     const dispatch = useDispatch()
     const {register, handleSubmit, setValue} = useForm()
     const [files, setFiles] = useState(null);
+
+    const {request} = useHttp()
     const {getRootProps, getInputProps} = useDropzone({
         accept: {
             'image/*': [],
@@ -116,20 +135,30 @@ export const SchoolCurriculumAdd = ({active, setActive}) => {
 
     const onAddItem = (data) => {
 
-        const res = {
-            img: files?.map(item => item?.preview),
-            ...data,
-            id: new Date().getTime()
-        }
+        const formData = new FormData
+        formData.append("image", files[0])
+        formData.append("name", data.name)
+        formData.append("description", data.description)
+        formData.append("type", 7)
 
-        setValue("name", "")
-        setValue("text", "")
-        setFiles(null)
+        request(`${API_URL}Ui/fronted-pages/`, "POST", formData, headerImg())
+            .then(res => {
+                console.log(res)
+                setValue("name", "")
+                setValue("text", "")
+                setFiles(null)
+                dispatch(onAddCurricular(res))
+                console.log(res)
+                setActive(false)
+            })
+            .catch(err => console.log(err))
 
-        dispatch(onAddCurricular(res))
 
-        setFiles(null)
-        setActive(false)
+
+
+
+
+
     }
 
     return (
@@ -137,7 +166,7 @@ export const SchoolCurriculumAdd = ({active, setActive}) => {
             <div className={cls.curriculam}>
                 <div className={cls.curriculam__input}>
                     <Input placeholder={"Text"} register={register} name={"name"}/>
-                    <Textarea placeholder={"Text"} register={register} name={"text"}/>
+                    <Textarea placeholder={"Text"} register={register} name={"description"}/>
                 </div>
                 <div style={myStyle} className={cls.curriculam__aside}>
 
@@ -163,6 +192,8 @@ export const SchoolCurriculumAdd = ({active, setActive}) => {
 
 export const SchoolCurriculumEdit = ({active, setActive, handleSubmit, setValue, register, idItem}) => {
 
+
+    const {request} = useHttp()
     const dispatch = useDispatch()
     // const {register, setValue, handleSubmit} = useForm()
     const [files, setFiles] = useState(null);
@@ -190,23 +221,45 @@ export const SchoolCurriculumEdit = ({active, setActive, handleSubmit, setValue,
     const onDeleteItem = (data) => {
 
 
-        dispatch(onDeleteCurricular(idItem.id))
+        request(`${API_URL}Ui/fronted-pages/${idItem.id}` , "DELETE" , null , header() )
+            .then(res => {
 
-        setActive(false)
+                dispatch(onDeleteCurricular(idItem.id))
+
+                setActive(false)
+            })
+
+
     }
 
 
     const onUpdateItem = (data) => {
 
-        const res = {
-            img: files ? files?.map(item => item?.preview) : idItem?.img?.map(item => item?.img),
-            ...data,
+        const formData = new FormData
 
+        if (files) {
+            formData.append("image", files[0])
         }
-        dispatch(onEditCurricular({id: idItem.id, data: res}))
 
-        setFiles(null)
-        setActive(false)
+        formData.append("name", data.name)
+        formData.append("description", data.description)
+        formData.append("date", data.date)
+        formData.append("type", 7)
+
+
+        request(`${API_URL}Ui/fronted-pages/${idItem.id}/`, "PATCH", formData, headerImg())
+            .then(res => {
+                dispatch(onEditCurricular({id: idItem.id, data: res}))
+                setFiles(null)
+                setValue("name", "")
+                setValue("description", "")
+
+                setActive(false)
+
+            })
+
+
+
     }
 
     return (
@@ -214,7 +267,7 @@ export const SchoolCurriculumEdit = ({active, setActive, handleSubmit, setValue,
             <div className={cls.curriculam}>
                 <div className={cls.curriculam__input}>
                     <Input placeholder={"Text"} register={register} name={"name"}/>
-                    <Textarea placeholder={"Text"} register={register} name={"text"}/>
+                    <Textarea placeholder={"Text"} register={register} name={"description"}/>
                 </div>
                 <div style={myStyle} className={cls.curriculam__aside}>
 
@@ -244,6 +297,7 @@ export const SchoolExtraCurriculumAdd = ({setActive, active}) => {
 
     const dispatch = useDispatch()
 
+    const {request} = useHttp()
     const {register, setValue, handleSubmit} = useForm()
     const [files, setFiles] = useState(null);
     const {getRootProps, getInputProps} = useDropzone({
@@ -262,21 +316,30 @@ export const SchoolExtraCurriculumAdd = ({setActive, active}) => {
     });
 
 
-    const onClick = (data) => {
 
-        const res = {
-            img: files.map(item => item.preview),
-            ...data,
-            id: new Date().getTime()
-        }
 
-        setValue("name", "")
-        setValue("text", "")
-        setValue("date", "")
-        setFiles(null)
-        dispatch(onExtraAddCurricular(res))
-        console.log(res)
-        setActive(false)
+
+    const onAddItem = (data) => {
+
+        const formData = new FormData
+        formData.append("image", files[0])
+        formData.append("name", data.name)
+        formData.append("description", data.description)
+        formData.append("date", data.date)
+        formData.append("type", 6)
+
+        request(`${API_URL}Ui/fronted-pages/`, "POST", formData, headerImg())
+            .then(res => {
+                console.log(res)
+                setValue("name", "")
+                setValue("text", "")
+
+                setFiles(null)
+                dispatch(onExtraAddCurricular(res))
+                console.log(res)
+                setActive(false)
+            })
+            .catch(err => console.log(err))
     }
 
     return (
@@ -288,13 +351,13 @@ export const SchoolExtraCurriculumAdd = ({setActive, active}) => {
                         <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
                              alt=""/>}
                 </div>
-                <Input required register={register} name={"subject_name"} extraClassName={cls.modalExtra__input}
+                <Input required register={register} name={"name"} extraClassName={cls.modalExtra__input}
                        placeholder={"Name"}/>
-                <Textarea required placeholder={"Text"} name={"descr"} register={register}
+                <Textarea required placeholder={"Text"} name={"description"} register={register}
                           extraClassName={cls.modalExtra__input}/>
             </div>
             <div className={cls.modal__btn}>
-                <Button onClick={handleSubmit(onClick)} extraClass={cls.modal__btn_add}>Add</Button>
+                <Button onClick={handleSubmit(onAddItem)} extraClass={cls.modal__btn_add}>Add</Button>
                 <Button onClick={handleSubmit(() => setActive(false))}
                         extraClass={cls.modal__btn_cancel}>Cancel</Button>
             </div>
@@ -306,6 +369,7 @@ export const SchoolExtraCurriculumAdd = ({setActive, active}) => {
 export const SchoolExtraCurriculumEdit = ({active, setActive, handleSubmit, setValue, register, idItem}) => {
     const dispatch = useDispatch()
 
+    const {request} = useHttp()
     // const {register, setValue, handleSubmit} = useForm()
     const [files, setFiles] = useState(null);
     const {getRootProps, getInputProps} = useDropzone({
@@ -327,23 +391,38 @@ export const SchoolExtraCurriculumEdit = ({active, setActive, handleSubmit, setV
     const onDeleteItem = (data) => {
 
 
-        dispatch(onExtraDeleteCurricular(idItem.id))
 
-        setActive(false)
+        request(`${API_URL}Ui/fronted-pages/${idItem.id}` , "DELETE" , null , header() )
+            .then(res => {
+                dispatch(onExtraDeleteCurricular(idItem.id))
+                setActive(false)
+            })
     }
 
     const onUpdateItem = (data) => {
 
-        const res = {
-            img: files ? files?.map(item => item?.preview) : idItem?.img,
-            ...data,
+        const formData = new FormData
 
+        if (files) {
+            formData.append("image", files[0])
         }
 
-        dispatch(onExtraEditCurricular({id: idItem.id, data: res}))
+        formData.append("name", data.name)
+        formData.append("description", data.description)
+        formData.append("date", data.date)
+        formData.append("type", 6)
 
-        setFiles(null)
-        setActive(false)
+
+        request(`${API_URL}Ui/fronted-pages/${idItem.id}/`, "PATCH", formData, headerImg())
+            .then(res => {
+                dispatch(onExtraEditCurricular({id: idItem.id, data: res}))
+                setFiles(null)
+                setValue("name", "")
+                setValue("description", "")
+                setActive(false)
+
+            })
+
     }
     return (
         <Modal typeIcon setActive={setActive} active={active}>
@@ -354,9 +433,9 @@ export const SchoolExtraCurriculumEdit = ({active, setActive, handleSubmit, setV
                         <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
                              alt=""/>}
                 </div>
-                <Input required register={register} name={"subject_name"} extraClassName={cls.modalExtra__input}
+                <Input required register={register} name={"name"} extraClassName={cls.modalExtra__input}
                        placeholder={"Name"}/>
-                <Textarea required placeholder={"Text"} name={"descr"} register={register}
+                <Textarea required placeholder={"Text"} name={"description"} register={register}
                           extraClassName={cls.modalExtra__input}/>
             </div>
             <div className={cls.modal__btnEdit}>

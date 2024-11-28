@@ -24,9 +24,21 @@ export {getSchoolProfileData} from "./model/selector/schoolHomeStudentProfileSel
 export {SchoolHomeCurricular} from "./ui/schoolHomeCurricular/schoolHomeCurricular"
 export {} from "./ui/"
 
+export {SchoolLeadershipTeam} from "./ui/schoolLeadershipTeam/schoolLeadershipTeam"
+
+
 export {default as schoolProfileSlice} from "./model/slice/schoolHomeStudentProfileSlice"
 export {default as schoolLatestSlice} from "./model/slice/SchoolHomeLatestNewSlice"
 
 
 
 export {default as schoolCurricularSlice} from "./model/slice/schoolCurricularSlice"
+
+
+
+export {default as schoolLeaderSheapSlice} from "./model/slice/schoolLeaderSheapSlice"
+
+
+export {default as getHomePageSlice} from "./model/slice/getHomePageSlice"
+
+
