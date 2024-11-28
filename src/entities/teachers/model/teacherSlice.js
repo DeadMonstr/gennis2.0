@@ -17,7 +17,7 @@ export const teachersSlice = createSlice({
 
         onDelete: (state, action) => {
             console.log(action.payload, "hello")
-            state.teachersData = [...state.teachersData.filter(item => item.id !== action.payload)]
+            state.teachersData = state.teachersData.filter(item => item.id !== +action.payload)
         },
     },
     extraReducers: builder => {

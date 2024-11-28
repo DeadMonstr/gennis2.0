@@ -4,7 +4,7 @@ import React, {memo} from 'react';
 import cls from "./schoolHomeGallery.module.sass";
 import robot from "shared/assets/images/turonGallery.png";
 
-export const SchoolHomeGallery = memo(() => {
+export const SchoolHomeGallery = memo(({setActive}) => {
     return (
         <div className={cls.gallery}>
             <h2 className={cls.gallery__title}>Gallery</h2>
@@ -28,18 +28,17 @@ export const SchoolHomeGallery = memo(() => {
                         [cls.active]: false
                     })}
                 >
+                    <div
+                        onClick={() => setActive(true)}
+                        className={cls.item__change}
+                    >
+                        <i className="fas fa-edit"/>
+                    </div>
                     <img
                         className={cls.item__image}
                         src={robot}
                         alt=""
                     />
-                    {/*<h2*/}
-                    {/*    className={classNames(cls.item__title, {*/}
-                    {/*        [cls.active]: false*/}
-                    {/*    })}*/}
-                    {/*>*/}
-                    {/*    Robotics*/}
-                    {/*</h2>*/}
                     <p className={cls.item__text}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore
@@ -53,18 +52,17 @@ export const SchoolHomeGallery = memo(() => {
                         [cls.active]: false
                     })}
                 >
+                    <div
+                        onClick={() => setActive(true)}
+                        className={cls.item__change}
+                    >
+                        <i className="fas fa-edit"/>
+                    </div>
                     <img
                         className={cls.item__image}
                         src={robot}
                         alt=""
                     />
-                    {/*<h2*/}
-                    {/*    className={classNames(cls.item__title, {*/}
-                    {/*        [cls.active]: false*/}
-                    {/*    })}*/}
-                    {/*>*/}
-                    {/*    Robotics*/}
-                    {/*</h2>*/}
                     <p className={cls.item__text}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore
@@ -73,131 +71,6 @@ export const SchoolHomeGallery = memo(() => {
 
                     </p>
                 </div>
-                {/*<div*/}
-                {/*    className={classNames(cls.item, {*/}
-                {/*        [cls.active]: false*/}
-                {/*    })}*/}
-                {/*>*/}
-                {/*    <img*/}
-                {/*        className={cls.item__image}*/}
-                {/*        src={robot}*/}
-                {/*        alt=""*/}
-                {/*    />*/}
-                {/*    /!*<h2*!/*/}
-                {/*    /!*    className={classNames(cls.item__title, {*!/*/}
-                {/*    /!*        [cls.active]: false*!/*/}
-                {/*    /!*    })}*!/*/}
-                {/*    /!*>*!/*/}
-                {/*    /!*    Robotics*!/*/}
-                {/*    /!*</h2>*!/*/}
-                {/*    <p className={cls.item__text}>*/}
-                {/*        Robotics is an interdisciplinary branch of*/}
-                {/*        /!*<br/>*!/*/}
-                {/*        electronics and communication, computer*/}
-                {/*        /!*<br/>*!/*/}
-                {/*        science and engineering...*/}
-                {/*    </p>*/}
-                {/*</div>*/}
-                {/*<div*/}
-                {/*    className={classNames(cls.item, {*/}
-                {/*        [cls.active]: false*/}
-                {/*    })}*/}
-                {/*>*/}
-                {/*    <img*/}
-                {/*        className={cls.item__image}*/}
-                {/*        src={robot}*/}
-                {/*        alt=""*/}
-                {/*    />*/}
-                {/*    /!*<h2*!/*/}
-                {/*    /!*    className={classNames(cls.item__title, {*!/*/}
-                {/*    /!*        [cls.active]: false*!/*/}
-                {/*    /!*    })}*!/*/}
-                {/*    /!*>*!/*/}
-                {/*    /!*    Robotics*!/*/}
-                {/*    /!*</h2>*!/*/}
-                {/*    <p className={cls.item__text}>*/}
-                {/*        Robotics is an interdisciplinary branch of*/}
-                {/*        /!*<br/>*!/*/}
-                {/*        electronics and communication, computer*/}
-                {/*        /!*<br/>*!/*/}
-                {/*        science and engineering...*/}
-                {/*    </p>*/}
-                {/*</div>*/}
-                {/*<div*/}
-                {/*    className={classNames(cls.item, {*/}
-                {/*        [cls.active]: false*/}
-                {/*    })}*/}
-                {/*>*/}
-                {/*    <img*/}
-                {/*        className={cls.item__image}*/}
-                {/*        src={robot}*/}
-                {/*        alt=""*/}
-                {/*    />*/}
-                {/*    /!*<h2*!/*/}
-                {/*    /!*    className={classNames(cls.item__title, {*!/*/}
-                {/*    /!*        [cls.active]: false*!/*/}
-                {/*    /!*    })}*!/*/}
-                {/*    /!*>*!/*/}
-                {/*    /!*    Robotics*!/*/}
-                {/*    /!*</h2>*!/*/}
-                {/*    <p className={cls.item__text}>*/}
-                {/*        Robotics is an interdisciplinary branch of*/}
-                {/*        /!*<br/>*!/*/}
-                {/*        electronics and communication, computer*/}
-                {/*        /!*<br/>*!/*/}
-                {/*        science and engineering...*/}
-                {/*    </p>*/}
-                {/*</div>*/}
-                {/*<div*/}
-                {/*    className={classNames(cls.item, {*/}
-                {/*        [cls.active]: false*/}
-                {/*    })}*/}
-                {/*>*/}
-                {/*    <img*/}
-                {/*        className={cls.item__image}*/}
-                {/*        src={robot}*/}
-                {/*        alt=""*/}
-                {/*    />*/}
-                {/*    /!*<h2*!/*/}
-                {/*    /!*    className={classNames(cls.item__title, {*!/*/}
-                {/*    /!*        [cls.active]: false*!/*/}
-                {/*    /!*    })}*!/*/}
-                {/*    /!*>*!/*/}
-                {/*    /!*    Robotics*!/*/}
-                {/*    /!*</h2>*!/*/}
-                {/*    <p className={cls.item__text}>*/}
-                {/*        Robotics is an interdisciplinary branch of*/}
-                {/*        /!*<br/>*!/*/}
-                {/*        electronics and communication, computer*/}
-                {/*        /!*<br/>*!/*/}
-                {/*        science and engineering...*/}
-                {/*    </p>*/}
-                {/*</div>*/}
-                {/*<div*/}
-                {/*    className={classNames(cls.item, {*/}
-                {/*        [cls.active]: false*/}
-                {/*    })}*/}
-                {/*>*/}
-                {/*    <img*/}
-                {/*        className={cls.item__image}*/}
-                {/*        src={robot}*/}
-                {/*        alt=""*/}
-                {/*    />*/}
-                {/*    /!*<h2*!/*/}
-                {/*    /!*    className={classNames(cls.item__title, {*!/*/}
-                {/*    /!*        [cls.active]: false*!/*/}
-                {/*    /!*    })}*!/*/}
-                {/*    /!*>*!/*/}
-                {/*    /!*    Robotics*!/*/}
-                {/*    /!*</h2>*!/*/}
-                {/*    <p className={cls.item__text}>*/}
-                {/*        Robotics is an interdisciplinary branch of*/}
-                {/*        /!*<br/>*!/*/}
-                {/*        electronics and communication, computer*/}
-                {/*        /!*<br/>*!/*/}
-                {/*        science and engineering...*/}
-                {/*    </p>*/}
-                {/*</div>*/}
             </div>
         </div>
     )

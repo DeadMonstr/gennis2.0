@@ -1,8 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import classNames from "classnames";
 
-import cls from "./select.module.sass"
-import {value} from "lodash/seq";
+import cls from "./select.module.sass";
 
 export const  Select = React.memo(({
                                       options,
@@ -23,6 +22,10 @@ export const  Select = React.memo(({
     const [selectOption, setSelectOption] = useState("");
     const [optionsData, setOptionsData] = useState([]);
     const [isChanged, setIsChanged] = useState(false);
+
+    console.log(optionsData, "groupData")
+
+
     useEffect(() => {
         setOptionsData(options);
     }, [options]);

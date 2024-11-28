@@ -6,3 +6,8 @@ export {SchoolHomeLatestNewModal} from "./ui/SchoolHomeLatestNewModal/SchoolHome
 
 
 export {SchoolHomeCurriculamModal} from "./ui/schoolHomeCurriculamModal/schoolHomeCurriculamModal"
+
+export {SchoolVisionMission} from "./ui/schoolVisionMission/schoolVisionMission";
+export {SchoolHomeMainModal} from "./ui/schoolHomeMainModal/schoolHomeMainModal";
+export {SchoolGalleryModal} from "./ui/schoolGalleryModal/schoolGalleryModal";
+export {SchoolHomeCertificatsModal} from "./ui/schoolHomeCertificatsModal/schoolHomeCertificatsModal";

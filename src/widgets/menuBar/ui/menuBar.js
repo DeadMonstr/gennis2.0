@@ -59,7 +59,7 @@ export const Menubar = () => {
 
                 return (
                     <NavLink
-                        to={`${item.to}${item.branches  ? linkId : `/${branch?.id}`}`}
+                        to={item.to}
                         key={index}
                         className={({isActive}) =>
                             isActive ? `${cls.link} ${cls.active}` : `${cls.link}`
@@ -80,7 +80,6 @@ export const Menubar = () => {
     }, [theme, selectedLocations, branch, user]);
 
     const renderedMenu = renderMultipleMenu();
-
 
 
     return (

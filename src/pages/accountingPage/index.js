@@ -1,4 +1,5 @@
-export {AccountingPageMainIndex} from "pages/accountingPage/ui/accountingPageMainIndex"
+// export {AccountingPageMainIndex} from "pages/accountingPage/ui/accountingPageMainIndex"
+export {AccountingPageMain as AccountingPageMainIndex} from "pages/accountingPage/ui/accountingPageMainIndex"
 export {AccountingPageMain} from "pages/accountingPage/ui/accountingPageMainIndex"
 
 export {EmployerSalaryPage} from "./ui/accountingPages/employerSalary"

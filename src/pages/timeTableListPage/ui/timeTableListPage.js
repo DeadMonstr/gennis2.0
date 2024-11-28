@@ -1,5 +1,6 @@
+import {fetchClassInput, getClassInputData} from "entities/oftenUsed";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
-import {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 
 import {getSearchValue} from "features/searchInput";
@@ -10,11 +11,12 @@ import {
     TimeTableHeader,
     TimeTableList
 } from "entities/timeTable";
+import {ConfirmModal} from "shared/ui/confirmModal";
 import {
     getTimeTableData,
     getTimeTableLoading
 } from "../model/timeTableListSelector/timeTableListSelector";
-import {changeTime} from "../model/timeTableListSlice/timeTableListSlice";
+import {onDelete} from "../model/timeTableListSlice/timeTableListSlice";
 import {
     createTimeTable,
     fetchTimeTableListData,
@@ -22,23 +24,25 @@ import {
 } from "../model/timeTableListThunk/timeTableListThunk";
 
 import cls from "./timeTableListPage.module.sass";
-import {API_URL, headers, useHttp} from "../../../shared/api/base";
-import {onDelete} from "../../../entities/teachers/model/teacherSlice";
+import {API_URL, headers, useHttp} from "shared/api/base";
 
 export const TimeTableListPage = () => {
 
     useEffect(() => {
         dispatch(fetchTimeTableListData())
+        dispatch(fetchClassInput())
     }, [])
 
     const dispatch = useDispatch()
 
     const data = useSelector(getTimeTableData)
+    const classInput = useSelector(getClassInputData)
     const loading = useSelector(getTimeTableLoading)
     const [isCreate, setIsCreate] = useState(false)
     const [isChange, setIsChange] = useState(null)
     const [isFilter, setIsFilter] = useState(false)
     const [currentStatus, setCurrentStatus] = useState(false)
+    const [isDeleted, setIsDeleted] = useState(false)
 
     const search = useSelector(getSearchValue)
     let PageSize = useMemo(() => 10, [])
@@ -61,8 +65,9 @@ export const TimeTableListPage = () => {
         dispatch(onAddAlertOptions({
             type: "success",
             status: true,
-            mas: `Vaqt qo'shildi`
+            msg: `Vaqt qo'shildi`
         }))
+        setIsCreate(false)
         setCurrentStatus(true)
     }
 
@@ -96,6 +101,10 @@ export const TimeTableListPage = () => {
 
 
     }
+    
+    const onDeleteStatus = () => {
+        setIsDeleted(true)
+    }
 
     return (
         <div className={cls.timeTable}>
@@ -123,17 +132,25 @@ export const TimeTableListPage = () => {
                 />
             </div>
             <TimeTableCreate
+                classInput={classInput}
                 active={currentStatus ? false : isCreate}
                 setActive={setIsCreate}
                 onSubmit={onSubmitCreate}
                 loading={loading}
             />
             <TimeTableChange
+                classInput={classInput}
                 active={currentStatus ? false : isChange}
                 setActive={setIsChange}
                 onSubmit={onSubmitChange}
                 loading={loading}
-                onDelete={onDeleteTimeTable}
+                onDelete={onDeleteStatus}
+            />
+            <ConfirmModal
+                type={"danger"}
+                active={isDeleted}
+                setActive={setIsDeleted}
+                onClick={onDeleteTimeTable}
             />
         </div>
     )

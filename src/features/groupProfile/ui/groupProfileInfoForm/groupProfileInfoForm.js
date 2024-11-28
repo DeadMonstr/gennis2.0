@@ -55,6 +55,7 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
     // const schoolClassColors = useSelector(getSchoolClassColors)
     const schoolClassColors = useSelector(getClassColorData)
 
+    const [isDeleted, setIsDeleted] = useState(false)
     const [active, setActive] = useState(false)
     const [selectColor, setSelectColor] = useState()
     const [activeSwitch, setActiveSwitch] = useState(data?.status ?? false)
@@ -171,7 +172,10 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
                 <h1>Ma’lumot o’zgartirish</h1>
                 <Button
                     extraClass={cls.infoModal__btn}
-                    onClick={() => setDelete(!deleteID)}
+                    onClick={()=> {
+                        setIsDeleted(true)
+                        setDelete(!deleteID)
+                    }}
                     type={"danger"}
                 >
                     Delete group
@@ -268,6 +272,12 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
                 <ConfirmModal setActive={setDelete} active={deleteID} onClick={onDelete} title={`Rostanham o'chirmoqchimisiz`}   type={"danger"}/>
 
             </Modal>
+            <ConfirmModal
+                type={"danger"}
+                active={isDeleted}
+                setActive={setIsDeleted}
+                onClick={onDelete}
+            />
         </>
     )
 })

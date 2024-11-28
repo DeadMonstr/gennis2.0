@@ -24,10 +24,11 @@ import {Footer} from "../../../../entities/schoolHome/ui/footer/footer";
 import {Contact} from "../../../../entities/centerHome";
 import {useDispatch, useSelector} from "react-redux";
 import {
+    SchoolGalleryModal, SchoolHomeCertificatsModal,
     SchoolHomeCurriculamModal,
     SchoolHomeLatestEditModal,
     schoolHomeLatestEditModal,
-    SchoolHomeLatestNewModal,
+    SchoolHomeLatestNewModal, SchoolHomeMainModal,
     SchoolHomeStudentEditModal,
     SchoolHomeStudentProfileModal
 } from "../../../../features/schoolHome";
@@ -39,6 +40,7 @@ import {
 import {fetchHomePage} from "../../../../entities/schoolHome/model/thunk/getHomePageSelector";
 import {getHomePageType} from "../../../../entities/schoolHome/model/selector/getHomePageSelector";
 import {type} from "@testing-library/user-event/dist/type";
+import {getUserJob} from "../../../../entities/profile/userProfile";
 
 
 export const SchoolHomePage = () => {
@@ -59,8 +61,11 @@ export const SchoolHomePage = () => {
 
 
     const types = useSelector(getHomePageType)
+    const job = useSelector(getUserJob)
 
     const dispatch = useDispatch()
+
+    console.log(types, "types")
 
 
     useEffect(() => {
@@ -91,20 +96,22 @@ export const SchoolHomePage = () => {
             {/*    className={cls.schoolHome__header}*/}
             {/*>*/}
             <SchoolHomeHeader ref={currentHeight}/>
-            {/*<SchoolHomeMain/>*/}
+            <SchoolHomeMainModal types={types}/>
             {/*</div>*/}
-            {/*/!*<SchoolHomeExtracurricus/>*!/*/}
+            <SchoolHomeExtracurricus/>
+            <SchoolHomeCertificatsModal/>
             {/*<SchoolHomeCertificats/>*/}
-            {/*<SchoolHomeAboutUs/>*/}
+            <SchoolHomeAboutUs/>
+            <SchoolGalleryModal/>
             {/*<SchoolHomeGallery/>*/}
-            {/*/!*<SchoolHomeWorkUs/>*!/*/}
-            {/*<SchoolHomeContact/>*/}
-            {/*<SchoolHomeContactUs/>*/}
-            {/*/!*<SchoolParentesComment/>*!/*/}
-            {/*<SchoolNews/>*/}
-            {/*<WorkUs/>*/}
-            {/*/!*<Calendar/>*!/*/}
-            {/*<Footer/>*/}
+            <SchoolHomeWorkUs/>
+            <SchoolHomeContact/>
+            <SchoolHomeContactUs/>
+            <SchoolParentesComment/>
+            <SchoolNews/>
+            <WorkUs/>
+            <Calendar/>
+            <Footer/>
 
 
 
@@ -112,7 +119,7 @@ export const SchoolHomePage = () => {
 
 
 
-            {/*<SchoolHomeStudentProfileModal types={types}/>*/}
+            <SchoolHomeStudentProfileModal types={types}/>
 
 
 

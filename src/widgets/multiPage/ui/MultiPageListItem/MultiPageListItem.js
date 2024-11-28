@@ -27,7 +27,7 @@ const MultiPageListItem = ({data, title, item: type,isType,id}) => {
                     item?.list?.map(branch =>
                         <Link
                             to={{
-                                pathname: id ? `${branch?.id}` : `../${branch?.id}/${type.type}`,
+                                pathname: id ? `${branch?.id}` : `./${type.type}`,
                                 search: isType && id ? `type=${type.type}` : null,
                             }}
                             onClick={() => {

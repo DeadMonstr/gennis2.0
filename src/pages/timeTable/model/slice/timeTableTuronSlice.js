@@ -139,6 +139,28 @@ const TimeTableTuronSlice = createSlice({
             })
 
 
+            .addCase(fetchTimeTableWeekDays.pending, state => {
+                state.loading = true
+                state.error = null
+            })
+
+            .addCase(fetchTimeTableWeekDays.fulfilled, (state, action) => {
+                state.weekDays = action.payload.days.map(item => {
+                    return {
+                        id: item.id,
+                        name: item.name_uz
+                    }
+                })
+                state.day = action.payload.today
+                state.loading = false
+                state.error = null
+            })
+            .addCase(fetchTimeTableWeekDays.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload ?? null
+            })
+
+
             .addCase(fetchTimeTableTypesData.pending, state => {
                 state.loading = true
                 state.error = null

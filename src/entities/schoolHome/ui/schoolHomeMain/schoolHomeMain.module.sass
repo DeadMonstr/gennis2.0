@@ -1,3 +1,5 @@
+@import "app/styles/abstracts/mixins"
+
 .homeMain
   width: 100%
   //height: 100%
@@ -42,6 +44,19 @@
       flex-direction: column
       gap: 2rem
       color: white
+      position: relative
+      &__mainEdit
+        background: #FFFFFF
+        padding: .8rem
+        position: absolute
+        right: 0
+        top: -30%
+        border-radius: .5rem
+        transition: .1s
+        @include btn-active
+        i
+          font-size: 1.6rem
+          color: #001B61
       &__title
         font-size: 3.6rem
       &__text
@@ -81,10 +96,23 @@
         gap: 1.4rem
         border-radius: 1.361rem
         transition: .3s
+        position: relative
         &:hover
           box-shadow: 0 0 2rem 0 rgba(0, 0, 0, 0.25)
         &.active
           background: #6100FF
+      &__edit
+        top: .9rem
+        right: 2.1rem
+        position: absolute
+        background: #FFFFFF
+        padding: .8rem
+        border-radius: .5rem
+        transition: .1s
+        @include btn-active
+        i
+          font-size: 1.6rem
+          color: #001B61
       &__image
         width: 5.416rem
       &__title

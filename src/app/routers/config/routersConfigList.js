@@ -150,6 +150,7 @@ export const routersConfigList = [
         name: "accounting",
         path: getAccounting(":id"),
         element: <AccountingPageMainIndex/>,
+        isMultiPage: true
     },
     // {
     //     name: "capital category profile",

@@ -1,4 +1,5 @@
-import {memo, useEffect, useMemo} from 'react';
+import {AnimatedMulti} from "features/workerSelect";
+import {memo, useEffect, useMemo, useState} from 'react';
 import {useForm} from "react-hook-form";
 
 import {Modal} from "shared/ui/modal";
@@ -12,9 +13,14 @@ import {Select} from "shared/ui/select";
 
 export const TimeTableChange = memo((props) => {
 
-    const {register, handleSubmit, setValue} = useForm()
+    const {
+        register,
+        handleSubmit,
+        setValue
+    } = useForm()
 
     const {
+        classInput,
         active,
         setActive,
         onSubmit,
@@ -27,6 +33,9 @@ export const TimeTableChange = memo((props) => {
     let order = useMemo(() => active?.order, [active])
     let name = useMemo(() => active?.name, [active])
     let type = useMemo(() => active?.type, [active])
+
+    const [selectedCI, setSelectedCI] = useState([])
+    const [classInputData, setClassInputData] = useState([])
 
     useEffect(() => {
         setValue("start_time", startTime)
@@ -47,6 +56,18 @@ export const TimeTableChange = memo((props) => {
             value: "initial"
         },
     ]
+
+    useEffect(() => {
+        setSelectedCI(active?.types.map(item => ({value: item.id, label: item.name})))
+    }, [active?.types])
+
+    useEffect(() => {
+        setClassInputData(
+            classInput.map(item => {
+                return {value: item.id, label: item.name}
+            })
+        )
+    }, [])
 
     return (
         <Modal
@@ -94,6 +115,12 @@ export const TimeTableChange = memo((props) => {
                         // value={name}
                         required
                     />
+                    <AnimatedMulti
+                        options={classInputData}
+                        onChange={setSelectedCI}
+                        value={selectedCI}
+                        fontSize={15}
+                    />
 
                     <Select
                         name={"type"}
@@ -104,7 +131,7 @@ export const TimeTableChange = memo((props) => {
                     />
                     {
                         loading ? <MiniLoader/> :
-                            <div style={{display: "flex" , gap: "1rem"}}>
+                            <div style={{display: "flex", gap: "1rem"}}>
                                 <Button
                                     onClick={handleSubmit(onSubmit)}
                                     extraClass={cls.change__btn}

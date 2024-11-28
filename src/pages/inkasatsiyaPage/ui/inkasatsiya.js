@@ -37,7 +37,6 @@ export const Inkasatsiya = () => {
     const [ot, setOt] = useState([])
     const student = useSelector(getInkasatsiya)
     const [radio, setSelectedRadio] = useState([])
-    const {"*": id} = useParams()
 
 
     const branchId = useSelector(getBranch)

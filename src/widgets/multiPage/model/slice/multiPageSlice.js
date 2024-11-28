@@ -6,6 +6,7 @@ const initialState = {
     data: [],
     changedPage: false,
     oldPage: "",
+    oldLength: null,
 
     loading: false,
     error: null,
@@ -16,12 +17,16 @@ const multiPageSlice = createSlice({
     name: "MultiPageSlice",
     initialState,
     reducers: {
-        onChangedPage: (state,action) => {
+        onChangedPage: (state, action) => {
             state.changedPage = action.payload
         },
 
-        onChangedOldPage: (state,action) => {
+        onChangedOldPage: (state, action) => {
             state.oldPage = action.payload
+        },
+
+        onChangedOldLength: (state, action) => {
+            state.oldLength = action.payload
         }
     },
     extraReducers: builder =>
@@ -45,4 +50,8 @@ const multiPageSlice = createSlice({
 })
 
 export default multiPageSlice.reducer
-export const {onChangedPage,onChangedOldPage} = multiPageSlice.actions
+export const {
+    onChangedPage,
+    onChangedOldPage,
+    onChangedOldLength
+} = multiPageSlice.actions

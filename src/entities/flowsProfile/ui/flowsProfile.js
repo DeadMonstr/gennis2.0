@@ -58,6 +58,7 @@ export const FlowProfileNavigators = memo(() => {
 
     const [activeTeacher, setActiveTeacher] = useState("")
     const [subject  ,setSubject] = useState(null)
+    const [isDeleted, setIsDeleted] = useState(false)
 
     useEffect(() => {
         dispatch(fetchFlowProfileData({id}))
@@ -90,7 +91,7 @@ export const FlowProfileNavigators = memo(() => {
                 .catch(err => console.log(err))
     }, [data])
 
-    const onDelete = () => {
+    const onSubmitDelete = () => {
         request(`${API_URL}Flow/flow-delete/${id}`, "DELETE", null, headers())
             .then(res => {
                 navigate(-2)
@@ -108,6 +109,10 @@ export const FlowProfileNavigators = memo(() => {
                 }))
             })
         // dispatch(deleteGroupProfile({id}))
+    }
+
+    const onDelete = () => {
+        setIsDeleted(true)
     }
 
     const onSubmitChange = (data) => {
@@ -308,6 +313,12 @@ export const FlowProfileNavigators = memo(() => {
 
 
             </Modal>
+            <ConfirmModal
+                type={"danger"}
+                active={isDeleted}
+                setActive={setIsDeleted}
+                onClick={onSubmitDelete}
+            />
         </div>
     )
 })

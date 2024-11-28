@@ -161,4 +161,11 @@ export const menuConfig = [
 
     },
 
+    {
+        to: "../../",
+        name: "Web-Sayt",
+        system: ["center","school"],
+        roles: [ROLES.smm]
+    }
+
 ];
