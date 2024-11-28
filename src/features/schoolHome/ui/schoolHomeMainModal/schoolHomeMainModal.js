@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useDropzone} from "react-dropzone";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 
 import {SchoolHomeMain} from "entities/schoolHome";
@@ -12,15 +12,18 @@ import {Modal} from "shared/ui/modal";
 import cls from "./schoolHomeMainModal.module.sass";
 import defImg from "shared/assets/images/Image Placeholder.svg";
 import {onAdd} from "../../../../entities/schoolHome/model/slice/schoolHomeStudentProfileSlice";
+import {Form} from "../../../../shared/ui/form";
+import {getUserJob} from "../../../../entities/profile/userProfile";
 
 
-export const SchoolHomeMainModal = () => {
+export const SchoolHomeMainModal = ({types}) => {
 
     const [mainActive, setMainActive] = useState(false)
     const [programActive, setProgramActive] = useState(false)
 
     const [files, setFiles] = useState(null);
 
+    const job = localStorage.getItem("job")
     const dispatch = useDispatch()
     const {
         register,
@@ -66,6 +69,10 @@ export const SchoolHomeMainModal = () => {
       
     }
 
+    const onChangeMain = (data) => {
+        console.log(data)
+    }
+
     return (
         <>
 
@@ -73,6 +80,7 @@ export const SchoolHomeMainModal = () => {
             <SchoolHomeMain
                 setActive={setProgramActive}
                 setMainActive={setMainActive}
+                role={job === "smm"}
             />
 
             <Modal active={programActive} setActive={setProgramActive}>
@@ -100,15 +108,17 @@ export const SchoolHomeMainModal = () => {
             </Modal>
 
             <Modal active={mainActive} setActive={setMainActive}>
-                <div className={cls.editModal}>
-                    <Input title={"Our vision text"}/>
-                    <Input title={"Programs text"}/>
-                </div>
-                <div className={cls.modal__btn}>
-                    <Button onClick={handleSubmit(onClick)} extraClass={cls.modal__btn_add}>Edit</Button>
-                    <Button onClick={handleSubmit(() => setMainActive(false))}
-                            extraClass={cls.modal__btn_cancel}>Cancel</Button>
-                </div>
+                <Form id={"change"} typeSubmit={""} onSubmit={handleSubmit(onChangeMain)}>
+                    <div className={cls.editModal}>
+                        <Input register={register} title={"Our vision text"} placeholder={"text"} name={"our_text"}/>
+                        <Input register={register} title={"Programs text"} placeholder={"text"} name={"prog_text"}/>
+                    </div>
+                    <div className={cls.modal__btn}>
+                        <Button id={"change"} extraClass={cls.modal__btn_add}>Edit</Button>
+                        <Button onClick={handleSubmit(() => setMainActive(false))}
+                                extraClass={cls.modal__btn_cancel}>Cancel</Button>
+                    </div>
+                </Form>
             </Modal>
         </>
 

@@ -8,75 +8,26 @@ import "slick-carousel/slick/slick-theme.css";
 import cls from "./schoolHomeMain.module.sass";
 import homeImage from "shared/assets/images/homeImage.png";
 import idea from "shared/assets/icons/turonIdea.png";
+import {useSelector} from "react-redux";
+import {getUserJob} from "../../../profile/userProfile";
 
 const list = [1, 2, 3, 4, 5, 6, 7]
 
-export const SchoolHomeMain = memo(({setActive, setMainActive}) => {
-
-    const settings = {
-        infinite: false,
-        dots: window.outerWidth > 430,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 3,
-        className: cls.homeSlider,
-        initialSlide: 0,
-        arrows: false,
-        responsive: [
-            {
-                breakpoint: 1440,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                }
-            },
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1
-
-                }
-            },
-            {
-                breakpoint: 830,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-
-                }
-            },
-            {
-                breakpoint: 650,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-
-                }
-            },
-            {
-                breakpoint: 500,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
-        ]
-    }
+export const SchoolHomeMain = memo(({setActive, setMainActive, role}) => {
 
     const carousel = useRef()
     const [activeItem, setActiveItem] = useState(null)
-    const [width,setWidth] = useState(null)
+    const [width, setWidth] = useState(null)
 
     useEffect(() => {
         setWidth(carousel.current?.scrollWidth - carousel.current?.offsetWidth)
-    },[list.length])
+    }, [list.length])
 
     const renderItems = useCallback(() => {
         return list.map(item => {
             return (
                 <motion.div
-                    transition={{duration : 1}}
+                    transition={{duration: 1}}
                     // onDoubleClick={(e) => {
                     //     console.log(e.detail, "e.detail")
                     //     switch (e.detail) {
@@ -96,12 +47,14 @@ export const SchoolHomeMain = memo(({setActive, setMainActive}) => {
                         [cls.active]: activeItem === item
                     })}
                 >
-                    <div
-                        onClick={() => setActive(true)}
-                        className={cls.items__edit}
-                    >
-                        <i className="fas fa-edit"/>
-                    </div>
+                    {
+                        role && <div
+                            onClick={() => setActive(true)}
+                            className={cls.items__edit}
+                        >
+                            <i className="fas fa-edit"/>
+                        </div>
+                    }
                     <img
                         className={cls.items__image}
                         src={idea}
@@ -137,12 +90,14 @@ export const SchoolHomeMain = memo(({setActive, setMainActive}) => {
             <div className={cls.wrapper}>
                 <div className={cls.homeMain__programs}>
                     <div className={cls.programsInfo}>
-                        <div
-                            onClick={() => setMainActive(true)}
-                            className={cls.programsInfo__mainEdit}
-                        >
-                            <i className="fas fa-edit"/>
-                        </div>
+                        {
+                            role && <div
+                                onClick={() => setMainActive(true)}
+                                className={cls.programsInfo__mainEdit}
+                            >
+                                <i className="fas fa-edit"/>
+                            </div>
+                        }
                         <h2 className={cls.programsInfo__title}>Programs</h2>
                         <p className={cls.programsInfo__text}>
                             Lorem Ipsum is simply dummy text of
@@ -156,7 +111,7 @@ export const SchoolHomeMain = memo(({setActive, setMainActive}) => {
                         <motion.div
                             className={cls.items__wrapper}
                             drag={"x"}
-                            dragConstraints={{left: -width,right: 0}}
+                            dragConstraints={{left: -width, right: 0}}
                         >
 
                             {/*<Slider*/}

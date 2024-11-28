@@ -40,6 +40,7 @@ import {
 import {fetchHomePage} from "../../../../entities/schoolHome/model/thunk/getHomePageSelector";
 import {getHomePageType} from "../../../../entities/schoolHome/model/selector/getHomePageSelector";
 import {type} from "@testing-library/user-event/dist/type";
+import {getUserJob} from "../../../../entities/profile/userProfile";
 
 
 export const SchoolHomePage = () => {
@@ -60,8 +61,11 @@ export const SchoolHomePage = () => {
 
 
     const types = useSelector(getHomePageType)
+    const job = useSelector(getUserJob)
 
     const dispatch = useDispatch()
+
+    console.log(types, "types")
 
 
     useEffect(() => {
@@ -92,7 +96,7 @@ export const SchoolHomePage = () => {
             {/*    className={cls.schoolHome__header}*/}
             {/*>*/}
             <SchoolHomeHeader ref={currentHeight}/>
-            <SchoolHomeMainModal/>
+            <SchoolHomeMainModal types={types}/>
             {/*</div>*/}
             <SchoolHomeExtracurricus/>
             <SchoolHomeCertificatsModal/>
@@ -115,7 +119,7 @@ export const SchoolHomePage = () => {
             <SchoolHomeCurriculamModal  type={types}/>
 
 
-            {/*<SchoolHomeStudentProfileModal types={types}/>*/}
+            <SchoolHomeStudentProfileModal types={types}/>
 
 
 
@@ -125,7 +129,6 @@ export const SchoolHomePage = () => {
 
 
 
-            <SchoolHomeLatestNewModal/>
 
 
 
@@ -136,7 +139,6 @@ export const SchoolHomePage = () => {
 
             {/*<SchoolLeadershipTeamModal type={types}/>*/}
 
-            <SchoolHomeCurriculamModal/>
 
         </div>
     )

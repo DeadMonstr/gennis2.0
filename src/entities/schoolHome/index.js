@@ -22,7 +22,7 @@ export {getSchoolProfileData} from "./model/selector/schoolHomeStudentProfileSel
 
 
 export {SchoolHomeCurricular} from "./ui/schoolHomeCurricular/schoolHomeCurricular"
-export {} from "./ui/"
+
 
 export {SchoolLeadershipTeam} from "./ui/schoolLeadershipTeam/schoolLeadershipTeam"
 
