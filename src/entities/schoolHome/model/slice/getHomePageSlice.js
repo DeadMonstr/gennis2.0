@@ -23,6 +23,7 @@ export const getHomePageSlice = createSlice({
                 state.loading = false
                 state.error = false
                 state.data = action.payload
+                console.log(action.payload)
             })
             .addCase(fetchHomePage.rejected, state => {
                 state.loading = false

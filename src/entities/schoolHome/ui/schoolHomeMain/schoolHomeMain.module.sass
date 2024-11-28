@@ -69,7 +69,17 @@
       padding: 2rem
       &__wrapper
         display: flex
+        align-items: center
         gap: 3rem
+      &__plus
+        height: fit-content
+        background: #fff
+        padding: 2rem
+        border-radius: 50%
+        transition: .1s
+        @include btn-active
+        i
+          font-size: 3rem
       //.homeSlider
       //  div
       //    padding: 1rem
@@ -101,6 +111,9 @@
           box-shadow: 0 0 2rem 0 rgba(0, 0, 0, 0.25)
         &.active
           background: #6100FF
+        img
+          min-width: 5rem
+          min-height: 5rem
       &__edit
         top: .9rem
         right: 2.1rem

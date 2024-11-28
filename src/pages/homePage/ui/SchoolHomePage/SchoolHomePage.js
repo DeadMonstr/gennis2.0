@@ -27,19 +27,11 @@ import {
     SchoolGalleryModal, SchoolHomeCertificatsModal,
     SchoolHomeCurriculamModal,
     SchoolHomeLatestEditModal,
-    schoolHomeLatestEditModal,
     SchoolHomeLatestNewModal, SchoolHomeMainModal,
-    SchoolHomeStudentEditModal,
     SchoolHomeStudentProfileModal
 } from "../../../../features/schoolHome";
-import {useForm} from "react-hook-form";
-import {getSchoolLatestSlice} from "../../../../entities/schoolHome/model/selector/schoolLatestSelector";
-import {
-    SchoolLeadershipTeamModal
-} from "../../../../features/schoolHome/ui/SchoolLeadershipTeamModal/SchoolLeadershipTeamModal";
 import {fetchHomePage} from "../../../../entities/schoolHome/model/thunk/getHomePageSelector";
 import {getHomePageType} from "../../../../entities/schoolHome/model/selector/getHomePageSelector";
-import {type} from "@testing-library/user-event/dist/type";
 import {getUserJob} from "../../../../entities/profile/userProfile";
 
 
@@ -99,10 +91,10 @@ export const SchoolHomePage = () => {
             <SchoolHomeMainModal types={types}/>
             {/*</div>*/}
             <SchoolHomeExtracurricus/>
-            <SchoolHomeCertificatsModal/>
+            <SchoolHomeCertificatsModal types={types}/>
             {/*<SchoolHomeCertificats/>*/}
             <SchoolHomeAboutUs/>
-            <SchoolGalleryModal/>
+            <SchoolGalleryModal types={types}/>
             {/*<SchoolHomeGallery/>*/}
             <SchoolHomeWorkUs/>
             <SchoolHomeContact/>

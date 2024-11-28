@@ -85,7 +85,10 @@ import {
     schoolCurricularSlice,
     schoolLatestSlice,
     schoolLeaderSheapSlice,
-    schoolProfileSlice
+    schoolProfileSlice,
+    schoolHomeMainSlice,
+    schoolHomeCertificatSlice,
+    schoolHomeGallerySlice
 } from "../entities/schoolHome";
 
 const stringMiddleware = () => (next) => (action) => {
@@ -188,7 +191,10 @@ export const store = configureStore({
         schoolLatestSlice,
         schoolCurricularSlice,
         schoolLeaderSheapSlice,
-        getHomePageSlice
+        getHomePageSlice,
+        schoolHomeMainSlice,
+        schoolHomeCertificatSlice,
+        schoolHomeGallerySlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(
