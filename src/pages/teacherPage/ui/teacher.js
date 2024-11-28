@@ -87,17 +87,22 @@ export const TeachersPage = () => {
         const id = activeDelete.id
         request(`${API_URL}Teachers/teachers/delete/${id}/`, "DELETE", null, headers())
             .then(res => {
-                console.log(res)
-                dispatch(onDelete(id))
+                if(res.status) {
+                    dispatch(onDelete(id))
+                }
                 dispatch(onAddAlertOptions({
-                    types: "success",
+                    type: res.status ? "success" : "danger",
                     status: true,
                     msg: res.msg
                 }))
                 setActiveModal(false)
             })
             .catch(err => {
-                console.log(err)
+                dispatch(onAddAlertOptions({
+                    type: "danger",
+                    status: true,
+                    msg: err.msg
+                }))
             })
     }
 

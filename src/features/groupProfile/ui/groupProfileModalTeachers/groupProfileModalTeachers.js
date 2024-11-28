@@ -66,12 +66,14 @@ export const GroupProfileModalTeachers = memo(({branch}) => {
         }))
     }
 
+    console.log(currentTeachersData, "currentrttttttttttttttttttttttttttt")
+
     const searched = useMemo(() => {
         const filteredSlice = currentTeachersData?.slice()
 
         return filteredSlice?.filter(item =>
-            item?.user?.name?.toLowerCase().includes(searchValue?.toLowerCase()) ||
-            item?.user?.surname?.toLowerCase().includes(searchValue?.toLowerCase())
+            item?.name?.toLowerCase().includes(searchValue?.toLowerCase()) ||
+            item?.surname?.toLowerCase().includes(searchValue?.toLowerCase())
         )
     }, [currentTeachersData, searchValue])
 
@@ -84,14 +86,14 @@ export const GroupProfileModalTeachers = memo(({branch}) => {
                         alt=""
                     />
                 </td>
-                <td>{item?.user?.name}</td>
-                <td>{item?.user?.surname}</td>
+                <td>{item?.name}</td>
+                <td>{item?.surname}</td>
                 <td>
                     <div className={cls.teachersModal__wrapper}>
                         {
                             item?.subject?.map(i =>
                                 <div className={cls.teachersModal__subject}>
-                                    {i?.name?.slice(0, 16)}
+                                    {i?.name?.slice(0,16)}
                                 </div>
                             )
                         }

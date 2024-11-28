@@ -35,7 +35,7 @@ import {onChange} from "features/studentPayment/model/studentPaymentSlice";
 import {ConfirmModal} from "../../../../../shared/ui/confirmModal";
 
 
-export const StudentProfileAmountPath = memo(({active, setActive,job}) => {
+export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
     const pathArray = window.location.pathname.split('/');
     const lastId = pathArray[pathArray.length - 1];
     const booksList = useSelector(getBooksData);
@@ -46,16 +46,14 @@ export const StudentProfileAmountPath = memo(({active, setActive,job}) => {
     const getBookPayments = useSelector(getBookPaymentsList);
     const dispatch = useDispatch();
 
-    const [changedData,setChangedData] = useState(null)
+    const [changedData, setChangedData] = useState(null)
     const [activeState, setActiveState] = useState("");
     const [selectedSalary, setSelectedSalary] = useState(null);
     const [portal, setPortal] = useState(false);
     const [modal, setModal] = useState(false);
     const [change, setChange] = useState(false);
+    const [canChange, setCanChange] = useState(false);
     const [canDelete, setCanDelete] = useState(false);
-
-    // const {} = useSelector(state => state.)
-
 
 
     const month = useSelector(getMonth)
@@ -65,6 +63,9 @@ export const StudentProfileAmountPath = memo(({active, setActive,job}) => {
     const [itemChange, setItemChange] = useState({})
 
     const {register, handleSubmit, setValue} = useForm()
+
+
+    const {register: registerChange, handleSubmit: handleSubmitChange, setValue: setValueChange} = useForm()
 
 
     const {id} = useParams()
@@ -91,21 +92,9 @@ export const StudentProfileAmountPath = memo(({active, setActive,job}) => {
             setPortal(false);
         });
     };
-    
-    
-    const onDeleteDebtMonth = () => {
-        request(`${API_URL}Attendance/attendance_per_month_delete/${changedData}`, "DELETE",null, headers())
-            .then(res => {
-                console.log(res)
-                dispatch(fetchStudentDebtorData(id))
-            })
-        setCanDelete(false)
-
-        console.log(id, "iddddd")
 
 
 
-    }
 
     useEffect(() => {
         if (!change) {
@@ -182,7 +171,10 @@ export const StudentProfileAmountPath = memo(({active, setActive,job}) => {
                             setValue("reason", item.discount_reason)
                             setActiveModal(true)
                             setItemChange(item.discount_id)
-                        }}>{item?.month}</td>
+                        }}
+                    >
+                        {item?.month}
+                    </td>
                     <td>{item?.total_debt}</td>
                     <td>{item?.remaining_debt}</td>
                     <td>{item?.discount}</td>
@@ -191,14 +183,25 @@ export const StudentProfileAmountPath = memo(({active, setActive,job}) => {
                     <td>{item?.cash}</td>
                     <td>{item?.click}</td>
                     <td>{item?.bank}</td>
+                    {/*<td>*/}
+                    {/*    <i*/}
+                    {/*        onClick={() => {*/}
+                    {/*            setChangedData(item.id)*/}
+                    {/*            setCanDelete(true)*/}
+                    {/*        }}*/}
+                    {/*        style={{color: '#FF3737FF'}}*/}
+                    {/*        className={`fa-solid fa-xmark `}*/}
+                    {/*    ></i>*/}
+                    {/*</td>*/}
                     <td>
                         <i
                             onClick={() => {
-                                setChangedData(item.id)
-                                setCanDelete(true)
+                                setChangedData(item)
+                                setCanChange(true)
+                                setValueChange("total_debt", item.total_debt)
                             }}
-                            style={{color: '#FF3737FF'}}
-                            className={`fa-solid fa-xmark `}
+                            style={{color: '#484848'}}
+                            className={`fa-solid fa-pen `}
                         ></i>
                     </td>
                 </tr>
@@ -215,12 +218,34 @@ export const StudentProfileAmountPath = memo(({active, setActive,job}) => {
         request(`${API_URL}Students/charity_month/${itemChange}/`, "PUT", JSON.stringify(data), headers())
             .then(res => {
                 setActiveModal(false)
-                dispatch(onChange({id: itemChange , payment_sum: data.payment_sum , reason: data.reason}))
+                dispatch(onChange({id: itemChange, payment_sum: data.payment_sum, reason: data.reason}))
                 console.log(res)
             })
             .catch(err => {
                 console.log(err)
             })
+    }
+
+    const onChangePaymentMonth = (data) => {
+
+
+        console.log(data)
+
+
+        request(`${API_URL}Attendance/attendance_per_month_delete/${changedData.id}/`, "PUT",JSON.stringify(data), headers())
+            .then(res => {
+                dispatch(fetchStudentDebtorData(id))
+            })
+        setCanChange(false)
+    }
+
+    const onDeleteDebtMonth = () => {
+        request(`${API_URL}Attendance/attendance_per_month_delete/${changedData.id}/`, "DELETE", null, headers())
+            .then(res => {
+                dispatch(fetchStudentDebtorData(id))
+            })
+        setCanDelete(false)
+        setCanChange(false)
     }
 
     return (
@@ -328,7 +353,6 @@ export const StudentProfileAmountPath = memo(({active, setActive,job}) => {
                                                     <th>Xayriya</th>
                                                     <th>Chegirma</th>
                                                     <th>Chegirma sababi</th>
-
                                                     <th>Cash</th>
                                                     <th>Click</th>
                                                     <th>Bank</th>
@@ -347,14 +371,47 @@ export const StudentProfileAmountPath = memo(({active, setActive,job}) => {
                         : null
                 }
                 {!change && (
-
-                    <ConfirmModal setActive={setPortal} active={portal} onClick={handleDelete}   type={"danger"}/>
+                    <ConfirmModal setActive={setPortal} active={portal} onClick={handleDelete} type={"danger"}/>
                 )}
 
-                {job === "director" && (
 
-                    <ConfirmModal setActive={setCanDelete} active={canDelete} onClick={onDeleteDebtMonth}   type={"danger"}/>
-                )}
+                {
+                    job === "director" &&
+                    <Modal active={canChange} setActive={setCanChange}>
+                        <Form onSubmit={handleSubmitChange(onChangePaymentMonth)} extraClassname={cls.changeModal}
+                              id={"changeForm"} typeSubmit={"outside"}>
+                            <h1>Oylik qarz o'zgartirish</h1>
+
+                            <Input value={changedData?.total_debt} register={registerChange} name={"total_debt"}/>
+                            <div className={cls.btns}>
+                                <Button
+                                    onClick={() => {
+                                        setCanDelete(true)
+
+                                    }}
+                                    type={"danger"} id={""}
+                                >
+                                    O'chirish
+                                </Button>
+                                <Button id={"changeForm"}>
+                                    O'zgartirish
+                                </Button>
+                            </div>
+                        </Form>
+
+
+                        <ConfirmModal
+                            title={`${changedData?.month} o'chirishni hohlaysizmi`}
+                            setActive={setCanDelete}
+                            active={canDelete}
+                            onClick={onDeleteDebtMonth}
+                            type={"danger"}
+                        />
+
+                    </Modal>
+                }
+
+
             </div>
             <StudentPaymentEditModal
                 portal={modal}
