@@ -85,7 +85,7 @@ export const Curricular = ({data, setDeleteId, setActiveEdit, setValue}) => {
 
                     setValue("name", item.name)
 
-                    setValue("text", item.text)
+                    setValue("text", item.description)
                     // setValue("date" , item.date)
                     setDeleteId(item)
                     setActiveEdit(true)
@@ -144,7 +144,7 @@ export const DissCurricular = ({extraCurricularData, setActiveExtraCurricularEdi
 
                 <div onClick={() => {
                     setValue("subject_name" , item.subject_name)
-                    setValue("descr" , item.descr)
+                    setValue("descr" , item.description)
                     setDeleteIdExtra(item)
                     setActiveExtraCurricularEdit(true)
                 }}

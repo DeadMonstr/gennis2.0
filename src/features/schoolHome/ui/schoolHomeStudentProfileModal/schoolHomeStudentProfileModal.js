@@ -12,8 +12,11 @@ import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {onAdd, onDelete, onEdit} from "../../../../entities/schoolHome/model/slice/schoolHomeStudentProfileSlice";
 import {getSchoolProfileData, SchoolHomeStudentProfile} from "../../../../entities/schoolHome";
+import {getStudentProfile} from "../../../../entities/schoolHome/model/thunk/schoolStudentProfileThunk";
+import {API_URL, header, headerImg, useHttp} from "../../../../shared/api/base";
 
-export const SchoolHomeStudentProfileModal = ({active, setActive}) => {
+
+export const SchoolHomeStudentProfileModal = ({types}) => {
     const [add, setAdd] = useState(false)
     const [edit, setEdit] = useState(false)
     const profileData = useSelector(getSchoolProfileData)
@@ -21,6 +24,15 @@ export const SchoolHomeStudentProfileModal = ({active, setActive}) => {
 
 
     const dispatch = useDispatch()
+
+    const {request} = useHttp()
+    const id = types[2]?.id
+
+
+
+    useEffect(() => {
+        dispatch(getStudentProfile(id))
+    }, [id])
 
 
     const {register, setValue, handleSubmit} = useForm()
@@ -43,18 +55,30 @@ export const SchoolHomeStudentProfileModal = ({active, setActive}) => {
 
     const onClick = (data) => {
 
-        const res = {
-            img: files.map(item => item.preview),
-            ...data,
-            id: new Date().getTime()
-        }
 
-        setValue("name", "")
-        setValue("text", "")
-        setFiles(null)
-        dispatch(onAdd(res))
-        console.log(res)
-        setAdd(false)
+        const formData = new FormData
+        formData.append("image", files[0])
+        formData.append("name", data.name)
+        formData.append("description", data.description)
+        formData.append("date", data.date)
+        formData.append("type", id)
+
+
+
+        request(`${API_URL}Ui/fronted-pages/`, "POST", formData, headerImg())
+            .then(res => {
+                console.log(res)
+                setValue("name", "")
+                setValue("description", "")
+                setValue("date", "")
+                setFiles(null)
+                dispatch(onAdd(res))
+                console.log(res)
+                setAdd(false)
+            })
+            .catch(err => console.log(err))
+
+
     }
 
     return (
@@ -81,7 +105,7 @@ export const SchoolHomeStudentProfileModal = ({active, setActive}) => {
                     </div>
                     <Input required register={register} name={"name"} extraClassName={cls.modal__input}
                            placeholder={"Name"}/>
-                    <Textarea required placeholder={"Text"} name={"text"} register={register}
+                    <Textarea required placeholder={"Text"} name={"description"} register={register}
                               extraClassName={cls.modal__input}/>
                 </div>
                 <div className={cls.modal__btn}>
@@ -97,6 +121,8 @@ export const SchoolHomeStudentProfileModal = ({active, setActive}) => {
                 register={register}
                 setActive={setEdit}
                 active={edit}
+                id={id}
+                setValue={setValue}
             />
 
         </>
@@ -105,10 +131,11 @@ export const SchoolHomeStudentProfileModal = ({active, setActive}) => {
 
 
 
-export const SchoolHomeStudentEditModal = ({active , setActive , deleteItemId , handleSubmit , register}) => {
+export const SchoolHomeStudentEditModal = ({active , setActive , deleteItemId , handleSubmit , register , id , setValue}) => {
 
     const dispatch = useDispatch()
     // const {register, setValue, handleSubmit} = useForm()
+    const {request} = useHttp()
     const [files, setFiles] = useState(null);
     const {getRootProps, getInputProps} = useDropzone({
         accept: {
@@ -129,23 +156,44 @@ export const SchoolHomeStudentEditModal = ({active , setActive , deleteItemId , 
     const onDeleteItem = (data) => {
 
 
-        dispatch(onDelete(deleteItemId.id))
 
-        setActive(false)
+
+
+
+        request(`${API_URL}Ui/fronted-pages/${deleteItemId.id}` , "DELETE" , null , header() )
+            .then(res => {
+
+                dispatch(onDelete(deleteItemId.id))
+
+                setActive(false)
+            })
     }
 
+
     const onUpdateItem = (data) => {
+        const formData = new FormData
 
-        const res = {
-            img: files ? files?.map(item => item?.preview) : deleteItemId?.img,
-            ...data,
-
+        if (files) {
+            formData.append("image", files[0])
         }
 
-        dispatch(onEdit({id: deleteItemId.id, data: res}))
+        formData.append("name", data.name)
+        formData.append("description", data.description)
+        formData.append("date", data.date)
+        formData.append("type", id)
 
-        setFiles(null)
-        setActive(false)
+
+        request(`${API_URL}Ui/fronted-pages/${deleteItemId.id}/`, "PATCH", formData, headerImg())
+            .then(res => {
+                dispatch(onEdit({id: deleteItemId.id, data: res}))
+                setFiles(null)
+                setValue("name", "")
+                setValue("description", "")
+                setValue("date", "")
+                setActive(false)
+
+            })
+
     }
     return (
 
@@ -156,13 +204,13 @@ export const SchoolHomeStudentEditModal = ({active , setActive , deleteItemId , 
             <div className={cls.modal}>
                 <div {...getRootProps({className: 'dropzone'})}>
                     <input  {...getInputProps()}/>
-                    {!files ? <img style={{width: "31rem", height: "23rem "}} src={defImg} alt=""/> :
+                    {!files ? <img style={{width: "31rem", height: "23rem "}} src={deleteItemId?.images?.map(item => item?.image)} alt=""/> :
                         <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
                              alt=""/>}
                 </div>
                 <Input required register={register} name={"name"} extraClassName={cls.modal__input}
                        placeholder={"Name"}/>
-                <Textarea required placeholder={"Text"} name={"text"} register={register}
+                <Textarea required placeholder={"Text"} name={"description"} register={register}
                           extraClassName={cls.modal__input}/>
             </div>
             <div className={cls.modal__btn}>

@@ -100,7 +100,7 @@ export const SchoolHomeHeader = memo(() => {
                     {/*>*/}
                     {/*    Aplay*/}
                     {/*</Button>*/}
-                    <Link target={"_self"} to={`http://school.gennis.uz/login`}>
+                    <Link target={"_self"} to={`login`}>
                         <Button
                             extraClass={cls.loginBtn}
                             type={"login"}

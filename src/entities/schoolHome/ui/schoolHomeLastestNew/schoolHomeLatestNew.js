@@ -11,14 +11,14 @@ export const SchoolHomeLatestNew = ({data , setValue , setEdit , add , setAdd , 
 
 
     const renderData = () => {
-        return data.map(item => (
+        return data?.map(item => (
             <div className={cls.main__box}>
                 <div className={cls.main__box_img}>
 
                     <div onClick={() => {
                         setEdit(true)
                         setValue("name", item.name)
-                        setValue("text", item.text)
+                        setValue("description", item.description)
                         setValue("date" , item.date)
                         setDeleteId(item)
                     }}
@@ -26,7 +26,7 @@ export const SchoolHomeLatestNew = ({data , setValue , setEdit , add , setAdd , 
                     >
                         <img src={editIcon} alt=""/>
                     </div>
-                    <img src={item?.img} alt=""/>
+                    <img src={item?.images.map(item => item.image)} alt=""/>
                 </div>
 
                 <div className={cls.main__box_main}>
@@ -40,7 +40,7 @@ export const SchoolHomeLatestNew = ({data , setValue , setEdit , add , setAdd , 
                     </div>
                     <div className={cls.main__box_descr}>
 
-                        {item?.text}
+                        {item?.description}
                     </div>
                 </div>
             </div>

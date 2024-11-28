@@ -13,18 +13,31 @@ import {useDispatch, useSelector} from "react-redux";
 import {onAdd, onDelete, onEdit} from "../../../../entities/schoolHome/model/slice/SchoolHomeLatestNewSlice";
 import {getSchoolLatestSlice} from "../../../../entities/schoolHome/model/selector/schoolLatestSelector";
 import {SchoolHomeLatestNew} from "../../../../entities/schoolHome";
+import {API_URL, header, headerImg, headersImg, useHttp} from "../../../../shared/api/base";
+import {rgbSlice} from "../../../../entities/rgbData";
+import {getLatestNew} from "../../../../entities/schoolHome/model/thunk/schoolLatestNewThunk";
 
 
-export const SchoolHomeLatestNewModal = () => {
+export const SchoolHomeLatestNewModal = ({types}) => {
     const [addLatestNew, setAddLatestNew] = useState(false)
     const [editLatestNew, setEditLatestNew] = useState(false)
+
 
     const dispatch = useDispatch()
 
 
+    const id = types[3]?.id
+
     const latestNew = useSelector(getSchoolLatestSlice)
     const [deleteId, setDeleteId] = useState(null)
 
+
+    useEffect(() => {
+        dispatch(getLatestNew(id))
+    }, [id])
+
+
+    const {request} = useHttp()
 
     const {register, setValue, handleSubmit} = useForm()
     const [files, setFiles] = useState(null);
@@ -43,26 +56,35 @@ export const SchoolHomeLatestNewModal = () => {
         },
     });
 
-
     const onClick = (data) => {
 
-        const res = {
-            img: files.map(item => item.preview),
-            ...data,
-            id: new Date().getTime()
-        }
 
-        setValue("name", "")
-        setValue("text", "")
-        setValue("date", "")
-        setFiles(null)
-        dispatch(onAdd(res))
-        console.log(res)
-        setAddLatestNew(false)
+        const formData = new FormData
+        formData.append("image", files[0])
+        formData.append("name", data.name)
+        formData.append("description", data.description)
+        formData.append("date", data.date)
+        formData.append("type", id)
+
+        request(`${API_URL}Ui/fronted-pages/`, "POST", formData, headerImg())
+            .then(res => {
+                console.log(res)
+                setValue("name", "")
+                setValue("description", "")
+                setValue("date", "")
+                setFiles(null)
+                dispatch(onAdd(res))
+                console.log(res)
+                setAddLatestNew(false)
+            })
+            .catch(err => console.log(err))
+
+
     }
 
     return (
         <div>
+
 
             <SchoolHomeLatestNew
                 data={latestNew}
@@ -74,11 +96,11 @@ export const SchoolHomeLatestNewModal = () => {
             />
 
 
-            <Modal active={addLatestNew} setActive={setAddLatestNew}>
+            <Modal extraClass={cls.modalExtraClass} active={addLatestNew} setActive={setAddLatestNew}>
                 <div className={cls.modal}>
                     <div {...getRootProps({className: 'dropzone'})}>
                         <input  {...getInputProps()}/>
-                        {!files ? <img src={defImg} alt=""/> :
+                        {!files ? <img className={cls.def_img} src={defImg} alt=""/> :
                             <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
                                  alt=""/>}
                     </div>
@@ -86,7 +108,7 @@ export const SchoolHomeLatestNewModal = () => {
                            placeholder={"Name"}/>
                     <Input required register={register} name={"name"} extraClassName={cls.modal__input}
                            placeholder={"Name"}/>
-                    <Textarea required placeholder={"Text"} name={"text"} register={register}
+                    <Textarea required placeholder={"Text"} name={"description"} register={register}
                               extraClassName={cls.modal__input}/>
                 </div>
                 <div className={cls.modal__btn}>
@@ -95,16 +117,18 @@ export const SchoolHomeLatestNewModal = () => {
                             extraClass={cls.modal__btn_cancel}>Cancel</Button>
                 </div>
             </Modal>
-            <SchoolHomeLatestEditModal setActive={setEditLatestNew} active={editLatestNew} register={register}
-                                       handleSubmit={handleSubmit} deleteItemId={deleteId}/>
+            <SchoolHomeLatestEditModal setValue={setValue} setActive={setEditLatestNew} active={editLatestNew} register={register}
+                                       handleSubmit={handleSubmit} deleteItemId={deleteId} id={id}/>
         </div>
 
     );
 };
 
-export const SchoolHomeLatestEditModal = ({active, setActive, register, handleSubmit, deleteItemId}) => {
+export const SchoolHomeLatestEditModal = ({active, setActive, register, handleSubmit, deleteItemId , id , setValue}) => {
 
     const dispatch = useDispatch()
+
+    const {request} = useHttp()
 
     // const {register, setValue, handleSubmit} = useForm()
     const [files, setFiles] = useState(null);
@@ -127,30 +151,51 @@ export const SchoolHomeLatestEditModal = ({active, setActive, register, handleSu
     const onDeleteItem = (data) => {
 
 
-        dispatch(onDelete(deleteItemId.id))
 
-        setActive(false)
+
+
+
+        request(`${API_URL}Ui/fronted-pages/${deleteItemId.id}` , "DELETE" , null , header() )
+            .then(res => {
+
+                dispatch(onDelete(deleteItemId.id))
+
+                setActive(false)
+            })
     }
 
+
     const onUpdateItem = (data) => {
+        const formData = new FormData
 
-        const res = {
-            img: files ? files?.map(item => item?.preview) : deleteItemId?.img,
-            ...data,
-
+        if (files) {
+            formData.append("image", files[0])
         }
 
-        dispatch(onEdit({id: deleteItemId.id, data: res}))
+        formData.append("name", data.name)
+        formData.append("description", data.description)
+        formData.append("date", data.date)
+        formData.append("type", id)
 
-        setFiles(null)
-        setActive(false)
+
+        request(`${API_URL}Ui/fronted-pages/${deleteItemId.id}/`, "PATCH", formData, headerImg())
+            .then(res => {
+                dispatch(onEdit({id: deleteItemId.id, data: res}))
+                setFiles(null)
+                setValue("name", "")
+                setValue("description", "")
+                setValue("date", "")
+                setActive(false)
+
+            })
+
     }
     return (
         <Modal active={active} setActive={setActive}>
             <div className={cls.modal}>
                 <div {...getRootProps({className: 'dropzone'})}>
                     <input  {...getInputProps()}/>
-                    {!files ? <img style={{width: "31rem", height: "23rem "}} src={deleteItemId?.img} alt=""/> :
+                    {!files ? <img style={{width: "31rem", height: "23rem "}} src={deleteItemId?.images?.map(item => item?.image)} alt=""/> :
                         <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
                              alt=""/>}
                 </div>
@@ -158,7 +203,7 @@ export const SchoolHomeLatestEditModal = ({active, setActive, register, handleSu
                        placeholder={"Name"}/>
                 <Input required register={register} name={"name"} extraClassName={cls.modal__input}
                        placeholder={"Name"}/>
-                <Textarea required placeholder={"Text"} name={"text"} register={register}
+                <Textarea required placeholder={"Text"} name={"description"} register={register}
                           extraClassName={cls.modal__input}/>
             </div>
             <div className={cls.modal__btnEdit}>
