@@ -38,11 +38,18 @@ export const SchoolHomeCertificatsModal = () => {
     const id = types[3]?.id
 
     useEffect(() => {
+        dispatch(fetchHomePage())
+
+    },[])
+
+    useEffect(() => {
         if (types) {
             dispatch(fetchCertificatData({id: types[8]?.id}))
         }
-        dispatch(fetchHomePage())
+
     }, [types])
+
+
 
     const formData = new FormData()
     const {

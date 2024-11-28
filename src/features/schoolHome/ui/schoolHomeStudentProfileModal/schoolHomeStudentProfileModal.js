@@ -68,7 +68,6 @@ export const SchoolHomeStudentProfileModal = ({types}) => {
 
         request(`${API_URL}Ui/fronted-pages/`, "POST", formData, headerImg())
             .then(res => {
-                console.log(res)
                 setValue("name", "")
                 setValue("description", "")
                 setValue("date", "")

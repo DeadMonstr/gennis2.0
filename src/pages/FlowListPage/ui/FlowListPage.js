@@ -133,8 +133,7 @@ export const FlowListPage = () => {
         })
     }
 
-    console.log(selectedId, "selectedId")
-    console.log(currentTableData, "currnetTbale")
+
 
     useEffect(() => {
         setCurrentTableData(prev => prev.map(item => {
