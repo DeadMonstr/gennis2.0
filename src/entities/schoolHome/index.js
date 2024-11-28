@@ -28,3 +28,6 @@ export {default as schoolHomeCertificatSlice} from "./model/slice/schoolHomeCert
 export {default as schoolHomeGallerySlice} from "./model/slice/schoolHomeGallerySlice";
 
 
+
+export {default as homeContactUsSlice} from "./model/slice/SchoolHomeContactUsSlice"
+

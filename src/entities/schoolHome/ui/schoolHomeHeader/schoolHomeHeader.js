@@ -32,9 +32,9 @@ const list = [
         path: "curricular"
     },
     {
-        name: "certificat",
-        label: "Certificate",
-        path: "certificat"
+        name: "studentLife",
+        label: "Student Life",
+        path: "studentLife"
     },
     // {
     //     name: "workWithUs",

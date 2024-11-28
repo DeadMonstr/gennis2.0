@@ -35,7 +35,7 @@ import {
     SchoolGalleryModal,
     SchoolHomeCertificatsModal,
     SchoolHomeCurriculamModal,
-    SchoolHomeLatestNewModal, SchoolVisionMission
+    SchoolHomeLatestNewModal, SchoolHomeStudentProfileModal, SchoolVisionMission
 } from "../../../features/schoolHome";
 import LayoutWebsite from "../../layoutWebSite/layoutWebsite";
 
@@ -59,7 +59,7 @@ export const AppRouter = () => {
                     <Route element={<SchoolHomeLatestNewModal/>} path={"news"}/>
                     <Route element={<SchoolHomeCurriculamModal/>} path={"curricular"}/>
                     <Route element={<SchoolGalleryModal/>} path={"gallery"}/>
-                    <Route element={<SchoolHomeCertificatsModal/>} path={"certificat"}/>
+                    <Route element={<SchoolHomeStudentProfileModal/>} path={"studentLife"}/>
                 </Route>
 
 

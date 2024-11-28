@@ -35,7 +35,7 @@ export const SchoolHomeCertificatsModal = () => {
 
     const types = useSelector(getHomePageType)
 
-    const id = types[3]?.id
+
 
     useEffect(() => {
         dispatch(fetchHomePage())

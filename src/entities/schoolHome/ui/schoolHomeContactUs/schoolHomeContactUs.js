@@ -13,16 +13,10 @@ import fluent from "shared/assets/images/fluent-mdl2_diet-plan-notebook.svg"
 import {Form} from "../../../../shared/ui/form";
 import {Input} from "../../../../shared/ui/input";
 import {Textarea} from "../../../../shared/ui/textArea";
+import React from "react";
 
-const data = [
-    {title: "Maktab", img: teen},
-    {title: "Qabul qilishlari", img: akar},
-    {title: "MAKTAB MISSIYASI VA VIZIYON", img: mage},
-    {title: "Bizning jamoat", img: clarity},
-    {title: "O'QUV REJASI", img: fluent},
-]
 
-export const SchoolHomeContactUs = () => {
+export const SchoolHomeContactUs = ({job, setActiveEditItem, setActive, data, setValue}) => {
 
     const render = () => {
         return data.map(item => (
@@ -43,13 +37,29 @@ export const SchoolHomeContactUs = () => {
                 </div>
 
                 <div className={cls.mainFormBox}>
+
+
                     <div className={cls.descr}>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-                        of type and scrambled it to make a type specimen book.Lorem Ipsum has been the industry's
-                        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                        scrambled it to make a type specimen book.
+                        {data?.map(item => (
+                            <>
+                                {job && <div
+                                    onClick={() => {
+                                        setActive("edit")
+                                        setActiveEditItem(item)
+                                        setValue("name", item.description)
+                                    }}
+                                    className={cls.mainFormBox__change}
+                                >
+                                    <i className="fas fa-edit"/>
+                                </div>
+                                }
+
+                                {item?.description}
+                            </>
+                        ))}
                     </div>
+
+
                     <div className={cls.mainRightBox}>
                         <div className={cls.formBox}>
                             <h1>Send message</h1>

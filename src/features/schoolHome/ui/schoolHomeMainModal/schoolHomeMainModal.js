@@ -122,6 +122,8 @@ export const SchoolHomeMainModal = ({types}) => {
         } else {
             dispatch(addDescription({data: data?.our_text, id: types[7]?.id}))
         }
+        setProgramActive(false)
+        setMainActive(false)
     }
 
     return (

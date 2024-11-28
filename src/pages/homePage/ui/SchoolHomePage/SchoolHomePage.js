@@ -24,7 +24,7 @@ import {Footer} from "../../../../entities/schoolHome/ui/footer/footer";
 import {Contact} from "../../../../entities/centerHome";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    SchoolGalleryModal, SchoolHomeCertificatsModal,
+    SchoolGalleryModal, SchoolHomeCertificatsModal, SchoolHomeContactUsModal,
     SchoolHomeCurriculamModal,
     SchoolHomeLatestEditModal,
     SchoolHomeLatestNewModal, SchoolHomeMainModal,
@@ -89,14 +89,14 @@ export const SchoolHomePage = () => {
                 <SchoolHomeMainModal types={types}/>
 
                 {/*<SchoolHomeExtracurricus/>*/}
-                {/*<SchoolHomeCertificatsModal types={types}/>*/}
+                <SchoolHomeCertificatsModal types={types}/>
                 {/*<SchoolHomeCertificats/>*/}
-                <SchoolHomeAboutUs/>
+                {/*<SchoolHomeAboutUs/>*/}
                 {/*<SchoolGalleryModal types={types}/>*/}
                 {/*<SchoolHomeGallery/>*/}
                 {/*<SchoolHomeWorkUs/>*/}
                 <SchoolHomeContact/>
-                <SchoolHomeContactUs/>
+               <SchoolHomeContactUsModal/>
                 {/*<SchoolParentesComment/>*/}
                 {/*<SchoolNews/>*/}
                 {/*<WorkUs/>*/}

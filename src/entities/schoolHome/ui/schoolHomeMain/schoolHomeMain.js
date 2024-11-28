@@ -77,7 +77,17 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
     return (
         <motion.div className={cls.homeMain}>
             <div className={cls.homeMain__info}>
+
+
                 <div className={cls.info}>
+                    {role &&  <div
+                        onClick={() => setMainActive(true)}
+                        className={cls.programsInfo__mainEdit}
+                    >
+                        <i className="fas fa-edit"/>
+                    </div>}
+
+
                     <h1 className={cls.info__title}>Our vision</h1>
                     <p className={cls.info__text}>
                         {des && des[0]?.description}
@@ -90,14 +100,7 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
             <div className={cls.wrapper}>
                 <div className={cls.homeMain__programs}>
                     <div className={cls.programsInfo}>
-                        {
-                            role && <div
-                                onClick={() => setMainActive(true)}
-                                className={cls.programsInfo__mainEdit}
-                            >
-                                <i className="fas fa-edit"/>
-                            </div>
-                        }
+
                         <h2 className={cls.programsInfo__title}>Programs</h2>
                         <p className={cls.programsInfo__text}>
                             {secDes && secDes[0]?.description}
