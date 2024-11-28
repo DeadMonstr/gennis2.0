@@ -10,7 +10,12 @@ const initialState = {
 const schoolHomeCertificatSlice = createSlice({
     name: "schoolHomeCertificatSlice",
     initialState,
-    reducers: {},
+    reducers: {
+        onDeleteCertificate: (state, action) => {
+            state.data = [...state.data.filter(item => item.id !== action.payload)]
+        }
+
+    },
     extraReducers: builder =>
         builder
             .addCase(fetchCertificatData.pending, (state) => {
@@ -40,5 +45,7 @@ const schoolHomeCertificatSlice = createSlice({
                 state.error = "error"
             })
 })
+
+export const {onDeleteCertificate} = schoolHomeCertificatSlice.actions
 
 export default schoolHomeCertificatSlice.reducer

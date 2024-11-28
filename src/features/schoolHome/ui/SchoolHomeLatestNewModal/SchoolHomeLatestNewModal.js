@@ -16,9 +16,11 @@ import {SchoolHomeLatestNew} from "../../../../entities/schoolHome";
 import {API_URL, header, headerImg, headersImg, useHttp} from "../../../../shared/api/base";
 import {rgbSlice} from "../../../../entities/rgbData";
 import {getLatestNew} from "../../../../entities/schoolHome/model/thunk/schoolLatestNewThunk";
+import {getHomePageType} from "../../../../entities/schoolHome/model/selector/getHomePageSelector";
+import {fetchHomePage} from "../../../../entities/schoolHome/model/thunk/getHomePageSelector";
 
 
-export const SchoolHomeLatestNewModal = ({types}) => {
+export const SchoolHomeLatestNewModal = () => {
     const [addLatestNew, setAddLatestNew] = useState(false)
     const [editLatestNew, setEditLatestNew] = useState(false)
 
@@ -26,7 +28,7 @@ export const SchoolHomeLatestNewModal = ({types}) => {
     const dispatch = useDispatch()
 
     const job = localStorage.getItem("job")
-
+    const types = useSelector(getHomePageType)
 
     const id = types[3]?.id
 
@@ -36,6 +38,7 @@ export const SchoolHomeLatestNewModal = ({types}) => {
 
     useEffect(() => {
         dispatch(getLatestNew(id))
+        dispatch(fetchHomePage())
     }, [id])
 
 
@@ -97,7 +100,6 @@ export const SchoolHomeLatestNewModal = ({types}) => {
                 setValue={setValue}
                 setDeleteId={setDeleteId}
             />
-
 
             <Modal extraClass={cls.modalExtraClass} active={addLatestNew} setActive={setAddLatestNew}>
                 <div className={cls.modal}>

@@ -47,6 +47,8 @@ export const SchoolVisionMission = memo(() => {
     const [activeEditItem, setActiveEditItem] = useState(null)
     const [activeEditImage, setActiveEditImage] = useState(false)
 
+    const job = localStorage.getItem("job")
+
     const renderListItem = useCallback(() => {
         return list.map(item => {
             return (
@@ -70,6 +72,7 @@ export const SchoolVisionMission = memo(() => {
     useEffect(() => {
         setValue("name", activeEditItem?.title)
         setValue("text", activeEditItem?.text)
+
     }, [activeEditItem])
 
     const onDeleteText = (id) => {
@@ -89,33 +92,33 @@ export const SchoolVisionMission = memo(() => {
                     <div className={cls.container}>
                         {renderListItem()}
                     </div>
-                    <div
+                    {job && <div
                         onClick={() => setActiveTextEdit(!activeTextEdit)}
                         className={cls.visionMission__change}
                         style={{right: "2.8rem", left: "none"}}
                     >
                         <i className={classNames("fas fa-edit")}/>
-                    </div>
+                    </div>}
                 </div>
                 <div
                     className={cls.visionMission__image}
                 >
                     <div className={cls.visionMission__imageFilter}>
-                        <div
+                        {job && <div
                             onClick={() => setActiveEditImage(!activeEditImage)}
                             className={cls.visionMission__change}
                             style={{left: "5rem"}}
                         >
                             <i className={classNames("fas fa-edit")}/>
-                        </div>
-                        <div className={cls.visionMission__add}>
+                        </div>}
+                        {job && <div className={cls.visionMission__add}>
                             <i
                                 className={classNames(
                                     "fas fa-plus",
                                     cls.visionMission__icon
                                 )}
                             />
-                        </div>
+                        </div>}
                     </div>
                     <img
                         src={image}

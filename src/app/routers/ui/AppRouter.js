@@ -31,6 +31,13 @@ import {
     SchoolHomeContact,
     SchoolHomeHeader
 } from "../../../entities/schoolHome";
+import {
+    SchoolGalleryModal,
+    SchoolHomeCertificatsModal,
+    SchoolHomeCurriculamModal,
+    SchoolHomeLatestNewModal, SchoolVisionMission
+} from "../../../features/schoolHome";
+import LayoutWebsite from "../../layoutWebSite/layoutWebsite";
 
 
 export const AppRouter = () => {
@@ -45,6 +52,19 @@ export const AppRouter = () => {
                     path={"/"}
                     element={<SchoolHomePage/>}
                 />
+
+
+                <Route element={<LayoutWebsite/>}>
+                    <Route element={<SchoolVisionMission/>} path={"aboutUs"}/>
+                    <Route element={<SchoolHomeLatestNewModal/>} path={"news"}/>
+                    <Route element={<SchoolHomeCurriculamModal/>} path={"curricular"}/>
+                    <Route element={<SchoolGalleryModal/>} path={"gallery"}/>
+                    <Route element={<SchoolHomeCertificatsModal/>} path={"certificat"}/>
+                </Route>
+
+
+
+
 
                 {/*<Route*/}
                 {/*    path={"/"}*/}
@@ -102,9 +122,6 @@ export const AppRouter = () => {
                         </Route>
 
 
-                        {/*<Route element={<SchoolHomeHeader/>}>*/}
-                        {/*    <Route element={<SchoolHomeAboutUs/>} path={"aboutUs"}/>*/}
-                        {/*</Route>*/}
 
                         <Route
                             path={"profile"}

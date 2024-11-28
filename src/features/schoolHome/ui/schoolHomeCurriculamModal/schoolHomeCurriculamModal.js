@@ -25,8 +25,10 @@ import {
 import {API_URL, header, headerImg, useHttp} from "shared/api/base";
 import {getCurriculum, getExtraCurriculum} from "entities/schoolHome/model/thunk/curriculumThunk";
 import {getUserJob} from "../../../../entities/profile/userProfile";
+import {getHomePageType} from "../../../../entities/schoolHome/model/selector/getHomePageSelector";
+import {fetchHomePage} from "../../../../entities/schoolHome/model/thunk/getHomePageSelector";
 
-export const SchoolHomeCurriculamModal = ({type}) => {
+export const SchoolHomeCurriculamModal = () => {
 
     const curricularData = useSelector(getCurricularData)
     const extraCurricularData = useSelector(getExtraCurricularData)
@@ -43,7 +45,9 @@ export const SchoolHomeCurriculamModal = ({type}) => {
     const {register, setValue, handleSubmit} = useForm()
 
 
-    const job = useSelector(getUserJob)
+    const job = localStorage.getItem("job")
+
+
 
 
 
@@ -56,6 +60,7 @@ export const SchoolHomeCurriculamModal = ({type}) => {
     useEffect(() => {
        dispatch(getCurriculum())
        dispatch(getExtraCurriculum())
+        dispatch(fetchHomePage())
     }, [])
 
 

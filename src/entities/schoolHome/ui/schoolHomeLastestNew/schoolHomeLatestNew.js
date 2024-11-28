@@ -3,9 +3,13 @@ import cls from "./schoolHomeLastestNew.module.sass"
 
 import editIcon from "shared/assets/icons/edittTuron.svg"
 import addIcon from "shared/assets/icons/PlusCircle.svg"
+import {useSelector} from "react-redux";
+import {getHomePageType} from "../../model/selector/getHomePageSelector";
 
 
 export const SchoolHomeLatestNew = ({data, setValue, setEdit, add, setAdd, setDeleteId, job}) => {
+
+
 
 
     const renderData = () => {

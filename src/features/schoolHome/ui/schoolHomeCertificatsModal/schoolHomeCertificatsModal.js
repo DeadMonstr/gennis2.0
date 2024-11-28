@@ -9,26 +9,39 @@ import {Modal} from "shared/ui/modal";
 import cls from "./schoolHomeCertificatsModal.module.sass";
 import defImg from "shared/assets/images/Image Placeholder.svg";
 import {useDropzone} from "react-dropzone";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import {Form} from "../../../../shared/ui/form";
 import {
     fetchAddCertificat,
     fetchCertificatData
 } from "entities/schoolHome/model/thunk/schoolHomeCertificatsThunk";
+import {API_URL, header, useHttp} from "../../../../shared/api/base";
+import {onDeleteCertificate} from "../../../../entities/schoolHome/model/slice/schoolHomeCertificatsSlice";
+import {getHomePageType} from "../../../../entities/schoolHome/model/selector/getHomePageSelector";
+import {fetchHomePage} from "../../../../entities/schoolHome/model/thunk/getHomePageSelector";
 
 
-export const SchoolHomeCertificatsModal = ({types}) => {
+export const SchoolHomeCertificatsModal = () => {
 
     const [active, setActive] = useState("")
     const [activeEditItem, setActiveEditItem] = useState(null)
     const [files, setFiles] = useState(null);
     const [currentFiles, setCurrentFiles] = useState(null);
 
+    const {request} = useHttp()
+
+    const job = localStorage.getItem("job")
+
+    const types = useSelector(getHomePageType)
+
+    const id = types[3]?.id
+
     useEffect(() => {
         if (types) {
             dispatch(fetchCertificatData({id: types[8]?.id}))
         }
+        dispatch(fetchHomePage())
     }, [types])
 
     const formData = new FormData()
@@ -55,9 +68,17 @@ export const SchoolHomeCertificatsModal = ({types}) => {
 
 
     const onDeleteItem = (data) => {
+        request(`${API_URL}Ui/fronted-pages/${activeEditItem.id}/`, "DELETE", null, header())
+            .then(res => {
+                dispatch(onDeleteCertificate(activeEditItem.id))
+            })
+            .catch(err => {
+                console.log(err)
+            })
 
 
         // dispatch(onDelete(deleteItemId.id))
+
 
         setActive(false)
     }
@@ -77,6 +98,10 @@ export const SchoolHomeCertificatsModal = ({types}) => {
         formData.append("description", data.description)
         formData.append("type", types[8]?.id)
         formData.append("image", files[0])
+        setActive(false)
+        setFiles(null)
+        setValue("name", "")
+        setValue("description", "")
         dispatch(fetchAddCertificat({data: formData}))
     }
 
@@ -91,6 +116,7 @@ export const SchoolHomeCertificatsModal = ({types}) => {
             <SchoolHomeCertificats
                 setActive={setActive}
                 setActiveEditItem={setActiveEditItem}
+                job={job === "smm"}
             />
 
 

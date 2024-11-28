@@ -9,7 +9,7 @@ import {getSchoolHomeGalleryData} from "../../model/selector/schoolHomeGallerySe
 
 const list = [1, 2]
 
-export const SchoolHomeGallery = memo(({setActive ,setActiveEditItem}) => {
+export const SchoolHomeGallery = memo(({setActive, setActiveEditItem, job}) => {
 
     const data = useSelector(getSchoolHomeGalleryData)
 
@@ -21,15 +21,18 @@ export const SchoolHomeGallery = memo(({setActive ,setActiveEditItem}) => {
                         [cls.active]: false
                     })}
                 >
-                    <div
-                        onClick={() => {
-                            setActive("edit")
-                            setActiveEditItem(item)
-                        }}
-                        className={cls.item__change}
-                    >
-                        <i className="fas fa-edit"/>
-                    </div>
+
+                    {job &&
+
+                        <div
+                            onClick={() => {
+                                setActive("edit")
+                                setActiveEditItem(item)
+                            }}
+                            className={cls.item__change}
+                        >
+                            <i className="fas fa-edit"/>
+                        </div>}
                     <img
                         className={cls.item__image}
                         src={item?.images[0]?.image ?? robot}
@@ -54,9 +57,9 @@ export const SchoolHomeGallery = memo(({setActive ,setActiveEditItem}) => {
         <div className={cls.gallery}>
             <div className={cls.gallery__wrapper}>
                 <h2 className={cls.gallery__title}>Gallery</h2>
-                <div className={cls.gallery__add} onClick={() => setActive("add")}>
+                {job && <div className={cls.gallery__add} onClick={() => setActive("add")}>
                     <img src={addIcon} alt=""/>
-                </div>
+                </div>}
             </div>
             <div className={cls.gallery__container}>
                 {/*<div*/}

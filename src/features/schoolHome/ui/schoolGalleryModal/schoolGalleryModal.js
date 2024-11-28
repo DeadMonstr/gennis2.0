@@ -8,13 +8,17 @@ import cls from "./schoolGalleryModal.module.sass";
 import defImg from "../../../../shared/assets/images/Image Placeholder.svg";
 import {useDropzone} from "react-dropzone";
 import {useForm} from "react-hook-form";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {
     fetchAddGallery,
     fetchHomeGalleryData
 } from "../../../../entities/schoolHome/model/thunk/schoolHomeGalleryThunk";
+import {API_URL, header, headerImg, useHttp} from "../../../../shared/api/base";
+import {DeleteGalary , ChangeGalary} from "../../../../entities/schoolHome/model/slice/schoolHomeGallerySlice";
+import {getHomePageType} from "../../../../entities/schoolHome/model/selector/getHomePageSelector";
+import {fetchHomePage} from "../../../../entities/schoolHome/model/thunk/getHomePageSelector";
 
-export const SchoolGalleryModal = ({types}) => {
+export const SchoolGalleryModal = () => {
 
     const formData = new FormData()
     const dispatch = useDispatch()
@@ -27,9 +31,17 @@ export const SchoolGalleryModal = ({types}) => {
     const [files, setFiles] = useState(null)
     const [activeEditItem, setActiveEditItem] = useState(null)
 
+    const job = localStorage.getItem("job")
+
+    const types = useSelector(getHomePageType)
+
+
+    const {request} = useHttp()
+
     useEffect(() => {
         if (types) {
             dispatch(fetchHomeGalleryData({id: types[0]?.id}))
+            dispatch(fetchHomePage())
         }
     }, [types])
 
@@ -49,20 +61,45 @@ export const SchoolGalleryModal = ({types}) => {
     });
 
     const onDeleteImage = () => {
-
+        return request(`${API_URL}Ui/fronted-pages/${activeEditItem.id}/`, "DELETE", null, header())
+            .catch(err => {
+                console.log(err)
+            })
+            .then(res => {
+                console.log(res)
+                dispatch(DeleteGalary(activeEditItem.id))
+                setActive(false)
+                setFiles(null)
+            })
     }
 
 
     const onAddImage = () => {
+        setActive(false)
         if (files) {
             formData.append("image", files[0])
             formData.append("type", types[0]?.id)
             dispatch(fetchAddGallery({data: formData}))
+
         }
+        setFiles(null)
     }
 
     const onChange = () => {
 
+        formData.append("image", files[0])
+        formData.append("type", types[0]?.id)
+
+        return request(`${API_URL}Ui/fronted-pages/${activeEditItem.id}/`, "PATCH", formData, headerImg())
+            .catch(err => {
+                console.log(err)
+            })
+            .then(res => {
+                console.log(res)
+                dispatch(ChangeGalary({id: activeEditItem.id , data: res}))
+                setActive(false)
+                setFiles(null)
+            })
     }
 
     return (
@@ -72,6 +109,7 @@ export const SchoolGalleryModal = ({types}) => {
             <SchoolHomeGallery
                 setActiveEditItem={setActiveEditItem}
                 setActive={setActive}
+                job={job === "smm"}
             />
 
             <Modal
@@ -83,15 +121,15 @@ export const SchoolGalleryModal = ({types}) => {
                 <div className={cls.image}>
                     <div {...getRootProps({className: 'dropzone'})}>
                         <input  {...getInputProps()}/>
-                        {!files ? <img src={defImg} alt=""/> :
+                        {!files ? <img style={{width: "31rem", height: "23rem "}} src={activeEditItem?.images[0]?.image} alt=""/> :
                             <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
                                  alt=""/>}
                     </div>
                 </div>
                 <div className={cls.imageEdit__btns}>
-                    <Button extraClass={cls.imageEdit__btn_delete}>Delete</Button>
+                    <Button onClick={handleSubmit(onDeleteImage)} extraClass={cls.imageEdit__btn_delete}>Delete</Button>
                     <div className={cls.imageEdit__btn_mini}>
-                        <Button id={"toggle"} extraClass={cls.imageEdit__btn_add}>Edit</Button>
+                        <Button onClick={onChange} id={"toggle"} extraClass={cls.imageEdit__btn_add}>Edit</Button>
                         <Button onClick={handleSubmit(() => setActive(false))}
                                 extraClass={cls.imageEdit__btn_cancel}>Cancel</Button>
                     </div>
@@ -103,17 +141,17 @@ export const SchoolGalleryModal = ({types}) => {
                 setActive={setActive}
                 extraClass={cls.imageEdit}
             >
-                <h1>Edit box</h1>
+                <h1>Add box</h1>
                 <div className={cls.image}>
                     <div {...getRootProps({className: 'dropzone'})}>
                         <input  {...getInputProps()}/>
-                        {!files ? <img src={activeEditItem?.images[0]?.image ?? defImg} alt=""/> :
+                        {!files ? <img style={{width: "31rem", height: "23rem "}} src={activeEditItem?.images[0]?.image ?? defImg} alt=""/> :
                             <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
                                  alt=""/>}
                     </div>
                 </div>
                 <div className={cls.imageEdit__btns}>
-                    <Button onClick={onAddImage} extraClass={cls.imageEdit__btn_add}>Edit</Button>
+                    <Button onClick={onAddImage} extraClass={cls.imageEdit__btn_add}>Add</Button>
                     <Button onClick={handleSubmit(() => setActive(false))}
                             extraClass={cls.imageEdit__btn_cancel}>Cancel</Button>
                 </div>

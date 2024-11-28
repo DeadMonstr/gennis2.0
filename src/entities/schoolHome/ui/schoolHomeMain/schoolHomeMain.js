@@ -120,13 +120,9 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
                                     {/*    {...settings}*/}
                                     <AnimatePresence>
                                         {render}
-                                        <div
-                                            onClick={() => setActive("add")}
-                                            className={cls.items__plus}
-                                        >
-                                            <i className="fas fa-plus"/>
-                                        </div>
+
                                     </AnimatePresence>
+
                                     {/*>*/}
                                     {/*</Slider>*/}
                                 </motion.div>
@@ -134,6 +130,12 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
 
 
                     </motion.div>
+                    {role && <div
+                        onClick={() => setActive("add")}
+                        className={cls.items__plus}
+                    >
+                        <i className="fas fa-plus"/>
+                    </div>}
                 </div>
             </div>
         </motion.div>
