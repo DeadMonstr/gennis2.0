@@ -8,12 +8,25 @@ import "slick-carousel/slick/slick-theme.css";
 import cls from "./schoolHomeMain.module.sass";
 import homeImage from "shared/assets/images/homeImage.png";
 import idea from "shared/assets/icons/turonIdea.png";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getUserJob} from "../../../profile/userProfile";
+import {
+    getSchoolHomeMainData, getSchoolHomeMainDes,
+    getSchoolHomeMainLoading,
+    getSchoolHomeMainSecDes
+} from "../../model/selector/schoolHomeMainSelector";
+import {DefaultLoader, DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 
 const list = [1, 2, 3, 4, 5, 6, 7]
 
-export const SchoolHomeMain = memo(({setActive, setMainActive, role}) => {
+export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEditItem}) => {
+
+    const dispatch = useDispatch()
+
+    const data = useSelector(getSchoolHomeMainData)
+    const loading = useSelector(getSchoolHomeMainLoading)
+    const secDes = useSelector(getSchoolHomeMainSecDes)
+    const des = useSelector(getSchoolHomeMainDes)
 
     const carousel = useRef()
     const [activeItem, setActiveItem] = useState(null)
@@ -24,32 +37,23 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role}) => {
     }, [list.length])
 
     const renderItems = useCallback(() => {
-        return list.map(item => {
+        return data?.map(item => {
             return (
                 <motion.div
                     transition={{duration: 1}}
-                    // onDoubleClick={(e) => {
-                    //     console.log(e.detail, "e.detail")
-                    //     switch (e.detail) {
-                    //         case 1:
-                    //             setActiveItem(null)
-                    //             break
-                    //         case 2:
-                    //            setActiveItem(item)
-                    //            break
-                    //     }
-                    //
-                    // }}
                     onClick={() => setActiveItem(prev =>
-                        prev === item ? null : item
+                        prev === item?.id ? null : item?.id
                     )}
                     className={classNames(cls.items__inner, {
-                        [cls.active]: activeItem === item
+                        [cls.active]: activeItem === item?.id
                     })}
                 >
                     {
                         role && <div
-                            onClick={() => setActive(true)}
+                            onClick={() => {
+                                setActive("edit")
+                                setActiveEditItem(item)
+                            }}
                             className={cls.items__edit}
                         >
                             <i className="fas fa-edit"/>
@@ -57,15 +61,16 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role}) => {
                     }
                     <img
                         className={cls.items__image}
-                        src={idea}
+                        // src={idea}
+                        src={item?.images[0]?.image ?? idea}
                         alt=""
                     />
-                    <h2 className={cls.items__title}>Creative Thinking</h2>
+                    <h2 className={cls.items__title}>{item?.name}</h2>
                     <p className={cls.items__more}>Learn more</p>
                 </motion.div>
             )
         })
-    }, [list, activeItem])
+    }, [data, activeItem])
 
     const render = renderItems()
 
@@ -75,12 +80,7 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role}) => {
                 <div className={cls.info}>
                     <h1 className={cls.info__title}>Our vision</h1>
                     <p className={cls.info__text}>
-                        "Our vision at Turon International School is to be a pioneering institution in
-                        Uzbekistan, renowned for excellence in STEM and IT education. We aim to
-                        foster a community of innovative thinkers and global leaders, equipped with
-                        the knowledge and skills to shape the future. Our commitment is to provide
-                        an inspiring and technologically advanced learning environment where
-                        students are empowered to
+                        {des && des[0]?.description}
                     </p>
                 </div>
                 <div className={cls.image}>
@@ -100,29 +100,39 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role}) => {
                         }
                         <h2 className={cls.programsInfo__title}>Programs</h2>
                         <p className={cls.programsInfo__text}>
-                            Lorem Ipsum is simply dummy text of
-                            the printing and typesetting industry.
+                            {secDes && secDes[0]?.description}
                         </p>
                     </div>
                     <motion.div
                         className={cls.items}
                         ref={carousel}
                     >
-                        <motion.div
-                            className={cls.items__wrapper}
-                            drag={"x"}
-                            dragConstraints={{left: -width, right: 0}}
-                        >
+                        {
+                            loading ? <DefaultPageLoader/> :
+                                <motion.div
+                                    className={cls.items__wrapper}
+                                    drag={"x"}
+                                    dragConstraints={{left: -width, right: 0}}
+                                >
 
-                            {/*<Slider*/}
+                                    {/*<Slider*/}
 
-                            {/*    {...settings}*/}
-                            <AnimatePresence>
-                                {render}
-                            </AnimatePresence>
-                            {/*>*/}
-                            {/*</Slider>*/}
-                        </motion.div>
+                                    {/*    {...settings}*/}
+                                    <AnimatePresence>
+                                        {render}
+                                        <div
+                                            onClick={() => setActive("add")}
+                                            className={cls.items__plus}
+                                        >
+                                            <i className="fas fa-plus"/>
+                                        </div>
+                                    </AnimatePresence>
+                                    {/*>*/}
+                                    {/*</Slider>*/}
+                                </motion.div>
+                        }
+
+
                     </motion.div>
                 </div>
             </div>

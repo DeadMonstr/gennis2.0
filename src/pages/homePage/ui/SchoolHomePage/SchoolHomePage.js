@@ -27,19 +27,11 @@ import {
     SchoolGalleryModal, SchoolHomeCertificatsModal,
     SchoolHomeCurriculamModal,
     SchoolHomeLatestEditModal,
-    schoolHomeLatestEditModal,
     SchoolHomeLatestNewModal, SchoolHomeMainModal,
-    SchoolHomeStudentEditModal,
     SchoolHomeStudentProfileModal
 } from "../../../../features/schoolHome";
-import {useForm} from "react-hook-form";
-import {getSchoolLatestSlice} from "../../../../entities/schoolHome/model/selector/schoolLatestSelector";
-import {
-    SchoolLeadershipTeamModal
-} from "../../../../features/schoolHome/ui/SchoolLeadershipTeamModal/SchoolLeadershipTeamModal";
 import {fetchHomePage} from "../../../../entities/schoolHome/model/thunk/getHomePageSelector";
 import {getHomePageType} from "../../../../entities/schoolHome/model/selector/getHomePageSelector";
-import {type} from "@testing-library/user-event/dist/type";
 import {getUserJob} from "../../../../entities/profile/userProfile";
 
 
@@ -96,26 +88,22 @@ export const SchoolHomePage = () => {
                 className={cls.schoolHome__header}
             >
             <SchoolHomeHeader ref={currentHeight}/>
-            {/*<SchoolHomeMainModal types={types}/>*/}
-            {/*    /!*<SchoolHomeExtracurricus/>*!/*/}
-            {/*    <SchoolHomeCertificatsModal/>*/}
-            {/*    <SchoolHomeCertificats/>*/}
-            {/*    <SchoolHomeAboutUs/>*/}
-            {/*    <SchoolGalleryModal/>*/}
-            {/*    /!*<SchoolHomeGallery/>*!/*/}
-            {/*    <SchoolHomeWorkUs/>*/}
-            {/*    <SchoolHomeContact/>*/}
-            {/*    <SchoolHomeContactUs/>*/}
-            {/*    /!*<SchoolParentesComment/>*!/*/}
-            {/*    /!*<SchoolNews/>*!/*/}
-            {/*    /!*<WorkUs/>*!/*/}
-            {/*    <Calendar/>*/}
-            {/*    <Footer/>*/}
-
-
-
-
-                {/*<SchoolHomeStudentProfileModal types={types}/>*/}
+            <SchoolHomeMainModal types={types}/>
+            {/*</div>*/}
+            <SchoolHomeExtracurricus/>
+            <SchoolHomeCertificatsModal types={types}/>
+            {/*<SchoolHomeCertificats/>*/}
+            <SchoolHomeAboutUs/>
+            <SchoolGalleryModal types={types}/>
+            {/*<SchoolHomeGallery/>*/}
+            <SchoolHomeWorkUs/>
+            <SchoolHomeContact/>
+            <SchoolHomeContactUs/>
+            <SchoolParentesComment/>
+            <SchoolNews/>
+            <WorkUs/>
+            <Calendar/>
+            <Footer/>
 
 
 
