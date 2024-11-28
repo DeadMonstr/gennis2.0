@@ -17,7 +17,7 @@ export const SchoolHomeStudentProfile = ({data , setValue , setEdit , add , setA
                     <div onClick={() => {
                         setEdit(true)
                         setValue("name", item.name)
-                        setValue("text", item.text)
+                        setValue("description", item.description)
                         setDeleteId(item)
                     }}
                          className={cls.main__edit}
@@ -34,7 +34,7 @@ export const SchoolHomeStudentProfile = ({data , setValue , setEdit , add , setA
                 </div>
                 <div className={cls.main__box_descr}>
 
-                    {item?.text}
+                    {item?.description}
                 </div>
             </div>
         ))

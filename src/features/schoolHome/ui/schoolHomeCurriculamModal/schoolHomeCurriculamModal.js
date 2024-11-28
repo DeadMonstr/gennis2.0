@@ -24,6 +24,7 @@ import {
 } from "entities/schoolHome/model/slice/schoolCurricularSlice";
 import {API_URL, header, headerImg, useHttp} from "shared/api/base";
 import {getCurriculum, getExtraCurriculum} from "entities/schoolHome/model/thunk/curriculumThunk";
+import {getUserJob} from "../../../../entities/profile/userProfile";
 
 export const SchoolHomeCurriculamModal = ({type}) => {
 
@@ -38,6 +39,10 @@ export const SchoolHomeCurriculamModal = ({type}) => {
     const [deleteIdExtra, setDeleteIdExtra] = useState(null)
     const {register, setValue, handleSubmit} = useForm()
 
+
+    const job = useSelector(getUserJob)
+
+    console.log(job)
 
     const [extraCurricular, setActiveExtraCurricular] = useState(false)
     const [extraCurricularEdit, setActiveExtraCurricularEdit] = useState(false)
@@ -243,7 +248,6 @@ export const SchoolCurriculumEdit = ({active, setActive, handleSubmit, setValue,
 
         formData.append("name", data.name)
         formData.append("description", data.description)
-        formData.append("date", data.date)
         formData.append("type", 7)
 
 
@@ -273,7 +277,7 @@ export const SchoolCurriculumEdit = ({active, setActive, handleSubmit, setValue,
 
                     <div {...getRootProps({className: 'dropzone'})}>
                         <input  {...getInputProps()}/>
-                        {!files ? <img style={{width: "31rem", height: "23rem "}} src={defImg} alt=""/> :
+                        {!files ? <img style={{width: "31rem", height: "23rem "}} src={idItem?.images?.map(item => item?.image)} alt=""/> :
                             <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
                                  alt=""/>}
                     </div>
@@ -325,7 +329,6 @@ export const SchoolExtraCurriculumAdd = ({setActive, active}) => {
         formData.append("image", files[0])
         formData.append("name", data.name)
         formData.append("description", data.description)
-        formData.append("date", data.date)
         formData.append("type", 6)
 
         request(`${API_URL}Ui/fronted-pages/`, "POST", formData, headerImg())
@@ -400,16 +403,12 @@ export const SchoolExtraCurriculumEdit = ({active, setActive, handleSubmit, setV
     }
 
     const onUpdateItem = (data) => {
-
         const formData = new FormData
-
         if (files) {
             formData.append("image", files[0])
         }
-
         formData.append("name", data.name)
         formData.append("description", data.description)
-        formData.append("date", data.date)
         formData.append("type", 6)
 
 
@@ -429,7 +428,7 @@ export const SchoolExtraCurriculumEdit = ({active, setActive, handleSubmit, setV
             <div className={cls.modalExtra}>
                 <div {...getRootProps({className: 'dropzone'})}>
                     <input  {...getInputProps()}/>
-                    {!files ? <img src={defImg} alt=""/> :
+                    {!files ? <img  style={{width: "31rem", height: "23rem "}} src={idItem?.images?.map(item => item?.image)} alt=""/> :
                         <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
                              alt=""/>}
                 </div>

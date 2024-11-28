@@ -109,7 +109,7 @@ export const SchoolHomePage = () => {
 
 
 
-            <SchoolHomeCurriculamModal  type={types}/>
+
 
 
             {/*<SchoolHomeStudentProfileModal types={types}/>*/}
@@ -126,7 +126,7 @@ export const SchoolHomePage = () => {
 
 
 
-
+            <SchoolHomeCurriculamModal  type={types}/>
 
 
 

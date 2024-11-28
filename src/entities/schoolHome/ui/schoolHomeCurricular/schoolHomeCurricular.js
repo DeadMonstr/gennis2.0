@@ -85,7 +85,7 @@ export const Curricular = ({data, setDeleteId, setActiveEdit, setValue}) => {
 
                     setValue("name", item.name)
 
-                    setValue("text", item.description)
+                    setValue("description", item.description)
                     // setValue("date" , item.date)
                     setDeleteId(item)
                     setActiveEdit(true)
@@ -103,11 +103,11 @@ export const Curricular = ({data, setDeleteId, setActiveEdit, setValue}) => {
                     </span>
                 </div>
                 <div className={cls.curricular__wrapper_box_img}>
-                    <img src={item.img} alt=""/>
+                    <img src={item.images?.map(item => item?.image)} alt=""/>
                 </div>
 
                 <div className={cls.curricular__wrapper_box_descr}>
-                    {item.text}
+                    {item.description}
                 </div>
             </div>
         ))
@@ -143,8 +143,8 @@ export const DissCurricular = ({extraCurricularData, setActiveExtraCurricularEdi
             <div className={cls.curricular__extraBox}>
 
                 <div onClick={() => {
-                    setValue("subject_name" , item.subject_name)
-                    setValue("descr" , item.description)
+                    setValue("name" , item.name)
+                    setValue("description" , item.description)
                     setDeleteIdExtra(item)
                     setActiveExtraCurricularEdit(true)
                 }}
@@ -154,20 +154,20 @@ export const DissCurricular = ({extraCurricularData, setActiveExtraCurricularEdi
                     <img src={editIcon} alt=""/>
                 </div>
                 <div className={cls.curricular__extraBox_img}>
-                    <img src={item.img} alt=""/>
+                    <img src={item?.images?.map(item => item?.image)} alt=""/>
                 </div>
 
 
                 <div className={cls.curricular__extraBox_title}>
                     <div className={cls.curricular__extraBox_descr}>
-                        {item.descr}
+                        {item.description}
                     </div>
                     <div className={cls.curricular__extraBox_box}>
                         <i className="fas fa-chevron-down"/>
                     </div>
 
 
-                    {item.subject_name}
+                    {item.name}
                 </div>
 
 

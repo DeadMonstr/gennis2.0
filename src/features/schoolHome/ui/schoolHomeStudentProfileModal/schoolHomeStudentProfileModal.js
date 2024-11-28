@@ -60,7 +60,6 @@ export const SchoolHomeStudentProfileModal = ({types}) => {
         formData.append("image", files[0])
         formData.append("name", data.name)
         formData.append("description", data.description)
-        formData.append("date", data.date)
         formData.append("type", id)
 
 
@@ -179,7 +178,6 @@ export const SchoolHomeStudentEditModal = ({active , setActive , deleteItemId , 
 
         formData.append("name", data.name)
         formData.append("description", data.description)
-        formData.append("date", data.date)
         formData.append("type", id)
 
 
