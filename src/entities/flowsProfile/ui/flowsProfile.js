@@ -22,7 +22,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {Button} from "shared/ui/button";
-import {ConfirmModal} from "shared/ui/confirmModal";
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import {Form} from "shared/ui/form";
 import {Input} from "shared/ui/input";

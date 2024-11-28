@@ -15,7 +15,6 @@ import {
 import {getSchoolClassColors, getSchoolClassNumbers} from "entities/students";
 import {useTheme} from "shared/lib/hooks/useTheme";
 import {Button} from "shared/ui/button";
-import {ConfirmModal} from "shared/ui/confirmModal";
 import {EditableCard} from "shared/ui/editableCard";
 import {Form} from "shared/ui/form";
 import {Input} from "shared/ui/input";

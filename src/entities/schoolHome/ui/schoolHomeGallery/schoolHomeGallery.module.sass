@@ -1,3 +1,5 @@
+@import "app/styles/abstracts/mixins"
+
 .gallery
   padding: 5rem 10rem
   display: flex
@@ -26,6 +28,19 @@
       box-shadow: 0 4px 8px 0 #0000001A, 0 14px 14px 0 #00000017, 0 32px 19px 0 #0000000D, 0 56px 23px 0 #00000003, 0 88px 25px 0 #00000000
       &:hover .item__text
         top: 0
+      &__change
+        z-index: 50
+        position: absolute
+        top: 1.3rem
+        left: 1.8rem
+        background: #001B61
+        padding: .8rem
+        transition: .1s
+        border-radius: .5rem
+        @include btn-active
+        i
+          font-size: 1.6rem
+          color: #fff
       &__title
         font-size: 3.2rem
         color: #001B61

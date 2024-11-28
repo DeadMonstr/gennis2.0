@@ -22,6 +22,7 @@ export {getSchoolProfileData} from "./model/selector/schoolHomeStudentProfileSel
 
 
 export {SchoolHomeCurricular} from "./ui/schoolHomeCurricular/schoolHomeCurricular"
+export {} from "./ui/"
 
 export {default as schoolProfileSlice} from "./model/slice/schoolHomeStudentProfileSlice"
 export {default as schoolLatestSlice} from "./model/slice/SchoolHomeLatestNewSlice"

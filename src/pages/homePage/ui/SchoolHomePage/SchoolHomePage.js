@@ -24,10 +24,11 @@ import {Footer} from "../../../../entities/schoolHome/ui/footer/footer";
 import {Contact} from "../../../../entities/centerHome";
 import {useSelector} from "react-redux";
 import {
+    SchoolGalleryModal, SchoolHomeCertificatsModal,
     SchoolHomeCurriculamModal,
     SchoolHomeLatestEditModal,
     schoolHomeLatestEditModal,
-    SchoolHomeLatestNewModal,
+    SchoolHomeLatestNewModal, SchoolHomeMainModal,
     SchoolHomeStudentEditModal,
     SchoolHomeStudentProfileModal
 } from "../../../../features/schoolHome";
@@ -74,20 +75,22 @@ export const SchoolHomePage = () => {
             {/*    className={cls.schoolHome__header}*/}
             {/*>*/}
             <SchoolHomeHeader ref={currentHeight}/>
-            {/*<SchoolHomeMain/>*/}
+            <SchoolHomeMainModal/>
             {/*</div>*/}
-            {/*/!*<SchoolHomeExtracurricus/>*!/*/}
+            <SchoolHomeExtracurricus/>
+            <SchoolHomeCertificatsModal/>
             {/*<SchoolHomeCertificats/>*/}
-            {/*<SchoolHomeAboutUs/>*/}
+            <SchoolHomeAboutUs/>
+            <SchoolGalleryModal/>
             {/*<SchoolHomeGallery/>*/}
-            {/*/!*<SchoolHomeWorkUs/>*!/*/}
-            {/*<SchoolHomeContact/>*/}
-            {/*<SchoolHomeContactUs/>*/}
-            {/*/!*<SchoolParentesComment/>*!/*/}
-            {/*<SchoolNews/>*/}
-            {/*<WorkUs/>*/}
-            {/*/!*<Calendar/>*!/*/}
-            {/*<Footer/>*/}
+            <SchoolHomeWorkUs/>
+            <SchoolHomeContact/>
+            <SchoolHomeContactUs/>
+            <SchoolParentesComment/>
+            <SchoolNews/>
+            <WorkUs/>
+            <Calendar/>
+            <Footer/>
 
 
 
@@ -100,13 +103,13 @@ export const SchoolHomePage = () => {
 
 
 
-            {/*<SchoolHomeLatestNewModal/>*/}
+            <SchoolHomeLatestNewModal/>
 
 
 
 
 
-            {/*<SchoolHomeCurriculamModal/>*/}
+            <SchoolHomeCurriculamModal/>
 
         </div>
     )

@@ -3,7 +3,7 @@ import React, {memo} from 'react';
 import cls from "./schoolHomeCertificats.module.sass";
 import image1 from "shared/assets/images/turonIGCSE.png";
 
-export const SchoolHomeCertificats = memo(() => {
+export const SchoolHomeCertificats = memo(({setActive}) => {
     return (
         <div className={cls.certificats}>
             <h2 className={cls.certificats__title}>Certificats</h2>
@@ -15,6 +15,12 @@ export const SchoolHomeCertificats = memo(() => {
                         alt=""
                     />
                     <div className={cls.item__inner}>
+                        <div
+                            onClick={() => setActive(true)}
+                            className={cls.item__change}
+                        >
+                            <i className="fas fa-edit"/>
+                        </div>
                         <h2 className={cls.item__title}>
                             IGCSE
                         </h2>
@@ -37,6 +43,12 @@ export const SchoolHomeCertificats = memo(() => {
                         alt=""
                     />
                     <div className={cls.item__inner}>
+                        <div
+                            onClick={() => setActive(true)}
+                            className={cls.item__change}
+                        >
+                            <i className="fas fa-edit"/>
+                        </div>
                         <h2 className={cls.item__title}>
                             IGCSE
                         </h2>
@@ -59,6 +71,12 @@ export const SchoolHomeCertificats = memo(() => {
                         alt=""
                     />
                     <div className={cls.item__inner}>
+                        <div
+                            onClick={() => setActive(true)}
+                            className={cls.item__change}
+                        >
+                            <i className="fas fa-edit"/>
+                        </div>
                         <h2 className={cls.item__title}>
                             IGCSE
                         </h2>
@@ -81,6 +99,12 @@ export const SchoolHomeCertificats = memo(() => {
                         alt=""
                     />
                     <div className={cls.item__inner}>
+                        <div
+                            onClick={() => setActive(true)}
+                            className={cls.item__change}
+                        >
+                            <i className="fas fa-edit"/>
+                        </div>
                         <h2 className={cls.item__title}>
                             IGCSE
                         </h2>

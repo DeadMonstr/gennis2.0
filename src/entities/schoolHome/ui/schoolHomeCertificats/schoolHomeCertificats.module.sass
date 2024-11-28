@@ -1,3 +1,5 @@
+@import "app/styles/abstracts/mixins"
+
 .certificats
   padding: 5rem 10rem
   display: flex
@@ -28,6 +30,19 @@
       display: flex
       flex-direction: column
       gap: 1.5rem
+    &__change
+      z-index: 50
+      position: absolute
+      top: 2.4rem
+      right: 3rem
+      background: #001B61
+      padding: .8rem
+      transition: .1s
+      border-radius: .5rem
+      @include btn-active
+      i
+        font-size: 1.6rem
+        color: #fff
     &__title
       color: #F47B20
       font-size: 3.2rem

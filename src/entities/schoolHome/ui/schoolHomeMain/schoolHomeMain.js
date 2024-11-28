@@ -11,7 +11,7 @@ import idea from "shared/assets/icons/turonIdea.png";
 
 const list = [1, 2, 3, 4, 5, 6, 7]
 
-export const SchoolHomeMain = memo(() => {
+export const SchoolHomeMain = memo(({setActive, setMainActive}) => {
 
     const settings = {
         infinite: false,
@@ -96,6 +96,12 @@ export const SchoolHomeMain = memo(() => {
                         [cls.active]: activeItem === item
                     })}
                 >
+                    <div
+                        onClick={() => setActive(true)}
+                        className={cls.items__edit}
+                    >
+                        <i className="fas fa-edit"/>
+                    </div>
                     <img
                         className={cls.items__image}
                         src={idea}
@@ -131,7 +137,10 @@ export const SchoolHomeMain = memo(() => {
             <div className={cls.wrapper}>
                 <div className={cls.homeMain__programs}>
                     <div className={cls.programsInfo}>
-                        <div className={cls.programsInfo__mainEdit}>
+                        <div
+                            onClick={() => setMainActive(true)}
+                            className={cls.programsInfo__mainEdit}
+                        >
                             <i className="fas fa-edit"/>
                         </div>
                         <h2 className={cls.programsInfo__title}>Programs</h2>
