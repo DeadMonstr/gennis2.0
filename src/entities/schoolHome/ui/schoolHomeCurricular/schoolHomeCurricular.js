@@ -79,7 +79,7 @@ export const Curricular = ({data, setDeleteId, setActiveEdit, setValue, job}) =>
 
     const renderData = () => {
         return data?.map(item => (
-            <div className={cls.curricular__wrapper_box}>
+            <div className={`${cls.curricular__wrapper_box} ${cls.curricular__mobile_box}`}>
 
                 {job && <div onClick={() => {
 
@@ -103,7 +103,7 @@ export const Curricular = ({data, setDeleteId, setActiveEdit, setValue, job}) =>
                     </span>
                 </div>
                 <div className={cls.curricular__wrapper_box_img}>
-                    <img src={item.images?.map(item => item?.image)} alt=""/>
+                    <img className={cls.curricular__mobile_box_img} src={item.images?.map(item => item?.image)} alt=""/>
                 </div>
 
                 <div className={cls.curricular__wrapper_box_descr}>
@@ -125,7 +125,7 @@ export const Curricular = ({data, setDeleteId, setActiveEdit, setValue, job}) =>
             </div>
 
 
-            <div className={cls.curricular__wrapper}>
+                <div className={`${cls.curricular__wrapper} ${cls.curricular__mobile}`}>
 
                 {render}
             </div>

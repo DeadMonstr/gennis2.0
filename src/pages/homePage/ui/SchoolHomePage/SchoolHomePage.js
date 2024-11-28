@@ -91,27 +91,48 @@ export const SchoolHomePage = () => {
             }}
             className={cls.schoolHome}
         >
-            {/*<div*/}
-            {/*    // onScroll={(e) => onScroll(e.target)}*/}
-            {/*    className={cls.schoolHome__header}*/}
-            {/*>*/}
+            <div
+                // onScroll={(e) => onScroll(e.target)}
+                className={cls.schoolHome__header}
+            >
             <SchoolHomeHeader ref={currentHeight}/>
             {/*<SchoolHomeMainModal types={types}/>*/}
-            {/*</div>*/}
-            {/*<SchoolHomeExtracurricus/>*/}
-            {/*<SchoolHomeCertificatsModal/>*/}
-            {/*/!*<SchoolHomeCertificats/>*!/*/}
-            {/*<SchoolHomeAboutUs/>*/}
-            {/*<SchoolGalleryModal/>*/}
-            {/*/!*<SchoolHomeGallery/>*!/*/}
-            {/*<SchoolHomeWorkUs/>*/}
-            {/*<SchoolHomeContact/>*/}
-            {/*<SchoolHomeContactUs/>*/}
-            {/*<SchoolParentesComment/>*/}
-            {/*<SchoolNews/>*/}
-            {/*<WorkUs/>*/}
-            {/*<Calendar/>*/}
-            {/*<Footer/>*/}
+            {/*    /!*<SchoolHomeExtracurricus/>*!/*/}
+            {/*    <SchoolHomeCertificatsModal/>*/}
+            {/*    <SchoolHomeCertificats/>*/}
+            {/*    <SchoolHomeAboutUs/>*/}
+            {/*    <SchoolGalleryModal/>*/}
+            {/*    /!*<SchoolHomeGallery/>*!/*/}
+            {/*    <SchoolHomeWorkUs/>*/}
+            {/*    <SchoolHomeContact/>*/}
+            {/*    <SchoolHomeContactUs/>*/}
+            {/*    /!*<SchoolParentesComment/>*!/*/}
+            {/*    /!*<SchoolNews/>*!/*/}
+            {/*    /!*<WorkUs/>*!/*/}
+            {/*    <Calendar/>*/}
+            {/*    <Footer/>*/}
+
+
+
+
+                {/*<SchoolHomeStudentProfileModal types={types}/>*/}
+
+
+
+
+                <SchoolHomeCurriculamModal  type={types}/>
+
+
+
+                {/*<SchoolHomeLatestNewModal types={types}/>*/}
+
+
+
+
+
+
+                {/*<SchoolLeadershipTeamModal type={types}/>*/}
+            </div>
 
 
 
@@ -119,25 +140,12 @@ export const SchoolHomePage = () => {
 
 
 
-            {/*<SchoolHomeStudentProfileModal types={types}/>*/}
-
-
-
-
-            {/*<SchoolHomeLatestNewModal types={types}/>*/}
 
 
 
 
 
 
-
-
-            {/*<SchoolHomeCurriculamModal  type={types}/>*/}
-
-
-
-            <SchoolLeadershipTeamModal type={types}/>
 
 
         </div>

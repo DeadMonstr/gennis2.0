@@ -41,52 +41,14 @@ export const SchoolHomeContactUs = () => {
                 <div className={cls.title}>
                     Contact us
                 </div>
-                <div className={cls.descr}>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aliquid, commodi culpa deleniti
-                    dignissimos distinctio dolorem ea et eum fuga illum iure labore molestiae, non nostrum nulla
-                    obcaecati perferendis perspiciatis porro provident quia saepe voluptatem. Alias, autem debitis
-                    dolore eius esse expedita explicabo impedit inventore itaque magni maiores nobis perferendis quas
-                    quod quos reprehenderit tenetur! Autem, beatae, expedita itaque laboriosam necessitatibus nostrum
-                    officia officiis omnis sit soluta ullam velit voluptatum.
-                </div>
+
                 <div className={cls.mainFormBox}>
-                    <div className={cls.mainLeftBox}>
-                        <div className={cls.arounderBox}>
-                            <div className={cls.iconBox}>
-                                <img className={cls.icon} src={addressImg} alt=""/>
-                            </div>
-                            <div className={cls.iconDescr}>
-                                <h1>Address</h1>
-                                <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci cupiditate inventore officiis.</h3>
-                            </div>
-                        </div>
-                        <div className={cls.arounderBox}>
-                            <div className={cls.iconBox}>
-                                <img className={cls.icon} src={phoneImg} alt=""/>
-                            </div>
-                            <div className={cls.iconDescr}>
-                                <h1>Address</h1>
-                                <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci cupiditate inventore officiis.</h3>
-                            </div>
-                        </div>
-                        <div className={cls.arounderBox}>
-                            <div className={cls.iconBox}>
-                                <img className={cls.icon} src={instaImg} alt=""/>
-                            </div>
-                            <div className={cls.iconDescr}>
-                                <h1>Address</h1>
-                                <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci cupiditate inventore officiis.</h3>
-                            </div>
-                        </div>
-                        <div className={cls.arounderBox}>
-                            <div className={cls.iconBox}>
-                                <img className={cls.icon} src={telegramImg} alt=""/>
-                            </div>
-                            <div className={cls.iconDescr}>
-                                <h1>Address</h1>
-                                <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci cupiditate inventore officiis.</h3>
-                            </div>
-                        </div>
+                    <div className={cls.descr}>
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+                        of type and scrambled it to make a type specimen book.Lorem Ipsum has been the industry's
+                        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                        scrambled it to make a type specimen book.
                     </div>
                     <div className={cls.mainRightBox}>
                         <div className={cls.formBox}>
@@ -100,8 +62,6 @@ export const SchoolHomeContactUs = () => {
                         </div>
 
                     </div>
-
-
                 </div>
             </div>
 
