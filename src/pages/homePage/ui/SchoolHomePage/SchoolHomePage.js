@@ -96,22 +96,22 @@ export const SchoolHomePage = () => {
             {/*    className={cls.schoolHome__header}*/}
             {/*>*/}
             <SchoolHomeHeader ref={currentHeight}/>
-            <SchoolHomeMainModal types={types}/>
+            {/*<SchoolHomeMainModal types={types}/>*/}
             {/*</div>*/}
-            <SchoolHomeExtracurricus/>
-            <SchoolHomeCertificatsModal/>
-            {/*<SchoolHomeCertificats/>*/}
-            <SchoolHomeAboutUs/>
-            <SchoolGalleryModal/>
-            {/*<SchoolHomeGallery/>*/}
-            <SchoolHomeWorkUs/>
-            <SchoolHomeContact/>
-            <SchoolHomeContactUs/>
-            <SchoolParentesComment/>
-            <SchoolNews/>
-            <WorkUs/>
-            <Calendar/>
-            <Footer/>
+            {/*<SchoolHomeExtracurricus/>*/}
+            {/*<SchoolHomeCertificatsModal/>*/}
+            {/*/!*<SchoolHomeCertificats/>*!/*/}
+            {/*<SchoolHomeAboutUs/>*/}
+            {/*<SchoolGalleryModal/>*/}
+            {/*/!*<SchoolHomeGallery/>*!/*/}
+            {/*<SchoolHomeWorkUs/>*/}
+            {/*<SchoolHomeContact/>*/}
+            {/*<SchoolHomeContactUs/>*/}
+            {/*<SchoolParentesComment/>*/}
+            {/*<SchoolNews/>*/}
+            {/*<WorkUs/>*/}
+            {/*<Calendar/>*/}
+            {/*<Footer/>*/}
 
 
 
@@ -119,7 +119,7 @@ export const SchoolHomePage = () => {
 
 
 
-            <SchoolHomeStudentProfileModal types={types}/>
+            {/*<SchoolHomeStudentProfileModal types={types}/>*/}
 
 
 
@@ -133,11 +133,11 @@ export const SchoolHomePage = () => {
 
 
 
-            <SchoolHomeCurriculamModal  type={types}/>
+            {/*<SchoolHomeCurriculamModal  type={types}/>*/}
 
 
 
-            {/*<SchoolLeadershipTeamModal type={types}/>*/}
+            <SchoolLeadershipTeamModal type={types}/>
 
 
         </div>

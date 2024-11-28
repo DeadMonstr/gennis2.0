@@ -23,6 +23,8 @@ export const SchoolHomeStudentProfileModal = ({types}) => {
     const [deleteId, setDeleteId] = useState(null)
 
 
+    const job = localStorage.getItem("job")
+
     const dispatch = useDispatch()
 
     const {request} = useHttp()
@@ -86,6 +88,7 @@ export const SchoolHomeStudentProfileModal = ({types}) => {
         <>
 
             <SchoolHomeStudentProfile
+                job={job === "smm"}
                 setDeleteId={setDeleteId}
                 setEdit={setEdit}
                 add={add}

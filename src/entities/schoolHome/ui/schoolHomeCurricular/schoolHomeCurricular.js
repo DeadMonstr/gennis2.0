@@ -19,7 +19,8 @@ export const SchoolHomeCurricular = ({
                                          setActiveExtraCurricular,
                                          extraCurricularData,
                                          setActiveExtraCurricularEdit,
-                                         setDeleteIdExtra
+                                         setDeleteIdExtra,
+                                         job
 
                                      }) => {
 
@@ -31,10 +32,10 @@ export const SchoolHomeCurricular = ({
         switch (active) {
 
             case "curricular" :
-                return <Curricular setValue={setValue} data={data} setActiveEdit={setActiveEdit}
+                return <Curricular job={job} setValue={setValue} data={data} setActiveEdit={setActiveEdit}
                                    setDeleteId={setDeleteId}/>
             case "dissCurricular" :
-                return <DissCurricular setValue={setValue} setDeleteIdExtra={setDeleteIdExtra}
+                return <DissCurricular job={job} setValue={setValue} setDeleteIdExtra={setDeleteIdExtra}
                                        extraCurricularData={extraCurricularData}
                                        setActiveExtraCurricularEdit={setActiveExtraCurricularEdit}/>
 
@@ -57,12 +58,11 @@ export const SchoolHomeCurricular = ({
 
 
                 {active === "curricular" ?
-                    <div onClick={() => setActive(true)} className={cls.main__header_add}>
+                    job && <div onClick={() => setActive(true)} className={cls.main__header_add}>
                         <img src={addIcon} alt=""/>
-                    </div> :
+                    </div> : job &&
                     <div onClick={() => setActiveExtraCurricular(true)} className={cls.main__header_add}>
                         <img src={addIcon} alt=""/>
-
                     </div>
                 }
             </div>
@@ -75,13 +75,13 @@ export const SchoolHomeCurricular = ({
 };
 
 
-export const Curricular = ({data, setDeleteId, setActiveEdit, setValue}) => {
+export const Curricular = ({data, setDeleteId, setActiveEdit, setValue, job}) => {
 
     const renderData = () => {
         return data?.map(item => (
             <div className={cls.curricular__wrapper_box}>
 
-                <div onClick={() => {
+                {job && <div onClick={() => {
 
                     setValue("name", item.name)
 
@@ -90,11 +90,11 @@ export const Curricular = ({data, setDeleteId, setActiveEdit, setValue}) => {
                     setDeleteId(item)
                     setActiveEdit(true)
                 }}
-                     className={cls.curricular__wrapper_edit}
+                             className={cls.curricular__wrapper_edit}
 
                 >
                     <img src={editIcon} alt=""/>
-                </div>
+                </div>}
 
                 <div className={cls.curricular__wrapper_box_title}>
                     {item.class}
@@ -135,24 +135,30 @@ export const Curricular = ({data, setDeleteId, setActiveEdit, setValue}) => {
 }
 
 
-export const DissCurricular = ({extraCurricularData, setActiveExtraCurricularEdit, setDeleteIdExtra, setValue}) => {
+export const DissCurricular = ({
+                                   extraCurricularData,
+                                   setActiveExtraCurricularEdit,
+                                   setDeleteIdExtra,
+                                   setValue,
+                                   job
+                               }) => {
 
 
     const renderData = () => {
         return extraCurricularData.map(item => (
             <div className={cls.curricular__extraBox}>
 
-                <div onClick={() => {
-                    setValue("name" , item.name)
-                    setValue("description" , item.description)
+                {job && <div onClick={() => {
+                    setValue("name", item.name)
+                    setValue("description", item.description)
                     setDeleteIdExtra(item)
                     setActiveExtraCurricularEdit(true)
                 }}
-                     className={cls.curricular__wrapper_edit}
+                             className={cls.curricular__wrapper_edit}
 
                 >
                     <img src={editIcon} alt=""/>
-                </div>
+                </div>}
                 <div className={cls.curricular__extraBox_img}>
                     <img src={item?.images?.map(item => item?.image)} alt=""/>
                 </div>

@@ -32,6 +32,9 @@ export const SchoolHomeCurriculamModal = ({type}) => {
     const extraCurricularData = useSelector(getExtraCurricularData)
 
 
+
+
+
     const [activeAdd, setActiveAdd] = useState(false)
     const [activeEdit, setActiveEdit] = useState(false)
 
@@ -42,7 +45,7 @@ export const SchoolHomeCurriculamModal = ({type}) => {
 
     const job = useSelector(getUserJob)
 
-    console.log(job)
+
 
     const [extraCurricular, setActiveExtraCurricular] = useState(false)
     const [extraCurricularEdit, setActiveExtraCurricularEdit] = useState(false)
@@ -61,6 +64,7 @@ export const SchoolHomeCurriculamModal = ({type}) => {
         <div>
             <SchoolHomeCurricular
 
+                job={job === "smm"}
                 data={curricularData}
                 extraCurricularData={extraCurricularData}
 

@@ -25,6 +25,8 @@ export const SchoolHomeLatestNewModal = ({types}) => {
 
     const dispatch = useDispatch()
 
+    const job = localStorage.getItem("job")
+
 
     const id = types[3]?.id
 
@@ -87,6 +89,7 @@ export const SchoolHomeLatestNewModal = ({types}) => {
 
 
             <SchoolHomeLatestNew
+                job={job === "smm"}
                 data={latestNew}
                 setAdd={setAddLatestNew}
                 add={addLatestNew}
