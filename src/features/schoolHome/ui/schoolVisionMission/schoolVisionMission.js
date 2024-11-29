@@ -10,6 +10,7 @@ import {Button} from "shared/ui/button";
 
 import cls from "./schoolVisionMission.module.sass";
 import image from "shared/assets/images/Rectangle 1.png";
+import {API_URL, header, useHttp} from "../../../../shared/api/base";
 
 const list = [
     {
@@ -47,6 +48,8 @@ export const SchoolVisionMission = memo(() => {
     const [activeEditItem, setActiveEditItem] = useState(null)
     const [activeEditImage, setActiveEditImage] = useState(false)
 
+    const {request} = useHttp()
+
     const job = localStorage.getItem("job")
 
     const renderListItem = useCallback(() => {
@@ -81,7 +84,20 @@ export const SchoolVisionMission = memo(() => {
     }
 
     const onChangeText = (data) => {
-        console.log(data, "data")
+
+        const res = {
+            ...data,
+            // type:
+        }
+
+
+        request(`${API_URL}Ui/fronted-pages/${activeEditItem.id}/`, "PATCH", JSON.stringify(res), header())
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     return (
