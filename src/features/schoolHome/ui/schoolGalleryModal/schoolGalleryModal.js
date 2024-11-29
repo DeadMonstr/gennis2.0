@@ -14,7 +14,7 @@ import {
     fetchHomeGalleryData
 } from "../../../../entities/schoolHome/model/thunk/schoolHomeGalleryThunk";
 import {API_URL, header, headerImg, useHttp} from "../../../../shared/api/base";
-import {DeleteGalary , ChangeGalary} from "../../../../entities/schoolHome/model/slice/schoolHomeGallerySlice";
+import {DeleteGalary, ChangeGalary} from "../../../../entities/schoolHome/model/slice/schoolHomeGallerySlice";
 import {getHomePageType} from "../../../../entities/schoolHome/model/selector/getHomePageSelector";
 import {fetchHomePage} from "../../../../entities/schoolHome/model/thunk/getHomePageSelector";
 
@@ -37,11 +37,14 @@ export const SchoolGalleryModal = () => {
 
 
     const {request} = useHttp()
+    useEffect(() => {
+        dispatch(fetchHomePage())
+    } , [])
 
     useEffect(() => {
         if (types) {
             dispatch(fetchHomeGalleryData({id: types[0]?.id}))
-            dispatch(fetchHomePage())
+
         }
     }, [types])
 
@@ -96,7 +99,7 @@ export const SchoolGalleryModal = () => {
             })
             .then(res => {
                 console.log(res)
-                dispatch(ChangeGalary({id: activeEditItem.id , data: res}))
+                dispatch(ChangeGalary({id: activeEditItem.id, data: res}))
                 setActive(false)
                 setFiles(null)
             })
@@ -121,7 +124,8 @@ export const SchoolGalleryModal = () => {
                 <div className={cls.image}>
                     <div {...getRootProps({className: 'dropzone'})}>
                         <input  {...getInputProps()}/>
-                        {!files ? <img style={{width: "31rem", height: "23rem "}} src={activeEditItem?.images[0]?.image} alt=""/> :
+                        {!files ? <img style={{width: "31rem", height: "23rem "}} src={activeEditItem?.images[0]?.image}
+                                       alt=""/> :
                             <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
                                  alt=""/>}
                     </div>
@@ -145,7 +149,8 @@ export const SchoolGalleryModal = () => {
                 <div className={cls.image}>
                     <div {...getRootProps({className: 'dropzone'})}>
                         <input  {...getInputProps()}/>
-                        {!files ? <img style={{width: "31rem", height: "23rem "}} src={activeEditItem?.images[0]?.image ?? defImg} alt=""/> :
+                        {!files ? <img style={{width: "31rem", height: "23rem "}}
+                                       src={activeEditItem?.images[0]?.image ?? defImg} alt=""/> :
                             <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
                                  alt=""/>}
                     </div>

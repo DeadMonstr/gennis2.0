@@ -55,12 +55,13 @@ export const SchoolHomeCurriculamModal = () => {
     const [extraCurricularEdit, setActiveExtraCurricularEdit] = useState(false)
 
     const dispatch = useDispatch()
-
+    useEffect(() => {
+        dispatch(fetchHomePage())
+    } , [])
 
     useEffect(() => {
        dispatch(getCurriculum())
        dispatch(getExtraCurriculum())
-        dispatch(fetchHomePage())
     }, [])
 
 

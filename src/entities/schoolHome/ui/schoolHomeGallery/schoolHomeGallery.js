@@ -35,7 +35,7 @@ export const SchoolHomeGallery = memo(({setActive, setActiveEditItem, job}) => {
                         </div>}
                     <img
                         className={cls.item__image}
-                        src={item?.images[0]?.image ?? robot}
+                        src={item?.images.map(item => item.image) ?? robot}
                         // src={robot}
                         alt=""
                     />
