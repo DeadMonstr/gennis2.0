@@ -30,4 +30,5 @@ export {default as schoolHomeGallerySlice} from "./model/slice/schoolHomeGallery
 
 
 export {default as homeContactUsSlice} from "./model/slice/SchoolHomeContactUsSlice"
+export {default as visionSchoolSlice} from "./model/slice/missionSchoolSlice"
 
