@@ -18,6 +18,7 @@ import {fetchHomePage} from "../../../../entities/schoolHome/model/thunk/getHome
 import {useDropzone} from "react-dropzone";
 
 import defImg from "../../../../shared/assets/images/Image Placeholder.svg";
+import {onAdd, onDelete, onEdit} from "../../../../entities/schoolHome/model/slice/missionSchoolSlice";
 
 
 export const SchoolVisionMission = memo(() => {
@@ -61,7 +62,7 @@ export const SchoolVisionMission = memo(() => {
 
     useEffect(() => {
 
-        dispatch(getVisionSchool())
+        dispatch(getVisionSchool({id: 5}))
     }, [])
 
 
@@ -80,32 +81,41 @@ export const SchoolVisionMission = memo(() => {
                         [cls.active]: item?.id === active
                     })}
                 >
-                    <h3>{item?.title}</h3>
-                    <p>{item?.text}</p>
+                    <h3>{item?.name}</h3>
+                    <p>{item?.description}</p>
                 </div>
             )
         })
     }, [list, active])
 
     useEffect(() => {
-        setValue("name", activeEditItem?.title)
-        setValue("text", activeEditItem?.text)
+        setValue("name", activeEditItem?.name)
+        setValue("description", activeEditItem?.description)
 
     }, [activeEditItem])
 
+
+
     const onCreate = (data) => {
 
-       const formData = new FormData()
+        const formData = new FormData()
 
-        formData.append("img" , files[0])
-        formData.append("name" , data.name )
-        formData.append("description" , data.description)
+        formData.append("images", files[0])
+        formData.append("name", data.name)
+        formData.append("description", data.description)
+
+        formData.append("type", 5)
+
 
         console.log(formData)
+        console.log(files[0])
 
-        request(`${API_URL}Ui/fronted-pages/`, "PATCH", formData, headerImg())
+
+        request(`${API_URL}Ui/fronted-pages/`, "POST", formData, headerImg())
             .then(res => {
-                console.log(res)
+                setAddActive(false)
+                dispatch(onAdd(res))
+                setFiles(null)
             })
             .catch(err => {
                 console.log(err)
@@ -115,7 +125,9 @@ export const SchoolVisionMission = memo(() => {
     const onDeleteText = (id) => {
         request(`${API_URL}Ui/fronted-pages/${id}/`, "DELETE", null, header())
             .then(res => {
-                console.log(res)
+                dispatch(onDelete(id))
+
+                setActiveTextEdit(false)
             })
             .catch(err => {
                 console.log(err)
@@ -126,15 +138,23 @@ export const SchoolVisionMission = memo(() => {
 
     const onChangeText = (data) => {
 
-        const res = {
-            ...data,
-            // type:
+        const formData = new FormData()
+
+        if (files){
+            formData.append("images", files[0])
         }
+        formData.append("name", data.name)
+        formData.append("description", data.description)
 
+        formData.append("type", 5)
 
-        request(`${API_URL}Ui/fronted-pages/${activeEditItem.id}/`, "PATCH", JSON.stringify(res), header())
+        request(`${API_URL}Ui/fronted-pages/${activeEditItem.id}/`, "PATCH", formData, headerImg())
             .then(res => {
                 console.log(res)
+
+                setActiveTextEdit(false)
+
+                dispatch(onEdit({id: activeEditItem.id , data: res}))
             })
             .catch(err => {
                 console.log(err)
@@ -188,10 +208,6 @@ export const SchoolVisionMission = memo(() => {
             </div>
 
 
-
-
-
-
             <Modal
                 setActive={setAddActive}
                 active={addActive}
@@ -202,7 +218,6 @@ export const SchoolVisionMission = memo(() => {
                     typeSubmit={""}
                     extraClassname={cls.textEdit}
                 >
-
 
 
                     <div className={cls.image}>
@@ -223,7 +238,7 @@ export const SchoolVisionMission = memo(() => {
                         />
                         <Textarea
                             register={register}
-                            name={"text"}
+                            name={"description"}
                             placeholder={"Text"}
                         />
                     </div>
@@ -232,7 +247,6 @@ export const SchoolVisionMission = memo(() => {
                     </div>
                 </Form>
             </Modal>
-
 
 
             <Modal
@@ -253,7 +267,7 @@ export const SchoolVisionMission = memo(() => {
                         />
                         <Textarea
                             register={register}
-                            name={"text"}
+                            name={"description"}
                             placeholder={"Text"}
                         />
                     </div>

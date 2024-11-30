@@ -39,9 +39,12 @@ export const SchoolGalleryModal = () => {
     const {request} = useHttp()
 
     useEffect(() => {
+        dispatch(fetchHomePage())
+    } , [])
+
+    useEffect(() => {
         if (types) {
             dispatch(fetchHomeGalleryData({id: types[0]?.id}))
-            dispatch(fetchHomePage())
         }
     }, [types])
 

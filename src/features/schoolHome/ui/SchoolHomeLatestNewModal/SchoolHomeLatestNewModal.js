@@ -35,10 +35,14 @@ export const SchoolHomeLatestNewModal = () => {
     const latestNew = useSelector(getSchoolLatestSlice)
     const [deleteId, setDeleteId] = useState(null)
 
+    useEffect(() => {
+        dispatch(fetchHomePage())
+    } , [])
+
 
     useEffect(() => {
         dispatch(getLatestNew(id))
-        dispatch(fetchHomePage())
+
     }, [id])
 
 

@@ -56,11 +56,14 @@ export const SchoolHomeCurriculamModal = () => {
 
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        dispatch(fetchHomePage())
+    } , [])
 
     useEffect(() => {
        dispatch(getCurriculum())
        dispatch(getExtraCurriculum())
-        dispatch(fetchHomePage())
+
     }, [])
 
 
