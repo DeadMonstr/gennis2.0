@@ -22,6 +22,7 @@ import {
     getSchoolHomeMainSecDes
 } from "../../../../entities/schoolHome/model/selector/schoolHomeMainSelector";
 import {API_URL, header, useHttp} from "../../../../shared/api/base";
+import {onDeleteHomeBox} from "../../../../entities/schoolHome/model/slice/schoolHomeMain";
 
 
 export const SchoolHomeMainModal = ({types}) => {
@@ -69,7 +70,13 @@ export const SchoolHomeMainModal = ({types}) => {
 
     const onDeleteItem = () => {
         request(`${API_URL}Ui/fronted-pages/${activeEditItem?.id}/`, "DELETE", null, header())
-            .then(res => console.log(res))
+            .then(res => {
+
+                dispatch(onDeleteHomeBox(activeEditItem.id))
+
+                setProgramActive(false)
+                console.log(res)
+            })
             .catch(err => console.log(err))
     }
 

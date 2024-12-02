@@ -358,12 +358,12 @@ export const SchoolExtraCurriculumAdd = ({setActive, active}) => {
     }
 
     return (
-        <Modal active={active} setActive={setActive}>
+        <Modal extraClass={cls.modalExtraClass} active={active} setActive={setActive}>
             <div className={cls.modalExtra}>
                 <div {...getRootProps({className: 'dropzone'})}>
                     <input  {...getInputProps()}/>
-                    {!files ? <img src={defImg} alt=""/> :
-                        <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
+                    {!files ? <img className={cls.dropzone} src={defImg} alt=""/> :
+                        <img className={cls.dropzone}  src={files?.map(item => item?.preview)}
                              alt=""/>}
                 </div>
                 <Input required register={register} name={"name"} extraClassName={cls.modalExtra__input}

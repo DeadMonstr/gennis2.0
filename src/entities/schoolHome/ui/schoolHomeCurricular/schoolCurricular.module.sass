@@ -105,6 +105,7 @@
       &:hover .curricular__wrapper_box_descr
         right: 0
 
+
       &_title
         color: rgba(255, 255, 255, 1)
         font-size: 3.2rem
@@ -289,21 +290,34 @@
         //right: 10rem
   .curricular
     &__title
-      font-size: 2rem
+      font-size: 1.8rem
       width: 15rem
       height: 4.2rem
     &__wrapper
       &_box
+        &:hover .curricular__wrapper_box_descr
+          width: 100%
         &_img
           right: 5rem
           &:before
             position: absolute
             content: ""
             display: block
-            width: 14rem
-            top: -8px
+            width: 8rem
+            top: -9px
             height: 29rem
-            left: -4rem
+            left: -5rem
             transform: skew(347deg, 182deg)
             background: rgb(0, 27, 97)
+    &__extraBox
 
+      width: 30rem
+
+      &_img
+        img
+          object-fit: cover
+          height: 30rem
+      &_box
+        display: none
+      &_descr
+        height: 85vh

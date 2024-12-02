@@ -23,10 +23,14 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
 
     const dispatch = useDispatch()
 
+
     const data = useSelector(getSchoolHomeMainData)
     const loading = useSelector(getSchoolHomeMainLoading)
     const secDes = useSelector(getSchoolHomeMainSecDes)
     const des = useSelector(getSchoolHomeMainDes)
+
+
+    console.log(data , "log")
 
     const carousel = useRef()
     const [activeItem, setActiveItem] = useState(null)
@@ -80,7 +84,7 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
 
 
                 <div className={cls.info}>
-                    {role &&  <div
+                    {role && <div
                         onClick={() => setMainActive(true)}
                         className={cls.programsInfo__mainEdit}
                     >
@@ -110,26 +114,24 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
                         className={cls.items}
                         ref={carousel}
                     >
-                        {
-                            loading ? <DefaultPageLoader/> :
-                                <motion.div
-                                    className={cls.items__wrapper}
-                                    drag={"x"}
-                                    dragConstraints={{left: -width, right: 0}}
-                                >
 
-                                    {/*<Slider*/}
+                        <motion.div
+                            className={cls.items__wrapper}
+                            drag={"x"}
+                            dragConstraints={{left: -width, right: 0}}
+                        >
 
-                                    {/*    {...settings}*/}
-                                    <AnimatePresence>
-                                        {render}
+                            {/*<Slider*/}
 
-                                    </AnimatePresence>
+                            {/*    {...settings}*/}
+                            <AnimatePresence>
+                                {loading ? <DefaultPageLoader/> : render}
+                            </AnimatePresence>
 
-                                    {/*>*/}
-                                    {/*</Slider>*/}
-                                </motion.div>
-                        }
+
+                            {/*>*/}
+                            {/*</Slider>*/}
+                        </motion.div>
 
 
                     </motion.div>

@@ -19,7 +19,12 @@ const initialState = {
 const schoolHomeMainSlice = createSlice({
     name: "schoolHomeMainSlice",
     initialState,
-    reducers: {},
+    reducers: {
+        onDeleteHomeBox: (state , action) => {
+            state.data = [...state.data.filter(item => item.id !== action.payload )]
+        }
+
+    },
     extraReducers: builder =>
         builder
             .addCase(fetchHomeMainData.pending, (state) => {
@@ -103,5 +108,7 @@ const schoolHomeMainSlice = createSlice({
                 state.error = "error"
             })
 })
+
+export const {onDeleteHomeBox} = schoolHomeMainSlice.actions
 
 export default schoolHomeMainSlice.reducer
