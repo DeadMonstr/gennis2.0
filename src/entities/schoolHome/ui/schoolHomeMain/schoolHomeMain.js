@@ -65,8 +65,7 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
                     }
                     <img
                         className={cls.items__image}
-                        // src={idea}
-                        src={item?.images[0]?.image ?? idea}
+                        src={item?.images.map(item => item.image) ?? idea}
                         alt=""
                     />
                     <h2 className={cls.items__title}>{item?.name}</h2>

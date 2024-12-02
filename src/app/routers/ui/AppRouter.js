@@ -164,10 +164,10 @@ export const AppRouter = () => {
                     </Route>
                 </Route>
 
-                <Route
+           {/*     <Route
                     path={"*"}
                     element={<NotFoundPage/>}
-                />
+                />*/}
             </>
         )
     );

@@ -38,12 +38,13 @@ export const SchoolHomeLatestNewModal = () => {
     useEffect(() => {
         dispatch(fetchHomePage())
     } , [])
-
-
     useEffect(() => {
         dispatch(getLatestNew(id))
 
-    }, [id])
+    } , [])
+
+
+
 
 
     const {request} = useHttp()
