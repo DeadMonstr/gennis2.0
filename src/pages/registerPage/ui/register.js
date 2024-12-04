@@ -121,21 +121,21 @@ export const Register = () => {
     }
 
     useEffect(() => {
-        if (id) {
+        if (branchID) {
             // dispatch(fetchLanguages());
             dispatch(fetchLanguagesData())
             // dispatch(fetchSubjects())
             dispatch(fetchSubjectsData())
 
             // dispatch(getClassTypes(id))
-            dispatch(fetchClassTypeData({branch: id}))
-            dispatch(fetchClassNumberData({branch: id}))
+            dispatch(fetchClassTypeData({branch: branchID.id}))
+            dispatch(fetchClassNumberData({branch: branchID.id}))
 
-            dispatch(fetchCategories(id))
+            dispatch(fetchCategories(branchID.id))
         }
 
         setValue("password", 12345678)
-    }, [id]);
+    }, [branchID]);
 
     useEffect(() => {
         dispatch(fetchVacancyData())
@@ -193,14 +193,14 @@ export const Register = () => {
                 ...data,
                 observer: true,
                 language: selectedLanguage?.id,
-                branch: id,
+                branch: branchID.id,
             },
         };
         let res2 = {
             ...data,
             observer: true,
             language: selectedLanguage?.id || "",
-            branch: id,
+            branch: branchID.id,
         };
 
         let registerAction;
