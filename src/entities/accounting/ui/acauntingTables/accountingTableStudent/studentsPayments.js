@@ -42,17 +42,14 @@ export const StudentsPayments = ({
     const onDeleteModal = (data) => {
         setActiveDelete(true)
     }
+
+    console.log(currentTableData, "currentTableData")
+
     const renderStudents = () => {
         return currentTableData.map((item, i) => (
             <tr>
                 <td>{i + 1}</td>
-                <td onClick={() => navigation(`../../../students/profile/${item.student.id}`)}>{item?.student_name} {item?.student_surname}</td>
-                <td
-                    onClick={() =>
-                        navigation(`../../students/profile/${item.student.id}`, {relative: "path"})}
-                >
-                    {item?.student?.user?.name} {item?.student?.user?.surname}
-                </td>
+                <td onClick={() => navigation(`../../students/profile/${item.id}`)}>{item?.student_name} {item?.student_surname}</td>
                 <td>{formatSalary(item.payment_sum)}</td>
                 <td>{item.date}</td>
                 <td>

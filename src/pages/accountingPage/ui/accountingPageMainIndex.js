@@ -187,7 +187,7 @@ export const AccountingPageMain = () => {
 
                             }
                             <div className={cls.typeExpenses}>
-                                <Link to={`../../inkasatsiya`}>
+                                <Link to={`../inkasatsiya`}>
                                     <Button>
                                         Inkasatsiya
                                         {/*Harajatlar to’plami*/}
@@ -202,94 +202,80 @@ export const AccountingPageMain = () => {
                     </div>
                 </div>
                 <Outlet/>
-                        <div className={cls.typeExpenses}>
-                            <Link to={`../../inkasatsiya/${id}`}>
-                                <Button>
-                                    Inkasatsiya
-                                    {/*Harajatlar to’plami*/}
-                                </Button></Link>
-                            <Link to={`otchot`}>
-                                <Button onClick={() => setOtchot(!otchot)} type={"filter"}>
-                                    otchot
-                                </Button>
-                            </Link>
-                        </div>
-                    </div>
+            </div>
 
 
+            <Routes>
+                <Route
 
-
-                <Routes>
-                    <Route
-
-                        path={"studentsPayments"}
-                        element={
-                            <StudentSalary
-                                deleted={activeDel}
-                                setDeleted={setActiveDel}
-                            />
-                        }
-                    />
-                    <Route
-                        path={"teachersSalary"}
-                        element={<TeacherSalaryPage
+                    path={"studentsPayments"}
+                    element={
+                        <StudentSalary
                             deleted={activeDel}
                             setDeleted={setActiveDel}
-                            path={"teachersSalary"}
                         />
-                        }
-                    />
-                    <Route
-                        path={"employeesSalary"}
-                        element={
-                            <EmployerSalaryPage
-                                deleted={activeDel}
-                                setDeleted={setActiveDel}
-                                path={"employeesSalary"}
-                            />
-                        }
-                    />
-                    <Route
-                        path={"overhead"}
-                        element={
-                            <AdditionalCosts
-                                path={"overhead"}
-                                deleted={activeDel}
-                                setDeleted={setActiveDel}
-                            />
-                        }
-                    />
-                    <Route path={"capital"}
-                           element={
-                               <Capital
-                                   deleted={activeDel}
-                                   setDeleted={setActiveDel}
-                                   path={"capital"}
-                               />
-                           }
-                    />
-                    <Route path={"otchot"}
-                           element={
-                               <AccountingOtchotPage
-
-                                   path={"otchot"}
-                               />
-                           }
-                    />
-
-                    {/*<Route*/}
-                    {/*    index*/}
-                    {/*    element={<Navigate to={"studentsPayments"}/>}*/}
-                    {/*/>*/}
-
-                </Routes>
-                <AccountingFilter
-                    setActive={setActive}
-                    active={active}
-                    setActiveDel={setActiveDel}
-                    activeDel={activeDel}
-                    activePage={activePage}
+                    }
                 />
+                <Route
+                    path={"teachersSalary"}
+                    element={<TeacherSalaryPage
+                        deleted={activeDel}
+                        setDeleted={setActiveDel}
+                        path={"teachersSalary"}
+                    />
+                    }
+                />
+                <Route
+                    path={"employeesSalary"}
+                    element={
+                        <EmployerSalaryPage
+                            deleted={activeDel}
+                            setDeleted={setActiveDel}
+                            path={"employeesSalary"}
+                        />
+                    }
+                />
+                <Route
+                    path={"overhead"}
+                    element={
+                        <AdditionalCosts
+                            path={"overhead"}
+                            deleted={activeDel}
+                            setDeleted={setActiveDel}
+                        />
+                    }
+                />
+                <Route path={"capital"}
+                       element={
+                           <Capital
+                               deleted={activeDel}
+                               setDeleted={setActiveDel}
+                               path={"capital"}
+                           />
+                       }
+                />
+                <Route path={"otchot"}
+                       element={
+                           <AccountingOtchotPage
+
+                               path={"otchot"}
+                           />
+                       }
+                />
+
+                {/*<Route*/}
+                {/*    index*/}
+                {/*    element={<Navigate to={"studentsPayments"}/>}*/}
+                {/*/>*/}
+
+            </Routes>
+            <AccountingFilter
+                setActive={setActive}
+                active={active}
+                setActiveDel={setActiveDel}
+                activeDel={activeDel}
+                activePage={activePage}
+            />
 
         </MultiPage>
 
