@@ -45,7 +45,7 @@ const calendarSlice = createSlice({
                                 return {
                                     color: inner.color,
                                     type: inner.type,
-                                    days: inner.days.map(iI => action.payload.filter(ii => iI.id === ii.id)[0] ? null : iI)
+                                    days: inner.days.map(iI => action.payload.sort(compareById).filter(ii => iI.id === ii.id)[0] ? null : iI)
                                         .filter(iI => iI)
                                 }
                             }),
