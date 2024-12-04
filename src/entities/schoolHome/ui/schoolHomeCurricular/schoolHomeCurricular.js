@@ -19,7 +19,8 @@ export const SchoolHomeCurricular = ({
                                          setActiveExtraCurricular,
                                          extraCurricularData,
                                          setActiveExtraCurricularEdit,
-                                         setDeleteIdExtra
+                                         setDeleteIdExtra,
+                                         job
 
                                      }) => {
 
@@ -31,10 +32,10 @@ export const SchoolHomeCurricular = ({
         switch (active) {
 
             case "curricular" :
-                return <Curricular setValue={setValue} data={data} setActiveEdit={setActiveEdit}
+                return <Curricular job={job} setValue={setValue} data={data} setActiveEdit={setActiveEdit}
                                    setDeleteId={setDeleteId}/>
             case "dissCurricular" :
-                return <DissCurricular setValue={setValue} setDeleteIdExtra={setDeleteIdExtra}
+                return <DissCurricular job={job} setValue={setValue} setDeleteIdExtra={setDeleteIdExtra}
                                        extraCurricularData={extraCurricularData}
                                        setActiveExtraCurricularEdit={setActiveExtraCurricularEdit}/>
 
@@ -57,12 +58,11 @@ export const SchoolHomeCurricular = ({
 
 
                 {active === "curricular" ?
-                    <div onClick={() => setActive(true)} className={cls.main__header_add}>
+                    job && <div onClick={() => setActive(true)} className={cls.main__header_add}>
                         <img src={addIcon} alt=""/>
-                    </div> :
+                    </div> : job &&
                     <div onClick={() => setActiveExtraCurricular(true)} className={cls.main__header_add}>
                         <img src={addIcon} alt=""/>
-
                     </div>
                 }
             </div>
@@ -75,26 +75,26 @@ export const SchoolHomeCurricular = ({
 };
 
 
-export const Curricular = ({data, setDeleteId, setActiveEdit, setValue}) => {
+export const Curricular = ({data, setDeleteId, setActiveEdit, setValue, job}) => {
 
     const renderData = () => {
         return data?.map(item => (
-            <div className={cls.curricular__wrapper_box}>
+            <div className={`${cls.curricular__wrapper_box} ${cls.curricular__mobile_box}`}>
 
-                <div onClick={() => {
+                {job && <div onClick={() => {
 
                     setValue("name", item.name)
 
-                    setValue("text", item.description)
+                    setValue("description", item.description)
                     // setValue("date" , item.date)
                     setDeleteId(item)
                     setActiveEdit(true)
                 }}
-                     className={cls.curricular__wrapper_edit}
+                             className={cls.curricular__wrapper_edit}
 
                 >
                     <img src={editIcon} alt=""/>
-                </div>
+                </div>}
 
                 <div className={cls.curricular__wrapper_box_title}>
                     {item.class}
@@ -103,11 +103,11 @@ export const Curricular = ({data, setDeleteId, setActiveEdit, setValue}) => {
                     </span>
                 </div>
                 <div className={cls.curricular__wrapper_box_img}>
-                    <img src={item.img} alt=""/>
+                    <img className={cls.curricular__mobile_box_img} src={item.images?.map(item => item?.image)} alt=""/>
                 </div>
 
                 <div className={cls.curricular__wrapper_box_descr}>
-                    {item.text}
+                    {item.description}
                 </div>
             </div>
         ))
@@ -125,7 +125,7 @@ export const Curricular = ({data, setDeleteId, setActiveEdit, setValue}) => {
             </div>
 
 
-            <div className={cls.curricular__wrapper}>
+                <div className={`${cls.curricular__wrapper} ${cls.curricular__mobile}`}>
 
                 {render}
             </div>
@@ -135,39 +135,45 @@ export const Curricular = ({data, setDeleteId, setActiveEdit, setValue}) => {
 }
 
 
-export const DissCurricular = ({extraCurricularData, setActiveExtraCurricularEdit, setDeleteIdExtra, setValue}) => {
+export const DissCurricular = ({
+                                   extraCurricularData,
+                                   setActiveExtraCurricularEdit,
+                                   setDeleteIdExtra,
+                                   setValue,
+                                   job
+                               }) => {
 
 
     const renderData = () => {
         return extraCurricularData.map(item => (
             <div className={cls.curricular__extraBox}>
 
-                <div onClick={() => {
-                    setValue("subject_name" , item.subject_name)
-                    setValue("descr" , item.description)
+                {job && <div onClick={() => {
+                    setValue("name", item.name)
+                    setValue("description", item.description)
                     setDeleteIdExtra(item)
                     setActiveExtraCurricularEdit(true)
                 }}
-                     className={cls.curricular__wrapper_edit}
+                             className={cls.curricular__wrapper_edit}
 
                 >
                     <img src={editIcon} alt=""/>
-                </div>
+                </div>}
                 <div className={cls.curricular__extraBox_img}>
-                    <img src={item.img} alt=""/>
+                    <img src={item?.images?.map(item => item?.image)} alt=""/>
                 </div>
 
 
                 <div className={cls.curricular__extraBox_title}>
                     <div className={cls.curricular__extraBox_descr}>
-                        {item.descr}
+                        {item.description}
                     </div>
                     <div className={cls.curricular__extraBox_box}>
                         <i className="fas fa-chevron-down"/>
                     </div>
 
 
-                    {item.subject_name}
+                    {item.name}
                 </div>
 
 

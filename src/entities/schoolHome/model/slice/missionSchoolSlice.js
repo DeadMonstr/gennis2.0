@@ -1,47 +1,50 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {getVisionSchool} from "../thunk/missionSchoolThunk";
 
-import imgProfile from "shared/assets/icons/leaderSheap.svg"
 
-import {getLeaderShip} from "../thunk/leaderShipThunk";
 
 const initialState = {
-    data: []
+    data: [],
+    loading: false,
+    error: false
 }
 
 
-const schoolLeaderSheapSlice = createSlice({
-    name: "schoolLeaderSheapSlice",
+export const visionSchoolSlice = createSlice({
+    name: "visionSchoolSlice",
+    initialState,
     reducers: {
+
         onAdd: (state, action) => {
             state.data = [...state.data, action.payload]
         },
+
         onDelete: (state, action) => {
             state.data = [...state.data.filter(item => item.id !== action.payload)]
         },
         onEdit: (state, action) => {
             state.data = [...state.data.filter(item => item.id !== action.payload.id), action.payload.data]
-        }
-
+        },
 
     },
-    initialState,
     extraReducers: builder =>
         builder
-            .addCase(getLeaderShip.pending, state => {
+            .addCase(getVisionSchool.pending, state => {
                 state.loading = true
                 state.error = false
-
             })
-            .addCase(getLeaderShip.fulfilled, (state, action) => {
+            .addCase(getVisionSchool.fulfilled, (state , action) => {
                 state.loading = false
-                state.data = action.payload
                 state.error = false
+                state.data = action.payload
+                console.log(action.payload)
             })
-            .addCase(getLeaderShip.rejected, state => {
+            .addCase(getVisionSchool.rejected, state => {
                 state.loading = false
-                state.error = true
+                state.error = false
             })
 })
 
-export const {onAdd, onDelete, onEdit} = schoolLeaderSheapSlice.actions
-export default schoolLeaderSheapSlice.reducer
+export const {onAdd , onDelete , onEdit} = visionSchoolSlice.actions
+
+export default visionSchoolSlice.reducer

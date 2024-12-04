@@ -24,7 +24,7 @@ import {Footer} from "../../../../entities/schoolHome/ui/footer/footer";
 import {Contact} from "../../../../entities/centerHome";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    SchoolGalleryModal, SchoolHomeCertificatsModal,
+    SchoolGalleryModal, SchoolHomeCertificatsModal, SchoolHomeContactUsModal,
     SchoolHomeCurriculamModal,
     SchoolHomeLatestEditModal,
     SchoolHomeLatestNewModal, SchoolHomeMainModal,
@@ -33,14 +33,13 @@ import {
 import {fetchHomePage} from "../../../../entities/schoolHome/model/thunk/getHomePageSelector";
 import {getHomePageType} from "../../../../entities/schoolHome/model/selector/getHomePageSelector";
 import {getUserJob} from "../../../../entities/profile/userProfile";
+import {
+    SchoolLeadershipTeamModal
+} from "../../../../features/schoolHome/ui/SchoolLeadershipTeamModal/SchoolLeadershipTeamModal";
+import {Route, Routes} from "react-router";
 
 
 export const SchoolHomePage = () => {
-
-
-
-
-
 
 
     const currentHeight = useRef()
@@ -49,7 +48,6 @@ export const SchoolHomePage = () => {
 
 
     const [addLatestNew, setAddLatestNew] = useState(false)
-
 
 
     const types = useSelector(getHomePageType)
@@ -62,7 +60,7 @@ export const SchoolHomePage = () => {
 
     useEffect(() => {
         dispatch(fetchHomePage())
-    } , [])
+    }, [])
 
     // const onScroll = (target) => {
     //     console.log(true)
@@ -83,53 +81,43 @@ export const SchoolHomePage = () => {
             }}
             className={cls.schoolHome}
         >
-            {/*<div*/}
-            {/*    // onScroll={(e) => onScroll(e.target)}*/}
-            {/*    className={cls.schoolHome__header}*/}
-            {/*>*/}
-            <SchoolHomeHeader ref={currentHeight}/>
-            <SchoolHomeMainModal types={types}/>
-            {/*</div>*/}
-            <SchoolHomeExtracurricus/>
-            <SchoolHomeCertificatsModal types={types}/>
-            {/*<SchoolHomeCertificats/>*/}
-            <SchoolHomeAboutUs/>
-            <SchoolGalleryModal types={types}/>
-            {/*<SchoolHomeGallery/>*/}
-            <SchoolHomeWorkUs/>
-            <SchoolHomeContact/>
-            <SchoolHomeContactUs/>
-            <SchoolParentesComment/>
-            <SchoolNews/>
-            <WorkUs/>
-            <Calendar/>
-            <Footer/>
+            <div
+                // onScroll={(e) => onScroll(e.target)}
+                className={cls.schoolHome__header}
+            >
+                <SchoolHomeHeader ref={currentHeight}/>
+                <SchoolHomeMainModal types={types}/>
+
+                {/*<SchoolHomeExtracurricus/>*/}
+                <SchoolHomeCertificatsModal types={types}/>
+                {/*<SchoolHomeCertificats/>*/}
+                {/*<SchoolHomeAboutUs/>*/}
+                {/*<SchoolGalleryModal types={types}/>*/}
+                {/*<SchoolHomeGallery/>*/}
+                {/*<SchoolHomeWorkUs/>*/}
+                <SchoolHomeContact/>
+               <SchoolHomeContactUsModal/>
+                {/*<SchoolParentesComment/>*/}
+                {/*<SchoolNews/>*/}
+                {/*<WorkUs/>*/}
+                <Calendar/>
+                <Footer/>
+
+
+                {/*<SchoolHomeCurriculamModal type={types}/>*/}
+
+
+
+                    {/*<Route path={"news"} element={<SchoolHomeLatestNewModal types={types}/>}/>*/}
 
 
 
 
-            <SchoolHomeCurriculamModal  type={types}/>
+                {/*<SchoolHomeStudentProfileModal types={types}/>*/}
 
 
-            <SchoolHomeStudentProfileModal types={types}/>
-
-
-
-
-            {/*<SchoolHomeLatestNewModal types={types}/>*/}
-
-
-
-
-
-
-
-
-
-
-
-
-            {/*<SchoolLeadershipTeamModal type={types}/>*/}
+                {/*<SchoolLeadershipTeamModal type={types}/>*/}
+            </div>
 
 
         </div>

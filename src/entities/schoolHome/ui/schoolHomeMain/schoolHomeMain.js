@@ -23,10 +23,13 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
 
     const dispatch = useDispatch()
 
+
     const data = useSelector(getSchoolHomeMainData)
     const loading = useSelector(getSchoolHomeMainLoading)
     const secDes = useSelector(getSchoolHomeMainSecDes)
     const des = useSelector(getSchoolHomeMainDes)
+
+
 
     const carousel = useRef()
     const [activeItem, setActiveItem] = useState(null)
@@ -34,7 +37,7 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
 
     useEffect(() => {
         setWidth(carousel.current?.scrollWidth - carousel.current?.offsetWidth)
-    }, [list.length])
+    }, [data?.length])
 
     const renderItems = useCallback(() => {
         return data?.map(item => {
@@ -61,8 +64,7 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
                     }
                     <img
                         className={cls.items__image}
-                        // src={idea}
-                        src={item?.images[0]?.image ?? idea}
+                        src={item?.images.map(item => item.image)}
                         alt=""
                     />
                     <h2 className={cls.items__title}>{item?.name}</h2>
@@ -77,7 +79,17 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
     return (
         <motion.div className={cls.homeMain}>
             <div className={cls.homeMain__info}>
+
+
                 <div className={cls.info}>
+                    {role && <div
+                        onClick={() => setMainActive(true)}
+                        className={cls.programsInfo__mainEdit}
+                    >
+                        <i className="fas fa-edit"/>
+                    </div>}
+
+
                     <h1 className={cls.info__title}>Our vision</h1>
                     <p className={cls.info__text}>
                         {des && des[0]?.description}
@@ -90,14 +102,7 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
             <div className={cls.wrapper}>
                 <div className={cls.homeMain__programs}>
                     <div className={cls.programsInfo}>
-                        {
-                            role && <div
-                                onClick={() => setMainActive(true)}
-                                className={cls.programsInfo__mainEdit}
-                            >
-                                <i className="fas fa-edit"/>
-                            </div>
-                        }
+
                         <h2 className={cls.programsInfo__title}>Programs</h2>
                         <p className={cls.programsInfo__text}>
                             {secDes && secDes[0]?.description}
@@ -107,33 +112,33 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
                         className={cls.items}
                         ref={carousel}
                     >
-                        {
-                            loading ? <DefaultPageLoader/> :
-                                <motion.div
-                                    className={cls.items__wrapper}
-                                    drag={"x"}
-                                    dragConstraints={{left: -width, right: 0}}
-                                >
 
-                                    {/*<Slider*/}
+                        <motion.div
+                            className={cls.items__wrapper}
+                            drag={"x"}
+                            dragConstraints={{left: -width, right: 0}}
+                        >
 
-                                    {/*    {...settings}*/}
-                                    <AnimatePresence>
-                                        {render}
-                                        <div
-                                            onClick={() => setActive("add")}
-                                            className={cls.items__plus}
-                                        >
-                                            <i className="fas fa-plus"/>
-                                        </div>
-                                    </AnimatePresence>
-                                    {/*>*/}
-                                    {/*</Slider>*/}
-                                </motion.div>
-                        }
+                            {/*<Slider*/}
+
+                            {/*    {...settings}*/}
+                            <AnimatePresence>
+                                {loading ? <DefaultPageLoader/> : render}
+                            </AnimatePresence>
+
+
+                            {/*>*/}
+                            {/*</Slider>*/}
+                        </motion.div>
 
 
                     </motion.div>
+                    {role && <div
+                        onClick={() => setActive("add")}
+                        className={cls.items__plus}
+                    >
+                        <i className="fas fa-plus"/>
+                    </div>}
                 </div>
             </div>
         </motion.div>

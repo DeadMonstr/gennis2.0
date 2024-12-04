@@ -16,25 +16,38 @@ const list = [
         path: "aboutUs"
     },
     {
-        name: "education",
-        label: "Education"
+        name: "gallery",
+        label: "Gallery",
+        path: "gallery"
     },
     {
         name: "news",
-        label: "News"
+        label: "News",
+        path: "news"
+    },
+
+    {
+        name: "curricular",
+        label: "Curricular",
+        path: "curricular"
     },
     {
-        name: "workWithUs",
-        label: "Work with us"
+        name: "studentLife",
+        label: "Student Life",
+        path: "studentLife"
     },
-    {
-        name: "campusLife",
-        label: "Campus life"
-    },
-    {
-        name: "academicCalendar",
-        label: "Academic calendar"
-    }
+    // {
+    //     name: "workWithUs",
+    //     label: "Work with us"
+    // },
+    // {
+    //     name: "campusLife",
+    //     label: "Campus life"
+    // },
+    // {
+    //     name: "academicCalendar",
+    //     label: "Academic calendar"
+    // }
 ]
 
 export const SchoolHomeHeader = memo(() => {
@@ -86,7 +99,7 @@ export const SchoolHomeHeader = memo(() => {
                         }
                     />
                 </div>
-                <div className={cls.homeHeader__logo}>
+                <div onClick={() => navigate("/")} className={cls.homeHeader__logo}>
                     <img className={cls.logo} src={turonLogo} alt=""/>
                     <img className={cls.logoText} src={turonLogoText} alt=""/>
                 </div>

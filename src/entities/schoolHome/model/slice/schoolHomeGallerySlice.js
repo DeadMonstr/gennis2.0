@@ -10,7 +10,15 @@ const initialState = {
 const schoolHomeGallerySlice = createSlice({
     name: "schoolHomeGallerySlice",
     initialState,
-    reducers: {},
+    reducers: {
+        DeleteGalary: (state , action ) => {
+            state.data = [...state.data.filter(item => item.id !== action.payload)]
+        },
+        ChangeGalary: (state , action ) => {
+            console.log(action.payload)
+            state.data = [...state.data.filter(item => item.id !== action.payload.id) , action.payload.data]
+        }
+    },
     extraReducers: builder =>
         builder
             .addCase(fetchHomeGalleryData.pending, (state) => {
@@ -61,4 +69,5 @@ const schoolHomeGallerySlice = createSlice({
             })
 })
 
+export const  {DeleteGalary , ChangeGalary} = schoolHomeGallerySlice.actions
 export default schoolHomeGallerySlice.reducer

@@ -45,8 +45,6 @@ export const FlowListPage = () => {
     const [selectedId, setSelectedId] = useState([])
 
 
-    console.log(flowList, "flowlist")
-
 
     const searchedUsers = useMemo(() => {
         const filteredHeroes = flowList?.slice()
@@ -135,8 +133,7 @@ export const FlowListPage = () => {
         })
     }
 
-    console.log(selectedId, "selectedId")
-    console.log(currentTableData, "currnetTbale")
+
 
     useEffect(() => {
         setCurrentTableData(prev => prev.map(item => {

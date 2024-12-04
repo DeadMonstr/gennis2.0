@@ -34,8 +34,6 @@ import {
 } from "../../model/thunk/studentProfileThunk";
 import {
     getCharity,
-    getStudentProfileClasses,
-    getStudentProfileLanguages,
     getUserData
 } from "../../model/selector/studentProfileSelector";
 
@@ -43,8 +41,9 @@ import cls from "./studentProfilePage.module.sass";
 import {getSystem} from "features/themeSwitcher";
 import {getBranch} from "features/branchSwitcher";
 import {fetchStudentDebtorData, getMonthDataThunk} from "../../../../features/studentPayment/model/studentPaymentThunk";
-import {getMonthData} from "../../../../features/studentPayment";
 import {getMonth} from "../../../../features/studentPayment/model/selectors/selectors";
+
+import {getUserJob} from "entities/profile/userProfile";
 
 export const StudentProfilePage = () => {
 
@@ -56,6 +55,9 @@ export const StudentProfilePage = () => {
     const branch = useSelector(getBranch)
 
     const month = useSelector(getMonth)
+
+
+    const myJob = useSelector(getUserJob)
 
 
     const userData = useSelector(getUserData)
@@ -195,6 +197,7 @@ export const StudentProfilePage = () => {
                     data={userData}
                     active={active}
                     setActive={setActive}
+                    job={myJob}
                 />
                 <StudentProfileTotalRating
                     active={active}

@@ -5,7 +5,7 @@
   flex-direction: column
   justify-content: center
 
-  padding: 4.7rem 3.7rem 0 15rem
+  padding: 4.7rem 3.7rem 4rem 15rem
   &__header
     display: flex
     align-items: center
@@ -84,3 +84,47 @@
       img
         height: 36.8rem
         width: 100%
+
+@media (max-width: 777px)
+  .main
+    padding: 3rem 2.7rem 0 2rem
+    &__add
+      width: 4.4rem
+      height: 4.9rem
+      img
+        width: 1.9rem
+        height: 1.9rem
+    &__wrapper
+      padding-top: 3rem
+    &__box
+      &_main
+        padding: 2rem 2rem 0 5.3rem
+      &_date
+        font-size: 2rem
+      &_title
+        font-size: 3.2rem
+      &_descr
+        font-size: 1.6rem
+
+
+
+@media (max-width: 510px)
+  .main
+    padding: 3rem 2.7rem 0 2rem
+    &__edit
+    //top: 8rem
+    &__box
+      &_main
+        padding: 2rem 2rem 0 5.3rem
+      &_date
+        font-size: 1.8rem
+      &_title
+        font-size: 2.8rem
+      &_descr
+        font-size: 1.6rem
+
+@media (max-width: 388px)
+  .main
+    padding: 3rem 2.7rem 0 2rem
+    &__edit
+//top: 10rem

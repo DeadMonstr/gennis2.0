@@ -16,21 +16,31 @@ import {SchoolHomeLatestNew} from "../../../../entities/schoolHome";
 import {API_URL, header, headerImg, headersImg, useHttp} from "../../../../shared/api/base";
 import {rgbSlice} from "../../../../entities/rgbData";
 import {getLatestNew} from "../../../../entities/schoolHome/model/thunk/schoolLatestNewThunk";
+import {getHomePageType} from "../../../../entities/schoolHome/model/selector/getHomePageSelector";
+import {fetchHomePage} from "../../../../entities/schoolHome/model/thunk/getHomePageSelector";
 
 
-export const SchoolHomeLatestNewModal = ({types}) => {
+export const SchoolHomeLatestNewModal = () => {
     const [addLatestNew, setAddLatestNew] = useState(false)
     const [editLatestNew, setEditLatestNew] = useState(false)
 
 
     const dispatch = useDispatch()
 
+    const job = localStorage.getItem("job")
+    const types = useSelector(getHomePageType)
 
     const id = types[3]?.id
 
     const latestNew = useSelector(getSchoolLatestSlice)
     const [deleteId, setDeleteId] = useState(null)
 
+    useEffect(() => {
+        dispatch(fetchHomePage())
+    }, [])
+
+
+    console.log(id , "id")
 
     useEffect(() => {
         dispatch(getLatestNew(id))
@@ -87,6 +97,7 @@ export const SchoolHomeLatestNewModal = ({types}) => {
 
 
             <SchoolHomeLatestNew
+                job={job === "smm"}
                 data={latestNew}
                 setAdd={setAddLatestNew}
                 add={addLatestNew}
@@ -94,7 +105,6 @@ export const SchoolHomeLatestNewModal = ({types}) => {
                 setValue={setValue}
                 setDeleteId={setDeleteId}
             />
-
 
             <Modal extraClass={cls.modalExtraClass} active={addLatestNew} setActive={setAddLatestNew}>
                 <div className={cls.modal}>
@@ -117,14 +127,15 @@ export const SchoolHomeLatestNewModal = ({types}) => {
                             extraClass={cls.modal__btn_cancel}>Cancel</Button>
                 </div>
             </Modal>
-            <SchoolHomeLatestEditModal setValue={setValue} setActive={setEditLatestNew} active={editLatestNew} register={register}
+            <SchoolHomeLatestEditModal setValue={setValue} setActive={setEditLatestNew} active={editLatestNew}
+                                       register={register}
                                        handleSubmit={handleSubmit} deleteItemId={deleteId} id={id}/>
         </div>
 
     );
 };
 
-export const SchoolHomeLatestEditModal = ({active, setActive, register, handleSubmit, deleteItemId , id , setValue}) => {
+export const SchoolHomeLatestEditModal = ({active, setActive, register, handleSubmit, deleteItemId, id, setValue}) => {
 
     const dispatch = useDispatch()
 
@@ -151,11 +162,7 @@ export const SchoolHomeLatestEditModal = ({active, setActive, register, handleSu
     const onDeleteItem = (data) => {
 
 
-
-
-
-
-        request(`${API_URL}Ui/fronted-pages/${deleteItemId.id}` , "DELETE" , null , header() )
+        request(`${API_URL}Ui/fronted-pages/${deleteItemId.id}`, "DELETE", null, header())
             .then(res => {
 
                 dispatch(onDelete(deleteItemId.id))
@@ -195,7 +202,8 @@ export const SchoolHomeLatestEditModal = ({active, setActive, register, handleSu
             <div className={cls.modal}>
                 <div {...getRootProps({className: 'dropzone'})}>
                     <input  {...getInputProps()}/>
-                    {!files ? <img style={{width: "31rem", height: "23rem "}} src={deleteItemId?.images?.map(item => item?.image)} alt=""/> :
+                    {!files ? <img style={{width: "31rem", height: "23rem "}}
+                                   src={deleteItemId?.images?.map(item => item?.image)} alt=""/> :
                         <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
                              alt=""/>}
                 </div>

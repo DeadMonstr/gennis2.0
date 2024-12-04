@@ -9,7 +9,7 @@ import {getSchoolHomeCertificatData} from "../../model/selector/schoolHomeCertif
 
 const list = [1, 2, 3, 4]
 
-export const SchoolHomeCertificats = memo(({setActive, setActiveEditItem}) => {
+export const SchoolHomeCertificats = memo(({setActive, setActiveEditItem , job}) => {
 
     const data = useSelector(getSchoolHomeCertificatData)
 
@@ -24,7 +24,7 @@ export const SchoolHomeCertificats = memo(({setActive, setActiveEditItem}) => {
                         alt=""
                     />
                     <div className={cls.item__inner}>
-                        <div
+                        {job && <div
                             onClick={() => {
                                 setActive("edit")
                                 setActiveEditItem(item)
@@ -32,7 +32,7 @@ export const SchoolHomeCertificats = memo(({setActive, setActiveEditItem}) => {
                             className={cls.item__change}
                         >
                             <i className="fas fa-edit"/>
-                        </div>
+                        </div>}
                         <h2 className={cls.item__title}>
                             {item?.name}
                         </h2>
@@ -57,9 +57,9 @@ export const SchoolHomeCertificats = memo(({setActive, setActiveEditItem}) => {
         <div className={cls.certificats}>
             <div className={cls.certificats__wrapper}>
                 <h2 className={cls.certificats__title}>Certificats</h2>
-                <div className={cls.certificats__add} onClick={() => setActive("add")}>
+                {job && <div className={cls.certificats__add} onClick={() => setActive("add")}>
                     <img src={addIcon} alt=""/>
-                </div>
+                </div>}
             </div>
             <div className={cls.item}>
                 {render}

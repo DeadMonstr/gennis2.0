@@ -24,11 +24,17 @@ import {
 } from "entities/schoolHome/model/slice/schoolCurricularSlice";
 import {API_URL, header, headerImg, useHttp} from "shared/api/base";
 import {getCurriculum, getExtraCurriculum} from "entities/schoolHome/model/thunk/curriculumThunk";
+import {getUserJob} from "../../../../entities/profile/userProfile";
+import {getHomePageType} from "../../../../entities/schoolHome/model/selector/getHomePageSelector";
+import {fetchHomePage} from "../../../../entities/schoolHome/model/thunk/getHomePageSelector";
 
-export const SchoolHomeCurriculamModal = ({type}) => {
+export const SchoolHomeCurriculamModal = () => {
 
     const curricularData = useSelector(getCurricularData)
     const extraCurricularData = useSelector(getExtraCurricularData)
+
+
+
 
 
     const [activeAdd, setActiveAdd] = useState(false)
@@ -39,15 +45,25 @@ export const SchoolHomeCurriculamModal = ({type}) => {
     const {register, setValue, handleSubmit} = useForm()
 
 
+    const job = localStorage.getItem("job")
+
+
+
+
+
     const [extraCurricular, setActiveExtraCurricular] = useState(false)
     const [extraCurricularEdit, setActiveExtraCurricularEdit] = useState(false)
 
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        dispatch(fetchHomePage())
+    } , [])
 
     useEffect(() => {
        dispatch(getCurriculum())
        dispatch(getExtraCurriculum())
+
     }, [])
 
 
@@ -56,6 +72,7 @@ export const SchoolHomeCurriculamModal = ({type}) => {
         <div>
             <SchoolHomeCurricular
 
+                job={job === "smm"}
                 data={curricularData}
                 extraCurricularData={extraCurricularData}
 
@@ -243,7 +260,6 @@ export const SchoolCurriculumEdit = ({active, setActive, handleSubmit, setValue,
 
         formData.append("name", data.name)
         formData.append("description", data.description)
-        formData.append("date", data.date)
         formData.append("type", 7)
 
 
@@ -273,7 +289,7 @@ export const SchoolCurriculumEdit = ({active, setActive, handleSubmit, setValue,
 
                     <div {...getRootProps({className: 'dropzone'})}>
                         <input  {...getInputProps()}/>
-                        {!files ? <img style={{width: "31rem", height: "23rem "}} src={defImg} alt=""/> :
+                        {!files ? <img style={{width: "31rem", height: "23rem "}} src={idItem?.images?.map(item => item?.image)} alt=""/> :
                             <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
                                  alt=""/>}
                     </div>
@@ -325,7 +341,6 @@ export const SchoolExtraCurriculumAdd = ({setActive, active}) => {
         formData.append("image", files[0])
         formData.append("name", data.name)
         formData.append("description", data.description)
-        formData.append("date", data.date)
         formData.append("type", 6)
 
         request(`${API_URL}Ui/fronted-pages/`, "POST", formData, headerImg())
@@ -343,12 +358,12 @@ export const SchoolExtraCurriculumAdd = ({setActive, active}) => {
     }
 
     return (
-        <Modal active={active} setActive={setActive}>
+        <Modal extraClass={cls.modalExtraClass} active={active} setActive={setActive}>
             <div className={cls.modalExtra}>
                 <div {...getRootProps({className: 'dropzone'})}>
                     <input  {...getInputProps()}/>
-                    {!files ? <img src={defImg} alt=""/> :
-                        <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
+                    {!files ? <img className={cls.dropzone} src={defImg} alt=""/> :
+                        <img className={cls.dropzone}  src={files?.map(item => item?.preview)}
                              alt=""/>}
                 </div>
                 <Input required register={register} name={"name"} extraClassName={cls.modalExtra__input}
@@ -400,16 +415,12 @@ export const SchoolExtraCurriculumEdit = ({active, setActive, handleSubmit, setV
     }
 
     const onUpdateItem = (data) => {
-
         const formData = new FormData
-
         if (files) {
             formData.append("image", files[0])
         }
-
         formData.append("name", data.name)
         formData.append("description", data.description)
-        formData.append("date", data.date)
         formData.append("type", 6)
 
 
@@ -429,7 +440,7 @@ export const SchoolExtraCurriculumEdit = ({active, setActive, handleSubmit, setV
             <div className={cls.modalExtra}>
                 <div {...getRootProps({className: 'dropzone'})}>
                     <input  {...getInputProps()}/>
-                    {!files ? <img src={defImg} alt=""/> :
+                    {!files ? <img  style={{width: "31rem", height: "23rem "}} src={idItem?.images?.map(item => item?.image)} alt=""/> :
                         <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
                              alt=""/>}
                 </div>

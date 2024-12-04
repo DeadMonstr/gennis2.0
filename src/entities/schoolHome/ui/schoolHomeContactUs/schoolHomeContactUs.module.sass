@@ -1,19 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Blinker:wght@100;200;300;400;600;700;800;900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Risque&family=Space+Grotesk:wght@300..700&display=swap')
+
+@import "app/styles/abstracts/mixins"
 .school
-  height: 100dvh
+  //height: 100dvh
   gap: 2rem
   display: flex
-  padding-top: 10rem
+  padding: 10rem
   flex-direction: column
+  background-repeat: no-repeat
+  background-size: cover
+
   align-items: center
   .title
     color: #ffffff
     font-size: 5rem
     font-weight: bolder
   .descr
-    font-size: 1.8rem
+    padding: 2rem
+    font-size: 2.5rem
     color: #FFFFFF
     text-align: center
-    width: 70%
+    width: 75rem
+    font-family: "Blinker", sans-serif
+    font-weight: 400
 .box_main
   display: flex
   gap: 2rem
@@ -26,8 +35,24 @@
   align-items: center
 .mainFormBox
   width: 100%
-  justify-content: space-between
+  justify-content: center
+  align-items: center
+  flex-wrap: wrap
   display: flex
+  position: relative
+  &__change
+    z-index: 50
+    position: absolute
+    top: 2.4rem
+    left: 3rem
+    background: #001B61
+    padding: .8rem
+    transition: .1s
+    border-radius: .5rem
+    @include btn-active
+    i
+      font-size: 1.6rem
+      color: #fff
 .mainLeftBox
   width: 45%
   //padding-top: 4rem
@@ -80,13 +105,22 @@
 .submitBtn
   width: 100%
   background: #001B61
+@media (max-width: 1380px)
+  .descr
+    width: 50rem!important
+  .inputMsg
+    width: 100%!important
 @media (max-width: 1200px)
   .inputMsg
-    width: 24rem!important
+    width: 100%!important
+  .descr
+    width: 100%!important
+  .formBox
+    width: 100%!important
 @media (max-width: 1000px)
   .school
     .descr
-      width: 80%
+      font-size: 1.6rem
 @media (max-width: 815px)
   .inputMsg
     width: 15rem!important
@@ -112,9 +146,13 @@
   .formBox
     width: 70% !important
     .form
-      width: 60% !important
+      width: 100% !important
       display: flex
       align-items: center
 
   .inputMsg
     width: 230px !important
+
+@media (max-width: 600px)
+  .inputMsg
+    width: 100%!important

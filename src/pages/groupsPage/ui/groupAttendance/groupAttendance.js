@@ -295,15 +295,12 @@ export const Attendance = ({active, setActive}) => {
         setStudents(students => {
             return students.map(item => {
                 if (id === item.id) {
-
                     return {...item, requestType: requestType, requestMsg: requestMsg}
-                    console.log(item, "item")
                 }
                 return item
 
             })
         })
-        console.log(id, requestType, requestMsg)
     }
 
     const onSubmitAbsent = (data) => {

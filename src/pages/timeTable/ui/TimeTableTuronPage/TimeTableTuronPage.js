@@ -190,48 +190,33 @@ export const TimeTableTuronPage = () => {
     useEffect(() => {
         if (rooms.length && filteredClass && type) {
             setRooms(rooms => rooms.map(room => {
-
                 const newLessons = room.lessons.map(item => {
-
-
                     const isItemGroup = !!item.group.id
-
                     if (isItemGroup) {
-
-
                         let isFilteredColor
                         if (type === "group") {
                             isFilteredColor = item.group.type === "group" ? item.group.id === +filteredClass : item.group.classes.includes(+filteredClass)
 
                         } else {
                             isFilteredColor = item.group.id === +filteredClass
-
                         }
-
                         return {
                             ...item,
                             isFilteredColor: isFilteredColor,
                         }
                     }
-
                     return item
-
                 })
-
-
-
 
                 return {
                     ...room,
                     lessons: newLessons,
                 }
-
             }))
         }
     },[rooms.length,filteredClass,type])
 
 
-    // };
 
 
 
@@ -729,15 +714,10 @@ export const TimeTableTuronPage = () => {
                 date
             }
 
-
             if (canSubmitLesson?.group.type === "flow") {
                 data.teacher = canSubmitLesson?.group?.teacher_info?.id
                 data.subject = canSubmitLesson?.group?.subject_info?.id
             }
-
-
-            console.log(canSubmitLesson)
-
 
             request(`${API_URL}SchoolTimeTable/timetable-list-${canSubmitLesson?.id ? "update" : "create"}/${canSubmitLesson?.id ? canSubmitLesson?.id : ""}`, canSubmitLesson?.id ? "PATCH" : "POST", JSON.stringify(data), headers())
                 .then(res => {
@@ -763,10 +743,9 @@ export const TimeTableTuronPage = () => {
                         return item
                     }))
 
-
-                    dispatch(fetchTimeTableSubject(canSubmitLesson.group.id))
-
-
+                    if (canSubmitLesson?.group.type !== "flow") {
+                        dispatch(fetchTimeTableSubject(canSubmitLesson.group.id))
+                    }
                 })
                 .then(() => {
                     setCanSubmitLesson({})
@@ -777,11 +756,7 @@ export const TimeTableTuronPage = () => {
         }
     }, [canSubmitLesson])
 
-
     const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
-
-
-
 
     return (
         <div className={cls.timeTable}>
@@ -856,7 +831,8 @@ export const TimeTableTuronPage = () => {
                                         item={startItem}
                                         color={startItem?.color?.value}
                                     >
-                                        {startItem.name}
+
+                                        {startItem.class_name || startItem.name}
                                     </TimeTableDragItem>
                                     : null
                     }

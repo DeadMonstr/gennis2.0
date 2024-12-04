@@ -14,20 +14,29 @@ import {onAdd, onDelete, onEdit} from "../../../../entities/schoolHome/model/sli
 import {getSchoolProfileData, SchoolHomeStudentProfile} from "../../../../entities/schoolHome";
 import {getStudentProfile} from "../../../../entities/schoolHome/model/thunk/schoolStudentProfileThunk";
 import {API_URL, header, headerImg, useHttp} from "../../../../shared/api/base";
+import {fetchHomePage} from "../../../../entities/schoolHome/model/thunk/getHomePageSelector";
+import {getHomePageType} from "../../../../entities/schoolHome/model/selector/getHomePageSelector";
 
 
-export const SchoolHomeStudentProfileModal = ({types}) => {
+export const SchoolHomeStudentProfileModal = () => {
     const [add, setAdd] = useState(false)
     const [edit, setEdit] = useState(false)
     const profileData = useSelector(getSchoolProfileData)
     const [deleteId, setDeleteId] = useState(null)
 
 
+    const job = localStorage.getItem("job")
+
+
+    const types = useSelector(getHomePageType)
     const dispatch = useDispatch()
 
     const {request} = useHttp()
     const id = types[2]?.id
 
+    useEffect(() => {
+        dispatch(fetchHomePage())
+    } , [])
 
 
     useEffect(() => {
@@ -60,14 +69,11 @@ export const SchoolHomeStudentProfileModal = ({types}) => {
         formData.append("image", files[0])
         formData.append("name", data.name)
         formData.append("description", data.description)
-        formData.append("date", data.date)
         formData.append("type", id)
-
 
 
         request(`${API_URL}Ui/fronted-pages/`, "POST", formData, headerImg())
             .then(res => {
-                console.log(res)
                 setValue("name", "")
                 setValue("description", "")
                 setValue("date", "")
@@ -87,6 +93,7 @@ export const SchoolHomeStudentProfileModal = ({types}) => {
         <>
 
             <SchoolHomeStudentProfile
+                job={job === "smm"}
                 setDeleteId={setDeleteId}
                 setEdit={setEdit}
                 add={add}
@@ -130,8 +137,7 @@ export const SchoolHomeStudentProfileModal = ({types}) => {
 };
 
 
-
-export const SchoolHomeStudentEditModal = ({active , setActive , deleteItemId , handleSubmit , register , id , setValue}) => {
+export const SchoolHomeStudentEditModal = ({active, setActive, deleteItemId, handleSubmit, register, id, setValue}) => {
 
     const dispatch = useDispatch()
     // const {register, setValue, handleSubmit} = useForm()
@@ -156,11 +162,7 @@ export const SchoolHomeStudentEditModal = ({active , setActive , deleteItemId , 
     const onDeleteItem = (data) => {
 
 
-
-
-
-
-        request(`${API_URL}Ui/fronted-pages/${deleteItemId.id}` , "DELETE" , null , header() )
+        request(`${API_URL}Ui/fronted-pages/${deleteItemId.id}`, "DELETE", null, header())
             .then(res => {
 
                 dispatch(onDelete(deleteItemId.id))
@@ -179,7 +181,6 @@ export const SchoolHomeStudentEditModal = ({active , setActive , deleteItemId , 
 
         formData.append("name", data.name)
         formData.append("description", data.description)
-        formData.append("date", data.date)
         formData.append("type", id)
 
 
@@ -198,13 +199,12 @@ export const SchoolHomeStudentEditModal = ({active , setActive , deleteItemId , 
     return (
 
 
-
-
         <Modal active={active} setActive={setActive}>
             <div className={cls.modal}>
                 <div {...getRootProps({className: 'dropzone'})}>
                     <input  {...getInputProps()}/>
-                    {!files ? <img style={{width: "31rem", height: "23rem "}} src={deleteItemId?.images?.map(item => item?.image)} alt=""/> :
+                    {!files ? <img style={{width: "31rem", height: "23rem "}}
+                                   src={deleteItemId?.images?.map(item => item?.image)} alt=""/> :
                         <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
                              alt=""/>}
                 </div>
@@ -217,7 +217,7 @@ export const SchoolHomeStudentEditModal = ({active , setActive , deleteItemId , 
                 <Button onClick={handleSubmit(onDeleteItem)} extraClass={cls.modal__btn_delete}>Delete</Button>
                 <div className={cls.modal__btn_mini}>
                     <Button onClick={handleSubmit(onUpdateItem)} extraClass={cls.modal__btn_add}>Edit</Button>
-                    <Button onClick={handleSubmit(() =>setActive(false))}
+                    <Button onClick={handleSubmit(() => setActive(false))}
                             extraClass={cls.modal__btn_cancel}>Cancel</Button>
                 </div>
             </div>

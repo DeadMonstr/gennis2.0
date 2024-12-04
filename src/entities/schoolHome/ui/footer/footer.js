@@ -42,14 +42,21 @@ export const Footer = () => {
             {/*</div>*/}
             {/*<hr className={cls.hr}/>*/}
             <div className={cls.footer_bottom}>
-
                 <div className={cls.footer_logo}>
                     <img src={turonLogo} alt=""/>
                     <img src={turonLogoText} alt=""/>
                 </div>
                 <div className={cls.footer_contact}>
                     Phone Number: +9998943103333
+
+                    <ul className={cls.footer_bottom_ul}>
+                        <li><a target={"_blank"} href="https://www.instagram.com/turon_international_school/">  <i className="fab fa-instagram"/> Telegram </a></li>
+                        <li><a target={"_blank"} href="https://t.me/tis_info"> <i className="fab fa-telegram"/>Instagram </a></li>
+                    </ul>
+
                 </div>
+
+
             </div>
         </div>
     );
