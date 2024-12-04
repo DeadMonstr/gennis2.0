@@ -105,32 +105,38 @@ export const SchoolHomeMainModal = ({types}) => {
         formData.append("description", data.description)
         formData.append("type", types[1]?.id)
         if (programActive === "add") {
-            formData.append("image", files[0])
+            if (files) {
+                formData.append("image", files[0])
+            }
             dispatch(fetchAddPrograms({data: formData}))
         } else {
-            if (files[0]?.path) {
-                formData.append("image", JSON.stringify(files[0]))
+            if (files) {
+                formData.append("image", files[0])
             }
             dispatch(editProgram({data: formData, id: activeEditItem?.id}))
         }
         setProgramActive(false)
+        setFiles(null)
     }
 
+
     const onChangeMain = (data) => {
-        if (secDes[0]?.id) {
+
+        if (secDes && secDes[0]?.id) {
             const res2 = {description: data?.programs_text, type: types[9]?.id}
             dispatch(editDescription({data: res2, id: secDes[0]?.id}))
         } else {
-            dispatch(addDescription({data: data?.programs_text, id: types[9]?.id}))
+            dispatch(addDescription({description: data?.programs_text, type: types[9]?.id}))
         }
-        if (des[0]?.id) {
+        if (des && des[0]?.id) {
             const res = {description: data?.our_text, type: types[7]?.id}
             dispatch(editDescription({data: res, id: des[0]?.id}))
         } else {
-            dispatch(addDescription({data: data?.our_text, id: types[7]?.id}))
+            dispatch(addDescription({description: data?.our_text, type: types[7]?.id}))
         }
         setProgramActive(false)
         setMainActive(false)
+        setFiles(null)
     }
 
     return (

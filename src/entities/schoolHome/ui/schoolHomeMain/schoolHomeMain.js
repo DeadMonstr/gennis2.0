@@ -30,7 +30,6 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
     const des = useSelector(getSchoolHomeMainDes)
 
 
-    console.log(data , "log")
 
     const carousel = useRef()
     const [activeItem, setActiveItem] = useState(null)
@@ -38,7 +37,7 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
 
     useEffect(() => {
         setWidth(carousel.current?.scrollWidth - carousel.current?.offsetWidth)
-    }, [list.length])
+    }, [data?.length])
 
     const renderItems = useCallback(() => {
         return data?.map(item => {
@@ -65,7 +64,7 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
                     }
                     <img
                         className={cls.items__image}
-                        src={item?.images.map(item => item.image) ?? idea}
+                        src={item?.images.map(item => item.image)}
                         alt=""
                     />
                     <h2 className={cls.items__title}>{item?.name}</h2>

@@ -100,15 +100,15 @@ export const SchoolVisionMission = memo(() => {
 
         const formData = new FormData()
 
-        formData.append("images", files[0])
+        if (files){
+            formData.append("images", files[0])
+        }
         formData.append("name", data.name)
         formData.append("description", data.description)
 
         formData.append("type", 5)
 
 
-        console.log(formData)
-        console.log(files[0])
 
 
         request(`${API_URL}Ui/fronted-pages/`, "POST", formData, headerImg())
@@ -116,6 +116,9 @@ export const SchoolVisionMission = memo(() => {
                 setAddActive(false)
                 dispatch(onAdd(res))
                 setFiles(null)
+                setValue("name" , "")
+                setValue("description" , "")
+
             })
             .catch(err => {
                 console.log(err)
@@ -150,8 +153,6 @@ export const SchoolVisionMission = memo(() => {
 
         request(`${API_URL}Ui/fronted-pages/${activeEditItem.id}/`, "PATCH", formData, headerImg())
             .then(res => {
-                console.log(res)
-
                 setActiveTextEdit(false)
 
                 dispatch(onEdit({id: activeEditItem.id , data: res}))
@@ -161,8 +162,12 @@ export const SchoolVisionMission = memo(() => {
             })
     }
 
+    console.log(list)
+
     return (
         <>
+
+
             <div className={cls.visionMission}>
                 <div className={cls.visionMission__info}>
                     <h1 className={cls.visionMission__title}>Vision mission</h1>
@@ -188,7 +193,7 @@ export const SchoolVisionMission = memo(() => {
                         >
                             <i className={classNames("fas fa-edit")}/>
                         </div>}
-                        {job &&
+                        {job && list.length <5  ?
                             <div
                                 onClick={() => setAddActive(true)}
                                 className={cls.visionMission__add}>
@@ -198,7 +203,7 @@ export const SchoolVisionMission = memo(() => {
                                         cls.visionMission__icon
                                     )}
                                 />
-                            </div>}
+                            </div> : null}
                     </div>
                     <img
                         src={image}

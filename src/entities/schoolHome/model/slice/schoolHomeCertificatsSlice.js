@@ -13,8 +13,10 @@ const schoolHomeCertificatSlice = createSlice({
     reducers: {
         onDeleteCertificate: (state, action) => {
             state.data = [...state.data.filter(item => item.id !== action.payload)]
-        }
-
+        },
+        onEditCertificate: (state, action) => {
+            state.data = [...state.data.filter(item => item.id !== action.payload.id) ,action.payload.data]
+        },
     },
     extraReducers: builder =>
         builder
@@ -46,6 +48,6 @@ const schoolHomeCertificatSlice = createSlice({
             })
 })
 
-export const {onDeleteCertificate} = schoolHomeCertificatSlice.actions
+export const {onDeleteCertificate , onEditCertificate} = schoolHomeCertificatSlice.actions
 
 export default schoolHomeCertificatSlice.reducer

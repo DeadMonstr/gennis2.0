@@ -29,6 +29,9 @@ export const SchoolHomeContactUs = ({job, setActiveEditItem, setActive, data, se
     const myStyle = {
         backgroundImage: `url(${backImg})`
     }
+
+
+
     return (
         <>
             <div style={myStyle} className={cls.school}>
@@ -40,13 +43,13 @@ export const SchoolHomeContactUs = ({job, setActiveEditItem, setActive, data, se
 
 
                     <div className={cls.descr}>
-                        {data?.map(item => (
+                        {data?.length >= 0 &&  data?.map(item => (
                             <>
                                 {job && <div
                                     onClick={() => {
                                         setActive("edit")
                                         setActiveEditItem(item)
-                                        setValue("name", item.description)
+                                        setValue("description", item.description)
                                     }}
                                     className={cls.mainFormBox__change}
                                 >

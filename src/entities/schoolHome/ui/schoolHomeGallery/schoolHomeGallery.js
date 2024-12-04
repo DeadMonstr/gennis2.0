@@ -9,7 +9,7 @@ import {getSchoolHomeGalleryData} from "../../model/selector/schoolHomeGallerySe
 
 const list = [1, 2]
 
-export const SchoolHomeGallery = memo(({setActive, setActiveEditItem, job}) => {
+export const SchoolHomeGallery = memo(({setValue ,setActive, setActiveEditItem, job}) => {
 
     const data = useSelector(getSchoolHomeGalleryData)
 
@@ -28,6 +28,7 @@ export const SchoolHomeGallery = memo(({setActive, setActiveEditItem, job}) => {
                             onClick={() => {
                                 setActive("edit")
                                 setActiveEditItem(item)
+                                setValue("description" , item.description)
                             }}
                             className={cls.item__change}
                         >
@@ -40,10 +41,7 @@ export const SchoolHomeGallery = memo(({setActive, setActiveEditItem, job}) => {
                         alt=""
                     />
                     <p className={cls.item__text}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        con
+                        {item.description}
 
                     </p>
                 </div>
