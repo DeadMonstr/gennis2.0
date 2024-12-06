@@ -123,7 +123,7 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
                         students are empowered to discover their passions, pursue excellence, and make meaningful
                         contributions to the world
                     </p>
-                    <Button extraClass={cls.home__btn}>Login</Button>
+                    <Button onClick={() => navigate("/login")} extraClass={cls.home__btn}>Login</Button>
                 </div>
                 <div className={cls.image}>
                     <img src={homeImage} alt=""/>

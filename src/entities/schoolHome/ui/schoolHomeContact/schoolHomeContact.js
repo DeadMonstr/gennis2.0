@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 
 import {Modal} from "shared/ui/modal";
+import {Button} from "../../../../shared/ui/button";
 
 const locations = [
 
@@ -114,7 +115,7 @@ export const SchoolHomeContact = () => {
                         </div>
                         <div className={cls.contact__locations__box_locations}>
                             <h2>Manzil</h2>
-                            <span>Chirchiq shahar , Temur yo'lchilar ko'chasi</span>
+                            <span>Chirchiq shahar , Temur yo'lovchilar ko'chasi</span>
                         </div>
                     </>
                 )
@@ -182,7 +183,6 @@ export const SchoolHomeContact = () => {
                 <div className={classNames(cls.contact__branches, {
                     [cls.branches_active]: activeHamburger
                 })}>
-                    <h2>Location</h2>
                     <div className={cls.contact__branches_name}>
                         <ul>
                             {selectedItem && [...locations].sort(compareById).map((item) => {
@@ -195,7 +195,7 @@ export const SchoolHomeContact = () => {
                                             [cls.active]: selectedItem === item.name
                                         })}>
 
-                                        {item.name}
+                                        <Button>{item.name}</Button>
                                     </li>
                                 )
                             })}

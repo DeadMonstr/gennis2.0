@@ -47,11 +47,14 @@ export const Footer = () => {
                     <img src={turonLogoText} alt=""/>
                 </div>
                 <div className={cls.footer_contact}>
-                    Phone Number: +9998943103333
+                    <div className={cls.footer__number}>
+                        <i className={"fa-solid fa-phone "}/> +998 20 000 55 55
+                    </div>
 
                     <ul className={cls.footer_bottom_ul}>
-                        <li><a target={"_blank"} href="https://www.instagram.com/turon_international_school/">  <i className="fab fa-instagram"/> Telegram </a></li>
-                        <li><a target={"_blank"} href="https://t.me/tis_info"> <i className="fab fa-telegram"/>Instagram </a></li>
+                        <li className={cls.list}>Social Media</li>
+                        <li><a target={"_blank"} href="https://www.instagram.com/turon_international_school/"><i className="fab fa-telegram"/> </a></li>
+                        <li><a target={"_blank"} href="https://t.me/tis_info">  <i className="fab fa-instagram"/> </a></li>
                     </ul>
 
                 </div>

@@ -26,6 +26,7 @@ import RequireBranch from "app/routers/ui/RequireBranch";
 import RequireHeader from "app/routers/ui/RequireHeader";
 import {routersConfigProfile} from "app/routers/config/routerConfigProfiles";
 import {
+    AboutUs,
     SchoolHomeAboutUs,
     SchoolHomeCertificats,
     SchoolHomeContact,
@@ -55,7 +56,7 @@ export const AppRouter = () => {
 
 
                 <Route element={<LayoutWebsite/>}>
-                    <Route element={<SchoolVisionMission/>} path={"aboutUs"}/>
+                    <Route element={<AboutUs/>} path={"aboutUs"}/>
                     <Route element={<SchoolHomeLatestNewModal/>} path={"news"}/>
                     <Route element={<SchoolHomeCurriculamModal/>} path={"curricular"}/>
                     <Route element={<SchoolGalleryModal/>} path={"gallery"}/>
