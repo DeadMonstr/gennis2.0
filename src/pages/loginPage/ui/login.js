@@ -68,20 +68,23 @@ export const Login = () => {
 
 
 
+                //
+                // request(`${CLASSROOM_API}api/turon_user/${res.username}`, "GET",)
+                //     .then(res1 => {
+                //         console.log(res1 , "logg")
+                //
+                //         if (res.room === true) {
+                //             window.location.replace(`${CLASSROOM_API_URL}get_user/${res1.access_token}/${res1.refresh_token}`)
+                //         }
+                //
+                //     })
 
-                request(`${CLASSROOM_API}api/turon_user/${res.username}`, "GET",)
-                    .then(res1 => {
-                        console.log(res1 , "logg")
 
-                        if (res.room === true) {
-                            window.location.replace(`${CLASSROOM_API_URL}get_user/${res1.access_token}/${res1.refresh_token}`)
-                        }
 
-                    })
 
 
                 dispatch(getUserData(res))
-                // navigate("/platform")
+                navigate("/platform")
                 setLoading(true)
             })
             .catch(err => {
@@ -115,6 +118,8 @@ export const Login = () => {
                         <h1 className={cls.box__header_title}>
                             login
                         </h1>
+
+
                         {error && error ?
                             <div className={cls.login__error}>Username yoki Parol noto'g'ri !</div> : null}
                         <div className={cls.box__form}>
