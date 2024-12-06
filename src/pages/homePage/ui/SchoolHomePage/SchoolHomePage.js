@@ -100,7 +100,6 @@ export const SchoolHomePage = () => {
                 {/*<SchoolParentesComment/>*/}
                 {/*<SchoolNews/>*/}
                 {/*<WorkUs/>*/}
-                <Calendar/>
                 <Footer/>
 
 

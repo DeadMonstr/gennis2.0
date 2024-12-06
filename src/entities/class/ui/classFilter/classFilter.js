@@ -32,18 +32,14 @@ import {useParams} from "react-router";
 //     }
 // ]
 
-export const ClassFilter = ({classesType, active, setActive, setEdit}) => {
+export const ClassFilter = ({classesType, active, setActive, setEdit,branch }) => {
 
     const dispatch = useDispatch()
 
-    const {"*": id} = useParams()
-
-
-    const userBranchId = id
     const onClick = useCallback((id) => {
         // dispatch(classItem({branchId: userBranchId, id: id}))
-        dispatch(getClassNewNumberList({branchId: userBranchId, id: id}))
-    }, [userBranchId])
+        dispatch(getClassNewNumberList({branchId: branch, id: id}))
+    }, [branch])
 
     function compareById(a, b) {
         return a.id - b.id;

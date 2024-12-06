@@ -9,7 +9,7 @@ import {MiniLoader} from "shared/ui/miniLoader";
 import cls from "./login.module.sass"
 import gennisImg from "shared/assets/images/logo.svg"
 import loginAside from "shared/assets/images/login-page-4468581-3783954 1.svg"
-import {API_URL, useHttp} from "shared/api/base";
+import {API_URL, CLASSROOM_API_URL, useHttp} from "shared/api/base";
 import {getUserData} from "../model/loginSlice";
 import {DefaultLoader} from "shared/ui/defaultLoader";
 
@@ -65,9 +65,15 @@ export const Login = () => {
 
         request(`${API_URL}token/`, "POST", JSON.stringify(res))
             .then(res => {
-                dispatch(getUserData(res))
-                navigate("/platform")
-                setLoading(false)
+                if (res.class) {
+                    window.location.replace(`${CLASSROOM_API_URL}get_user_turon/${res.username}/${res.access}/${res.refresh}`)
+                    return {success: false}
+                } else {
+                    dispatch(getUserData(res))
+                    navigate("/platform")
+                    setLoading(false)
+                }
+
             })
             .catch(err => {
 
