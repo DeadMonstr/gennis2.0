@@ -7,6 +7,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import cls from "./schoolHomeMain.module.sass";
 import homeImage from "shared/assets/images/homeImage.png";
+
+
+import programImg from "shared/assets/icons/programImg.svg"
 import idea from "shared/assets/icons/turonIdea.png";
 import {useDispatch, useSelector} from "react-redux";
 import {getUserJob} from "../../../profile/userProfile";
@@ -16,8 +19,22 @@ import {
     getSchoolHomeMainSecDes
 } from "../../model/selector/schoolHomeMainSelector";
 import {DefaultLoader, DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
+import {useNavigate} from "react-router";
+import {Button} from "../../../../shared/ui/button";
 
 const list = [1, 2, 3, 4, 5, 6, 7]
+
+
+const listData = [
+    {name: "Nursery", id: 1},
+    {name: "PRIMARY", id: 4},
+    {name: "LOWER SECONDARY", id: 3},
+    {name: "UPPER SECONDARY", id: 2},
+    {name: "ADVANCED", id: 5},
+
+
+]
+
 
 export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEditItem}) => {
 
@@ -30,6 +47,8 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
     const des = useSelector(getSchoolHomeMainDes)
 
 
+    const navigate = useNavigate()
+
 
     const carousel = useRef()
     const [activeItem, setActiveItem] = useState(null)
@@ -37,19 +56,24 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
 
     useEffect(() => {
         setWidth(carousel.current?.scrollWidth - carousel.current?.offsetWidth)
-    }, [data?.length])
+    }, [list?.length])
 
     const renderItems = useCallback(() => {
-        return data?.map(item => {
+        return listData?.map(item => {
             return (
                 <motion.div
                     transition={{duration: 1}}
-                    onClick={() => setActiveItem(prev =>
-                        prev === item?.id ? null : item?.id
-                    )}
+                    onClick={() => {
+                        setActiveItem(prev =>
+                            prev === item?.id ? null : item?.id
+                        )
+                        navigate(`curricular`)
+                    }
+                    }
                     className={classNames(cls.items__inner, {
                         [cls.active]: activeItem === item?.id
                     })}
+
                 >
                     {
                         role && <div
@@ -64,7 +88,7 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
                     }
                     <img
                         className={cls.items__image}
-                        src={item?.images.map(item => item.image)}
+                        src={programImg}
                         alt=""
                     />
                     <h2 className={cls.items__title}>{item?.name}</h2>
@@ -92,8 +116,14 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
 
                     <h1 className={cls.info__title}>Our vision</h1>
                     <p className={cls.info__text}>
-                        {des && des[0]?.description}
+                        Our vision at Turon International School is to be a pioneering institution in Uzbekistan,
+                        renowned for excellence in STEM and IT education. We aim to foster a community of innovative
+                        thinkers and global leaders, equipped with the knowledge and skills to shape the future. Our
+                        commitment is to provide an inspiring and technologically advanced learning environment where
+                        students are empowered to discover their passions, pursue excellence, and make meaningful
+                        contributions to the world
                     </p>
+                    <Button extraClass={cls.home__btn}>Login</Button>
                 </div>
                 <div className={cls.image}>
                     <img src={homeImage} alt=""/>
@@ -104,9 +134,9 @@ export const SchoolHomeMain = memo(({setActive, setMainActive, role, setActiveEd
                     <div className={cls.programsInfo}>
 
                         <h2 className={cls.programsInfo__title}>Programs</h2>
-                        <p className={cls.programsInfo__text}>
-                            {secDes && secDes[0]?.description}
-                        </p>
+                        {/*<p className={cls.programsInfo__text}>*/}
+                        {/*    {secDes && secDes[0]?.description}*/}
+                        {/*</p>*/}
                     </div>
                     <motion.div
                         className={cls.items}

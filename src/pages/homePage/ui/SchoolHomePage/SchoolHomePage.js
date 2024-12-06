@@ -89,7 +89,7 @@ export const SchoolHomePage = () => {
                 <SchoolHomeMainModal types={types}/>
 
                 {/*<SchoolHomeExtracurricus/>*/}
-                <SchoolHomeCertificatsModal types={types}/>
+                {/*<SchoolHomeCertificatsModal types={types}/>*/}
                 {/*<SchoolHomeCertificats/>*/}
                 {/*<SchoolHomeAboutUs/>*/}
                 {/*<SchoolGalleryModal types={types}/>*/}
