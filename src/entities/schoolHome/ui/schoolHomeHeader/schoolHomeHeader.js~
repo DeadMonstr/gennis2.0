@@ -42,9 +42,8 @@ const list = [
         path: "admission"
     },
     {
-        name: "workwithus",
-        label: "Work with us",
-        path: "workwithus",
+        name: "campusLife",
+        label: "Campus life"
     },
     // {
     //     name: "academicCalendar",

@@ -1,5 +1,5 @@
 import cls from "./schoolHomeContactUs.module.sass"
-import backImg from "shared/assets/images/school.svg"
+import backImg from "shared/assets/images/turonBack.svg"
 import {Button} from "../../../../shared/ui/button";
 import addressImg from 'shared/assets/images/address.png'
 import phoneImg from 'shared/assets/images/phone.png'
@@ -31,7 +31,6 @@ export const SchoolHomeContactUs = ({job, setActiveEditItem, setActive, data, se
     }
 
 
-
     return (
         <>
             <div style={myStyle} className={cls.school}>
@@ -39,27 +38,37 @@ export const SchoolHomeContactUs = ({job, setActiveEditItem, setActive, data, se
                     Contact us
                 </div>
 
+                {/*<div className={cls.descr}>*/}
+                {/*  */}
+                {/*</div>*/}
+
                 <div className={cls.mainFormBox}>
-
-
                     <div className={cls.descr}>
-                        {data?.length >= 0 &&  data?.map(item => (
-                            <>
-                                {job && <div
-                                    onClick={() => {
-                                        setActive("edit")
-                                        setActiveEditItem(item)
-                                        setValue("description", item.description)
-                                    }}
-                                    className={cls.mainFormBox__change}
-                                >
-                                    <i className="fas fa-edit"/>
-                                </div>
-                                }
 
-                                {item?.description}
-                            </>
-                        ))}
+                        We are here to assist you! If you have any questions, need more information, or would like to get in
+                        touch with us, please don’t hesitate to reach out. Our team is ready to help.
+                        You can contact us via phone, email, or by filling out the form on our website. We look forward to
+                        hearing from you
+
+
+
+                        {/*{data?.length >= 0 && data?.map(item => (*/}
+                        {/*    <>*/}
+                        {/*        {job && <div*/}
+                        {/*            onClick={() => {*/}
+                        {/*                setActive("edit")*/}
+                        {/*                setActiveEditItem(item)*/}
+                        {/*                setValue("description", item.description)*/}
+                        {/*            }}*/}
+                        {/*            className={cls.mainFormBox__change}*/}
+                        {/*        >*/}
+                        {/*            <i className="fas fa-edit"/>*/}
+                        {/*        </div>*/}
+                        {/*        }*/}
+
+                        {/*        {item?.description}*/}
+                        {/*    </>*/}
+                        {/*))}*/}
                     </div>
 
 

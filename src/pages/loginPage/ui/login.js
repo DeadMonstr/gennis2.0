@@ -9,7 +9,7 @@ import {MiniLoader} from "shared/ui/miniLoader";
 import cls from "./login.module.sass"
 import gennisImg from "shared/assets/images/logo.svg"
 import loginAside from "shared/assets/images/login-page-4468581-3783954 1.svg"
-import {API_URL, useHttp} from "shared/api/base";
+import {API_URL, CLASSROOM_API_URL, CLASSROOM_API, useHttp} from "shared/api/base";
 import {getUserData} from "../model/loginSlice";
 import {DefaultLoader} from "shared/ui/defaultLoader";
 
@@ -21,7 +21,7 @@ export const Login = () => {
     const {request} = useHttp()
 
 
-    const {register, handleSubmit , setValue} = useForm()
+    const {register, handleSubmit, setValue} = useForm()
     const [inputChange, setInputChange] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -61,20 +61,38 @@ export const Login = () => {
         // .catch(() =>{
         //     showAlert("error" ,"error login")
         // })
-        setLoading(!loading)
+        setLoading(false)
 
         request(`${API_URL}token/`, "POST", JSON.stringify(res))
             .then(res => {
+
+
+
+                //
+                // request(`${CLASSROOM_API}api/turon_user/${res.username}`, "GET",)
+                //     .then(res1 => {
+                //         console.log(res1 , "logg")
+                //
+                //         if (res.room === true) {
+                //             window.location.replace(`${CLASSROOM_API_URL}get_user/${res1.access_token}/${res1.refresh_token}`)
+                //         }
+                //
+                //     })
+
+
+
+
+
                 dispatch(getUserData(res))
                 navigate("/platform")
-                setLoading(false)
+                setLoading(true)
             })
             .catch(err => {
 
                 setLoading(true)
                 setError(true)
-                setValue("username" , "")
-                setValue("password" , "")
+                setValue("username", "")
+                setValue("password", "")
 
             })
 
@@ -100,6 +118,8 @@ export const Login = () => {
                         <h1 className={cls.box__header_title}>
                             login
                         </h1>
+
+
                         {error && error ?
                             <div className={cls.login__error}>Username yoki Parol noto'g'ri !</div> : null}
                         <div className={cls.box__form}>
