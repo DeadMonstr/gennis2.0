@@ -4,6 +4,7 @@ import cls from "./aboutUs.module.sass"
 import turonAbout from "shared/assets/images/logoturon1 2.svg"
 import turonAbout2 from "shared/assets/images/about4.svg"
 import turonAbout3 from "shared/assets/images/about5.svg"
+import footerImg from "shared/assets/images/mahmudAka.svg"
 
 
 import coreValue from "shared/assets/images/about12.svg"
@@ -14,6 +15,8 @@ import coreValue6 from "shared/assets/images/corevalue5svg.svg"
 import coreValue7 from "shared/assets/images/corevalue7.svg"
 import coreValue8 from "shared/assets/images/corevalue8.svg"
 import coreValue9 from "shared/assets/images/corevalue10.svg"
+import {getSchoolLeaderShip} from "../../model/selector/schoolLeaderShipSelector";
+import {useSelector} from "react-redux";
 
 
 const data = [
@@ -63,7 +66,7 @@ const data = [
 const location = [
     "chirchiq",
     "sergeli",
-    "xujakent"
+    "Xo’jakent"
 ]
 export const AboutUs = () => {
     return (
@@ -71,6 +74,7 @@ export const AboutUs = () => {
             <AboutMain/>
             <CoreValues/>
             <SchoolLeadershipTeam/>
+            <AboutFooter/>
         </div>
     );
 };
@@ -195,31 +199,33 @@ export const CoreValues = () => {
 
 export const SchoolLeadershipTeam = () => {
 
+    const leaderShip = useSelector(getSchoolLeaderShip)
+
     const renderDate = () => {
-        // return data.map(item => (
-        //     <div className={cls.leaderShip__wrapper_box}>
-        //         <img src={item.img} alt=""/>
-        //
-        //         <div className={cls.leaderShip__wrapper_box_info}>
-        //             <div className={cls.leaderShip__wrapper_box_info_name}>
-        //                 {item.name}
-        //             </div>
-        //             <div className={cls.leaderShip__wrapper_box_info_job}>
-        //                 {item.job}
-        //             </div>
-        //             <div className={cls.leaderShip__wrapper_box_info_descr}>
-        //                 {item.descr}
-        //             </div>
-        //         </div>
-        //
-        //     </div>
-        // ))
+        return leaderShip.map(item => (
+            <div className={cls.leaderShip__wrapper_box}>
+                <img src={item.img} alt=""/>
+
+                <div className={cls.leaderShip__wrapper_box_info}>
+                    <div className={cls.leaderShip__wrapper_box_info_name}>
+                        {item.name}
+                    </div>
+                    <div className={cls.leaderShip__wrapper_box_info_job}>
+                        {item.job}
+                    </div>
+                    <div className={cls.leaderShip__wrapper_box_info_descr}>
+                        {item.descr}
+                    </div>
+                </div>
+
+            </div>
+        ))
     }
 
 
     const locationRender = () => {
         return location.map(item => (
-            <div>
+            <div className={cls.leaderShip__subHeader_location_box}>
                 {item}
             </div>
         ))
@@ -244,16 +250,88 @@ export const SchoolLeadershipTeam = () => {
                     confidence to excel in a dynamic world
                 </div>
             </div>
-            <div>
-                <div>
-                    Teaching staff
-                </div>
-                {locationRender()}
-            </div>
+
             <div className={cls.leaderShip__wrapper}>
+                <div className={cls.leaderShip__subHeader}>
+                    <div className={cls.leaderShip__subHeader_title}>
+
+                        Teaching staff
+                    </div>
+                    <div className={cls.leaderShip__subHeader_location}>
+                        {locationRender()}
+                    </div>
+                </div>
                 {render}
             </div>
 
         </div>
     );
 };
+
+
+export const AboutFooter = () => {
+    return (
+        <div className={cls.footer}>
+
+            <img src={footerImg} alt=""/>
+
+
+            <div className={cls.footer__wrapper}>
+                <div className={cls.footer__wrapper_title}>
+                    Meet Our Founder: Sal Khan
+                </div>
+                <div className={cls.footer__wrapper_descr}>
+                    In 2012, when writing The One World Schoolhouse, I outlined how modern education developed and how
+                    Khan Academy came to be. But, most importantly, the book outlines a vision for the future of both
+                    in-person and online education given the tools we have and the need for many more people to
+                    participate in the knowledge economy. Two years later, I founded Khan Lab School to test and refine
+                    these ideas in an actual school setting. Today, our school has grown to encompass a Lower School
+                    (K-5th), a Middle School (6th-8th) and an Upper School (9th-12th) that collectively serve over 280
+                    students.
+                </div>
+
+                <div className={cls.footer__wrapper_list}>
+                    <div className={cls.footer__wrapper_list_title}>
+                        From our founding, the core ideas of the school have been:
+                    </div>
+                    <ul>
+
+
+                        <li> • The personalization of pace with high expectations</li>
+                        <li> • Opportunities for students to learn from one another</li>
+                        <li> • Giving students the opportunity and tools to fill in their knowledge gaps and improve their
+                            achievement
+                        </li>
+                        <li> • Learning that is not bound by time or space, and</li>
+                        <li> • Blurring the arbitrary boundaries between elementary school, middle school, high school and
+                            college
+                        </li>
+                    </ul>
+                </div>
+                <div className={cls.footer__wrapper_descr}>
+                    We believe in focusing on what really matters for students’ lives (i.e., no busy work!). This
+                    enables content knowledge, skill development, applied learning opportunities and collaboration to
+                    reinforce each other rather than be in competition with each other. We value focusing on fewer
+                    authentic student-driven applied experiences over many artificial, cookie cutter ones. We believe
+                    that students can be extremely competitive in the broader world without having to be competitive
+                    with their peers. Most importantly, we believe that student agency, mindfulness and resilience are
+                    the most important skills in a world with too many stressed young people lacking a sense of purpose.
+                </div>
+
+                <div className={cls.footer__wrapper_descr}>
+                    At Khan Lab School, all of our decisions are made through the lens of what is best for our students.
+                    We tackle tough questions without ego, are results oriented, and have high expectations for our
+                    school and our students.
+                </div>
+
+                <div className={cls.footer__wrapper_descr}>
+                    Thanks for your interest in Khan Lab School. We look forward to getting to know you through our
+                    application process.
+                </div>
+
+
+            </div>
+
+        </div>
+    );
+}

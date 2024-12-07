@@ -1,8 +1,10 @@
 import React from 'react';
 
-import {SchoolHomeBuilding, SchoolHomeChampions, SchoolHomeClub} from "entities/schoolHome";
+import {SchoolHomeBuilding, SchoolHomeChampions, SchoolHomeClub, StudentCouncil} from "entities/schoolHome";
+
 
 import cls from "./schoolHomeStudentsModal.module.sass";
+import OurStudent from "../../../../entities/schoolHome/ui/ourStudent/ourStudent";
 
 export const SchoolHomeStudentsModal = () => {
     return (
@@ -10,6 +12,8 @@ export const SchoolHomeStudentsModal = () => {
             <SchoolHomeBuilding/>
             <SchoolHomeChampions/>
             <SchoolHomeClub/>
+            <OurStudent/>
+            <StudentCouncil/>
         </div>
     );
 }

@@ -53,14 +53,14 @@ export const AppRouter = () => {
         createRoutesFromElements(
             <>
 
-                <Route
-                    path={"/"}
-                    element={<SchoolHomePage/>}
-                />
 
-
-                <Route element={<LayoutWebsite/>}>
+                <Route path={"/"} element={<LayoutWebsite/>}>
+                    <Route
+                        index
+                        element={<SchoolHomePage/>}
+                    />
                     <Route element={<AboutUs/>} path={"aboutUs"}/>
+                    <Route element={null} path={"education"}/>
                     <Route element={<SchoolHomeLatestNewModal/>} path={"news"}/>
                     <Route element={<SchoolHomeCurriculamModal/>} path={"curricular"}/>
                     <Route element={<SchoolGalleryModal/>} path={"gallery"}/>
@@ -70,14 +70,10 @@ export const AppRouter = () => {
                 </Route>
 
 
-
-
-
                 {/*<Route*/}
                 {/*    path={"/"}*/}
                 {/*    element={<CenterHomePage/>}*/}
                 {/*/>*/}
-
 
 
                 <Route
@@ -129,7 +125,6 @@ export const AppRouter = () => {
                         </Route>
 
 
-
                         <Route
                             path={"profile"}
                             element={<StudentProfilePage/>}
@@ -171,7 +166,7 @@ export const AppRouter = () => {
                     </Route>
                 </Route>
 
-           {/*     <Route
+                {/*     <Route
                     path={"*"}
                     element={<NotFoundPage/>}
                 />*/}
