@@ -65,7 +65,7 @@ export const Calendar = () => {
     return (
         <>
             <div className={cls.calendarHeader}>
-                <h1>Academic Calendar</h1>
+                <h1 className={cls.calendarHeader__titleMain}>Academic Calendar</h1>
 
                 <div className={cls.calendarHeader__title}>
                     <i className="far fa-calendar-alt"/>
