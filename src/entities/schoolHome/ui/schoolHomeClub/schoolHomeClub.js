@@ -7,7 +7,7 @@ export const SchoolHomeClub = () => {
     return (
         <div className={cls.club}>
             <div className={cls.club__title}>
-                <h1>School champions</h1>
+                <h1>School club</h1>
                 <div className={cls.club__locations}>
                     <span>Chirchiq</span>
                     <span>Chirchiq</span>
