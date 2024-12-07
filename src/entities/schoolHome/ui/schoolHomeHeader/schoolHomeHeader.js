@@ -96,7 +96,7 @@ export const SchoolHomeHeader = memo(() => {
 
                     <div className={classNames({
                             [cls.hoverActive]: item.name === activeSection,
-                            [cls.hover]: !item.name === !activeSection
+                            [cls.hover]: item.name === !activeSection
                         }
                     )}>
 

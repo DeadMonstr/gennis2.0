@@ -5,7 +5,14 @@ import imgProfile from "shared/assets/icons/leaderSheap.svg"
 import {getLeaderShip} from "../thunk/leaderShipThunk";
 
 const initialState = {
-    data: []
+    data: [
+        {id: 1, name: "dsadas" , job: "fdsfds" , descr: "fdsfds" , img: imgProfile},
+        {id: 1, name: "dsadas" , job: "fdsfds" , descr: "fdsfds" , img: imgProfile},
+        {id: 1, name: "dsadas" , job: "fdsfds" , descr: "fdsfds" , img: imgProfile},
+        {id: 1, name: "dsadas" , job: "fdsfds" , descr: "fdsfds" , img: imgProfile},
+        {id: 1, name: "dsadas" , job: "fdsfds" , descr: "fdsfds" , img: imgProfile},
+        {id: 1, name: "dsadas" , job: "fdsfds" , descr: "fdsfds" , img: imgProfile},
+    ]
 }
 
 
