@@ -63,8 +63,27 @@ export const Login = () => {
         // })
         setLoading(!loading)
 
+
         request(`${API_URL}token/`, "POST", JSON.stringify(res))
             .then(res => {
+
+
+                navigate("/platform")
+                //
+                // request(`${CLASSROOM_API}api/turon_user/${res.username}`, "GET",)
+                //     .then(res1 => {
+                //         console.log(res1 , "logg")
+                //
+                //         if (res.room === true) {
+                //             window.location.replace(`${CLASSROOM_API_URL}get_user/${res1.access_token}/${res1.refresh_token}`)
+                //         }
+                //
+                //     })
+
+
+
+
+
                 dispatch(getUserData(res))
                 navigate("/platform")
                 setLoading(false)

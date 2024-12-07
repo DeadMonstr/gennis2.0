@@ -13,7 +13,24 @@ const list = [
     {
         name: "aboutUs",
         label: "About us",
-        path: "aboutUs"
+        children: [
+            {
+                name: "About TIS",
+                path: "aboutUs"
+            },
+            {
+                name: "Principal’s Spotlight",
+                path: "principalsSpotlight"
+            },
+            {
+                name: "Student Profile",
+                path: "studentProfile"
+            },
+            {
+                name: "Teaching Staff",
+                path: "teachingStaff"
+            },
+        ]
     },
     {
         name: "gallery",
@@ -52,10 +69,13 @@ const list = [
 
 export const SchoolHomeHeader = memo(() => {
 
-    const navigate =  useNavigate()
+    const navigate = useNavigate()
 
     const [activeSection, setActiveSection] = useState(null)
     const [activeBurger, setActiveBurger] = useState(false)
+
+
+    console.log(activeSection)
 
     const renderSectionMenuList = useCallback(() => {
         return list.map(item => {
@@ -63,13 +83,24 @@ export const SchoolHomeHeader = memo(() => {
                 <li
                     onClick={() => {
                         setActiveSection(item.name)
-                        navigate(item.path)
+                        // navigate(item.path)
                     }}
                     className={classNames(cls.listItem, {
                         [cls.active]: item.name === activeSection
                     })}
                 >
                     {item.label}
+
+
+                    <div className={classNames({
+                            [cls.hoverActive]: item.name === activeSection,
+                            [cls.hover]: !item.name === !activeSection
+                        }
+                    )}>
+
+                    </div>
+
+
                 </li>
             )
         })

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins&display=swap')
+
 .footer
   background-color: #001B61
   margin-top: 3rem
@@ -35,7 +37,15 @@
       display: flex
       list-style: none
       cursor: pointer
+      align-items: center
       gap: 2rem
+      .list
+        color: gray!important
+        font-size: 1.4rem!important
+        font-family: "DM Sans", sans-serif
+        font-optical-sizing: auto
+        font-weight: 500
+        font-style: normal
       li
         a
           display: flex
@@ -47,6 +57,8 @@
     flex-direction: column
     gap: 1rem
     font-size: 2rem
+  &__number
+    font-size: 1.4rem
 
 
 @media (max-width: 900px)
