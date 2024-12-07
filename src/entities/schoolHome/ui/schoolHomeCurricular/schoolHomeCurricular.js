@@ -8,6 +8,7 @@ import addIcon from "shared/assets/icons/PlusCircle.svg"
 
 const item = [
     {name: "curricular", label: "Curricular",},
+    {name: "coCurriculum", label: "Co-curriculum"},
     {name: "dissCurricular", label: "Extra Curricular"},
 ]
 export const SchoolHomeCurricular = ({
@@ -51,7 +52,7 @@ export const SchoolHomeCurricular = ({
                 {item.map((item, i) => (
                     <div className={classNames(cls.main__header_title, {
                         [cls.active]: active === item.name
-                    })} onClick={() => setActiveItem(item.name)}>
+                    })} onClick={() => item.name !== "coCurriculum" && setActiveItem(item.name)}>
                         {item.label}
                     </div>
                 ))}
@@ -125,7 +126,7 @@ export const Curricular = ({data, setDeleteId, setActiveEdit, setValue, job}) =>
             </div>
 
 
-                <div className={`${cls.curricular__wrapper} ${cls.curricular__mobile}`}>
+            <div className={`${cls.curricular__wrapper} ${cls.curricular__mobile}`}>
 
                 {render}
             </div>

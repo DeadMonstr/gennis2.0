@@ -7,7 +7,7 @@ import {routersConfigList} from "app/routers/config/routersConfigList";
 import {Layout} from "app/layout";
 import {Login} from "pages/loginPage";
 import {StudentProfilePage} from "pages/profilePage";
-import {CenterHomePage, SchoolHomePage} from "pages/homePage";
+import {CenterHomePage, SchoolHomeEducationPage, SchoolHomePage} from "pages/homePage";
 import {Register} from "pages/registerPage/ui/register";
 import {NotFoundPage} from "pages/notfoundPage/ui/notfound";
 
@@ -30,7 +30,7 @@ import {
     SchoolHomeAboutUs,
     SchoolHomeCertificats,
     SchoolHomeContact,
-    SchoolHomeHeader
+    SchoolHomeHeader, SchoolHomeWorkUs, SchoolParentesComment
 } from "../../../entities/schoolHome";
 import {
     SchoolGalleryModal,
@@ -60,7 +60,9 @@ export const AppRouter = () => {
                         element={<SchoolHomePage/>}
                     />
                     <Route element={<AboutUs/>} path={"aboutUs"}/>
-                    <Route element={null} path={"education"}/>
+                    <Route element={<SchoolParentesComment/>} path={"testimonial"}/>
+                    <Route element={<SchoolHomeWorkUs/>} path={"workwithus"}/>
+                    <Route element={<SchoolHomeEducationPage/>} path={"education"}/>
                     <Route element={<SchoolHomeLatestNewModal/>} path={"news"}/>
                     <Route element={<SchoolHomeCurriculamModal/>} path={"curricular"}/>
                     <Route element={<SchoolGalleryModal/>} path={"gallery"}/>

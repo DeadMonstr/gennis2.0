@@ -4,9 +4,24 @@
   align-items: center
   gap: 1rem
   color: #001B61
-  padding-top: 2rem
-  h1
-    font-size: 2.4rem
+  position: relative
+  padding-top: 15rem
+  &__titleMain
+    top: 5rem
+    left: 0
+    position: absolute
+    background: rgba(0, 27, 97, 1)
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 35rem
+    font-size: 3.2rem
+    height: 8.2rem
+    color: rgba(255, 255, 255, 1)
+    font-family: "Blinker", sans-serif
+    font-weight: 600
+    cursor: pointer
+    font-style: normal
   &__btn
     align-self: flex-end
   &__title
@@ -17,6 +32,7 @@
     i
       font-size: 2rem
 .calendar
+  padding-bottom: 5rem
   display: flex
   justify-content: space-around
   flex-wrap: wrap
