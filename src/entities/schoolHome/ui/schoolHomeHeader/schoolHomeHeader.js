@@ -13,6 +13,7 @@ const list = [
     {
         name: "aboutUs",
         label: "About us",
+        isMultiLink: true,
         children: [
             {
                 name: "About TIS",
@@ -81,11 +82,60 @@ export const SchoolHomeHeader = memo(() => {
 
     const renderSectionMenuList = useCallback(() => {
         return list.map(item => {
+            if (item.isMultiLink) {
+                return (
+                    <details
+                        open={item.name === activeSection}
+                        className={classNames(cls.listItem, {
+                            [cls.active]: item.name === activeSection
+                        })}
+                        onClick={() => {
+                            setActiveSection(item.name)
+                            // navigate(item.path)
+                        }}
+                    >
+                        <summary>
+                            {item.label}
+                        </summary>
+                        <div className={cls.homeHeader__multi}>
+                            {
+                                item.children.map(link => {
+                                    return (
+                                        <li
+                                            onClick={() => {
+                                                setActiveSection(link.name)
+                                                navigate(link.path)
+                                            }}
+                                            className={classNames(cls.listItem, {
+                                                [cls.active]: link.name === activeSection
+                                            })}
+                                        >
+                                            {link.name}
+
+
+                                            {/*<div className={classNames({*/}
+                                            {/*        [cls.hoverActive]: item.name === activeSection,*/}
+                                            {/*        [cls.hover]: !item.name === !activeSection*/}
+                                            {/*    }*/}
+                                            {/*)}>*/}
+
+                                            {/*</div>*/}
+
+
+                                        </li>
+                                    )
+                                })
+                            }
+                        </div>
+
+                    </details>
+                )
+            }
             return (
                 <li
                     onClick={() => {
                         setActiveSection(item.name)
-                        // navigate(item.path)
+                        navigate(item.path)
                     }}
                     className={classNames(cls.listItem, {
                         [cls.active]: item.name === activeSection
@@ -94,13 +144,13 @@ export const SchoolHomeHeader = memo(() => {
                     {item.label}
 
 
-                    <div className={classNames({
-                            [cls.hoverActive]: item.name === activeSection,
-                            [cls.hover]: !item.name === !activeSection
-                        }
-                    )}>
+                    {/*<div className={classNames({*/}
+                    {/*        [cls.hoverActive]: item.name === activeSection,*/}
+                    {/*        [cls.hover]: !item.name === !activeSection*/}
+                    {/*    }*/}
+                    {/*)}>*/}
 
-                    </div>
+                    {/*</div>*/}
 
 
                 </li>
