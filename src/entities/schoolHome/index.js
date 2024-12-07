@@ -20,6 +20,9 @@ export {AboutUs} from "./ui/aboutUs/aboutUs"
 export {SchoolHomeNewsAnnouncement} from "./ui/schoolHomeNewsAnnouncement/schoolHomeNewsAnnouncement";
 export {SchoolHomeBuilding} from "./ui/schoolHomeBuilding/schoolHomeBuilding";
 export {SchoolHomeChampions} from "./ui/schoolHomeChampions/schoolHomeChampions";
+export {StudentCouncil} from "./ui/studentCouncil/studentCouncil";
+
+export {OurStudent} from "./ui/ourStudent/ourStudent"
 
 
 export {default as schoolProfileSlice} from "./model/slice/schoolHomeStudentProfileSlice"
