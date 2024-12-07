@@ -19,17 +19,19 @@ export const ClassMain = () => {
     const [activeMenu, setActiveMenu] = useState(classes)
     const [edit, setEdit] = useState({})
     const [activeEdit, setActiveEdit] = useState(false)
-    const {"*": id} = useParams()
 
 
-    const userBranchId = id
+
+    const userBranchId = useSelector(getBranch)
+
+
 
 
     const dispatch = useDispatch()
     useEffect(() => {
 
         if (userBranchId) {
-            dispatch(getClassTypes(userBranchId))
+            dispatch(getClassTypes(userBranchId.id))
             dispatch(getColor())
             dispatch(fetchClassSubjects())
         }

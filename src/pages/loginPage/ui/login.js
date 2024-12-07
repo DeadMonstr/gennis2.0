@@ -63,11 +63,12 @@ export const Login = () => {
         // })
         setLoading(false)
 
+
         request(`${API_URL}token/`, "POST", JSON.stringify(res))
             .then(res => {
 
 
-
+                navigate("/platform")
                 //
                 // request(`${CLASSROOM_API}api/turon_user/${res.username}`, "GET",)
                 //     .then(res1 => {
@@ -84,7 +85,7 @@ export const Login = () => {
 
 
                 dispatch(getUserData(res))
-                navigate("/platform")
+
                 setLoading(true)
             })
             .catch(err => {
