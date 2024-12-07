@@ -15,7 +15,7 @@
     color: black
     padding: 2rem
     opacity: 0
-    //display: none
+  //display: none
   &.hoverActive
     opacity: 1
     display: flex !important
@@ -42,9 +42,19 @@
   &__multi
     display: flex
     flex-direction: column
+    align-items: center
     position: absolute
     background: white
-    color: #072E92
+    gap: 1rem
+    padding: 1rem
+    top: 3rem
+    left: -4rem
+    border-radius: .2rem
+    box-shadow: 0 0 4rem -1rem rgba(0, 0, 0, 0.6)
+
+    .multiItem
+      width: max-content
+      color: #072E92
 
   &__burger
     font-size: 4rem
@@ -63,7 +73,7 @@
 
   &__list
     display: flex
-    gap: 4rem
+    gap: 7rem
 
   &__btns
     display: flex

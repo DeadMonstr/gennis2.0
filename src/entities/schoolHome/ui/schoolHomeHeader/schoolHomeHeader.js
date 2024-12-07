@@ -13,6 +13,7 @@ const list = [
     {
         name: "aboutUs",
         label: "About us",
+        path: "aboutUs",
         isMultiLink: true,
         children: [
             {
@@ -36,7 +37,26 @@ const list = [
     {
         name: "education",
         label: "Education",
-        path: "education"
+        path: "education",
+        isMultiLink: true,
+        children: [
+            {
+                name: "Curricular",
+                path: "curricular"
+            },
+            {
+                name: "Co-Curricular",
+                path: "co_curricular"
+            },
+            {
+                name: "Extra Curricular",
+                path: "extra_curricular"
+            },
+            {
+                name: "Academic Calendar",
+                path: "academic_calendar"
+            },
+        ]
     },
     {
         name: "news_announcement",
@@ -47,7 +67,23 @@ const list = [
     {
         name: "students",
         label: "Students",
-        path: "students"
+        path: "students",
+        isMultiLink: true,
+        children: [
+            {
+                name: "Our Students",
+                path: "our_students"
+            },{
+                name: "Academic Champions",
+                path: "academic_champions"
+            },{
+                name: "Student Clubs",
+                path: "student_clubs"
+            },{
+                name: "Student Council",
+                path: "student_council"
+            },
+        ]
     },
     {
         name: "testimonial",
@@ -75,8 +111,9 @@ export const SchoolHomeHeader = memo(() => {
     const navigate = useNavigate()
 
     const [activeSection, setActiveSection] = useState(null)
+    const [prevActiveSection, setPrevActiveSection] = useState("")
+    const [activeMulti, setActiveMulti] = useState(false)
     const [activeBurger, setActiveBurger] = useState(false)
-
 
     console.log(activeSection)
 
@@ -85,13 +122,16 @@ export const SchoolHomeHeader = memo(() => {
             if (item.isMultiLink) {
                 return (
                     <details
-                        open={item.name === activeSection}
+                        open={activeSection === item.name}
                         className={classNames(cls.listItem, {
                             [cls.active]: item.name === activeSection
                         })}
                         onClick={() => {
-                            setActiveSection(item.name)
-                            // navigate(item.path)
+                            setActiveSection(prev => {
+                                setPrevActiveSection(prev)
+                                return item.name
+                            })
+                            navigate(item.path)
                         }}
                     >
                         <summary>
@@ -106,7 +146,7 @@ export const SchoolHomeHeader = memo(() => {
                                                 setActiveSection(link.name)
                                                 navigate(link.path)
                                             }}
-                                            className={classNames(cls.listItem, {
+                                            className={classNames(cls.multiItem, {
                                                 [cls.active]: link.name === activeSection
                                             })}
                                         >
@@ -156,7 +196,7 @@ export const SchoolHomeHeader = memo(() => {
                 </li>
             )
         })
-    }, [activeSection])
+    }, [activeSection, prevActiveSection, activeMulti])
 
     const render = renderSectionMenuList()
 
