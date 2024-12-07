@@ -53,7 +53,6 @@ export const AppRouter = () => {
         createRoutesFromElements(
             <>
 
-
                 <Route path={"/"} element={<LayoutWebsite/>}>
                     <Route
                         index
