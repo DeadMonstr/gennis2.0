@@ -101,6 +101,10 @@ export const StudentsPage = () => {
     const loadingStudyingStudents = useSelector(getLoadingStudyingStudents);
     const loadingDeletedStudents = useSelector(getLoadingDeletedStudents);
 
+    const [selectedColor , setSelectedColor] = useState(null)
+
+    console.log(selectedColor)
+
     const [selectedRadio, setSelectedRadio] = useState(getPageTypeFromLocalStorage("selectedRadio") || studentsFilter[0].name);
     const [data, setData] = useState({})
     const [selectColor, setSelectColor] = useState();
@@ -404,6 +408,7 @@ export const StudentsPage = () => {
                                     name={"color"}
                                     options={schoolClassColors}
                                     register={register}
+                                    // onChangeOption={setSelectedColor}
                                 />
                         }
                     </Form>
