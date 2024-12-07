@@ -16,6 +16,9 @@ export {SchoolHomeLatestNew} from "./ui/schoolHomeLastestNew/schoolHomeLatestNew
 export {getSchoolProfileData} from "./model/selector/schoolHomeStudentProfileSelector"
 export {SchoolHomeCurricular} from "./ui/schoolHomeCurricular/schoolHomeCurricular"
 export {SchoolLeadershipTeam} from "./ui/schoolLeadershipTeam/schoolLeadershipTeam"
+export {SchoolHomeNewsAnnouncement} from "./ui/schoolHomeNewsAnnouncement/schoolHomeNewsAnnouncement";
+export {SchoolHomeBuilding} from "./ui/schoolHomeBuilding/schoolHomeBuilding";
+export {SchoolHomeChampions} from "./ui/schoolHomeChampions/schoolHomeChampions";
 
 
 export {default as schoolProfileSlice} from "./model/slice/schoolHomeStudentProfileSlice"
