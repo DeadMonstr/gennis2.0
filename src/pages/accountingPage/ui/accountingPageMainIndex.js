@@ -13,6 +13,10 @@ import {
 } from "entities/accounting";
 import {getPaymentType} from "entities/capital/model/thunk/capitalThunk";
 
+
+
+
+
 import {Routes, Route, useLocation, Navigate, useMatches, Outlet} from "react-router";
 import React, {memo, useCallback, useEffect, useMemo, useState} from "react";
 import {getMultiOldLength} from "widgets/multiPage/model/selector/multiPageSelector";
