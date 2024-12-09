@@ -22,6 +22,8 @@ export {SchoolHomeBuilding} from "./ui/schoolHomeBuilding/schoolHomeBuilding";
 export {SchoolHomeChampions} from "./ui/schoolHomeChampions/schoolHomeChampions";
 export {StudentCouncil} from "./ui/studentCouncil/studentCouncil";
 
+export {OurStudent} from "./ui/ourStudent/ourStudent"
+
 
 export {default as schoolProfileSlice} from "./model/slice/schoolHomeStudentProfileSlice"
 export {default as schoolLatestSlice} from "./model/slice/SchoolHomeLatestNewSlice"
