@@ -103,7 +103,6 @@ export const StudentsPage = () => {
 
     const [selectedColor , setSelectedColor] = useState(null)
 
-    console.log(selectedColor)
 
     const [selectedRadio, setSelectedRadio] = useState(getPageTypeFromLocalStorage("selectedRadio") || studentsFilter[0].name);
     const [data, setData] = useState({})
