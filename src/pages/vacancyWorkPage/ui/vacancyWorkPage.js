@@ -14,6 +14,7 @@ import {getUserProfileData} from "entities/profile/userProfile/model/userProfile
 import {useParams} from "react-router-dom";
 import {getUserPermission} from "entities/profile/userProfile";
 import {vacancyWorkerListThunk} from "features/vacancyWorkerList";
+import {getBranch} from "../../../features/branchSwitcher";
 
 export const VacancyWorkPage = () => {
     const [active, setActive] = useState(false);
@@ -31,7 +32,8 @@ export const VacancyWorkPage = () => {
     const getWorkerID = useSelector(getWorkerId)
     const PageSize = useMemo(() => 20, []);
     const getCurrentUser = useSelector(getUserProfileData)
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
 
 
     const user = useSelector(getUserProfileData)

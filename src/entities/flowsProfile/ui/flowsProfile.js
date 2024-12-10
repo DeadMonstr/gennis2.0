@@ -37,6 +37,7 @@ import defaultRoom from "shared/assets/images/room.png";
 import coin from "shared/assets/images/coin.png";
 import {FlowProfileStudentsList} from "./flowsProfileItem";
 import {ConfirmModal} from "../../../shared/ui/confirmModal";
+import {getBranch} from "../../../features/branchSwitcher";
 
 export const FlowProfileNavigators = memo(() => {
 
@@ -48,7 +49,8 @@ export const FlowProfileNavigators = memo(() => {
     } = useForm()
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
     const data = useSelector(getFlowsProfileData)
     const nextLesson = useSelector(getFlowsProfileNextLs)
     const loading = useSelector(getFlowsProfileStatus)

@@ -4,19 +4,21 @@ import {Modal} from "shared/ui/modal";
 import {Form} from "shared/ui/form";
 import {Input} from "shared/ui/input";
 import {useForm} from "react-hook-form";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import {fetchTeacherSalaryThunk} from "entities/teacherSalary";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {Select} from "shared/ui/select";
 import {Radio} from "shared/ui/radio";
+import {getBranch} from "../../../branchSwitcher";
 
 export const SchoolTeacherCountDayModal = memo(({setEditMode, editMode, teacherData}) => {
 
     const {register, handleSubmit} = useForm()
     const [day, setDay] = useState("")
     const dispatch = useDispatch()
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
 
     const {request} = useHttp()
 

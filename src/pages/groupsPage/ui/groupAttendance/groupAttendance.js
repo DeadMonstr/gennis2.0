@@ -17,6 +17,8 @@ import {DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
 import {Form} from "../../../../shared/ui/form";
 import {Textarea} from "../../../../shared/ui/textArea";
 import {useForm} from "react-hook-form";
+import {getBranch} from "../../../../features/branchSwitcher";
+
 
 export const GroupAttendance = () => {
 
@@ -30,7 +32,9 @@ export const GroupAttendance = () => {
     const attendanceList = useSelector(getAttendanceList)
     const loading = useSelector(getLoading)
 
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
+    console.log(id, "branch")
 
     const dispatch = useDispatch()
     useEffect(() => {
@@ -139,7 +143,8 @@ export const GroupAttendance = () => {
 
 export const Attendance = ({active, setActive}) => {
 
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
     const dispatch = useDispatch()
 
 

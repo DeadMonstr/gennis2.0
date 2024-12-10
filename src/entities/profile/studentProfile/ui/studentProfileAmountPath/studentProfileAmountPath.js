@@ -33,6 +33,7 @@ import {Input} from "shared/ui/input";
 import {useForm} from "react-hook-form";
 import {onChange} from "features/studentPayment/model/studentPaymentSlice";
 import {ConfirmModal} from "../../../../../shared/ui/confirmModal";
+import {getBranch} from "../../../../../features/branchSwitcher";
 
 
 export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
@@ -68,7 +69,8 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
     const {register: registerChange, handleSubmit: handleSubmitChange, setValue: setValueChange} = useForm()
 
 
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
 
 
     const handleDelete = () => {
