@@ -19,6 +19,7 @@ import {deleteRoomThunk} from "../../../features/roomDeleteModal/model/roomDelet
 import {onAddAlertOptions} from "../../../features/alert/model/slice/alertSlice";
 import {ConfirmModal} from "../../../shared/ui/confirmModal";
 import {useNavigate} from "react-router";
+import {getBranch} from "../../../features/branchSwitcher";
 
 export const RoomsProfilePage = () => {
     const [switchStates, setSwitchStates] = useState({});
@@ -28,7 +29,8 @@ export const RoomsProfilePage = () => {
     const [window, setWindow] = useState(false);
     const [image, setImage] = useState(false);
     const [localRoomData, setLocalRoomData] = useState({});
-    const {id} = useParams();
+    // const {id} = useParams();
+    const {id} = useSelector(getBranch)
     const dispatch = useDispatch();
     const roomsID = useSelector(getRoomsID);
     const loading = useSelector(getLoadingStatus);

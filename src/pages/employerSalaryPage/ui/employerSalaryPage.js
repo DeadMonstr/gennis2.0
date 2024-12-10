@@ -12,6 +12,7 @@ import {EmployerSalaryList, fetchEmployerSalaryThunk} from "../../../entities/em
 import {getEmployerSalaries} from "../../../entities/employerSalary";
 import {useParams} from "react-router-dom";
 import {getSearchValue} from "../../../features/searchInput";
+import {getBranch} from "../../../features/branchSwitcher";
 
 export const EmployerSalaryPage = () => {
     const [active, setActive] = useState(false);
@@ -22,7 +23,8 @@ export const EmployerSalaryPage = () => {
     const [currentTableData, setCurrentTableData] = useState([]);
     const dispatch = useDispatch()
     const employerSalaries = useSelector(getEmployerSalaries)
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
     const handleChange = (value) => {
         setSelected(value);
     };

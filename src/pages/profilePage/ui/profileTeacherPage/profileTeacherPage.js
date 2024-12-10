@@ -11,6 +11,7 @@ import {changeStudentProfileImage} from "../../model/thunk/studentProfileThunk";
 
 import cls from "./profileTeacherPage.module.sass"
 import {getSystem} from "features/themeSwitcher";
+import {getBranch} from "../../../../features/branchSwitcher";
 export const ContextStuPro = createContext(null)
 
 export const ProfileTeacherPage = () => {
@@ -18,7 +19,8 @@ export const ProfileTeacherPage = () => {
     const [active, setActive] = useState(false)
     const [actives, setActives] = useState(false)
     const dispatch = useDispatch()
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
     const teacherId = useSelector(getTeacherId)
     const [activeModal, setActiveModal] = useState("")
     const [newImage, setNewImage] = useState("")

@@ -28,6 +28,7 @@ import {
 
 import cls from "./userProfilePage.module.sass";
 import {getSystem} from "../../../../features/themeSwitcher";
+import {getBranch} from "../../../../features/branchSwitcher";
 
 export const UserProfilePage = () => {
 
@@ -35,7 +36,8 @@ export const UserProfilePage = () => {
         dispatch(fetchUserProfileData(id))
     }, [])
 
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
     const {request} = useHttp()
     const dispatch = useDispatch()
     const userData = useSelector(getUserProfileData)

@@ -35,11 +35,13 @@ import {Table} from "shared/ui/table";
 
 import cls from "./FlowProfileStudentsForm.module.sass";
 import {ConfirmModal} from "../../../shared/ui/confirmModal";
+import {getBranch} from "../../branchSwitcher";
 
 export const FlowProfileStudentsForm = ({activeTeacher, setActiveTeacher}) => {
 
     const {request} = useHttp()
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
     const dispatch = useDispatch()
     const {
         register,

@@ -11,7 +11,7 @@ import {getGroupHistory} from "../../../../../features/studentPayment";
 
 export const StudentProfileGroupsHistory = memo(({active, setActive, selectedSubject}) => {
 
-    const {id} = useParams()
+    // const {id} = useParams()
     const dispatch = useDispatch()
     const getGroupHistories = useSelector(getGroupHistory)
     const getHistorys = getGroupHistories.studenthistorygroup
