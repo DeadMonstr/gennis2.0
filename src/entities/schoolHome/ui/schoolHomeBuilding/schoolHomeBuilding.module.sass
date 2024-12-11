@@ -53,3 +53,34 @@
           display: flex
           align-items: center
           justify-content: center
+
+@media (max-width: 430px)
+  .building
+    padding-top: 1.6rem
+    &__header
+      padding: 0 2rem
+      h1
+        font-size: 2rem
+      p
+        font-size: 1.2rem
+    .container
+      padding: 0 2rem
+      flex-direction: column
+      img
+        width: 26.5rem
+        height: 36.5rem
+      &__list
+        .item
+          &__image
+            min-width: 6rem
+            max-width: 6rem
+            min-height: 6rem
+            max-height: 6rem
+            img
+              width: 3.6rem
+              height: 3.5rem
+          &__info
+            h2
+              font-size: 1.6rem
+            p
+              font-size: 1.2rem

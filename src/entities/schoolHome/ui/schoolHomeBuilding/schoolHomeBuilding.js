@@ -1,133 +1,124 @@
-import React from 'react';
+import {useCallback} from 'react';
+import classNames from "classnames";
+import {isMobile} from "react-device-detect";
 
 import cls from "./schoolHomeBuilding.module.sass";
 import image from "shared/assets/images/studentBuilding.png";
 import iconImage1 from "shared/assets/images/studentBuildImage1.png";
-import classNames from "classnames";
+
+const list = [
+    {
+        title: "Collaborator (Jamoada hamkorlikda ishlovchi",
+        text: "Our students learn the value of teamwork, respect " +
+            "diverse perspectives, and contribute effectively to group success.",
+        image: iconImage1
+    }, {
+        title: "Collaborator (Jamoada hamkorlikda ishlovchi",
+        text: "Our students learn the value of teamwork, respect " +
+            "diverse perspectives, and contribute effectively to group success.",
+        image: iconImage1
+    }, {
+        title: "Collaborator (Jamoada hamkorlikda ishlovchi",
+        text: "Our students learn the value of teamwork, respect " +
+            "diverse perspectives, and contribute effectively to group success.",
+        image: iconImage1
+    }, {
+        title: "Collaborator (Jamoada hamkorlikda ishlovchi",
+        text: "Our students learn the value of teamwork, respect " +
+            "diverse perspectives, and contribute effectively to group success.",
+        image: iconImage1
+    },
+]
+const list2 = [
+    {
+        title: "Collaborator (Jamoada hamkorlikda ishlovchi",
+        text: "Our students learn the value of teamwork, respect " +
+            "diverse perspectives, and contribute effectively to group success.",
+        image: iconImage1
+    }, {
+        title: "Collaborator (Jamoada hamkorlikda ishlovchi",
+        text: "Our students learn the value of teamwork, respect " +
+            "diverse perspectives, and contribute effectively to group success.",
+        image: iconImage1
+    }, {
+        title: "Collaborator (Jamoada hamkorlikda ishlovchi",
+        text: "Our students learn the value of teamwork, respect " +
+            "diverse perspectives, and contribute effectively to group success.",
+        image: iconImage1
+    }, {
+        title: "Collaborator (Jamoada hamkorlikda ishlovchi",
+        text: "Our students learn the value of teamwork, respect " +
+            "diverse perspectives, and contribute effectively to group success.",
+        image: iconImage1
+    },
+]
 
 export const SchoolHomeBuilding = () => {
+
+    const renderList = useCallback(() => {
+        return list.map(item => {
+            return (
+                <div
+                    className={classNames(cls.item, {
+                        [cls.reverse]: isMobile
+                    })}
+                >
+                    <div className={cls.item__info}>
+                        <h2>{item.title}</h2>
+                        <p>{item.text}</p>
+                    </div>
+                    <div className={cls.item__image}>
+                        <img src={item.image} alt=""/>
+                    </div>
+                </div>
+            )
+        })
+    }, [list])
+
+    const renderList2 = useCallback(() => {
+        return list2.map(item => {
+            return (
+                <div
+                    className={classNames(cls.item, {
+                        [cls.reverse]: isMobile
+                    })}
+                >
+                    <div className={cls.item__info}>
+                        <h2>{item.title}</h2>
+                        <p>{item.text}</p>
+                    </div>
+                    <div className={cls.item__image}>
+                        <img src={item.image} alt=""/>
+                    </div>
+                </div>
+            )
+        })
+    }, [list2])
+
     return (
         <div className={cls.building}>
             <div className={cls.building__header}>
                 <h1>Student Profile - Building Tomorrow's Leaders</h1>
                 <p>
                     "At Turon International School, we are committed to developing well-rounded
-                    individuals. We believe that fostering essential <br/>
+                    individuals. We believe that fostering essential {!isMobile && <br/>}
                     traits such as collaboration, critical thinking, and innovation in our students
-                    is the foundation for academic and personal <br/>
+                    is the foundation for academic and personal {!isMobile && <br/>}
                     success. Once these qualities are nurtured, education becomes an easier and
                     more enriching journey."
                 </p>
             </div>
             <div className={cls.container}>
-                <div className={cls.container__list}>
-                    <div className={cls.item}>
-                        <div className={cls.item__info}>
-                            <h2>Collaborator (Jamoada hamkorlikda ishlovchi</h2>
-                            <p>
-                                Our students learn the value of teamwork, respect diverse perspectives,
-                                and contribute effectively to group success.
-                            </p>
-                        </div>
-                        <div className={cls.item__image}>
-                            <img src={iconImage1} alt=""/>
-                        </div>
+                {
+                    !isMobile &&
+                    <div className={cls.container__list}>
+                        {renderList()}
                     </div>
-                    <div className={cls.item}>
-                        <div className={cls.item__info}>
-                            <h2>Collaborator (Jamoada hamkorlikda ishlovchi</h2>
-                            <p>
-                                Our students learn the value of teamwork, respect diverse perspectives,
-                                and contribute effectively to group success.
-                            </p>
-                        </div>
-                        <div className={cls.item__image}>
-                            <img src={iconImage1} alt=""/>
-                        </div>
-                    </div>
-                    <div className={cls.item}>
-                        <div className={cls.item__info}>
-                            <h2>Collaborator (Jamoada hamkorlikda ishlovchi</h2>
-                            <p>
-                                Our students learn the value of teamwork, respect diverse perspectives,
-                                and contribute effectively to group success.
-                            </p>
-                        </div>
-                        <div className={cls.item__image}>
-                            <img src={iconImage1} alt=""/>
-                        </div>
-                    </div>
-                    <div className={cls.item}>
-                        <div className={cls.item__info}>
-                            <h2>Collaborator (Jamoada hamkorlikda ishlovchi</h2>
-                            <p>
-                                Our students learn the value of teamwork, respect diverse perspectives,
-                                and contribute effectively to group success.
-                            </p>
-                        </div>
-                        <div className={cls.item__image}>
-                            <img src={iconImage1} alt=""/>
-                        </div>
-                    </div>
-                </div>
+                }
                 <img src={image} alt=""/>
                 <div className={cls.container__list}>
-                    <div className={classNames(cls.item, {
-                        [cls.reverse]: true
-                    })}>
-                        <div className={cls.item__info}>
-                            <h2>Collaborator (Jamoada hamkorlikda ishlovchi</h2>
-                            <p>
-                                Our students learn the value of teamwork, respect diverse perspectives,
-                                and contribute effectively to group success.
-                            </p>
-                        </div>
-                        <div className={cls.item__image}>
-                            <img src={iconImage1} alt=""/>
-                        </div>
-                    </div>
-                    <div className={classNames(cls.item, {
-                        [cls.reverse]: true
-                    })}>
-                        <div className={cls.item__info}>
-                            <h2>Collaborator (Jamoada hamkorlikda ishlovchi</h2>
-                            <p>
-                                Our students learn the value of teamwork, respect diverse perspectives,
-                                and contribute effectively to group success.
-                            </p>
-                        </div>
-                        <div className={cls.item__image}>
-                            <img src={iconImage1} alt=""/>
-                        </div>
-                    </div>
-                    <div className={classNames(cls.item, {
-                        [cls.reverse]: true
-                    })}>
-                        <div className={cls.item__info}>
-                            <h2>Collaborator (Jamoada hamkorlikda ishlovchi</h2>
-                            <p>
-                                Our students learn the value of teamwork, respect diverse perspectives,
-                                and contribute effectively to group success.
-                            </p>
-                        </div>
-                        <div className={cls.item__image}>
-                            <img src={iconImage1} alt=""/>
-                        </div>
-                    </div>
-                    <div className={classNames(cls.item, {
-                        [cls.reverse]: true
-                    })}>
-                        <div className={cls.item__info}>
-                            <h2>Collaborator (Jamoada hamkorlikda ishlovchi</h2>
-                            <p>
-                                Our students learn the value of teamwork, respect diverse perspectives,
-                                and contribute effectively to group success.
-                            </p>
-                        </div>
-                        <div className={cls.item__image}>
-                            <img src={iconImage1} alt=""/>
-                        </div>
-                    </div>
+                    {isMobile && renderList()}
+                    {renderList2()}
                 </div>
             </div>
         </div>
