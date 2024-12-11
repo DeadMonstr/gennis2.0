@@ -7,20 +7,29 @@
   //justify-content: center
   overflow: hidden
   padding: 5rem 0
+  justify-content: center
   &__wrapper
     display: flex
     flex-direction: column
+    padding: 2rem
   &__box
     display: flex
     gap: 4rem
     width: 100%
-    //justify-content: space-around
+    justify-content: space-between
+    flex-wrap: wrap
     //img
     //  width: 950px!important
     &:nth-child(1)
       margin-bottom: 6.8rem
     &_last
-      padding-left: 11rem
+      //padding-left: 11rem
+    &_img
+      width: 50%
+
+      img
+        //height: 100vh
+        width: 100%
   &__title
     color: #001B61
     font-size: 3.2rem
@@ -195,6 +204,19 @@
           color: rgba(0, 0, 0, 1)
           font-style: normal
 
+
+@media (max-width: 1500px)
+  .about
+    &__logo
+      width: 40%
+      img
+        width: 100%
+    &__info
+      width: 50%
+    &__descr
+      font-size: 2.4rem
+      max-width: 100%
+      
 @media (max-width: 777px)
   .leaderShip
     &__header

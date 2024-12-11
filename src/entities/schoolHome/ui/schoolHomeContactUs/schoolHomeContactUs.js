@@ -1,15 +1,6 @@
 import cls from "./schoolHomeContactUs.module.sass"
 import backImg from "shared/assets/images/turonBack.svg"
 import {Button} from "../../../../shared/ui/button";
-import addressImg from 'shared/assets/images/address.png'
-import phoneImg from 'shared/assets/images/phone.png'
-import instaImg from 'shared/assets/images/insta.png'
-import telegramImg from 'shared/assets/images/telegram.png'
-import teen from "shared/assets/images/teenyicons_school-outline.svg"
-import akar from "shared/assets/images/akar-icons_door.svg"
-import mage from "shared/assets/images/mage_light-bulb.svg"
-import clarity from "shared/assets/images/clarity_group-line.svg"
-import fluent from "shared/assets/images/fluent-mdl2_diet-plan-notebook.svg"
 import {Form} from "../../../../shared/ui/form";
 import {Input} from "../../../../shared/ui/input";
 import {Textarea} from "../../../../shared/ui/textArea";
@@ -37,51 +28,28 @@ export const SchoolHomeContactUs = ({job, setActiveEditItem, setActive, data, se
                 <div className={cls.title}>
                     Contact us
                 </div>
-
-                {/*<div className={cls.descr}>*/}
-                {/*  */}
-                {/*</div>*/}
-
                 <div className={cls.mainFormBox}>
                     <div className={cls.descr}>
 
-                        We are here to assist you! If you have any questions, need more information, or would like to get in
+                        We are here to assist you! If you have any questions, need more information, or would like to
+                        get in
                         touch with us, please don’t hesitate to reach out. Our team is ready to help.
-                        You can contact us via phone, email, or by filling out the form on our website. We look forward to
+                        You can contact us via phone, email, or by filling out the form on our website. We look forward
+                        to
                         hearing from you
-
-
-
-                        {/*{data?.length >= 0 && data?.map(item => (*/}
-                        {/*    <>*/}
-                        {/*        {job && <div*/}
-                        {/*            onClick={() => {*/}
-                        {/*                setActive("edit")*/}
-                        {/*                setActiveEditItem(item)*/}
-                        {/*                setValue("description", item.description)*/}
-                        {/*            }}*/}
-                        {/*            className={cls.mainFormBox__change}*/}
-                        {/*        >*/}
-                        {/*            <i className="fas fa-edit"/>*/}
-                        {/*        </div>*/}
-                        {/*        }*/}
-
-                        {/*        {item?.description}*/}
-                        {/*    </>*/}
-                        {/*))}*/}
                     </div>
-
-
                     <div className={cls.mainRightBox}>
-                        <div className={cls.formBox}>
-                            <h1>Send message</h1>
-                            <Form typeSubmit="" extraClassname={cls.form}>
-                                <Input extraClassName={cls.inputMsg} placeholder={"Full name"}/>
-                                <Input extraClassName={cls.inputMsg} type={"number"} placeholder={"Phone"}/>
-                                <Textarea extraClassName={cls.inputMsg} placeholder={"Type your message"}/>
-                                <Button children="Yuborish" extraClass={cls.submitBtn}/>
-                            </Form>
-                        </div>
+
+                        <h1>Send message</h1>
+                        <Form  extraClassname={cls.form}>
+                            <Input extraClassName={cls.inputMsg} placeholder={"Full name"}/>
+                            <hr/>
+                            <Input extraClassName={cls.inputMsg} type={"number"} placeholder={"Phone"}/>
+                            <hr/>
+                            <Textarea extraClassName={cls.inputMsg} placeholder={"Type your message"}/>
+                            <hr/>
+                            {/*<Button children="Yuborish" extraClass={cls.submitBtn}/>*/}
+                        </Form>
 
                     </div>
                 </div>
