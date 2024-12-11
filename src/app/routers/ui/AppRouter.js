@@ -67,9 +67,9 @@ export const AppRouter = () => {
                     <Route element={<SchoolGalleryModal/>} path={"gallery"}/>
                     <Route element={<SchoolHomeStudentProfileModal/>} path={"studentLife"}/>
                     <Route element={<SchoolHomeNewsAnnouncementModal/>} path={"news_announcement"}/>
-                    <Route element={<SchoolHomeStudentsModal/>} path={"students"}/>
-                </Route>
 
+                </Route>
+                <Route element={<SchoolHomeStudentsModal/>} path={"students"}/>
 
                 {/*<Route*/}
                 {/*    path={"/"}*/}

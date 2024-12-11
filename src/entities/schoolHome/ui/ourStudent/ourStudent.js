@@ -11,7 +11,9 @@ export const OurStudent = () => {
     const renderDate = () => {
         return leaderShip.map(item => (
             <div className={cls.champions__wrapper_box}>
-                <img src={item.img} alt=""/>
+                <div className={cls.champions__wrapper_box_img}>
+                    <img src={item.img} alt=""/>
+                </div>
 
                 <div className={cls.champions__wrapper_box_info}>
                     <div className={cls.champions__wrapper_box_info_name}>

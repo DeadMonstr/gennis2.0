@@ -8,8 +8,8 @@ import OurStudent from "../../../../entities/schoolHome/ui/ourStudent/ourStudent
 export const SchoolHomeStudentsModal = () => {
     return (
         <div className={cls.students}>
-            <SchoolHomeBuilding/>
-            <SchoolHomeChampions/>
+            {/*<SchoolHomeBuilding/>*/}
+            {/*<SchoolHomeChampions/>*/}
             <OurStudent/>
             <StudentCouncil/>
         </div>

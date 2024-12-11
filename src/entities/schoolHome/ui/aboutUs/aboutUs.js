@@ -178,7 +178,9 @@ export const CoreValues = () => {
 
                 {data.map(item => (
                     <div className={cls.coreValue__box}>
-                        <img src={item.img} alt=""/>
+                        <div className={cls.coreValue__img}>
+                            <img src={item.img} alt=""/>
+                        </div>
 
 
                         <div className={cls.coreValue__box_descr}>
