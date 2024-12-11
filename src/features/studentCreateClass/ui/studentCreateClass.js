@@ -1,6 +1,6 @@
 import {getFilteredClassStudents, getFilteredLoading} from "entities/students/model/selector/studentsSelector";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
-import React, {memo, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 
 import {fetchOnlyNewStudentsData, getNewStudentsData} from "entities/students";
@@ -20,8 +20,8 @@ export const StudentCreateClass = memo((props) => {
         active,
         setActive,
         data,
-        deactiveModal,
-        branch
+        branch,
+        deactiveModal
     } = props
 
     const {request} = useHttp()
@@ -31,11 +31,17 @@ export const StudentCreateClass = memo((props) => {
 
     const [selectStudents, setSelectStudents] = useState([]);
 
+
+    useEffect(() => {
+        setSelectStudents([])
+    },[studentsList])
     const onClick = () => {
         const res = {
             ...data,
             students: selectStudents
         }
+
+
         request(`${API_URL}Group/groups/create/`, "POST", JSON.stringify(res), headers())
             .then(res => {
                 dispatch(onAddAlertOptions({
