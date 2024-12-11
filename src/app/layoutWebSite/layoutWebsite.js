@@ -4,7 +4,7 @@ import {Outlet} from "react-router";
 
 const LayoutWebsite = () => {
     return (
-        <div style={{width: "100%"}}>
+        <div style={{width: "100%", position: "relative"}}>
             <SchoolHomeHeader/>
             <Outlet/>
         </div>

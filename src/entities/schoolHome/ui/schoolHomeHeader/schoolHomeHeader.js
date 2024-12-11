@@ -73,13 +73,13 @@ const list = [
             {
                 name: "Our Students",
                 path: "our_students"
-            },{
+            }, {
                 name: "Academic Champions",
                 path: "academic_champions"
-            },{
+            }, {
                 name: "Student Clubs",
                 path: "student_clubs"
-            },{
+            }, {
                 name: "Student Council",
                 path: "student_council"
             },
@@ -167,7 +167,6 @@ export const SchoolHomeHeader = memo(() => {
                                 })
                             }
                         </div>
-
                     </details>
                 )
             }
