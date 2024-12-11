@@ -26,6 +26,7 @@ import RequireBranch from "app/routers/ui/RequireBranch";
 import RequireHeader from "app/routers/ui/RequireHeader";
 import {routersConfigProfile} from "app/routers/config/routerConfigProfiles";
 import {
+    AboutUs,
     SchoolHomeAboutUs,
     SchoolHomeCertificats,
     SchoolHomeContact,
@@ -35,7 +36,11 @@ import {
     SchoolGalleryModal,
     SchoolHomeCertificatsModal,
     SchoolHomeCurriculamModal,
-    SchoolHomeLatestNewModal, SchoolHomeStudentProfileModal, SchoolVisionMission
+    SchoolHomeLatestNewModal,
+    SchoolHomeNewsAnnouncementModal,
+    SchoolHomeStudentProfileModal,
+    SchoolHomeStudentsModal,
+    SchoolVisionMission
 } from "../../../features/schoolHome";
 import LayoutWebsite from "../../layoutWebSite/layoutWebsite";
 
@@ -48,29 +53,27 @@ export const AppRouter = () => {
         createRoutesFromElements(
             <>
 
-                <Route
-                    path={"/"}
-                    element={<SchoolHomePage/>}
-                />
 
-
-                <Route element={<LayoutWebsite/>}>
-                    <Route element={<SchoolVisionMission/>} path={"aboutUs"}/>
+                <Route path={"/"} element={<LayoutWebsite/>}>
+                    <Route
+                        index
+                        element={<SchoolHomePage/>}
+                    />
+                    <Route element={<AboutUs/>} path={"aboutUs"}/>
+                    <Route element={null} path={"education"}/>
                     <Route element={<SchoolHomeLatestNewModal/>} path={"news"}/>
                     <Route element={<SchoolHomeCurriculamModal/>} path={"curricular"}/>
                     <Route element={<SchoolGalleryModal/>} path={"gallery"}/>
                     <Route element={<SchoolHomeStudentProfileModal/>} path={"studentLife"}/>
+                    <Route element={<SchoolHomeNewsAnnouncementModal/>} path={"news_announcement"}/>
+                    <Route element={<SchoolHomeStudentsModal/>} path={"students"}/>
                 </Route>
-
-
-
 
 
                 {/*<Route*/}
                 {/*    path={"/"}*/}
                 {/*    element={<CenterHomePage/>}*/}
                 {/*/>*/}
-
 
 
                 <Route
@@ -122,7 +125,6 @@ export const AppRouter = () => {
                         </Route>
 
 
-
                         <Route
                             path={"profile"}
                             element={<StudentProfilePage/>}
@@ -164,7 +166,7 @@ export const AppRouter = () => {
                     </Route>
                 </Route>
 
-           {/*     <Route
+                {/*     <Route
                     path={"*"}
                     element={<NotFoundPage/>}
                 />*/}

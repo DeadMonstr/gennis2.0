@@ -7,7 +7,7 @@ import {Modal} from "shared/ui/modal";
 import cls from "./schoolGalleryModal.module.sass";
 import defImg from "../../../../shared/assets/images/Image Placeholder.svg";
 import {useDropzone} from "react-dropzone";
-import {useForm} from "react-hook-form";
+import {Form, useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {
     fetchAddGallery,
@@ -17,6 +17,7 @@ import {API_URL, header, headerImg, useHttp} from "../../../../shared/api/base";
 import {DeleteGalary, ChangeGalary} from "../../../../entities/schoolHome/model/slice/schoolHomeGallerySlice";
 import {getHomePageType} from "../../../../entities/schoolHome/model/selector/getHomePageSelector";
 import {fetchHomePage} from "../../../../entities/schoolHome/model/thunk/getHomePageSelector";
+import {Textarea} from "../../../../shared/ui/textArea";
 
 export const SchoolGalleryModal = () => {
 
@@ -39,7 +40,11 @@ export const SchoolGalleryModal = () => {
     const {request} = useHttp()
     useEffect(() => {
         dispatch(fetchHomePage())
-    } , [])
+    }, [])
+
+    useEffect(() => {
+        dispatch(fetchHomePage())
+    }, [])
 
     useEffect(() => {
         if (types) {
@@ -77,21 +82,25 @@ export const SchoolGalleryModal = () => {
     }
 
 
-    const onAddImage = () => {
+    const onAddImage = (data) => {
         setActive(false)
         if (files) {
             formData.append("image", files[0])
             formData.append("type", types[0]?.id)
+            formData.append("description", data.description)
             dispatch(fetchAddGallery({data: formData}))
 
         }
         setFiles(null)
     }
 
-    const onChange = () => {
+    const onChange = (data) => {
 
-        formData.append("image", files[0])
+        if (files){
+            formData.append("image", files[0])
+        }
         formData.append("type", types[0]?.id)
+        formData.append("description", data.description)
 
         return request(`${API_URL}Ui/fronted-pages/${activeEditItem.id}/`, "PATCH", formData, headerImg())
             .catch(err => {
@@ -105,6 +114,11 @@ export const SchoolGalleryModal = () => {
             })
     }
 
+    const style = {
+        width: "31rem",
+        height: "23rem "
+    }
+
     return (
         <>
 
@@ -112,6 +126,7 @@ export const SchoolGalleryModal = () => {
             <SchoolHomeGallery
                 setActiveEditItem={setActiveEditItem}
                 setActive={setActive}
+                setValue={setValue}
                 job={job === "smm"}
             />
 
@@ -124,16 +139,18 @@ export const SchoolGalleryModal = () => {
                 <div className={cls.image}>
                     <div {...getRootProps({className: 'dropzone'})}>
                         <input  {...getInputProps()}/>
-                        {!files ? <img style={{width: "31rem", height: "23rem "}} src={activeEditItem?.images[0]?.image}
+                        {!files ? <img style={style} src={activeEditItem?.images[0]?.image}
                                        alt=""/> :
-                            <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
+                            <img style={style} src={files?.map(item => item?.preview)}
                                  alt=""/>}
                     </div>
+
+                    <Textarea extraClassName={cls.textarea} name={"description"} register={register}/>
                 </div>
                 <div className={cls.imageEdit__btns}>
                     <Button onClick={handleSubmit(onDeleteImage)} extraClass={cls.imageEdit__btn_delete}>Delete</Button>
                     <div className={cls.imageEdit__btn_mini}>
-                        <Button onClick={onChange} id={"toggle"} extraClass={cls.imageEdit__btn_add}>Edit</Button>
+                        <Button onClick={handleSubmit(onChange)} id={"toggle"} extraClass={cls.imageEdit__btn_add}>Edit</Button>
                         <Button onClick={handleSubmit(() => setActive(false))}
                                 extraClass={cls.imageEdit__btn_cancel}>Cancel</Button>
                     </div>
@@ -154,9 +171,11 @@ export const SchoolGalleryModal = () => {
                             <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
                                  alt=""/>}
                     </div>
+                    <Textarea extraClassName={cls.textarea} name={"description"} register={register}/>
+
                 </div>
                 <div className={cls.imageEdit__btns}>
-                    <Button onClick={onAddImage} extraClass={cls.imageEdit__btn_add}>Add</Button>
+                    <Button onClick={handleSubmit(onAddImage)} extraClass={cls.imageEdit__btn_add}>Add</Button>
                     <Button onClick={handleSubmit(() => setActive(false))}
                             extraClass={cls.imageEdit__btn_cancel}>Cancel</Button>
                 </div>

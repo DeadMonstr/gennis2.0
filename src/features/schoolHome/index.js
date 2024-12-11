@@ -14,3 +14,5 @@ export {SchoolVisionMission} from "./ui/schoolVisionMission/schoolVisionMission"
 export {SchoolHomeMainModal} from "./ui/schoolHomeMainModal/schoolHomeMainModal";
 export {SchoolGalleryModal} from "./ui/schoolGalleryModal/schoolGalleryModal";
 export {SchoolHomeCertificatsModal} from "./ui/schoolHomeCertificatsModal/schoolHomeCertificatsModal";
+export {SchoolHomeNewsAnnouncementModal} from "./ui/schoolHomeNewsAnnouncementModal/schoolHomeNewsAnnouncementModal";
+export {SchoolHomeStudentsModal} from "./ui/schoolHomeStudentsModal/schoolHomeStudentsModal";

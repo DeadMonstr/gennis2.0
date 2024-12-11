@@ -33,7 +33,6 @@ export const SchoolHomeContactUsModal = () => {
     }, [])
 
 
-    console.log(data)
 
     return (
         <div>

@@ -13,37 +13,93 @@ const list = [
     {
         name: "aboutUs",
         label: "About us",
-        path: "aboutUs"
+        path: "aboutUs",
+        isMultiLink: true,
+        children: [
+            {
+                name: "About TIS",
+                path: "aboutUs"
+            },
+            {
+                name: "Principal’s Spotlight",
+                path: "principalsSpotlight"
+            },
+            {
+                name: "Student Profile",
+                path: "studentProfile"
+            },
+            {
+                name: "Teaching Staff",
+                path: "teachingStaff"
+            },
+        ]
     },
     {
-        name: "gallery",
-        label: "Gallery",
-        path: "gallery"
+        name: "education",
+        label: "Education",
+        path: "education",
+        isMultiLink: true,
+        children: [
+            {
+                name: "Curricular",
+                path: "curricular"
+            },
+            {
+                name: "Co-Curricular",
+                path: "co_curricular"
+            },
+            {
+                name: "Extra Curricular",
+                path: "extra_curricular"
+            },
+            {
+                name: "Academic Calendar",
+                path: "academic_calendar"
+            },
+        ]
     },
     {
-        name: "news",
-        label: "News",
-        path: "news"
+        name: "news_announcement",
+        label: "News  announcement",
+        path: "news_announcement"
     },
 
     {
-        name: "curricular",
-        label: "Curricular",
-        path: "curricular"
+        name: "students",
+        label: "Students",
+        path: "students",
+        isMultiLink: true,
+        children: [
+            {
+                name: "Our Students",
+                path: "our_students"
+            },{
+                name: "Academic Champions",
+                path: "academic_champions"
+            },{
+                name: "Student Clubs",
+                path: "student_clubs"
+            },{
+                name: "Student Council",
+                path: "student_council"
+            },
+        ]
     },
     {
-        name: "studentLife",
-        label: "Student Life",
-        path: "studentLife"
+        name: "testimonial",
+        label: "Testimonial",
+        path: "testimonial"
     },
-    // {
-    //     name: "workWithUs",
-    //     label: "Work with us"
-    // },
-    // {
-    //     name: "campusLife",
-    //     label: "Campus life"
-    // },
+    {
+        name: "admission",
+        label: "Admission",
+        path: "admission"
+    },
+    {
+        name: "workwithus",
+        label: "Work with us",
+        path: "workwithus",
+    },
     // {
     //     name: "academicCalendar",
     //     label: "Academic calendar"
@@ -52,13 +108,69 @@ const list = [
 
 export const SchoolHomeHeader = memo(() => {
 
-    const navigate =  useNavigate()
+    const navigate = useNavigate()
 
     const [activeSection, setActiveSection] = useState(null)
+    const [prevActiveSection, setPrevActiveSection] = useState("")
+    const [activeMulti, setActiveMulti] = useState(false)
     const [activeBurger, setActiveBurger] = useState(false)
+
+    console.log(activeSection)
 
     const renderSectionMenuList = useCallback(() => {
         return list.map(item => {
+            if (item.isMultiLink) {
+                return (
+                    <details
+                        open={activeSection === item.name}
+                        className={classNames(cls.listItem, {
+                            [cls.active]: item.name === activeSection
+                        })}
+                        onClick={() => {
+                            setActiveSection(prev => {
+                                setPrevActiveSection(prev)
+                                return item.name
+                            })
+                            navigate(item.path)
+                        }}
+                    >
+                        <summary>
+                            {item.label}
+                        </summary>
+                        <div className={cls.homeHeader__multi}>
+                            {
+                                item.children.map(link => {
+                                    return (
+                                        <li
+                                            onClick={() => {
+                                                setActiveSection(link.name)
+                                                navigate(link.path)
+                                            }}
+                                            className={classNames(cls.multiItem, {
+                                                [cls.active]: link.name === activeSection
+                                            })}
+                                        >
+                                            {link.name}
+
+
+                                            {/*<div className={classNames({*/}
+                                            {/*        [cls.hoverActive]: item.name === activeSection,*/}
+                                            {/*        [cls.hover]: !item.name === !activeSection*/}
+                                            {/*    }*/}
+                                            {/*)}>*/}
+
+                                            {/*</div>*/}
+
+
+                                        </li>
+                                    )
+                                })
+                            }
+                        </div>
+
+                    </details>
+                )
+            }
             return (
                 <li
                     onClick={() => {
@@ -70,10 +182,21 @@ export const SchoolHomeHeader = memo(() => {
                     })}
                 >
                     {item.label}
+
+
+                    {/*<div className={classNames({*/}
+                    {/*        [cls.hoverActive]: item.name === activeSection,*/}
+                    {/*        [cls.hover]: !item.name === !activeSection*/}
+                    {/*    }*/}
+                    {/*)}>*/}
+
+                    {/*</div>*/}
+
+
                 </li>
             )
         })
-    }, [activeSection])
+    }, [activeSection, prevActiveSection, activeMulti])
 
     const render = renderSectionMenuList()
 
@@ -118,7 +241,7 @@ export const SchoolHomeHeader = memo(() => {
                             extraClass={cls.loginBtn}
                             type={"login"}
                         >
-                            Login
+                            Register
                         </Button>
                     </Link>
                 </div>

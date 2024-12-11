@@ -85,11 +85,11 @@ export const SchoolHomePage = () => {
                 // onScroll={(e) => onScroll(e.target)}
                 className={cls.schoolHome__header}
             >
-                <SchoolHomeHeader ref={currentHeight}/>
+                {/*<SchoolHomeHeader ref={currentHeight}/>*/}
                 <SchoolHomeMainModal types={types}/>
 
                 {/*<SchoolHomeExtracurricus/>*/}
-                <SchoolHomeCertificatsModal types={types}/>
+                {/*<SchoolHomeCertificatsModal types={types}/>*/}
                 {/*<SchoolHomeCertificats/>*/}
                 {/*<SchoolHomeAboutUs/>*/}
                 {/*<SchoolGalleryModal types={types}/>*/}
@@ -100,6 +100,7 @@ export const SchoolHomePage = () => {
                 {/*<SchoolParentesComment/>*/}
                 {/*<SchoolNews/>*/}
                 {/*<WorkUs/>*/}
+                {/*<Calendar/>*/}
                 <Footer/>
 
 

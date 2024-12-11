@@ -5,6 +5,7 @@ import {API_URL, headers, useHttp} from "shared/api/base";
 import {useDispatch, useSelector} from "react-redux";
 import {classItem, getClassNewNumberList} from "../../model/thunk/classThunk";
 import {useParams} from "react-router";
+import {getBranch} from "../../../../features/branchSwitcher";
 
 // const data = [
 //     {
@@ -32,14 +33,18 @@ import {useParams} from "react-router";
 //     }
 // ]
 
-export const ClassFilter = ({classesType, active, setActive, setEdit,branch }) => {
+export const ClassFilter = ({classesType, active, setActive, setEdit}) => {
 
     const dispatch = useDispatch()
 
+
+
+
+    const userBranchId = useSelector(getBranch)
     const onClick = useCallback((id) => {
         // dispatch(classItem({branchId: userBranchId, id: id}))
-        dispatch(getClassNewNumberList({branchId: branch, id: id}))
-    }, [branch])
+        dispatch(getClassNewNumberList({branchId: userBranchId.id, id: id}))
+    }, [userBranchId])
 
     function compareById(a, b) {
         return a.id - b.id;

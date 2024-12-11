@@ -37,10 +37,13 @@ export const SchoolHomeLatestNewModal = () => {
 
     useEffect(() => {
         dispatch(fetchHomePage())
-    } , [])
+    }, [])
+
+
+    console.log(id , "id")
+
     useEffect(() => {
         dispatch(getLatestNew(id))
-
     }, [id])
 
 
@@ -124,14 +127,15 @@ export const SchoolHomeLatestNewModal = () => {
                             extraClass={cls.modal__btn_cancel}>Cancel</Button>
                 </div>
             </Modal>
-            <SchoolHomeLatestEditModal setValue={setValue} setActive={setEditLatestNew} active={editLatestNew} register={register}
+            <SchoolHomeLatestEditModal setValue={setValue} setActive={setEditLatestNew} active={editLatestNew}
+                                       register={register}
                                        handleSubmit={handleSubmit} deleteItemId={deleteId} id={id}/>
         </div>
 
     );
 };
 
-export const SchoolHomeLatestEditModal = ({active, setActive, register, handleSubmit, deleteItemId , id , setValue}) => {
+export const SchoolHomeLatestEditModal = ({active, setActive, register, handleSubmit, deleteItemId, id, setValue}) => {
 
     const dispatch = useDispatch()
 
@@ -158,11 +162,7 @@ export const SchoolHomeLatestEditModal = ({active, setActive, register, handleSu
     const onDeleteItem = (data) => {
 
 
-
-
-
-
-        request(`${API_URL}Ui/fronted-pages/${deleteItemId.id}` , "DELETE" , null , header() )
+        request(`${API_URL}Ui/fronted-pages/${deleteItemId.id}`, "DELETE", null, header())
             .then(res => {
 
                 dispatch(onDelete(deleteItemId.id))
@@ -202,7 +202,8 @@ export const SchoolHomeLatestEditModal = ({active, setActive, register, handleSu
             <div className={cls.modal}>
                 <div {...getRootProps({className: 'dropzone'})}>
                     <input  {...getInputProps()}/>
-                    {!files ? <img style={{width: "31rem", height: "23rem "}} src={deleteItemId?.images?.map(item => item?.image)} alt=""/> :
+                    {!files ? <img style={{width: "31rem", height: "23rem "}}
+                                   src={deleteItemId?.images?.map(item => item?.image)} alt=""/> :
                         <img style={{width: "31rem", height: "23rem "}} src={files?.map(item => item?.preview)}
                              alt=""/>}
                 </div>

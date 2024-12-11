@@ -1,3 +1,4 @@
+import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import {ClassHeader} from "entities/class";
 import {useEffect, useState} from "react";
 import cls from "./classPage.module.sass";
@@ -7,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {classData, classItemLoading, colorItem} from "entities/class/model/selector/classSelector";
 import {fetchClassSubjects, getClassTypes, getColor} from "entities/class/model/thunk/classThunk";
 import {getBranch} from "features/branchSwitcher";
+import {useParams} from "react-router";
 
 
 export const ClassMain = () => {
@@ -17,19 +19,24 @@ export const ClassMain = () => {
     const [activeMenu, setActiveMenu] = useState(classes)
     const [edit, setEdit] = useState({})
     const [activeEdit, setActiveEdit] = useState(false)
+
+
+
     const userBranchId = useSelector(getBranch)
+
+
 
 
     const dispatch = useDispatch()
     useEffect(() => {
 
-        if (userBranchId.id) {
+        if (userBranchId) {
             dispatch(getClassTypes(userBranchId.id))
             dispatch(getColor())
             dispatch(fetchClassSubjects())
         }
 
-    }, [userBranchId.id])
+    }, [userBranchId])
     const [activeSwitch, setActiveSwitch] = useState(true)
 
 
@@ -55,7 +62,6 @@ export const ClassMain = () => {
                         activeEdit={activeEdit}
                         edit={edit}
                         setEdit={setEdit}
-                        branch={userBranchId.id}
                     />
                     :
                     <ClassAddColorPage

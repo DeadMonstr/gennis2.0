@@ -7,14 +7,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 
 import {Modal} from "shared/ui/modal";
+import {Button} from "../../../../shared/ui/button";
 
 const locations = [
 
-    {name: "xo'jakent"},
-    {name: "gazalkent"},
+    {name: "chorvoq"},
+    {name: "toshkent"},
     {name: "chirchiq"},
-    {name: "sergili"},
-    {name: "nurafshon"},
+    // {name: "nurafshon"},
 ]
 export const SchoolHomeContact = () => {
     const {
@@ -111,68 +111,40 @@ export const SchoolHomeContact = () => {
                     <>
                         <div className={cls.contact__locations__box_info}>
                             <h2>Chirchiq</h2>
-                            <div><i className={"fa-solid fa-phone "}/> <span>+998999999999</span></div>
+                            <div><i className={"fa-solid fa-phone "}/> <span>+998 94 310 33 33</span></div>
                         </div>
                         <div className={cls.contact__locations__box_locations}>
                             <h2>Manzil</h2>
-                            <span> улица Рудаки, Chirchiq, </span>
+                            <span>Chirchiq shahar , Temur yo'lovchilar ko'chasi</span>
                         </div>
                     </>
                 )
                 break
-            case "gazalkent" :
+            case "chorvoq" :
                 return (
                     <>
                         <div className={cls.contact__locations__box_info}>
-                            <h2>Gazalkent</h2>
+                            <h2>chorvoq</h2>
                             <div className={cls.contact__locations__box_info_item}><i className={"fa-solid fa-phone "}/>
-                                <span>+998999999999</span></div>
+                                <span>+998 99 476 33 36</span></div>
                         </div>
                         <div className={cls.contact__locations__box_locations}>
                             <h2>Manzil</h2>
-                            <span>Bo'stonliq ko'chasi, G‘azalkent, Toshkent Viloyati, </span>
+                            <span>Bo'stonliq tumani ,  Beshtut MFY  </span>
                         </div>
                     </>
                 )
                 break
-            case "xo'jakent" :
+            case "toshkent" :
                 return (
                     <>
                         <div className={cls.contact__locations__box_info}>
-                            <h2>xo'jakent</h2>
-                            <div><i className={"fa-solid fa-phone "}/> <span>+998999999999</span></div>
+                            <h2>toshkent</h2>
+                            <div><i className={"fa-solid fa-phone "}/> <span>+998 20 000 55 55</span></div>
                         </div>
                         <div className={cls.contact__locations__box_locations}>
                             <h2>Manzil</h2>
-                            <span>Bo'stonliq tumani, Nurchilar MFY,  </span>
-                        </div>
-                    </>
-                )
-                break
-            case "sergili" :
-                return (
-                    <>
-                        <div className={cls.contact__locations__box_info}>
-                            <h2>sergili</h2>
-                            <div><i className={"fa-solid fa-phone "}/> <span>+998999999999</span></div>
-                        </div>
-                        <div className={cls.contact__locations__box_locations}>
-                            <h2>Manzil</h2>
-                            <span>Amir Temur ko'chasi</span>
-                        </div>
-                    </>
-                )
-                break
-            case "nurafshon" :
-                return (
-                    <>
-                        <div className={cls.contact__locations__box_info}>
-                            <h2>nurafshon</h2>
-                            <div><i className={"fa-solid fa-phone "}/> <span>+998999999999</span></div>
-                        </div>
-                        <div className={cls.contact__locations__box_locations}>
-                            <h2>Manzil</h2>
-                            <span>Amir Temur ko'chasi</span>
+                            <span>Toshkent shahar  , sergeli tumani shokir ariq ko'chasi</span>
                         </div>
                     </>
                 )
@@ -181,35 +153,23 @@ export const SchoolHomeContact = () => {
     }
     const renderMaps = () => {
         switch (selectedItem) {
-            case "gazalkent" :
-                return <iframe
-                    src={"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2985.3254498242686!2d69.76749861197915!3d41.56220048501333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38af1ba601d62bc3%3A0xecd7bb024bc3192b!2sGennis%20Campus!5e0!3m2!1sru!2s!4v1721050256490!5m2!1sru!2s"}
-                    allowFullScreen="" loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"/>
-                break
-            case "xo'jakent" :
-                return <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2982.0651548587853!2d69.93543831198187!3d41.63272308062137!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38af1764720a4969%3A0x5bffca52f4445fc0!2sGennis%20Campus!5e0!3m2!1sru!2s!4v1721052569434!5m2!1sru!2s"
-                    allowFullScreen="" loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"/>
-                break
             case "chirchiq" :
                 return <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2989.2761672928013!2d69.57225835382543!3d41.47661211666293!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38aefd412457f5ef%3A0xb416448af4b439fb!2sGennis!5e0!3m2!1sru!2s!4v1721052656468!5m2!1sru!2s"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d919.6208757171587!2d69.59200527278249!3d41.47180846473949!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38aefd001d09a3fb%3A0x3defb64edb2164f6!2sTuron%20Xalqaro%20Maktabi!5e1!3m2!1sru!2s!4v1733480085201!5m2!1sru!2s"
                     allowFullScreen="" loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"/>
                 break
-            case "nurafshon" :
+            case "toshkent" :
                 return <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2989.2761672928013!2d69.57225835382543!3d41.47661211666293!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38aefd412457f5ef%3A0xb416448af4b439fb!2sGennis!5e0!3m2!1sru!2s!4v1721052656468!5m2!1sru!2s"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6002.598757406476!2d69.21117262052368!3d41.215245940243776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae61ab41db49f1%3A0x889c9f788b1c7aea!2sTuron%20xalqaro%20maktabi!5e0!3m2!1sru!2s!4v1733480259416!5m2!1sru!2s"
                     allowFullScreen="" loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"/>
+                    referrerPolicy="no-referrer-when-downgrade"></iframe>
                 break
-            case "sergili" :
+            case "chorvoq" :
                 return <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2989.2761672928013!2d69.57225835382543!3d41.47661211666293!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38aefd412457f5ef%3A0xb416448af4b439fb!2sGennis!5e0!3m2!1sru!2s!4v1721052656468!5m2!1sru!2s"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1029.630900409872!2d69.94854717827091!3d41.635367929634334!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38af16a418831869%3A0x7cc9a20b5cbc2070!2s16-o&#39;rta%20maktab!5e1!3m2!1sru!2s!4v1733480158809!5m2!1sru!2s"
                     allowFullScreen="" loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"/>
+                    referrerPolicy="no-referrer-when-downgrade"></iframe>
                 break
         }
     }
@@ -223,7 +183,6 @@ export const SchoolHomeContact = () => {
                 <div className={classNames(cls.contact__branches, {
                     [cls.branches_active]: activeHamburger
                 })}>
-                    <h2>Location</h2>
                     <div className={cls.contact__branches_name}>
                         <ul>
                             {selectedItem && [...locations].sort(compareById).map((item) => {
@@ -236,7 +195,7 @@ export const SchoolHomeContact = () => {
                                             [cls.active]: selectedItem === item.name
                                         })}>
 
-                                        {item.name}
+                                        <Button>{item.name}</Button>
                                     </li>
                                 )
                             })}

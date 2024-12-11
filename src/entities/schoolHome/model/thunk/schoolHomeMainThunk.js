@@ -44,8 +44,8 @@ export const editDescription = createAsyncThunk(
 
 export const addDescription = createAsyncThunk(
     "schoolHomeMainSlice/editDescription",
-    ({data, id}) => {
+    (data) => {
         const {request} = useHttp()
-        return request(`${API_URL}Ui/fronted-pages/${id}/`, "POST", JSON.stringify(data), header())
+        return request(`${API_URL}Ui/fronted-pages/`, "POST", JSON.stringify(data), header())
     }
 )

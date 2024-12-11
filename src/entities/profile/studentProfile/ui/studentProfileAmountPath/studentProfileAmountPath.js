@@ -94,8 +94,6 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
     };
 
 
-
-
     useEffect(() => {
         if (!change) {
             dispatch(studentPaymentListThunk(lastId));
@@ -193,17 +191,20 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
                     {/*        className={`fa-solid fa-xmark `}*/}
                     {/*    ></i>*/}
                     {/*</td>*/}
-                    <td>
-                        <i
-                            onClick={() => {
-                                setChangedData(item)
-                                setCanChange(true)
-                                setValueChange("total_debt", item.total_debt)
-                            }}
-                            style={{color: '#484848'}}
-                            className={`fa-solid fa-pen `}
-                        ></i>
-                    </td>
+                    {
+                        job === "director" &&
+                        <td>
+                            <i
+                                onClick={() => {
+                                    setChangedData(item)
+                                    setCanChange(true)
+                                    setValueChange("total_debt", item.total_debt)
+                                }}
+                                style={{color: '#484848'}}
+                                className={`fa-solid fa-pen `}
+                            ></i>
+                        </td>
+                    }
                 </tr>
             )
         })
@@ -232,7 +233,7 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
         console.log(data)
 
 
-        request(`${API_URL}Attendance/attendance_per_month_delete/${changedData.id}/`, "PUT",JSON.stringify(data), headers())
+        request(`${API_URL}Attendance/attendance_per_month_delete/${changedData.id}/`, "PUT", JSON.stringify(data), headers())
             .then(res => {
                 dispatch(fetchStudentDebtorData(id))
             })
@@ -356,7 +357,7 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
                                                     <th>Cash</th>
                                                     <th>Click</th>
                                                     <th>Bank</th>
-                                                    <th></th>
+                                                    {/*<th></th>*/}
                                                 </tr>
                                                 </thead>
                                                 <tbody>
