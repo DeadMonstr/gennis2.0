@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {Fragment, useContext, useEffect, useRef, useState} from 'react';
 
 import {SchoolHomeCertificats} from "entities/schoolHome";
 import {Input} from "shared/ui/input";
@@ -23,9 +23,17 @@ import {
 } from "../../../../entities/schoolHome/model/slice/schoolHomeCertificatsSlice";
 import {getHomePageType} from "../../../../entities/schoolHome/model/selector/getHomePageSelector";
 import {fetchHomePage} from "../../../../entities/schoolHome/model/thunk/getHomePageSelector";
+import {HomeContext} from "../../../../shared/lib/context/homeContext";
 
 
 export const SchoolHomeCertificatsModal = () => {
+    const {setSectionTop} = useContext(HomeContext)
+
+    const sectionRef = useRef()
+
+    useEffect(() => {
+        setSectionTop(cur => ({...cur, co_curricular: sectionRef?.current?.offsetTop}))
+    }, [setSectionTop])
 
     const [active, setActive] = useState("")
     const [activeEditItem, setActiveEditItem] = useState(null)
@@ -140,7 +148,7 @@ export const SchoolHomeCertificatsModal = () => {
     }
 
     return (
-        <>
+        <div ref={sectionRef}>
 
 
             <SchoolHomeCertificats
@@ -200,6 +208,6 @@ export const SchoolHomeCertificatsModal = () => {
             </Modal>
 
 
-        </>
+        </div>
     );
 }

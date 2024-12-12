@@ -87,7 +87,8 @@ export const AccountingPageMain = () => {
     const oldLength = useSelector(getMultiOldLength)
     const locations = useSelector(getSelectedLocations)
 
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
     const location = useLocation()
 
     const [otchot, setOtchot] = useState(false)

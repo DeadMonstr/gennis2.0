@@ -8,6 +8,7 @@ import {ImageCrop} from "../../../../features/imageCrop";
 import {changeEmployerProfileImage} from "../../../../entities/profile/employerProfile";
 import {EmployerProfileInfo} from "../../../../entities/profile/employerProfile";
 import {DefaultLoader, DefaultPageLoader} from "../../../../shared/ui/defaultLoader";
+import {getBranch} from "../../../../features/branchSwitcher";
 export const ContextStuPro = createContext(null)
 
 export const ProfileEmployerPage = () => {
@@ -15,7 +16,8 @@ export const ProfileEmployerPage = () => {
     const [active, setActive] = useState(false)
     const [actives, setActives] = useState(false)
     const dispatch = useDispatch()
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
     const employerId = useSelector(getEmployerId)
     const [activeModal, setActiveModal] = useState("")
     const [newImage, setNewImage] = useState("")

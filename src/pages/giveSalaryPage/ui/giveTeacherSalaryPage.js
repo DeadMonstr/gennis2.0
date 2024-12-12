@@ -15,6 +15,7 @@ import {getTeacherSalariesList} from "entities/teacherSalary";
 import {useParams} from "react-router-dom";
 import {useLocation} from "react-router";
 import {DefaultLoader} from "shared/ui/defaultLoader";
+import {getBranch} from "../../../features/branchSwitcher";
 
 
 export const GiveTeacherSalaryPage = () => {
@@ -33,7 +34,8 @@ export const GiveTeacherSalaryPage = () => {
     const pathSegments = pathname.split('/');
     const salaryPageIdx = pathSegments.indexOf('teacherSalaryPage') + 1;
     const teacherSalaryPageId = Number(pathSegments[salaryPageIdx]);
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
 
     useEffect(() => {
         if(id)

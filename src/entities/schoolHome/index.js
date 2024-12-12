@@ -20,6 +20,7 @@ export {AboutUs} from "./ui/aboutUs/aboutUs"
 export {SchoolHomeNewsAnnouncement} from "./ui/schoolHomeNewsAnnouncement/schoolHomeNewsAnnouncement";
 export {SchoolHomeBuilding} from "./ui/schoolHomeBuilding/schoolHomeBuilding";
 export {SchoolHomeChampions} from "./ui/schoolHomeChampions/schoolHomeChampions";
+export {SchoolHomeClub} from './ui/schoolHomeClub/schoolHomeClub'
 export {StudentCouncil} from "./ui/studentCouncil/studentCouncil";
 
 export {OurStudent} from "./ui/ourStudent/ourStudent"

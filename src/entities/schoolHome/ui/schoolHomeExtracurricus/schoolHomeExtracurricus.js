@@ -1,12 +1,20 @@
 import classNames from "classnames";
-import React, {memo, useState} from 'react';
+import React, {memo, useContext, useEffect, useRef, useState} from 'react';
 
 import cls from "./schoolHomeExtracurricus.module.sass";
 import robot from "shared/assets/images/turonRobot.png";
+import {HomeContext} from "../../../../shared/lib/context/homeContext";
 
 const list = [1,2,3,4,5,6,7,8]
 
 export const SchoolHomeExtracurricus = memo(() => {
+    const {setSectionTop} = useContext(HomeContext)
+
+    const sectionRef = useRef()
+
+    useEffect(() => {
+        setSectionTop(cur => ({...cur, extra_curricular: sectionRef?.current?.offsetTop}))
+    }, [setSectionTop])
 
     const [activeItem, setActiveItem] = useState(null)
 
@@ -48,7 +56,7 @@ export const SchoolHomeExtracurricus = memo(() => {
     const render = renderItems()
 
     return (
-        <div className={cls.extracurricus}>
+        <div ref={sectionRef} className={cls.extracurricus}>
             <h2 className={cls.extracurricus__title}>Extracurricular</h2>
             <div className={cls.extracurricus__container}>
                 {render}

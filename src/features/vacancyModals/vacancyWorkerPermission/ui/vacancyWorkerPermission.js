@@ -10,6 +10,7 @@ import { getPermissionTables } from "../model/selectors/selectors";
 import {fetchWorkerWithId,getWorkerId} from "features/vacancyModals/vacancyWorkPage/model";
 import { fetchPermissionTable, postSelectedTable, postSelectedPermission } from "../model/vacancyWorkerPermissionThunk";
 import {useParams} from "react-router-dom";
+import {getBranch} from "../../../branchSwitcher";
 
 export const VacancyWorkerPermission = React.memo(({active, setActive, onAddVacancy}) => {
     const [selectedWorkName, setSelectedWorkName] = useState("");
@@ -17,7 +18,8 @@ export const VacancyWorkerPermission = React.memo(({active, setActive, onAddVaca
     const [availablePermissions, setAvailablePermissions] = useState([]);
     const selectedJobID = useSelector(getWorkerId)
     const dispatch = useDispatch();
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
     const permissionData = useSelector(getPermissionTables);
     const {request} = useHttp()
     const userId = selectedJobID.job?.length ? Number(selectedJobID.job[0].id) : null;

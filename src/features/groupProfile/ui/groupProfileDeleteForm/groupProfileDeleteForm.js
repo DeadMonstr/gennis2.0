@@ -42,6 +42,7 @@ import defaultUserImg from "shared/assets/images/user_image.png";
 import bank from "shared/assets/images/Bank.png";
 import creditCard from "shared/assets/images/CreditCard.png";
 import money from "shared/assets/images/Money.png";
+import {getBranch} from "../../../branchSwitcher";
 
 const listPretcent = [-1, 34.8, 70.4]
 
@@ -64,7 +65,8 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
     } = useForm()
 
     const {theme} = useTheme()
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
     const dispatch = useDispatch()
     const navigation = useNavigate()
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed

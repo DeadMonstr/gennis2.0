@@ -34,7 +34,7 @@ export const OurStudent = () => {
     return (
         <div className={cls.champions}>
             <div className={cls.champions__title}>
-                <h1>Studen council</h1>
+                <h1>Student council</h1>
                 <div className={cls.champions__locations}>
                     <span>Chirchiq</span>
                     <span>Chirchiq</span>

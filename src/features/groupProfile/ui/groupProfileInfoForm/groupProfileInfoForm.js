@@ -32,6 +32,7 @@ import cls from "./groupProfileInfoForm.module.sass";
 import nextImage from "shared/assets/images/groupImage.png";
 import defaultUserImg from "shared/assets/images/user_image.png";
 import {ConfirmModal} from "../../../../shared/ui/confirmModal";
+import {getBranch} from "../../../branchSwitcher";
 
 
 export const GroupProfileInfoForm = memo(({system,branch}) => {
@@ -43,7 +44,8 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
     } = useForm()
 
     const {theme} = useTheme()
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const data = useSelector(getGroupProfileData)

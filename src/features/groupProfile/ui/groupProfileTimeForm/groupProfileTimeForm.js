@@ -17,6 +17,7 @@ import {Button} from "shared/ui/button";
 import {Table} from "shared/ui/table";
 
 import cls from "./groupProfileTimeForm.module.sass";
+import {getBranch} from "../../../branchSwitcher";
 
 const data = [
     {
@@ -55,7 +56,8 @@ export const GroupProfileTimeForm = memo(() => {
     const roomsData = useSelector(getRoomsData)
     const weekData = useSelector(getWeekDays)
     const userBranchId = useSelector(getUserBranchId)
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
 
     const [active, setActive] = useState("")
     const [counter, setCounter] = useState([])

@@ -8,6 +8,7 @@ import {getTeacherSalaries} from "entities/teacherSalary";
 import {fetchTeacherSalaryThunk} from "entities/teacherSalary";
 import {useParams} from "react-router-dom";
 import {getSearchValue} from "../../../features/searchInput";
+import {getBranch} from "../../../features/branchSwitcher";
 
 export const TeacherSalaryPage = () => {
     const [selected, setSelected] = useState("");
@@ -17,7 +18,8 @@ export const TeacherSalaryPage = () => {
     const [currentTableData, setCurrentTableData] = useState([]);
     const dispatch = useDispatch()
     const teacherSalaries = useSelector(getTeacherSalaries)
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
     const handleChange = (value) => {
         setSelected(value);
     };
