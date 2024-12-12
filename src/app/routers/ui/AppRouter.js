@@ -70,7 +70,6 @@ export const AppRouter = () => {
                     <Route element={<SchoolHomeStudentsModal/>} path={"students"}/>
                 </Route>
 
-
                 {/*<Route*/}
                 {/*    path={"/"}*/}
                 {/*    element={<CenterHomePage/>}*/}

@@ -68,6 +68,10 @@ export const SchoolHomePage = () => {
     //     console.log(target.offsetHeight, "offsetHeight")
     // }
 
+
+
+
+
     return (
         <div
             onWheel={(e) => {

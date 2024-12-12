@@ -41,9 +41,9 @@ import {getUserProfileData} from "../../../entities/profile/userProfile";
 
 const userstype = {
     types: [
-        {id: 1, value: "student", name: "Student"},
-        {id: 2, value: "teacher", name: "Teacher"},
-        {id: 3, value: "employer", name: "Employer"}
+        {value: "student", name: "Student"},
+        {value: "teacher", name: "Teacher"},
+        {value: "employer", name: "Employer"}
     ]
 };
 
@@ -72,8 +72,11 @@ export const Register = () => {
         setValue,
         reset
     } = useForm();
-    const {idBranch: id} = useParams()
+
+
     const registerType = watch("registerType", "student");
+
+
     const username = watch("username", "");
     const {theme} = useTheme()
     const getSystem = useSelector(getSystemName)
@@ -102,7 +105,6 @@ export const Register = () => {
         value: subject?.id,
         label: subject?.name,
     }));
-
 
 
     const filteredJobOptions = jobOptions.filter(
@@ -176,7 +178,7 @@ export const Register = () => {
         }
     }, [username]);
 
-    console.log(selectedClass , selectedLang)
+    console.log(selectedClass, selectedLang)
 
     const onSubmit = (data) => {
         // console.log(selectedClass, selectedLang ,data , "data")
@@ -282,24 +284,24 @@ export const Register = () => {
                     // reset({password: "12345678"},  );
 
 
-                    setValue("name" , "")
-                    setValue("surname" , "")
-                    setValue("username" , "")
-                    setValue("parents_fullname" , "")
-                    setValue("parent_seria" , "")
-                    setValue("parent_seria_num" , "")
-                    setValue("parent_region" , "")
-                    setValue("born_date" , "")
-                    setValue("father_name" , "")
-                    setValue("parents_phone" , "")
-                    setValue("phone" , "")
-                    setValue("student_seria_num" , "")
-                    setValue("student_seria" , "")
-                    setValue("old_school" , "")
-                    setValue("region" , "")
-                    setValue("district" , "")
-                    setValue("birth_date" , "")
-                    setValue("comment" , "")
+                    setValue("name", "")
+                    setValue("surname", "")
+                    setValue("username", "")
+                    setValue("parents_fullname", "")
+                    setValue("parent_seria", "")
+                    setValue("parent_seria_num", "")
+                    setValue("parent_region", "")
+                    setValue("born_date", "")
+                    setValue("father_name", "")
+                    setValue("parents_phone", "")
+                    setValue("phone", "")
+                    setValue("student_seria_num", "")
+                    setValue("student_seria", "")
+                    setValue("old_school", "")
+                    setValue("region", "")
+                    setValue("district", "")
+                    setValue("birth_date", "")
+                    setValue("comment", "")
                 } else {
                     dispatch(onAddAlertOptions({
                         type: "error",

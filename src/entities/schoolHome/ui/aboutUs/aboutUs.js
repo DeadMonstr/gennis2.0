@@ -87,7 +87,7 @@ export const AboutMain = () => {
 
             <div className={cls.about__wrapper}>
                 <div className={`${cls.about__box} ${cls.about__box_last}`}>
-                    <div>
+                    <div className={cls.about__info}>
                         <div className={cls.about__title}>
                             About us
                         </div>
@@ -106,16 +106,16 @@ export const AboutMain = () => {
                             fostering future-ready learners and global citizens.
                         </div>
                     </div>
-                    <div>
+                    <div className={cls.about__logo} >
                         <img src={turonAbout} alt=""/>
                     </div>
                 </div>
                 <div className={cls.about__box}>
-                    <div>
-                        <img src={turonAbout2} style={{width: "950px"}} alt=""/>
+                    <div className={cls.about__box_img}>
+                        <img src={turonAbout2}  alt=""/>
                     </div>
 
-                    <div>
+                    <div className={cls.about__info}>
                         <div className={cls.about__title}>
                             Our vision
                         </div>
@@ -134,7 +134,7 @@ export const AboutMain = () => {
                 <div className={`${cls.about__box} ${cls.about__box_last}`}>
 
 
-                    <div>
+                    <div className={cls.about__info}>
                         <div className={cls.about__title}>
                             MISSION
                         </div>
@@ -152,8 +152,8 @@ export const AboutMain = () => {
                         </div>
                     </div>
 
-                    <div>
-                        <img src={turonAbout3} style={{width: "950px"}} alt=""/>
+                    <div className={cls.about__box_img}>
+                        <img src={turonAbout3}  alt=""/>
                     </div>
 
                 </div>
@@ -178,7 +178,9 @@ export const CoreValues = () => {
 
                 {data.map(item => (
                     <div className={cls.coreValue__box}>
-                        <img src={item.img} alt=""/>
+                        <div className={cls.coreValue__img}>
+                            <img src={item.img} alt=""/>
+                        </div>
 
 
                         <div className={cls.coreValue__box_descr}>

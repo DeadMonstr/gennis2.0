@@ -1,6 +1,8 @@
-import {useCallback} from 'react';
+import {useCallback, useContext, useEffect, useRef} from 'react';
 import classNames from "classnames";
 import {isMobile} from "react-device-detect";
+
+import {Context} from "app/layoutWebSite/layoutWebsite"
 
 import cls from "./schoolHomeBuilding.module.sass";
 import image from "shared/assets/images/studentBuilding.png";
@@ -54,6 +56,13 @@ const list2 = [
 ]
 
 export const SchoolHomeBuilding = () => {
+    const {setSectionTop} = useContext(Context)
+
+    const sectionRef = useRef()
+
+    useEffect(() => {
+        setSectionTop(cur => ({...cur, our_students: sectionRef?.current?.offsetTop}))
+    }, [setSectionTop])
 
     const renderList = useCallback(() => {
         return list.map(item => {
@@ -96,7 +105,7 @@ export const SchoolHomeBuilding = () => {
     }, [list2])
 
     return (
-        <div className={cls.building}>
+        <div className={cls.building} ref={sectionRef}>
             <div className={cls.building__header}>
                 <h1>Student Profile - Building Tomorrow's Leaders</h1>
                 <p>

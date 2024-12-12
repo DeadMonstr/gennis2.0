@@ -19,8 +19,9 @@
   &.hoverActive
     opacity: 1
     display: flex !important
-  &.active
-    font-weight: 700
+  &__summary, &__single
+    &.active
+      font-weight: 700
 
 
 .homeHeader
@@ -109,13 +110,17 @@
     color: white
 
   &__list
+    padding-top: 2rem
+    padding-bottom: 2rem
+    gap: 3rem
     padding-left: 3rem
-    width: 45%
-    height: 60%
+    width: 50%
+    min-height: min-content
+    max-height: max-content
     background: white
     display: flex
     flex-direction: column
-    justify-content: space-around
+    //justify-content: space-around
     //align-items: center
     position: absolute
     top: 8.5rem
@@ -158,6 +163,10 @@
     font-size: 2rem
     cursor: pointer
   .homeHeader
+    &__multi
+      position: initial
+      box-shadow: none
+      align-items: flex-start
     &__list
       display: none
 

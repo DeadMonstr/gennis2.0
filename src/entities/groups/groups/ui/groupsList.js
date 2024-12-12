@@ -36,9 +36,9 @@ export const GroupsList = React.memo(({currentTableData}) => {
                             </> :
                             // null
                             <>
-                                <td>{`${item?.teacher?.user?.surname} ${item?.teacher?.user?.name}`}</td>
+                                <td>{item?.teacher}</td>
                                 <td>{item?.students?.length}</td>
-                                <td>{`${item?.class_number?.number}-${item?.color?.name}`}</td>
+                                {/*<td>{`${item?.class_number?.number}-${item?.color?.name}`}</td>*/}
                             </>
                     }
 
@@ -48,10 +48,15 @@ export const GroupsList = React.memo(({currentTableData}) => {
 
 
                     <td>{item?.status ? <div>
-                        <div/>
-                    </div> : <div className={cls.red}>
-                        <div className={cls.red__inner}/>
-                    </div>}</td>
+                            <div/>
+                        </div>
+                        :
+                        <div className={cls.red}>
+                            <div className={cls.red__inner}/>
+                        </div>
+                    }
+
+                    </td>
 
                 </tr>
             )

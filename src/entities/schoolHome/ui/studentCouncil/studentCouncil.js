@@ -1,6 +1,6 @@
 import doctor from "shared/assets/images/studentCouncil.svg"
 import logo from "shared/assets/images/studentCouncilLogo.svg"
-import cls from "./studentCouncil.module.sass";
+import cls from "./studentConcul.module.sass";
 import image from "../../../../shared/assets/images/championImage.png";
 import React from "react";
 

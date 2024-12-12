@@ -1,9 +1,10 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {motion} from "framer-motion";
 
 import cls from "./schoolHomeChampions.module.sass";
 import image from "shared/assets/images/championImage.png";
 import ratingStar from 'shared/assets/icons/rate.svg'
+import {Context} from "../../../../app/layoutWebSite/layoutWebsite";
 
 const list = [
     {
@@ -34,6 +35,13 @@ const list = [
 ]
 
 export const SchoolHomeChampions = () => {
+    const {setSectionTop} = useContext(Context)
+
+    const sectionRef = useRef()
+
+    useEffect(() => {
+        setSectionTop(cur => ({...cur, academic_champions: sectionRef?.current?.offsetTop}))
+    }, [setSectionTop])
 
     const carousel = useRef()
 
@@ -65,7 +73,7 @@ export const SchoolHomeChampions = () => {
     }, [list])
 
     return (
-        <div className={cls.champions}>
+        <div ref={sectionRef} className={cls.champions}>
             <div className={cls.champions__title}>
                 <h1>School champions</h1>
                 <div className={cls.champions__locations}>

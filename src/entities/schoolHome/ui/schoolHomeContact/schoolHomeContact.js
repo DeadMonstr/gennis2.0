@@ -6,7 +6,6 @@ import {changeHrefs, changeLocation} from "entities/centerHome/model/homeSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 
-import {Modal} from "shared/ui/modal";
 import {Button} from "../../../../shared/ui/button";
 
 const locations = [
@@ -14,7 +13,6 @@ const locations = [
     {name: "chorvoq"},
     {name: "toshkent"},
     {name: "chirchiq"},
-    // {name: "nurafshon"},
 ]
 export const SchoolHomeContact = () => {
     const {
@@ -36,9 +34,9 @@ export const SchoolHomeContact = () => {
     const [changeItem, setChangeItem] = useState({})
     const [changeLoc, setChangeLoc] = useState({})
     const [changeImage, setChangeImage] = useState({})
-    const [activeLoc, setActiveLoc] = useState(0)
+
     const [selectedItem, setSelectedItem] = useState(locations[0].name)
-    const [loading, setLoading] = useState(false)
+
 
     const onSubmitHrefs = (data) => {
         const res = {
@@ -109,11 +107,13 @@ export const SchoolHomeContact = () => {
             case "chirchiq" :
                 return (
                     <>
-                        <div className={cls.contact__locations__box_info}>
+                        <div className={cls.contact__locations_info_descr}>
                             <h2>Chirchiq</h2>
-                            <div><i className={"fa-solid fa-phone "}/> <span>+998 94 310 33 33</span></div>
+                            <div><i className={"fa-solid fa-phone "}/>
+                                <span>+998 94 310 33 33</span>
+                            </div>
                         </div>
-                        <div className={cls.contact__locations__box_locations}>
+                        <div className={cls.contact__locations_info_locations}>
                             <h2>Manzil</h2>
                             <span>Chirchiq shahar , Temur yo'lovchilar ko'chasi</span>
                         </div>
@@ -123,12 +123,12 @@ export const SchoolHomeContact = () => {
             case "chorvoq" :
                 return (
                     <>
-                        <div className={cls.contact__locations__box_info}>
+                        <div className={cls.contact__locations_info_descr}>
                             <h2>chorvoq</h2>
-                            <div className={cls.contact__locations__box_info_item}><i className={"fa-solid fa-phone "}/>
+                            <div><i className={"fa-solid fa-phone "}/>
                                 <span>+998 99 476 33 36</span></div>
                         </div>
-                        <div className={cls.contact__locations__box_locations}>
+                        <div className={cls.contact__locations_info_locations}>
                             <h2>Manzil</h2>
                             <span>Bo'stonliq tumani ,  Beshtut MFY  </span>
                         </div>
@@ -138,11 +138,11 @@ export const SchoolHomeContact = () => {
             case "toshkent" :
                 return (
                     <>
-                        <div className={cls.contact__locations__box_info}>
+                        <div className={cls.contact__locations_info_descr}>
                             <h2>toshkent</h2>
                             <div><i className={"fa-solid fa-phone "}/> <span>+998 20 000 55 55</span></div>
                         </div>
-                        <div className={cls.contact__locations__box_locations}>
+                        <div className={cls.contact__locations_info_locations}>
                             <h2>Manzil</h2>
                             <span>Toshkent shahar  , sergeli tumani shokir ariq ko'chasi</span>
                         </div>
@@ -183,7 +183,6 @@ export const SchoolHomeContact = () => {
                 <div className={classNames(cls.contact__branches, {
                     [cls.branches_active]: activeHamburger
                 })}>
-                    <div className={cls.contact__branches_name}>
                         <ul>
                             {selectedItem && [...locations].sort(compareById).map((item) => {
                                 return (
@@ -200,13 +199,9 @@ export const SchoolHomeContact = () => {
                                 )
                             })}
                         </ul>
-                    </div>
                 </div>
 
                 <div className={cls.contact__locations}>
-                    <div onClick={() => setActiveHamburger(true)} className={cls.hamburger}>
-                        <i className={"fa fa-bars"}/>
-                    </div>
                     <div className={cls.contact__locations_maps}>
                         <div className={cls.contact__locations_info}>
                             {renderInfo()}

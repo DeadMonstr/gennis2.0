@@ -1,13 +1,34 @@
-import React from 'react';
-import {SchoolHomeHeader} from "../../entities/schoolHome";
+import React, {useState} from 'react';
 import {Outlet} from "react-router";
 
+import {SchoolHomeHeader} from "entities/schoolHome";
+
+export const Context = React.createContext(null)
+
 const LayoutWebsite = () => {
+
+    const [sectionTop, setSectionTop] = useState({
+        aboutUs: null,
+        principalsSpotlight: null,
+        studentProfile: null,
+        teachingStaff: null,
+        curricular: null,
+        co_curricular: null,
+        extra_curricular: null,
+        academic_calendar: null,
+        our_students: null,
+        academic_champions: null,
+        student_clubs: null,
+        student_council: null,
+    })
+
     return (
-        <div style={{width: "100%", position: "relative"}}>
-            <SchoolHomeHeader/>
-            <Outlet/>
-        </div>
+        <Context.Provider value={{sectionTop, setSectionTop}}>
+            <div style={{width: "100%", position: "relative"}}>
+                <SchoolHomeHeader/>
+                <Outlet/>
+            </div>
+        </Context.Provider>
     );
 };
 

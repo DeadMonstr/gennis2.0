@@ -26,14 +26,17 @@
       font-size: 1.6rem
   &__wrapper
     display: flex
-    gap: 1rem
+    gap: 2rem
     flex-wrap: wrap
+    margin-top: 2rem
     &_box
       border: 1px solid rgba(234, 236, 240, 1)
-      width: 29rem
-      img
+      width: 31rem
+      &_img
         width: 100%
-        object-fit: cover
+        img
+          width: 100%
+          object-fit: cover
       &_info
         padding: 1.6rem
         display: flex
@@ -51,3 +54,29 @@
           font-size: 1.5rem
         &_descr
           color: rgba(95, 105, 128, 1)
+
+@media (max-width: 900px)
+  .champions
+    padding: 3rem
+@media (max-width: 800px)
+
+  .champions
+    padding: .5rem
+    &__title
+      padding: 2rem
+    &__locations
+      display: none
+    &__wrapper
+      &_box
+        width: 24rem
+@media (max-width: 510px)
+  .champions
+    padding: .5rem
+    &__title
+      padding: 2rem
+    &__locations
+      display: none
+    &__wrapper
+      justify-content: center
+      &_box
+        width: 95%
