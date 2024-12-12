@@ -17,6 +17,8 @@ import coreValue8 from "shared/assets/images/corevalue8.svg"
 import coreValue9 from "shared/assets/images/corevalue10.svg"
 import {getSchoolLeaderShip} from "../../model/selector/schoolLeaderShipSelector";
 import {useSelector} from "react-redux";
+import {useContext, useEffect, useRef} from "react";
+import {HomeContext} from "../../../../shared/lib/context/homeContext";
 
 
 const data = [
@@ -81,8 +83,16 @@ export const AboutUs = () => {
 
 
 export const AboutMain = () => {
+    const {setSectionTop} = useContext(HomeContext)
+
+    const sectionRef = useRef()
+
+    useEffect(() => {
+        setSectionTop(cur => ({...cur, aboutUs: sectionRef?.current?.offsetTop}))
+    }, [setSectionTop])
+
     return (
-        <div className={cls.about}>
+        <div ref={sectionRef} className={cls.about}>
 
 
             <div className={cls.about__wrapper}>
@@ -167,8 +177,16 @@ export const AboutMain = () => {
 
 
 export const CoreValues = () => {
+    const {setSectionTop} = useContext(HomeContext)
+
+    const sectionRef = useRef()
+
+    useEffect(() => {
+        setSectionTop(cur => ({...cur, principalsSpotlight: sectionRef?.current?.offsetTop}))
+    }, [setSectionTop])
+
     return (
-        <div className={cls.coreValue}>
+        <div ref={sectionRef} className={cls.coreValue}>
             <div className={cls.coreValue__title}>
                 Core Values
             </div>
@@ -200,6 +218,13 @@ export const CoreValues = () => {
 
 
 export const SchoolLeadershipTeam = () => {
+    const {setSectionTop} = useContext(HomeContext)
+
+    const sectionRef = useRef()
+
+    useEffect(() => {
+        setSectionTop(cur => ({...cur, studentProfile: sectionRef?.current?.offsetTop}))
+    }, [setSectionTop])
 
     const leaderShip = useSelector(getSchoolLeaderShip)
 
@@ -236,7 +261,7 @@ export const SchoolLeadershipTeam = () => {
     const render = renderDate()
 
     return (
-        <div className={cls.leaderShip}>
+        <div ref={sectionRef} className={cls.leaderShip}>
             <div className={cls.leaderShip__header}>
                 <div className={cls.leaderShip__header_span}>
                     OUR TEAM
@@ -272,8 +297,16 @@ export const SchoolLeadershipTeam = () => {
 
 
 export const AboutFooter = () => {
+    const {setSectionTop} = useContext(HomeContext)
+
+    const sectionRef = useRef()
+
+    useEffect(() => {
+        setSectionTop(cur => ({...cur, teachingStaff: sectionRef?.current?.offsetTop}))
+    }, [setSectionTop])
+
     return (
-        <div className={cls.footer}>
+        <div ref={sectionRef} className={cls.footer}>
 
             <img src={footerImg} alt=""/>
 

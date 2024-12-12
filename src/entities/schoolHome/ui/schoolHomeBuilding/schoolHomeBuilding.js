@@ -2,7 +2,7 @@ import {useCallback, useContext, useEffect, useRef} from 'react';
 import classNames from "classnames";
 import {isMobile} from "react-device-detect";
 
-import {Context} from "app/layoutWebSite/layoutWebsite"
+import {HomeContext} from "shared/lib/context/homeContext";
 
 import cls from "./schoolHomeBuilding.module.sass";
 import image from "shared/assets/images/studentBuilding.png";
@@ -56,7 +56,7 @@ const list2 = [
 ]
 
 export const SchoolHomeBuilding = () => {
-    const {setSectionTop} = useContext(Context)
+    const {setSectionTop} = useContext(HomeContext)
 
     const sectionRef = useRef()
 

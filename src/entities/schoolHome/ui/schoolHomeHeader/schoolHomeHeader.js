@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React, {memo, useCallback, useContext, useEffect, useRef, useState} from 'react';
 
-import {Context} from "app/layoutWebSite/layoutWebsite"
+import {HomeContext} from "shared/lib/context/homeContext";
 
 import {Button} from "shared/ui/button";
 
@@ -111,7 +111,7 @@ const list = [
 export const SchoolHomeHeader = memo(() => {
 
     const navigate = useNavigate()
-    const {sectionTop} = useContext(Context)
+    const {sectionTop} = useContext(HomeContext)
 
     const [activeSection, setActiveSection] = useState(null)
     const [prevActiveSection, setPrevActiveSection] = useState("")
@@ -155,7 +155,7 @@ export const SchoolHomeHeader = memo(() => {
                                         <li
                                             onClick={() => {
                                                 setActiveSection(link.name)
-                                                toLink(sectionTop[item.name])
+                                                toLink(sectionTop[link.path])
                                                 // navigate(link.path)
                                             }}
                                             className={classNames(cls.multiItem, {

@@ -2,8 +2,17 @@
 import cls from "./calendar.module.sass"
 import {Table} from "../../../../shared/ui/table";
 import {months} from "../../../../pages/calendarPage/ui/calendarDetail";
+import {useContext, useEffect, useRef} from "react";
+import {HomeContext} from "../../../../shared/lib/context/homeContext";
 
 export const Calendar = () => {
+    const {setSectionTop} = useContext(HomeContext)
+
+    const sectionRef = useRef()
+
+    useEffect(() => {
+        setSectionTop(cur => ({...cur, academic_calendar: sectionRef?.current?.offsetTop}))
+    }, [setSectionTop])
 
     const render = () => {
         return months.map(item => (
@@ -63,7 +72,7 @@ export const Calendar = () => {
         ))
     }
     return (
-        <>
+        <div ref={sectionRef}>
             <div className={cls.calendarHeader}>
                 <h1 className={cls.calendarHeader__titleMain}>Academic Calendar</h1>
 
@@ -78,7 +87,7 @@ export const Calendar = () => {
 
            </div>
 
-        </>
+        </div>
     );
 };
 

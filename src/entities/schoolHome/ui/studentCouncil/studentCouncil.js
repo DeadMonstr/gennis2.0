@@ -2,7 +2,8 @@ import doctor from "shared/assets/images/studentCouncil.svg"
 import logo from "shared/assets/images/studentCouncilLogo.svg"
 import cls from "./studentCouncil.module.sass";
 import image from "../../../../shared/assets/images/championImage.png";
-import React from "react";
+import React, {useContext, useEffect, useRef} from "react";
+import {HomeContext} from "../../../../shared/lib/context/homeContext";
 
 
 const data = [
@@ -21,8 +22,16 @@ const council = [
 
 
 export const StudentCouncil = () => {
+    const {setSectionTop} = useContext(HomeContext)
+
+    const sectionRef = useRef()
+
+    useEffect(() => {
+        setSectionTop(cur => ({...cur, student_council: sectionRef?.current?.offsetTop}))
+    }, [setSectionTop])
+
     return (
-        <div className={cls.champions}>
+        <div ref={sectionRef} className={cls.champions}>
             <div className={cls.champions__title}>
                 <h1>Studen council</h1>
                 <div className={cls.champions__locations}>

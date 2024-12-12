@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {Outlet} from "react-router";
 
 import {SchoolHomeHeader} from "entities/schoolHome";
+import {HomeContext} from "shared/lib/context/homeContext";
 
-export const Context = React.createContext(null)
 
 const LayoutWebsite = () => {
 
@@ -23,12 +23,12 @@ const LayoutWebsite = () => {
     })
 
     return (
-        <Context.Provider value={{sectionTop, setSectionTop}}>
+        <HomeContext.Provider value={{sectionTop, setSectionTop}}>
             <div style={{width: "100%", position: "relative"}}>
                 <SchoolHomeHeader/>
                 <Outlet/>
             </div>
-        </Context.Provider>
+        </HomeContext.Provider>
     );
 };
 

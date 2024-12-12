@@ -1,10 +1,11 @@
 import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {motion} from "framer-motion";
 
+import {HomeContext} from "shared/lib/context/homeContext";
+
 import cls from "./schoolHomeChampions.module.sass";
 import image from "shared/assets/images/championImage.png";
 import ratingStar from 'shared/assets/icons/rate.svg'
-import {Context} from "../../../../app/layoutWebSite/layoutWebsite";
 
 const list = [
     {
@@ -35,7 +36,7 @@ const list = [
 ]
 
 export const SchoolHomeChampions = () => {
-    const {setSectionTop} = useContext(Context)
+    const {setSectionTop} = useContext(HomeContext)
 
     const sectionRef = useRef()
 

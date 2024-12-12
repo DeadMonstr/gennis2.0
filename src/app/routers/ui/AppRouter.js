@@ -7,7 +7,7 @@ import {routersConfigList} from "app/routers/config/routersConfigList";
 import {Layout} from "app/layout";
 import {Login} from "pages/loginPage";
 import {StudentProfilePage} from "pages/profilePage";
-import {CenterHomePage, SchoolHomeEducationPage, SchoolHomePage} from "pages/homePage";
+import {CenterHomePage, NewSchoolHomePage, SchoolHomeEducationPage, SchoolHomePage} from "pages/homePage";
 import {Register} from "pages/registerPage/ui/register";
 import {NotFoundPage} from "pages/notfoundPage/ui/notfound";
 
@@ -53,22 +53,24 @@ export const AppRouter = () => {
         createRoutesFromElements(
             <>
 
-                <Route path={"/"} element={<LayoutWebsite/>}>
-                    <Route
-                        index
-                        element={<SchoolHomePage/>}
-                    />
-                    <Route element={<AboutUs/>} path={"aboutUs"}/>
-                    <Route element={<SchoolParentesComment/>} path={"testimonial"}/>
-                    <Route element={<SchoolHomeWorkUs/>} path={"workwithus"}/>
-                    <Route element={<SchoolHomeEducationPage/>} path={"education"}/>
-                    <Route element={<SchoolHomeLatestNewModal/>} path={"news"}/>
-                    <Route element={<SchoolHomeCurriculamModal/>} path={"curricular"}/>
-                    <Route element={<SchoolGalleryModal/>} path={"gallery"}/>
-                    <Route element={<SchoolHomeStudentProfileModal/>} path={"studentLife"}/>
-                    <Route element={<SchoolHomeNewsAnnouncementModal/>} path={"news_announcement"}/>
-                    <Route element={<SchoolHomeStudentsModal/>} path={"students"}/>
-                </Route>
+                <Route path={"/*"} element={<NewSchoolHomePage/>}/>
+
+                {/*<Route path={"/"} element={<LayoutWebsite/>}>*/}
+                {/*    <Route*/}
+                {/*        index*/}
+                {/*        element={<SchoolHomePage/>}*/}
+                {/*    />*/}
+                {/*    <Route element={<AboutUs/>} path={"aboutUs"}/>*/}
+                {/*    <Route element={<SchoolParentesComment/>} path={"testimonial"}/>*/}
+                {/*    <Route element={<SchoolHomeWorkUs/>} path={"workwithus"}/>*/}
+                {/*    <Route element={<SchoolHomeEducationPage/>} path={"education"}/>*/}
+                {/*    <Route element={<SchoolHomeLatestNewModal/>} path={"news"}/>*/}
+                {/*    <Route element={<SchoolHomeCurriculamModal/>} path={"curricular"}/>*/}
+                {/*    <Route element={<SchoolGalleryModal/>} path={"gallery"}/>*/}
+                {/*    <Route element={<SchoolHomeStudentProfileModal/>} path={"studentLife"}/>*/}
+                {/*    <Route element={<SchoolHomeNewsAnnouncementModal/>} path={"news_announcement"}/>*/}
+                {/*    <Route element={<SchoolHomeStudentsModal/>} path={"students"}/>*/}
+                {/*</Route>*/}
 
                 {/*<Route*/}
                 {/*    path={"/"}*/}
