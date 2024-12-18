@@ -29,8 +29,8 @@ export const RoomsProfilePage = () => {
     const [window, setWindow] = useState(false);
     const [image, setImage] = useState(false);
     const [localRoomData, setLocalRoomData] = useState({});
-    // const {id} = useParams();
-    const {id} = useSelector(getBranch)
+    const {id} = useParams();
+    // const {id} = useSelector(getBranch)
     const dispatch = useDispatch();
     const roomsID = useSelector(getRoomsID);
     const loading = useSelector(getLoadingStatus);

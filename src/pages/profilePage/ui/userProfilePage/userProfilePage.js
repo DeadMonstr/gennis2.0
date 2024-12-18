@@ -36,8 +36,8 @@ export const UserProfilePage = () => {
         dispatch(fetchUserProfileData(id))
     }, [])
 
-    // const {id} = useParams()
-    const {id} = useSelector(getBranch)
+    const {id} = useParams()
+    // const {id} = useSelector(getBranch)
     const {request} = useHttp()
     const dispatch = useDispatch()
     const userData = useSelector(getUserProfileData)

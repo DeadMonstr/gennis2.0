@@ -50,8 +50,8 @@ export const StudentProfilePage = () => {
     const formData = new FormData()
     const {register, handleSubmit} = useForm()
     const dispatch = useDispatch()
-    // const {id} = useParams()
-    const {id} = useSelector(getBranch)
+    const {id} = useParams()
+    // const {id} = useSelector(getBranch)
 
     const branch = useSelector(getBranch)
 

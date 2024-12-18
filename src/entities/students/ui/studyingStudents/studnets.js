@@ -11,7 +11,7 @@ export const Students = ({ currentTableData }) => {
         return currentTableData?.map((item, i) => {
 
                 return (
-                    <tr key={item.id} onClick={() => navigation(`profile/${item.id}`)}>
+                    <tr key={item.id} onClick={() => navigation(`profile/${item?.id}`)}>
                         <td>{i + 1}</td>
                         <td>{item?.user?.name} {item?.user?.surname}</td>
                         <td>{item?.user?.age}</td>
