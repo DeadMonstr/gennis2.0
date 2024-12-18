@@ -18,7 +18,7 @@ export const StudentProfileInfo = memo(({
                                             charity
                                         }) => {
     const number = content?.debt
-    console.log(month, "m")
+
     const formattedNumber = number?.toLocaleString();
     return (
         <EditableCard

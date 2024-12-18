@@ -65,14 +65,17 @@ export const Login = () => {
 
         request(`${API_URL}token/`, "POST", JSON.stringify(res))
             .then(res => {
-                if (res.class) {
+                dispatch(getUserData(res))
+                navigate("/platform")
+                setLoading(false)
+              /*  if (res.class) {
                     window.location.replace(`${CLASSROOM_API_URL}get_user_turon/${res.username}/${res.access}/${res.refresh}`)
                     return {success: false}
                 } else {
                     dispatch(getUserData(res))
                     navigate("/platform")
                     setLoading(false)
-                }
+                }*/
 
             })
             .catch(err => {
