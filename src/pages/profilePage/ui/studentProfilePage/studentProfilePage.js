@@ -141,6 +141,7 @@ export const StudentProfilePage = () => {
     }
 
 
+    console.log(userData , "userData")
     return (
         <div
             className={classNames(cls.profile)}

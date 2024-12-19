@@ -24,6 +24,7 @@ import {
     getMonthPrice, fetchStudentDebtorData, fetchStudentCharityMonth
 
 } from "./studentPaymentThunk";
+import {months} from "../../../pages/calendarPage/ui/calendarDetail";
 
 
 const initialState = {
@@ -59,9 +60,9 @@ const studentPaymentSlice = createSlice({
     initialState,
     reducers: {
 
-        onChange : (state , action) =>{
+        onChange: (state, action) => {
             state.month.data = state?.month.data?.map(item => {
-                if (item.id === +action.payload.id){
+                if (item.id === +action.payload.id) {
                     return {
                         ...item,
                         payment_sum: action.payload.payment_sum,
@@ -70,6 +71,12 @@ const studentPaymentSlice = createSlice({
                 }
                 return item
             })
+        },
+        onDeleteDebtorData: (state, action) => {
+
+            console.log(action.payload)
+            state.debtStudent.data = state?.debtStudent?.data?.filter(item => item.id !== action.payload.id)
+
         }
     },
     extraReducers: builder => {
@@ -407,7 +414,7 @@ const studentPaymentSlice = createSlice({
             })
             .addCase(fetchStudentCharityMonth.fulfilled, (state, action) => {
                 state.month = action.payload
-                console.log(action.payload , "action payload")
+                console.log(action.payload, "action payload")
                 state.loading = false
                 state.error = false
             })
@@ -419,5 +426,5 @@ const studentPaymentSlice = createSlice({
 
     }
 });
-export const {onChange} = studentPaymentSlice.actions
+export const {onChange, onDeleteDebtorData} = studentPaymentSlice.actions
 export default studentPaymentSlice.reducer

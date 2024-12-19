@@ -31,7 +31,7 @@ import {fetchStudentDebtorData} from "features/studentPayment/model/studentPayme
 import {Form} from "shared/ui/form";
 import {Input} from "shared/ui/input";
 import {useForm} from "react-hook-form";
-import {onChange} from "features/studentPayment/model/studentPaymentSlice";
+import {onChange, onDeleteDebtorData} from "features/studentPayment/model/studentPaymentSlice";
 import {ConfirmModal} from "../../../../../shared/ui/confirmModal";
 import {getBranch} from "../../../../../features/branchSwitcher";
 
@@ -69,8 +69,8 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
     const {register: registerChange, handleSubmit: handleSubmitChange, setValue: setValueChange} = useForm()
 
 
-    // const {id} = useParams()
-    const {id} = useSelector(getBranch)
+    const {id} = useParams()
+    // const {id} = useSelector(getBranch)
 
 
     const handleDelete = () => {
@@ -242,10 +242,13 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
         setCanChange(false)
     }
 
+
     const onDeleteDebtMonth = () => {
         request(`${API_URL}Attendance/attendance_per_month_delete/${changedData.id}/`, "DELETE", null, headers())
             .then(res => {
                 dispatch(fetchStudentDebtorData(id))
+                dispatch(onDeleteDebtorData(changedData.id))
+
             })
         setCanDelete(false)
         setCanChange(false)

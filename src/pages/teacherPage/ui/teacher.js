@@ -82,7 +82,7 @@ export const TeachersPage = () => {
             name: "O'qituvchilar",
             type: "teachers"
         }
-    ]
+    ];
 
     const onClick = () => {
         const id = activeDelete.id
