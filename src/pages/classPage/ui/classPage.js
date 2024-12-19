@@ -6,7 +6,7 @@ import {classItemLoading, classItems} from "entities/class/model/selector/classS
 import {useHttp} from "shared/api/base";
 import {DefaultPageLoader} from "../../../shared/ui/defaultLoader";
 
-export const ClassPage = ({setEdit, edit, setActiveEdit, activeMenu, setActiveMenu, classes}) => {
+export const ClassPage = ({setEdit, edit, setActiveEdit, activeMenu, setActiveMenu, classes,branch}) => {
 
     const {request} = useHttp()
     const [selectBox, setSelectBox] = useState([])
@@ -22,8 +22,15 @@ export const ClassPage = ({setEdit, edit, setActiveEdit, activeMenu, setActiveMe
 
     return (
         <>
-            <ClassFilter classesType={classes} setActiveEdit={setActiveEdit} edit={edit} setEdit={setEdit}
-                         active={activeMenu} setActive={setActiveMenu}/>
+            <ClassFilter
+                classesType={classes}
+                setActiveEdit={setActiveEdit}
+                edit={edit}
+                setEdit={setEdit}
+                active={activeMenu}
+                setActive={setActiveMenu}
+                branch={branch}
+            />
             {/*{loading*/}
             {/*    ?*/}
             {/*    <DefaultPageLoader/>*/}

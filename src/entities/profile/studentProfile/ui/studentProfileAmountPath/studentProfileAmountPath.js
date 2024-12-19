@@ -60,6 +60,7 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
     const month = useSelector(getMonth)
 
 
+
     const [modalActive, setActiveModal] = useState(false)
     const [itemChange, setItemChange] = useState({})
 
@@ -362,7 +363,7 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
                                                     <th>Cash</th>
                                                     <th>Click</th>
                                                     <th>Bank</th>
-                                                    {/*<th></th>*/}
+
                                                 </tr>
                                                 </thead>
                                                 <tbody>
