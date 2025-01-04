@@ -194,8 +194,7 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
                     {/*        className={`fa-solid fa-xmark `}*/}
                     {/*    ></i>*/}
                     {/*</td>*/}
-                    {
-                        job === "director" &&
+
                         <td>
                             <i
                                 onClick={() => {
@@ -207,7 +206,7 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
                                 className={`fa-solid fa-pen `}
                             ></i>
                         </td>
-                    }
+
                 </tr>
             )
         })
@@ -363,6 +362,7 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
                                                     <th>Cash</th>
                                                     <th>Click</th>
                                                     <th>Bank</th>
+                                                    <th></th>
 
                                                 </tr>
                                                 </thead>
@@ -382,8 +382,7 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
                 )}
 
 
-                {
-                    job === "director" &&
+
                     <Modal active={canChange} setActive={setCanChange}>
                         <Form onSubmit={handleSubmitChange(onChangePaymentMonth)} extraClassname={cls.changeModal}
                               id={"changeForm"} typeSubmit={"outside"}>
@@ -416,7 +415,7 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
                         />
 
                     </Modal>
-                }
+
 
 
             </div>

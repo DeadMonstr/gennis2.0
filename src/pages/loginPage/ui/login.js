@@ -62,6 +62,7 @@ export const Login = () => {
         //     showAlert("error" ,"error login")
         // })
         setLoading(!loading)
+        console.log("res")
 
         request(`${API_URL}token/`, "POST", JSON.stringify(res))
             .then(res => {

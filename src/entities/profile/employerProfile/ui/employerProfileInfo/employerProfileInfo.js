@@ -16,8 +16,8 @@ export const EmployerProfileInfo = memo(({active,setActive,setActiveModal, newIm
 
     const loading = useSelector(getEmployerLoading)
     const dispatch = useDispatch()
-    const {employerId} = useParams()
-    // const employerId = useSelector(getEmployerId)
+    // const {employerId} = useParams()
+    const employerId = useSelector(getEmployerId)
     const [localTeacherData, setLocalTeacherData] = useState({});
 
     useEffect(() => {
