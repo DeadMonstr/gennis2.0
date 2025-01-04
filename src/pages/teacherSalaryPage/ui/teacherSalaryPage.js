@@ -18,8 +18,8 @@ export const TeacherSalaryPage = () => {
     const [currentTableData, setCurrentTableData] = useState([]);
     const dispatch = useDispatch()
     const teacherSalaries = useSelector(getTeacherSalaries)
-    // const {id} = useParams()
-    const {id} = useSelector(getBranch)
+    const {id} = useParams()
+    // const {id} = useSelector(getBranch)
     const handleChange = (value) => {
         setSelected(value);
     };
