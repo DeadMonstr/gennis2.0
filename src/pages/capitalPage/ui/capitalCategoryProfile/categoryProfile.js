@@ -4,13 +4,15 @@ import {CategoryProfileProfile} from "entities/capital/ui/categoryProfileProfile
 import {getCapitalCategoryInfo} from "../../../../entities/capital/model/selector/capitalSelector";
 import {useEffect} from "react";
 import {getCapitalCategory} from "../../../../entities/capital/model/thunk/capitalThunk";
+import {getBranch} from "../../../../features/branchSwitcher";
 
 export const CategoryProfile = () => {
 
 
     const dispatch = useDispatch()
     const categoryInfo  = useSelector(getCapitalCategoryInfo)
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
 
     useEffect(() => {
         dispatch(getCapitalCategory(id))

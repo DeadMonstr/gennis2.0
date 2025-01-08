@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {motion} from "framer-motion";
+import {isMobile} from "react-device-detect";
 
 import cls from "./schoolHomeNewsAnnouncement.module.sass";
 import image from "shared/assets/images/tagFood.png";
@@ -104,7 +105,7 @@ const postsList = [
         text: "Of course the Puget Sound is very watery, and where there is water, " +
             "there are boats. Today is the Grand Opening of Boating Season when traffic" +
             " gets stalled in the University District (UW) while the Montlake Bridge"
-    },{
+    }, {
         image: sportImage,
         title: "Opening Day of Boating Season, Seattle WA",
         text: "Of course the Puget Sound is very watery, and where there is water, " +
@@ -123,8 +124,10 @@ export const SchoolHomeNewsAnnouncement = () => {
 
     const tagCarousel = useRef()
     const postCarousel = useRef()
+    const sliderCarousel = useRef()
     const [tagWidth, setTagWidth] = useState(null)
     const [postWidth, setPostWidth] = useState(null)
+    const [sliderWidth, setSliderWidth] = useState(null)
 
     useEffect(() => {
         setTagWidth(tagCarousel.current?.scrollWidth - tagCarousel.current?.offsetWidth)
@@ -133,6 +136,10 @@ export const SchoolHomeNewsAnnouncement = () => {
     useEffect(() => {
         setPostWidth(postCarousel.current?.scrollWidth - postCarousel.current?.offsetWidth)
     }, [postsList?.length])
+
+    useEffect(() => {
+        setSliderWidth(sliderCarousel.current?.scrollWidth - sliderCarousel.current?.offsetWidth)
+    }, [sliderList?.length])
 
     const renderTagsList = useCallback(() => {
         return tagList.map(item => {
@@ -153,16 +160,23 @@ export const SchoolHomeNewsAnnouncement = () => {
     const renderSliderList = useCallback(() => {
         return sliderList.map((item, i) => {
             return (
-                <div className={cls.slider__item}>
+                <motion.div
+                    transition={{duration: 1}}
+                    className={cls.slider__item}
+                >
                     <img src={item.image} alt=""/>
                     <div
                         className={cls.slider__info}
-                        style={{paddingRight: (i + 1) % 3 === 0 ? "18rem" : ""}}
+                        style={isMobile ? null : {paddingRight: (i + 1) % 3 === 0 ? "18rem" : ""}}
                     >
-                        <h2>{item.title}</h2>
-                        <p>{`${item.text.slice(0, ((i + 1) % 3 === 0 ? 151 : 101))}...`}</p>
+                        <h2>{item.title.length > 25 ? `${item.title.slice(0, 25)}...` : item.title}</h2>
+                        <p>{`${
+                            isMobile ?
+                                item.text.slice(0, 67) :
+                                item.text.slice(0, ((i + 1) % 3 === 0 ? 151 : 101))
+                        }...`}</p>
                     </div>
-                </div>
+                </motion.div>
             )
         })
     }, [sliderList])
@@ -176,7 +190,7 @@ export const SchoolHomeNewsAnnouncement = () => {
                 >
                     <img src={item?.image} alt=""/>
                     <div className={cls.posts__info}>
-                        <h2>{item?.title}</h2>
+                        <h2>{isMobile ? `${item?.title.slice(0, 25)}...` : item?.title}</h2>
                         <p>{item?.text?.slice(0, 93)}...</p>
                     </div>
                 </motion.div>
@@ -208,9 +222,18 @@ export const SchoolHomeNewsAnnouncement = () => {
                 </motion.div>
                 <div className={cls.tags__end}/>
             </motion.div>
-            <div className={cls.slider}>
-                {renderSliderList()}
-            </div>
+            <motion.div
+                className={cls.slider}
+                ref={sliderCarousel}
+            >
+                <motion.div
+                    className={cls.slider__wrapper}
+                    drag={"x"}
+                    dragConstraints={{left: -sliderWidth, right: 0}}
+                >
+                    {renderSliderList()}
+                </motion.div>
+            </motion.div>
             <div className={cls.posts}>
                 <div className={cls.posts__pseudo}/>
                 <h2 className={cls.posts__title}>Popular posts</h2>

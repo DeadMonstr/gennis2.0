@@ -7,10 +7,12 @@ import {useParams} from "react-router-dom";
 import {fetchWorkerWithId} from "features/vacancyModals/vacancyWorkPage/model";
 import {getWorkerId, getWorkerLoading} from "features/vacancyModals/vacancyWorkPage/model";
 import {DefaultLoader, DefaultPageLoader} from "shared/ui/defaultLoader";
+import {getBranch} from "../../../../../features/branchSwitcher";
 
 export const VacancyWorkList = ({ currentTableData, currentPage, PageSize, editMode, onEditClick, selectedItems, setSelectedItems }) => {
 
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
     const dispatch = useDispatch()
     const workerID = useSelector(getWorkerId)
     const userName = workerID.job?.map(item => item.group.name)

@@ -68,21 +68,21 @@ export const TeacherProfileTotalAmount = memo(({active, setActive, salary_id, us
 
     }
 
-    const renderAmountServiceTypes = useCallback(() => {
-        return amountService.map(item =>
-            <div className={cls.items__inner}>
-                <Radio
-                    extraClasses={cls.items__radio}
-                    onChange={() => setActiveService(item)}
-                    value={item}
-                    checked={item === activeService}
-                />
-                <p>{item}</p>
-            </div>
-        )
-    }, [activeService])
-
-    const renderAmountService = renderAmountServiceTypes()
+    // const renderAmountServiceTypes = useCallback(() => {
+    //     return amountService.map(item =>
+    //         <div className={cls.items__inner}>
+    //             <Radio
+    //                 extraClasses={cls.items__radio}
+    //                 onChange={() => setActiveService(item)}
+    //                 value={item}
+    //                 checked={item === activeService}
+    //             />
+    //             <p>{item}</p>
+    //         </div>
+    //     )
+    // }, [activeService])
+    //
+    // const renderAmountService = renderAmountServiceTypes()
 
     return (
         <EditableCard
@@ -109,15 +109,15 @@ export const TeacherProfileTotalAmount = memo(({active, setActive, salary_id, us
                 </div>
             </div>
             <div className={cls.amount__content}>
-                <div className={cls.items}>
-                    {renderAmountService}
-                </div>
+                {/*<div className={cls.items}>*/}
+                {/*    {renderAmountService}*/}
+                {/*</div>*/}
                 <div className={cls.form}>
                     <h1>{activeService}</h1>
-                    {
-                        activeService === "To'lov"
-                            ?
-                            <>
+                    {/*{*/}
+                    {/*    activeService === "To'lov"*/}
+                    {/*        ?*/}
+                    {/*        <>*/}
                                 <div className={cls.items}>
                                     {amountTypes.map((item, index) =>
                                         <div
@@ -156,37 +156,37 @@ export const TeacherProfileTotalAmount = memo(({active, setActive, salary_id, us
                                         />
                                     </div>
                                 </Form>
-                            </>
-                            :
-                            activeService === "Xayriya"
-                                ?
-                                <Form onSubmit={handleSubmit(handleAddSalary)}>
-                                    <div className={cls.form__container}>
-                                        <Select
-                                            extraClass={cls.form__select}
-                                        />
-                                        <div className={cls.form__inner}>
-                                            <p>{activeService} miqdori</p>
-                                            <Input
-                                                {...register("amount")}
-                                                placeholder={"Summa"}
-                                                type={"number"}
-                                            />
-                                        </div>
-                                    </div>
-                                </Form>
-                                :
-                                <Form>
-                                    <div className={cls.form__inner}>
-                                        <p>{activeService} miqdori</p>
-                                        <Input
-                                            {...register("amount")}
-                                            placeholder={"Summa"}
-                                            type={"number"}
-                                        />
-                                    </div>
-                                </Form>
-                    }
+                    {/*        </>*/}
+                    {/*        :*/}
+                    {/*        activeService === "Xayriya"*/}
+                    {/*            ?*/}
+                    {/*            <Form onSubmit={handleSubmit(handleAddSalary)}>*/}
+                    {/*                <div className={cls.form__container}>*/}
+                    {/*                    <Select*/}
+                    {/*                        extraClass={cls.form__select}*/}
+                    {/*                    />*/}
+                    {/*                    <div className={cls.form__inner}>*/}
+                    {/*                        <p>{activeService} miqdori</p>*/}
+                    {/*                        <Input*/}
+                    {/*                            {...register("amount")}*/}
+                    {/*                            placeholder={"Summa"}*/}
+                    {/*                            type={"number"}*/}
+                    {/*                        />*/}
+                    {/*                    </div>*/}
+                    {/*                </div>*/}
+                    {/*            </Form>*/}
+                    {/*            :*/}
+                    {/*            <Form>*/}
+                    {/*                <div className={cls.form__inner}>*/}
+                    {/*                    <p>{activeService} miqdori</p>*/}
+                    {/*                    <Input*/}
+                    {/*                        {...register("amount")}*/}
+                    {/*                        placeholder={"Summa"}*/}
+                    {/*                        type={"number"}*/}
+                    {/*                    />*/}
+                    {/*                </div>*/}
+                    {/*            </Form>*/}
+                    {/*}*/}
                 </div>
             </div>
         </EditableCard>

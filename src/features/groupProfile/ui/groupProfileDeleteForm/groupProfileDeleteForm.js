@@ -1,12 +1,13 @@
 import {getGroupsListData} from "entities/groups";
 import {
+    getDebtStudents,
     getFilteredGroups,
     getGroupProfileFilteredStudents, getGroupProfileFilteredTeachers,
-    getReasons
+    getReasons, getStudyMonths
 } from "entities/profile/groupProfile/model/groupProfileSelector";
 import {
     fetchFilteredGroups,
-    filteredStudents,
+    filteredStudents, getGroupDebtStudents, getGroupStudyMonth, getGroupStudyYears,
     moveGroup,
     moveToClass
 } from "entities/profile/groupProfile/model/groupProfileThunk";
@@ -19,7 +20,13 @@ import classNames from "classnames";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 
-import {changeGroupProfile, getGroupProfileData} from "entities/profile/groupProfile";
+import {
+    changeDebtStudent,
+    changeGroupProfile,
+    deleteDebtStudent,
+    getGroupProfileData,
+    getStudyYears
+} from "entities/profile/groupProfile";
 import {
     amountService,
     amountTypes
@@ -42,6 +49,10 @@ import defaultUserImg from "shared/assets/images/user_image.png";
 import bank from "shared/assets/images/Bank.png";
 import creditCard from "shared/assets/images/CreditCard.png";
 import money from "shared/assets/images/Money.png";
+import {getBranch} from "../../../branchSwitcher";
+import {API_URL, headers, useHttp} from "../../../../shared/api/base";
+import {fetchStudentDebtorData} from "../../../studentPayment/model/studentPaymentThunk";
+import {onDeleteDebtorData} from "../../../studentPayment/model/studentPaymentSlice";
 
 const listPretcent = [-1, 34.8, 70.4]
 
@@ -62,9 +73,11 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
         register,
         handleSubmit
     } = useForm()
+    const {request} = useHttp()
 
     const {theme} = useTheme()
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
     const dispatch = useDispatch()
     const navigation = useNavigate()
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
@@ -75,6 +88,9 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
     const schoolTeachers = useSelector(getTeachers)
     const groups = useSelector(getFilteredGroups)
     const reasons = useSelector(getReasons)
+    const studyYears = useSelector(getStudyYears)
+    const studyMonths = useSelector(getStudyMonths)
+    const debtStudents = useSelector(getDebtStudents)
 
     const [isDeleted, setIsDeleted] = useState(false)
     const [dataDeleted, setDataDeleted] = useState(null)
@@ -87,6 +103,7 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
                 res: {ignore_students: data?.students.map(item => item.id)}
             }))
             dispatch(fetchTeachersData({userBranchId: branch}))
+            dispatch(getGroupStudyYears({id: data?.id}))
         }
     }, [data, branch])
 
@@ -99,6 +116,13 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
     const [activeService, setActiveService] = useState(amountService[0])
     const [activePaymentType, setActivePaymentType] = useState(0)
     const [selectedId, setSelectedId] = useState([])
+
+    const [selectedMonthId, setSelectedMonthId] = useState(null)
+    const [selectedYearId, setSelectedYearId] = useState(null)
+    const [selectedChange, setSelectedChange] = useState(null)
+    const [activeMonthDebt, setActiveMonthDebt] = useState(false)
+    const [activeDebt, setActiveDebt] = useState(false)
+    const [canDelete, setCanDelete] = useState(false)
 
     const [searchValue, setSearchValue] = useState("")
     const [currentTeachersData, setCurrentTeachersData] = useState([])
@@ -182,9 +206,119 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
         }))
     }
 
+    const onChangePaymentMonth = (data) => {
+        console.log(data, "data")
+        request(`${API_URL}Attendance/attendance_per_month_delete/${selectedChange?.attendance_id}/`, "PUT", JSON.stringify(data), headers())
+            .then(res => {
+                console.log(res)
+                dispatch(changeDebtStudent({id: selectedChange.id, res}))
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: res.msg
+                }))
+                setActiveDebt(false)
+            })
+            .catch(err => console.log(err))
+    }
+
+    const onDeleteDebtMonth = () => {
+        request(`${API_URL}Attendance/attendance_per_month_delete/${selectedChange.attendance_id}/`, "DELETE", null, headers())
+            .then(res => {
+                dispatch(deleteDebtStudent(selectedChange?.id))
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: res.msg
+                }))
+                setCanDelete(false)
+                setActiveDebt(false)
+                // dispatch(fetchStudentDebtorData(id))
+                // dispatch(onDeleteDebtorData(changedData.id))
+
+            })
+    }
+
+    const changeMonthId = useCallback((monthId) => {
+        setSelectedMonthId(monthId)
+        dispatch(getGroupDebtStudents({id: data?.id, res: {year: selectedYearId, month: monthId}}))
+    }, [selectedYearId])
+
+    const changeYearId = useCallback((id) => {
+        setSelectedYearId(id)
+        setSelectedMonthId(null)
+        dispatch(getGroupStudyMonth({id: data?.id, res: id}))
+        // request(`${API_URL}/${id}`, "POST")
+        //     .then(res => console.log(res))
+        //     .catch(err => console.log(err))
+    }, [])
+
     const onFilterGroups = (id) => {
         dispatch(fetchFilteredGroups({id, group_id: data?.id}))
     }
+
+    const renderDebtorData = useCallback(() => {
+        if (selectedYearId && selectedMonthId)
+            return debtStudents?.map((item, i) => {
+                return (
+                    <tr>
+                        <td>{i + 1}</td>
+                        <td
+                            // onClick={() => {
+                            //     setValue("payment_sum", item.discount_sum)
+                            //     setValue("reason", item.discount_reason)
+                            //     setActiveModal(true)
+                            //     setItemChange(item.discount_id)
+                            // }}
+                        >
+                            {item?.name} {item?.surname}
+                        </td>
+                        <td>{item?.total_debt}</td>
+                        <td>{item?.remaining_debt}</td>
+                        <td>{item?.charity}</td>
+                        <td>{item?.discount}</td>
+                        {/*<td>{item?.discount_sum}</td>*/}
+                        <td>{item?.reason}</td>
+                        {/*<td>{item?.cash}</td>*/}
+                        {/*<td>{item?.click}</td>*/}
+                        {/*<td>{item?.bank}</td>*/}
+                        <td>
+                            <i
+                                onClick={() => {
+                                    setActiveDebt(true)
+                                    setSelectedChange(item)
+                                }}
+                                className="fas fa-pen"
+                            />
+                        </td>
+                        {/*<td>*/}
+                        {/*    <i*/}
+                        {/*        onClick={() => {*/}
+                        {/*            setChangedData(item.id)*/}
+                        {/*            setCanDelete(true)*/}
+                        {/*        }}*/}
+                        {/*        style={{color: '#FF3737FF'}}*/}
+                        {/*        className={`fa-solid fa-xmark `}*/}
+                        {/*    ></i>*/}
+                        {/*</td>*/}
+                        {/*{*/}
+                        {/*    job === "director" &&*/}
+                        {/*    <td>*/}
+                        {/*        <i*/}
+                        {/*            onClick={() => {*/}
+                        {/*                setChangedData(item)*/}
+                        {/*                setCanChange(true)*/}
+                        {/*                setValueChange("total_debt", item.total_debt)*/}
+                        {/*            }}*/}
+                        {/*            style={{color: '#484848'}}*/}
+                        {/*            className={`fa-solid fa-pen `}*/}
+                        {/*        ></i>*/}
+                        {/*    </td>*/}
+                        {/*}*/}
+                    </tr>
+                )
+            })
+    }, [debtStudents, selectedYearId, selectedMonthId])
 
     const renderStudents = () => {
         return data?.students?.map(item =>
@@ -321,26 +455,32 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
             >
                 <div className={cls.students__title}>
                     <h1>O’quvchilar</h1>
-                    {
-                        active ?
-                            <div className={cls.students__wrapper}>
-                                <Button
-                                    disabled={select.length === 0}
-                                    type={select.length === 0 ? "disabled" : ""}
-                                    extraClass={cls.students__btn}
-                                    onClick={() => setActiveModal("changeModal")}
-                                >
-                                    Move
-                                </Button>
-                                <Button
-                                    extraClass={cls.students__btn}
-                                    onClick={() => setActiveModal("addModal")}
-                                >
-                                    Add
-                                </Button>
+                    <div className={cls.students__wrapperBtn}>
+                        <i
+                            className={classNames("fas fa-pen", cls.students__icon)}
+                            onClick={() => setActiveMonthDebt(true)}
+                        />
+                        {
+                            active ?
+                                <div className={cls.students__wrapper}>
+                                    <Button
+                                        disabled={select.length === 0}
+                                        type={select.length === 0 ? "disabled" : ""}
+                                        extraClass={cls.students__btn}
+                                        onClick={() => setActiveModal("changeModal")}
+                                    >
+                                        Move
+                                    </Button>
+                                    <Button
+                                        extraClass={cls.students__btn}
+                                        onClick={() => setActiveModal("addModal")}
+                                    >
+                                        Add
+                                    </Button>
 
-                            </div> : null
-                    }
+                                </div> : null
+                        }
+                    </div>
                 </div>
                 <div className={cls.students__list}>
                     <Table>
@@ -565,6 +705,96 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
                 >
                     Add
                 </Button>
+            </Modal>
+            <Modal
+                active={activeMonthDebt}
+                setActive={setActiveMonthDebt}
+                extraClass={cls.changeModal}
+            >
+
+                <div className={cls.changeModal__title}>
+                    <h1>Oylik qarz o'zgartirish</h1>
+                    <div className={cls.changeModal__wrapper}>
+                        <Select
+                            defaultValue={selectedYearId}
+                            // extraClass={cls.changeModal__input}
+                            onChangeOption={changeYearId}
+                            options={studyYears}
+                            keyValue={"year"}
+                        />
+                        <Select
+                            status={!selectedYearId && !selectedMonthId ? "disabled" : null}
+                            defaultValue={selectedMonthId ?? "clear"}
+                            // extraClass={cls.changeModal__input}
+                            onChangeOption={changeMonthId}
+                            options={studyMonths}
+                            keyValue={"month"}
+                        />
+                    </div>
+                </div>
+                <div className={cls.tableDebt}>
+                    <Table>
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Full name</th>
+                            <th>Umumiy qarz</th>
+                            <th>Qolgan qarz</th>
+                            <th>Xayriya</th>
+                            <th>Chegirma</th>
+                            <th>Chegirma sababi</th>
+                            {/*<th>Cash</th>*/}
+                            {/*<th>Click</th>*/}
+                            {/*<th>Bank</th>*/}
+                            {/*<th></th>*/}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {renderDebtorData()}
+                        </tbody>
+                    </Table>
+                </div>
+
+            </Modal>
+            <Modal
+                active={activeDebt}
+                setActive={setActiveDebt}
+                // extraClass={cls.changeModal}
+            >
+                <Form
+                    onSubmit={handleSubmit(onChangePaymentMonth)}
+                    extraClassname={cls.changeModal}
+                    id={"changeForm"} typeSubmit={"outside"}
+                >
+                    <h1>Oylik qarz o'zgartirish</h1>
+                    <Input
+                        extraClassName={cls.changeModal__input}
+                        value={selectedChange?.total_debt}
+                        register={register}
+                        name={"total_debt"}
+                    />
+                    <div className={cls.changeModal__btns}>
+                        <Button
+                            onClick={() => {
+                                setCanDelete(true)
+
+                            }}
+                            type={"danger"} id={""}
+                        >
+                            O'chirish
+                        </Button>
+                        <Button id={"changeForm"}>
+                            O'zgartirish
+                        </Button>
+                    </div>
+                </Form>
+                <ConfirmModal
+                    title={`${selectedChange?.name} ${selectedChange?.surname} o'chirishni hohlaysizmi`}
+                    setActive={setCanDelete}
+                    active={canDelete}
+                    onClick={onDeleteDebtMonth}
+                    type={"danger"}
+                />
             </Modal>
             <ConfirmModal
                 type={"danger"}

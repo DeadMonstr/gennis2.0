@@ -19,15 +19,16 @@
   &.hoverActive
     opacity: 1
     display: flex !important
-  &.active
-    font-weight: 700
+  &__summary, &__single
+    &.active
+      font-weight: 700
 
 
 .homeHeader
   //min-height: 13rem
   width: 100%
   height: fit-content
-  z-index: 3219039214234
+  z-index: 100
   display: flex
   justify-content: space-between
   align-items: center
@@ -109,13 +110,17 @@
     color: white
 
   &__list
+    padding-top: 2rem
+    padding-bottom: 2rem
+    gap: 3rem
     padding-left: 3rem
-    width: 45%
-    height: 60%
+    width: 50%
+    min-height: min-content
+    max-height: max-content
     background: white
     display: flex
     flex-direction: column
-    justify-content: space-around
+    //justify-content: space-around
     //align-items: center
     position: absolute
     top: 8.5rem
@@ -153,7 +158,15 @@
         font-size: 1.5rem
 
 @media (max-width: 768px)
+  .listItem
+    color: black
+    font-size: 2rem
+    cursor: pointer
   .homeHeader
+    &__multi
+      position: initial
+      box-shadow: none
+      align-items: flex-start
     &__list
       display: none
 

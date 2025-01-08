@@ -13,10 +13,12 @@ import groupImage from 'shared/assets/images/group-img.svg';
 import {Table} from "shared/ui/table";
 import {useDispatch, useSelector} from "react-redux";
 import {getTeacherId} from "../../../../teachers";
+import {getBranch} from "../../../../../features/branchSwitcher";
 
 export const SchoolTeacherGroups = memo(() => {
 
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
     const dispatch = useDispatch()
     const navigation = useNavigate()
 

@@ -11,7 +11,12 @@ import {
     fetchWeekDays,
     createWeekDays,
     moveGroup,
-    filteredStudents, fetchGroupProfileNextLesson, getSchoolAttendance
+    filteredStudents,
+    fetchGroupProfileNextLesson,
+    getSchoolAttendance,
+    getGroupStudyYears,
+    getGroupStudyMonth,
+    getGroupDebtStudents
 } from "./groupProfileThunk";
 
 const initialState = {
@@ -24,6 +29,9 @@ const initialState = {
     timeTable: null,
     weekDays: null,
     reasons: null,
+    studyYears: [],
+    studyMonths: [],
+    debtStudents: [],
     loading: false,
     studentsLoading: false,
     error: null
@@ -35,6 +43,28 @@ const groupProfileSlice = createSlice({
     reducers: {
         getNextLesson: (state, action) => {
             state.nextLessonData = action.payload
+        },
+        changeDebtStudent: (state, action) => {
+            state.debtStudents = state.debtStudents.map(item => {
+                if (item.id === action.payload.id) {
+                    console.log(action.payload, "payload")
+                    return {
+                        remaining_debt: action.payload.res.remaining_debt,
+                        total_debt: action.payload.res.total_debt,
+                        attendance_id: item?.attendance_id,
+                        charity: item?.charity,
+                        discount: item?.discount,
+                        id: item?.id,
+                        name: item?.name,
+                        payment: item?.payment,
+                        reason: item?.reason,
+                        surname: item?.surname,
+                    }
+                } else return item
+            })
+        },
+        deleteDebtStudent: (state, action) => {
+            state.debtStudents = state.debtStudents.filter(item => item.id !== action.payload)
         }
     },
     extraReducers: builder =>
@@ -201,22 +231,68 @@ const groupProfileSlice = createSlice({
             })
 
 
+            .addCase(getGroupStudyYears.pending, state => {
+                // state.loading = true
+                // state.error = null
+            })
+            .addCase(getGroupStudyYears.fulfilled, (state, action) => {
+                state.studyYears = action.payload?.dates
+                // state.filteredStudents = action.payload.students
+                // state.loading = false
+                // state.error = null
+            })
+            .addCase(getGroupStudyYears.rejected, (state, action) => {
+                // state.loading = false
+                // state.error = "error"
+            })
 
-            // .addCase(getSchoolAttendance.pending, state => {
-            //     state.loading = true
-            //     state.error = null
-            // })
-            // .addCase(getSchoolAttendance.fulfilled, (state, action) => {
-            //     state.groupAttendance = action.payload
-            //     console.log(action.payload , "shaxzod kur")
-            //     state.loading = false
-            //     state.error = null
-            // })
-            // .addCase(getSchoolAttendance.rejected, (state, action) => {
-            //     state.loading = false
-            //     state.error = true
-            // })
+            .addCase(getGroupStudyMonth.pending, state => {
+                // state.loading = true
+                // state.error = null
+            })
+            .addCase(getGroupStudyMonth.fulfilled, (state, action) => {
+                state.studyMonths = action.payload?.dates
+                // state.filteredStudents = action.payload.students
+                // state.loading = false
+                // state.error = null
+            })
+            .addCase(getGroupStudyMonth.rejected, (state, action) => {
+                // state.loading = false
+                // state.error = "error"
+            })
+
+            .addCase(getGroupDebtStudents.pending, state => {
+                // state.loading = true
+                // state.error = null
+            })
+            .addCase(getGroupDebtStudents.fulfilled, (state, action) => {
+                state.debtStudents = action.payload?.students
+                // state.filteredStudents = action.payload.students
+                // state.loading = false
+                // state.error = null
+            })
+            .addCase(getGroupDebtStudents.rejected, (state, action) => {
+                // state.loading = false
+                // state.error = "error"
+            })
+
+
+
+    // .addCase(getSchoolAttendance.pending, state => {
+    //     state.loading = true
+    //     state.error = null
+    // })
+    // .addCase(getSchoolAttendance.fulfilled, (state, action) => {
+    //     state.groupAttendance = action.payload
+    //     console.log(action.payload , "shaxzod kur")
+    //     state.loading = false
+    //     state.error = null
+    // })
+    // .addCase(getSchoolAttendance.rejected, (state, action) => {
+    //     state.loading = false
+    //     state.error = true
+    // })
 })
 
-export const {getNextLesson} = groupProfileSlice.actions
+export const {getNextLesson, changeDebtStudent, deleteDebtStudent} = groupProfileSlice.actions
 export default groupProfileSlice.reducer

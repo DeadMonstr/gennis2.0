@@ -1,5 +1,7 @@
 import classNames from "classnames";
-import React, {memo, useCallback, useEffect, useRef, useState} from 'react';
+import React, {memo, useCallback, useContext, useEffect, useRef, useState} from 'react';
+
+import {HomeContext} from "shared/lib/context/homeContext";
 
 import {Button} from "shared/ui/button";
 
@@ -73,13 +75,13 @@ const list = [
             {
                 name: "Our Students",
                 path: "our_students"
-            },{
+            }, {
                 name: "Academic Champions",
                 path: "academic_champions"
-            },{
+            }, {
                 name: "Student Clubs",
                 path: "student_clubs"
-            },{
+            }, {
                 name: "Student Council",
                 path: "student_council"
             },
@@ -90,11 +92,11 @@ const list = [
         label: "Testimonial",
         path: "testimonial"
     },
-    {
-        name: "admission",
-        label: "Admission",
-        path: "admission"
-    },
+    // {
+    //     name: "admission",
+    //     label: "Admission",
+    //     path: "admission"
+    // },
     {
         name: "workwithus",
         label: "Work with us",
@@ -109,13 +111,18 @@ const list = [
 export const SchoolHomeHeader = memo(() => {
 
     const navigate = useNavigate()
+    const {sectionTop} = useContext(HomeContext)
 
     const [activeSection, setActiveSection] = useState(null)
     const [prevActiveSection, setPrevActiveSection] = useState("")
     const [activeMulti, setActiveMulti] = useState(false)
     const [activeBurger, setActiveBurger] = useState(false)
 
-    console.log(activeSection)
+    const toLink = (top) => {
+        // setStatus(false)
+        setActiveBurger(false)
+        window.scrollTo(0, top - 100)
+    }
 
     const renderSectionMenuList = useCallback(() => {
         return list.map(item => {
@@ -134,7 +141,11 @@ export const SchoolHomeHeader = memo(() => {
                             navigate(item.path)
                         }}
                     >
-                        <summary>
+                        <summary
+                            className={classNames(cls.listItem__summary, {
+                                [cls.active]: item.name === activeSection
+                            })}
+                        >
                             {item.label}
                         </summary>
                         <div className={cls.homeHeader__multi}>
@@ -144,10 +155,11 @@ export const SchoolHomeHeader = memo(() => {
                                         <li
                                             onClick={() => {
                                                 setActiveSection(link.name)
-                                                navigate(link.path)
+                                                toLink(sectionTop[link.path])
+                                                // navigate(link.path)
                                             }}
                                             className={classNames(cls.multiItem, {
-                                                [cls.active]: link.name === activeSection
+                                                // [cls.active]: link.name === activeSection
                                             })}
                                         >
                                             {link.name}
@@ -167,7 +179,6 @@ export const SchoolHomeHeader = memo(() => {
                                 })
                             }
                         </div>
-
                     </details>
                 )
             }
@@ -177,7 +188,7 @@ export const SchoolHomeHeader = memo(() => {
                         setActiveSection(item.name)
                         navigate(item.path)
                     }}
-                    className={classNames(cls.listItem, {
+                    className={classNames(cls.listItem,cls.listItem__single,  {
                         [cls.active]: item.name === activeSection
                     })}
                 >

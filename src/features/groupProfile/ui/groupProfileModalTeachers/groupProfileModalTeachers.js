@@ -20,6 +20,7 @@ import {getGroupProfileData} from "entities/profile/groupProfile";
 
 import cls from "./groupProfileModalTeachers.module.sass";
 import defaultUserImg from "shared/assets/images/user_image.png";
+import {getBranch} from "../../../branchSwitcher";
 
 export const GroupProfileModalTeachers = memo(({branch}) => {
 
@@ -28,7 +29,8 @@ export const GroupProfileModalTeachers = memo(({branch}) => {
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
     const userBranchId = useSelector(getUserBranchId)
     const dispatch = useDispatch()
-    const {id} = useParams()
+    // const {id} = useParams()
+    const {id} = useSelector(getBranch)
     const {theme} = useTheme()
     const profileData = useSelector(getGroupProfileData)
     const centerTeachers = useSelector(getGroupProfileFilteredTeachers)

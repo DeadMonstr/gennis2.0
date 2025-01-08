@@ -63,6 +63,7 @@ export const GroupProfilePage = () => {
     const {request} = useHttp()
     const dispatch = useDispatch()
     const {id} = useParams()
+    // const {id} = useSelector(getBranch)
     const data = useSelector(getGroupProfileData)
     const timeTable = useSelector(getTimeTable)
     const loading = useSelector(getGroupProfileLoading)

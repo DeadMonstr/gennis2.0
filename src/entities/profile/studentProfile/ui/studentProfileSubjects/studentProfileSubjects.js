@@ -7,6 +7,8 @@ import cls from "./studentProfileSubjects.module.sass";
 import time from "shared/assets/images/oclock.png";
 
 export const StudentProfileSubjects = memo(({ setActive, data, onSelectSubject }) => {
+
+    console.log(data , "data")
     const navigation = useNavigate()
     const renderSubjects = useCallback(() => {
         const subjects = Array.isArray(data)
@@ -23,6 +25,8 @@ export const StudentProfileSubjects = memo(({ setActive, data, onSelectSubject }
                 groupId: data.id
             }] : []);
 
+
+        console.log(subjects , " sub")
 
         return subjects?.map(item =>
             <div onClick={() => {
@@ -63,7 +67,7 @@ export const StudentProfileSubjects = memo(({ setActive, data, onSelectSubject }
             <div className={cls.subject__edit}>
                 <img src={time} alt="" />
             </div>
-            <h1>O’qiyotgan fanlari</h1>
+            <h1>O’qiyotgan sinflari</h1>
             <div className={cls.subject__list}>
                 {render.length > 0 ? (
                     render

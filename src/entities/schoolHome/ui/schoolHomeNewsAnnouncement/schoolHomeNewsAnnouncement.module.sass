@@ -33,7 +33,7 @@
       gap: 2.4rem
     &__end
       top: 0
-      right: 0
+      right: -10rem
       position: absolute
       width: 15.5rem
       height: 100%
@@ -48,6 +48,7 @@
       @include btn-active
       cursor: pointer
       img
+        height: 100%
         width: 100%
         object-fit: cover
         border-radius: 1.2rem
@@ -67,8 +68,11 @@
         font-family: sans-serif, "Roboto Thin" !important
         font-weight: 400 !important
   .slider
-    display: flex
-    gap: 5rem
+    overflow: hidden
+    width: 100%
+    &__wrapper
+      display: flex
+      gap: 5rem
     &__item
       position: relative
       img
@@ -144,3 +148,30 @@
         color: #3E3232BF
         font-size: 1.4rem
         font-weight: 400
+
+@media (max-width: 430px)
+  .announcement
+    padding: 1.6rem 2.8rem
+    .title
+      h1
+        font-size: 2rem
+      &__container
+        display: none
+    .tags
+      &__item
+        min-width: 10.4rem
+    .slider
+      &__item
+        img
+          width: 26rem
+          height: 35rem
+      &__info
+        width: 95%
+        right: .6rem
+        h2
+          font-size: 1.6rem
+    .posts
+      &__item
+        img
+          max-width: 23rem
+          max-height: 26rem

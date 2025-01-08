@@ -23,7 +23,7 @@ export const  Select = React.memo(({
     const [optionsData, setOptionsData] = useState([]);
     const [isChanged, setIsChanged] = useState(false);
 
-
+    console.log(defaultValue, "defaultValue")
 
     useEffect(() => {
         setOptionsData(options);
@@ -53,7 +53,7 @@ export const  Select = React.memo(({
     const renderOptionsOfSelect = useCallback(() => {
         return optionsData?.map((item, index) => {
             const value = item[keyValue] || item?.id || item?.value || item?.name || item;
-            const key = item?.name  || item?.number || item.old_id  || item?.days || item.num || item?.user && `${item.user?.name} ${item.user?.surname}` || item.branch || item;
+            const key = item?.name  || item?.number || item.old_id  || item?.days || item.num || item?.user && `${item.user?.name} ${item.user?.surname}` || item.branch || item[keyValue] || item;
 
             return (
                 <option

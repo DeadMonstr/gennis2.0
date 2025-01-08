@@ -51,6 +51,7 @@ export const StudentProfilePage = () => {
     const {register, handleSubmit} = useForm()
     const dispatch = useDispatch()
     const {id} = useParams()
+    // const {id} = useSelector(getBranch)
 
     const branch = useSelector(getBranch)
 
@@ -140,6 +141,7 @@ export const StudentProfilePage = () => {
     }
 
 
+    console.log(userData , "userData")
     return (
         <div
             className={classNames(cls.profile)}

@@ -14,6 +14,7 @@ import {useParams} from "react-router-dom";
 import {useLocation} from "react-router";
 import {giveEmployerSalaryLoading} from "../../../features/giveEmployerSalary";
 import {DefaultLoader} from "../../../shared/ui/defaultLoader";
+import {getBranch} from "../../../features/branchSwitcher";
 
 
 export const GiveSalaryPage = () => {
@@ -34,6 +35,7 @@ export const GiveSalaryPage = () => {
     const salaryPageIdx = pathSegments.indexOf('employerSalaryPage') + 1;
     const employerSalaryPageId = pathSegments[salaryPageIdx];
     const {id} = useParams()
+    // const {id} = useSelector(getBranch)
 
     useEffect(() => {
         if(id)

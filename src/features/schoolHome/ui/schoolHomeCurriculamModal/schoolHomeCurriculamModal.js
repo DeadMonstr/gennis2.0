@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {SchoolHomeCurricular} from "entities/schoolHome";
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -27,8 +27,16 @@ import {getCurriculum, getExtraCurriculum} from "entities/schoolHome/model/thunk
 import {getUserJob} from "../../../../entities/profile/userProfile";
 import {getHomePageType} from "../../../../entities/schoolHome/model/selector/getHomePageSelector";
 import {fetchHomePage} from "../../../../entities/schoolHome/model/thunk/getHomePageSelector";
+import {HomeContext} from "../../../../shared/lib/context/homeContext";
 
 export const SchoolHomeCurriculamModal = () => {
+    const {setSectionTop} = useContext(HomeContext)
+
+    const sectionRef = useRef()
+
+    useEffect(() => {
+        setSectionTop(cur => ({...cur, curricular: sectionRef?.current?.offsetTop}))
+    }, [setSectionTop])
 
     const curricularData = useSelector(getCurricularData)
     const extraCurricularData = useSelector(getExtraCurricularData)
@@ -69,7 +77,7 @@ export const SchoolHomeCurriculamModal = () => {
 
 
     return (
-        <div>
+        <div ref={sectionRef}>
             <SchoolHomeCurricular
 
                 job={job === "smm"}
