@@ -135,8 +135,29 @@ export const moveToClass = createAsyncThunk(
     }
 )
 
+export const getGroupStudyYears = createAsyncThunk(
+    "groupProfileSlice/getGroupStudyYears",
+    ({id}) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Attendance/attendance_year_list/${id}/`, "GET", null, headers())
+    }
+)
 
+export const getGroupStudyMonth = createAsyncThunk(
+    "groupProfileSlice/getGroupStudyMonth",
+    ({id, res}) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Attendance/attendance_year_list/${id}/`, "POST", JSON.stringify({year: res}), headers())
+    }
+)
 
+export const getGroupDebtStudents = createAsyncThunk(
+    "groupProfileSlice/getGroupDebtStudents",
+    ({id, res}) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Attendance/attendance_year_list_all/${id}/`, "POST", JSON.stringify(res), headers())
+    }
+)
 
 
 // export const getSchoolAttendance = createAsyncThunk(
