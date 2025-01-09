@@ -194,20 +194,19 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
                     {/*        className={`fa-solid fa-xmark `}*/}
                     {/*    ></i>*/}
                     {/*</td>*/}
-                    {
-                        job === "director" &&
-                        <td>
-                            <i
-                                onClick={() => {
-                                    setChangedData(item)
-                                    setCanChange(true)
-                                    setValueChange("total_debt", item.total_debt)
-                                }}
-                                style={{color: '#484848'}}
-                                className={`fa-solid fa-pen `}
-                            ></i>
-                        </td>
-                    }
+
+                    <td>
+                        <i
+                            onClick={() => {
+                                setChangedData(item)
+                                setCanChange(true)
+                                setValueChange("total_debt", item.total_debt)
+                            }}
+                            style={{color: '#484848'}}
+                            className={`fa-solid fa-pen `}
+                        ></i>
+                    </td>
+
                 </tr>
             )
         })

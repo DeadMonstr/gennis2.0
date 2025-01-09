@@ -16,6 +16,7 @@ import creditCard from "shared/assets/images/CreditCard.png";
 import bank from "shared/assets/images/Bank.png";
 import {fetchTeacherSalaryIdThunk, fetchTeacherSalaryThunk, getTeacherSalaries} from "../../../../teacherSalary";
 import {onAddAlertOptions} from "../../../../../features/alert/model/slice/alertSlice";
+import {getBranch} from "features/branchSwitcher";
 
 const listPretcent = [-1, 34.8, 70.4]
 
@@ -25,11 +26,16 @@ export const TeacherProfileTotalAmount = memo(({active, setActive, salary_id, us
     const [activeService, setActiveService] = useState(amountService[0])
     const [activePaymentType, setActivePaymentType] = useState(0)
     const [salary, setSalary] = useState(0);
-    const [branch, setBranch] = useState(1)
+
+    const branch = useSelector(getBranch)
+
     const [payment, setPayment] = useState(1)
     const [comment, setComment] = useState('')
     const dispatch = useDispatch()
     const userData = useSelector(getTeacherSalaries);
+
+
+
     useEffect(() => {
         console.log("Ma'lumotlar yangilandi: ", userData);
 
@@ -42,7 +48,7 @@ export const TeacherProfileTotalAmount = memo(({active, setActive, salary_id, us
             salary_id: salary_id,
             payment: payment,
             teacher: user_id,
-            branch: branch
+            branch: branch.id
         };
         try {
             const action = await dispatch(giveTeacherSalaryThunk(newSalary));
