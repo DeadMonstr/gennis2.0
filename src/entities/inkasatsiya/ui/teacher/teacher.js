@@ -2,6 +2,9 @@ import {Table} from "../../../../shared/ui/table";
 
 export const Teacher = ({teacher , extraClass , formatSalary}) => {
 
+
+    console.log(teacher, "teacabsdh abshd")
+
     const renderTable = () => {
         return teacher?.teachers?.teacher_data?.map((item , i) => (
             <tr>

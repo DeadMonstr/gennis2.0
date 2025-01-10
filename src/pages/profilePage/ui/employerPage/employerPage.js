@@ -18,7 +18,7 @@ export const ProfileEmployerPage = () => {
     const dispatch = useDispatch()
     const {id} = useParams()
     // const {id} = useSelector(getBranch)
-    // const employerId = useSelector(getEmployerId)
+    const employerId = useSelector(getEmployerId)
     const [activeModal, setActiveModal] = useState("")
     const [newImage, setNewImage] = useState("")
     const loadingDef = useSelector(getEmployerLoading)
@@ -36,7 +36,7 @@ export const ProfileEmployerPage = () => {
     const onSubmitImage = (data) => {
         // formData.append("profile_img", data)
 
-        dispatch(changeEmployerProfileImage({id: id, data}))
+        dispatch(changeEmployerProfileImage({id: employerId.id, data}))
     }
 
     if (loadingDef) return <DefaultPageLoader/>

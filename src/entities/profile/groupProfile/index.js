@@ -22,9 +22,17 @@ export {
     fetchReasons,
     fetchWeekDays
 } from "./model/groupProfileThunk";
-export {default as groupProfileSlice} from "./model/groupProfileSlice";
+export {
+    default as groupProfileSlice,
+    getNextLesson,
+    changeDebtStudent,
+    deleteDebtStudent
+} from "./model/groupProfileSlice";
 export {
     getGroupProfileData,
     getGroupProfileLoading,
-    getTimeTable
+    getTimeTable,
+    getStudyYears,
+    getStudyMonths,
+    getDebtStudents
 } from "./model/groupProfileSelector";

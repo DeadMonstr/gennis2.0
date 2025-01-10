@@ -16,6 +16,7 @@ import creditCard from "shared/assets/images/CreditCard.png";
 import bank from "shared/assets/images/Bank.png";
 import {fetchEmployerSalaryThunk, getSalaryInsideSource} from "pages/giveSalaryPage";
 import {onAddAlertOptions} from "../../../../../features/alert/model/slice/alertSlice";
+import {getBranch} from "features/branchSwitcher";
 
 const listPretcent = [-1, 34.8, 70.4]
 
@@ -25,7 +26,10 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
     const [activeService, setActiveService] = useState(amountService[0])
     const [activePaymentType, setActivePaymentType] = useState(0)
     const [salary, setSalary] = useState(null);
-    const [branch, setBranch] = useState(1)
+
+
+    const branch = useSelector(getBranch)
+
     const [payment, setPayment] = useState(1)
     const [comment, setComment] = useState('')
     const dispatch = useDispatch()
@@ -40,7 +44,7 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
             permission: permission_id,
             payment_types: payment,
             user: user_id,
-            branch: branch,
+            branch: branch.id,
             ...data
         };
 

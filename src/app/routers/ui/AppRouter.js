@@ -155,10 +155,12 @@ export const AppRouter = () => {
                             element={<ClassAddColorPage/>}
                         />
 
+
                         {/*<Route*/}
                         {/*    path={"calendar"}*/}
                         {/*    element={<CalendarPage/>}*/}
                         {/*/>*/}
+
 
 
                         <Route

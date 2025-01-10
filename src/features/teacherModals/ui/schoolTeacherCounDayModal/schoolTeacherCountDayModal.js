@@ -18,13 +18,14 @@ export const SchoolTeacherCountDayModal = memo(({setEditMode, editMode, teacherD
     const [day, setDay] = useState("")
     const dispatch = useDispatch()
     // const {id} = useParams()
-    const {id} = useSelector(getBranch)
+    const {id} = useParams()
 
     const {request} = useHttp()
 
-    const handleAddDay = () => {
+    const handleAddDay = (newData) => {
         const data = {
-            worked_hours: day
+            worked_hours: newData.day,
+            class_salary: newData.class_salary
         }
         request(`${API_URL}Teachers/teachers/salary/update_patch/${teacherData.id}/` , "PATCH" , JSON.stringify(data) , headers())
             .then(res => {
@@ -50,10 +51,18 @@ export const SchoolTeacherCountDayModal = memo(({setEditMode, editMode, teacherD
 
                     <Input
                         placeholder="Soat kiriting"
-                        defaultValue={teacherData?.worked_hours}
+                        value={teacherData?.worked_hours}
                         type={"number"}
-                        {...register("day")}
-                        onChange={(e) => setDay(e.target.value)}
+                        register={register}
+                        name={"day"}
+                    />
+
+                    <Input
+                        placeholder="Sinf rahbarlik"
+                        value={teacherData?.class_salary}
+                        type={"number"}
+                        register={register}
+                        name={"class_salary"}
                     />
                 </Form>
             </Modal>

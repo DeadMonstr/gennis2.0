@@ -195,17 +195,17 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
                     {/*    ></i>*/}
                     {/*</td>*/}
 
-                        <td>
-                            <i
-                                onClick={() => {
-                                    setChangedData(item)
-                                    setCanChange(true)
-                                    setValueChange("total_debt", item.total_debt)
-                                }}
-                                style={{color: '#484848'}}
-                                className={`fa-solid fa-pen `}
-                            ></i>
-                        </td>
+                    <td>
+                        <i
+                            onClick={() => {
+                                setChangedData(item)
+                                setCanChange(true)
+                                setValueChange("total_debt", item.total_debt)
+                            }}
+                            style={{color: '#484848'}}
+                            className={`fa-solid fa-pen `}
+                        ></i>
+                    </td>
 
                 </tr>
             )
@@ -362,7 +362,6 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
                                                     <th>Cash</th>
                                                     <th>Click</th>
                                                     <th>Bank</th>
-                                                    <th></th>
 
                                                 </tr>
                                                 </thead>
@@ -382,7 +381,8 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
                 )}
 
 
-
+                {
+                    job === "director" &&
                     <Modal active={canChange} setActive={setCanChange}>
                         <Form onSubmit={handleSubmitChange(onChangePaymentMonth)} extraClassname={cls.changeModal}
                               id={"changeForm"} typeSubmit={"outside"}>
@@ -415,7 +415,7 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
                         />
 
                     </Modal>
-
+                }
 
 
             </div>

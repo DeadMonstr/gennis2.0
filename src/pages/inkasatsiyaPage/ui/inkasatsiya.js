@@ -94,6 +94,10 @@ export const Inkasatsiya = () => {
         dispatch(onChangeAccountingPage({value: value}))
         navigate(`./${value}`)
     }, [navigate])
+
+
+    console.log(student)
+
     return (
         <div style={{display: "flex", flexDirection: "column", gap: "2rem", padding: "2rem"}}>
 

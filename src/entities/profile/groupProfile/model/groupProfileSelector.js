@@ -26,6 +26,13 @@ export const getFilteredGroups = (state) =>
 export const getWeekDays = (state) =>
     state.groupProfileSlice.weekDays
 
+export const getStudyYears = (state) =>
+    state.groupProfileSlice.studyYears
+export const getStudyMonths = (state) =>
+    state.groupProfileSlice.studyMonths
+export const getDebtStudents = (state) =>
+    state.groupProfileSlice.debtStudents
+
 
 // export const getGroupAttendance = (state) =>
 //     state.groupProfileSlice.groupAttendance
