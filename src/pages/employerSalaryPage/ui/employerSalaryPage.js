@@ -23,8 +23,8 @@ export const EmployerSalaryPage = () => {
     const [currentTableData, setCurrentTableData] = useState([]);
     const dispatch = useDispatch()
     const employerSalaries = useSelector(getEmployerSalaries)
-    // const {id} = useParams()
-    const {id} = useSelector(getBranch)
+    const {id} = useParams()
+    // const {id} = useSelector(getBranch)
     const handleChange = (value) => {
         setSelected(value);
     };
@@ -55,10 +55,10 @@ export const EmployerSalaryPage = () => {
             <div className={cls.mainContainer_buttonPanelBox}>
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}>
                 </div>
-                <Select
-                    onChangeOption={() => onChangeOption}
-                    options={branches}
-                />
+                {/*<Select*/}
+                {/*    onChangeOption={() => onChangeOption}*/}
+                {/*    options={branches}*/}
+                {/*/>*/}
             </div>
             <div className={cls.mainContainer_tablePanelBox}>
                 <EmployerSalaryList

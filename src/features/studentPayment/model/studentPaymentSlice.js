@@ -21,7 +21,7 @@ import {
     studentPaymentTypeChangeThunk,
     studentBookOrderListThunk,
     getMonthDataThunk,
-    getMonthPrice, fetchStudentDebtorData, fetchStudentCharityMonth
+    fetchStudentDebtorData, fetchStudentCharityMonth, fetchStudentCharityYears
 
 } from "./studentPaymentThunk";
 import {months} from "../../../pages/calendarPage/ui/calendarDetail";
@@ -52,7 +52,11 @@ const initialState = {
     debtStudent: [],
     loading: false,
     error: null,
-    month: []
+    month: [],
+    year: [],
+    yearMonth: []
+
+
 }
 
 const studentPaymentSlice = createSlice({
@@ -408,13 +412,29 @@ const studentPaymentSlice = createSlice({
                 state.error = true
             })
 
+            .addCase(fetchStudentCharityYears.pending, state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(fetchStudentCharityYears.fulfilled, (state, action) => {
+                state.year = action.payload
+                console.log(action.payload, "action payload")
+                state.loading = false
+                state.error = false
+            })
+            .addCase(fetchStudentCharityYears.rejected, state => {
+                state.loading = false
+                state.error = true
+            })
+
+
+
             .addCase(fetchStudentCharityMonth.pending, state => {
                 state.loading = true
                 state.error = false
             })
             .addCase(fetchStudentCharityMonth.fulfilled, (state, action) => {
-                state.month = action.payload
-                console.log(action.payload, "action payload")
+                state.yearMonth = action.payload
                 state.loading = false
                 state.error = false
             })

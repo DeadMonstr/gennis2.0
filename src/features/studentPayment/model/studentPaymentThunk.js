@@ -202,11 +202,21 @@ export const fetchStudentDebtorData = createAsyncThunk(
     }
 )
 
+export const fetchStudentCharityYears = createAsyncThunk(
+    "studentPaymentSlice/fetchStudentCharityYears",
+    (id) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Students/get_year/?student_id=${id}` , "GET" , null , headers())
+    }
+)
+
 
 export const fetchStudentCharityMonth = createAsyncThunk(
     "studentPaymentSlice/fetchStudentCharityMonth",
-    (id) => {
+    ({years, id}) => {
         const {request} = useHttp()
-        return request(`${API_URL}Students/charity_month/${id}/` , "GET" , null , headers())
+        return request(`${API_URL}Students/get_month/?student_id=${id}&year=${years}/` , "GET" , null , headers())
     }
 )
+
+

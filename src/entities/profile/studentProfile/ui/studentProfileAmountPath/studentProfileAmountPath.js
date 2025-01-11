@@ -25,9 +25,9 @@ import {fetchStudentProfileData} from "pages/profilePage/model/thunk/studentProf
 import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
 import {useParams} from "react-router";
-import {getMonth} from "features/studentPayment/model/selectors/selectors";
+import {getCherityYear, getCherityYearMonth, getMonth} from "features/studentPayment/model/selectors/selectors";
 import {API_URL, headers, useHttp} from "shared/api/base";
-import {fetchStudentDebtorData} from "features/studentPayment/model/studentPaymentThunk";
+import {fetchStudentCharityMonth, fetchStudentDebtorData} from "features/studentPayment/model/studentPaymentThunk";
 import {Form} from "shared/ui/form";
 import {Input} from "shared/ui/input";
 import {useForm} from "react-hook-form";
@@ -57,8 +57,9 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
     const [canDelete, setCanDelete] = useState(false);
 
 
-    const month = useSelector(getMonth)
-
+    const years = useSelector(getCherityYear)
+    const month = useSelector(getCherityYearMonth)
+    const data = useSelector(getMonth)
 
 
     const [modalActive, setActiveModal] = useState(false)
@@ -162,7 +163,7 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
     };
 
     const renderDebtorData = () => {
-        return month?.data?.map((item, i) => {
+        return data?.data?.map((item, i) => {
             return (
                 <tr>
                     <td>{i + 1}</td>
@@ -222,7 +223,6 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
             .then(res => {
                 setActiveModal(false)
                 dispatch(onChange({id: itemChange, payment_sum: data.payment_sum, reason: data.reason}))
-                console.log(res)
             })
             .catch(err => {
                 console.log(err)
@@ -311,7 +311,7 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
                                 {
                                     activeState === "balanceBackLog" ?
                                         <div className={cls.popup}>
-                                            <AddDebt studentId={id} month={month}/>
+                                            <AddDebt studentId={id} month={month} years={years}/>
                                         </div> :
                                         <>
                                             <Button children={change ? "Amaldagi" : "O'chirilganlar"}
@@ -381,41 +381,38 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
                 )}
 
 
-                {
-                    job === "director" &&
-                    <Modal active={canChange} setActive={setCanChange}>
-                        <Form onSubmit={handleSubmitChange(onChangePaymentMonth)} extraClassname={cls.changeModal}
-                              id={"changeForm"} typeSubmit={"outside"}>
-                            <h1>Oylik qarz o'zgartirish</h1>
+                <Modal active={canChange} setActive={setCanChange}>
+                    <Form onSubmit={handleSubmitChange(onChangePaymentMonth)} extraClassname={cls.changeModal}
+                          id={"changeForm"} typeSubmit={"outside"}>
+                        <h1>Oylik qarz o'zgartirish</h1>
 
-                            <Input value={changedData?.total_debt} register={registerChange} name={"total_debt"}/>
-                            <div className={cls.btns}>
-                                <Button
-                                    onClick={() => {
-                                        setCanDelete(true)
+                        <Input value={changedData?.total_debt} register={registerChange} name={"total_debt"}/>
+                        <div className={cls.btns}>
+                            <Button
+                                onClick={() => {
+                                    setCanDelete(true)
 
-                                    }}
-                                    type={"danger"} id={""}
-                                >
-                                    O'chirish
-                                </Button>
-                                <Button id={"changeForm"}>
-                                    O'zgartirish
-                                </Button>
-                            </div>
-                        </Form>
+                                }}
+                                type={"danger"} id={""}
+                            >
+                                O'chirish
+                            </Button>
+                            <Button id={"changeForm"}>
+                                O'zgartirish
+                            </Button>
+                        </div>
+                    </Form>
 
 
-                        <ConfirmModal
-                            title={`${changedData?.month} o'chirishni hohlaysizmi`}
-                            setActive={setCanDelete}
-                            active={canDelete}
-                            onClick={onDeleteDebtMonth}
-                            type={"danger"}
-                        />
+                    <ConfirmModal
+                        title={`${changedData?.month} o'chirishni hohlaysizmi`}
+                        setActive={setCanDelete}
+                        active={canDelete}
+                        onClick={onDeleteDebtMonth}
+                        type={"danger"}
+                    />
 
-                    </Modal>
-                }
+                </Modal>
 
 
             </div>
@@ -449,18 +446,26 @@ export const StudentProfileAmountPath = memo(({active, setActive, job}) => {
 });
 
 
-const AddDebt = ({month, studentId}) => {
+const AddDebt = ({month, studentId, years}) => {
 
 
     const [months, setMonths] = useState(null)
-
+    const [year, setYear] = useState(null)
+    useEffect(() => {
+        if (year) {
+            dispatch(fetchStudentCharityMonth({id: studentId, years: year}));
+        }
+    }, [year])
 
     const [activeModal, setActiveModal] = useState(false)
 
     const {request} = useHttp()
     const dispatch = useDispatch()
     const onClick = () => {
-        request(`${API_URL}Students/missing_month_post/${studentId}/`, "POST", JSON.stringify({month: months}), headers())
+        request(`${API_URL}Students/missing_month_post/${studentId}/`, "POST", JSON.stringify({
+            month: months,
+            year: year
+        }), headers())
             .then(res => {
                 console.log(res)
                 dispatch(fetchStudentDebtorData(studentId))
@@ -480,7 +485,8 @@ const AddDebt = ({month, studentId}) => {
             <Button onClick={() => setActiveModal(!activeModal)}>Qo'shish</Button>
 
             <Modal active={activeModal} setActive={setActiveModal}>
-                <Select options={month.month} onChangeOption={setMonths}/>
+                <Select options={years.years} onChangeOption={setYear}/>
+                <Select options={month} onChangeOption={setMonths}/>
                 <Button extraClass={cls.buttonAdd} onClick={onClick}>Qo'shish</Button>
             </Modal>
 

@@ -20,8 +20,16 @@ import {API_URL, headers, useHttp} from "shared/api/base";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import {fetchStudentProfileData} from "pages/profilePage/model/thunk/studentProfileThunk";
 import {getSystem} from "../../../../../features/themeSwitcher";
-import {getCherityMonth, getMonth} from "../../../../../features/studentPayment/model/selectors/selectors";
-import {fetchStudentCharityMonth} from "../../../../../features/studentPayment/model/studentPaymentThunk";
+import {
+    getCherityMonth,
+    getMonth,
+    getCherityYear,
+    getCherityYearMonth
+} from "../../../../../features/studentPayment/model/selectors/selectors";
+import {
+    fetchStudentCharityMonth,
+    fetchStudentCharityYears
+} from "../../../../../features/studentPayment/model/studentPaymentThunk";
 
 
 const listPretcent = [-1, 34.8, 70.4];
@@ -30,7 +38,8 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
 
     const {register, handleSubmit, reset} = useForm();
     const getMonthDate = useSelector(getMonthData);
-    const getMonthCharity = useSelector(getCherityMonth);
+    const years = useSelector(getCherityYear);
+    const monthYear = useSelector(getCherityYearMonth);
     const [activeService, setActiveService] = useState(amountService[0]);
     const [selectPrice, setSelectPrice] = useState(0);
     const [selectMonth, setSelectedMonth] = useState(0);
@@ -38,7 +47,6 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     const [activePaymentType, setActivePaymentType] = useState(0);
     const [option, setOption] = useState(0);
     const [paymentSum, setPaymentSum] = useState(0);
-    const [charityMonth, setCharityMonth] = useState(null);
     const [charitysum, setCharitySum] = useState(0);
     const [discount, setDiscount] = useState(0);
     const [checkModalStatus, setCheckModalStatus] = useState(false);
@@ -50,6 +58,19 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     // const [date , setDate] = useState(null)
     const month = useSelector(getMonth)
 
+
+    const [year, setYear] = useState(null)
+    const [yearMonth, setMonth] = useState(null)
+
+
+    console.log(year)
+
+    useEffect(() => {
+        if (year) {
+            dispatch(fetchStudentCharityMonth({id: student_id, years: year}));
+        }
+    }, [year])
+
     const {theme} = useTheme();
     const system = useSelector(getSystem)
     const {request} = useHttp();
@@ -57,8 +78,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     useEffect(() => {
         if (student_id) {
             dispatch(getMonthDataThunk(student_id));
-            dispatch(fetchStudentCharityMonth(student_id));
-            dispatch(fetchStudentCharityMonth(student_id));
+            dispatch(fetchStudentCharityYears(student_id));
         }
     }, [student_id, dispatch]);
 
@@ -157,19 +177,32 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
             status: true,
             branch: branch_id,
             ...data,
-            date: charityMonth
+            year: year,
+            date: yearMonth
         };
-        console.log(newDiscount , "dis")
 
-        const response = await request(`${API_URL}Students/charity_month/${student_id}/`, "POST", JSON.stringify(newDiscount), headers());
-        dispatch(onAddAlertOptions({
-            type: "success",
-            status: true,
-            msg: response.msg
-        }));
 
-        setDiscount(0);
-        return response;
+        request(`${API_URL}Students/charity_month/${student_id}/`, "POST", JSON.stringify(newDiscount), headers())
+            .then(res => {
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: res.msg
+                }));
+
+                setDiscount(0);
+            })
+            .catch(err => {
+                console.log(err)
+                dispatch(onAddAlertOptions({
+                    type: "error",
+                    status: true,
+                    msg: err.msg
+                }));
+
+                setDiscount(0);
+            })
+
     };
 
     const onSubmitPassword = (data) => {
@@ -178,13 +211,12 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
 
 
     const postStudentDiscount = (data) => {
-        console.log(data)
+
 
         const res = {
             discount: data.discount,
             reason: data.reason,
             student: student_id,
-
         }
 
         request(`${API_URL}Students/discount/`, "POST", JSON.stringify(res), headers())
@@ -373,11 +405,22 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                             </div>
                         </Form>
                     }
+
+
                     {activeService === "Chegirma" && (
                         <Form onSubmit={handleSubmit(handleAddDiscount)}>
                             <div className={cls.form__inner}>
                                 <p>{activeService} miqdori</p>
-                                <Select extraClass={cls.select} options={getMonthCharity} onChangeOption={setCharityMonth}/>
+                                <Select
+                                    extraClass={cls.select}
+                                    options={years.years}
+                                    onChangeOption={setYear}
+                                />
+                                {year ? <Select
+                                    options={monthYear}
+                                    extraClass={cls.select}
+                                    onChangeOption={setMonth}
+                                /> : null}
                                 <Input
                                     {...register("payment_sum")}
                                     register={register}
