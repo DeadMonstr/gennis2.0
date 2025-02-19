@@ -143,8 +143,7 @@ export const GroupAttendance = () => {
 
 export const Attendance = ({active, setActive}) => {
 
-    // const {id} = useParams()
-    const {id} = useSelector(getBranch)
+    const {id} = useParams()
     const dispatch = useDispatch()
 
 
