@@ -21,7 +21,6 @@ import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import {fetchStudentProfileData} from "pages/profilePage/model/thunk/studentProfileThunk";
 import {getSystem} from "../../../../../features/themeSwitcher";
 import {
-    getCherityMonth,
     getMonth,
     getCherityYear,
     getCherityYearMonth

@@ -7,7 +7,7 @@ import {useSelector} from "react-redux";
 import {DefaultPageLoader} from "../../../shared/ui/defaultLoader";
 
 
-export const EmployerSalaryList = ({ currentTableData, currentPage, PageSize }) => {
+export const EmployerSalaryList = ({ currentTableData,  setActiveEdit  , setActive}) => {
     const loadingDef = useSelector(getEmployerSalaryLoading)
     const renderStudents = () => {
         return currentTableData?.map((item, index) => (
@@ -16,13 +16,21 @@ export const EmployerSalaryList = ({ currentTableData, currentPage, PageSize }) 
                     loadingDef ? <DefaultPageLoader/>
                         :
                         <>
-                            <td>{(currentPage - 1) * PageSize + index + 1}</td>
+                            <td>{index + 1}</td>
                             <Link to={`giveSalaryPage/${item.id}/${item.permission}`}>
                             <td>{item.total_salary}</td>
                             </Link>
                             <td>{item.taken_salary}</td>
                             <td>{item.remaining_salary}</td>
                             <td>{item.date}</td>
+                            <td>
+                                <i
+                                    onClick={() => {
+                                        setActive(true)
+                                        setActiveEdit(item)
+                                    }}
+                                    className={"fa fa-pen"}/>
+                            </td>
 
                         </>
                 }
@@ -40,6 +48,7 @@ export const EmployerSalaryList = ({ currentTableData, currentPage, PageSize }) 
                     <th>Olingan oylik</th>
                     <th>Qolgan oylik</th>
                     <th>Sana</th>
+                    <th/>
                 </tr>
                 </thead>
                 <tbody>

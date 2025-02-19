@@ -35,20 +35,20 @@ export const TeacherProfileTotalAmount = memo(({active, setActive, salary_id, us
     const userData = useSelector(getTeacherSalaries);
 
 
-
     useEffect(() => {
         console.log("Ma'lumotlar yangilandi: ", userData);
 
     }, [userData]);
 
-    const handleAddSalary = async () => {
+    const handleAddSalary = async (data) => {
         const newSalary = {
             salary: Number(salary),
             comment: comment,
             salary_id: salary_id,
             payment: payment,
             teacher: user_id,
-            branch: branch.id
+            date: data.date,
+            branch: branch.id,
         };
         try {
             const action = await dispatch(giveTeacherSalaryThunk(newSalary));
@@ -59,7 +59,7 @@ export const TeacherProfileTotalAmount = memo(({active, setActive, salary_id, us
                     status: true,
                     msg: "Oylik muvofaqqiyatli to'landi"
                 }))
-            } else if (giveTeacherSalaryThunk.rejected.match(action)){
+            } else if (giveTeacherSalaryThunk.rejected.match(action)) {
                 dispatch(onAddAlertOptions({
                     type: "error",
                     status: true,
@@ -124,44 +124,54 @@ export const TeacherProfileTotalAmount = memo(({active, setActive, salary_id, us
                     {/*    activeService === "To'lov"*/}
                     {/*        ?*/}
                     {/*        <>*/}
-                                <div className={cls.items}>
-                                    {amountTypes.map((item, index) =>
-                                        <div
-                                            className={cls.items__inner}
-                                            onClick={() => {
-                                                setActivePaymentType(index);
-                                                setPayment(index + 1); // Bu yerda index + 1 deb qo'yish orqali tanlangan payment_types'ni to'g'ri qiymatga o'rnatish
-                                            }}
-                                        >
-                                            <p>{item.name}</p>
-                                            <img src={item.image} alt=""/>
-                                        </div>
-                                    )}
-                                    <div
-                                        className={cls.items__active}
-                                        style={{left: `${listPretcent[activePaymentType]}%`}}
-                                    />
-                                </div>
-                                <Form onSubmit={handleSubmit(handleAddSalary)}>
-                                    <div className={cls.form__inner}>
-                                        <Input
-                                            title={"To'lov miqdori"}
-                                            {...register("amount")}
-                                            placeholder={"Summa"}
-                                            type={"number"}
-                                            defaultValue={salary}
-                                            onChange={(e) => setSalary(e.target.value)}
-                                        />
-                                        <Input
-                                            title={"Sababi"}
-                                            {...register("comment")}
-                                            placeholder={"Sababi"}
-                                            type={"text"}
-                                            defaultValue={comment}
-                                            onChange={(e) => setComment(e.target.value)}
-                                        />
-                                    </div>
-                                </Form>
+                    <div className={cls.items}>
+                        {amountTypes.map((item, index) =>
+                            <div
+                                className={cls.items__inner}
+                                onClick={() => {
+                                    setActivePaymentType(index);
+                                    setPayment(index + 1); // Bu yerda index + 1 deb qo'yish orqali tanlangan payment_types'ni to'g'ri qiymatga o'rnatish
+                                }}
+                            >
+                                <p>{item.name}</p>
+                                <img src={item.image} alt=""/>
+                            </div>
+                        )}
+                        <div
+                            className={cls.items__active}
+                            style={{left: `${listPretcent[activePaymentType]}%`}}
+                        />
+                    </div>
+                    <Form onSubmit={handleSubmit(handleAddSalary)}>
+                        <div className={cls.form__inner}>
+                            <Input
+
+                                title={"Kuni"}
+                                register={register}
+                                name={"date"}
+
+                                type={"date"}
+                                defaultValue={salary}
+                                onChange={(e) => setSalary(e.target.value)}
+                            />
+                            <Input
+                                title={"To'lov miqdori"}
+                                {...register("amount")}
+                                placeholder={"Summa"}
+                                type={"number"}
+                                defaultValue={salary}
+                                onChange={(e) => setSalary(e.target.value)}
+                            />
+                            <Input
+                                title={"Sababi"}
+                                {...register("comment")}
+                                placeholder={"Sababi"}
+                                type={"text"}
+                                defaultValue={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                            />
+                        </div>
+                    </Form>
                     {/*        </>*/}
                     {/*        :*/}
                     {/*        activeService === "Xayriya"*/}

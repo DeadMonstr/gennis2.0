@@ -1,47 +1,38 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import { Pagination } from "features/pagination";
-import {
-    TeacherSalaryList,
-    branches,
-    salary
-} from "entities/teacherSalary";
-import { Select } from "shared/ui/select";
+
 import cls from "./employerSalaryPage.module.sass";
 import {useSelector, useDispatch} from "react-redux";
 import {EmployerSalaryList, fetchEmployerSalaryThunk} from "../../../entities/employerSalary";
 import {getEmployerSalaries} from "../../../entities/employerSalary";
 import {useParams} from "react-router-dom";
-import {getSearchValue} from "../../../features/searchInput";
-import {getBranch} from "../../../features/branchSwitcher";
+
+import {Modal} from "../../../shared/ui/modal";
+import {Form} from "../../../shared/ui/form";
+import {Input} from "../../../shared/ui/input";
+import {API_URL, headers, useHttp} from "../../../shared/api/base";
+import {useForm} from "react-hook-form";
+import {onEditSalary} from "../../../entities/employerSalary/model/employerSalarySlice";
 
 export const EmployerSalaryPage = () => {
     const [active, setActive] = useState(false);
-    const [selected, setSelected] = useState("");
+    const [activeItem, setActiveItem] = useState(false);
+
+    const {setValue, register, handleSubmit} = useForm()
     let PageSize = useMemo(() => 20, []);
     const [currentPage, setCurrentPage] = useState(1);
-    const search = useSelector(getSearchValue)
-    const [currentTableData, setCurrentTableData] = useState([]);
+
     const dispatch = useDispatch()
     const employerSalaries = useSelector(getEmployerSalaries)
     const {id} = useParams()
-    // const {id} = useSelector(getBranch)
-    const handleChange = (value) => {
-        setSelected(value);
-    };
 
-    // const searchedUsers = useMemo(() => {
-    //     const filteredHeroes = employerSalaries?.usersalary.slice()
-    //     setCurrentPage(1)
-    //
-    //     if (!search) return  filteredHeroes
-    //
-    //     return filteredHeroes.filter(item =>
-    //         item.total_salary?.toLowerCase().includes(search.toLowerCase())
-    //     )
-    // }, [employerSalaries, setCurrentPage, search])
-    const onChangeOption = (value) => {
-        setSelected(value)
-    }
+    const {request} = useHttp()
+
+    console.log(activeItem)
+
+    useEffect(() => {
+        setValue("total_salary", activeItem.total_salary)
+    }, [active, activeItem])
+
 
     useEffect(() => {
         if (id) {
@@ -50,9 +41,23 @@ export const EmployerSalaryPage = () => {
     }, [dispatch, id])
 
 
+    const onChangeSalary = (data) => {
+        request(`${API_URL}Users/salaries/update1/${activeItem.id}`, "PATCH", JSON.stringify(data), headers())
+            .then(res => {
+                console.log(res)
+                setActive(false)
+                dispatch(onEditSalary({id: activeItem.id, data: res}))
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+    }
+
     return (
         <div className={cls.mainContainer}>
             <div className={cls.mainContainer_buttonPanelBox}>
+
                 <div className={cls.mainContainer_buttonPanelBox_leftCreateButton}>
                 </div>
                 {/*<Select*/}
@@ -62,11 +67,24 @@ export const EmployerSalaryPage = () => {
             </div>
             <div className={cls.mainContainer_tablePanelBox}>
                 <EmployerSalaryList
+                    setActive={setActive}
+                    setActiveEdit={setActiveItem}
                     currentTableData={employerSalaries}
                     currentPage={currentPage}
                     PageSize={PageSize}
                 />
             </div>
+            <Modal setActive={setActive} active={active}>
+
+                <h2>Change Salary</h2>
+
+                <Form extraClassname={cls.changeSalary} onSubmit={handleSubmit(onChangeSalary)}>
+                    <Input placeholder={"Summa"} type={"number"} register={register} name={"total_salary"}/>
+
+                </Form>
+
+            </Modal>
+
             {/*<Pagination*/}
             {/*    setCurrentTableData={setCurrentTableData}*/}
             {/*    users={employerSalaries?.usersalary}*/}

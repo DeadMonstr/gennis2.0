@@ -1,13 +1,13 @@
 //
-// export const API_URL_DOC = `http://192.168.1.40:8000/`
-//
+// export const API_URL_DOC = `http://192.168.1.57:8000/`
+// //
 // export const API_URL = `${API_URL_DOC}api/`
 
 //
 export const API_URL_DOC = `https://school.gennis.uz/`
 export const API_URL = `${API_URL_DOC}api/`
-export const CLASSROOM_API_URL = `https://classroom.gennis.uz/`
-export const CLASSROOM_API_URL_DOC = `https://classroom.gennis.uz/`
+// export const CLASSROOM_API_URL = `htps://classroom.gennis.uz/`
+// export const CLASSROOM_API_URL_DOC = `https://classroom.gennis.uz/`
 
 
 export const headers = () => {

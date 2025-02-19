@@ -50,7 +50,7 @@ export const ClassProfileSalaryModal = memo((props) => {
             extraClass={cls.wrapper}
         >
             <div className={cls.salaryModal}>
-                <h1 className={cls.salaryModal__title}>Oylik berish:</h1>
+                <h1 className={cls.salaryModal__title}>Oylik berish: </h1>
                 <div className={cls.items}>
                     <div className={cls.items__inner}>
                         <img src={money} alt=""/>

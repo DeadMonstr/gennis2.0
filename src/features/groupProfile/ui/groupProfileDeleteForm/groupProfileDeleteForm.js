@@ -76,8 +76,8 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
     const {request} = useHttp()
 
     const {theme} = useTheme()
-    // const {id} = useParams()
-    const {id} = useSelector(getBranch)
+    const {id} = useParams()
+    // const {id} = useSelector(getBranch)
     const dispatch = useDispatch()
     const navigation = useNavigate()
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
@@ -136,6 +136,7 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
             item?.user?.surname?.toLowerCase().includes(searchValue?.toLowerCase())
         )
     }, [students, searchValue])
+
 
     const onSubmitDelete = () => {
         const place = userSystem?.name === "center" ? "guruh" : "sinf"
@@ -454,7 +455,7 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
                 onClick={() => setActive(!active)}
             >
                 <div className={cls.students__title}>
-                    <h1>O’quvchilar</h1>
+                    <h1>O’quvchilar </h1>
                     <div className={cls.students__wrapperBtn}>
                         <i
                             className={classNames("fas fa-pen", cls.students__icon)}

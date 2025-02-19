@@ -68,7 +68,7 @@ export const GroupProfileModalTeachers = memo(({branch}) => {
         }))
     }
 
-    console.log(currentTeachersData, "currentrttttttttttttttttttttttttttt")
+
 
     const searched = useMemo(() => {
         const filteredSlice = currentTeachersData?.slice()

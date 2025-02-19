@@ -12,7 +12,17 @@ const initialState = {
 export const employerSalarySlice = createSlice({
     name: "teacherSalarySlice",
     initialState,
-    reducers: {},
+    reducers: {
+        onEditSalary: (state, action) => {
+            state.salaryData = state.salaryData.map(item => {
+                if (item.id === action.payload.id) {
+                    return action.payload.data
+                }
+                return item
+            })
+        }
+
+    },
     extraReducers: builder => {
         builder
             .addCase(fetchEmployerSalaryThunk.pending, (state) => {
@@ -29,5 +39,6 @@ export const employerSalarySlice = createSlice({
             })
     }
 })
+export const {onEditSalary} = employerSalarySlice.actions
 
 export default employerSalarySlice.reducer

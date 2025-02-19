@@ -48,4 +48,4 @@ export const ClassSwitch = ({ isActive, onSwitch }) => {
             </div>
         </div>
     );
-};
+}

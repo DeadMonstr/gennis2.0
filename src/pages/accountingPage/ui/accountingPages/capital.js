@@ -16,7 +16,7 @@ import {getMonthDay} from "entities/accounting/model/thunk/additionalCosts";
 import {useForm} from "react-hook-form";
 import {API_URL, headers, useHttp} from "shared/api/base";
 import {AccountingCapitalCosts} from "entities/accounting";
-import {onDeleteCapital} from "entities/accounting/model/slice/capital";
+import {onAddCapital, onDeleteCapital} from "entities/accounting/model/slice/capital";
 
 import {
     CapitalDeleted
@@ -56,8 +56,6 @@ export const Capital = ({deleted , setDeleted }) => {
     const onAdd = (data) => {
 
         const res = {
-            day: day,
-            month: month,
             branch: branchID.id,
             payment_type: radio.id,
 
@@ -73,7 +71,12 @@ export const Capital = ({deleted , setDeleted }) => {
                     status: true,
                     msg: res.msg
                 }))
-                dispatch(capitalListThunk())
+                const data = {
+                    ...res,
+                    payment_type: res.payment.name
+                }
+
+                dispatch(onAddCapital(data))
                 setValue("name" , "")
                 setValue("price" , "")
             })

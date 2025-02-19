@@ -17,8 +17,11 @@ export const overHeadSlice = createSlice({
         onDeleteOverhead: (state, action) => {
             state.overHeadList = state.overHeadList.filter(item => item.id !== action.payload.id)
         },
+        onAddOverhead: (state, action) => {
+            state.overHeadList = [...state.overHeadList, action.payload]
+        },
 
-        onChangePaymentType: (state ,action) => {
+        onChangePaymentType: (state, action) => {
             console.log(action.payload)
             state.overHeadList = state.overHeadList.map(item => {
                 if (item.id === +action.payload.id) {
@@ -49,6 +52,9 @@ export const overHeadSlice = createSlice({
                 state.loading = false
                 state.error = true
             })
+
+
+
             .addCase(overHeadDeletedList.pending, state => {
                 state.loading = true
                 state.error = false
@@ -58,10 +64,14 @@ export const overHeadSlice = createSlice({
                 state.loading = false
                 state.error = false
             })
+
+
             .addCase(overHeadDeletedList.rejected, state => {
                 state.loading = false
                 state.error = true
             })
+
+
             .addCase(getOverheadType.pending, state => {
                 state.loading = true
                 state.error = false
@@ -75,6 +85,8 @@ export const overHeadSlice = createSlice({
                 state.loading = false
                 state.error = true
             })
+
+
             .addCase(getMonthDay.pending, state => {
                 state.loading = true
                 state.error = false
@@ -90,5 +102,5 @@ export const overHeadSlice = createSlice({
             })
 })
 
-export const {onDeleteOverhead , onChangePaymentType} = overHeadSlice.actions
+export const {onDeleteOverhead, onChangePaymentType , onAddOverhead} = overHeadSlice.actions
 export default overHeadSlice.reducer

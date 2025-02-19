@@ -16,6 +16,9 @@ export const capitalList = createSlice({
         onDeleteCapital: (state, action) => {
             state.capital = state.capital.filter(item => item.id !== action.payload.id)
         },
+        onAddCapital: (state, action) => {
+            state.capital = [...state.capital, action.payload]
+        },
     },
     extraReducers: builder =>
         builder
@@ -47,5 +50,5 @@ export const capitalList = createSlice({
             })
 })
 
-export const {onDeleteCapital} = capitalList.actions
+export const {onDeleteCapital , onAddCapital} = capitalList.actions
 export default capitalList.reducer

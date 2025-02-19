@@ -13,7 +13,7 @@ export const GiveSalaryModal = React.memo(({active, setActive, salary_id, user_i
             setActive={setActive}
         >
             <div className={cls.filter}>
-                <h1>Oylik berish</h1>
+                <h1>Oylik berish </h1>
                 <div className={cls.filter__container}>
                     <TeacherProfileTotalAmount
                         active={active}
