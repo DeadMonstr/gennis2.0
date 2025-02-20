@@ -53,6 +53,7 @@ import {getBranch} from "../../../branchSwitcher";
 import {API_URL, headers, useHttp} from "../../../../shared/api/base";
 import {fetchStudentDebtorData} from "../../../studentPayment/model/studentPaymentThunk";
 import {onDeleteDebtorData} from "../../../studentPayment/model/studentPaymentSlice";
+import {onMoveToGroup} from "entities/profile/groupProfile/model/groupProfileSlice";
 
 const listPretcent = [-1, 34.8, 70.4]
 
@@ -110,6 +111,7 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
     const [active, setActive] = useState(false)
     const [activeModal, setActiveModal] = useState("")
     const [select, setSelect] = useState([])
+    console.log(select)
     const [selectDeleteId, setSelectDeleteId] = useState(null)
     const [selectOpt, setSelectOpt] = useState(null)
     const [selectOptId, setSelectOptId] = useState(null)
@@ -166,13 +168,29 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
 
     const onSubmitMove = (data) => {
         let msg;
+
         if (theme === "app_school_theme" || userSystem?.name === "school") {
             const res = {
                 ...data,
                 students: select
             }
-            dispatch(moveToClass({branch, id, res}))
-            msg = `O'quvchilar boshqa sinfga o'tqazildi`
+
+
+
+            request(`${API_URL}Group/filtered_students_move_to_class/?branch=${branch}&group=${id}`, "POST", JSON.stringify(res), headers())
+               .then((res) =>{
+                   dispatch(onAddAlertOptions({
+                       type: "success",
+                       status: true,
+                       msg: "O'quvchilar sinfga o'tqazildi"
+
+                   }))
+                   dispatch(onMoveToGroup(select));
+                   setSelect([])
+                   setActive(false)
+                   setActiveModal("")
+               })
+            // dispatch(moveToClass({branch, id, res}))
         } else {
             const res = {
                 ...data,
@@ -258,6 +276,7 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
         dispatch(fetchFilteredGroups({id, group_id: data?.id}))
     }
 
+
     const renderDebtorData = useCallback(() => {
         if (selectedYearId && selectedMonthId)
             return debtStudents?.map((item, i) => {
@@ -320,6 +339,15 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
                 )
             })
     }, [debtStudents, selectedYearId, selectedMonthId])
+    const handleSelect = (id) => {
+        setSelect(prev => {
+            const isSelected = prev.includes(id);
+            return isSelected ? prev.filter(i => i !== id) : [...prev, id];
+        });
+    };
+    useEffect(() => {
+        setSelect(prev => prev.filter(id => students.some(student => student.id === id)));
+    }, [students]);
 
     const renderStudents = () => {
         return data?.students?.map(item =>
@@ -358,10 +386,12 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
                                     type={"checkbox"}
                                     onChange={() => {
                                         setSelect(prev => {
-                                            if (prev.filter(i => i === item.id)[0]) {
-                                                return prev.filter(i => i !== item.id)
-                                            } else return [...prev, item.id]
-                                        })
+                                            if (prev.includes(item.id)) {
+                                                return prev.filter(i => i !== item.id);
+                                            } else {
+                                                return [...prev, item.id];
+                                            }
+                                        });
                                     }}
                                 />
                                 <i
@@ -465,8 +495,8 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
                             active ?
                                 <div className={cls.students__wrapper}>
                                     <Button
-                                        disabled={select.length === 0}
-                                        type={select.length === 0 ? "disabled" : ""}
+                                        disabled={select?.length === 0}
+                                        type={select?.length === 0 ? "disabled" : ""}
                                         extraClass={cls.students__btn}
                                         onClick={() => setActiveModal("changeModal")}
                                     >

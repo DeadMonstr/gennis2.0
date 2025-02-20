@@ -1,5 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {API_URL, headers, useHttp} from "shared/api/base";
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
+import {useDispatch} from "react-redux";
 
 // check-next-lesson-flow
 export const fetchGroupProfile = createAsyncThunk(
@@ -130,8 +132,16 @@ export const filteredStudents = createAsyncThunk(
 export const moveToClass = createAsyncThunk(
     "groupProfileSlice/moveToClass",
     ({userBranchId, id, res}) => {
+        const dispatch = useDispatch()
         const {request} = useHttp()
         return request(`${API_URL}Group/filtered_students_move_to_class/?branch=${userBranchId}&group=${id}`, "POST", JSON.stringify(res), headers())
+            .then((res) =>{
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: res.msg
+                }))
+            })
     }
 )
 

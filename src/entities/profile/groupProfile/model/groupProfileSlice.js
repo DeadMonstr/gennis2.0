@@ -65,6 +65,12 @@ const groupProfileSlice = createSlice({
         },
         deleteDebtStudent: (state, action) => {
             state.debtStudents = state.debtStudents.filter(item => item.id !== action.payload)
+        },
+        onMoveToGroup: (state, action) => {
+            console.log(action.payload, "action");
+            state.data.students = state.data.students.filter(item =>
+                !action.payload.includes(item.id)
+            );
         }
     },
     extraReducers: builder =>
@@ -193,6 +199,7 @@ const groupProfileSlice = createSlice({
             })
             .addCase(fetchFilteredGroups.fulfilled, (state, action) => {
                 state.filteredGroups = action.payload
+                console.log(action.payload, "active")
                 // state.filteredStudents = action.payload.students
                 // state.loading = false
                 // state.error = null
@@ -294,5 +301,5 @@ const groupProfileSlice = createSlice({
     // })
 })
 
-export const {getNextLesson, changeDebtStudent, deleteDebtStudent} = groupProfileSlice.actions
+export const {getNextLesson, changeDebtStudent, deleteDebtStudent, onMoveToGroup} = groupProfileSlice.actions
 export default groupProfileSlice.reducer

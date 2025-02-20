@@ -44,8 +44,8 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
     } = useForm()
 
     const {theme} = useTheme()
-    // const {id} = useParams()
-    const {id} = useSelector(getBranch)
+    const {id} = useParams()
+    // const {id} = useSelector(getBranch)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const data = useSelector(getGroupProfileData)
@@ -172,16 +172,7 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
                 setActive={setActive}
             >
                 <h1>Ma’lumot o’zgartirish</h1>
-                <Button
-                    extraClass={cls.infoModal__btn}
-                    onClick={()=> {
-                        setIsDeleted(true)
-                        setDelete(!deleteID)
-                    }}
-                    type={"danger"}
-                >
-                    Delete group
-                </Button>
+
                 <Form
                     id={"formChange"}
                     extraClassname={cls.form}
@@ -190,7 +181,7 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
                 >
                     <Input
                         extraClassName={cls.form__input}
-                        placeholder={"Guruh nomi"}
+                        placeholder={"Sinf nomi"}
                         // title={"Guruh nomi"}
                         register={register}
                         name={"name"}
@@ -210,7 +201,7 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
                     <Select
                         extraClass={cls.form__select}
                         options={languages}
-                        title={"Guruh tili"}
+                        title={"Sinf tili"}
                         register={register}
                         name={"language"}
                         defaultValue={data?.language?.id}
@@ -218,15 +209,18 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
                     />
                     {
                         userSystem?.name === "school" ? <>
-                            <Select
-                                extraClass={cls.form__select}
-                                options={schoolClassNumbers}
-                                title={"Sinf raqami"}
-                                register={register}
-                                name={"class_number"}
-                                defaultValue={data?.class_number?.id}
-                                required
-                            />
+                            <>
+                                <Select
+                                    extraClass={cls.form__select}
+                                    options={schoolClassNumbers}
+                                    title={"Sinf raqami"}
+                                    register={register}
+                                    name={"class_number"}
+                                    defaultValue={data?.class_number?.id}
+                                    required
+                                />
+                                <Input title={"Sinf narxi"} type={"number"} placeholder={"Amount"} register={register} name={"price"}/>
+                            </>
                             {
                                 schoolClassColors.length <= 3 ?
                                     <div className={cls.form__radios}>
@@ -269,7 +263,19 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
                             onChangeSwitch={setActiveSwitch}
                         />
                     </div>
-                    <Button id={"formChange"} extraClass={cls.infoModal__btn}>Change</Button>
+                   <div style={{display: "flex" , justifyContent: "space-between"}}>
+                       <Button
+                           extraClass={cls.infoModal__btn}
+                           onClick={()=> {
+                               setIsDeleted(true)
+                               setDelete(!deleteID)
+                           }}
+                           type={"danger"}
+                       >
+                           Delete group
+                       </Button>
+                       <Button id={"formChange"} extraClass={cls.infoModal__btn}>Change</Button>
+                   </div>
                 </Form>
                 <ConfirmModal setActive={setDelete} active={deleteID} onClick={onDelete} title={`Rostanham o'chirmoqchimisiz`}   type={"danger"}/>
 

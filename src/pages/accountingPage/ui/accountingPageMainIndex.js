@@ -268,10 +268,7 @@ export const AccountingPageMain = () => {
                        }
                 />
 
-                {/*<Route*/}
-                {/*    index*/}
-                {/*    element={<Navigate to={"studentsPayments"}/>}*/}
-                {/*/>*/}
+
 
             </Routes>
             <AccountingFilter

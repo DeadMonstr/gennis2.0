@@ -31,6 +31,7 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
     const [selectedSubjects, setSelectedSubjects] = useState([])
     const [colorChange, setColorChange] = useState("black")
     const [classTime, setClassTime] = useState()
+    const [classSalary, setClassSalary] = useState()
 
 
     const subjectOptions = subjects?.map(subject => ({
@@ -53,12 +54,14 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
             setAge(teacherID.user?.birth_date)
             setTeacherSalaryType(teacherID?.teacher_salary_type)
             setClassType(teacherID?.class_type)
+            setClassSalary(teacherID?.class_salary)
             setSelectedSubjects(
                 teacherID?.subject?.map(subject => ({
                     value: subject?.id,
                     label: subject?.name,
                 }))
             )
+
         }
     }, [teacherID])
 
@@ -76,7 +79,8 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
             subject: selectedSubjects.map(item => item?.value),
             color: colorChange,
             working_hours: +classTime,
-            salary_percentage: +money
+            salary_percentage: +money,
+            class_salary: classSalary
 
         };
 
@@ -181,6 +185,15 @@ export const TeacherEdit = ({isOpen, onClose, onUpdate, teacherId}) => {
                             placeholder={"Darslik soat"}
                             onChange={(e) => setClassTime(e.target.value)}
                             value={classTime}
+                            // value={selectedTo}
+                        />
+                        <Input
+                            type={"number"}
+                            title={"Sinfdan oylik"}
+                            extraClassName={cls.filter__input}
+                            placeholder={"Darslik soat"}
+                            onChange={(e) => setClassSalary(e.target.value)}
+                            value={classSalary}
                             // value={selectedTo}
                         />
 
