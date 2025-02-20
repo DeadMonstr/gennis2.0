@@ -29,6 +29,7 @@ import {
     fetchStudentCharityMonth,
     fetchStudentCharityYears
 } from "../../../../../features/studentPayment/model/studentPaymentThunk";
+import {Switch} from "../../../../../shared/ui/switch";
 
 
 const listPretcent = [-1, 34.8, 70.4];
@@ -54,6 +55,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem"));
     const [discountCharity, setDiscountCharity] = useState("")
     const [reasonCharity, setReasonCharity] = useState(0)
+    const [swtich, setSwitch] = useState(false)
     // const [date , setDate] = useState(null)
     const month = useSelector(getMonth)
 
@@ -207,7 +209,10 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     const onSubmitPassword = (data) => {
 
     }
-
+    const onChangeSwitch = () => {
+        setSwitch(!swtich)
+    }
+    const typeDiscount = swtich === true ? "percentage" : "sum"
 
     const postStudentDiscount = (data) => {
 
@@ -218,7 +223,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
             student: student_id,
         }
 
-        request(`${API_URL}Students/discount/`, "POST", JSON.stringify(res), headers())
+        request(`${API_URL}Students/discount/?type=${typeDiscount}`, "POST", JSON.stringify(res), headers())
             .then(res => {
                 console.log(res)
                 // setDiscountCharity(0)
@@ -232,6 +237,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                 console.log(err)
             })
     }
+
 
 
     const renderAmountServiceTypes = useCallback(() => {
@@ -362,6 +368,10 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                         <Form onSubmit={handleSubmit(postStudentDiscount)}>
                             <div className={cls.form__container}>
                                 <div className={cls.form__inner}>
+                                    <div className={cls.form__inner__discount}>
+                                        { swtich === true ? <h2>Foizli chegirma</h2> : <h2>Summali chegirma</h2>}
+                                        <Switch activeSwitch={swtich} onChangeSwitch={onChangeSwitch}/>
+                                    </div>
                                     <p>{activeService} miqdori</p>
                                     <Input
                                         register={register}
