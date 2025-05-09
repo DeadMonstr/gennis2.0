@@ -23,7 +23,11 @@ import {
     getMonthDays, getOverHeadDeletedList,
     getOverHeadList,
 } from "entities/accounting/model/selector/additionalCosts";
+<<<<<<< HEAD
 import {onAddOverhead, onChangePaymentType, onDeleteOverhead} from "entities/accounting/model/slice/additionalCosts";
+=======
+import {onChangePaymentType, onDeleteOverhead} from "entities/accounting/model/slice/additionalCosts";
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
 import {DefaultPageLoader} from "shared/ui/defaultLoader";
 import {
     AdditionalCostsDeleted
@@ -34,7 +38,11 @@ import {ConfirmModal} from "../../../../shared/ui/confirmModal";
 import {getBranch} from "../../../../features/branchSwitcher";
 
 
+<<<<<<< HEAD
 export const AdditionalCosts = ({deleted, setDeleted}) => {
+=======
+export const AdditionalCosts = ( {deleted , setDeleted}) => {
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
     const [activeModal, setActiveModal] = useState(false)
     const overHeadType = useSelector(getOverHeadType)
     const dispatch = useDispatch()
@@ -57,7 +65,11 @@ export const AdditionalCosts = ({deleted, setDeleted}) => {
 
     const getCapitalType = useSelector(getCapitalTypes)
 
+<<<<<<< HEAD
     const [changePaymentType, setChangePaymentType] = useState(null)
+=======
+    const [changePaymentType , setChangePaymentType] = useState(null)
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
     let branchID = useSelector(getBranch)
     // const [alerts, setAlerts] = useState([])
     useEffect(() => {
@@ -96,19 +108,26 @@ export const AdditionalCosts = ({deleted, setDeleted}) => {
     const onAdd = (data) => {
         const res = {
             type: select.id,
+<<<<<<< HEAD
+=======
             month: month,
             day: day,
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
             branch: branchID.id,
             payment: radioSelect.id,
             ...data
         }
+<<<<<<< HEAD
 
+=======
+        console.log(res)
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
         request(`${API_URL}Overhead/overheads/create/`, "POST", JSON.stringify(res), headers())
             .then(res => {
                 setActiveModal(false)
                 setValue("name", "")
                 setValue("price", "")
-                dispatch(overHeadList())
+<<<<<<< HEAD
 
 
                 const data = {
@@ -121,6 +140,9 @@ export const AdditionalCosts = ({deleted, setDeleted}) => {
                 }
                 dispatch(onAddOverhead(data))
 
+=======
+                dispatch(overHeadList())
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
                 dispatch(onAddAlertOptions({
                     type: "success",
                     status: true,
@@ -157,12 +179,18 @@ export const AdditionalCosts = ({deleted, setDeleted}) => {
 
 
     const onChangePayment = (newPaymentType) => {
+<<<<<<< HEAD
         const {id} = changePaymentType;
         dispatch(onChangePaymentType({
             id: id,
             payment: getCapitalType.filter(item => item.id === +newPaymentType)[0],
             changePaymentType
         }));
+=======
+        console.log(newPaymentType)
+        const {id} = changePaymentType;
+        dispatch(onChangePaymentType({id: id, payment: getCapitalType.filter(item => item.id === +newPaymentType)[0] , changePaymentType}));
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
         // if (!newPaymentType) return;
 
         // request(`${API_URL}Users/salaries/update/${id}/`, "PATCH", JSON.stringify({payment_types: Number(newPaymentType)}), headers())
@@ -210,7 +238,11 @@ export const AdditionalCosts = ({deleted, setDeleted}) => {
                     additionalCosts={overheadList}
                     paymentStyle={cls.typeItem}
                     setChangePayment={setChangePayment}
+<<<<<<< HEAD
                     changePayment={changePayment}
+=======
+                   changePayment={changePayment}
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
                     getCapitalType={getCapitalType}
                     onChange={onChangePayment}
                     setChangePaymentType={setChangePaymentType}
@@ -238,8 +270,12 @@ export const AdditionalCosts = ({deleted, setDeleted}) => {
                 setMonth={setMonth}
             />
 
+<<<<<<< HEAD
             <ConfirmModal setActive={setActiveDelete} active={activeDelete} onClick={onDelete}
                           title={`Rostanham ${changingData.name} ni o'chirmoqchimisiz `} type={"danger"}/>
+=======
+            <ConfirmModal setActive={setActiveDelete} active={activeDelete} onClick={onDelete} title={`Rostanham ${changingData.name} ni o'chirmoqchimisiz `}   type={"danger"}/>
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
             {/*<YesNo activeDelete={activeDelete} setActiveDelete={setActiveDelete} onDelete={onDelete} changingData={changingData}/>*/}
         </div>
     );
@@ -252,8 +288,11 @@ export const AddAdditionalCosts = (props) => {
         setActiveModal,
         option,
         showAdditionalFields,
+<<<<<<< HEAD
+=======
         select,
         setSelected,
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
         onChange,
         paymentType,
         handleSubmit,
@@ -262,11 +301,14 @@ export const AddAdditionalCosts = (props) => {
         radioSelect,
 
         onChangeRadio,
+<<<<<<< HEAD
+=======
         monthDay,
 
         setDay,
         month,
         setMonth
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
     } = props;
 
 
@@ -275,7 +317,11 @@ export const AddAdditionalCosts = (props) => {
         <Modal setActive={setActiveModal} active={activeModal}>
 
             <Form extraClassname={cls.form} onSubmit={handleSubmit(onAdd)}>
+<<<<<<< HEAD
                 <Input register={register} name={"created"} type={"date"} title={"Kun"}/>
+=======
+
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
                 <Select options={option} defaultValue={option[0]?.id} onChangeOption={(e) => {
                     onChange({
                         name: e,
@@ -285,9 +331,13 @@ export const AddAdditionalCosts = (props) => {
                 />
                 {showAdditionalFields ?
                     <Input name={"name"} register={register} placeholder={"Narsa turi"}/> : null}
+<<<<<<< HEAD
 
                 <Input register={register} name={"price"} type={"number"} placeholder={"Narxi"}/>
 
+=======
+                <Input register={register} name={"price"} type={"number"} placeholder={"Narxi"}/>
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
                 <div style={{display: "flex", justifyContent: "center", gap: "2rem"}}>
                     {paymentType.map(item => (
                         <Radio
@@ -303,6 +353,9 @@ export const AddAdditionalCosts = (props) => {
                     ))}
                 </div>
 
+<<<<<<< HEAD
+
+=======
                 <Select
                     title={'Oy'}
                     defaultValue={monthDay[0]?.value}
@@ -314,7 +367,7 @@ export const AddAdditionalCosts = (props) => {
                     options={monthDay.filter(item => item?.value === month)[0]?.days}
                     onChangeOption={setDay}
                 />
-
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
             </Form>
         </Modal>
     )

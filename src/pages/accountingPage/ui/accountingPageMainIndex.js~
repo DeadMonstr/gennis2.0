@@ -268,10 +268,14 @@ export const AccountingPageMain = () => {
                        }
                 />
 
+<<<<<<< HEAD
+
+=======
                 {/*<Route*/}
                 {/*    index*/}
                 {/*    element={<Navigate to={"studentsPayments"}/>}*/}
                 {/*/>*/}
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
 
             </Routes>
             <AccountingFilter

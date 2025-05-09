@@ -10,7 +10,11 @@ export const CapitalModal = ({
                                  setActive,
                                  activeModal,
                                  radio,
-
+                                 monthDay,
+                                 month,
+                                 day,
+                                 setDay,
+                                 setMonth,
                                  register,
                                  handleSubmit,
                                  onAdd,
@@ -42,6 +46,9 @@ export const CapitalModal = ({
                     </div>
 
 
+                    <Select title={"Oy"} options={monthDay} onChangeOption={setMonth}/>
+                    <Select title={"sana"} options={monthDay.filter(item => item?.value === month)[0]?.days}
+                            onChangeOption={setDay}/>
                 </Form>
             </div>
         </Modal>

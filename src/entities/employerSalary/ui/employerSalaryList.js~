@@ -7,7 +7,11 @@ import {useSelector} from "react-redux";
 import {DefaultPageLoader} from "../../../shared/ui/defaultLoader";
 
 
-export const EmployerSalaryList = ({ currentTableData, currentPage, PageSize,setActiveEdit  , setActive }) => {
+<<<<<<< HEAD
+export const EmployerSalaryList = ({ currentTableData,  setActiveEdit  , setActive}) => {
+=======
+export const EmployerSalaryList = ({ currentTableData, currentPage, PageSize }) => {
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
     const loadingDef = useSelector(getEmployerSalaryLoading)
     const renderStudents = () => {
         return currentTableData?.map((item, index) => (
@@ -16,13 +20,18 @@ export const EmployerSalaryList = ({ currentTableData, currentPage, PageSize,set
                     loadingDef ? <DefaultPageLoader/>
                         :
                         <>
+<<<<<<< HEAD
+                            <td>{index + 1}</td>
+=======
                             <td>{(currentPage - 1) * PageSize + index + 1}</td>
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
                             <Link to={`giveSalaryPage/${item.id}/${item.permission}`}>
                             <td>{item.total_salary}</td>
                             </Link>
                             <td>{item.taken_salary}</td>
                             <td>{item.remaining_salary}</td>
                             <td>{item.date}</td>
+<<<<<<< HEAD
                             <td>
                                 <i
                                     onClick={() => {
@@ -31,6 +40,8 @@ export const EmployerSalaryList = ({ currentTableData, currentPage, PageSize,set
                                     }}
                                     className={"fa fa-pen"}/>
                             </td>
+=======
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
 
                         </>
                 }
@@ -48,7 +59,10 @@ export const EmployerSalaryList = ({ currentTableData, currentPage, PageSize,set
                     <th>Olingan oylik</th>
                     <th>Qolgan oylik</th>
                     <th>Sana</th>
+<<<<<<< HEAD
                     <th/>
+=======
+>>>>>>> dc3900ea5d74cfa21ff9492298ffabae62f9e1b5
                 </tr>
                 </thead>
                 <tbody>
