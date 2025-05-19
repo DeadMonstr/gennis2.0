@@ -117,7 +117,7 @@ export const EmployerProfileTotalAmount = memo(({active, setActive, salary_id, u
                 {/*    {renderAmountService}*/}
                 {/*</div>*/}
                 <div className={cls.form}>
-                    <h1>{activeService}</h1>
+                    <h1>{activeService} ehjkbehjfdhje</h1>
                     {
                         activeService === "To'lov"
                             ?

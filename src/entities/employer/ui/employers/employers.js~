@@ -103,7 +103,6 @@ export const Employers = ({currentTableData, loading}) => {
                     msg: res.msg
                 }))
                 dispatch(onDeleteEmployer(changingUser.id))
-                setActiveModal(false)
             })
     }
 
