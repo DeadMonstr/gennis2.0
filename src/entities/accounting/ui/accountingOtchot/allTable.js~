@@ -52,7 +52,7 @@ const TableCash = ({alltable}) => {
             <thead>
             <tr>
                 <th>No</th>
-                <th>Oy uchun umumiy hisoblangan to'lov</th>
+                <th>Umumiy to'lov</th>
                 <th>Umumiy oyliklar</th>
                 <th>Umumiy xarajat</th>
                 <th>Umumiy Kapital</th>
@@ -63,6 +63,7 @@ const TableCash = ({alltable}) => {
             <tbody>
             <tr>
                 <td/>
+
                 <td>{allTable[0]?.students?.student_total_payment}</td>
                 <td>{allTable[0]?.teachers?.teacher_total_salary}</td>
                 <td>{allTable[0]?.overheads?.total_overhead_payment}</td>

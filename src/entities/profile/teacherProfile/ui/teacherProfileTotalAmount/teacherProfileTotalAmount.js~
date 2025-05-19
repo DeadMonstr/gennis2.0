@@ -35,6 +35,10 @@ export const TeacherProfileTotalAmount = memo(({active, setActive, salary_id, us
     const userData = useSelector(getTeacherSalaries);
 
 
+    useEffect(() => {
+        console.log("Ma'lumotlar yangilandi: ", userData);
+
+    }, [userData]);
 
     const handleAddSalary = async (data) => {
         const newSalary = {

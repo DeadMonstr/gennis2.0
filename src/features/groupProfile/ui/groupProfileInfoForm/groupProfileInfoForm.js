@@ -66,7 +66,7 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
     const onSubmitChange = (data) => {
         const res = {
             ...data,
-            color: data?.color ?? selectColor
+            color: selectColor ?? data?.color
         }
         dispatch(changeGroupProfile({
             status: activeSwitch,
@@ -74,11 +74,11 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
             id,
             group_type: theme === "app_center_theme" ? "center" : "school"
         }))
-        dispatch(onAddAlertOptions({
-            type: "success",
-            status: true,
-            msg: `Guruhni malumotlari o'zgardi`
-        }))
+        // dispatch(onAddAlertOptions({
+        //     type: "success",
+        //     status: true,
+        //     msg: `Guruhni malumotlari o'zgardi`
+        // }))
     }
 
     const onDelete = () => {
@@ -90,8 +90,9 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
         navigate(-2)
     }
 
+    console.log(data)
+
     useEffect(() => {
-        setValue("name", data?.name)
         setValue("price", data?.price)
         setValue("language", data?.language?.id)
         if (userSystem?.name === "school") {
@@ -115,7 +116,7 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
                         src={data?.profile_img ?? defaultUserImg}
                         alt=""
                     />
-                    <h1>{data?.name}</h1>
+                    <h1>{data?.class_number?.number}-{data?.color?.name}</h1>
                     <h2 className={cls.info__role}>Group</h2>
                 </div>
                 <div className={cls.info__text}>
@@ -179,14 +180,7 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
                     typeSubmit={""}
                     onSubmit={handleSubmit(onSubmitChange)}
                 >
-                    <Input
-                        extraClassName={cls.form__input}
-                        placeholder={"Sinf nomi"}
-                        // title={"Guruh nomi"}
-                        register={register}
-                        name={"name"}
-                        required
-                    />
+
                     {
                         system.name === "center" ? <Input
                             extraClassName={cls.form__input}
@@ -263,29 +257,28 @@ export const GroupProfileInfoForm = memo(({system,branch}) => {
                             onChangeSwitch={setActiveSwitch}
                         />
                     </div>
-                   <div style={{display: "flex" , justifyContent: "space-between"}}>
-                       <Button
-                           extraClass={cls.infoModal__btn}
-                           onClick={()=> {
-                               setIsDeleted(true)
-                               setDelete(!deleteID)
-                           }}
-                           type={"danger"}
-                       >
-                           Delete group
-                       </Button>
-                       <Button id={"formChange"} extraClass={cls.infoModal__btn}>Change</Button>
-                   </div>
+
+
+
                 </Form>
+                <div style={{display: "flex" , justifyContent: "space-between"}}>
+                    <Button
+                        extraClass={cls.infoModal__btn}
+                        onClick={()=> {
+                            setIsDeleted(true)
+                            setDelete(!deleteID)
+                        }}
+                        type={"danger"}
+                    >
+                        Delete group
+                    </Button>
+                    <Button type={"submit"} id={"formChange"} extraClass={cls.infoModal__btn}>Change</Button>
+                </div>
+
                 <ConfirmModal setActive={setDelete} active={deleteID} onClick={onDelete} title={`Rostanham o'chirmoqchimisiz`}   type={"danger"}/>
 
             </Modal>
-            <ConfirmModal
-                type={"danger"}
-                active={isDeleted}
-                setActive={setIsDeleted}
-                onClick={onDelete}
-            />
+
         </>
     )
 })

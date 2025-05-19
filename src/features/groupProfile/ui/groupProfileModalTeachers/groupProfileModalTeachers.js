@@ -29,8 +29,8 @@ export const GroupProfileModalTeachers = memo(({branch}) => {
     const userSystem = JSON.parse(localStorage.getItem("selectedSystem")) // changed
     const userBranchId = useSelector(getUserBranchId)
     const dispatch = useDispatch()
-    // const {id} = useParams()
-    const {id} = useSelector(getBranch)
+    const {id} = useParams()
+    // const {id} = useSelector(getBranch)
     const {theme} = useTheme()
     const profileData = useSelector(getGroupProfileData)
     const centerTeachers = useSelector(getGroupProfileFilteredTeachers)

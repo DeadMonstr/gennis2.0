@@ -75,7 +75,7 @@ export const SchoolTeacherGroups = memo(() => {
 
                             <h1>{item?.class_number?.number}-{item?.color?.name}</h1>
 
-                            {/*<h2 className={cls.info__role}>{item?.color?.name}</h2>*/}
+                            <h2 className={cls.info__role}>{item?.color?.name}</h2>
                         </EditableCard>
                     ))
             }

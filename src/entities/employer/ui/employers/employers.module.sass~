@@ -1,5 +1,4 @@
 @import "app/styles/abstracts/mixins"
-@import "app/styles/abstracts/variables"
 
 .employer
   width: 100%
@@ -33,6 +32,3 @@
     align-items: center
     i
       color: white
-  .delete
-    i
-      color: $color-danger

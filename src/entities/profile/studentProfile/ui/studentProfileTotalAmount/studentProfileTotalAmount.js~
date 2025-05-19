@@ -215,7 +215,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
             student: student_id,
         }
 
-        request(`${API_URL}Students/discount/?type=${typeDiscount}`, "POST", JSON.stringify(res), headers())
+        request(`${API_URL}Students/discount/`, "POST", JSON.stringify(res), headers())
             .then(res => {
                 console.log(res)
                 // setDiscountCharity(0)

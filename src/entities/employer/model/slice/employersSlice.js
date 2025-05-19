@@ -12,7 +12,11 @@ const initialState = {
 export const employersSlice = createSlice({
     name: 'employersSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        onDeleteEmployer: (state, action) => {
+            state.employersData = state.employersData.filter(employer => employer.id !== action.payload)
+        }
+    },
     extraReducers: builder => {
         builder
             .addCase(fetchEmployersData.pending, (state) => {state.loading = true})
@@ -40,4 +44,7 @@ export const employersSlice = createSlice({
 
     }
 })
+
+export const {onDeleteEmployer} = employersSlice.actions
+
 export default employersSlice.reducer
