@@ -8,6 +8,7 @@ import {useSelector} from "react-redux";
 import {getSearchValue} from "../../../../../features/searchInput";
 import {MiniLoader} from "../../../../../shared/ui/miniLoader";
 import {Select} from "../../../../../shared/ui/select";
+import {DefaultPageLoader} from "shared/ui/defaultLoader";
 
 export const AccountingAdditionalCosts = ({
                                               additionalCosts,
@@ -20,7 +21,7 @@ export const AccountingAdditionalCosts = ({
                                               setChangePayment,
                                               changePayment,
                                               getCapitalType,
-                                              onChange
+                                              onChange, loading
                                           }) => {
     const search = useSelector(getSearchValue)
     let PageSize = useMemo(() => 50, [])
@@ -94,7 +95,7 @@ export const AccountingAdditionalCosts = ({
                     </tr>
                     </thead>
                     <tbody>
-                    {render}
+                    { render}
                     </tbody>
                 </Table>
             </div>

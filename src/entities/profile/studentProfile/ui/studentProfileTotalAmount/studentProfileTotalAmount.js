@@ -209,6 +209,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     const onSubmitPassword = (data) => {
 
     }
+
     const onChangeSwitch = () => {
         setSwitch(!swtich)
     }

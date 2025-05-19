@@ -45,7 +45,7 @@ export const GroupAttendance = () => {
     const checkTrueFalse = (data) => {
         if (data) {
             return data?.map(item => {
-                console.log(item.reason, 'log item')
+                
                 if (item.status === true) {
                     return (
                         <td className="date true">
