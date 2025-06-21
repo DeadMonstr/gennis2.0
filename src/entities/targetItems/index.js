@@ -1,1 +1,0 @@
-export {TargetItemsReg} from "entities/targetItems/ui/targetForm/targetItemsReg"

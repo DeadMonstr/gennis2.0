@@ -24,7 +24,7 @@ import {ClassAddColorPage} from "pages/classPage";
 import RequireBranch from "app/routers/ui/RequireBranch";
 import RequireHeader from "app/routers/ui/RequireHeader";
 import {routersConfigProfile} from "app/routers/config/routerConfigProfiles";
-import {TargetItemsReg} from "entities/targetItems";
+import {TargetItemsReg} from "features/target";
 
 
 export const AppRouter = () => {
