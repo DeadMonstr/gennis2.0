@@ -1,5 +1,5 @@
 import {Input} from "shared/ui/input";
-import cls from "entities/targetItems/ui/targetItemsReg.module.sass"
+import cls from "entities/targetItems/ui/targetForm/targetItemsReg.module.sass"
 import {Button} from "shared/ui/button";
 import {API_URL, useHttp} from "shared/api/base";
 import {useForm} from "react-hook-form";

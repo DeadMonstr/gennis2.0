@@ -1,1 +1,1 @@
-export {TargetItemsReg} from "entities/targetItems/ui/targetItemsReg"
+export {TargetItemsReg} from "entities/targetItems/ui/targetForm/targetItemsReg"
