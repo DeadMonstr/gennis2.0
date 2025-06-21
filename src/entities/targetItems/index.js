@@ -1,0 +1,1 @@
+export {TargetItemsReg} from "entities/targetItems/ui/targetItemsReg"
