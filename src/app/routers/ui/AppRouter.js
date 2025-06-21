@@ -25,6 +25,8 @@ import RequireBranch from "app/routers/ui/RequireBranch";
 import RequireHeader from "app/routers/ui/RequireHeader";
 import {routersConfigProfile} from "app/routers/config/routerConfigProfiles";
 import {TargetItemsReg} from "entities/targetItems";
+import Target from "pages/target/ui/Target";
+import LayoutTarget from "app/layouts/layoutTarget/LayoutTarget";
 
 
 export const AppRouter = () => {
@@ -68,7 +70,9 @@ export const AppRouter = () => {
                     element={<Register/>}
                 />
 
-                <Route path={"/instagramReg"} element={<TargetItemsReg/>}/>
+                <Route path={"/register/target/*"}  element={<LayoutTarget>
+                    <Target/>
+                </LayoutTarget>} />
 
                 <Route element={<RequireAuth/>}>
 
