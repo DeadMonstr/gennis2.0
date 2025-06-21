@@ -3,6 +3,7 @@ import {fetchMultiPageDataThunk} from "../thunk/multiPageThunk";
 
 const initialState = {
 
+
     data: [],
     changedPage: false,
     oldPage: "",

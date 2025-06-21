@@ -56,8 +56,6 @@ export const Capital = ({deleted , setDeleted }) => {
     const onAdd = (data) => {
 
         const res = {
-            day: day,
-            month: month,
             branch: branchID.id,
             payment_type: radio.id,
 
@@ -79,7 +77,6 @@ export const Capital = ({deleted , setDeleted }) => {
                 }
 
                 dispatch(onAddCapital(data))
-                dispatch(capitalListThunk())
                 setValue("name" , "")
                 setValue("price" , "")
             })

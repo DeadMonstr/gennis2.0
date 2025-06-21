@@ -18,7 +18,7 @@ import {
     getEmployerSalary,
     getTeacherSalary, getInkasatsiya,
     getGroupHistory,
-    getRouteClassProfile, getOtchot, getRouteRGBData
+    getRouteClassProfile, getOtchot, getRouteRGBData, getRouteTaskManager
 } from "shared/const/routers";
 
 
@@ -41,6 +41,7 @@ import {Branch, Education, Location, System} from "entities/editCreates";
 import {Inkasatsiya} from "pages/inkasatsiyaPage";
 import {StudentProfileGroupsHistory} from "entities/profile/studentProfile";
 import {AccountingOtchotPage} from "../../../pages/accountingPage";
+import {TaskManager} from "pages/taskManager/ui/taskManager";
 
 export const routersConfigProfile = [
     {
@@ -48,6 +49,11 @@ export const routersConfigProfile = [
         name: "Student Profile",
         path: getProfile(":id"),
         element: <StudentProfilePage/>,
+    },
+    {
+        name: "Task Manager",
+        path: getRouteTaskManager(":id"),
+        element: <TaskManager/>,
     },
     {
         to: "capitalBox",

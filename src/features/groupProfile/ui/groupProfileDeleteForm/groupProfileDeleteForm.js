@@ -1,19 +1,21 @@
-import {getGroupsListData} from "entities/groups";
 import {
     getDebtStudents,
     getFilteredGroups,
-    getGroupProfileFilteredStudents, getGroupProfileFilteredTeachers,
-    getReasons, getStudyMonths
+    getGroupProfileFilteredStudents,
+    getGroupProfileFilteredTeachers,
+    getReasons,
+    getStudyMonths
 } from "entities/profile/groupProfile/model/groupProfileSelector";
 import {
     fetchFilteredGroups,
-    filteredStudents, getGroupDebtStudents, getGroupStudyMonth, getGroupStudyYears,
-    moveGroup,
-    moveToClass
+    filteredStudents,
+    getGroupDebtStudents,
+    getGroupStudyMonth,
+    getGroupStudyYears,
+    moveGroup
 } from "entities/profile/groupProfile/model/groupProfileThunk";
-import {getFilteredTeachers} from "entities/students";
 import {fetchTeachersData, getTeachers} from "entities/teachers";
-import {getUserBranchId, getUserSystemId} from "entities/profile/userProfile/model/userProfileSelector";
+import {getUserBranchId} from "entities/profile/userProfile/model/userProfileSelector";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import classNames from "classnames";
@@ -27,10 +29,7 @@ import {
     getGroupProfileData,
     getStudyYears
 } from "entities/profile/groupProfile";
-import {
-    amountService,
-    amountTypes
-} from "entities/profile/studentProfile";
+import {amountService, amountTypes} from "entities/profile/studentProfile";
 import {useNavigate, useParams} from "react-router";
 import {useTheme} from "shared/lib/hooks/useTheme";
 import {ConfirmModal} from "shared/ui/confirmModal";
@@ -41,7 +40,6 @@ import {Button} from "shared/ui/button";
 import {Input} from "shared/ui/input";
 import {Radio} from "shared/ui/radio";
 import {Select} from "shared/ui/select";
-import {Switch} from "shared/ui/switch";
 import {Table} from "shared/ui/table";
 
 import cls from "./groupProfileDeleteForm.module.sass";
@@ -49,10 +47,7 @@ import defaultUserImg from "shared/assets/images/user_image.png";
 import bank from "shared/assets/images/Bank.png";
 import creditCard from "shared/assets/images/CreditCard.png";
 import money from "shared/assets/images/Money.png";
-import {getBranch} from "../../../branchSwitcher";
 import {API_URL, headers, useHttp} from "../../../../shared/api/base";
-import {fetchStudentDebtorData} from "../../../studentPayment/model/studentPaymentThunk";
-import {onDeleteDebtorData} from "../../../studentPayment/model/studentPaymentSlice";
 import {onMoveToGroup} from "entities/profile/groupProfile/model/groupProfileSlice";
 
 const listPretcent = [-1, 34.8, 70.4]
@@ -190,6 +185,9 @@ export const GroupProfileDeleteForm = memo(({branch, system}) => {
                    setActive(false)
                    setActiveModal("")
                })
+
+
+
             // dispatch(moveToClass({branch, id, res}))
         } else {
             const res = {

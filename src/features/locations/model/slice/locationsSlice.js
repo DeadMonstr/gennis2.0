@@ -15,7 +15,7 @@ const locationsSlice = createSlice({
     initialState,
     reducers: {
         addSelectedLocations: (state,action) => {
-            const filteredLocation = state.locations.filter(item => item.id === +action.payload)[0]
+            const filteredLocation = state.locations.filter(item => item?.id === +action.payload)[0]
             localStorage.setItem("selectedLocations", JSON.stringify([...state.selectedLocations,filteredLocation]))
             state.selectedLocations = [...state.selectedLocations,filteredLocation]
 
@@ -28,7 +28,10 @@ const locationsSlice = createSlice({
 
                 }
                 return item
+
             })
+            console.log(state.locations, "ededed")
+
 
         },
 
@@ -77,7 +80,7 @@ const locationsSlice = createSlice({
                     state.selectedLocations = localstorageLocs
                     state.locations = action.payload.list.map(item => {
 
-                        const isHave = localstorageLocs.some(loc => loc.id === item.id)
+                        const isHave = localstorageLocs.some(loc => loc?.id === item.id)
 
                         if (isHave) {
                             return {

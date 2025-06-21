@@ -7,9 +7,9 @@ import {routersConfigList} from "app/routers/config/routersConfigList";
 import {Layout} from "app/layout";
 import {Login} from "pages/loginPage";
 import {StudentProfilePage} from "pages/profilePage";
-import {CenterHomePage, NewSchoolHomePage, SchoolHomeEducationPage, SchoolHomePage} from "pages/homePage";
+import { NewSchoolHomePage,} from "pages/homePage";
 import {Register} from "pages/registerPage/ui/register";
-import {NotFoundPage} from "pages/notfoundPage/ui/notfound";
+
 
 import {ClassMolassesPage} from "pages/School";
 
@@ -19,30 +19,12 @@ import "app/styles/index.sass"
 
 import {FlowProfileNavigators} from "entities/flowsProfile";
 import {FlowListPage} from "pages/FlowListPage";
-import {ClassAddColorPage, ClassPage} from "pages/classPage";
+import {ClassAddColorPage} from "pages/classPage";
 
-import {CalendarPage} from "pages/calendarPage";
 import RequireBranch from "app/routers/ui/RequireBranch";
 import RequireHeader from "app/routers/ui/RequireHeader";
 import {routersConfigProfile} from "app/routers/config/routerConfigProfiles";
-import {
-    AboutUs,
-    SchoolHomeAboutUs,
-    SchoolHomeCertificats,
-    SchoolHomeContact,
-    SchoolHomeHeader, SchoolHomeWorkUs, SchoolParentesComment
-} from "../../../entities/schoolHome";
-import {
-    SchoolGalleryModal,
-    SchoolHomeCertificatsModal,
-    SchoolHomeCurriculamModal,
-    SchoolHomeLatestNewModal,
-    SchoolHomeNewsAnnouncementModal,
-    SchoolHomeStudentProfileModal,
-    SchoolHomeStudentsModal,
-    SchoolVisionMission
-} from "../../../features/schoolHome";
-import LayoutWebsite from "../../layoutWebSite/layoutWebsite";
+import {TargetItemsReg} from "entities/targetItems";
 
 
 export const AppRouter = () => {
@@ -54,7 +36,6 @@ export const AppRouter = () => {
             <>
 
                 <Route path={"/*"} element={<NewSchoolHomePage/>}/>
-
                 {/*<Route path={"/"} element={<LayoutWebsite/>}>*/}
                 {/*    <Route*/}
                 {/*        index*/}
@@ -87,6 +68,7 @@ export const AppRouter = () => {
                     element={<Register/>}
                 />
 
+                <Route path={"/instagramReg"} element={<TargetItemsReg/>}/>
 
                 <Route element={<RequireAuth/>}>
 

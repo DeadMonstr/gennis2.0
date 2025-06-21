@@ -38,6 +38,7 @@ export const GroupsList = React.memo(({currentTableData}) => {
                             <>
                                 <td>{item?.teacher}</td>
                                 <td>{item?.students?.length}</td>
+                                <td>{item?.price ? item.price : "Sinfga hali narx belgilanmagan"}</td>
                                 {/*<td>{`${item?.class_number?.number}-${item?.color?.name}`}</td>*/}
                             </>
                     }
@@ -84,7 +85,7 @@ export const GroupsList = React.memo(({currentTableData}) => {
                         <th>Sinf nomi</th>
                         <th>O’qituvchi ism familiya</th>
                         <th>Studentlar soni</th>
-                        {/*<th>Guruh narxi</th>*/}
+                        <th>Sinf narxi</th>
                         <th>Status</th>
                     </tr>
                 }

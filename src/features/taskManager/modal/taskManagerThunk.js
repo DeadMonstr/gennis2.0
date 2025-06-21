@@ -1,0 +1,20 @@
+import {createAsyncThunk} from "@reduxjs/toolkit";
+import {API_URL, headers, useHttp} from "shared/api/base";
+
+
+export const fetchTaskManager = createAsyncThunk(
+    "taskManagerSlice/fetchTaskManager",
+    async ({date}) => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Lead/lead_list/?date=${date}`, "GET", null, headers())
+    }
+)
+
+
+export const fetchBranch = createAsyncThunk(
+    "taskManagerSlice/fetchBranch",
+    async () => {
+        const {request} = useHttp()
+        return await request(`${API_URL}Branch/branch_list/`, "GET", null, headers())
+    }
+)

@@ -1,5 +1,5 @@
 import {
-    getRouteTaskManager,
+
     getRouteStudents,
     getRouteTimePage,
     getRouteTeacher,
@@ -15,7 +15,7 @@ import {
     getRouteCalendar,
     getRouteMain,
     getRouteRegister,
-    getRouteRGBData,
+
 } from "shared/const/routers";
 
 
@@ -36,6 +36,7 @@ import {TimeTableTuronPage} from "pages/timeTable";
 import {ClassMain} from "pages/classPage/ui/classMain";
 import {Register} from "pages/registerPage";
 import {RgbDataPage} from "pages/rgbDataPage";
+import {TaskManager} from "pages/taskManager/ui/taskManager";
 
 
 
@@ -46,11 +47,7 @@ export const routersConfigList = [
         // element: <HomePage/>,
         element: null,
     },
-    {
-        name: "Task Manager",
-        path: getRouteTaskManager(":id"),
-        element: null,
-    },
+
 
     {
         name: "O'quvchilar",

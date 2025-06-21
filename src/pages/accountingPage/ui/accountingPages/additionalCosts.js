@@ -32,6 +32,7 @@ import {onAddAlertOptions} from "../../../../features/alert/model/slice/alertSli
 
 import {ConfirmModal} from "../../../../shared/ui/confirmModal";
 import {getBranch} from "../../../../features/branchSwitcher";
+import classNames from "classnames";
 
 
 export const AdditionalCosts = ({deleted, setDeleted}) => {
@@ -53,6 +54,8 @@ export const AdditionalCosts = ({deleted, setDeleted}) => {
     const [changingData, setChangingData] = useState({})
     const overheadDeletedList = useSelector(getOverHeadDeletedList)
     const [changePayment, setChangePayment] = useState(false)
+    const [activeBtn, setActiveBtn] = useState(null)
+
 
 
     const getCapitalType = useSelector(getCapitalTypes)
@@ -65,9 +68,17 @@ export const AdditionalCosts = ({deleted, setDeleted}) => {
         // dispatch(getPaymentType())
         dispatch(getMonthDay())
         // dispatch(overHeadDeletedList())
-        dispatch(overHeadList(branchID))
     }, [])
 
+    useEffect(() => {
+        const res ={
+            branchID: branchID.id,
+            type: activeBtn
+        }
+
+        dispatch(overHeadList({activeBtn: activeBtn , branchId: branchID}))
+    }, [activeBtn])
+    console.log(activeBtn)
     // useEffect(() => {
     //
     // }, [deleted])
@@ -96,8 +107,6 @@ export const AdditionalCosts = ({deleted, setDeleted}) => {
     const onAdd = (data) => {
         const res = {
             type: select.id,
-            month: month,
-            day: day,
             branch: branchID.id,
             payment: radioSelect.id,
             ...data
@@ -108,7 +117,6 @@ export const AdditionalCosts = ({deleted, setDeleted}) => {
                 setActiveModal(false)
                 setValue("name", "")
                 setValue("price", "")
-                dispatch(overHeadList())
 
 
                 const data = {
@@ -188,7 +196,7 @@ export const AdditionalCosts = ({deleted, setDeleted}) => {
     const formatSalary = (salary) => {
         return Number(salary).toLocaleString();
     };
-    return loading ? <DefaultPageLoader/> : (
+    return   (
         <div className={cls.overhead}>
 
             <OverHeadHeader formatSalary={formatSalary} sum={sum1} deleted={deleted} sum2={sum2} onClick={onClick}
@@ -199,22 +207,37 @@ export const AdditionalCosts = ({deleted, setDeleted}) => {
                     extraClassName={cls.table}
                     paymentStyle={cls.typeItem}
                 /> :
-                <AccountingAdditionalCosts
-                    formatSalary={formatSalary}
-                    loading={loading}
-                    onDelete={onDelete}
-                    changingData={changingData}
-                    setChangingData={setChangingData}
-                    setActiveDelete={setActiveDelete}
-                    activeDelete={activeDelete} extraclassName={cls.table}
-                    additionalCosts={overheadList}
-                    paymentStyle={cls.typeItem}
-                    setChangePayment={setChangePayment}
-                    changePayment={changePayment}
-                    getCapitalType={getCapitalType}
-                    onChange={onChangePayment}
-                    setChangePaymentType={setChangePaymentType}
-                />
+                <>
+                    <div className={cls.subHeader}>
+
+                        {overHeadType.map(item => (
+                            <Button extraClass={classNames(cls.subHeader__subBtn , {
+                                [cls.active]: activeBtn === item.id
+                            })} onClick={() => setActiveBtn(item.id)}>{item.name}</Button>
+                        ))}
+
+
+                    </div>
+
+
+                    <AccountingAdditionalCosts
+                        formatSalary={formatSalary}
+                        loading={loading}
+                        onDelete={onDelete}
+                        changingData={changingData}
+                        setChangingData={setChangingData}
+                        setActiveDelete={setActiveDelete}
+                        activeDelete={activeDelete} extraclassName={cls.table}
+                        additionalCosts={overheadList}
+                        paymentStyle={cls.typeItem}
+                        setChangePayment={setChangePayment}
+                        changePayment={changePayment}
+                        getCapitalType={getCapitalType}
+                        onChange={onChangePayment}
+                        setChangePaymentType={setChangePaymentType}
+
+                    />
+                </>
             }
             <AddAdditionalCosts
                 showAdditionalFields={showAdditionalFields}
@@ -236,6 +259,7 @@ export const AdditionalCosts = ({deleted, setDeleted}) => {
                 setDay={setDay}
                 month={month}
                 setMonth={setMonth}
+                optionDef={activeBtn}
             />
 
             <ConfirmModal setActive={setActiveDelete} active={activeDelete} onClick={onDelete}
@@ -252,8 +276,6 @@ export const AddAdditionalCosts = (props) => {
         setActiveModal,
         option,
         showAdditionalFields,
-        select,
-        setSelected,
         onChange,
         paymentType,
         handleSubmit,
@@ -262,11 +284,7 @@ export const AddAdditionalCosts = (props) => {
         radioSelect,
 
         onChangeRadio,
-        monthDay,
-
-        setDay,
-        month,
-        setMonth
+        optionDef
     } = props;
 
 
@@ -276,7 +294,7 @@ export const AddAdditionalCosts = (props) => {
 
             <Form extraClassname={cls.form} onSubmit={handleSubmit(onAdd)}>
                 <Input register={register} name={"created"} type={"date"} title={"Kun"}/>
-                <Select options={option} defaultValue={option[0]?.id} onChangeOption={(e) => {
+                <Select options={option} defaultValue={optionDef} onChangeOption={(e) => {
                     onChange({
                         name: e,
                         id: e
@@ -303,17 +321,6 @@ export const AddAdditionalCosts = (props) => {
                     ))}
                 </div>
 
-                <Select
-                    title={'Oy'}
-                    defaultValue={monthDay[0]?.value}
-                    options={monthDay}
-                    onChangeOption={setMonth}
-                />
-                <Select
-                    title={'Kun'}
-                    options={monthDay.filter(item => item?.value === month)[0]?.days}
-                    onChangeOption={setDay}
-                />
 
             </Form>
         </Modal>
