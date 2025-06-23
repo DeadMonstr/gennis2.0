@@ -4,7 +4,7 @@ import {createBrowserRouter} from "react-router-dom";
 import classNames from "classnames";
 import {RequireAuth} from "./RequireAuth";
 import {routersConfigList} from "app/routers/config/routersConfigList";
-import {Layout} from "app/layout";
+import {Layout} from "app/layouts/layout";
 import {Login} from "pages/loginPage";
 import {StudentProfilePage} from "pages/profilePage";
 import { NewSchoolHomePage,} from "pages/homePage";
@@ -24,7 +24,8 @@ import {ClassAddColorPage} from "pages/classPage";
 import RequireBranch from "app/routers/ui/RequireBranch";
 import RequireHeader from "app/routers/ui/RequireHeader";
 import {routersConfigProfile} from "app/routers/config/routerConfigProfiles";
-import {TargetItemsReg} from "features/target";
+import Target from "pages/target/ui/Target";
+import LayoutTarget from "app/layouts/layoutTarget/LayoutTarget";
 
 
 export const AppRouter = () => {
@@ -68,7 +69,9 @@ export const AppRouter = () => {
                     element={<Register/>}
                 />
 
-                <Route path={"/instagramReg"} element={<TargetItemsReg/>}/>
+                <Route path={"/register/target/*"}  element={<LayoutTarget>
+                    <Target/>
+                </LayoutTarget>} />
 
                 <Route element={<RequireAuth/>}>
 

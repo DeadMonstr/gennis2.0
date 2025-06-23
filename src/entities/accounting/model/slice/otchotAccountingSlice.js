@@ -17,7 +17,11 @@ const initialState = {
 const accountingOtchotSlice = createSlice({
     name: "otchotSlice",
     initialState,
-    reducers: {},
+    reducers: {
+        getFilteredAll: (state, action) => {
+            state.all = action.payload
+        }
+    },
     extraReducers: builder =>
         builder
             .addCase(getStudentPayment.pending , state => {
@@ -80,4 +84,5 @@ const accountingOtchotSlice = createSlice({
             })
 })
 
+export const {getFilteredAll} = accountingOtchotSlice.actions
 export default accountingOtchotSlice.reducer
