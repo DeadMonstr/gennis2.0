@@ -27,7 +27,7 @@ export function useTheme() {
     }
 
     return {
-        theme: theme || currentTheme,
+        theme: "app_school_theme",
         toggleTheme,
     };
 }

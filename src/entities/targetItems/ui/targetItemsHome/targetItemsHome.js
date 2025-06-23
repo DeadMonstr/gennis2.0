@@ -59,6 +59,7 @@ export const TargetItemsHome = () => {
                 </ul>
             </div>
             <Button onClick={() => navigate("/register/target/form/home")} extraClass={cls.home__btn} type={"simple"}>{t("targetHome.btn")}</Button>
+            {/*<button onClick={() => navigate("/register/target/form/home")} className={cls.home__btn} type={"simple"}>{t("targetHome.btn")}</button>*/}
         </div>
     );
 }
