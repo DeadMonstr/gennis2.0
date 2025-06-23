@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from "react-i18next";
 
 import {Button} from "shared/ui/button";
 
@@ -6,61 +7,56 @@ import cls from "./targetItemsHome.module.sass";
 import image from "shared/assets/images/newHome.png";
 
 export const TargetItemsHome = () => {
+
+    const { t, i18n } = useTranslation();
+
     return (
         <div className={cls.home}>
-            <h1 className={cls.home__title}>Har bir bola – noyob! Biz bunga ishonamiz.</h1>
+            <h1 className={cls.home__title}>{t("targetHome.title")}</h1>
             <p className={cls.home__desc}>
-                🌍 <span className={cls.inner}>Turon International School</span> – har bir o‘quvchining bilim darajasi va
-                individual
-                xususiyatlari inobatga
-                olinadi.
+                🌍 <span className={cls.inner}>{t("targetHome.titleName")}</span> {t("targetHome.subTitle")}
             </p>
             <img className={cls.home__image} src={image} alt=""/>
             <div className={cls.home__container}>
-                <h2 className={cls.title}>🎯 Asosiy yo‘nalishlarimiz:</h2>
+                <h2 className={cls.title}>🎯 {t("targetHome.boxesTitle")}:</h2>
                 <div className={cls.list}>
                     <div className={cls.list__item}>
-                        <h3 className={cls.title}>🧠 Kognitiv (bilish) testlar</h3>
+                        <h3 className={cls.title}>🧠 {t("targetHome.boxesTitle1")}</h3>
                         <p className={cls.desc}>
-                            Bu testlar o‘quvchining diqqat, xotira, tafakkur va mantiqiy fikrlash darajasini aniqlashga
-                            xizmat qiladi. Masalan: Diqqatni jamlash testi, mantiqiy ketma-ketlikni topish.
+                            {t("targetHome.boxesDesc1")}
                         </p>
                     </div>
                     <div className={cls.list__item}>
-                        <h3 className={cls.title}>🎯 Motivatsion testlar</h3>
+                        <h3 className={cls.title}>🎯 {t("targetHome.boxesTitle2")}</h3>
                         <p className={cls.desc}>
-                            Bu testlar bolaning o‘qishga, ishlashga va muvaffaqiyatga intilish darajasini o‘lchashga
-                            yordam beradi. Masalan: “Men nima uchun o‘qiyman?” testi, ta’limga nisbatan qiziqish
-                            so‘rovnomasi.
+                            {t("targetHome.boxesDesc2")}
                         </p>
                     </div>
                     <div className={cls.list__item}>
-                        <h3 className={cls.title}>😊 Emotsional holat testlari</h3>
+                        <h3 className={cls.title}>😊 {t("targetHome.boxesTitle3")}</h3>
                         <p className={cls.desc}>
-                            Bu testlar orqali bola yoki o‘smirning kayfiyati, xavotir darajasi va hissiy muvozanatini
-                            baholash mumkin. Masalan: Kayfiyat shkalasi, xavotir darajasini aniqlovchi testlar.
+                            {t("targetHome.boxesDesc3")}
                         </p>
                     </div>
                     <div className={cls.list__item}>
-                        <h3 className={cls.title}>💬 Shaxsiy sifatlar testlari</h3>
+                        <h3 className={cls.title}>💬 {t("targetHome.boxesTitle4")}</h3>
                         <p className={cls.desc}>
-                            O‘quvchining xarakteri, o‘zini baholashi va atrofdagilar bilan munosabatini o‘lchovchi
-                            testlar. Masalan: O‘ziga ishonch darajasi testi, introvert/ekstravert tahlili.
+                            {t("targetHome.boxesDesc4")}
                         </p>
                     </div>
                 </div>
             </div>
             <div className={cls.home__menu}>
-                <h2 className={cls.title}>Asosiy maqsadlarimiz</h2>
+                <h2 className={cls.title}>{t("targetHome.listTitle")}:</h2>
                 <ul className={cls.list}>
-                    <li>Bolaning o‘zini anglash va baholash qobiliyatini aniqlash</li>
-                    <li>O‘qishga bo‘lgan qiziqish va motivatsiya darajasini aniqlash</li>
-                    <li>Diqqat, xotira, fikrlash kabi bilish jarayonlarini baholash</li>
-                    <li>Ijtimoiy muhitga moslashish darajasini aniqlash</li>
-                    <li>Emotsional barqarorlik va stressga chidamlilikni baholash</li>
+                    <li>{t("targetHome.listItem1")}</li>
+                    <li>{t("targetHome.listItem2")}</li>
+                    <li>{t("targetHome.listItem3")}</li>
+                    <li>{t("targetHome.listItem4")}</li>
+                    <li>{t("targetHome.listItem5")}</li>
                 </ul>
             </div>
-            <Button extraClass={cls.home__btn} type={"simple"}>Ariza qoldiring</Button>
+            <Button extraClass={cls.home__btn} type={"simple"}>{t("targetHome.btn")}</Button>
         </div>
     );
 }
