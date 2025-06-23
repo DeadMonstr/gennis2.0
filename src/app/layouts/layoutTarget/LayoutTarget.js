@@ -50,7 +50,7 @@ const LayoutTarget = ({children}) => {
                     </div>
 
                     <div className={cls.icons}>
-                        {icons.map(item => (<div className={cls.icons__item}>
+                        {icons.map((item, index) => (<div key={index} className={cls.icons__item}>
                             <img src={item} alt=""/>
                         </div>))}
                     </div>
