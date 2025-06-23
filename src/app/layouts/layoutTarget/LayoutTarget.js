@@ -9,20 +9,32 @@ import facebookIcon from "shared/assets/icons/facebook.svg";
 import {TargetChildren} from "entities/targetItems";
 import LangSwitcher from "features/langSwitcher/ui/LangSwitcher";
 import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router";
 
 const LayoutTarget = ({children}) => {
 
 
-    const icons = [telegramIcon, instagramIcon, youtubeIcon, facebookIcon]
+    const icons = [
+        {
+            icon: telegramIcon,
+            link: "https://t.me/gennis_info"
+        },
+        {
+            icon: instagramIcon,
+            link: "https://www.instagram.com/genniscampus/"
+        },
+    ]
 
-    const { t, i18n } = useTranslation();
+    const {t, i18n} = useTranslation();
 
+
+    const navigate = useNavigate()
 
 
     return (
         <div className={cls.layoutTarget}>
             <div className={cls.header}>
-                <div className={cls.logo}>
+                <div onClick={() => navigate("/")} className={cls.logo}>
                     <img src={logo} alt="logo"/>
                 </div>
 
@@ -39,7 +51,6 @@ const LayoutTarget = ({children}) => {
                 <div className={cls.footer}>
 
 
-
                     <div className={cls.footer_header}>
                         <h1>
                             {t("footer.title")}
@@ -51,7 +62,7 @@ const LayoutTarget = ({children}) => {
 
                     <div className={cls.icons}>
                         {icons.map(item => (<div className={cls.icons__item}>
-                            <img src={item} alt=""/>
+                            <a href={`${item.link}`} target={"_blank"}><img src={item.icon} alt=""/></a>
                         </div>))}
                     </div>
                 </div>
