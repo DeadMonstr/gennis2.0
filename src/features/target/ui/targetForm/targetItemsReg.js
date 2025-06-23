@@ -14,6 +14,7 @@ import youtubeIcon from "shared/assets/icons/youtube.svg";
 import checkIcon from "shared/assets/icons/checkIcon.svg";
 import { useState } from "react";
 import {useTranslation} from "react-i18next";
+import {useParams} from "react-router";
 
 
 
@@ -28,6 +29,11 @@ export const TargetItemsReg = () => {
         surname: false,
         phone: false
     });
+
+
+    const {slug} = useParams()
+
+    console.log(slug , "dasd")
 
     const { register, handleSubmit } = useForm();
     const dispatch = useDispatch();
