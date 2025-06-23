@@ -21,10 +21,13 @@ export const Input = React.memo(({
                                      extraValues,
                                      checkboxTitle,
                                      checked,
-                                     onBlur
+                                     onBlur,
+                                     titleColor,
                                  }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [silk, setSilk] = useState("");
+
+
 
 
 
@@ -32,7 +35,7 @@ export const Input = React.memo(({
         <label style={style} className={cls.inputLabel} htmlFor={name}>
             {title || subTitle   ? (
                 <div className={cls.info}>
-                    {(title) && <span>{title}</span>}
+                    {(title) && <span className={titleColor} >{title}</span>}
                     {subTitle && <span>{subTitle}</span>}
                 </div>
             ) : null}
@@ -53,6 +56,7 @@ export const Input = React.memo(({
                         ...extraValues,
                     })}
                 />
+
                 {type === "password" && (
                     <div className={cls.eye} onClick={() => setShowPassword(!showPassword)}>
                         {showPassword ? (
