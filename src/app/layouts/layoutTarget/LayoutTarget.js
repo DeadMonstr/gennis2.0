@@ -32,6 +32,7 @@ const LayoutTarget = ({children}) => {
             <TargetChildren/>
             {children}
 
+
             <div className={cls.footer}>
 
 
