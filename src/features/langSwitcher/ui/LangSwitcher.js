@@ -54,11 +54,11 @@ const LangSwitcher = () => {
                 className={classNames(cls.switcher__popup, {[cls.active]: active})}
             >
                 {
-                    langs.map(item => {
+                    langs.map((item, index) => {
 
 
                         return (
-                            <div onClick={() => onChangeLanguage(item.value)} className={cls.item}>
+                            <div key={index} onClick={() => onChangeLanguage(item.value)} className={cls.item}>
                                 <img src={item.icon} alt=""/>
                                 <span>{item.label}</span>
 
