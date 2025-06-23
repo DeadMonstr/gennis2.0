@@ -1,5 +1,6 @@
 import React from 'react';
 import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router";
 
 import {Button} from "shared/ui/button";
 
@@ -9,6 +10,8 @@ import image from "shared/assets/images/last.png";
 export const TargetItemsLast = () => {
 
     const { t, i18n } = useTranslation();
+    const navigate = useNavigate()
+
 
     return (
         <div className={cls.home}>
@@ -67,7 +70,7 @@ export const TargetItemsLast = () => {
                     <li>🎓 {t("targetLast.listItem6")}</li>
                 </ul>
             </div>
-            <Button extraClass={cls.home__btn} type={"simple"}>{t("targetLast.btn")}</Button>
+            <Button onClick={() => navigate("/register/target/form/last")} extraClass={cls.home__btn} type={"simple"}>{t("targetLast.btn")}</Button>
         </div>
     );
 }
