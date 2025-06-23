@@ -1,17 +1,18 @@
 import React from 'react';
 import {Route, Routes} from "react-router";
-import {TargetItemsReg} from "entities/targetItems";
+import {TargetItemsReg, TargetItemsHome, TargetItemsSecond, TargetItemsLast} from "entities/targetItems";
 
 const Target = () => {
     return (
-        <div>
-            <Routes>
-                <Route path={"/form/:type"} element={<TargetItemsReg/>} />
-                {/*<Route path={"/children"} element={<>} />*/}
+        <Routes>
+            <Route path={"form"} element={<TargetItemsHome/>}/>
+            <Route path={"second"} element={<TargetItemsSecond/>}/>
+            <Route path={"last"} element={<TargetItemsLast/>}/>
+            <Route path={"/form/:type"} element={<TargetItemsReg/>}/>
+            {/*<Route path={"/children"} element={<>} />*/}
 
 
-            </Routes>
-        </div>
+        </Routes>
     );
 };
 

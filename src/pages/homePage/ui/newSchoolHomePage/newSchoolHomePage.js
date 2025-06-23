@@ -3,7 +3,7 @@ import {Outlet, Route, Routes} from "react-router";
 
 import {AboutUs, SchoolHomeHeader, SchoolHomeWorkUs, SchoolParentesComment} from "entities/schoolHome";
 import {HomeContext} from "shared/lib/context/homeContext";
-import LayoutWebsite from "../../../../app/layoutWebSite/layoutWebsite";
+import LayoutWebsite from "../../../../app/layouts/layoutWebSite/layoutWebsite";
 import {SchoolHomePage} from "../SchoolHomePage/SchoolHomePage";
 import {SchoolHomeEducationPage} from "../SchoolHomePage/SchoolHomeEducationPage";
 import {
