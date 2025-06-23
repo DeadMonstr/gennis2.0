@@ -1,10 +1,10 @@
-import { Input } from "shared/ui/input";
+import {Input} from "shared/ui/input";
 import cls from "./targetItemsReg.module.sass";
-import { Button } from "shared/ui/button";
-import { API_URL, useHttp } from "shared/api/base";
-import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { Form } from "shared/ui/form";
+import {Button} from "shared/ui/button";
+import {API_URL, useHttp} from "shared/api/base";
+import {useForm} from "react-hook-form";
+import {useDispatch} from "react-redux";
+import {Form} from "shared/ui/form";
 
 import instagramIcon from "shared/assets/icons/instagram.svg";
 import telegramIcon from "shared/assets/icons/telegram.svg";
@@ -12,30 +12,28 @@ import facebookIcon from "shared/assets/icons/facebook.svg";
 import youtubeIcon from "shared/assets/icons/youtube.svg";
 
 import checkIcon from "shared/assets/icons/checkIcon.svg";
-import { useState } from "react";
+import {useState} from "react";
 import {useTranslation} from "react-i18next";
-import {useParams} from "react-router";
-
-
+import {useNavigate, useParams} from "react-router";
 
 
 export const TargetItemsReg = () => {
     const [check, setCheck] = useState(false);
-    const { request } = useHttp();
+    const {request} = useHttp();
     const icons = [telegramIcon, instagramIcon, youtubeIcon, facebookIcon];
-    const { t, i18n } = useTranslation();
+    const {t, i18n} = useTranslation();
     const [errors, setErrors] = useState({
         name: false,
         surname: false,
         phone: false
     });
 
+    const navigate = useNavigate()
 
-    const {slug} = useParams()
+    const {type} = useParams()
 
-    console.log(slug , "dasd")
 
-    const { register, handleSubmit } = useForm();
+    const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
 
     const onClickForm = (data) => {
@@ -45,12 +43,17 @@ export const TargetItemsReg = () => {
             phone: !data?.phone
         };
 
+        const res = {
+            ...data,
+            type
+        }
+
         setErrors(newErrors);
 
         const hasError = Object.values(newErrors).some(Boolean);
         if (hasError) return;
 
-        request(`${API_URL}Lead/lead_create/`, "POST", JSON.stringify(data))
+        request(`${API_URL}Lead/lead_create/`, "POST", JSON.stringify(res))
             .then((res) => {
                 console.log(res);
                 setCheck(true);
@@ -64,7 +67,7 @@ export const TargetItemsReg = () => {
         <div className={cls.wrapper}>
             {check ? (
                 <div className={cls.wrapper__check}>
-                    <img src={checkIcon} alt="" />
+                    <img src={checkIcon} alt=""/>
                     <h1>Muvaffaqiyatli yuborildi!</h1>
                     <span>
             Operatorlarimiz siz bilan tez orada bog‘lanadi. Qo‘shimcha savollar bo‘lsa, bemalol murojaat qiling.
@@ -80,7 +83,7 @@ export const TargetItemsReg = () => {
                     <Form typeSubmit extraClassname={cls.wrapper__form}>
                         {errors.name && <span className={cls.wrapper__error}>{t("form.errorName")}</span>}
                         <Input
-                            required
+
                             titleColor={cls.wrapper__form_title}
                             title={`${t("form.formName")}`}
                             register={register}
@@ -90,7 +93,7 @@ export const TargetItemsReg = () => {
 
                         {errors.surname && <span className={cls.wrapper__error}>{t("form.errorSurname")}</span>}
                         <Input
-                            required
+
                             titleColor={cls.wrapper__form_title}
                             title={`${t("form.formSurname")}`}
                             register={register}
@@ -100,7 +103,7 @@ export const TargetItemsReg = () => {
 
                         {errors.phone && <span className={cls.wrapper__error}>{t("form.errorPhone")}</span>}
                         <Input
-                            required
+
                             titleColor={cls.wrapper__form_title}
                             title={`${t("form.formPhone")}`}
                             register={register}
@@ -110,7 +113,8 @@ export const TargetItemsReg = () => {
 
 
                         <div className={cls.wrapper__buttons}>
-                            <Button extraClass={cls.wrapper__buttons_cancel}>{t("form.cancel")}</Button>
+                            <Button onClick={handleSubmit(() => navigate(-1))}
+                                    extraClass={cls.wrapper__buttons_cancel}>{t("form.cancel")}</Button>
                             <Button
                                 type={"simple"}
                                 extraClass={cls.wrapper__buttons_post}
