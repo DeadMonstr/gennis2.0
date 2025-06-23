@@ -1,4 +1,4 @@
-import {Input} from "shared/ui/input";
+import  {Input} from "shared/ui/input";
 import cls from "features/target/ui/targetForm/targetItemsReg.module.sass"
 import {Button} from "shared/ui/button";
 import {API_URL, useHttp} from "shared/api/base";
@@ -25,14 +25,11 @@ export const TargetItemsReg = () => {
 
     const icons = [telegramIcon, instagramIcon, youtubeIcon, facebookIcon,]
     const [name , setName] = useState("")
-    const [surname , setSurname] = useState("")
-    const [phone , setPhone] = useState(false)
 
 
 
     const {register, handleSubmit} = useForm()
 
-    const dispatch = useDispatch()
 
     const onClickForm = (data) => {
         console.log(data)

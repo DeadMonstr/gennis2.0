@@ -1,6 +1,7 @@
 import React from 'react';
 import {Route, Routes} from "react-router";
-import {TargetItemsReg} from "entities/targetItems";
+import {TargetItemsReg} from "features/target";
+
 
 const Target = () => {
     return (
