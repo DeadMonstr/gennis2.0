@@ -33,6 +33,7 @@ const LangSwitcher = () => {
     const [active, setActive] = useState(false)
     const [activeLang,setActiveLang] = useState("Uzb")
 
+    console.log("dasd")
 
     const onChangeLanguage = (type) => {
         i18n.changeLanguage(type)
