@@ -9,6 +9,12 @@ import childrenFormUz from "features/target/ui/targetForm/uz.json"
 import childrenFormRu from "features/target/ui/targetForm/ru.json"
 import childrenFooterUz from "app/layouts/layoutTarget/uz.json"
 import childrenFooterRU from "app/layouts/layoutTarget/ru.json"
+import targetItemsHomeConfigRu from "entities/targetItems/config/targetItemsHomeConfig/ruTranslation.json"
+import targetItemsHomeConfigUz from "entities/targetItems/config/targetItemsHomeConfig/uzTranslation.json"
+import targetItemsSecondConfigUz from "entities/targetItems/config/targetItemsSecondConfig/uzTranslation.json"
+import targetItemsSecondConfigRu from "entities/targetItems/config/targetItemsSecondConfig/ruTranslation.json"
+import targetItemsLastConfigUz from "entities/targetItems/config/targetItemsLastConfig/uzTranslation.json"
+import targetItemsLastConfigRu from "entities/targetItems/config/targetItemsLastConfig/ruTranslation.json"
 
 
 
@@ -21,14 +27,20 @@ const resources = {
         translation: {
             children: childrenUz ,
             form: childrenFormUz,
-            footer: childrenFooterUz
+            footer: childrenFooterUz,
+            targetHome: targetItemsHomeConfigUz,
+            targetSecond: targetItemsSecondConfigUz,
+            targetLast: targetItemsLastConfigUz
         }
     },
     ru: {
         translation: {
             children: childrenRu,
             form: childrenFormRu,
-            footer: childrenFooterRU
+            footer: childrenFooterRU,
+            targetHome: targetItemsHomeConfigRu,
+            targetSecond: targetItemsSecondConfigRu,
+            targetLast: targetItemsLastConfigRu
         }
     },
 };
