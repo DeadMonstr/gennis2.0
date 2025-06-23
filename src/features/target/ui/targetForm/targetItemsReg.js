@@ -63,6 +63,8 @@ export const TargetItemsReg = () => {
             });
     };
 
+    console.log("dsad")
+
     return (
         <div className={cls.wrapper}>
             {check ? (
