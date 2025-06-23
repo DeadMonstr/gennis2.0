@@ -31,6 +31,8 @@ const LayoutTarget = ({children}) => {
     const navigate = useNavigate()
 
 
+    const check = localStorage.getItem("check")
+
     return (
         <div className={cls.layoutTarget}>
             <div className={cls.header}>
@@ -48,7 +50,7 @@ const LayoutTarget = ({children}) => {
                 {children}
 
 
-                <div className={cls.footer}>
+                 <div className={cls.footer}>
 
 
                     <div className={cls.footer_header}>

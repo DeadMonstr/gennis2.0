@@ -36,6 +36,7 @@ export const TargetItemsReg = () => {
     const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
 
+    localStorage.setItem("check" , String(check))
     const onClickForm = (data) => {
         const newErrors = {
             name: !data?.name,
@@ -63,16 +64,17 @@ export const TargetItemsReg = () => {
             });
     };
 
-    console.log("dsad")
+
 
     return (
         <div className={cls.wrapper}>
-            {check ? (
+            {!check ? (
                 <div className={cls.wrapper__check}>
                     <img src={checkIcon} alt=""/>
-                    <h1>Muvaffaqiyatli yuborildi!</h1>
+                    <h1>{t("form.success")}</h1>
                     <span>
-            Operatorlarimiz siz bilan tez orada bog‘lanadi. Qo‘shimcha savollar bo‘lsa, bemalol murojaat qiling.
+
+                        {t("form.successTitle")}
           </span>
                 </div>
             ) : (
