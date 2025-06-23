@@ -1,5 +1,5 @@
 import { Input } from "shared/ui/input";
-import cls from "features/target/ui/targetForm/targetItemsReg.module.sass";
+import cls from "./targetItemsReg.module.sass";
 import { Button } from "shared/ui/button";
 import { API_URL, useHttp } from "shared/api/base";
 import { useForm } from "react-hook-form";
@@ -13,12 +13,16 @@ import youtubeIcon from "shared/assets/icons/youtube.svg";
 
 import checkIcon from "shared/assets/icons/checkIcon.svg";
 import { useState } from "react";
+import {useTranslation} from "react-i18next";
+
+
+
 
 export const TargetItemsReg = () => {
     const [check, setCheck] = useState(false);
     const { request } = useHttp();
     const icons = [telegramIcon, instagramIcon, youtubeIcon, facebookIcon];
-
+    const { t, i18n } = useTranslation();
     const [errors, setErrors] = useState({
         name: false,
         surname: false,
@@ -63,69 +67,68 @@ export const TargetItemsReg = () => {
             ) : (
                 <div className={cls.wrapper__container}>
                     <div className={cls.wrapper__title}>
-                        Ariza yuborish
-                        <span>Bugunoq biz bilan bog‘laning!</span>
+                        {t("form.title")}
+                        <span>{t("form.subtitle")}</span>
                     </div>
 
                     <Form typeSubmit extraClassname={cls.wrapper__form}>
-                        {errors.name && <span className={cls.wrapper__error}>Iltimos, ismingizni kiriting</span>}
+                        {errors.name && <span className={cls.wrapper__error}>{t("form.errorName")}</span>}
                         <Input
                             required
                             titleColor={cls.wrapper__form_title}
-                            title={"Ism"}
+                            title={`${t("form.formName")}`}
                             register={register}
                             name={"name"}
-                            placeholder={"Ismingizni kiriting"}
+                            placeholder={`${t("form.formNamePlaceholder")}`}
                         />
 
-                        {errors.surname && <span className={cls.wrapper__error}>Iltimos, familiyangizni kiriting</span>}
+                        {errors.surname && <span className={cls.wrapper__error}>{t("form.errorSurname")}</span>}
                         <Input
                             required
                             titleColor={cls.wrapper__form_title}
-                            title={"Familiya"}
+                            title={`${t("form.formSurname")}`}
                             register={register}
                             name={"surname"}
-                            placeholder={"Familiyangizni kiriting"}
+                            placeholder={`${t("form.formSurnamePlaceholder")}`}
                         />
 
-                        {errors.phone && <span className={cls.wrapper__error}>Iltimos, telefon raqamingizni kiriting</span>}
+                        {errors.phone && <span className={cls.wrapper__error}>{t("form.errorPhone")}</span>}
                         <Input
                             required
                             titleColor={cls.wrapper__form_title}
-                            title={"Telefon raqam"}
-                            type={"number"}
+                            title={`${t("form.formPhone")}`}
                             register={register}
                             name={"phone"}
-                            placeholder={"Telefon raqamingizni kiriting"}
+                            placeholder={`${t("form.formPhonePlaceholder")}`}
                         />
 
 
                         <div className={cls.wrapper__buttons}>
-                            <Button extraClass={cls.wrapper__buttons_cancel}>Bekor etish</Button>
+                            <Button extraClass={cls.wrapper__buttons_cancel}>{t("form.cancel")}</Button>
                             <Button
                                 type={"simple"}
                                 extraClass={cls.wrapper__buttons_post}
                                 onClick={handleSubmit(onClickForm)}
                             >
-                                Arizani yuborish
+                                {t("form.formPost")}
                             </Button>
                         </div>
                     </Form>
 
-                    <div className={cls.wrapper__contact}>
-                        <div className={cls.wrapper__contact_header}>
-                            <h1>Bizga obuna bo'ling</h1>
-                            <span>Biz siz uchun qiziqarli materiallar e’lon qilamiz!</span>
-                        </div>
+                    {/*<div className={cls.wrapper__contact}>*/}
+                    {/*    <div className={cls.wrapper__contact_header}>*/}
+                    {/*        <h1>Bizga obuna bo'ling</h1>*/}
+                    {/*        <span>Biz siz uchun qiziqarli materiallar e’lon qilamiz!</span>*/}
+                    {/*    </div>*/}
 
-                        <div className={cls.wrapper__contact_icons}>
-                            {icons.map((item, i) => (
-                                <div key={i} className={cls.wrapper__contact_icons_icon}>
-                                    <img src={item} alt="" />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                    {/*    <div className={cls.wrapper__contact_icons}>*/}
+                    {/*        {icons.map((item, i) => (*/}
+                    {/*            <div key={i} className={cls.wrapper__contact_icons_icon}>*/}
+                    {/*                <img src={item} alt="" />*/}
+                    {/*            </div>*/}
+                    {/*        ))}*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                 </div>
             )}
         </div>

@@ -8,12 +8,14 @@ import youtubeIcon from "shared/assets/icons/youtube.svg";
 import facebookIcon from "shared/assets/icons/facebook.svg";
 import {TargetChildren} from "entities/targetItems";
 import LangSwitcher from "features/langSwitcher/ui/LangSwitcher";
+import {useTranslation} from "react-i18next";
 
 const LayoutTarget = ({children}) => {
 
 
     const icons = [telegramIcon, instagramIcon, youtubeIcon, facebookIcon]
 
+    const { t, i18n } = useTranslation();
 
 
 
@@ -29,27 +31,29 @@ const LayoutTarget = ({children}) => {
                     <LangSwitcher/>
                 </div>
             </div>
-            <TargetChildren/>
-            {children}
+            {/*<TargetChildren/>*/}
+            <div className={cls.wrapper}>
+                {children}
 
 
-            <div className={cls.footer}>
+                <div className={cls.footer}>
 
 
 
-                <div className={cls.footer_header}>
-                    <h1>
-                        Bizga obuna bo'ling
-                    </h1>
-                    <span>
-                        Biz siz uchun qiziqarli materiallar e’lon qilamiz!
+                    <div className={cls.footer_header}>
+                        <h1>
+                            {t("footer.title")}
+                        </h1>
+                        <span>
+                         {t("footer.subTitle")}
                     </span>
-                </div>
+                    </div>
 
-                <div className={cls.icons}>
-                    {icons.map(item => (<div className={cls.icons__item}>
-                        <img src={item} alt=""/>
-                    </div>))}
+                    <div className={cls.icons}>
+                        {icons.map(item => (<div className={cls.icons__item}>
+                            <img src={item} alt=""/>
+                        </div>))}
+                    </div>
                 </div>
             </div>
         </div>

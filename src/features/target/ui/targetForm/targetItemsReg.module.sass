@@ -4,8 +4,9 @@
   flex-direction: column
   width: 100%
   align-items: center
-  height: 100vh
+  //height: 100vh
   justify-content: center
+  padding-top: 6rem
   &__error
     color: red
     font-size: 15px
@@ -134,3 +135,7 @@
         flex-wrap: wrap
         justify-content: center
         gap: 1rem
+    &__buttons
+      flex-direction: column-reverse
+      & > button
+        width: 100%
