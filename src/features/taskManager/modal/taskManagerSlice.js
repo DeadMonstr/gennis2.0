@@ -48,8 +48,8 @@ const taskManagerSlice = createSlice({
                 state.loading = false
                 state.data = action.payload.data
                 state.percentage = action.payload.accepted_percentage
-                state.completedCount = action.payload.status_true_count
-                state.progressCount = action.payload.total_leads
+                state.completedCount = action.payload.completed
+                state.progressCount = action.payload.progressing
                 state.error = false
             })
             .addCase(fetchTaskManager.rejected , state => {

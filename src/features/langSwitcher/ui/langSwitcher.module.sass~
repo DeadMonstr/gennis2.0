@@ -5,7 +5,6 @@
   position: relative
   display: flex
   flex-direction: column
-  cursor: pointer
   &__lang
     width: 100%
     border: 1px solid white

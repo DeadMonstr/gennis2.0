@@ -5,6 +5,13 @@ import childrenUz from 'entities/targetItems/ui/children/uz.json';
 import childrenRu from 'entities/targetItems/ui/children/ru.json';
 
 
+import childrenFormUz from "features/target/ui/targetForm/uz.json"
+import childrenFormRu from "features/target/ui/targetForm/ru.json"
+import childrenFooterUz from "app/layouts/layoutTarget/uz.json"
+import childrenFooterRU from "app/layouts/layoutTarget/ru.json"
+
+
+
 
 
 
@@ -12,12 +19,16 @@ import childrenRu from 'entities/targetItems/ui/children/ru.json';
 const resources = {
     uz: {
         translation: {
-            children: childrenUz
+            children: childrenUz ,
+            form: childrenFormUz,
+            footer: childrenFooterUz
         }
     },
     ru: {
         translation: {
-            children: childrenRu
+            children: childrenRu,
+            form: childrenFormRu,
+            footer: childrenFooterRU
         }
     },
 };

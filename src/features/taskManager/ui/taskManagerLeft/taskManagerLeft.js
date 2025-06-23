@@ -98,8 +98,8 @@ export const TaskManagerLeft = ({formatted}) => {
                 setActiveModal(false)
                 dispatch(onRemoveTask(activeModalItem.id))
                 dispatch(onCountPercentage(res.accepted_percentage))
-                dispatch(onCountCompleted(res.status_true_count))
-                dispatch(onCountProgress(res.total_leads))
+                dispatch(onCountCompleted(res.completed))
+                dispatch(onCountProgress(res.progressing))
                 setValue("comment", "")
 
 

@@ -1,0 +1,15 @@
+{
+  "title": "Ariza yuborish",
+  "subtitle": "Bugunoq biz bilan bog‘laning!",
+  "formName": "Ism",
+  "formNamePlaceholder": "Ismingizni kiriting",
+  "formSurname": "Familiya",
+  "formSurnamePlaceholder": "Familiyangizni kiriting",
+  "formPhone": "Telefon raqam",
+  "formPhonePlaceholder": "Telefon raqamingizni kiriting",
+  "errorName": "Iltimos, ismingizni kiriting",
+  "errorSurname": "Iltimos, familiyangizni kiriting",
+  "errorPhone": "Iltimos, telefon raqamingizni kiriting",
+  "cancel": "Bekor qilish",
+  "formPost": "Arizani yuborish"
+}
