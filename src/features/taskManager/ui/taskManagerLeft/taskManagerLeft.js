@@ -8,7 +8,7 @@ import pinkCard from "shared/assets/images/pinkCard.svg"
 import greenCard from "shared/assets/images/greenCard.svg"
 
 import {createContext, useContext, useEffect, useMemo, useRef, useState} from "react"
-import unknownUser from "shared/assets/images/circleImg.svg"
+import unknownUser from "shared/assets/user-interface/user_image.png"
 
 import {motion, useMotionValue, useDragControls} from "framer-motion"
 import {Modal} from "shared/ui/modal";
@@ -31,6 +31,8 @@ import {
 } from "features/taskManager/modal/taskManagerSlice";
 import {formatDate} from "shared/ui/formDate/formDate";
 import {Table} from "shared/ui/table";
+import {ConfirmModal} from "../../../../shared/ui/confirmModal";
+import {onAddAlertOptions} from "../../../alert/model/slice/alertSlice";
 
 const FuncContext = createContext(null)
 
@@ -307,8 +309,12 @@ export const DraggableRow = ({items = [], className = ""}) => {
 const TaskCard = ({item}) => {
     const [style, setStyle] = useState({})
 
-    const {setActiveModal, setActiveModalItem} = useContext(FuncContext)
+    const {setActiveModal, setActiveModalItem } = useContext(FuncContext)
 
+    const [confirmModal , setActiveConfirmModal] = useState(false)
+
+    const {request} = useHttp()
+    const dispatch = useDispatch()
     const renderBgImage = (color) => {
         switch (color) {
             case "red":
@@ -321,6 +327,32 @@ const TaskCard = ({item}) => {
                 return ""
         }
     }
+    const onDeleteLead = () => {
+
+
+        request(`${API_URL}Lead/lead_delete/${item.id}`, "DELETE", null, headers())
+            .then(res => {
+                console.log(res)
+                setActiveConfirmModal(false)
+                dispatch(onRemoveTask(item.id))
+                dispatch(onCountPercentage(res.accepted_percentage))
+                dispatch(onCountCompleted(res.completed))
+                dispatch(onCountProgress(res.progressing))
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: "Muvaffaqiyatli o'chirildi"
+                }))
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+
+
+
+    }
+
 
     useEffect(() => {
         setStyle({
@@ -335,36 +367,43 @@ const TaskCard = ({item}) => {
     }, [item?.color])
 
     return (
-        <div
-            style={{background: style.color}}
-            className={cls.taskLeft__body_card_item}
-        >
-            <div className={cls.taskLeft__body_card_item_left}>
-                <h2 className={cls.taskLeft__body_card_item_left_header}>
-                    {item.name} {item.surname}
-                </h2>
-                <div className={cls.taskLeft__body_card_item_left_number}>
-                    Number: <span>{item.phone}</span>
-                </div>
-            </div>
-
+        <>
             <div
-                className={cls.item__image}
-                style={{
-                    backgroundImage: style.backImage,
-                    backgroundRepeat: "no-repeat"
-                }}
-                onClick={() => {
-                    setActiveModalItem(item)
-                    {
-                        setActiveModal(item)
-                    }
-                }}
+                style={{background: style.color}}
+                className={cls.taskLeft__body_card_item}
             >
-                <div className={cls.circle}>
-                    <img src={unknownUser} alt=""/>
+                <div className={cls.taskLeft__body_card_item_left}>
+                    <h2 className={cls.taskLeft__body_card_item_left_header}>
+                        {item.name} {item.surname}
+                    </h2>
+                    <div className={cls.taskLeft__body_card_item_left_number}>
+                        Number: <span>{item.phone}</span>
+                    </div>
+                </div>
+
+                <div
+                    className={cls.item__image}
+                    style={{
+                        backgroundImage: style.backImage,
+                        backgroundRepeat: "no-repeat"
+                    }}
+                >
+                    <div onClick={() => {
+                        setActiveModalItem(item)
+                        {
+                            setActiveModal(item)
+                        }
+                    }} className={cls.circle}>
+                        <img src={unknownUser} alt=""/>
+                    </div>
+                    <div onClick={() => setActiveConfirmModal(true)} className={cls.delete}>
+                        <i className={"fa fa-trash"}/>
+                    </div>
                 </div>
             </div>
-        </div>
+            <ConfirmModal active={confirmModal} setActive={setActiveConfirmModal} onClick={onDeleteLead}/>
+
+        </>
+
     )
 }

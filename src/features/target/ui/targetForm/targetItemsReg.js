@@ -68,7 +68,7 @@ export const TargetItemsReg = () => {
 
     return (
         <div className={cls.wrapper}>
-            {!check ? (
+            {check ? (
                 <div className={cls.wrapper__check}>
                     <img src={checkIcon} alt=""/>
                     <h1>{t("form.success")}</h1>
