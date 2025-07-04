@@ -1,14 +1,12 @@
-
 import cls from "./newHomeUi.module.sass"
-import {NewHomeHeader} from "entities/newHomeUi";
+import {NewHomeFileDownload, NewHomeHeader} from "entities/newHomeUi";
 
 
 export const NewHomeUi = () => {
     return (
         <div className={cls.wrapper}>
 
-            <NewHomeHeader/>
-
+            <NewHomeFileDownload/>
         </div>
     );
 };

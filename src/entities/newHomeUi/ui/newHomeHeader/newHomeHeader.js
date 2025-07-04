@@ -64,9 +64,7 @@ export const NewHomeHeader = () => {
                 {renderList()}
             </ul>
 
-            <div className={}>
                 <GiHamburgerMenu />
-            </div>
 
 
         </div>
