@@ -8,6 +8,9 @@ export const NewHomeUi = () => {
         <div className={cls.wrapper}>
 
             <NewHomeHeader/>
+            <div style={{padding: "10rem 0" }}>
+                dasdsa
+            </div>
 
         </div>
     );
