@@ -6,7 +6,11 @@ export const NewHomeUi = () => {
     return (
         <div className={cls.wrapper}>
 
-            <NewHomeFileDownload/>
+            <NewHomeHeader/>
+            <div style={{padding: "10rem 0" }}>
+                <NewHomeFileDownload/>
+            </div>
+
         </div>
     );
 };

@@ -1,6 +1,9 @@
 import newLogo from "shared/assets/logo/turonNew.svg"
+import hamburger from "shared/assets/icons/hamburger.svg"
+import whiteHamburger from "shared/assets/icons/whitehamburger.svg"
 import cls from "./newHomeUi.module.sass"
-import {GiHamburgerMenu} from "react-icons/gi";
+import {useEffect, useState} from "react";
+import classNames from "classnames";
 
 
 const headerList = [
@@ -48,23 +51,47 @@ const headerList = [
 
 export const NewHomeHeader = () => {
 
+
+    const [active, setActive] = useState(headerList[0].id)
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 50);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+
     const renderList = () => {
         return headerList.map(item => (
-            <li>{item.title}</li>
+            <li onClick={() => setActive(item.id)} className={classNames(
+                {
+                    [cls.active]: active === item.id,
+
+                })}>{item.title}</li>
         ))
     }
     return (
-        <div className={cls.header}>
+        <div className={classNames(cls.header , {
+            [cls.scrolled]: scrolled
+        })}>
 
             <div className={cls.header__logo}>
                 <img src={newLogo} alt=""/>
             </div>
 
-            <ul>
+            <ul className={classNames(cls.header__list , {
+                [cls.scrolledActive]: scrolled
+            })}>
                 {renderList()}
             </ul>
 
-                <GiHamburgerMenu />
+            <div className={cls.header__burger}>
+                <img src={scrolled ? whiteHamburger : hamburger} alt=""/>
+            </div>
 
 
         </div>

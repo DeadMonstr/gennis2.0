@@ -1,0 +1,47 @@
+.header
+  display: flex
+  justify-content: space-between
+  align-items: center
+  width: 100%
+  position: fixed
+  top: 0
+  padding: 2.5rem 8rem
+  transition: .3s all linear
+  left: 0
+  background: white
+  &__logo
+    width: 7rem
+    height: 7rem
+    &  >img
+      width: 100%
+      height: 100%
+  &__list
+    display: flex
+    gap: 3rem
+    list-style: none
+    background: #F1F0F7
+    padding: 2rem 4rem
+
+
+    //height: 2rem
+    border-radius: 100px
+    &  >li
+      font-family: "Montserrat", sans-serif
+      font-size: 1.4rem
+      font-weight: 400
+      cursor: pointer
+      color: rgba(0, 0, 0, 1)
+      padding: 1rem 1.2rem
+    .active
+      color: rgba(7, 46, 146, 1)
+      font-weight: 800
+.scrolled
+  background: rgba(7, 46, 146, 1)
+  box-shadow: 0 3px 8px 0
+
+  //backdrop-filter: blur(5px)
+
+.scrolledActive
+  background: none
+  & > li
+    color: white!important
