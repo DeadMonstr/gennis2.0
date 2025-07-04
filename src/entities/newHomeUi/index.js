@@ -1,0 +1,1 @@
+export {NewHomeHeader} from "./ui/newHomeHeader/newHomeHeader"

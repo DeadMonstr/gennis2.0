@@ -21,7 +21,7 @@ export const TargetItemsLast = () => {
             </p>
             <img className={cls.home__image} src={image} alt=""/>
             <div className={cls.home__container}>
-                <h2 className={cls.title}>🎯 {t("targetLast.boxesTitle")}</h2>
+                <h2 className={cls.mainTitle}>🎯 {t("targetLast.boxesTitle")}</h2>
                 <div className={cls.list}>
                     <div className={cls.list__item}>
                         <h3 className={cls.title}>🧠 {t("targetLast.boxesTitle1")}</h3>

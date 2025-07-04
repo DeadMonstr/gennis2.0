@@ -203,9 +203,9 @@ export const TaskManagerLeft = ({formatted}) => {
                                 {card?.map((item, i) => (
                                     <tr
                                         key={i}
-                                        onClick={() => {
-                                            onClick(item)
-                                        }}
+                                        // onClick={() => {
+                                        //     onClick(item)
+                                        // }}
                                     >
                                         <td>{i + 1}</td>
                                         <td>{item?.lead?.name}</td>
