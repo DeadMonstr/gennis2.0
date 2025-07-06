@@ -1,5 +1,12 @@
+import {
+    NewHomeCurriculum,
+    NewHomeDailyLife,
+    NewHomeFileDownload,
+    NewHomeHeader,
+    NewHomePrincipal
+} from "entities/newHomeUi";
+
 import cls from "./newHomeUi.module.sass"
-import {NewHomeFileDownload, NewHomeHeader} from "entities/newHomeUi";
 
 
 export const NewHomeUi = () => {
@@ -8,7 +15,10 @@ export const NewHomeUi = () => {
 
             <NewHomeHeader/>
             <div style={{padding: "10rem 0" }}>
-                <NewHomeFileDownload/>
+                {/*<NewHomePrincipal/>*/}
+                {/*<NewHomeDailyLife/>*/}
+                {/*<NewHomeFileDownload/>*/}
+                <NewHomeCurriculum/>
             </div>
 
         </div>

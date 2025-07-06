@@ -19,7 +19,8 @@ const list = [
         image: docxImage,
         avatarBg: "#FFFFFF",
         cardBg: "#072E92",
-        cardColor: "#FFF"
+        cardColor: "#FFF",
+        lineColor: "#CAA77F",
     },
     {
         title: "PDF",
@@ -40,7 +41,12 @@ export const NewHomeFileDownload = () => {
                 className={cls.card}
             >
                 <div className={cls.card__header}>
-                    <h2 className={cls.title}>{item.title}</h2>
+                    <h2
+                        className={cls.title}
+                        style={{color: item?.cardColor}}
+                    >
+                        {item.title}
+                    </h2>
                     <div
                         style={{background: item.avatarBg}}
                         className={cls.avatar}
@@ -48,14 +54,22 @@ export const NewHomeFileDownload = () => {
                         <img src={item.image} alt=""/>
                     </div>
                 </div>
-                <p className={cls.card__desc}>{item.desc}</p>
+                <p
+                    style={{color: item?.cardColor}}
+                    className={cls.card__desc}
+                >
+                    {item.desc}
+                </p>
                 <div className={cls.card__footer}>
-                    <div className={cls.title}>
-                        <p className={cls.title__inner}>📥 Yuklab olish</p>
-                        <p>{item.percent}%</p>
+                    <div className={cls.info}>
+                        <p style={{color: item?.cardColor}} className={cls.info__inner}>📥 Yuklab olish</p>
+                        <p style={{color: item?.cardColor}} className={cls.info__percent}>{item.percent}%</p>
                     </div>
                     <div className={cls.line}>
-                        <div className={cls.line__percent}/>
+                        <div
+                            style={{width: `${item.percent}%`, background: item.lineColor}}
+                            className={cls.line__percent}
+                        />
                     </div>
                 </div>
             </div>
