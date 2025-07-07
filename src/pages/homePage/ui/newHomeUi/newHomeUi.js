@@ -1,4 +1,12 @@
 import cls from "./newHomeUi.module.sass"
+import {
+    NewHomeCurriculum,
+    NewHomeDailyLife,
+    NewHomeFileDownload,
+    NewHomeHeader,
+    NewHomePrincipal
+} from "entities/newHomeUi";
+
 import {NewHomeAdmissions, NewHomeHeader, NewHomeMain} from "entities/newHomeUi";
 import {useState} from "react";
 import {Route, Routes} from "react-router";
@@ -25,7 +33,7 @@ export const NewHomeUi = () => {
                         </section>
 
                         <section id="slider">
-                            <div style={{height: "100vh", padding: "100px"}}>Slider content</div>
+                            <div style={{height: "100vh", padding: "100px"}}>  <NewHomeCurriculum/></div>
                         </section>
 
 
