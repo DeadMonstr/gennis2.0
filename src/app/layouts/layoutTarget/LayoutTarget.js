@@ -1,7 +1,7 @@
 import React from 'react';
 
 import cls from "./layoutTarget.module.sass"
-import logo from "shared/assets/logo/logoMain.svg"
+import logo from "shared/assets/logo/turon.svg"
 import telegramIcon from "shared/assets/icons/telegram.svg";
 import instagramIcon from "shared/assets/icons/instagram.svg";
 import youtubeIcon from "shared/assets/icons/youtube.svg";
@@ -17,11 +17,11 @@ const LayoutTarget = ({children}) => {
     const icons = [
         {
             icon: telegramIcon,
-            link: "https://t.me/gennis_info"
+            link: "https://t.me/tis_chirchiq_kanal"
         },
         {
             icon: instagramIcon,
-            link: "https://www.instagram.com/genniscampus/"
+            link: "https://www.instagram.com/turon_international_school/"
         },
     ]
 

@@ -7,7 +7,7 @@ import {routersConfigList} from "app/routers/config/routersConfigList";
 import {Layout} from "app/layouts/layout";
 import {Login} from "pages/loginPage";
 import {StudentProfilePage} from "pages/profilePage";
-import { NewSchoolHomePage,} from "pages/homePage";
+import {NewHomeUi, NewSchoolHomePage,} from "pages/homePage";
 import {Register} from "pages/registerPage/ui/register";
 
 
@@ -36,7 +36,7 @@ export const AppRouter = () => {
         createRoutesFromElements(
             <>
 
-                <Route path={"/*"} element={<NewSchoolHomePage/>}/>
+                <Route path={"/*"} element={<NewHomeUi/>}/>
                 {/*<Route path={"/"} element={<LayoutWebsite/>}>*/}
                 {/*    <Route*/}
                 {/*        index*/}

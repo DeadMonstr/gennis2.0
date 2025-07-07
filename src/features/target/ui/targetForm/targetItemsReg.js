@@ -12,7 +12,7 @@ import facebookIcon from "shared/assets/icons/facebook.svg";
 import youtubeIcon from "shared/assets/icons/youtube.svg";
 
 import checkIcon from "shared/assets/icons/checkIcon.svg";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {useNavigate, useParams} from "react-router";
 
@@ -35,6 +35,7 @@ export const TargetItemsReg = () => {
 
     const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
+
 
     const onClickForm = (data) => {
         const newErrors = {
@@ -63,16 +64,17 @@ export const TargetItemsReg = () => {
             });
     };
 
-    console.log("dsad")
+
 
     return (
         <div className={cls.wrapper}>
             {check ? (
                 <div className={cls.wrapper__check}>
                     <img src={checkIcon} alt=""/>
-                    <h1>Muvaffaqiyatli yuborildi!</h1>
+                    <h1>{t("form.success")}</h1>
                     <span>
-            Operatorlarimiz siz bilan tez orada bog‘lanadi. Qo‘shimcha savollar bo‘lsa, bemalol murojaat qiling.
+
+                        {t("form.successTitle")}
           </span>
                 </div>
             ) : (

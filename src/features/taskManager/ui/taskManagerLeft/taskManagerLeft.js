@@ -8,7 +8,7 @@ import pinkCard from "shared/assets/images/pinkCard.svg"
 import greenCard from "shared/assets/images/greenCard.svg"
 
 import {createContext, useContext, useEffect, useMemo, useRef, useState} from "react"
-import unknownUser from "shared/assets/images/circleImg.svg"
+import unknownUser from "shared/assets/user-interface/user_image.png"
 
 import {motion, useMotionValue, useDragControls} from "framer-motion"
 import {Modal} from "shared/ui/modal";
@@ -19,7 +19,7 @@ import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {
     getTaskManager, getTaskManagerBranchs,
-    getTaskManagerCompletedCount,
+    getTaskManagerCompletedCount, getTaskManagerLoading,
     getTaskManagerProgressCount
 } from "features/taskManager/modal/taskManagerSelector";
 import {API_URL, headers, useHttp} from "shared/api/base";
@@ -31,6 +31,9 @@ import {
 } from "features/taskManager/modal/taskManagerSlice";
 import {formatDate} from "shared/ui/formDate/formDate";
 import {Table} from "shared/ui/table";
+import {ConfirmModal} from "shared/ui/confirmModal";
+import {onAddAlertOptions} from "../../../alert/model/slice/alertSlice";
+import {DefaultLoader, DefaultPageLoader} from "shared/ui/defaultLoader";
 
 const FuncContext = createContext(null)
 
@@ -46,10 +49,12 @@ const FuncContext = createContext(null)
 const status = ["Tel ko'tardi", "Tel ko'tarmadi"]
 
 
-export const TaskManagerLeft = ({formatted}) => {
+export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
     const complateCount = useSelector(getTaskManagerCompletedCount)
     const progressCount = useSelector(getTaskManagerProgressCount)
     const [selectedStatus, setSelectedStatus] = useState(null)
+
+    const loading = useSelector(getTaskManagerLoading)
 
     const [resComment, setResComment] = useState(null)
 
@@ -68,6 +73,11 @@ export const TaskManagerLeft = ({formatted}) => {
     const dispatch = useDispatch()
 
 
+    useEffect(() => {
+        if (loading) setActiveModal(false)
+
+    }, [loading])
+
     const groupedCards = {
         red: [],
         yellow: [],
@@ -80,7 +90,6 @@ export const TaskManagerLeft = ({formatted}) => {
     })
 
 
-    console.log(activeModalItem)
     const onPost = (data) => {
 
 
@@ -102,6 +111,11 @@ export const TaskManagerLeft = ({formatted}) => {
                 dispatch(onCountProgress(res.progressing))
                 setValue("comment", "")
 
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: "Muvaffaqiyatli yuborildi"
+                }))
 
             })
 
@@ -132,7 +146,8 @@ export const TaskManagerLeft = ({formatted}) => {
         activeModal,
         setActiveModal: onClick,
         activeModalItem,
-        setActiveModalItem
+        setActiveModalItem,
+        taskType
     }), [])
     return (
         <div className={cls.taskLeft}>
@@ -140,6 +155,7 @@ export const TaskManagerLeft = ({formatted}) => {
 
                 {formatedDate === formatted && <div
 
+                    onClick={() => setTaskType("progress")}
                     className={cls.taskLeft__header_box}
                     style={{background: `rgba(249, 145, 75, 1)`}}
                 >
@@ -153,6 +169,8 @@ export const TaskManagerLeft = ({formatted}) => {
                 <div
 
                     className={cls.taskLeft__header_box}
+                    onClick={() => setTaskType("completed")}
+
                     style={{background: `rgba(26, 174, 204, 1)`}}
                 >
                     <div className={cls.taskLeft__header_box_top}>
@@ -168,62 +186,66 @@ export const TaskManagerLeft = ({formatted}) => {
             <FuncContext.Provider value={contextObj}>
 
                 <div className={cls.taskLeft__body}>
-                    <h1 className={cls.taskLeft__body_title}>My Tasks</h1>
+                    <h1 className={cls.taskLeft__body_title}>{taskType === "completed" ? "Completed leads" : "Leads"}</h1>
 
-                    {formatted === formatedDate ? <>
-                        <div className={cls.taskLeft__body_main}>
-                            <div className={cls.taskLeft__body_card}>
-                                {Object.entries(groupedCards).map(([color, items]) => (
-                                    <DraggableRow
-                                        key={color}
-                                        items={items}
-                                        className={cls.taskLeft__body_card_cotainer}
-                                    />
-                                ))}
+                    {loading ? <DefaultPageLoader/> :
+
+                        formatted === formatedDate ? <>
+                            <div className={cls.taskLeft__body_main}>
+                                <div className={cls.taskLeft__body_card}>
+                                    {Object.entries(groupedCards).map(([color, items]) => (
+                                        <DraggableRow
+                                            taskType={taskType}
+                                            key={color + taskType}
+                                            items={items}
+                                            className={cls.taskLeft__body_card_cotainer}
+                                        />
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    </> : <>
+                        </> : <>
 
-                        <div className={cls.taskLeft__body_table}>
-                            <Table>
-                                <thead>
-                                <tr>
-                                    <th/>
-                                    <th>Ism</th>
-                                    <th>Familiya</th>
-                                    <th>Kament</th>
-                                    <th>Tel raqami</th>
-                                    <th>Tel statusi</th>
-                                    <th>Tel qilingan sana</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {card?.map((item, i) => (
-                                    <tr
-                                        key={i}
-                                        onClick={() => {
-                                            onClick(item)
-                                        }}
-                                    >
-                                        <td>{i + 1}</td>
-                                        <td>{item?.lead?.name}</td>
-                                        <td>{item?.lead?.surname}</td>
-                                        <td>{item?.comment}</td>
-                                        <td>{item?.lead?.phone}</td>
-                                        <td>{item.status === true ? "Tel ko'tardi" : "Tel ko'tarilmadi"}</td>
-                                        <td>{item?.lead?.created}</td>
+                            <div className={cls.taskLeft__body_table}>
+                                <Table>
+                                    <thead>
+                                    <tr>
+                                        <th/>
+                                        <th>Ism</th>
+                                        <th>Familiya</th>
+                                        <th>Kament</th>
+                                        <th>Tel raqami</th>
+                                        <th>Tel statusi</th>
+                                        <th>Tel qilingan sana</th>
                                     </tr>
-                                ))}
-                                </tbody>
-                            </Table>
-                        </div>
-                    </>}
+                                    </thead>
+                                    <tbody>
+                                    {card?.map((item, i) => (
+                                        <tr
+                                            key={i}
+                                            // onClick={() => {
+                                            //     onClick(item)
+                                            // }}
+                                        >
+                                            <td>{i + 1}</td>
+                                            <td>{item?.lead?.name}</td>
+                                            <td>{item?.lead?.surname}</td>
+                                            <td>{item?.comment}</td>
+                                            <td>{item?.lead?.phone}</td>
+                                            <td>{item.status === true ? "Tel ko'tardi" : "Tel ko'tarilmadi"}</td>
+                                            <td>{item?.lead?.created}</td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </Table>
+                            </div>
+                        </>}
 
                 </div>
             </FuncContext.Provider>
 
-            <Modal typeIcon extraClass={cls.modal} active={activeModal} setActive={setActiveModal}>
-                {formatted === formatedDate && <div className={cls.modal__left}>
+            <Modal typeIcon extraClass={cls.modal} active={taskType === "progress" ? activeModal : false}
+                   setActive={setActiveModal}>
+                {formatted === formatedDate && taskType === "progress" && <div className={cls.modal__left}>
                     <Select defaultValue={selectedStatus} onChangeOption={setSelectedStatus} options={status}/>
 
                     {selectedStatus === "Tel ko'tardi" ? <>
@@ -248,7 +270,9 @@ export const TaskManagerLeft = ({formatted}) => {
 
                     {/*</> : <Textarea name={"comment"} register={register}/>}*/}
                     {/*<Button extraClass={cls.modal__add} onClick={handleSubmit(onPost)}>Add</Button>*/}
-                    { resComment.map(item => (
+
+
+                    {resComment.map(item => (
                         <div className={cls.modal__right_box}>
                             <div className={cls.modal__right_header}>
                                 <span>Telefon qilingan sana :</span>  <h2>{item.created}</h2>
@@ -266,11 +290,11 @@ export const TaskManagerLeft = ({formatted}) => {
     )
 }
 
-export const DraggableRow = ({items = [], className = ""}) => {
+export const DraggableRow = ({items = [], className = "", taskType}) => {
     const x = useMotionValue(0)
     const controls = useDragControls()
     const wrapperRef = useRef(null)
-    const [scrollWidth, setScrollWidth] = useState(0)
+    const [scrollWidth, setScrollWidth] = useState(taskType === "completed" ? 0 : 0)
 
     useEffect(() => {
         if (wrapperRef.current) {
@@ -278,7 +302,8 @@ export const DraggableRow = ({items = [], className = ""}) => {
             const visibleWidth = wrapperRef.current.offsetWidth
             setScrollWidth(fullWidth - visibleWidth)
         }
-    }, [items.length])
+    }, [items.length, taskType])
+
 
     return (
         <div className={`${cls.scroll} ${className}`} ref={wrapperRef}>
@@ -294,6 +319,7 @@ export const DraggableRow = ({items = [], className = ""}) => {
                     gap: "2rem",
                     cursor: "w-resize",
                     userSelect: "none",
+
                 }}
             >
                 {items.map((item, idx) => (
@@ -307,8 +333,12 @@ export const DraggableRow = ({items = [], className = ""}) => {
 const TaskCard = ({item}) => {
     const [style, setStyle] = useState({})
 
-    const {setActiveModal, setActiveModalItem} = useContext(FuncContext)
+    const {setActiveModal, setActiveModalItem, taskType} = useContext(FuncContext)
 
+    const [confirmModal, setActiveConfirmModal] = useState(false)
+
+    const {request} = useHttp()
+    const dispatch = useDispatch()
     const renderBgImage = (color) => {
         switch (color) {
             case "red":
@@ -321,6 +351,30 @@ const TaskCard = ({item}) => {
                 return ""
         }
     }
+    const onDeleteLead = () => {
+
+
+        request(`${API_URL}Lead/lead_delete/${item.id}`, "DELETE", null, headers())
+            .then(res => {
+                console.log(res)
+                setActiveConfirmModal(false)
+                dispatch(onRemoveTask(item.id))
+                dispatch(onCountPercentage(res.accepted_percentage))
+                dispatch(onCountCompleted(res.completed))
+                dispatch(onCountProgress(res.progressing))
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: "Muvaffaqiyatli o'chirildi"
+                }))
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+
+    }
+
 
     useEffect(() => {
         setStyle({
@@ -335,36 +389,44 @@ const TaskCard = ({item}) => {
     }, [item?.color])
 
     return (
-        <div
-            style={{background: style.color}}
-            className={cls.taskLeft__body_card_item}
-        >
-            <div className={cls.taskLeft__body_card_item_left}>
-                <h2 className={cls.taskLeft__body_card_item_left_header}>
-                    {item.name} {item.surname}
-                </h2>
-                <div className={cls.taskLeft__body_card_item_left_number}>
-                    Number: <span>{item.phone}</span>
-                </div>
-            </div>
-
+        <>
             <div
-                className={cls.item__image}
-                style={{
-                    backgroundImage: style.backImage,
-                    backgroundRepeat: "no-repeat"
-                }}
-                onClick={() => {
-                    setActiveModalItem(item)
-                    {
-                        setActiveModal(item)
-                    }
-                }}
+                style={{background: style.color}}
+                className={cls.taskLeft__body_card_item}
             >
-                <div className={cls.circle}>
-                    <img src={unknownUser} alt=""/>
+                <div className={cls.taskLeft__body_card_item_left}>
+                    <h2 className={cls.taskLeft__body_card_item_left_header}>
+                        {item.name} {item.surname}
+                    </h2>
+                    <div className={cls.taskLeft__body_card_item_left_number}>
+                        Number: <span>{item.phone}</span>
+                    </div>
+                </div>
+
+                <div
+                    className={cls.item__image}
+                    style={{
+                        backgroundImage: style.backImage,
+                        backgroundRepeat: "no-repeat"
+                    }}
+                >
+                    <div onClick={() => {
+                        setActiveModalItem(item)
+                        {
+                            taskType === "progress" &&
+                            setActiveModal(item)
+                        }
+                    }} className={cls.circle}>
+                        <img src={unknownUser} alt=""/>
+                    </div>
+                    <div onClick={() => setActiveConfirmModal(true)} className={cls.delete}>
+                        <i className={"fa fa-trash"}/>
+                    </div>
                 </div>
             </div>
-        </div>
+            <ConfirmModal active={confirmModal} setActive={setActiveConfirmModal} onClick={onDeleteLead}/>
+
+        </>
+
     )
 }

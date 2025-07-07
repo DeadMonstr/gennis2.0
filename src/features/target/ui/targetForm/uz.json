@@ -11,5 +11,7 @@
   "errorSurname": "Iltimos, familiyangizni kiriting",
   "errorPhone": "Iltimos, telefon raqamingizni kiriting",
   "cancel": "Bekor qilish",
-  "formPost": "Arizani yuborish"
+  "formPost": "Arizani yuborish",
+  "success": "Muvaffaqiyatli yuborildi!",
+  "successTitle": " Operatorlarimiz siz bilan tez orada bog‘lanadi. Qo‘shimcha savollar bo‘lsa, bemalol murojaat qiling."
 }

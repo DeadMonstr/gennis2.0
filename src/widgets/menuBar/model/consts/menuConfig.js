@@ -20,7 +20,7 @@ export const menuConfig = [
         name: "Task Manager",
         icon: "fa-tasks",
         system: ["center","school"],
-        roles: [ROLES.director,ROLES.operator],
+        roles: [ROLES.director,ROLES.operator ],
 
     },
     {

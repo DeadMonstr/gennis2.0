@@ -6,10 +6,10 @@ import {Button} from "shared/ui/button";
 
 import cls from "./targetItemsSecond.module.sass";
 import image from "shared/assets/images/second.png";
-import image1 from "shared/assets/images/second1.png";
-import image2 from "shared/assets/images/second2.png";
-import image3 from "shared/assets/images/second3.png";
-import image4 from "shared/assets/images/second4.png";
+import image1 from "shared/assets/images/second1.svg";
+import image2 from "shared/assets/images/second2.svg";
+import image3 from "shared/assets/images/second3.svg";
+import image4 from "shared/assets/images/second4.svg";
 
 export const TargetItemsSecond = () => {
 
