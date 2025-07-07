@@ -1,15 +1,27 @@
-
 import cls from "./newHomeUi.module.sass"
-import {NewHomeHeader} from "entities/newHomeUi";
+import {NewHomeAdmissions, NewHomeHeader, NewHomeMain} from "entities/newHomeUi";
+import {useState} from "react";
 
 
 export const NewHomeUi = () => {
+
+    const [sectionTop, setSectionTop] = useState({
+        home: null,
+        about: null,
+        advantages: null,
+        comments: null,
+        events: null,
+        gallery: null,
+        contact: null
+    })
+
     return (
         <div className={cls.wrapper}>
 
             <NewHomeHeader/>
-            <div style={{padding: "10rem 0" }}>
-                dasdsa
+            <div className={cls.wrapper__container}>
+                <NewHomeMain/>
+                <NewHomeAdmissions/>
             </div>
 
         </div>

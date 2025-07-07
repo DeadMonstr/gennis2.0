@@ -13,14 +13,16 @@ export const TaskManager = () => {
 
     const [selectedDate, setSelectedDate] = useState(new Date())
 
+    const [taskType , setTaskType] = useState('')
 
     const formatted = formatDate(selectedDate)
+    console.log(taskType)
 
 
     useEffect(() => {
-        dispatch(fetchTaskManager({date: formatted}))
+        dispatch(fetchTaskManager({date: formatted , taskType: taskType}))
         dispatch(fetchBranch())
-    }, [formatted])
+    }, [formatted , taskType])
 
 
     return (
@@ -33,7 +35,7 @@ export const TaskManager = () => {
                 </div>
 
                 <div className={cls.box__sides}>
-                    <TaskManagerLeft formatted={formatted}/>
+                    <TaskManagerLeft setTaskType={setTaskType} taskType={taskType} formatted={formatted}/>
                     <TaskManagerRight selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
 
                 </div>

@@ -23,6 +23,7 @@ export const Input = React.memo(({
                                      checked,
                                      onBlur,
                                      titleColor,
+
                                  }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [silk, setSilk] = useState("");
@@ -103,6 +104,7 @@ export const Input = React.memo(({
                     checked={checked}
                     {...extraValues}
                 />
+
                 {type === "password" && (
                     <div className={cls.eye} onClick={() => setShowPassword(!showPassword)}>
                         {showPassword ? (

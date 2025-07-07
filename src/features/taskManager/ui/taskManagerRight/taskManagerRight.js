@@ -84,7 +84,7 @@ const CalendarItem = ({setSelectedDate , selectedDate}) => {
     const maxSelectableDate = new Date();
     maxSelectableDate.setDate(today.getDate());
     return (
-        <div style={{width: "100%"}}>
+        <div style={{width: "100%" , justifyContent: "center" , display: "flex"}}>
             <Calendar
                 tileDisabled={({ date }) => date >= new Date()}
                       onChange={setSelectedDate}
