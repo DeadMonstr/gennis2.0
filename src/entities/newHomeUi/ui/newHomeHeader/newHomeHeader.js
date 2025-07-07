@@ -96,7 +96,12 @@ export const NewHomeHeader = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-
+    const scrollToSection = (id) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+        }
+    };
     const renderList = () => {
         return headerList.map(item => {
             const isActive = active === item.id;
@@ -124,6 +129,8 @@ export const NewHomeHeader = () => {
                 >
                     {item.title}
                     <i className={`fa-solid fa-chevron-${isActive ? "up" : "down"}`}/>
+
+                    {/* Submenu popup */}
                     <div
                         className={classNames(cls.popup, {
                             [cls.popup_active]: item?.id === activePath?.id,
@@ -131,22 +138,28 @@ export const NewHomeHeader = () => {
                         })}
                     >
                         <ul>
-                            {activePath?.path?.map(subItem => {
-                                return (<li
+                            {activePath?.path?.map(subItem => (
+                                <li
                                     key={subItem.title}
-
                                     className={classNames({
                                         [cls.active]: activeFormTitle === subItem.title
                                     })}
-
                                     onClick={(e) => {
-                                        e.stopPropagation()
-                                        setActiveFormTitle(subItem.title)
+                                        e.stopPropagation();
+                                        setActiveFormTitle(subItem.title);
+
+                                        const target = document.getElementById(subItem.path);
+                                        if (target) {
+                                            target.scrollIntoView({ behavior: 'smooth' });
+                                            window.history.pushState(null, '', `#${subItem.path}`);
+                                        }
+
+                                        setActiveMenu(false);
                                     }}
                                 >
                                     {subItem.title}
-                                </li>)
-                            })}
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </li>

@@ -4,24 +4,32 @@ import {useState} from "react";
 
 
 export const NewHomeUi = () => {
-
-    const [sectionTop, setSectionTop] = useState({
-        home: null,
-        about: null,
-        advantages: null,
-        comments: null,
-        events: null,
-        gallery: null,
-        contact: null
-    })
-
     return (
         <div className={cls.wrapper}>
 
-            <NewHomeHeader/>
+            {/*<NewHomeHeader/>*/}
+            <section id="homepage">
+                <NewHomeHeader/>
+            </section>
             <div className={cls.wrapper__container}>
-                <NewHomeMain/>
-                <NewHomeAdmissions/>
+                {/* Submenu scroll targetlari */}
+                <section id="homepage">
+                    <NewHomeMain/>
+                </section>
+
+                <section id="events">
+                    <div style={{ height: "100vh", padding: "100px" }}>Events content</div>
+                </section>
+
+                <section id="slider">
+                    <div style={{ height: "100vh", padding: "100px" }}>Slider content</div>
+                </section>
+
+
+                {/* Admissions (ariza) */}
+                <section id="quickLinks">
+                    <NewHomeAdmissions/>
+                </section>
             </div>
 
         </div>

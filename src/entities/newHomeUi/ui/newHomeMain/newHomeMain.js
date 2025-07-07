@@ -13,7 +13,7 @@ export const NewHomeMain = () => {
 
     console.log(window.innerWidth)
     return (
-        <div className={cls.main}>
+        <div id={"homepage"} className={cls.main}>
             <div className={cls.main__left}>
                 <div className={cls.main__left_title}>
                     Farzandingiz kelajagi {window.innerWidth > 1050 ? <br/>: null} uchun to‘g‘ri tanlov <br/>
