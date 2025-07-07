@@ -103,7 +103,7 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
 
         request(`${API_URL}Lead/lead_call_create/`, "POST", JSON.stringify(res), headers())
             .then(res => {
-                console.log(res)
+
                 setActiveModal(false)
                 dispatch(onRemoveTask(activeModalItem.id))
                 dispatch(onCountPercentage(res.accepted_percentage))
@@ -356,7 +356,7 @@ const TaskCard = ({item}) => {
 
         request(`${API_URL}Lead/lead_delete/${item.id}`, "DELETE", null, headers())
             .then(res => {
-                console.log(res)
+
                 setActiveConfirmModal(false)
                 dispatch(onRemoveTask(item.id))
                 dispatch(onCountPercentage(res.accepted_percentage))

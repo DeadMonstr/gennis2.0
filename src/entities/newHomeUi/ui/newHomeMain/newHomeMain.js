@@ -10,8 +10,6 @@ import robo from "shared/assets/icons/codicon_robot.svg"
 export const NewHomeMain = () => {
 
     const number = [800, 500, 400]
-
-    console.log(window.innerWidth)
     return (
         <div id={"homepage"} className={cls.main}>
             <div className={cls.main__left}>

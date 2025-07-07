@@ -77,7 +77,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
     useEffect(() => {
         if (student_id) {
             dispatch(getMonthDataThunk(student_id));
-            console.log(student_id)
+
             dispatch(fetchStudentCharityYears(student_id));
         }
     }, [student_id]);
@@ -115,7 +115,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                 .catch(err => {
                     console.log(newPaymentSchool, "new")
                 })
-            console.log(newPaymentSchool, "new")
+
 
             dispatch(onAddAlertOptions({
                 type: "success",
@@ -193,7 +193,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
                 setDiscount(0);
             })
             .catch(err => {
-                console.log(err)
+
                 dispatch(onAddAlertOptions({
                     type: "error",
                     status: true,
@@ -217,7 +217,7 @@ export const StudentProfileTotalAmount = memo(({active, setActive, student_id, b
 
         request(`${API_URL}Students/discount/?type=${typeDiscount}`, "POST", JSON.stringify(res), headers())
             .then(res => {
-                console.log(res)
+
                 // setDiscountCharity(0)
                 dispatch(onAddAlertOptions({
                     type: "success",

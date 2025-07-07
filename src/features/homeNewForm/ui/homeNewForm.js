@@ -20,7 +20,7 @@ export const HomeNewForm = ({activeForm, setActiveForm}) => {
 
     const onClick = (data) => {
 
-        console.log(data)
+
         setActiveForm(false)
         reset()
     }

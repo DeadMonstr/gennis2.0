@@ -34,7 +34,6 @@ export const GroupAttendance = () => {
 
     // const {id} = useParams()
     const {id} = useSelector(getBranch)
-    console.log(id, "branch")
 
     const dispatch = useDispatch()
     useEffect(() => {
@@ -179,7 +178,7 @@ export const Attendance = ({active, setActive}) => {
         // console.log(res , groupId)
         request(`${API_URL}Attendance/school-to-attend-days/${groupId}/`, "POST", JSON.stringify(res), headers())
             .then(res => {
-                console.log(res)
+
                 setStudents(res.students)
             })
             .catch(err => {
@@ -259,7 +258,7 @@ export const Attendance = ({active, setActive}) => {
 
 
             return students.map(item => {
-                console.log(item.reason, "log")
+
                 if (item.attended) {
 
                     return (
@@ -308,7 +307,7 @@ export const Attendance = ({active, setActive}) => {
     }
 
     const onSubmitAbsent = (data) => {
-        console.log(data, "lkog")
+
         setValue("reason" , "")
         setStudents(students => {
             return students.map(item => {
@@ -333,7 +332,7 @@ export const Attendance = ({active, setActive}) => {
                     teacher: studentAttendance.teachers
                     // teacherId
                 }
-                console.log(data)
+
                 const studentId = data?.students?.map(item => item.id)
 
                 updateStatusStudent({id: student.id, requestType: "loading",})
@@ -353,7 +352,7 @@ export const Attendance = ({active, setActive}) => {
 
     const render = renderTable()
     const renderCheckedStudent = renderCheckedStudents()
-    console.log(reason)
+
     return (
         <>
             <Modal active={active} setActive={setActive}>

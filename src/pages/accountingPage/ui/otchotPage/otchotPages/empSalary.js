@@ -13,7 +13,7 @@ export const EmpSalary = ({formatSalary}) => {
 
     const employerSalary = useSelector(getEmployerSalary)
 
-    console.log(employerSalary , "log")
+
     const branchId = branch.id
     useEffect(() => {
         dispatch(getEmployer(branchId))

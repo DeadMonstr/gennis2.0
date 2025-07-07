@@ -10,7 +10,7 @@ export const SubCategory = () => {
     const {request} = useHttp()
 
     const onClick = (data) => {
-        console.log(data)
+
         request(`${API_URL}Capital/capital_category/`, "POST", JSON.stringify(data), headers())
             .then(res => {
                 console.log(res)

@@ -36,7 +36,7 @@ const CircularProgress = ({ size = 150, strokeWidth = 15 }) => {
     const circumference = 2 * Math.PI * radius;
     const offset = circumference - (percentage / 100) * circumference;
 
-    console.log(percentage)
+
 
 
 

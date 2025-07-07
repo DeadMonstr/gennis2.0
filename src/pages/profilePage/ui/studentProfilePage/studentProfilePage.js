@@ -109,7 +109,7 @@ export const StudentProfilePage = () => {
     // }
 
     const onSubmitData = (data) => {
-        console.log(changeSelectedLang)
+
         const res = {
             user: {
                 ...data,
@@ -141,7 +141,7 @@ export const StudentProfilePage = () => {
     }
 
 
-    console.log(userData , "userData")
+
     return (
         <div
             className={classNames(cls.profile)}

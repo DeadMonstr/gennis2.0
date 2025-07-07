@@ -84,7 +84,7 @@ export const registerTeacher = createAsyncThunk(
             return data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);
-            console.log(error)
+
         }
     }
 );
@@ -139,7 +139,7 @@ export const fetchCategories = createAsyncThunk(
     "user/fetchCategories",
     (id) => {
         const {request} = useHttp()
-        console.log(id)
+
         return request(`${API_URL}Teachers/salary-types/?branch=${id}`, "GET", null, headers())
     }
 )

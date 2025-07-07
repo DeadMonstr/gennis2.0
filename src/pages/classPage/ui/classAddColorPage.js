@@ -21,7 +21,6 @@ export const ClassAddColorPage = ({color, setEdit, edit}) => {
     const changeColor = (data) => {
         const id = edit.id
 
-        console.log(id)
         const res = {
             value: colorChange ? colorChange : edit.value,
             ...data

@@ -16,7 +16,6 @@ export const TaskManager = () => {
     const [taskType , setTaskType] = useState('')
 
     const formatted = formatDate(selectedDate)
-    console.log(taskType)
 
 
     useEffect(() => {

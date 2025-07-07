@@ -27,7 +27,7 @@ export const EmployerSalaryPage = () => {
 
     const {request} = useHttp()
 
-    console.log(activeItem)
+
 
     useEffect(() => {
         setValue("total_salary", activeItem.total_salary)
