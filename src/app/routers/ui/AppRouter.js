@@ -92,7 +92,6 @@ export const AppRouter = () => {
                                     />
                                 )
                             }
-
                         </Route>
 
                         <Route element={<RequireHeader header={false}/>}>
@@ -145,7 +144,6 @@ export const AppRouter = () => {
                         {/*    path={"calendar"}*/}
                         {/*    element={<CalendarPage/>}*/}
                         {/*/>*/}
-
 
 
                         <Route
