@@ -4,11 +4,11 @@ import {
     NewHomeDailyLife,
     NewHomeFileDownload,
     NewHomeHeader,
-    NewHomePrincipal
+    NewHomePrincipal,
+    NewHomeMain,
+    NewHomeAdmissions, NewHomeClubs
 } from "entities/newHomeUi";
 
-import {NewHomeAdmissions, NewHomeHeader, NewHomeMain} from "entities/newHomeUi";
-import {useState} from "react";
 import {Route, Routes} from "react-router";
 
 
@@ -17,35 +17,67 @@ export const NewHomeUi = () => {
         <div className={cls.wrapper}>
 
             {/*<NewHomeHeader/>*/}
-            <section id="homepage">
+
                 <NewHomeHeader/>
-            </section>
-            <Routes>
-                <Route path={"/"} element={<>
-                    <div className={cls.wrapper__container}>
-                        {/* Submenu scroll targetlari */}
-                        <section id="homepage">
-                            <NewHomeMain/>
-                        </section>
 
-                        <section id="events">
-                            <div style={{height: "100vh", padding: "100px"}}>Events content</div>
-                        </section>
-
-                        <section id="slider">
-                            <div style={{height: "100vh", padding: "100px"}}>  <NewHomeCurriculum/></div>
-                        </section>
-
-
-                        {/* Admissions (ariza) */}
-                        <section id="quickLinks">
-                            <NewHomeAdmissions/>
-                        </section>
-                    </div>
-                </>}/>
-            </Routes>
+            <div className={cls.wrapper__container}>
+                <Routes>
+                    <Route path={"/"} element={<Home/>}/>
+                    <Route path={"/student_life"} element={<StudentLife/>}/>
+                </Routes>
+            </div>
 
         </div>
     );
 };
 
+const Home = () => {
+    return (
+        <div className={cls.wrapper__container}>
+            {/* Submenu scroll targetlari */}
+            <section id="homepage">
+                <NewHomeMain/>
+            </section>
+
+            <section id="events">
+                <div ><NewHomePrincipal/></div>
+            </section>
+
+            <section id="slider">
+                <div >  <NewHomeDailyLife/></div>
+            </section>
+
+
+            {/* Admissions (ariza) */}
+            <section id="quickLinks">
+                <NewHomeAdmissions/>
+            </section>
+        </div>
+    )
+}
+
+
+const StudentLife = () => {
+    return (
+        <div className={cls.wrapper__container}>
+            {/* Submenu scroll targetlari */}
+                <NewHomeClubs/>
+            {/*<section id="sports_and_arts">*/}
+            {/*    <div ><NewHomePrincipal/></div>*/}
+            {/*</section>*/}
+
+            {/*<section id="school_trips">*/}
+            {/*    <div >  <NewHomeDailyLife/></div>*/}
+            {/*</section>*/}
+
+
+            {/*/!* Admissions (ariza) *!/*/}
+            {/*<section id="competitions">*/}
+            {/*    <NewHomeAdmissions/>*/}
+            {/*</section>*/}
+            {/*<section id="student_council">*/}
+            {/*    <NewHomeAdmissions/>*/}
+            {/*</section>*/}
+        </div>
+    )
+}

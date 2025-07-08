@@ -1,0 +1,267 @@
+.club
+  display: flex
+  flex-direction: column
+  gap: 20rem
+
+  &__header
+    display: flex
+    flex-direction: column
+    gap: 5rem
+    &_text
+      display: flex
+      justify-content: space-between
+    &_img
+      display: flex
+      justify-content: space-between
+      & > div
+        width: 600px
+        height: 354px
+        & > img
+          width: 100%
+          height: 100%
+  &__title
+    display: flex
+    font-weight: 600
+    //padding: 1rem
+    //color: white
+    width: 80rem
+    font-size: 4rem
+    align-items: center
+    flex-wrap: wrap
+    gap: 1rem
+    font-family: "Montserrat", sans-serif
+    &_text
+      background: rgba(7, 46, 146, 1)
+      color: white
+      padding: 1rem
+      border-radius: 10px
+    &_desc
+      color: rgba(135, 140, 145, 1)
+      font-size: 2rem
+      font-family: "Montserrat", sans-serif
+      font-weight: 500
+      width: 55rem
+
+      line-height: 3rem
+  &__sport , &__trips
+    display: flex
+    justify-content: space-between
+    align-items: center
+    &_text
+      display: flex
+      flex-direction: column
+      gap: 2rem
+    &_title
+      display: flex
+      font-weight: 600
+      //padding: 1rem
+      //color: white
+      width: 60rem
+      font-size: 4rem
+      align-items: center
+      flex-wrap: wrap
+      gap: 1rem
+      font-family: "Montserrat", sans-serif
+      &_text
+        background: rgba(7, 46, 146, 1)
+        color: white
+        padding: 1rem
+        border-radius: 10px
+      &_desc
+        color: rgba(135, 140, 145, 1)
+        font-size: 2rem
+        font-family: "Montserrat", sans-serif
+        font-weight: 500
+        width: 55rem
+
+        line-height: 3rem
+
+    &_img
+      width: 600px
+      height: 417px
+      &  >img
+        width: 100%
+        height: 100%
+
+  &__trips
+    &_text
+      width: 70rem
+    &_title
+      &_desc
+        width: 100%
+  &__competitions
+    &_header
+      display: flex
+      justify-content: space-between
+      &_title
+        color: rgba(7, 46, 146, 1)
+        font-family: "Montserrat", sans-serif
+        font-size: 4rem
+        width: 60rem
+        font-weight: 600
+      &_desc
+        color: rgba(135, 140, 145, 1)
+        font-weight: 400
+        font-size: 1.6rem
+        font-family: "Montserrat", sans-serif
+        width: 60rem
+        line-height: 3rem
+    &__wrapper
+      margin-top: 5rem
+      display: flex
+      justify-content: space-between
+      &_left
+        width: 50rem
+        display: flex
+        flex-direction: column
+        gap: 2rem
+        &_img
+          width: 52.6rem
+          height: 27.9rem
+          object-fit: cover
+        &_subTitle
+          background: rgba(202, 167, 127, 1)
+          color: white
+          font-family: "Montserrat", sans-serif
+          font-size: 1.6rem
+          font-weight: 600
+          width: 236px
+          display: flex
+          justify-content: center
+          align-items: center
+          height: 33px
+          border-radius: 20px
+        &_title
+
+          color: rgba(7, 46, 146, 1)
+          font-weight: 600
+          font-size: 2rem
+          font-family: "Montserrat", sans-serif
+          width: 100%
+        &_desc
+          color: rgba(105, 105, 132, 1)
+          font-size: 1.6rem
+          font-weight: 600
+          font-family: "Montserrat", sans-serif
+          width: 100%
+        &_link
+          color: rgba(7, 46, 146, 1)
+          font-family: "Montserrat", sans-serif
+          font-size: 1.6rem
+          font-weight: 600
+
+          text-decoration: underline
+      &_right
+        display: flex
+        flex-direction: column
+        gap: 4rem
+
+        &_box
+          //border: 1px solid
+          display: flex
+          width: 68rem
+          gap: 2rem
+          align-items: center
+          &_img
+            width: 24rem
+            height: 16.4rem
+            position: relative
+            & > div
+              position: absolute
+              background: rgba(202, 167, 127, 1)
+              color:  white
+              font-family: "Montserrat", sans-serif
+              font-size: 1.2rem
+              font-weight: 500
+              padding: 1rem
+              bottom: 10px
+              left: 50%
+              transform: translateX(-50%)
+              width: 20rem
+              text-align: center
+
+              border-radius: 30px
+            & > img
+              width: 100%
+              height: 100%
+          &_text
+            width: 44rem
+            display: flex
+            flex-direction: column
+            gap: 1rem
+            &_title
+              color: rgba(7, 46, 146, 1)
+              font-size: 1.8rem
+              font-family: "Montserrat", sans-serif
+              font-weight: 500
+            &_desc
+              color: rgba(105, 105, 132, 1)
+              font-weight: 400
+              font-size: 1.6rem
+              font-family: "Montserrat", sans-serif
+.student
+  &__header
+
+    display: flex
+    justify-content: space-between
+    align-items: center
+    &_text
+      font-family: "Montserrat", sans-serif
+      font-weight: 900
+      font-size: 4rem
+      display: flex
+      flex-direction: column
+      gap: 2rem
+
+      &_title
+        background: rgba(7, 46, 146, 1)
+        color: white
+        width: fit-content
+        border-radius: 10px
+        padding: 1rem
+    &_desc
+      width: 67rem
+      color: rgba(135, 140, 145, 1)
+      font-size: 1.6rem
+      font-weight: 400
+      font-family: "Montserrat", sans-serif
+      line-height: 2rem
+  &__wrapper
+    display: flex
+    gap: 2rem
+    padding-top: 1.8rem
+    flex-wrap: wrap
+    &_box
+      width: 32.8rem
+      border: 1px solid rgba(234, 236, 240, 1)
+      border-radius: 10px 10px 0 0
+      overflow: hidden
+      display: flex
+      flex-direction: column
+      gap: 2rem
+      &_img
+        width: 100%
+        height: 25.4rem
+        & > img
+          width: 100%
+          height: 100%
+      &_text
+        display: flex
+        flex-direction: column
+        gap: 2rem
+        padding: 1.6rem
+        &_title
+          color: rgba(40, 40, 40, 1)
+          font-family: "Montserrat", sans-serif
+          font-size: 1.8rem
+          font-weight: 600
+        &_subtitle
+          color: rgba(62, 62, 89, 1)
+          font-size: 1.4rem
+          font-weight: 400
+          font-family: "Montserrat", sans-serif
+        &_desc
+          color: rgba(95, 105, 128, 1)
+          font-size: 1.4rem
+          font-family: "Montserrat", sans-serif
+          font-weight: 400
