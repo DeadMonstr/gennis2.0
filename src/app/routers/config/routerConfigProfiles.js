@@ -164,7 +164,7 @@ export const routersConfigProfile = [
     },
 
     {
-        name: "otchoq",
+        name: "otchot",
         path: getOtchot(),
         element: <AccountingOtchotPage/>
     },

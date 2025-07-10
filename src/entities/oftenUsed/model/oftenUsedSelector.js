@@ -76,3 +76,13 @@ export const getClassInputLoading = (state) =>
 
 export const getClassInputError = (state) =>
     state.oftenUsedSlice.classInputError
+
+
+export const getBranchesError = (state) =>
+    state.oftenUsedSlice.branchesError
+
+export const getBranchesLoading = (state) =>
+    state.oftenUsedSlice.loading
+
+export const getBranchesSelect = (state) =>
+    state.oftenUsedSlice?.branches

@@ -75,3 +75,11 @@ export const fetchTeachersForSelect = createAsyncThunk(
     }
 )
 
+export const fetchBranchesForSelect = createAsyncThunk(
+    "oftenUsedSlice/fetchBranchesForSelect",
+    (id) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Branch/branch_filtered/`, "GET", null)
+    }
+)
+
