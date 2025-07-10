@@ -5,7 +5,12 @@ import {
     fetchLanguagesData,
     fetchClassColorData,
     fetchClassNumberData,
-    fetchClassTypeData, fetchCategories, fetchClassInput, fetchGroupsForSelect, fetchTeachersForSelect
+    fetchClassTypeData,
+    fetchCategories,
+    fetchClassInput,
+    fetchGroupsForSelect,
+    fetchTeachersForSelect,
+    fetchBranchesForSelect
 } from "./oftenUsedThunk";
 
 const initialState = {
@@ -35,6 +40,9 @@ const initialState = {
     groupsError: null,
     groups: [],
 
+    branchesLoading: false,
+    branchesError: null,
+    branches: [],
 
 
 
@@ -169,6 +177,21 @@ const oftenUsedSlice = createSlice({
             .addCase(fetchTeachersForSelect.rejected, (state) => {
                 state.teachersLoading = false
                 state.teachersError = "error"
+            })
+
+
+            .addCase(fetchBranchesForSelect.pending, (state) => {
+                state.branchesLoading = true
+                state.branchesError = null
+            })
+            .addCase(fetchBranchesForSelect.fulfilled, (state, action) => {
+                state.branches = action.payload
+                state.branchesLoading = false
+                state.branchesError = null
+            })
+            .addCase(fetchBranchesForSelect.rejected, (state) => {
+                state.branchesLoading = false
+                state.branchesError = "error"
             })
 })
 

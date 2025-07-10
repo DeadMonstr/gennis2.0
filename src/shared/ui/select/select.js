@@ -70,6 +70,7 @@ export const  Select = React.memo(({
     const renderedOptions = renderOptionsOfSelect();
 
     return register ? (
+
         <label className={classNames(cls.label, extraClass)}>
             {
                 title ?
@@ -85,6 +86,7 @@ export const  Select = React.memo(({
                 className={classNames(cls.label__inner, extraClass, {
                     [cls.error]: status === "error"
                 })}
+                name={name}
                 required={required}
                 value={selectOption}
                 {...register(name, {

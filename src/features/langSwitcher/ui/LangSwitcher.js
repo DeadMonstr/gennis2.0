@@ -56,8 +56,6 @@ const LangSwitcher = () => {
             >
                 {
                     langs.map((item, index) => {
-
-
                         return (
                             <div key={index} onClick={() => onChangeLanguage(item.value)} className={cls.item}>
                                 <img src={item.icon} alt=""/>
@@ -65,13 +63,9 @@ const LangSwitcher = () => {
 
                             </div>
                         )
-
                     })
                 }
-
             </div>
-
-
         </div>
     );
 };

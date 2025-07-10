@@ -3,45 +3,54 @@ import cls from "./targetItemsReg.module.sass";
 import {Button} from "shared/ui/button";
 import {API_URL, useHttp} from "shared/api/base";
 import {useForm} from "react-hook-form";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Form} from "shared/ui/form";
 
-import instagramIcon from "shared/assets/icons/instagram.svg";
-import telegramIcon from "shared/assets/icons/telegram.svg";
-import facebookIcon from "shared/assets/icons/facebook.svg";
-import youtubeIcon from "shared/assets/icons/youtube.svg";
+
 
 import checkIcon from "shared/assets/icons/checkIcon.svg";
 import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {useNavigate, useParams} from "react-router";
+import {Select} from "shared/ui/select";
+import {getBranchesSelect} from "entities/oftenUsed/model/oftenUsedSelector";
+import {fetchBranchesForSelect} from "entities/oftenUsed/model/oftenUsedThunk";
 
 
 export const TargetItemsReg = () => {
     const [check, setCheck] = useState(false);
-    const {request} = useHttp();
-    const icons = [telegramIcon, instagramIcon, youtubeIcon, facebookIcon];
-    const {t, i18n} = useTranslation();
     const [errors, setErrors] = useState({
         name: false,
         surname: false,
-        phone: false
+        phone: false,
+        branch: false
     });
 
+    const branches = useSelector(getBranchesSelect)
+
+
+    const {t, i18n} = useTranslation();
+
+
     const navigate = useNavigate()
-
     const {type} = useParams()
-
-
-    const {register, handleSubmit} = useForm();
+    const {request} = useHttp();
     const dispatch = useDispatch();
+    const {register, handleSubmit} = useForm();
 
+
+    useEffect(()=> {
+        dispatch(fetchBranchesForSelect())
+    }, [])
 
     const onClickForm = (data) => {
+
+        console.log(data)
         const newErrors = {
             name: !data?.name,
             surname: !data?.surname,
-            phone: !data?.phone
+            phone: !data?.phone,
+            branch: !data?.branch
         };
 
         const res = {
@@ -55,7 +64,7 @@ export const TargetItemsReg = () => {
         if (hasError) return;
 
         request(`${API_URL}Lead/lead_create/`, "POST", JSON.stringify(res))
-            .then((res) => {
+            .then((res)  => {
                 console.log(res);
                 setCheck(true);
             })
@@ -63,7 +72,6 @@ export const TargetItemsReg = () => {
                 console.log(err);
             });
     };
-
 
 
     return (
@@ -113,6 +121,18 @@ export const TargetItemsReg = () => {
                             register={register}
                             name={"phone"}
                             placeholder={`${t("form.formPhonePlaceholder")}`}
+                        />
+
+
+                        {errors.branch && <span className={cls.wrapper__error}>{t("form.errorFilial")}</span>}
+                        <Select
+                            titleColor={cls.wrapper__form_title}
+                            title={`${t("form.formFilial")}`}
+                            register={register}
+                            name={"branch"}
+                            options={branches}
+                            // onChangeOption={setBranch}
+                            placeholder={`${t("form.formFilialPlaceholder")}`}
                         />
 
 
