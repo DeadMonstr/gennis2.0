@@ -6,10 +6,11 @@ import {
     NewHomeHeader,
     NewHomePrincipal,
     NewHomeMain,
-    NewHomeAdmissions, NewHomeClubs
+    NewHomeAdmissions, NewHomeClubs, NewHomeGrade, NewHomeAssessment, NewHomeFaculty, NewHomeContact
 } from "entities/newHomeUi";
 
 import {Route, Routes} from "react-router";
+import {SchoolHomeContact} from "entities/schoolHome";
 
 
 export const NewHomeUi = () => {
@@ -24,6 +25,9 @@ export const NewHomeUi = () => {
                 <Routes>
                     <Route path={"/"} element={<Home/>}/>
                     <Route path={"/student_life"} element={<NewHomeClubs/>}/>
+                    <Route path={"/academics"} element={<Academics/>}/>
+                    <Route path={"/faculty"} element={<NewHomeFaculty/>}/>
+                    <Route path={"/contact"} element={<SchoolHomeContact/>}/>
                 </Routes>
             </div>
 
@@ -37,17 +41,12 @@ const Home = () => {
             <section id="homepage">
                 <NewHomeMain/>
             </section>
-
             <section id="events">
-                <div ><NewHomePrincipal/></div>
+                {/*<div ><NewHomePrincipal/></div>*/}
             </section>
-
             <section id="slider">
-                <div><NewHomeDailyLife/></div>
+                {/*<div><NewHomeDailyLife/></div>*/}
             </section>
-
-
-            {/* Admissions (ariza) */}
             <section id="quickLinks">
                 <NewHomeAdmissions/>
             </section>
@@ -55,4 +54,12 @@ const Home = () => {
     )
 }
 
-
+const Academics = () => {
+    return (
+        <>
+            <NewHomeCurriculum/>
+            <NewHomeGrade/>
+            <NewHomeAssessment/>
+        </>
+    )
+}

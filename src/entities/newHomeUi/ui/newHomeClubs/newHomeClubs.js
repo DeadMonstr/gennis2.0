@@ -86,6 +86,7 @@ export const NewHomeClubs = () => {
 
                     </h2>
                     <span className={cls.club__competitions__wrapper_right_box_text_desc}>{item.desc}</span>
+                    <span className={cls.club__competitions__wrapper_right_box_text_link}>Batafsil</span>
                 </div>
             </div>
         ))
@@ -114,7 +115,7 @@ export const NewHomeClubs = () => {
             <div className={cls.club__header} id={"clubs_and_activities"}>
                 <div className={cls.club__header_text}>
                     <div className={cls.club__title}>
-                        <span className={cls.club__title_text}>Clubs & Activities</span> darsdan tashqari <span>hayot markazi</span>
+                        <div className={cls.club__title_text}>Clubs & Activities {window.innerWidth < 950 ? "darsdan" : ""}</div> {window.innerWidth >= 950 ? "darsdan" : ""} tashqari <span>hayot markazi</span>
                     </div>
                     <div className={cls.club__title_desc}>
                         Turon Xalqaro Maktabi o‘quvchilari sinfdan tashqarida ham o‘z qiziqishlari va iste’dodlarini
@@ -158,6 +159,8 @@ export const NewHomeClubs = () => {
                     </div>
                 </div>
             </div>
+
+
             <div className={cls.club__competitions} id={"competitions"}>
                 <div className={cls.club__competitions_header}>
                     <div className={cls.club__competitions_header_title}>
@@ -177,15 +180,17 @@ export const NewHomeClubs = () => {
                         <div className={cls.club__competitions__wrapper_left_subTitle}>
                             📚 Fan olimpiadalari
                         </div>
-                        <div className={cls.club__competitions__wrapper_left_title}>
-                            Biologiya, Matematika, Fizika bo‘yicha mintaqaviy va xalqaro darajadagi tanlovlar.
-                        </div>
-                        <div className={cls.club__competitions__wrapper_left_desc}>
-                            👉 O‘quvchilarimiz aniq fanlar bo‘yicha chuqur bilim va mantiqiy fikrlash ko‘nikmalarini
-                            namoyon etib, yuqori natijalarga erishishmoqda.
-                        </div>
-                        <div className={cls.club__competitions__wrapper_left_link}>
-                            Batafsil
+                        <div className={cls.club__competitions__wrapper_left_text}>
+                            <div className={cls.club__competitions__wrapper_left_title}>
+                                Biologiya, Matematika, Fizika bo‘yicha mintaqaviy va xalqaro darajadagi tanlovlar.
+                            </div>
+                            <div className={cls.club__competitions__wrapper_left_desc}>
+                                👉 O‘quvchilarimiz aniq fanlar bo‘yicha chuqur bilim va mantiqiy fikrlash ko‘nikmalarini
+                                namoyon etib, yuqori natijalarga erishishmoqda.
+                            </div>
+                            <div className={cls.club__competitions__wrapper_left_link}>
+                                Batafsil
+                            </div>
                         </div>
                     </div>
                     <div className={cls.club__competitions__wrapper_right}>
@@ -193,6 +198,8 @@ export const NewHomeClubs = () => {
                     </div>
                 </div>
             </div>
+
+
             <div className={cls.student} id={"student_council"}>
                 <div className={cls.student__header}>
                     <div className={cls.student__header_text}>

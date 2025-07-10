@@ -131,6 +131,24 @@
   opacity: 1
 .popup_unactive
   opacity: 0
+
+.popup_mobile
+  padding-left: 4rem
+  display: none
+
+  & > ul
+    list-style: none
+    color: white
+    display: flex
+    flex-direction: column
+    gap: 1rem
+    font-size: 1.6rem
+
+.popup_active_mobile
+  display: flex
+.popup_unactive_mobile
+  display: none
+
 @media (max-width: 1500px)
   .header
     padding: 2.5rem 2rem

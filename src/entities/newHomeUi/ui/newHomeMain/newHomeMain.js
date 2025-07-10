@@ -59,15 +59,15 @@ export const NewHomeMain = () => {
                         <Textarea style={{width: window.innerWidth > 1050 ? "transparent" : "100%" }}  placeholder={"Message"} extraClassName={cls.main__right_form_textarea}/>
                     </Form>
                     <HomeBtnUi type={"submit"}>Yuborish</HomeBtnUi>
-                    <div className={`${cls.pulse_container} ${cls.main__right_form_robo}`}>
-                        <div className={cls.pulse_ring}></div>
-                        <div className={cls.pulse_ring}></div>
-                        <div className={cls.pulse_ring}></div>
+                    {/*<div className={`${cls.pulse_container} ${cls.main__right_form_robo}`}>*/}
+                    {/*    <div className={cls.pulse_ring}></div>*/}
+                    {/*    <div className={cls.pulse_ring}></div>*/}
+                    {/*    <div className={cls.pulse_ring}></div>*/}
 
-                        <div className={cls.icon}>
-                           <img src={robo} alt=""/>
-                        </div>
-                    </div>
+                    {/*    <div className={cls.icon}>*/}
+                    {/*       <img src={robo} alt=""/>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
                 </div>
                 <div className={`${cls.main__left_footer} ${cls.main__right_disappear}`}>

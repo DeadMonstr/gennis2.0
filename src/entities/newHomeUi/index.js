@@ -8,3 +8,8 @@ export {NewHomePrincipal} from "./ui/newHomePrincipal/newHomePrincipal";
 export {NewHomeDailyLife} from "./ui/newHomeDailyLife/newHomeDailyLife";
 
 export {NewHomeClubs} from "./ui/newHomeClubs/newHomeClubs"
+export {NewHomeGrade} from "./ui/newHomeGrade/newHomeGrade"
+export {NewHomeAssessment} from "./ui/newHomeAssessment/newHomeAssessment"
+export {NewHomeFaculty} from "./ui/newHomeFaculty/newHomeFaculty"
+
+export {NewHomeContact} from "./ui/newHomeContact/newHomeContact"
