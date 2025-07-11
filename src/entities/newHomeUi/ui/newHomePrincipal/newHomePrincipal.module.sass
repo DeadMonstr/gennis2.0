@@ -38,7 +38,7 @@
           border-radius: 1.2rem
         .image
           height: 35rem
-          width: 41rem
+          width: 100%
           border-radius: 1.5rem
       &__title
         font-size: 2.4rem
@@ -47,3 +47,25 @@
         font-size: 1.3rem
         font-weight: 400
         color: #666666
+@media (min-width: 1920px)
+  .principal
+    width: 150rem
+@media (max-width: 1240px)
+  .principal
+    &__container
+      flex-wrap: wrap
+  .card
+    width: 48%
+    .image
+      height: 30rem!important
+
+
+@media (max-width: 900px)
+  .card
+    .image
+      height: 25rem!important
+@media (max-width: 700px)
+  .card
+    width: 100%
+    .image
+      height: 30rem!important

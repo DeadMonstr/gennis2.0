@@ -12,16 +12,16 @@ import image8 from "shared/assets/images/dailyLife8.jpg";
 
 export const NewHomeDailyLife = () => {
     return (
-        <div className={cls.dailyLife}>
+        <div id={'slider'} className={cls.dailyLife}>
             <div className={cls.dailyLife__header}>
                 <h1 className={cls.title}>
                     <span className={cls.title__inner}>Turon Xalqaro Maktabi</span>
                     hayotidan lahzalar
                 </h1>
                 <p className={cls.desc}>
-                    Farzandingiz qanday muhitda o‘qiyotgani, qanday <br/>
-                    faoliyatlarda ishtirok etayotgani bilan yaqindan tanishing. <br/>
-                    Suratlar orqali biz sizga maktab hayotidagi tabiiy, <br/>
+                    Farzandingiz qanday muhitda o‘qiyotgani, qanday
+                    faoliyatlarda ishtirok etayotgani bilan yaqindan tanishing.
+                    Suratlar orqali biz sizga maktab hayotidagi tabiiy,
                     quvonchli va ilhomli daqiqalarni taqdim etamiz.
                 </p>
             </div>

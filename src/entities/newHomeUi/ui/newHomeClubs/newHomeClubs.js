@@ -216,8 +216,6 @@ export const NewHomeClubs = () => {
                 <div className={cls.student__wrapper}>
                     {renderFooter()}
                 </div>
-
-
             </div>
 
         </div>

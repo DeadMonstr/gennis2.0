@@ -3,14 +3,13 @@ import {
     NewHomeCurriculum,
     NewHomeDailyLife,
     NewHomeFileDownload,
-    NewHomeHeader,
+    zNewHomeHeader,
     NewHomePrincipal,
     NewHomeMain,
-    NewHomeAdmissions, NewHomeClubs, NewHomeGrade, NewHomeAssessment, NewHomeFaculty, NewHomeContact
+    NewHomeAdmissions, NewHomeClubs, NewHomeGrade, NewHomeAssessment, NewHomeFaculty, NewHomeContact, NewHomeHeader
 } from "entities/newHomeUi";
 
 import {Route, Routes} from "react-router";
-import {SchoolHomeContact} from "entities/schoolHome";
 
 
 export const NewHomeUi = () => {
@@ -19,16 +18,19 @@ export const NewHomeUi = () => {
 
             {/*<NewHomeHeader/>*/}
 
-                <NewHomeHeader/>
+            <NewHomeHeader/>
 
             <div className={cls.wrapper__container}>
+
+
                 <Routes>
                     <Route path={"/"} element={<Home/>}/>
                     <Route path={"/student_life"} element={<NewHomeClubs/>}/>
                     <Route path={"/academics"} element={<Academics/>}/>
                     <Route path={"/faculty"} element={<NewHomeFaculty/>}/>
-                    <Route path={"/contact"} element={<SchoolHomeContact/>}/>
+                    <Route path={"/contact"} element={<NewHomeContact/>}/>
                 </Routes>
+
             </div>
 
         </div>
@@ -38,18 +40,18 @@ export const NewHomeUi = () => {
 const Home = () => {
     return (
         <>
-            <section id="homepage">
-                <NewHomeMain/>
-            </section>
-            <section id="events">
-                {/*<div ><NewHomePrincipal/></div>*/}
-            </section>
-            <section id="slider">
-                {/*<div><NewHomeDailyLife/></div>*/}
-            </section>
-            <section id="quickLinks">
-                <NewHomeAdmissions/>
-            </section>
+
+            <NewHomeMain/>
+
+
+              <NewHomePrincipal/>
+
+
+              <NewHomeDailyLife/>
+            {/**/}
+            {/**/}
+            <NewHomeAdmissions/>
+
         </>
     )
 }

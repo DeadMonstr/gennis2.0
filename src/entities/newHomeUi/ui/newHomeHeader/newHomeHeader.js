@@ -1,4 +1,5 @@
-import newLogo from "shared/assets/logo/turonNew.svg";
+import newLogo from "shared/assets/logo/Frame 2147223283.svg";
+import newLogoBlue from "shared/assets/logo/turonLogoBlue.svg";
 import hamburger from "shared/assets/icons/hamburger.svg";
 import whiteHamburger from "shared/assets/icons/whitehamburger.svg";
 import cls from "./newHomeUi.module.sass";
@@ -171,24 +172,24 @@ export const NewHomeHeader = () => {
     return (
         <div className={classNames(cls.header, { [cls.scrolled]: scrolled })}>
             <div className={cls.header__logo}>
-                <img src={newLogo} alt="logo" />
+                <img src={scrolled ? newLogoBlue : newLogo} alt="logo" />
             </div>
 
             <ul className={classNames(cls.header__list, { [cls.scrolledActive]: scrolled })}>
                 {renderList()}
             </ul>
 
-            <div style={{ display: "flex", gap: "2rem" }}>
-                {window.innerWidth > 1050 && (
-                    <HomeBtnUi type="request">Onlayn ariza topiring</HomeBtnUi>
-                )}
+            <div  style={{ display: "flex", gap: "2rem"}}>
+
+                    <HomeBtnUi extraClass={cls.contact} onClick={() => setActiveForm(true)} type="request">Onlayn ariza topiring</HomeBtnUi>
+
                 <div onClick={() => setActiveMenu(!activeMenu)} className={cls.header__burger}>
                     <img src={scrolled ? whiteHamburger : hamburger} alt="menu" />
                 </div>
             </div>
 
-            <div className={classNames(cls.activeMenu, { [cls.activeMenuActive]: activeMenu })}>
-                <ul className={cls.activeMenu__list}>
+            <div className={classNames(cls.activeMenu, {[cls.activeMenuBc] : activeMenu})}>
+                <ul className={classNames(cls.activeMenu__list , { [cls.activeMenuActive]: activeMenu })}>
                     {headerList.map((item) => (
                         <>
                             <li

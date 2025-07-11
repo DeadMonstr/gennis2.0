@@ -227,12 +227,12 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
                                             // }}
                                         >
                                             <td>{i + 1}</td>
-                                            <td>{item?.lead?.name}</td>
-                                            <td>{item?.lead?.surname}</td>
+                                            <td>{item?.name}</td>
+                                            <td>{item?.surname}</td>
                                             <td>{item?.comment}</td>
-                                            <td>{item?.lead?.phone}</td>
+                                            <td>{item?.phone}</td>
                                             <td>{item.status === true ? "Tel ko'tardi" : "Tel ko'tarilmadi"}</td>
-                                            <td>{item?.lead?.created}</td>
+                                            <td>{item?.created}</td>
                                         </tr>
                                     ))}
                                     </tbody>
@@ -243,7 +243,7 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
                 </div>
             </FuncContext.Provider>
 
-            <Modal typeIcon extraClass={cls.modal} active={taskType === "progress" ? activeModal : false}
+            <Modal typeIcon extraClass={cls.modal} active={activeModal}
                    setActive={setActiveModal}>
                 {formatted === formatedDate && taskType === "progress" && <div className={cls.modal__left}>
                     <Select defaultValue={selectedStatus} onChangeOption={setSelectedStatus} options={status}/>

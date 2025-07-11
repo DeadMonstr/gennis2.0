@@ -2,7 +2,7 @@
 
 .curriculum
   display: flex
-  justify-content: space-between
+  justify-content: center
   align-items: flex-end
   gap: 8rem
 
@@ -11,6 +11,8 @@
     flex-direction: column
     align-items: center
     gap: 4rem
+    width: 50rem
+
 
     .image
       width: 51rem
@@ -40,6 +42,7 @@
     display: flex
     flex-direction: column
     gap: 4rem
+    width: 92rem
 
     .header
       display: flex
@@ -102,6 +105,13 @@
             color: #7F8490
 .invisible
   display: none
+@media (max-width: 1920px)
+  .curriculum
+    justify-content: space-between
+    &__image
+      width: 35%
+    &__container
+      width: 50%
 @media (max-width: 1452px)
   .curriculum
     .header
@@ -171,6 +181,9 @@
     display: none!important
   .curriculum
     flex-direction: column
+
+    &__container
+      width: 100%
     &__image
       width: 100%!important
       flex-direction: column-reverse!important

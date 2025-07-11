@@ -11,7 +11,7 @@ export const NewHomeAdmissions = () => {
 
 
     return (
-        <div className={cls.admission}>
+        <div className={cls.admission} id={"quickLinks"}>
             <div className={cls.admission__title}>
                 Sizga kerakli bo‘limlar shu yerda.
                 <div className={cls.admission__title_span}>
@@ -50,8 +50,8 @@ export const NewHomeAdmissions = () => {
                         <ol className={cls.admission__wrapper_contact_list}>
                             <li>1. Telefon raqami: <span className={cls.admission__wrapper_contact_list_span}>+998 94 310 33 33</span></li>
                             <li>2. Elektron pochta:  <span className={cls.admission__wrapper_contact_list_span}>info@.uz</span></li>
-                            <li>3. Instagram:  <span className={cls.admission__wrapper_contact_list_span}>@turon_international_school</span> </li>
-                            <li>4. Telegram:  <span className={cls.admission__wrapper_contact_list_span}>@turon_international_school</span></li>
+                            <li style={{flexDirection: "column"}}>3. Instagram:  <span className={cls.admission__wrapper_contact_list_span}>@turon_international_school</span> </li>
+                            <li style={{flexDirection: "column"}}>4. Telegram:  <span className={cls.admission__wrapper_contact_list_span}>@turon_international_school</span></li>
                         </ol>
 
                     </div>

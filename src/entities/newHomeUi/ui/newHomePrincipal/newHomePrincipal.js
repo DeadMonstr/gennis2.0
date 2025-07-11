@@ -28,7 +28,7 @@ export const NewHomePrincipal = () => {
 
 
     return (
-        <div className={cls.principal}>
+        <div className={cls.principal} id={"events"}>
             <div className={cls.principal__header}>
                 <h1 className={cls.title}>Bo‘lib o‘tadigan tadbirlar</h1>
                 <p className={cls.subTitle}>

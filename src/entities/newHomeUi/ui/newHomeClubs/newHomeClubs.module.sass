@@ -2,6 +2,7 @@
   display: flex
   flex-direction: column
   gap: 20rem
+  width: 100%
 
   &__header
     display: flex
@@ -14,10 +15,10 @@
 
     &_img
       display: flex
-      justify-content: space-between
+      gap: 2rem
 
       & > div
-        width: 600px
+        width: 50%
         height: 354px
 
         & > img
@@ -53,13 +54,16 @@
 
   &__sport, &__trips
     display: flex
-    justify-content: space-between
     align-items: center
+
+    gap: 2rem
+
 
     &_text
       display: flex
       flex-direction: column
       gap: 2rem
+      width: 50%
 
     &_title
       display: flex
@@ -89,7 +93,7 @@
         line-height: 3rem
 
     &_img
-      width: 600px
+      width: 50%
       height: 417px
 
       & > img
@@ -142,7 +146,7 @@
           gap: 2rem
 
         &_img
-          width: 52.6rem
+          width: 100%
           height: 27.9rem
           object-fit: cover
 
@@ -323,6 +327,18 @@
           font-family: "Montserrat", sans-serif
           font-weight: 400
 
+@media (min-width: 1920px)
+  .club
+    width: 150rem
+    &__competitions
+      &__wrapper
+        gap: 5rem
+        &_left
+          width: 40%
+          &_img
+            border-radius: 2rem
+        &_right
+          width: 50%
 
 @media (max-width: 1450px)
   .club
@@ -405,11 +421,11 @@
           height: 30rem
 
     &__sport, &__trips
-      gap: 2rem
-      justify-content: center
+      //gap: 2rem
+      //justify-content: center
 
       &_text
-        width: 45rem
+      //  width: 45rem
 
       &_title
         width: 100%
@@ -420,7 +436,7 @@
           font-size: 1.6rem
 
       &_img
-        width: 500px
+        //width: 500px
         height: 300px
 @media (max-width: 1100px)
   .student
@@ -458,10 +474,11 @@
 
     &__sport, &__trips
       gap: 2rem
-      justify-content: center
+      //justify-content: center
 
       &_text
-        width: 40rem
+        //width: 40rem
+        width: 45%
 
       &_title
         width: 100%
@@ -473,7 +490,7 @@
           font-size: 1.3rem
 
       &_img
-        width: 400px
+        //width: 400px
         height: 250px
 
     &__competitions
@@ -568,7 +585,7 @@
   .club
     &__sport, &__trips
       &_img
-        width: 400px
+        //width: 400px
         height: 200px
 
     &__competitions
@@ -670,7 +687,7 @@
                 display: flex
                 font-size: 1.4rem
 
-@media (max-width: 570px)
+@media (max-width: 670px)
   .club
     &__sport, &__trips
       flex-direction: column

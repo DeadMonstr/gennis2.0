@@ -1,9 +1,8 @@
 .main
   display: flex
 
-  //gap: 2rem
+  gap: 2rem
   justify-content: space-between
-
   &__left
     display: flex
     flex-direction: column
@@ -202,7 +201,9 @@
   z-index: 2
   background-color: #d2a679
   border-radius: 50%
-
+@media (min-width: 1890px)
+  .main
+    gap: 26rem
 @keyframes pulse
   0%
     transform: scale(0.8)
@@ -213,6 +214,8 @@
 
 @media (max-width: 1450px)
   .main
+    width: 100%
+    justify-content: space-between
     &__right
       width: 50rem
 
@@ -222,6 +225,7 @@
 
 @media (max-width: 1320px)
   .main
+
     &__left
       &_title
         font-size: 3.5rem
@@ -342,38 +346,75 @@
 @media (max-width: 1050px)
   .main
     padding-top: 2.5rem
-    flex-direction: column
+    //flex-direction: column
 
+    gap: 1rem
     &__left
+      width: 45%
       &_title
-        flex-direction: column-reverse
+        //flex-direction: column-reverse
 
       &_disappear
-        display: none
+        //display: none
 
       &_desc
         width: 100%
 
     &__right
-      width: 100%
+      width: 40%
+
 
       &_wrapper
         width: 100%
 
       &_header
         &_img
-          display: none
+          //display: none
 
       &_form
         &_input, &_textarea
           width: 100% !important
 
       &_disappear
-        display: flex
+        //display: flex
 
       &_style
         width: 100% !important
+@media (max-width: 1006px)
+  .main
+    flex-direction: column
+    &__left
+      width: 100%
+      &_disappear
+        display: none
+    &__right
+      width: 100%
+      flex-direction: row-reverse
 
+      align-items: center
+      justify-content: center
+      &_header
+        width: 50%
+        &_img
+          & > img
+            height: 25rem
+      &_form
+        width: 50%
+        height: 23rem
+        margin-top: 4rem
+        //display: none
+      //&_disappear
+      //  display: flex
+@media (max-width: 746px)
+  .main
+    &__right
+      flex-direction: column
+      &_header
+        display: none
+      &_form
+        width: 100%
+      &_disappear
+        display: flex
 @media (max-width: 700px)
   .main
     &__right

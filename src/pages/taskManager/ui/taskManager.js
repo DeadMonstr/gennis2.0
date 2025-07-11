@@ -13,7 +13,7 @@ export const TaskManager = () => {
 
     const [selectedDate, setSelectedDate] = useState(new Date())
 
-    const [taskType , setTaskType] = useState('')
+    const [taskType , setTaskType] = useState('progress')
 
     const formatted = formatDate(selectedDate)
 
@@ -36,7 +36,6 @@ export const TaskManager = () => {
                 <div className={cls.box__sides}>
                     <TaskManagerLeft setTaskType={setTaskType} taskType={taskType} formatted={formatted}/>
                     <TaskManagerRight selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
-
                 </div>
             </div>
         </div>

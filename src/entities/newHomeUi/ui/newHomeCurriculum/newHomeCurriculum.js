@@ -7,13 +7,13 @@ const card = [
     {
         title: "🧒 Boshlang‘ich sinflar (1–4 sinf)",
         desc: `O‘quvchilar o‘qish, yozish, matematika va atrof-muhitni o‘rganadilar. Ijodiy fikrlash, muloqot va mustaqil o‘rganish ko‘nikmalari shakllantiriladi. Rasm, musiqa va  jismoniy tarbiya darslari mavjud.`
-    },{
+    }, {
         title: "🧑‍🎓 Yuqori sinflar (10–11 sinf)",
         desc: "Tanlangan yo‘nalishlar bo‘yicha chuqurlashtirilgan ta’lim beriladi. IELTS, SAT,  DTM imtihonlariga tayyorgarlik ko‘riladi. Amaliy darslar va kasbga yo‘naltirish  mavjud.",
         cardBg: "#CAA77F",
         lgColor: "#000000",
         lgBg: "#FFFFFF"
-    },{
+    }, {
         title: "👧 O‘rta sinflar (5–9 sinf)",
         desc: "Asosiy fanlar chuqurroq o‘rgatiladi: ingliz tili, matematika, biologiya, informatika va  boshqalar. Tanqidiy fikrlash rivojlantiriladi. Klub darslari va loyihalar orqali amaliy  ko‘nikmalar beriladi."
     },
@@ -33,7 +33,7 @@ export const NewHomeCurriculum = () => {
                         {item.desc.split('\n').map((line, index) => (
                             <React.Fragment key={index}>
                                 {line}
-                                <br />
+                                <br/>
                             </React.Fragment>
                         ))}
                     </p>
@@ -47,7 +47,7 @@ export const NewHomeCurriculum = () => {
             <div className={`${cls.curriculum__container} ${cls.invisible}`}>
                 <div className={cls.header}>
                     <p className={cls.header__subTitle}>Curriculum Overview</p>
-                    <h1 className={cls.header__title}>O‘quv dasturimiz haqida umumiy  ma’lumot</h1>
+                    <h1 className={cls.header__title}>O‘quv dasturimiz haqida umumiy ma’lumot</h1>
                     <p className={cls.header__desc}>
                         Turon xalqaro maktabi o‘quvchilarga zamonaviy va muvozanatli bilim
                         beruvchi, xalqaro talablar va milliy qadriyatlarga asoslangan o‘quv
@@ -71,7 +71,7 @@ export const NewHomeCurriculum = () => {
             <div className={cls.curriculum__container}>
                 <div className={cls.header}>
                     <p className={cls.header__subTitle}>Curriculum Overview</p>
-                    <h1 className={cls.header__title}>O‘quv dasturimiz haqida umumiy  ma’lumot</h1>
+                    <h1 className={cls.header__title}>O‘quv dasturimiz haqida umumiy ma’lumot</h1>
                     <p className={cls.header__desc}>
                         Turon xalqaro maktabi o‘quvchilarga zamonaviy va muvozanatli bilim
                         beruvchi, xalqaro talablar va milliy qadriyatlarga asoslangan o‘quv
