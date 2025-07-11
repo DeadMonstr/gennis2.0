@@ -1,5 +1,5 @@
 export const getRouteMain = () => 'home';
-export const getRouteTaskManager = (id) => `taskManager`;
+export const getRouteTaskManager = (id) => `taskManager/*`;
 
 export const getRouteStudents = (id) => `students/*`;
 export const getRouteCalendar = () => `calendar/*`;

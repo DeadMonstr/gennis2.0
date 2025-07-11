@@ -1,26 +1,29 @@
 import cls from "./taskManager.module.sass"
 import {TaskManagerLeft, TaskManagerRight} from "features/taskManager";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {fetchBranch, fetchTaskManager} from "features/taskManager/modal/taskManagerThunk";
 import {formatDate} from "shared/ui/formDate/formDate";
-
+import {getBranch} from "features/branchSwitcher";
+import {Link, NavLink, useMatch} from "react-router-dom";
+import {Outlet, Route, Routes, useLocation, useNavigate, useParams} from "react-router";
+import {Leads} from "pages/taskManager/ui/leads/Leads";
+import {AnimatePresence, motion} from "framer-motion";
+import {LeadProfile} from "features/leadProfile";
 
 
 export const TaskManager = () => {
 
     const dispatch = useDispatch()
+    const {id} = useSelector(getBranch)
 
     const [selectedDate, setSelectedDate] = useState(new Date())
 
-    const [taskType , setTaskType] = useState('')
-
+    const [taskType , setTaskType] = useState('progress')
     const formatted = formatDate(selectedDate)
-    console.log(taskType)
-
 
     useEffect(() => {
-        dispatch(fetchTaskManager({date: formatted , taskType: taskType}))
+        dispatch(fetchTaskManager({date: formatted , taskType: taskType, branch: id}))
         dispatch(fetchBranch())
     }, [formatted , taskType])
 
@@ -44,3 +47,67 @@ export const TaskManager = () => {
     );
 };
 
+//
+// const links = [
+//     "Leads", "Tasks", "Statistics"
+// ]
+//
+// export const TaskManager = () => {
+//
+//
+//     const location = useLocation()
+//     const state = location.state
+//
+//
+//
+//     const match = useMatch("/platform/taskManager/lead/:id");
+//
+//
+//     return (
+//         <div className={cls.taskManager}>
+//
+//             <div className={cls.header}>
+//
+//                 <div className={cls.links}>
+//                     {
+//                         links.map((item, index) => {
+//                             return (
+//                                 <NavLink
+//                                     to={item.toLowerCase()}
+//                                     className={({isActive}) => (isActive ? `${cls.links__item} ${cls.links__item_active}` : cls.links__item)}
+//                                 >
+//                                     {item}
+//                                 </NavLink>
+//                             )
+//                         })
+//                     }
+//                 </div>
+//
+//             </div>
+//
+//
+
+//             <div className={cls.wrapper}>
+//                 <Routes location={state?.backgroundLocation || location}>
+//                     <Route element={<TaskManagerLayout />}>
+//                         <Route path={"leads"} element={<Leads/>}/>
+//                     </Route>
+//                 </Routes>
+//                 <AnimatePresence>
+//                     {match && state?.backgroundLocation && (
+//                         <LeadProfile id={match.params.id} key={match.params.id} />
+//                     )}
+//                 </AnimatePresence>
+//             </div>
+//         </div>
+//     );
+// };
+//
+//
+// const TaskManagerLayout = () => {
+//     return (
+//         <>
+//             <Outlet/>
+//         </>
+//     )
+// }

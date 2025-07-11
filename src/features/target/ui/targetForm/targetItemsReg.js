@@ -69,7 +69,12 @@ export const TargetItemsReg = () => {
                 setCheck(true);
             })
             .catch((err) => {
-                console.log(err);
+                const newErrors = {
+                    phoneExist: true
+                }
+                setErrors(newErrors);
+
+                console.log(err, "errrr");
             });
     };
 
@@ -114,6 +119,7 @@ export const TargetItemsReg = () => {
                         />
 
                         {errors.phone && <span className={cls.wrapper__error}>{t("form.errorPhone")}</span>}
+                        {errors.phoneExist && <span className={cls.wrapper__error}>{t("form.errorPhoneExist")}</span>}
                         <Input
 
                             titleColor={cls.wrapper__form_title}
