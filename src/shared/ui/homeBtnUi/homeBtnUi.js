@@ -8,6 +8,8 @@ export const HomeBtnUi = ({children , onClick , extraClass , icon , type}) => {
             [cls.request] : type === "request",
             [cls.formBtn] : type === "formBtn",
             [cls.contact] : type === "contact",
+            [cls.download] : type === "download",
+            [cls.downloadWhite] : type === "downloadWhite",
 
         })}>
             {children} {icon}

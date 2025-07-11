@@ -96,7 +96,7 @@ export const Inkasatsiya = () => {
     }, [navigate])
 
 
-    console.log(student)
+
 
     return (
         <div style={{display: "flex", flexDirection: "column", gap: "2rem", padding: "2rem"}}>

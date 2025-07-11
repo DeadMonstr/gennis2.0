@@ -127,7 +127,7 @@ export const AccountingPageMain = () => {
     };
 
     useEffect(() => {
-        console.log(oldLength, "oldLength")
+
         if (!!oldLength && oldLength !== locations.length && locations.length >= 2) {
             navigate('./', {relative: "path"})
         }

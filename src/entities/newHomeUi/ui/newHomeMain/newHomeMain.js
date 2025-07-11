@@ -10,10 +10,8 @@ import robo from "shared/assets/icons/codicon_robot.svg"
 export const NewHomeMain = () => {
 
     const number = [800, 500, 400]
-
-    console.log(window.innerWidth)
     return (
-        <div className={cls.main}>
+        <div id={"homepage"} className={cls.main}>
             <div className={cls.main__left}>
                 <div className={cls.main__left_title}>
                     Farzandingiz kelajagi {window.innerWidth > 1050 ? <br/>: null} uchun to‘g‘ri tanlov <br/>
@@ -61,15 +59,15 @@ export const NewHomeMain = () => {
                         <Textarea style={{width: window.innerWidth > 1050 ? "transparent" : "100%" }}  placeholder={"Message"} extraClassName={cls.main__right_form_textarea}/>
                     </Form>
                     <HomeBtnUi type={"submit"}>Yuborish</HomeBtnUi>
-                    <div className={`${cls.pulse_container} ${cls.main__right_form_robo}`}>
-                        <div className={cls.pulse_ring}></div>
-                        <div className={cls.pulse_ring}></div>
-                        <div className={cls.pulse_ring}></div>
+                    {/*<div className={`${cls.pulse_container} ${cls.main__right_form_robo}`}>*/}
+                    {/*    <div className={cls.pulse_ring}></div>*/}
+                    {/*    <div className={cls.pulse_ring}></div>*/}
+                    {/*    <div className={cls.pulse_ring}></div>*/}
 
-                        <div className={cls.icon}>
-                           <img src={robo} alt=""/>
-                        </div>
-                    </div>
+                    {/*    <div className={cls.icon}>*/}
+                    {/*       <img src={robo} alt=""/>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
                 </div>
                 <div className={`${cls.main__left_footer} ${cls.main__right_disappear}`}>

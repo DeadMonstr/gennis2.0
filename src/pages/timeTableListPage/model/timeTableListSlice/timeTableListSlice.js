@@ -26,7 +26,7 @@ const TimeTableSlice = createSlice({
         // }
         onDelete: (state , action) => {
             state.data= state.data.filter(item => item.id !== action.payload)
-            console.log(action.payload , "hello")
+
         }
     },
     extraReducers: builder =>

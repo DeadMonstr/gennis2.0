@@ -45,7 +45,7 @@ export const EmployerSalaryPage = memo(({deleted , setDeleted }) => {
     };
 
 
-    console.log(changingData)
+
 
     const onDelete = (data) => {
         const {id} = changingData
@@ -69,13 +69,13 @@ export const EmployerSalaryPage = memo(({deleted , setDeleted }) => {
     }
 
     const onChange = (newPaymentType) => {
-        console.log(newPaymentType)
+
         const {id} = changingData;
         // if (!newPaymentType) return;
 
         request(`${API_URL}Users/salaries/update/${id}/`, "PATCH", JSON.stringify({payment_types: Number(newPaymentType)}), headers())
             .then(res => {
-                console.log(res)
+
                 // window.location.reload()
                 setChangePayment(false)
                 dispatch(changePaymentType({id: id, payment_types: getCapitalType.filter(item => item.id === +newPaymentType)[0] , changingData}));

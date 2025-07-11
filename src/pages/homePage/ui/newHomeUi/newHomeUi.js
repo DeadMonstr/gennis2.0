@@ -1,30 +1,67 @@
 import cls from "./newHomeUi.module.sass"
-import {NewHomeAdmissions, NewHomeHeader, NewHomeMain} from "entities/newHomeUi";
-import {useState} from "react";
+import {
+    NewHomeCurriculum,
+    NewHomeDailyLife,
+    NewHomeFileDownload,
+    zNewHomeHeader,
+    NewHomePrincipal,
+    NewHomeMain,
+    NewHomeAdmissions, NewHomeClubs, NewHomeGrade, NewHomeAssessment, NewHomeFaculty, NewHomeContact, NewHomeHeader
+} from "entities/newHomeUi";
+
+import {Route, Routes} from "react-router";
 
 
 export const NewHomeUi = () => {
-
-    const [sectionTop, setSectionTop] = useState({
-        home: null,
-        about: null,
-        advantages: null,
-        comments: null,
-        events: null,
-        gallery: null,
-        contact: null
-    })
-
     return (
         <div className={cls.wrapper}>
 
+            {/*<NewHomeHeader/>*/}
+
             <NewHomeHeader/>
+
             <div className={cls.wrapper__container}>
-                <NewHomeMain/>
-                <NewHomeAdmissions/>
+
+
+                <Routes>
+                    <Route path={"/"} element={<Home/>}/>
+                    <Route path={"/student_life"} element={<NewHomeClubs/>}/>
+                    <Route path={"/academics"} element={<Academics/>}/>
+                    <Route path={"/faculty"} element={<NewHomeFaculty/>}/>
+                    <Route path={"/contact"} element={<NewHomeContact/>}/>
+                </Routes>
+
             </div>
 
         </div>
     );
 };
 
+const Home = () => {
+    return (
+        <>
+
+            <NewHomeMain/>
+
+
+              <NewHomePrincipal/>
+
+
+              <NewHomeDailyLife/>
+            {/**/}
+            {/**/}
+            <NewHomeAdmissions/>
+
+        </>
+    )
+}
+
+const Academics = () => {
+    return (
+        <>
+            <NewHomeCurriculum/>
+            <NewHomeGrade/>
+            <NewHomeAssessment/>
+        </>
+    )
+}

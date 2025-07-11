@@ -178,7 +178,7 @@ export const Register = () => {
         }
     }, [username]);
 
-    console.log(selectedClass, selectedLang)
+
 
     const onSubmit = (data) => {
         // console.log(selectedClass, selectedLang ,data , "data")

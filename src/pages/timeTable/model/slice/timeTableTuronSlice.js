@@ -92,7 +92,7 @@ const TimeTableTuronSlice = createSlice({
                         }
                     })
                 } else {
-                    console.log("helllooooooooooooooooo")
+
                     state.subjects = []
                 }
 

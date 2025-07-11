@@ -55,7 +55,7 @@ export const SchoolHomePage = () => {
 
     const dispatch = useDispatch()
 
-    console.log(types, "types")
+
 
 
     useEffect(() => {

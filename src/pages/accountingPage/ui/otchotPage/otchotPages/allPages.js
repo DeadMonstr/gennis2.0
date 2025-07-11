@@ -20,7 +20,7 @@ export const AllPages = () => {
 
     const [year, setYear] = useState(null)
 
-    console.log(all ,"dasd")
+
     return (
         <div>
             {/*<div className={cls.paymentType}>*/}
