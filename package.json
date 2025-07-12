@@ -29,7 +29,6 @@
     "react-slick": "^0.30.2",
     "redux": "^5.0.1",
     "slick-carousel": "^1.8.1",
-    "twemoji": "^14.0.2",
     "typescript": "^5.8.3",
     "web-vitals": "^2.1.4"
   },
