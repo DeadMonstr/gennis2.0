@@ -26,13 +26,26 @@ const headerList = [
         title: "About Us",
         url: "/about",
         path: [
-            { title: "Homepage", path: "homepage" },
-            { title: "Upcoming Events", path: "events" },
-            { title: "Photo slider", path: "slider" },
-            { title: "Quick links", path: "quickLinks" },
+            {title: "Introduction", path: "introduction"},
+            {title: "Missions", path: "missions"},
+            {title: "Core values", path: "coreValues"},
+            {title: "School life", path: "schoolLife"},
+            {title: "Parents comment", path: "parentsComment"},
+            {title: "File download", path: "fileDownload"},
         ],
     },
-    { id: 3, title: "Admissions", url: "/contact" },
+    {
+        id: 3,
+        title: "Admissions",
+        url: "/admissions",
+        path: [
+            {title: "Payment", path: "payment"},
+            {title: "Calendar", path: "calendar"},
+            {title: "Question", path: "question"},
+        ]
+    },
+    {id: 4, title: "Academics", url: "/contact"},
+    {id: 5, title: "FACULTY & STAFF", url: "/contact"},
     {
         id: 4,
         title: "Academics",
