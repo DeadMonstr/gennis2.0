@@ -3,16 +3,19 @@ import {
     NewHomeCurriculum,
     NewHomeDailyLife,
     NewHomeFileDownload,
-    zNewHomeHeader,
+    NewHomeHeader,
     NewHomePrincipal,
     NewHomeMain,
-    NewHomeAdmissions, NewHomeClubs, NewHomeGrade, NewHomeAssessment, NewHomeFaculty, NewHomeContact, NewHomeHeader
+    NewHomeAdmissions, NewHomeClubs, NewHomeGrade, NewHomeAssessment, NewHomeFaculty, NewHomeContact,
 } from "entities/newHomeUi";
 
 import {Route, Routes} from "react-router";
 
 
 export const NewHomeUi = () => {
+
+
+
     return (
         <div className={cls.wrapper}>
 
