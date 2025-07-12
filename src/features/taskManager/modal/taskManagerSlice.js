@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {fetchBranch, fetchTaskManager} from "features/taskManager/modal/taskManagerThunk";
+import {fetchAdminTaskManager, fetchBranch, fetchTaskManager} from "features/taskManager/modal/taskManagerThunk";
 
 
 
@@ -16,6 +16,9 @@ const initialState = {
     branchs: [],
     loading: false,
     error: false,
+
+    adminTasks: []
+
 };
 
 const taskManagerSlice = createSlice({
@@ -69,6 +72,24 @@ const taskManagerSlice = createSlice({
                 state.loading = false
                 state.error = true
             })
+
+            .addCase(fetchAdminTaskManager.pending , state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(fetchAdminTaskManager.fulfilled , ( state, action) => {
+                state.loading = false
+                state.adminTasks = action.payload.data
+                state.percentage = action.payload.accepted_percentage
+                state.completedCount = action.payload.completed
+                state.progressCount = action.payload.progressing
+                state.error = false
+            })
+            .addCase(fetchAdminTaskManager.rejected , state => {
+                state.loading = false
+                state.error = true
+            })
+
 });
 
 

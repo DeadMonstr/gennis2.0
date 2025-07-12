@@ -10,7 +10,7 @@ import {
     fetchClassInput,
     fetchGroupsForSelect,
     fetchTeachersForSelect,
-    fetchBranchesForSelect
+    fetchBranchesForSelect, fetchOperatorsData
 } from "./oftenUsedThunk";
 
 const initialState = {
@@ -44,6 +44,9 @@ const initialState = {
     branchesError: null,
     branches: [],
 
+    operators: [],
+    operatorsLoading: false,
+    operatorsError: null
 
 
 }
@@ -192,6 +195,20 @@ const oftenUsedSlice = createSlice({
             .addCase(fetchBranchesForSelect.rejected, (state) => {
                 state.branchesLoading = false
                 state.branchesError = "error"
+            })
+
+            .addCase(fetchOperatorsData.pending, (state) => {
+                state.operatorsLoading = true
+                state.operatorsError = null
+            })
+            .addCase(fetchOperatorsData.fulfilled, (state, action) => {
+                state.operators = action.payload
+                state.operatorsLoading = false
+                state.operatorsError = null
+            })
+            .addCase(fetchOperatorsData.rejected, (state) => {
+                state.operatorsLoading = false
+                state.operatorsError = "error"
             })
 })
 

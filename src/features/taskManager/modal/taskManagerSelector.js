@@ -4,3 +4,4 @@ export const getTaskManagerPercentage = (state) => state.taskManagerSlice.percen
 export const getTaskManagerProgressCount = (state) => state.taskManagerSlice.progressCount
 export const getTaskManagerCompletedCount = (state) => state.taskManagerSlice.completedCount
 export const getTaskManagerBranchs = (state) => state.taskManagerSlice.branchs
+export const getAdminTasksData = (state) => state.taskManagerSlice.adminTasks

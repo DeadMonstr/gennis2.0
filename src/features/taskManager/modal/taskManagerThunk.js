@@ -18,3 +18,14 @@ export const fetchBranch = createAsyncThunk(
         return await request(`${API_URL}Branch/branch_list/`, "GET", null, headers())
     }
 )
+
+export const fetchAdminTaskManager = createAsyncThunk(
+    "taskManagerSlice/fetchAdminTaskManager",
+    async ({operator_id, date, branch, taskType}) => {
+        const {request} = useHttp()
+        return await request(
+            `${API_URL}Lead/${taskType === "completed" ? "lead_list_completed" : "lead_list/"}?date=${date}&branch_id=${branch}${operator_id === "all" ? "" : `&operator_id=${operator_id}`}`,
+            "GET", null, headers())
+    }
+)
+
