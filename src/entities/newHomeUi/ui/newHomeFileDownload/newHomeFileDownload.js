@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useRef} from 'react';
 
 import cls from "./newHomeFileDownload.module.sass";
 import pdfImage from "shared/assets/images/📎.png";
 import docxImage from "shared/assets/images/📄.png";
+import {useGSAP} from "@gsap/react";
+import gsap from "gsap";
+import classNames from "classnames";
 
 const list = [
     {
@@ -33,12 +36,47 @@ const list = [
 ]
 
 export const NewHomeFileDownload = () => {
+    const container = useRef(null);
+    const headerRef = useRef(null);
+    const cardsRef = useRef(null);
+
+    useGSAP(() => {
+
+        gsap.from(headerRef.current, {
+            scrollTrigger: {
+                trigger: headerRef.current,
+                start: "top 80%",
+                end: "bottom 80%",
+                toggleActions: "play none none reverse",
+                scrub: 1,
+            },
+            x: -100,
+            opacity: 0,
+            duration: 1.5,
+            ease: "power3.out"
+        });
+
+        gsap.from(".event-card", {
+            scrollTrigger: {
+                trigger: cardsRef.current,
+                start: "top 80%",
+                end: "bottom 75%",
+                scrub: 1,
+            },
+            y: 100,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+            stagger: 0.3
+        });
+
+    }, { scope: container });
 
     const render = () => {
         return list.map(item => (
             <div
                 style={{background: item?.cardBg, color: item?.cardColor}}
-                className={cls.card}
+                className={classNames(cls.card, "event-card")}
             >
                 <div className={cls.card__header}>
                     <h2
@@ -77,8 +115,8 @@ export const NewHomeFileDownload = () => {
     }
 
     return (
-        <div className={cls.fileDownload} id={"fileDownload"}>
-            <div className={cls.fileDownload__header}>
+        <div ref={container} className={cls.fileDownload} id={"fileDownload"}>
+            <div ref={headerRef} className={cls.fileDownload__header}>
                 <h1 className={cls.title}>
                     <span className={cls.title__inner}>Quyidagi fayllarni PDF/DOC</span>
                     formatda yuklab olishingiz <br/> mumkin.
@@ -89,7 +127,7 @@ export const NewHomeFileDownload = () => {
                     olishi uchun qulay bo‘lim.
                 </p>
             </div>
-            <div className={cls.fileDownload__container}>
+            <div ref={cardsRef} className={cls.fileDownload__container}>
                 {render()}
             </div>
         </div>

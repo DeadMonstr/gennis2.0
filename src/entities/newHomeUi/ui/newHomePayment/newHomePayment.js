@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useRef} from 'react';
 
 import cls from "./newHomePayment.module.sass";
 import {HomeBtnUi} from "shared/ui/homeBtnUi/homeBtnUi";
 import classNames from "classnames";
+import {useGSAP} from "@gsap/react";
+import gsap from "gsap";
 
 const list = [
     {
@@ -23,11 +25,46 @@ const list = [
 ]
 
 export const NewHomePayment = () => {
+    const container = useRef(null);
+    const headerRef = useRef(null);
+    const cardsRef = useRef(null);
+
+    useGSAP(() => {
+
+        gsap.from(headerRef.current, {
+            scrollTrigger: {
+                trigger: headerRef.current,
+                start: "top 80%",
+                end: "bottom 80%",
+                toggleActions: "play none none reverse",
+                scrub: 1,
+            },
+            x: -100,
+            opacity: 0,
+            duration: 1.5,
+            ease: "power3.out"
+        });
+
+        gsap.from(".event-card", {
+            scrollTrigger: {
+                trigger: cardsRef.current,
+                start: "top 80%",
+                end: "bottom 75%",
+                scrub: 1,
+            },
+            y: 100,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+            stagger: 0.3
+        });
+
+    }, { scope: container });
 
     const render = () => {
         return list.map(item => (
             <div
-                className={cls.card}
+                className={classNames(cls.card, "event-card")}
                 style={{
                     background: item.color,
                     gap: !!item.color ? "4rem" : "",
@@ -61,8 +98,8 @@ export const NewHomePayment = () => {
     }
 
     return (
-        <div className={cls.payment} id={"payment"}>
-            <div className={cls.payment__header}>
+        <div ref={container} className={cls.payment} id={"payment"}>
+            <div ref={headerRef} className={cls.payment__header}>
                 <h1 className={cls.title}>
                     <span className={cls.title__inner}>To‘lov tafsilotlarini</span>
                     ko‘rib chiqing
@@ -73,7 +110,7 @@ export const NewHomePayment = () => {
                     qo‘shimcha xizmatlar narxlari haqida to‘liq ma’lumot olishingiz mumkin.
                 </p>
             </div>
-            <div className={cls.payment__container}>
+            <div ref={cardsRef} className={cls.payment__container}>
                 {render()}
             </div>
         </div>
