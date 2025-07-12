@@ -44,8 +44,7 @@ const headerList = [
             {title: "Question", path: "question"},
         ]
     },
-    {id: 4, title: "Academics", url: "/contact"},
-    {id: 5, title: "FACULTY & STAFF", url: "/contact"},
+    {id: 5, title: "Faculty & Staff", url: "/faculty"},
     {
         id: 4,
         title: "Academics",
@@ -58,10 +57,9 @@ const headerList = [
             { title: "Exams & assessments info", path: "exams" },
         ],
     },
-    { id: 5, title: "FACULTY & STAFF", url: "/faculty" },
     {
         id: 6,
-        title: "STUDENT LIFE",
+        title: "Student life",
         url: "/student_life",
         path: [
             { title: "Clubs & Activities", path: "clubs_and_activities" },
@@ -71,7 +69,7 @@ const headerList = [
             { title: "Student Council", path: "student_council" },
         ],
     },
-    { id: 8, title: "CONTACT US", url: "/contact" },
+    { id: 8, title: "Contact us", url: "/contact" },
 ];
 
 export const NewHomeHeader = () => {
@@ -184,7 +182,7 @@ export const NewHomeHeader = () => {
 
     return (
         <div className={classNames(cls.header, { [cls.scrolled]: scrolled })}>
-            <div className={cls.header__logo}>
+            <div  className={cls.header__logo}>
                 <img src={scrolled ? newLogoBlue : newLogo} alt="logo" />
             </div>
 
