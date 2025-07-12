@@ -77,3 +77,32 @@
             background: #072E92
             height: 1rem
             border-radius: .6rem
+
+@media (max-width: 430px)
+  .fileDownload
+    &__header
+      flex-direction: column
+      justify-content: normal
+      align-items: normal
+      gap: 1.5rem
+      .title
+        font-size: 2.2rem
+        &__inner
+          padding: .8rem .9rem .8rem .5rem
+      .subTitle
+        font-size: 1.4rem
+    &__container
+      flex-direction: column
+      .card
+        width: 38rem
+
+@media (max-width: 380px)
+  .fileDownload
+    &__container
+      .card
+        width: 33rem
+        &__header
+          .avatar
+            width: 5.5rem
+            height: 5.5rem
+

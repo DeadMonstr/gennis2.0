@@ -25,22 +25,33 @@ const headerList = [
         title: "About Us",
         url: "/about",
         path: [
-            {title: "Homepage", path: "homepage"},
-            {title: "Upcoming Events", path: "events"},
-            {title: "Photo slider", path: "slider"},
-            {title: "Quick links", path: "quickLinks"},
+            {title: "Introduction", path: "introduction"},
+            {title: "Missions", path: "missions"},
+            {title: "Core values", path: "coreValues"},
+            {title: "School life", path: "schoolLife"},
+            {title: "Parents comment", path: "parentsComment"},
+            {title: "File download", path: "fileDownload"},
         ],
     },
-    {id: 3, title: "Admissions", url: "/contact"},
+    {
+        id: 3,
+        title: "Admissions",
+        url: "/admissions",
+        path: [
+            {title: "Payment", path: "payment"},
+            {title: "Calendar", path: "calendar"},
+            {title: "Question", path: "question"},
+        ]
+    },
     {id: 4, title: "Academics", url: "/contact"},
     {id: 5, title: "FACULTY & STAFF", url: "/contact"},
     {
         id: 6, title: "STUDENT LIFE", url: "/student_life", path: [
             {title: "Clubs & Activities", path: "clubs_and_activities"},
-            {title: "Sports & Arts" , path: "sports_and_arts"},
-            {title: "School trips" , path: 'school_trips'},
-            {title: "Competitions" , path: 'competitions'},
-            {title: "Student Council" , path: 'student_council'},
+            {title: "Sports & Arts", path: "sports_and_arts"},
+            {title: "School trips", path: 'school_trips'},
+            {title: "Competitions", path: 'competitions'},
+            {title: "Student Council", path: 'student_council'},
         ]
     },
     {id: 7, title: "GALLERY", url: "/contact"},
@@ -95,7 +106,7 @@ export const NewHomeHeader = () => {
             const yOffset = -150; // butta headerdagi height ni ovomma
             const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
-            window.scrollTo({ top: y, behavior: 'smooth' });
+            window.scrollTo({top: y, behavior: 'smooth'});
             window.history.pushState(null, '', `#${subItem.path}`);
         }
     };

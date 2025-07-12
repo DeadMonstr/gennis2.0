@@ -6,7 +6,13 @@ import {
     NewHomeHeader,
     NewHomePrincipal,
     NewHomeMain,
-    NewHomeAdmissions, NewHomeClubs
+    NewHomeAdmissions,
+    NewHomeClubs,
+    NewHomeIntroduction,
+    NewHomeMission,
+    NewHomeCoreValues,
+    NewHomeSchoolLife,
+    NewHomeParentsComment, NewHomePayment, NewHomeCalendar, NewHomeQuestions
 } from "entities/newHomeUi";
 
 import {Route, Routes} from "react-router";
@@ -18,12 +24,14 @@ export const NewHomeUi = () => {
 
             {/*<NewHomeHeader/>*/}
 
-                <NewHomeHeader/>
+            <NewHomeHeader/>
 
             <div className={cls.wrapper__container}>
                 <Routes>
                     <Route path={"/"} element={<Home/>}/>
                     <Route path={"/student_life"} element={<NewHomeClubs/>}/>
+                    <Route path={"/about"} element={<About/>}/>
+                    <Route path={"/admissions"} element={<Admissions/>}/>
                 </Routes>
             </div>
 
@@ -39,7 +47,7 @@ const Home = () => {
             </section>
 
             <section id="events">
-                <div ><NewHomePrincipal/></div>
+                <div><NewHomePrincipal/></div>
             </section>
 
             <section id="slider">
@@ -54,5 +62,29 @@ const Home = () => {
         </>
     )
 }
+
+const About = () => {
+    return (
+        <>
+            <NewHomeIntroduction/>
+            <NewHomeMission/>
+            <NewHomeCoreValues/>
+            <NewHomeSchoolLife/>
+            <NewHomeParentsComment/>
+            <NewHomeFileDownload/>
+        </>
+    )
+}
+
+const Admissions = () => {
+    return (
+        <>
+            <NewHomePayment/>
+            <NewHomeCalendar/>
+            <NewHomeQuestions/>
+        </>
+    )
+}
+
 
 

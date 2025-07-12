@@ -77,7 +77,7 @@ export const NewHomeFileDownload = () => {
     }
 
     return (
-        <div className={cls.fileDownload}>
+        <div className={cls.fileDownload} id={"fileDownload"}>
             <div className={cls.fileDownload__header}>
                 <h1 className={cls.title}>
                     <span className={cls.title__inner}>Quyidagi fayllarni PDF/DOC</span>
