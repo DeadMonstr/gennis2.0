@@ -26,6 +26,7 @@ import RequireHeader from "app/routers/ui/RequireHeader";
 import {routersConfigProfile} from "app/routers/config/routerConfigProfiles";
 import Target from "pages/target/ui/Target";
 import LayoutTarget from "app/layouts/layoutTarget/LayoutTarget";
+import {TestModal} from "pages/taskManager/ui/taskManager";
 
 
 export const AppRouter = () => {
@@ -94,7 +95,7 @@ export const AppRouter = () => {
                             }
                         </Route>
 
-                        <Route element={<RequireHeader header={false}/>}>
+                        <Route element={<RequireHeader header={false} back={false}/>}>
                             {
                                 routersConfigProfile.map((item, index) =>
                                     <Route
@@ -109,6 +110,9 @@ export const AppRouter = () => {
                                 )
                             }
                         </Route>
+
+
+                        {/*<Route path="tasks" element={<TestModal/>}/>*/}
 
 
                         <Route
@@ -163,9 +167,9 @@ export const AppRouter = () => {
 
     return (
         <div className={classNames("app", [theme])}>
-            <Suspense>
+            {/*<Suspense>*/}
                 <RouterProvider router={router}/>
-            </Suspense>
+            {/*</Suspense>*/}
         </div>
     );
 };

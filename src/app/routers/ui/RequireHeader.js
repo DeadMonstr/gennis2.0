@@ -9,7 +9,7 @@ import {fetchBranchesByLocationsThunk} from "features/branchSwitcher";
 import {useDispatch, useSelector} from "react-redux";
 import {getSystemInited} from "features/themeSwitcher/modal/selector/themeSwitcherSystems";
 
-const RequireHeader = ({header = true}) => {
+ const RequireHeader = ({header = true,back}) => {
 
     const inited = useSelector(getSystemInited)
     const system = useSelector(getSystem)
@@ -37,7 +37,8 @@ const RequireHeader = ({header = true}) => {
 
     return (
         <>
-            {header ? <Header/> : <BackButton/>}
+            {header && <Header/>}
+            {back && <BackButton/>}
             <Outlet/>
         </>
 

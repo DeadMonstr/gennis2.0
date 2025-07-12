@@ -39,7 +39,6 @@ const CircularProgress = ({ size = 150, strokeWidth = 15 }) => {
 
 
 
-
     return (
         <div className={cls.taskManager__rating_circle}>
             <svg width={size} height={size}>

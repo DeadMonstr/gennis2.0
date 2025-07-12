@@ -7,7 +7,7 @@ import yellowCard from "shared/assets/images/yelloCard.svg"
 import pinkCard from "shared/assets/images/pinkCard.svg"
 import greenCard from "shared/assets/images/greenCard.svg"
 
-import {createContext, useContext, useEffect, useMemo, useRef, useState} from "react"
+import {createContext, useCallback, useContext, useEffect, useMemo, useRef, useState} from "react"
 import unknownUser from "shared/assets/user-interface/user_image.png"
 
 import {motion, useMotionValue, useDragControls} from "framer-motion"
@@ -60,17 +60,17 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
 
     const date = new Date()
 
-
     const formatedDate = formatDate(date)
 
     const [activeModal, setActiveModal] = useState(false)
     const [activeModalItem, setActiveModalItem] = useState(null)
     const {register, handleSubmit, setValue} = useForm()
     const card = useSelector(getTaskManager)
-    const branchs = useSelector(getTaskManagerBranchs)
+    // const branchs = useSelector(getTaskManagerBranchs)
     const {request} = useHttp()
 
     const dispatch = useDispatch()
+
 
 
     useEffect(() => {
@@ -92,7 +92,6 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
 
     const onPost = (data) => {
 
-
         const res = {
             ...data,
             lead: activeModalItem?.id,
@@ -103,14 +102,12 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
 
         request(`${API_URL}Lead/lead_call_create/`, "POST", JSON.stringify(res), headers())
             .then(res => {
-
                 setActiveModal(false)
                 dispatch(onRemoveTask(activeModalItem.id))
                 dispatch(onCountPercentage(res.accepted_percentage))
                 dispatch(onCountCompleted(res.completed))
                 dispatch(onCountProgress(res.progressing))
                 setValue("comment", "")
-
                 dispatch(onAddAlertOptions({
                     type: "success",
                     status: true,
@@ -127,28 +124,43 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
     }, [status])
 
 
-    const onClick = (item) => {
-
+    const onClick = useCallback((item) => {
         setActiveModal(true)
         setActiveModalItem(item)
-        request(`${API_URL}Lead/lead_call/${item.status ? item.lead?.id : item.id}`, "GET", null, headers())
+        request(`${API_URL}Lead/lead_call/${item.id}`, "GET", null, headers())
             .then(res => {
-                setResComment(res)
+                console.log(res, "nma gap")
+                setResComment(res.history)
             })
             .catch(err => {
                 console.log(err)
             })
-
-
-    }
+    })
 
     const contextObj = useMemo(() => ({
         activeModal,
-        setActiveModal: onClick,
+        setActiveModal: (item) => onClick(item),
         activeModalItem,
         setActiveModalItem,
         taskType
     }), [])
+
+
+    const onClickTel = () => {
+
+
+        request(`${API_URL}Lead/lead_call_ring/`, "POST", JSON.stringify({lead_id: activeModalItem.id}), headers())
+            .then(res => {
+                console.log(res)
+                // setResComment(res)
+            })
+            .catch(err => {
+                // console.log(err)
+            })
+    }
+
+
+
     return (
         <div className={cls.taskLeft}>
             <div className={cls.taskLeft__header}>
@@ -220,12 +232,7 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
                                     </thead>
                                     <tbody>
                                     {card?.map((item, i) => (
-                                        <tr
-                                            key={i}
-                                            // onClick={() => {
-                                            //     onClick(item)
-                                            // }}
-                                        >
+                                        <tr key={i}>
                                             <td>{i + 1}</td>
                                             <td>{item?.name}</td>
                                             <td>{item?.surname}</td>
@@ -239,25 +246,44 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
                                 </Table>
                             </div>
                         </>}
-
                 </div>
             </FuncContext.Provider>
 
             <Modal typeIcon extraClass={cls.modal} active={activeModal}
                    setActive={setActiveModal}>
-                {formatted === formatedDate && taskType === "progress" && <div className={cls.modal__left}>
-                    <Select defaultValue={selectedStatus} onChangeOption={setSelectedStatus} options={status}/>
 
-                    {selectedStatus === "Tel ko'tardi" ? <>
+                <div className={cls.modal__left}>
+                    <div className={cls.userbox}>
+                        <h2 className={cls.userbox__name}>
+                            <span>{activeModalItem?.name} {activeModalItem?.surname}</span> <br/>
+                        </h2>
+                        <div className={cls.userbox__info}>
+                            <div className={cls.userbox__infos}>
+                                <p className={cls.userbox__number}>
+                                    Number :
+                                    <span>{activeModalItem?.phone} </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {
+                        formatted === formatedDate && taskType === "progress" && <>
+                            {/*<Button onClick={onClickTel}>Tel qilish</Button>*/}
+                            <Select defaultValue={selectedStatus} onChangeOption={setSelectedStatus} options={status}/>
+
+                            {selectedStatus === "Tel ko'tardi" ? <>
+                                {/*<h2>Branch</h2>*/}
+                                {/*<Select defaultValue={branchs[0]?.id} options={branchs} name={"branch"} register={register}/>*/}
+                                <Textarea name={"comment"} register={register}/>
+
+                            </> : <Textarea name={"comment"} register={register}/>}
+                            <Button extraClass={cls.modal__add} onClick={handleSubmit(onPost)}>Add</Button>
+                        </>
+                    }
+                </div>
 
 
-                        <h2>Branch</h2>
-                        <Select defaultValue={branchs[0]?.id} options={branchs} name={"branch"} register={register}/>
-                        <Textarea name={"comment"} register={register}/>
-
-                    </> : <Textarea name={"comment"} register={register}/>}
-                    <Button extraClass={cls.modal__add} onClick={handleSubmit(onPost)}>Add</Button>
-                </div>}
                 {resComment?.length >= 1 && <div className={cls.modal__right}>
                     {/*<Select defaultValue={selectedStatus} onChangeOption={setSelectedStatus} options={status}/>*/}
 
@@ -268,7 +294,7 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
                     {/*    <Select defaultValue={branchs[0]?.id} options={branchs} name={"branch"} register={register}/>*/}
                     {/*    <Textarea name={"comment"} register={register}/>*/}
 
-                    {/*</> : <Textarea name={"comment"} register={register}/>}*/}
+                    {/*</> : <Textarea nam e={"comment"} register={register}/>}*/}
                     {/*<Button extraClass={cls.modal__add} onClick={handleSubmit(onPost)}>Add</Button>*/}
 
 
@@ -319,7 +345,6 @@ export const DraggableRow = ({items = [], className = "", taskType}) => {
                     gap: "2rem",
                     cursor: "w-resize",
                     userSelect: "none",
-
                 }}
             >
                 {items.map((item, idx) => (
@@ -356,7 +381,7 @@ const TaskCard = ({item}) => {
 
         request(`${API_URL}Lead/lead_delete/${item.id}`, "DELETE", null, headers())
             .then(res => {
-
+                console.log(res)
                 setActiveConfirmModal(false)
                 dispatch(onRemoveTask(item.id))
                 dispatch(onCountPercentage(res.accepted_percentage))
@@ -388,6 +413,7 @@ const TaskCard = ({item}) => {
         })
     }, [item?.color])
 
+
     return (
         <>
             <div
@@ -410,13 +436,12 @@ const TaskCard = ({item}) => {
                         backgroundRepeat: "no-repeat"
                     }}
                 >
-                    <div onClick={() => {
-                        setActiveModalItem(item)
-                        {
-                            taskType === "progress" &&
+                    <div
+                        onClick={() => {
                             setActiveModal(item)
-                        }
-                    }} className={cls.circle}>
+                        }}
+                         className={cls.circle}
+                    >
                         <img src={unknownUser} alt=""/>
                     </div>
                     <div onClick={() => setActiveConfirmModal(true)} className={cls.delete}>
