@@ -7,7 +7,11 @@ export {
     fetchLanguagesData,
     fetchClassTypeData,
     fetchCategories,
-    fetchClassInput
+    fetchClassInput,
+    fetchBranchesForSelect,
+    fetchGroupsForSelect,
+    fetchOperatorsData,
+    fetchTeachersForSelect
 } from "./model/oftenUsedThunk";
 
 export {
@@ -29,6 +33,9 @@ export {
     getCategories,
     getClassInputData,
     getClassInputLoading,
-    getClassInputError
+    getClassInputError,
+    getOperatorsData,
+    getOperatorsLoading,
+    getOperatorsError
 } from "./model/oftenUsedSelector";
 

@@ -55,6 +55,7 @@ export const NewHomeAssessment = () => {
             scrollTrigger: {
                 trigger: titleRef.current,
                 start: "top 80%",
+                end: "bottom 75%",
                 scrub: 1,
                 toggleActions: "play none none reverse",
             },
@@ -68,6 +69,8 @@ export const NewHomeAssessment = () => {
             scrollTrigger: {
                 trigger: descRef.current,
                 start: "top 80%",
+                end: "bottom 75%",
+
                 scrub: 1,
                 toggleActions: "play none none reverse",
             },

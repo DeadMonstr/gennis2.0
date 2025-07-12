@@ -166,6 +166,14 @@ export const menuConfig = [
         name: "Web-Sayt",
         system: ["center","school"],
         roles: [ROLES.smm]
+    },
+
+    {
+        to: "adminTaskManager",
+        name: "Task Manager",
+        icon: "fa-tasks",
+        system: ["center","school"],
+        roles: [ROLES.admin]
     }
 
 ];

@@ -6,7 +6,14 @@ import {
     NewHomeHeader,
     NewHomePrincipal,
     NewHomeMain,
-    NewHomeAdmissions, NewHomeClubs, NewHomeGrade, NewHomeAssessment, NewHomeFaculty, NewHomeContact,
+     NewHomeClubs, NewHomeGrade, NewHomeAssessment, NewHomeFaculty, NewHomeContact,
+    NewHomeAdmissions,
+
+    NewHomeIntroduction,
+    NewHomeMission,
+    NewHomeCoreValues,
+    NewHomeSchoolLife,
+    NewHomeParentsComment, NewHomePayment, NewHomeCalendar, NewHomeQuestions
 } from "entities/newHomeUi";
 
 import {Route, Routes} from "react-router";
@@ -29,6 +36,8 @@ export const NewHomeUi = () => {
                 <Routes>
                     <Route path={"/"} element={<Home/>}/>
                     <Route path={"/student_life"} element={<NewHomeClubs/>}/>
+                    <Route path={"/about"} element={<About/>}/>
+                    <Route path={"/admissions"} element={<Admissions/>}/>
                     <Route path={"/academics"} element={<Academics/>}/>
                     <Route path={"/faculty"} element={<NewHomeFaculty/>}/>
                     <Route path={"/contact"} element={<NewHomeContact/>}/>
@@ -68,3 +77,28 @@ const Academics = () => {
         </>
     )
 }
+const About = () => {
+    return (
+        <>
+            <NewHomeIntroduction/>
+            <NewHomeMission/>
+            <NewHomeCoreValues/>
+            <NewHomeSchoolLife/>
+            <NewHomeParentsComment/>
+            <NewHomeFileDownload/>
+        </>
+    )
+}
+
+const Admissions = () => {
+    return (
+        <>
+            <NewHomePayment/>
+            <NewHomeCalendar/>
+            <NewHomeQuestions/>
+        </>
+    )
+}
+
+
+

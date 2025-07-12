@@ -86,3 +86,11 @@ export const getBranchesLoading = (state) =>
 
 export const getBranchesSelect = (state) =>
     state.oftenUsedSlice?.branches
+
+export const getOperatorsData = (state) =>
+    state.oftenUsedSlice.operators
+export const getOperatorsLoading = (state) =>
+    state.oftenUsedSlice.operatorsLoading
+export const getOperatorsError = (state) =>
+    state.oftenUsedSlice.operatorsError
+

@@ -27,8 +27,11 @@ export const NewHomeDailyLife = () => {
             scrollTrigger: {
                 trigger: headerRef.current,
                 start: "top 80%",
+                end: "bottom 100%",
+
                 scrub: 1,
                 toggleActions: "play none none reverse",
+
             },
             x: -100,
             opacity: 0,
@@ -40,8 +43,9 @@ export const NewHomeDailyLife = () => {
             scrollTrigger: {
                 trigger: imagesRef.current,
                 start: "top 85%",
-                end: "bottom 20%",
+                end: "bottom 100%",
                 scrub: 1,
+
             },
             y: 100,
             opacity: 0,

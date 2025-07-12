@@ -3,6 +3,7 @@
 
   gap: 2rem
   justify-content: space-between
+  width: 100%
   &__left
     display: flex
     flex-direction: column
@@ -201,8 +202,9 @@
   z-index: 2
   background-color: #d2a679
   border-radius: 50%
-@media (min-width: 1890px)
+@media (min-width: 1905px)
   .main
+    width: 150rem
     gap: 26rem
 @keyframes pulse
   0%
@@ -212,10 +214,12 @@
     transform: scale(2.2)
     opacity: 0
 
-@media (max-width: 1450px)
+@media (max-width: 1920px)
   .main
     width: 100%
     justify-content: space-between
+@media (max-width: 1500px)
+  .main
     &__right
       width: 50rem
 
