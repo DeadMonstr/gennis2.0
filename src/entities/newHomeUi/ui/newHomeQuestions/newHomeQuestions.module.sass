@@ -1,6 +1,7 @@
 @import "app/styles/abstracts/variables"
 
 .questions
+  width: 100%
   padding-top: 4rem
   display: flex
   flex-direction: column
@@ -29,6 +30,10 @@
       gap: .2rem
       font-size: 1.6rem
 
+
+@media (min-width: 1920px)
+  .questions
+    width: 150rem
 
 
 @media (max-width: 430px)

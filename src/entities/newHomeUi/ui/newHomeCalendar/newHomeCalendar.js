@@ -68,7 +68,7 @@ export const NewHomeCalendar = () => {
             if (index > 0 && window.innerWidth <= 430) return null
             return (
                 <div className={cls.container}>
-                    <div className={cls.calendar}>
+                    <div className={cls.calendarSub}>
                         <div className={cls.header}>Dekabr</div>
                         <div className={cls.grid}>
                             {weekdays.map((day, idx) => (
