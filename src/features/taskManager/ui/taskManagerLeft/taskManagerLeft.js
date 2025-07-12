@@ -34,6 +34,7 @@ import {Table} from "shared/ui/table";
 import {ConfirmModal} from "shared/ui/confirmModal";
 import {onAddAlertOptions} from "../../../alert/model/slice/alertSlice";
 import {DefaultLoader, DefaultPageLoader} from "shared/ui/defaultLoader";
+import {Input} from "shared/ui/input";
 
 const FuncContext = createContext(null)
 
@@ -74,7 +75,6 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
     const dispatch = useDispatch()
 
 
-
     useEffect(() => {
         if (loading) setActiveModal(false)
 
@@ -100,7 +100,7 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
             name: activeModalItem.name,
             phone: activeModalItem.phone,
             status: selectedStatus === "Tel ko'tardi" ? true : false,
-            is_agreed: agreeStatus === "Keladi" ? true : false
+            is_agreed: agreeStatus
         }
 
         request(`${API_URL}Lead/lead_call_create/`, "POST", JSON.stringify(res), headers())
@@ -161,7 +161,7 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
                 // console.log(err)
             })
     }
-
+    console.log(agreeStatus)
 
 
     return (
@@ -274,10 +274,13 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
                         formatted === formatedDate && taskType === "progress" && <>
                             {/*<Button onClick={onClickTel}>Tel qilish</Button>*/}
                             <Select defaultValue={selectedStatus} onChangeOption={setSelectedStatus} options={status}/>
-                            <Select defaultValue={agreeStatus} onChangeOption={setAgreeStatus} options={agreeType}/>
+
 
                             {selectedStatus === "Tel ko'tardi" ? <>
                                 {/*<h2>Branch</h2>*/}
+                               <div style={{display: "flex" , gap: "1rem"}}>
+                                   <Input type={"checkbox"}  onChange={e => setAgreeStatus(e.target.checked)}/> <h2>Keladi</h2>
+                               </div>
                                 {/*<Select defaultValue={branchs[0]?.id} options={branchs} name={"branch"} register={register}/>*/}
                                 <Textarea name={"comment"} register={register}/>
 
@@ -444,7 +447,7 @@ const TaskCard = ({item}) => {
                         onClick={() => {
                             setActiveModal(item)
                         }}
-                         className={cls.circle}
+                        className={cls.circle}
                     >
                         <img src={unknownUser} alt=""/>
                     </div>
