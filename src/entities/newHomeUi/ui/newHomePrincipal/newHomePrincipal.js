@@ -21,6 +21,7 @@ export const NewHomePrincipal = () => {
             scrollTrigger: {
                 trigger: headerRef.current,
                 start: "top 80%",
+                end: "bottom 80%",
                 toggleActions: "play none none reverse",
                 scrub: 1,
             },
@@ -34,7 +35,7 @@ export const NewHomePrincipal = () => {
             scrollTrigger: {
                 trigger: cardsRef.current,
                 start: "top 80%",
-                end: "bottom 80%",
+                end: "bottom 75%",
                 scrub: 1,
             },
             y: 100,

@@ -22,6 +22,7 @@ export const NewHomeAdmissions = () => {
             scrollTrigger: {
                 trigger: titleRef.current,
                 start: "top 80%",
+                end: "bottom 100%%",
                 scrub: 1,
                 toggleActions: "play none none reverse",
             },
@@ -35,7 +36,7 @@ export const NewHomeAdmissions = () => {
             scrollTrigger: {
                 trigger: cardsRef.current,
                 start: "top 85%",
-                end: "bottom 80%",
+                end: "bottom 100%",
                 scrub: 1,
             },
             y: 100,

@@ -29,7 +29,7 @@ export const NewHomeGrade = () => {
         gsap.from(titleRef.current, {
             scrollTrigger: {
                 trigger: titleRef.current,
-                start: "top 80%",
+                // start: "top 100%",
                 scrub: 1,
                 toggleActions: "play none none reverse",
             },
@@ -75,7 +75,8 @@ export const NewHomeGrade = () => {
                     trigger: card,
                     start: "top 90%",
                     end: "bottom 60%",
-                    toggleActions: "play none none reverse",
+                    // toggleActions: "play none none reverse",
+                    // markers: true
                 },
                 y: 80,
                 opacity: 0,
