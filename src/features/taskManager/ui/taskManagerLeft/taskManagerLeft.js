@@ -47,12 +47,14 @@ const FuncContext = createContext(null)
 // }))
 
 const status = ["Tel ko'tardi", "Tel ko'tarmadi"]
+const agreeType = ["Keladi", "Kemidi"]
 
 
 export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
     const complateCount = useSelector(getTaskManagerCompletedCount)
     const progressCount = useSelector(getTaskManagerProgressCount)
     const [selectedStatus, setSelectedStatus] = useState(null)
+    const [agreeStatus, setAgreeStatus] = useState(null)
 
     const loading = useSelector(getTaskManagerLoading)
 
@@ -97,7 +99,8 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
             lead: activeModalItem?.id,
             name: activeModalItem.name,
             phone: activeModalItem.phone,
-            status: selectedStatus === "Tel ko'tardi" ? true : false
+            status: selectedStatus === "Tel ko'tardi" ? true : false,
+            is_agreed: agreeStatus === "Keladi" ? true : false
         }
 
         request(`${API_URL}Lead/lead_call_create/`, "POST", JSON.stringify(res), headers())
@@ -271,6 +274,7 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
                         formatted === formatedDate && taskType === "progress" && <>
                             {/*<Button onClick={onClickTel}>Tel qilish</Button>*/}
                             <Select defaultValue={selectedStatus} onChangeOption={setSelectedStatus} options={status}/>
+                            <Select defaultValue={agreeStatus} onChangeOption={setAgreeStatus} options={agreeType}/>
 
                             {selectedStatus === "Tel ko'tardi" ? <>
                                 {/*<h2>Branch</h2>*/}
