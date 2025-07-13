@@ -221,19 +221,19 @@ export const AdminTaskManagerList = ({formatted, setTaskType, taskType}) => {
                                         <th>Kament</th>
                                         <th>Tel raqami</th>
                                         <th>Tel statusi</th>
-                                        <th>Tel qilingan sana</th>
+                                        <th>Yaratilgan sana</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {card?.map((item, i) => (
                                         <tr key={i}>
                                             <td>{i + 1}</td>
-                                            <td>{item?.name}</td>
-                                            <td>{item?.surname}</td>
+                                            <td>{item?.lead?.name}</td>
+                                            <td>{item?.lead?.surname}</td>
                                             <td>{item?.comment}</td>
-                                            <td>{item?.phone}</td>
+                                            <td>{item?.lead?.phone}</td>
                                             <td>{item.status === true ? "Tel ko'tardi" : "Tel ko'tarilmadi"}</td>
-                                            <td>{item?.created}</td>
+                                            <td>{item?.lead?.created}</td>
                                         </tr>
                                     ))}
                                     </tbody>
@@ -243,54 +243,54 @@ export const AdminTaskManagerList = ({formatted, setTaskType, taskType}) => {
                 </div>
             </FuncContext.Provider>
 
-            <Modal typeIcon extraClass={cls.modal} active={activeModal}
-                   setActive={setActiveModal}>
+            {/*<Modal typeIcon extraClass={cls.modal} active={activeModal}*/}
+            {/*       setActive={setActiveModal}>*/}
 
-                <div className={cls.modal__left}>
-                    <div className={cls.userbox}>
-                        <h2 className={cls.userbox__name}>
-                            <span>{activeModalItem?.name} {activeModalItem?.surname}</span> <br/>
-                        </h2>
-                        <div className={cls.userbox__info}>
-                            <div className={cls.userbox__infos}>
-                                <p className={cls.userbox__number}>
-                                    Number :
-                                    <span>{activeModalItem?.phone} </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+            {/*    <div className={cls.modal__left}>*/}
+            {/*        <div className={cls.userbox}>*/}
+            {/*            <h2 className={cls.userbox__name}>*/}
+            {/*                <span>{activeModalItem?.name} {activeModalItem?.surname}</span> <br/>*/}
+            {/*            </h2>*/}
+            {/*            <div className={cls.userbox__info}>*/}
+            {/*                <div className={cls.userbox__infos}>*/}
+            {/*                    <p className={cls.userbox__number}>*/}
+            {/*                        Number :*/}
+            {/*                        <span>{activeModalItem?.phone} </span>*/}
+            {/*                    </p>*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
 
-                    {
-                        formatted === formatedDate && taskType === "progress" && <>
-                            <Select defaultValue={selectedStatus} onChangeOption={setSelectedStatus} options={status}/>
-                            <Select defaultValue={agreeStatus} onChangeOption={setAgreeStatus} options={agreeType}/>
+            {/*        {*/}
+            {/*            formatted === formatedDate && taskType === "progress" && <>*/}
+            {/*                <Select defaultValue={selectedStatus} onChangeOption={setSelectedStatus} options={status}/>*/}
+            {/*                <Select defaultValue={agreeStatus} onChangeOption={setAgreeStatus} options={agreeType}/>*/}
 
-                            {selectedStatus === "Tel ko'tardi" ? <>
-                                <Textarea name={"comment"} register={register}/>
+            {/*                {selectedStatus === "Tel ko'tardi" ? <>*/}
+            {/*                    <Textarea name={"comment"} register={register}/>*/}
 
-                            </> : <Textarea name={"comment"} register={register}/>}
-                            <Button extraClass={cls.modal__add} onClick={handleSubmit(onPost)}>Add</Button>
-                        </>
-                    }
-                </div>
+            {/*                </> : <Textarea name={"comment"} register={register}/>}*/}
+            {/*                <Button extraClass={cls.modal__add} onClick={handleSubmit(onPost)}>Add</Button>*/}
+            {/*            </>*/}
+            {/*        }*/}
+            {/*    </div>*/}
 
 
-                {resComment?.length >= 1 && <div className={cls.modal__right}>
+            {/*    {resComment?.length >= 1 && <div className={cls.modal__right}>*/}
 
-                    {resComment.map(item => (
-                        <div className={cls.modal__right_box}>
-                            <div className={cls.modal__right_header}>
-                                <span>Telefon qilingan sana :</span>  <h2>{item.created}</h2>
-                            </div>
-                            <div className={cls.modal__right_info}>
-                                <span>Comment :</span> <h2 style={{width: "20rem"}}>{item.comment}</h2>
-                            </div>
-                        </div>
-                    ))}
+            {/*        {resComment.map(item => (*/}
+            {/*            <div className={cls.modal__right_box}>*/}
+            {/*                <div className={cls.modal__right_header}>*/}
+            {/*                    <span>Telefon qilingan sana :</span>  <h2>{item.created}</h2>*/}
+            {/*                </div>*/}
+            {/*                <div className={cls.modal__right_info}>*/}
+            {/*                    <span>Comment :</span> <h2 style={{width: "20rem"}}>{item.comment}</h2>*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*        ))}*/}
 
-                </div>}
-            </Modal>
+            {/*    </div>}*/}
+            {/*</Modal>*/}
 
         </div>
     )

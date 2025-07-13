@@ -55,7 +55,7 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
     const complateCount = useSelector(getTaskManagerCompletedCount)
     const progressCount = useSelector(getTaskManagerProgressCount)
     const [selectedStatus, setSelectedStatus] = useState(null)
-    const [agreeStatus, setAgreeStatus] = useState(null)
+    const [agreeStatus, setAgreeStatus] = useState(false)
 
     const loading = useSelector(getTaskManagerLoading)
 
@@ -230,19 +230,19 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
                                         <th>Kament</th>
                                         <th>Tel raqami</th>
                                         <th>Tel statusi</th>
-                                        <th>Tel qilingan sana</th>
+                                        <th>Yaratilgan sana</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {card?.map((item, i) => (
                                         <tr key={i}>
                                             <td>{i + 1}</td>
-                                            <td>{item?.name}</td>
-                                            <td>{item?.surname}</td>
+                                            <td>{item?.lead?.name}</td>
+                                            <td>{item?.lead?.surname}</td>
                                             <td>{item?.comment}</td>
-                                            <td>{item?.phone}</td>
+                                            <td>{item?.lead?.phone}</td>
                                             <td>{item.status === true ? "Tel ko'tardi" : "Tel ko'tarilmadi"}</td>
-                                            <td>{item?.created}</td>
+                                            <td>{item?.lead?.created}</td>
                                         </tr>
                                     ))}
                                     </tbody>
