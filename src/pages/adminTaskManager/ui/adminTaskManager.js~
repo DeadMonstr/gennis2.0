@@ -29,7 +29,7 @@ export const AdminTaskManager = () => {
 
     useEffect(() => {
         dispatch(fetchBranch())
-        dispatch(fetchOperatorsData(id))
+        dispatch(fetchOperatorsData())
     }, [])
 
     return (

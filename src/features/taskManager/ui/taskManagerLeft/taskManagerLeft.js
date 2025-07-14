@@ -93,6 +93,7 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
     })
 
 
+
     const onPost = (data) => {
 
         const res = {
@@ -101,7 +102,8 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
             name: activeModalItem.name,
             phone: activeModalItem.phone,
             status: selectedStatus === "Tel ko'tardi" ? true : false,
-            is_agreed: agreeStatus
+            is_agreed: agreeStatus,
+            branch: activeModalItem.branch
         }
 
         request(`${API_URL}Lead/lead_call_create/`, "POST", JSON.stringify(res), headers())
