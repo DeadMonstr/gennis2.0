@@ -1,12 +1,50 @@
-import React from 'react';
+import React, {useRef} from 'react';
 
 import cls from "./newHomeIntroduction.module.sass";
 import image from "shared/assets/images/director.png";
+import {useGSAP} from "@gsap/react";
+import gsap from "gsap";
 
 export const NewHomeIntroduction = () => {
+    const container = useRef(null);
+    const headerRef = useRef(null);
+    const cardsRef = useRef(null);
+
+    useGSAP(() => {
+
+        gsap.from(headerRef.current, {
+            scrollTrigger: {
+                trigger: headerRef.current,
+                start: "top 80%",
+                end: "bottom 80%",
+                toggleActions: "play none none reverse",
+                scrub: 1,
+            },
+            x: -100,
+            opacity: 0,
+            duration: 1.5,
+            ease: "power3.out"
+        });
+
+        gsap.from(".event-card", {
+            scrollTrigger: {
+                trigger: cardsRef.current,
+                start: "top 80%",
+                end: "bottom 75%",
+                scrub: 1,
+            },
+            y: 100,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+            stagger: 0.3
+        });
+
+    }, { scope: container });
+
     return (
-        <div className={cls.introduction} id={"introduction"}>
-            <div className={cls.introduction__info}>
+        <div ref={container} className={cls.introduction} id={"introduction"}>
+            <div ref={headerRef} className={cls.introduction__info}>
                 <h1 className={cls.title}>
                     Hurmatli ota-onalar, aziz o‘quvchilar va qadrli mehmonlar!
                 </h1>
@@ -43,8 +81,8 @@ export const NewHomeIntroduction = () => {
                     </p>
                 </div>
             </div>
-            <div className={cls.introduction__image}>
-                <img src={image} alt=""/>
+            <div ref={cardsRef} className={cls.introduction__image}>
+                <img className="event-card" src={image} alt=""/>
             </div>
         </div>
     );

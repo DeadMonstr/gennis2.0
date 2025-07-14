@@ -83,3 +83,12 @@ export const fetchBranchesForSelect = createAsyncThunk(
     }
 )
 
+export const fetchOperatorsData = createAsyncThunk(
+    "oftenUsedSlice/fetchOperatorsData",
+    (id) => {
+        const {request} = useHttp()
+        return request(`${API_URL}Lead/operators/`, "GET", null)
+    }
+)
+
+// Lead/operators/

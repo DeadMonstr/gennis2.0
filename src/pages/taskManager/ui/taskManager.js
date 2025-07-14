@@ -40,7 +40,6 @@ export const TaskManager = () => {
                 <div className={cls.box__sides}>
                     <TaskManagerLeft setTaskType={setTaskType} taskType={taskType} formatted={formatted}/>
                     <TaskManagerRight selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
-
                 </div>
             </div>
         </div>

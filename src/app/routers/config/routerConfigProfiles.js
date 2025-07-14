@@ -42,6 +42,7 @@ import {Inkasatsiya} from "pages/inkasatsiyaPage";
 import {StudentProfileGroupsHistory} from "entities/profile/studentProfile";
 import {AccountingOtchotPage} from "../../../pages/accountingPage";
 import {TaskManager} from "pages/taskManager/ui/taskManager";
+import {AdminTaskManager} from "../../../pages/adminTaskManager";
 
 export const routersConfigProfile = [
     {
@@ -178,6 +179,13 @@ export const routersConfigProfile = [
         path: getRouteRGBData(),
         element: <RgbDataPage/>
     },
+
+
+    {
+        name: "AdminTaskManager",
+        path: "adminTaskManager",
+        element: <AdminTaskManager/>
+    }
 
 
     // {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 
 import cls from "./newHomeCoreValues.module.sass";
 import image from "shared/assets/images/coreValues.png";
@@ -6,6 +6,9 @@ import image1 from "shared/assets/images/coreValues1.png";
 import image2 from "shared/assets/images/coreValues2.png";
 import image3 from "shared/assets/images/coreValues3.png";
 import image4 from "shared/assets/images/coreValues4.png";
+import {useGSAP} from "@gsap/react";
+import gsap from "gsap";
+import classNames from "classnames";
 
 const card = [
     {
@@ -31,6 +34,41 @@ const card = [
 ]
 
 export const NewHomeCoreValues = () => {
+    const container = useRef(null);
+    const headerRef = useRef(null);
+    const cardsRef = useRef(null);
+
+    useGSAP(() => {
+
+        gsap.from(headerRef.current, {
+            scrollTrigger: {
+                trigger: headerRef.current,
+                start: "top 80%",
+                end: "bottom 80%",
+                toggleActions: "play none none reverse",
+                scrub: 1,
+            },
+            x: -100,
+            opacity: 0,
+            duration: 1.5,
+            ease: "power3.out"
+        });
+
+        gsap.from(".event-card", {
+            scrollTrigger: {
+                trigger: cardsRef.current,
+                start: "top 80%",
+                end: "bottom 75%",
+                scrub: 1,
+            },
+            y: 100,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+            stagger: 0.3
+        });
+
+    }, { scope: container });
 
     const render = () => {
         return card.map(item => (
@@ -54,8 +92,8 @@ export const NewHomeCoreValues = () => {
     }
 
     return (
-        <div className={cls.coreValues} id={"coreValues"}>
-            <div className={cls.coreValues__container}>
+        <div ref={container} className={cls.coreValues} id={"coreValues"}>
+            <div ref={headerRef} className={cls.coreValues__container}>
                 <div className={cls.header}>
                     <p className={cls.header__subTitle}>Asosiy Qadriyatlarimiz</p>
                     <h1 className={cls.header__title}>
@@ -76,8 +114,8 @@ export const NewHomeCoreValues = () => {
                     {render()}
                 </div>
             </div>
-            <div className={cls.coreValues__image}>
-                <img className={cls.image} src={image} alt=""/>
+            <div ref={cardsRef} className={cls.coreValues__image}>
+                <img className={classNames(cls.image, "event-card")} src={image} alt=""/>
             </div>
         </div>
     );

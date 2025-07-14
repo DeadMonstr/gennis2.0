@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {useRef} from 'react';
 
 import cls from "./newHomeCalendar.module.sass";
+import {useGSAP} from "@gsap/react";
+import gsap from "gsap";
+import classNames from "classnames";
 
 const weekdays = ["DU", "SE", "CH", "PA", "JU", "SH", "YA"]
 
@@ -62,13 +65,48 @@ const list = [
 ]
 
 export const NewHomeCalendar = () => {
+    const container = useRef(null);
+    const headerRef = useRef(null);
+    const cardsRef = useRef(null);
+
+    useGSAP(() => {
+
+        gsap.from(headerRef.current, {
+            scrollTrigger: {
+                trigger: headerRef.current,
+                start: "top 80%",
+                end: "bottom 80%",
+                toggleActions: "play none none reverse",
+                scrub: 1,
+            },
+            x: -100,
+            opacity: 0,
+            duration: 1.5,
+            ease: "power3.out"
+        });
+
+        gsap.from(".event-card", {
+            scrollTrigger: {
+                trigger: cardsRef.current,
+                start: "top 80%",
+                end: "bottom 75%",
+                scrub: 1,
+            },
+            y: 100,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+            stagger: 0.3
+        });
+
+    }, { scope: container });
 
     const render = () => {
         return list.map((item, index) => {
             if (index > 0 && window.innerWidth <= 430) return null
             return (
-                <div className={cls.container}>
-                    <div className={cls.calendar}>
+                <div className={classNames(cls.container, "event-card")}>
+                    <div className={cls.calendarSub}>
                         <div className={cls.header}>Dekabr</div>
                         <div className={cls.grid}>
                             {weekdays.map((day, idx) => (
@@ -103,8 +141,8 @@ export const NewHomeCalendar = () => {
     }
 
     return (
-        <div className={cls.calendar} id={"calendar"}>
-            <div className={cls.calendar__header}>
+        <div ref={container} className={cls.calendar} id={"calendar"}>
+            <div ref={headerRef} className={cls.calendar__header}>
                 <h1 className={cls.title}>Muhim sanalar</h1>
                 <p className={cls.desc}>
                     Qabul va o‘quv jarayoniga oid muhim sanalarni kuzatib boring — siz <br/>
@@ -118,7 +156,7 @@ export const NewHomeCalendar = () => {
                     <p style={{color: "#3E3232"}} className={cls.bars__inner}>{">"}</p>
                 </div>
             </div>
-            <div className={cls.calendar__container}>
+            <div ref={cardsRef} className={cls.calendar__container}>
                 {render()}
             </div>
         </div>

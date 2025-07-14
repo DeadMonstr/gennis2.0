@@ -1,6 +1,7 @@
 @import "app/styles/abstracts/variables"
 
 .mission
+  width: 100%
   padding: 5rem 0
   display: flex
   flex-direction: column
@@ -65,6 +66,14 @@
       &__desc
         font-size: 2rem
         font-weight: 400
+
+
+@media (min-width: 1920px)
+  .mission
+    width: 150rem
+
+
+
 
 @media (max-width: 430px)
   .mission

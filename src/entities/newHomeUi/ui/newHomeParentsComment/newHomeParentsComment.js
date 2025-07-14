@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useRef} from 'react';
 
 import cls from "./newHomeParentsComment.module.sass";
 import image1 from "shared/assets/images/parents1.jpg";
 import image2 from "shared/assets/images/parents1.jpg";
 import image3 from "shared/assets/images/parents3.jpg";
+import {useGSAP} from "@gsap/react";
+import gsap from "gsap";
+import classNames from "classnames";
 
 const list = [
     {
@@ -21,10 +24,46 @@ const list = [
 ]
 
 export const NewHomeParentsComment = () => {
+    const container = useRef(null);
+    const headerRef = useRef(null);
+    const cardsRef = useRef(null);
+
+    useGSAP(() => {
+
+        gsap.from(headerRef.current, {
+            scrollTrigger: {
+                trigger: headerRef.current,
+                start: "top 80%",
+                end: "bottom 80%",
+                toggleActions: "play none none reverse",
+                scrub: 1,
+            },
+            x: -100,
+            opacity: 0,
+            duration: 1.5,
+            ease: "power3.out"
+        });
+
+        gsap.from(".event-card", {
+            scrollTrigger: {
+                trigger: cardsRef.current,
+                start: "top 80%",
+                end: "bottom 75%",
+                scrub: 1,
+            },
+            y: 100,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+            stagger: 0.3
+        });
+
+    }, { scope: container });
+
     const render = () => {
         return list.map(item => (
             <div
-                className={cls.card}
+                className={classNames(cls.card, "event-card")}
             >
                 <p className={cls.card__text}>
                     “Ikkita qizim ham shu maktabda tahsil oladi. Ikkalasining ham individual yondashuv asosida o‘sishini
@@ -43,8 +82,8 @@ export const NewHomeParentsComment = () => {
     }
 
     return (
-        <div className={cls.fileDownload} id={"parentsComment"}>
-            <div className={cls.fileDownload__header}>
+        <div ref={container} className={cls.fileDownload} id={"parentsComment"}>
+            <div ref={headerRef} className={cls.fileDownload__header}>
                 <h1 className={cls.title}>
                     <span className={cls.title__inner}>Biz haqimizda</span>
                     eng haqqoniy <br/>
@@ -58,7 +97,7 @@ export const NewHomeParentsComment = () => {
                     fikrlari bilan tanishing:
                 </p>
             </div>
-            <div className={cls.fileDownload__container}>
+            <div ref={cardsRef} className={cls.fileDownload__container}>
                 {render()}
             </div>
         </div>

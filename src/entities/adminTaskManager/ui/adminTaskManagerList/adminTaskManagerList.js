@@ -1,4 +1,4 @@
-import cls from "./taskManager.module.sass"
+import cls from "./adminTaskManagerList.module.sass"
 
 import completedIcon from "shared/assets/icons/completed.svg"
 import progressIcon from "shared/assets/icons/progres.svg"
@@ -7,10 +7,7 @@ import yellowCard from "shared/assets/images/yelloCard.svg"
 import pinkCard from "shared/assets/images/pinkCard.svg"
 import greenCard from "shared/assets/images/greenCard.svg"
 
-import {createContext, useCallback, useContext, useEffect, useMemo, useRef, useState} from "react"
-import unknownUser from "shared/assets/user-interface/user_image.png"
-
-import {motion, useMotionValue, useDragControls} from "framer-motion"
+import React, {createContext, useCallback, useContext, useEffect, useMemo, useRef, useState} from "react"
 import {Modal} from "shared/ui/modal";
 import {Select} from "shared/ui/select";
 import {Textarea} from "shared/ui/textArea";
@@ -18,7 +15,8 @@ import {Button} from "shared/ui/button";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    getTaskManager, getTaskManagerBranchs,
+    getAdminTasksData,
+    getTaskManager,
     getTaskManagerCompletedCount, getTaskManagerLoading,
     getTaskManagerProgressCount
 } from "features/taskManager/modal/taskManagerSelector";
@@ -32,31 +30,21 @@ import {
 import {formatDate} from "shared/ui/formDate/formDate";
 import {Table} from "shared/ui/table";
 import {ConfirmModal} from "shared/ui/confirmModal";
-import {onAddAlertOptions} from "../../../alert/model/slice/alertSlice";
 import {DefaultLoader, DefaultPageLoader} from "shared/ui/defaultLoader";
-import {Input} from "shared/ui/input";
-import PlusIcon from "shared/assets/icons/plus_icon.svg";
+import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 
 const FuncContext = createContext(null)
 
-
-// const card = Array.from({length: 12}, (_, i) => ({
-//     id: i,
-//     name: "Ali",
-//     surname: "Valiyev",
-//     number: `+99890${i}001122`,
-//     status: i < 4 ? "pink" : i < 8 ? "green" : "yellow"
-// }))
 
 const status = ["Tel ko'tardi", "Tel ko'tarmadi"]
 const agreeType = ["Keladi", "Kemidi"]
 
 
-export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
+export const AdminTaskManagerList = ({formatted, setTaskType, taskType}) => {
     const complateCount = useSelector(getTaskManagerCompletedCount)
     const progressCount = useSelector(getTaskManagerProgressCount)
     const [selectedStatus, setSelectedStatus] = useState(null)
-    const [agreeStatus, setAgreeStatus] = useState(false)
+    const [agreeStatus, setAgreeStatus] = useState(null)
 
     const loading = useSelector(getTaskManagerLoading)
 
@@ -69,11 +57,12 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
     const [activeModal, setActiveModal] = useState(false)
     const [activeModalItem, setActiveModalItem] = useState(null)
     const {register, handleSubmit, setValue} = useForm()
-    const card = useSelector(getTaskManager)
+    const card = useSelector(getAdminTasksData)
     // const branchs = useSelector(getTaskManagerBranchs)
     const {request} = useHttp()
 
     const dispatch = useDispatch()
+
 
 
     useEffect(() => {
@@ -101,7 +90,7 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
             name: activeModalItem.name,
             phone: activeModalItem.phone,
             status: selectedStatus === "Tel ko'tardi" ? true : false,
-            is_agreed: agreeStatus
+            is_agreed: agreeStatus === "Keladi" ? true : false
         }
 
         request(`${API_URL}Lead/lead_call_create/`, "POST", JSON.stringify(res), headers())
@@ -156,13 +145,11 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
         request(`${API_URL}Lead/lead_call_ring/`, "POST", JSON.stringify({lead_id: activeModalItem.id}), headers())
             .then(res => {
                 console.log(res)
-                // setResComment(res)
             })
             .catch(err => {
-                // console.log(err)
             })
     }
-    console.log(agreeStatus)
+
 
 
     return (
@@ -202,29 +189,24 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
             <FuncContext.Provider value={contextObj}>
 
                 <div className={cls.taskLeft__body}>
-                    <div className={cls.taskLeft__body__header}>
-                        <h1 className={cls.taskLeft__body_title}>{taskType === "completed" ? "Completed leads" : "Leads"}</h1>
-                        {
-                            taskType === "progress" && <div className={cls.plus}>
-                                <img src={PlusIcon} alt=""/>
-                            </div>
-                        }
-
-                    </div>
+                    <h1 className={cls.taskLeft__body_title}>{taskType === "completed" ? "Completed leads" : "Leads"}</h1>
 
                     {loading ? <DefaultPageLoader/> :
 
                         formatted === formatedDate ? <>
                             <div className={cls.taskLeft__body_main}>
                                 <div className={cls.taskLeft__body_card}>
-                                    {Object.entries(groupedCards).map(([color, items]) => (
-                                        <DraggableRow
-                                            taskType={taskType}
-                                            key={color + taskType}
-                                            items={items}
-                                            className={cls.taskLeft__body_card_cotainer}
-                                        />
-                                    ))}
+                                    {Object.entries(groupedCards).map(([color, items]) => {
+                                        if (!items.length) return null
+                                        return (
+                                            <DraggableRow
+                                                taskType={taskType}
+                                                key={color + taskType}
+                                                items={items}
+                                                className={cls.taskLeft__body_card_cotainer}
+                                            />
+                                        )
+                                    })}
                                 </div>
                             </div>
                         </> : <>
@@ -261,117 +243,80 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
                 </div>
             </FuncContext.Provider>
 
-            <Modal typeIcon extraClass={cls.modal} active={activeModal}
-                   setActive={setActiveModal}>
+            {/*<Modal typeIcon extraClass={cls.modal} active={activeModal}*/}
+            {/*       setActive={setActiveModal}>*/}
 
-                <div className={cls.modal__left}>
-                    <div className={cls.userbox}>
-                        <h2 className={cls.userbox__name}>
-                            <span>{activeModalItem?.name} {activeModalItem?.surname}</span> <br/>
-                        </h2>
-                        <div className={cls.userbox__info}>
-                            <div className={cls.userbox__infos}>
-                                <p className={cls.userbox__number}>
-                                    Number :
-                                    <span>{activeModalItem?.phone} </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+            {/*    <div className={cls.modal__left}>*/}
+            {/*        <div className={cls.userbox}>*/}
+            {/*            <h2 className={cls.userbox__name}>*/}
+            {/*                <span>{activeModalItem?.name} {activeModalItem?.surname}</span> <br/>*/}
+            {/*            </h2>*/}
+            {/*            <div className={cls.userbox__info}>*/}
+            {/*                <div className={cls.userbox__infos}>*/}
+            {/*                    <p className={cls.userbox__number}>*/}
+            {/*                        Number :*/}
+            {/*                        <span>{activeModalItem?.phone} </span>*/}
+            {/*                    </p>*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
 
-                    {
-                        formatted === formatedDate && taskType === "progress" && <>
-                            {/*<Button onClick={onClickTel}>Tel qilish</Button>*/}
-                            <Select defaultValue={selectedStatus} onChangeOption={setSelectedStatus} options={status}/>
+            {/*        {*/}
+            {/*            formatted === formatedDate && taskType === "progress" && <>*/}
+            {/*                <Select defaultValue={selectedStatus} onChangeOption={setSelectedStatus} options={status}/>*/}
+            {/*                <Select defaultValue={agreeStatus} onChangeOption={setAgreeStatus} options={agreeType}/>*/}
 
+            {/*                {selectedStatus === "Tel ko'tardi" ? <>*/}
+            {/*                    <Textarea name={"comment"} register={register}/>*/}
 
-                            {selectedStatus === "Tel ko'tardi" ? <>
-                                {/*<h2>Branch</h2>*/}
-                               <div style={{display: "flex" , gap: "1rem"}}>
-                                   <Input type={"checkbox"}  onChange={e => setAgreeStatus(e.target.checked)}/> <h2>Keladi</h2>
-                               </div>
-                                {/*<Select defaultValue={branchs[0]?.id} options={branchs} name={"branch"} register={register}/>*/}
-                                <Textarea name={"comment"} register={register}/>
-
-                            </> : <Textarea name={"comment"} register={register}/>}
-                            <Button extraClass={cls.modal__add} onClick={handleSubmit(onPost)}>Add</Button>
-                        </>
-                    }
-                </div>
+            {/*                </> : <Textarea name={"comment"} register={register}/>}*/}
+            {/*                <Button extraClass={cls.modal__add} onClick={handleSubmit(onPost)}>Add</Button>*/}
+            {/*            </>*/}
+            {/*        }*/}
+            {/*    </div>*/}
 
 
-                {resComment?.length >= 1 && <div className={cls.modal__right}>
-                    {/*<Select defaultValue={selectedStatus} onChangeOption={setSelectedStatus} options={status}/>*/}
+            {/*    {resComment?.length >= 1 && <div className={cls.modal__right}>*/}
 
-                    {/*{selectedStatus === "Tel ko'tardi" ? <>*/}
+            {/*        {resComment.map(item => (*/}
+            {/*            <div className={cls.modal__right_box}>*/}
+            {/*                <div className={cls.modal__right_header}>*/}
+            {/*                    <span>Telefon qilingan sana :</span>  <h2>{item.created}</h2>*/}
+            {/*                </div>*/}
+            {/*                <div className={cls.modal__right_info}>*/}
+            {/*                    <span>Comment :</span> <h2 style={{width: "20rem"}}>{item.comment}</h2>*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*        ))}*/}
 
-
-                    {/*    <h2>Branch</h2>*/}
-                    {/*    <Select defaultValue={branchs[0]?.id} options={branchs} name={"branch"} register={register}/>*/}
-                    {/*    <Textarea name={"comment"} register={register}/>*/}
-
-                    {/*</> : <Textarea nam e={"comment"} register={register}/>}*/}
-                    {/*<Button extraClass={cls.modal__add} onClick={handleSubmit(onPost)}>Add</Button>*/}
-
-
-                    {resComment.map(item => (
-                        <div className={cls.modal__right_box}>
-                            <div className={cls.modal__right_header}>
-                                <span>Telefon qilingan sana :</span>  <h2>{item.created}</h2>
-                            </div>
-                            <div className={cls.modal__right_info}>
-                                <span>Comment :</span> <h2 style={{width: "20rem"}}>{item.comment}</h2>
-                            </div>
-                        </div>
-                    ))}
-
-                </div>}
-            </Modal>
+            {/*    </div>}*/}
+            {/*</Modal>*/}
 
         </div>
     )
 }
 
 export const DraggableRow = ({items = [], className = "", taskType}) => {
-    const x = useMotionValue(0)
-    const controls = useDragControls()
-    const wrapperRef = useRef(null)
-    const [scrollWidth, setScrollWidth] = useState(taskType === "completed" ? 0 : 0)
-
-    useEffect(() => {
-        if (wrapperRef.current) {
-            const fullWidth = wrapperRef.current.scrollWidth
-            const visibleWidth = wrapperRef.current.offsetWidth
-            setScrollWidth(fullWidth - visibleWidth)
-        }
-    }, [items.length, taskType])
-
-
     return (
-        <div className={`${cls.scroll} ${className}`} ref={wrapperRef}>
-            <motion.div
-                drag="x"
-                dragElastic={0.25}
-                dragMomentum={true}
-                dragConstraints={{left: -scrollWidth, right: 0}}
-                dragControls={controls}
-                style={{
-                    x,
-                    display: "flex",
-                    gap: "2rem",
-                    cursor: "w-resize",
-                    userSelect: "none",
-                }}
-            >
-                {items.map((item, idx) => (
-                    <TaskCard key={idx} item={item}/>
-                ))}
-            </motion.div>
-        </div>
+        <Table>
+            <thead>
+            <tr>
+                <th>№</th>
+                <th>Ism</th>
+                <th>Familiya</th>
+                <th>Telefon nomer</th>
+            </tr>
+            </thead>
+            <tbody>
+            {items.map((item, idx) => (
+                <TaskCard key={idx} item={item} i={idx}/>
+            ))}
+            </tbody>
+        </Table>
     )
 }
 
-const TaskCard = ({item}) => {
+const TaskCard = ({item, i}) => {
     const [style, setStyle] = useState({})
 
     const {setActiveModal, setActiveModalItem, taskType} = useContext(FuncContext)
@@ -432,42 +377,13 @@ const TaskCard = ({item}) => {
 
     return (
         <>
-            <div
-                style={{background: style.color}}
-                className={cls.taskLeft__body_card_item}
-            >
-                <div className={cls.taskLeft__body_card_item_left}>
-                    <h2 className={cls.taskLeft__body_card_item_left_header}>
-                        {item.name} {item.surname}
-                    </h2>
-                    <div className={cls.taskLeft__body_card_item_left_number}>
-                        Number: <span>{item.phone}</span>
-                    </div>
-                </div>
-
-                <div
-                    className={cls.item__image}
-                    style={{
-                        backgroundImage: style.backImage,
-                        backgroundRepeat: "no-repeat"
-                    }}
-                >
-                    <div
-                        onClick={() => {
-                            setActiveModal(item)
-                        }}
-                        className={cls.circle}
-                    >
-                        <img src={unknownUser} alt=""/>
-                    </div>
-                    <div onClick={() => setActiveConfirmModal(true)} className={cls.delete}>
-                        <i className={"fa fa-trash"}/>
-                    </div>
-                </div>
-            </div>
+            <tr style={{background: style.color}}>
+                <td>{i + 1}</td>
+                <td>{item.name}</td>
+                <td>{item.surname}</td>
+                <td>{item.phone}</td>
+            </tr>
             <ConfirmModal active={confirmModal} setActive={setActiveConfirmModal} onClick={onDeleteLead}/>
-
         </>
-
     )
 }

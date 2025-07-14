@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {useRef} from 'react';
 
 import cls from "./newHomeSchoolLife.module.sass";
 import image1 from "shared/assets/images/schoolLife1.jpg"
 import image2 from "shared/assets/images/schoolLife2.jpg"
 import image3 from "shared/assets/images/schoolLife3.jpg"
 import image4 from "shared/assets/images/schoolLife4.jpg"
+import {useGSAP} from "@gsap/react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+import classNames from "classnames";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const list = [
     {
@@ -30,12 +36,62 @@ const list = [
 ]
 
 export const NewHomeSchoolLife = () => {
+    const container = useRef(null);
+    const headerRef = useRef(null);
+    const sliderRef = useRef(null);
+    const cardsRef = useRef(null);
+
+    useGSAP(() => {
+
+        gsap.from(headerRef.current, {
+            scrollTrigger: {
+                trigger: headerRef.current,
+                start: "top 80%",
+                end: "bottom 80%",
+                toggleActions: "play none none reverse",
+                scrub: 1,
+            },
+            x: -100,
+            opacity: 0,
+            duration: 1.5,
+            ease: "power3.out"
+        });
+
+        gsap.from(sliderRef.current, {
+            scrollTrigger: {
+                trigger: sliderRef.current,
+                start: "top 80%",
+                end: "bottom 80%",
+                toggleActions: "play none none reverse",
+                scrub: 1,
+            },
+            x: -100,
+            opacity: 0,
+            duration: 1.5,
+            ease: "power3.out"
+        });
+
+        gsap.from(".event-card", {
+            scrollTrigger: {
+                trigger: cardsRef.current,
+                start: "top 80%",
+                end: "bottom 75%",
+                scrub: 1,
+            },
+            y: 100,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+            stagger: 0.3
+        });
+
+    }, { scope: container });
 
     const render = () => {
         return list.map((item, index) => {
             if (index > 0 && window.innerWidth <= 430) return null
             return (
-                <div className={cls.card}>
+                <div className={classNames(cls.card, "event-card")}>
                     <div className={cls.card__header}>
                         <img className={cls.card__image} src={item.image} alt=""/>
                         <p className={cls.card__info}>{item.subTitle}</p>
@@ -51,8 +107,8 @@ export const NewHomeSchoolLife = () => {
     }
 
     return (
-        <div className={cls.schoolLife} id={"schoolLife"}>
-            <div className={cls.schoolLife__header}>
+        <div ref={container} className={cls.schoolLife} id={"schoolLife"}>
+            <div ref={headerRef} className={cls.schoolLife__header}>
                 <div className={cls.title}>
                     <span className={cls.title__inner}>Maktab hayotidagi</span>
                     muhim zafarlar
@@ -65,14 +121,14 @@ export const NewHomeSchoolLife = () => {
                     grantlarga ega bo‘lishgan.
                 </p>
             </div>
-            <div className={cls.schoolLife__slider}>
+            <div ref={sliderRef} className={cls.schoolLife__slider}>
                 <p className={cls.title}>Turon Xalqaro Maktabi Yutuqlari Bilan Tanishing</p>
                 <div className={cls.bars}>
                     <p style={{color: "#3E323280"}} className={cls.bars__inner}>{"<"}</p>
                     <p style={{color: "#3E3232"}} className={cls.bars__inner}>{">"}</p>
                 </div>
             </div>
-            <div className={cls.schoolLife__container}>
+            <div ref={cardsRef} className={cls.schoolLife__container}>
                 {render()}
             </div>
         </div>

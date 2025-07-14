@@ -1,6 +1,7 @@
 @import "app/styles/abstracts/variables"
 
 .schoolLife
+  width: 100%
   padding: 5rem 0
   display: flex
   flex-direction: column
@@ -51,7 +52,7 @@
       &__header
         position: relative
       &__image
-        width: 29.5rem
+        width: 100%
         height: 25rem
         border-radius: 1.2rem
       &__info
@@ -79,6 +80,12 @@
           color: #7F8490
           font-size: 1.4rem
           font-weight: 500
+
+@media (min-width: 1920px)
+  .schoolLife
+    width: 150rem
+
+
 
 @media (max-width: 430px)
   .schoolLife
