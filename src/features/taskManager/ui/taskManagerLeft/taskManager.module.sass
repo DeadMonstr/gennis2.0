@@ -1,3 +1,5 @@
+@import "app/styles/abstracts/variables"
+
 .taskLeft
   display: flex
   flex-direction: column
@@ -5,16 +7,18 @@
   color: rgba(75, 85, 99, 1)
   font-weight: 700
   font-size: 1.2rem
-  width: 75%
+  width: 70%
   position: relative
-  &:after
-    content: ""
-    position: absolute
-    top: -30px
-    right: 30px
-    width: 2px
-    height: calc(100vh - 20rem)
-    background-color: #9f9d9d
+  padding: 2rem
+  border-right: 1px solid #9f9d9d
+  //&:after
+  //  content: ""
+  //  position: absolute
+  //  top: -30px
+  //  right: 30px
+  //  width: 2px
+  //  height: calc(100vh - 20rem)
+  //  background-color: #9f9d9d
 
 
   &__header
@@ -49,6 +53,19 @@
     gap: 1rem
     //overflow: auto
     height: calc(100vh - 45rem)
+    &__header
+      display: flex
+      align-items: center
+      justify-content: space-between
+      .plus
+        width: 5rem
+        height: 5rem
+        background-color: $color-school-main
+        border-radius: 50%
+        display: flex
+        align-items: center
+        justify-content: center
+
     &_table
       padding-right: 2rem
 

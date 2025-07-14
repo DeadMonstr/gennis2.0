@@ -35,6 +35,7 @@ import {ConfirmModal} from "shared/ui/confirmModal";
 import {onAddAlertOptions} from "../../../alert/model/slice/alertSlice";
 import {DefaultLoader, DefaultPageLoader} from "shared/ui/defaultLoader";
 import {Input} from "shared/ui/input";
+import PlusIcon from "shared/assets/icons/plus_icon.svg";
 
 const FuncContext = createContext(null)
 
@@ -201,7 +202,15 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
             <FuncContext.Provider value={contextObj}>
 
                 <div className={cls.taskLeft__body}>
-                    <h1 className={cls.taskLeft__body_title}>{taskType === "completed" ? "Completed leads" : "Leads"}</h1>
+                    <div className={cls.taskLeft__body__header}>
+                        <h1 className={cls.taskLeft__body_title}>{taskType === "completed" ? "Completed leads" : "Leads"}</h1>
+                        {
+                            taskType === "progress" && <div className={cls.plus}>
+                                <img src={PlusIcon} alt=""/>
+                            </div>
+                        }
+
+                    </div>
 
                     {loading ? <DefaultPageLoader/> :
 
