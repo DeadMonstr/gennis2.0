@@ -13,6 +13,7 @@ import image8 from "shared/assets/images/dailyLife8.jpg";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import {useTranslation} from "react-i18next";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -20,6 +21,8 @@ export const NewHomeDailyLife = () => {
     const container = useRef(null);
     const headerRef = useRef(null);
     const imagesRef = useRef(null);
+    const {t} = useTranslation()
+
 
     useGSAP(() => {
 
@@ -59,14 +62,11 @@ export const NewHomeDailyLife = () => {
         <div ref={container} id={'slider'} className={cls.dailyLife}>
             <div ref={headerRef} className={cls.dailyLife__header}>
                 <h1 className={cls.title}>
-                    <span className={cls.title__inner}>Turon Xalqaro Maktabi</span>
-                    hayotidan lahzalar
+                    <span className={cls.title__inner}>{t("homeDailyLife.title")}</span>
+                    {t("homeDailyLife.span")}
                 </h1>
                 <p className={cls.desc}>
-                    Farzandingiz qanday muhitda o‘qiyotgani, qanday
-                    faoliyatlarda ishtirok etayotgani bilan yaqindan tanishing.
-                    Suratlar orqali biz sizga maktab hayotidagi tabiiy,
-                    quvonchli va ilhomli daqiqalarni taqdim etamiz.
+                    {t("homeDailyLife.desc")}
                 </p>
             </div>
             <div ref={imagesRef} className={cls.dailyLife__container}>

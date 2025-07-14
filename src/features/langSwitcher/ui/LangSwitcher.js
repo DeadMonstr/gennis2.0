@@ -4,9 +4,12 @@ import React, {useState} from 'react';
 import cls from "./langSwitcher.module.sass"
 
 import arrowDown from "shared/assets/icons/Trailing element-selected.svg"
+import arrowDownNigga from "shared/assets/icons/niggaDown.svg"
 import lang from "shared/assets/icons/language.svg"
-import {useTranslation} from "react-i18next";
 
+import langNigga from "shared/assets/icons/nigga.svg"
+import {useTranslation} from "react-i18next";
+import langEn from "shared/assets/icons/940156.png"
 import UzbSvg from "shared/assets/icons/twemoji_flag-uzbekistan.svg"
 import RusSvg from "shared/assets/icons/fxemoji_russianflag.svg"
 import classNames from "classnames";
@@ -15,56 +18,80 @@ import classNames from "classnames";
 const langs = [
     {
         value: "uz",
-        label: "Uzb",
+        label: "Uz",
         icon: UzbSvg
     },
     {
         value: "ru",
-        label: "Rus",
+        label: "Ru",
         icon: RusSvg
     },
 ]
+const extraLangs = [
+    {
+        value: "uz",
+        label: "Uz",
+        icon: UzbSvg
+    },
+    {
+        value: "ru",
+        label: "Ru",
+        icon: RusSvg
+    },
+    {
+        value: "en",
+        label: "En",
+        icon: langEn
+    },
+]
 
-
-const LangSwitcher = () => {
+const LangSwitcher = ({extraClass , type}) => {
 
     const {t, i18n} = useTranslation();
 
     const [active, setActive] = useState(false)
-    const [activeLang,setActiveLang] = useState("Uzb")
+    const [activeLang,setActiveLang] = useState("Uz")
 
     console.log("dasd")
 
     const onChangeLanguage = (type) => {
-        i18n.changeLanguage(type)
+        i18n.changeLanguage(type.value)
         setActive(false)
-        setActiveLang(langs.filter(item => item.value === type)[0].label)
+        setActiveLang(type.label)
     }
 
 
     return (
-        <div className={cls.switcher}>
+        <div className={classNames(cls.switcher)}>
 
-            <div className={cls.switcher__lang} onClick={() => setActive(!active)}>
-                <img src={lang} alt=""/>
+            <div className={classNames(cls.switcher__lang , extraClass)} onClick={() => setActive(!active)}>
+                <img src={extraClass ? langNigga : lang} alt=""/>
                 <span>{activeLang}</span>
-                <img src={arrowDown} alt=""/>
+                <img src={extraClass ? arrowDownNigga : arrowDown} alt=""/>
             </div>
 
             <div
                 className={classNames(cls.switcher__popup, {[cls.active]: active})}
             >
                 {
-                    langs.map((item, index) => {
+                    type !== "home" ? langs.map((item, index) => {
                         return (
-                            <div key={index} onClick={() => onChangeLanguage(item.value)} className={cls.item}>
+                            <div key={index} onClick={() => onChangeLanguage(item)} className={cls.item}>
                                 <img src={item.icon} alt=""/>
                                 <span>{item.label}</span>
 
                             </div>
                         )
+                    }) : extraLangs.map((item, index) => {
+                        return (
+                            <div key={index} onClick={() => onChangeLanguage(item)} className={cls.item}>
+                                <img src={item.icon} alt=""/>
+                                <span>{item.label}</span>
+                            </div>
+                        )
                     })
                 }
+
             </div>
         </div>
     );

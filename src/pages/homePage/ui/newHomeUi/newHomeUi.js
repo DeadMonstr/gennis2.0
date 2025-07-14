@@ -17,6 +17,7 @@ import {
 } from "entities/newHomeUi";
 
 import {Route, Routes} from "react-router";
+import {Alert} from "features/alert";
 
 
 export const NewHomeUi = () => {
@@ -25,6 +26,7 @@ export const NewHomeUi = () => {
 
     return (
         <div className={cls.wrapper}>
+            <Alert/>
 
             {/*<NewHomeHeader/>*/}
 

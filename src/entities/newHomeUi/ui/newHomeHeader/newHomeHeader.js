@@ -3,83 +3,94 @@ import newLogoBlue from "shared/assets/logo/turonLogoBlue.svg";
 import hamburger from "shared/assets/icons/hamburger.svg";
 import whiteHamburger from "shared/assets/icons/whitehamburger.svg";
 import cls from "./newHomeUi.module.sass";
-import { useEffect, useState } from "react";
+import {useEffect, useMemo, useState} from "react";
 import classNames from "classnames";
-import { HomeBtnUi } from "shared/ui/homeBtnUi/homeBtnUi";
-import { HomeNewForm } from "features/homeNewForm";
-import { useLocation, useNavigate } from "react-router";
+import {HomeBtnUi} from "shared/ui/homeBtnUi/homeBtnUi";
 
-const headerList = [
-    {
-        id: 1,
-        title: "Home",
-        url: "/",
-        path: [
-            { title: "Homepage", path: "homepage" },
-            { title: "Upcoming Events", path: "events" },
-            { title: "Photo slider", path: "slider" },
-            { title: "Quick links", path: "quickLinks" },
-        ],
-    },
-    {
-        id: 2,
-        title: "About Us",
-        url: "/about",
-        path: [
-            {title: "Introduction", path: "introduction"},
-            {title: "Missions", path: "missions"},
-            {title: "Core values", path: "coreValues"},
-            {title: "School life", path: "schoolLife"},
-            {title: "Parents comment", path: "parentsComment"},
-            {title: "File download", path: "fileDownload"},
-        ],
-    },
-    {
-        id: 3,
-        title: "Admissions",
-        url: "/admissions",
-        path: [
-            {title: "Payment", path: "payment"},
-            {title: "Calendar", path: "calendar"},
-            {title: "Question", path: "question"},
-        ]
-    },
-    {id: 5, title: "Faculty & Staff", url: "/faculty"},
-    {
-        id: 4,
-        title: "Academics",
-        url: "/academics",
-        path: [
-            { title: "Curriculum overview", path: "curriculum" },
-            { title: "Subjects by grade", path: "subjects" },
-            { title: "Academic calendar", path: "calendar" },
-            { title: "Grading system", path: "grading" },
-            { title: "Exams & assessments info", path: "exams" },
-        ],
-    },
-    {
-        id: 6,
-        title: "Student life",
-        url: "/student_life",
-        path: [
-            { title: "Clubs & Activities", path: "clubs_and_activities" },
-            { title: "Sports & Arts", path: "sports_and_arts" },
-            { title: "School trips", path: "school_trips" },
-            { title: "Competitions", path: "competitions" },
-            { title: "Student Council", path: "student_council" },
-        ],
-    },
-    { id: 8, title: "Contact us", url: "/contact" },
-];
+import {useLocation, useNavigate} from "react-router";
+import LangSwitcher from "features/langSwitcher/ui/LangSwitcher";
+import {useTranslation} from "react-i18next";
+
+
 
 export const NewHomeHeader = () => {
-    const navigate = useNavigate();
-    const { pathname } = useLocation();
+    const { t, i18n } = useTranslation();
 
+    const headerList = useMemo(() => [
+        {
+            id: 1,
+            title: t("homeHeader.home"),
+            url: "/",
+            path: [
+                { title: t("homeHeader.homepage"), path: "homepage" },
+                { title: t("homeHeader.events"), path: "events" },
+                { title: t("homeHeader.slider"), path: "slider" },
+                { title: t("homeHeader.quickLinks"), path: "quickLinks" },
+            ],
+        },
+        {
+            id: 2,
+            title: t("homeHeader.about"),
+            url: "/about",
+            path: [
+                { title: t("homeHeader.introduction"), path: "introduction" },
+                { title: t("homeHeader.missions"), path: "missions" },
+                { title: t("homeHeader.coreValues"), path: "coreValues" },
+                { title: t("homeHeader.schoolLife"), path: "schoolLife" },
+                { title: t("homeHeader.parentsComment"), path: "parentsComment" },
+                { title: t("homeHeader.fileDownload"), path: "fileDownload" },
+            ],
+        },
+        {
+            id: 3,
+            title: t("homeHeader.admission"),
+            url: "/admissions",
+            path: [
+                { title: t("homeHeader.payment"), path: "payment" },
+                { title: t("homeHeader.calendar"), path: "calendar" },
+                { title: t("homeHeader.question"), path: "question" },
+            ],
+        },
+        {
+            id: 5,
+            title: t("homeHeader.team"),
+            url: "/faculty",
+        },
+        {
+            id: 4,
+            title: t("homeHeader.education"),
+            url: "/academics",
+            path: [
+                { title: t("homeHeader.curriculum"), path: "curriculum" },
+                { title: t("homeHeader.subjects"), path: "subjects" },
+                { title: t("homeHeader.academicCalendar"), path: "calendar" },
+                { title: t("homeHeader.grading"), path: "grading" },
+                { title: t("homeHeader.exams"), path: "exams" },
+            ],
+        },
+        {
+            id: 6,
+            title: t("homeHeader.life"),
+            url: "/student_life",
+            path: [
+                { title: t("homeHeader.clubs"), path: "clubs_and_activities" },
+                { title: t("homeHeader.sports"), path: "sports_and_arts" },
+                { title: t("homeHeader.trips"), path: "school_trips" },
+                { title: t("homeHeader.competitions"), path: "competitions" },
+                { title: t("homeHeader.studentCouncil"), path: "student_council" },
+            ],
+        },
+        {
+            id: 8,
+            title: t("homeHeader.contact"),
+            url: "/contact",
+        },
+    ], [i18n.language, t]);
+    const navigate = useNavigate();
+    const {pathname} = useLocation();
     const [active, setActive] = useState(null);
     const [scrolled, setScrolled] = useState(false);
     const [activeMenu, setActiveMenu] = useState(false);
-    const [activeForm, setActiveForm] = useState(false);
     const [activePath, setActivePath] = useState(null);
     const [activeFormTitle, setActiveFormTitle] = useState(null);
 
@@ -99,9 +110,12 @@ export const NewHomeHeader = () => {
         }
     }, [activePath, activeFormTitle]);
 
+
+
     const handleMainClick = (item) => {
         navigate(item.url);
         setActiveMenu(false)
+
         if (item.id) {
             if (active === item.id) {
                 setActive(null);
@@ -137,7 +151,7 @@ export const NewHomeHeader = () => {
         if (section) {
             const yOffset = -150;
             const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
-            window.scrollTo({ top: y, behavior: "smooth" });
+            window.scrollTo({top: y, behavior: "smooth"});
             window.history.pushState(null, "", `#${subItem.path}`);
         }
     };
@@ -146,70 +160,75 @@ export const NewHomeHeader = () => {
         headerList.map((item) => {
             const isActive = active === item.id;
             return (
-                <li
-                    key={item.id || item.title}
-                    onClick={() => handleMainClick(item)}
-                    className={classNames({ [cls.active]: isActive })}
-                >
-                    {item.title}
-                    {item.path && <i className={`fa-solid fa-chevron-${isActive ? "up" : "down"}`} />}
+                <>
+                    <li
+                        key={item.id || item.title}
+                        onClick={() => handleMainClick(item)}
+                        className={classNames({[cls.active]: isActive})}
+                    >
+                        {item.title}
+                        {item.path && <i className={`fa-solid fa-chevron-${isActive ? "up" : "down"}`}/>}
 
-                    {!!item.path && (
-                        <div
-                            className={classNames(cls.popup, {
-                                [cls.popup_active]: item?.id === activePath?.id,
-                                [cls.popup_unactive]: !activePath?.path,
-                            })}
-                        >
-                            <ul>
-                                {activePath?.path?.map((subItem) => (
-                                    <li
-                                        key={subItem.title}
-                                        className={classNames({
-                                            [cls.active]: activeFormTitle === subItem.title,
-                                        })}
-                                        onClick={(e) => handleSubItemClick(e, subItem, item)}
-                                    >
-                                        {subItem.title}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
-                </li>
+                        {item?.id === activePath?.id && activePath?.path  && (
+                            <div
+                                style={{bottom: `${item?.path?.length * -2.2}rem`}}
+                                className={classNames(cls.popup, {
+                                    [cls.popup_active]: item?.id === activePath?.id,
+                                    [cls.popup_unactive]: !activePath?.path,
+                                })}
+                            >
+                                <ul>
+                                    {activePath?.path?.map((subItem) => (
+                                        <li
+                                            key={subItem.title}
+                                            className={classNames({
+                                                [cls.active]: activeFormTitle === subItem.title,
+                                            })}
+                                            onClick={(e) => handleSubItemClick(e, subItem, item)}
+                                        >
+                                            {subItem.title}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                    </li>
+
+                </>
             );
         });
 
     return (
-        <div className={classNames(cls.header, { [cls.scrolled]: scrolled })}>
-            <div  className={cls.header__logo}>
-                <img src={scrolled ? newLogoBlue : newLogo} alt="logo" />
+        <div className={classNames(cls.header, {[cls.scrolled]: scrolled})}>
+            <div className={cls.header__logo}>
+                <img src={scrolled ? newLogoBlue : newLogo} alt="logo"/>
             </div>
 
-            <ul className={classNames(cls.header__list, { [cls.scrolledActive]: scrolled })}>
+            <ul className={classNames(cls.header__list, {[cls.scrolledActive]: scrolled})}>
                 {renderList()}
             </ul>
 
-            <div  style={{ display: "flex", gap: "2rem"}}>
+            <div className={classNames(cls.header__btns)}>
 
-                    <HomeBtnUi extraClass={cls.contact} onClick={() => setActiveForm(true)} type="request">Onlayn ariza topiring</HomeBtnUi>
-
+                <HomeBtnUi extraClass={cls.contact} onClick={() => navigate("/login")} type="request">{t("homeHeader.apply")}</HomeBtnUi>
+                <LangSwitcher type={"home"} extraClass={scrolled ? "" : cls.header__lang}/>
                 <div onClick={() => setActiveMenu(!activeMenu)} className={cls.header__burger}>
-                    <img src={scrolled ? whiteHamburger : hamburger} alt="menu" />
+                    <img src={scrolled ? whiteHamburger : hamburger} alt="menu"/>
                 </div>
             </div>
 
-            <div className={classNames(cls.activeMenu, {[cls.activeMenuBc] : activeMenu})}>
-                <ul className={classNames(cls.activeMenu__list , { [cls.activeMenuActive]: activeMenu })}>
+            <div className={classNames(cls.activeMenu, {[cls.activeMenuBc]: activeMenu})}>
+                <ul className={classNames(cls.activeMenu__list, {[cls.activeMenuActive]: activeMenu})}>
                     {headerList.map((item) => (
                         <>
                             <li
                                 key={item.id}
                                 onClick={() => handleMainClick(item)}
-                                className={classNames({ [cls.activeList]: active === item.id })}
+                                className={classNames({[cls.activeList]: active === item.id})}
                             >
                                 {item.title}
-                                {item.path && <i className={`fa-solid fa-chevron-${active === item.id ? "up" : "down"}`} />}
+                                {item.path &&
+                                    <i className={`fa-solid fa-chevron-${active === item.id ? "up" : "down"}`}/>}
                             </li>
                             {!!item.path && (
                                 <div
@@ -238,7 +257,6 @@ export const NewHomeHeader = () => {
                 </ul>
             </div>
 
-            <HomeNewForm setActiveForm={setActiveForm} activeForm={activeForm} />
         </div>
     );
 };

@@ -17,11 +17,21 @@ import targetItemsLastConfigUz from "entities/targetItems/config/targetItemsLast
 import targetItemsLastConfigRu from "entities/targetItems/config/targetItemsLastConfig/ruTranslation.json"
 
 
+import homeHeaderUz from "entities/newHomeUi/ui/newHomeHeader/config/uz.json"
+import homeHeaderEn from "entities/newHomeUi/ui/newHomeHeader/config/en.json"
+import homeHeaderRu from "entities/newHomeUi/ui/newHomeHeader/config/ru.json"
 
+import homeMainUz from "entities/newHomeUi/ui/newHomeMain/config/uz.json"
+import homeMainRu from "entities/newHomeUi/ui/newHomeMain/config/ru.json"
+import homeMainEn from "entities/newHomeUi/ui/newHomeMain/config/en.json"
 
+import homePrincipalUz from "entities/newHomeUi/ui/newHomePrincipal/config/uz.json"
+import homePrincipalRu from "entities/newHomeUi/ui/newHomePrincipal/config/ru.json"
+import homePrincipalEn from "entities/newHomeUi/ui/newHomePrincipal/config/en.json"
 
-
-
+import homeDailyLifeUz from "entities/newHomeUi/ui/newHomeDailyLife/config/uz.json"
+import homeDailyLifeRu from "entities/newHomeUi/ui/newHomeDailyLife/config/ru.json"
+import homeDailyLifeEn from "entities/newHomeUi/ui/newHomeDailyLife/config/en.json"
 const resources = {
     uz: {
         translation: {
@@ -30,7 +40,12 @@ const resources = {
             footer: childrenFooterUz,
             targetHome: targetItemsHomeConfigUz,
             targetSecond: targetItemsSecondConfigUz,
-            targetLast: targetItemsLastConfigUz
+            targetLast: targetItemsLastConfigUz,
+            homeHeader: homeHeaderUz,
+            homeMain: homeMainUz,
+            homePrincipal: homePrincipalUz,
+            homeDailyLife: homeDailyLifeUz
+
         }
     },
     ru: {
@@ -40,7 +55,25 @@ const resources = {
             footer: childrenFooterRU,
             targetHome: targetItemsHomeConfigRu,
             targetSecond: targetItemsSecondConfigRu,
-            targetLast: targetItemsLastConfigRu
+            targetLast: targetItemsLastConfigRu,
+            homeHeader: homeHeaderRu,
+            homeMain: homeMainRu,
+            homePrincipal: homePrincipalRu,
+            homeDailyLife: homeDailyLifeRu
+
+
+
+
+        }
+    },
+    en: {
+        translation: {
+            homeHeader: homeHeaderEn,
+
+            homeMain: homeMainEn,
+            homePrincipal: homePrincipalEn,
+            homeDailyLife: homeDailyLifeEn
+
         }
     },
 };
