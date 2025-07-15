@@ -1,14 +1,14 @@
 import React, { useRef } from 'react';
 
 import cls from "./newHomeDailyLife.module.sass";
-import image1 from "shared/assets/images/dailyLife1.jpg";
-import image2 from "shared/assets/images/dailyLife2.jpg";
-import image3 from "shared/assets/images/dailyLife3.jpg";
-import image4 from "shared/assets/images/dailyLife4.jpg";
-import image5 from "shared/assets/images/dailyLife5.jpg";
-import image6 from "shared/assets/images/dailyLife6.jpg";
-import image7 from "shared/assets/images/dailyLife7.jpg";
-import image8 from "shared/assets/images/dailyLife8.jpg";
+import image1 from "shared/assets/images/homeGallery1.jpg";
+import image2 from "shared/assets/images/homeGallery2.jpg";
+import image3 from "shared/assets/images/homeGallery3.jpg";
+import image4 from "shared/assets/images/homeGallery4.jpg";
+import image5 from "shared/assets/images/homeGallery5.jpg";
+import image6 from "shared/assets/images/homeGallery6.jpg";
+import image7 from "shared/assets/images/DSC09808.jpg";
+import image8 from "shared/assets/images/DSC09946.jpg";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
