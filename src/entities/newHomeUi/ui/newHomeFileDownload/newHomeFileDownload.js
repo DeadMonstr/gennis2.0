@@ -121,11 +121,11 @@ export const NewHomeFileDownload = () => {
                     <span className={cls.title__inner}>Quyidagi fayllarni PDF/DOC</span>
                     formatda yuklab olishingiz <br/> mumkin.
                 </h1>
-                <p className={cls.subTitle}>
-                    Ota-onalar va abituriyentlar maktab haqida <br/>
-                    zarur hujjat va materiallarni oson topib, yuklab <br/>
-                    olishi uchun qulay bo‘lim.
-                </p>
+                {/*<p className={cls.subTitle}>*/}
+                {/*    Ota-onalar va abituriyentlar maktab haqida <br/>*/}
+                {/*    zarur hujjat va materiallarni oson topib, yuklab <br/>*/}
+                {/*    olishi uchun qulay bo‘lim.*/}
+                {/*</p>*/}
             </div>
             <div ref={cardsRef} className={cls.fileDownload__container}>
                 {render()}

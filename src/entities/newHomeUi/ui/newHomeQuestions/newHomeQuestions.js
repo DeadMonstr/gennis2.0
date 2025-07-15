@@ -82,11 +82,11 @@ export const NewHomeQuestions = () => {
                     Qabul jarayoni haqida tez-tez <br/>
                     so‘raladigan savollar
                 </h1>
-                <p className={cls.subTitle}>
-                    Qabul qanday kechadi? Qanday hujjatlar kerak? To‘lov <br/>
-                    qanday bo‘ladi? Biz sizni qiziqtiradigan eng muhim <br/>
-                    savollarga bu yerda javob berdik.
-                </p>
+                {/*<p className={cls.subTitle}>*/}
+                {/*    Qabul qanday kechadi? Qanday hujjatlar kerak? To‘lov <br/>*/}
+                {/*    qanday bo‘ladi? Biz sizni qiziqtiradigan eng muhim <br/>*/}
+                {/*    savollarga bu yerda javob berdik.*/}
+                {/*</p>*/}
             </div>
             <div ref={cardsRef} className={cls.questions__container}>
                 {render()}

@@ -17,6 +17,8 @@ import {
 } from "entities/newHomeUi";
 
 import {Route, Routes} from "react-router";
+import {SchoolHomeWorkUs} from "../../../../entities/schoolHome";
+import React from "react";
 
 
 export const NewHomeUi = () => {
@@ -41,6 +43,7 @@ export const NewHomeUi = () => {
                     <Route path={"/academics"} element={<Academics/>}/>
                     <Route path={"/faculty"} element={<NewHomeFaculty/>}/>
                     <Route path={"/contact"} element={<NewHomeContact/>}/>
+                    <Route element={<SchoolHomeWorkUs/>} path={"workwithus"}/>
                 </Routes>
 
             </div>

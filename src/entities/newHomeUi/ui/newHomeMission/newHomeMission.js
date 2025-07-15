@@ -57,15 +57,19 @@ export const NewHomeMission = () => {
             stagger: 0.3
         });
 
-    }, { scope: container });
+    }, {scope: container});
 
     return (
         <div ref={container} className={cls.mission} id={"missions"}>
             <div ref={headerRef1} className={cls.mission__header}>
                 <img className={cls.image} src={missionImg} alt=""/>
                 <h1 className={cls.title}>
-                    Missiya va Vizyon: Farzandingiz <br/>
-                    uchun ishonchli yo‘nalish
+                    Missiya va Maqsad:
+                    <span className={cls.title__inner}>
+                        Yetakchilikka intilgan har bir tashkilot o'z oldiga qoygan <br/>
+                        maqsadi va shu maqsadga erishish uchun aniq missiyalariga <br/>
+                        ega bo'lishi zarur.
+                    </span>
                 </h1>
                 <div className={cls.btn}>
                     <div className={cls.btn__inner}>
@@ -74,28 +78,27 @@ export const NewHomeMission = () => {
                 </div>
             </div>
             <div ref={cardsRef} className={cls.mission__container}>
-                <div  ref={headerRef} className={cls.info}>
+                <div ref={headerRef} className={cls.info}>
                     <h1 className={cls.info__header}>
                         Ilm, innovatsiya <br/>
                         va orzu sari yo‘l
                     </h1>
-                    <p  ref={headerRef} className={cls.info__desc}>
-                        Turon Xalqaro Maktabi o‘quvchilariga zamonaviy dunyo uchun <br/>
-                        zarur bo‘lgan bilim, ko‘nikma va qadriyatlarni uyg‘unlashtirgan <br/>
-                        ta’lim muhitini yaratadi.
+                    <p ref={headerRef} className={cls.info__desc}>
+                        Turon Xalqaro Maktabining maqsadi o‘quvchilariga zamonaviy dunyo uchun
+                        zarur bo‘lgan bilim, ko‘nikma va qadriyatlarni uyg‘unlashtirgan
+                        ta’lim muhitini yaratishdir.
                     </p>
                     <img className={classNames(cls.info__image, "event-card")} src={visionImg} alt=""/>
                 </div>
                 <div className={classNames(cls.task, "event-card")}>
-                    <h2 className={cls.task__title}>Missiya</h2>
+                    <h2 className={cls.task__title}>Missiyamiz</h2>
                     <p className={cls.task__desc}>
                         O‘zbekistonda o‘quvchilarga fan, texnologiya, muhandislik va matematika bo‘yicha, axborot
-                        texnologiyalari bilan integratsiyalashgan holda ajoyib ta’lim berishdan iborat.
-                        Bizning yondashuvimiz qat’iy akademik standartlarni amaliy tajriba bilan birlashtirib,
-                        bitiruvchilarimizni tez o‘zgaruvchan global dunyo talablari uchun tayyorlaydi.
-                        Hozirgi zamon yoshlari e'tiborini eski nazariya va formulalarni yodlash bilan jalb qilish
-                        imkonsiz ekan, biz o'qitish va amaliyot jarayoniga zamonaviy texnalogiyalarni jalb qilish
-                        tarafdorimiz.
+                        texnologiyalari bilan integratsiyalashgan holda ajoyib ta’lim berishdan iborat. Bizning
+                        yondashuvimiz qat’iy akademik standartlarni amaliy tajriba bilan birlashtirib, bitiruvchilarimizni
+                        tez o‘zgaruvchan global dunyo talablari uchun tayyorlaydi. Hozirgi zamon yoshlari e'tiborini eski
+                        nazariya va formulalarni yodlash bilan jalb qilish imkonsiz ekan, biz o'qitish va amaliyot
+                        jarayoniga zamonaviy texnalogiyalarni jalb qilish tarafdorimiz.
                     </p>
                 </div>
             </div>

@@ -9,6 +9,11 @@ import {useGSAP} from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import classNames from "classnames";
+import {isMobile} from "react-device-detect";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Scrollbar} from "swiper/modules";
+import 'swiper/css';
+import 'swiper/css/scrollbar';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -40,6 +45,7 @@ export const NewHomeSchoolLife = () => {
     const headerRef = useRef(null);
     const sliderRef = useRef(null);
     const cardsRef = useRef(null);
+    const mainCardRef = useRef(null);
 
     useGSAP(() => {
 
@@ -85,13 +91,31 @@ export const NewHomeSchoolLife = () => {
             stagger: 0.3
         });
 
-    }, { scope: container });
+        gsap.from(mainCardRef.current, {
+            scrollTrigger: {
+                trigger: mainCardRef.current,
+                start: "top 80%",
+                end: "bottom 75%",
+                scrub: 1,
+            },
+            y: 100,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+            stagger: 0.3
+        });
+
+    }, {scope: container});
 
     const render = () => {
         return list.map((item, index) => {
-            if (index > 0 && window.innerWidth <= 430) return null
+            // if (index > 0 && window.innerWidth <= 430) return null
             return (
-                <div className={classNames(cls.card, "event-card")}>
+                <SwiperSlide
+                    className={classNames(cls.card, {
+                        "event-card": !isMobile
+                    })}
+                >
                     <div className={cls.card__header}>
                         <img className={cls.card__image} src={item.image} alt=""/>
                         <p className={cls.card__info}>{item.subTitle}</p>
@@ -101,7 +125,7 @@ export const NewHomeSchoolLife = () => {
                         <p className={cls.desc}>100+ o‘quvchi biologiya, matematika va fizika yo‘nalishlarida xalqaro
                             olimpiadalarda g‘oliblikni qo‘lga kiritgan.</p>
                     </div>
-                </div>
+                </SwiperSlide>
             )
         })
     }
@@ -110,8 +134,8 @@ export const NewHomeSchoolLife = () => {
         <div ref={container} className={cls.schoolLife} id={"schoolLife"}>
             <div ref={headerRef} className={cls.schoolLife__header}>
                 <div className={cls.title}>
-                    <span className={cls.title__inner}>Maktab hayotidagi</span>
-                    muhim zafarlar
+                    <span className={cls.title__inner}>Maktab faoliyatidagi</span>
+                    muhim yutuqlarimiz
                 </div>
                 <p className={cls.desc}>
                     Turon Xalqaro Maktabi qisqa vaqt ichida ta’lim sifati, o‘quv dasturlari va <br/>
@@ -121,16 +145,24 @@ export const NewHomeSchoolLife = () => {
                     grantlarga ega bo‘lishgan.
                 </p>
             </div>
-            <div ref={sliderRef} className={cls.schoolLife__slider}>
-                <p className={cls.title}>Turon Xalqaro Maktabi Yutuqlari Bilan Tanishing</p>
-                <div className={cls.bars}>
-                    <p style={{color: "#3E323280"}} className={cls.bars__inner}>{"<"}</p>
-                    <p style={{color: "#3E3232"}} className={cls.bars__inner}>{">"}</p>
-                </div>
-            </div>
-            <div ref={cardsRef} className={cls.schoolLife__container}>
-                {render()}
-            </div>
+            {
+                isMobile
+                    ?
+                    <Swiper
+                        scrollbar={{ draggable: true }}
+                        modules={[Scrollbar]}
+                        spaceBetween={10}
+                        slidesPerView={1}
+                        ref={mainCardRef}
+                        className={cls.schoolLife__container}
+                    >
+                        {render()}
+                    </Swiper>
+                    :
+                    <div ref={cardsRef} className={cls.schoolLife__container}>
+                        {render()}
+                    </div>
+            }
         </div>
     );
 };

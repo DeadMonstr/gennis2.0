@@ -1,73 +1,22 @@
 import React, {useRef} from 'react';
-
-import cls from "./newHomeCalendar.module.sass";
+import classNames from "classnames";
 import {useGSAP} from "@gsap/react";
 import gsap from "gsap";
-import classNames from "classnames";
+import {isMobile} from "react-device-detect";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Scrollbar} from "swiper/modules";
 
-const weekdays = ["DU", "SE", "CH", "PA", "JU", "SH", "YA"]
+import {weekdays, list} from "../../config/newHomeCalendarConfig";
 
-const list = [
-    {
-        calendarRows: [
-            [1, 2, 3, 4, 5, 6, 7],
-            [8, 2, 3, 4, 5, 6, 7],
-            [1, 2, 3, 4, 5, 6, 7],
-            [1, 2, 3, 4, 5, 6, 7],
-            [1, 2, 3, 4, 5, 6, 7],
-        ]
-    },
-    {
-        calendarRows: [
-            [1, 2, 3, 4, 5, 6, 7],
-            [8, 2, 3, 4, 5, 6, 7],
-            [1, 2, 3, 4, 5, 6, 7],
-            [1, 2, 3, 4, 5, 6, 7],
-            [1, 2, 3, 4, 5, 6, 7],
-        ]
-    },
-    {
-        calendarRows: [
-            [1, 2, 3, 4, 5, 6, 7],
-            [8, 2, 3, 4, 5, 6, 7],
-            [1, 2, 3, 4, 5, 6, 7],
-            [1, 2, 3, 4, 5, 6, 7],
-            [1, 2, 3, 4, 5, 6, 7],
-        ]
-    },
-    {
-        calendarRows: [
-            [1, 2, 3, 4, 5, 6, 7],
-            [8, 2, 3, 4, 5, 6, 7],
-            [1, 2, 3, 4, 5, 6, 7],
-            [1, 2, 3, 4, 5, 6, 7],
-            [1, 2, 3, 4, 5, 6, 7],
-        ]
-    },
-    {
-        calendarRows: [
-            [1, 2, 3, 4, 5, 6, 7],
-            [8, 2, 3, 4, 5, 6, 7],
-            [1, 2, 3, 4, 5, 6, 7],
-            [1, 2, 3, 4, 5, 6, 7],
-            [1, 2, 3, 4, 5, 6, 7],
-        ]
-    },
-    {
-        calendarRows: [
-            [1, 2, 3, 4, 5, 6, 7],
-            [8, 2, 3, 4, 5, 6, 7],
-            [1, 2, 3, 4, 5, 6, 7],
-            [1, 2, 3, 4, 5, 6, 7],
-            [1, 2, 3, 4, 5, 6, 7],
-        ]
-    },
-]
+import cls from "./newHomeCalendar.module.sass";
+import 'swiper/css';
+import 'swiper/css/scrollbar';
 
 export const NewHomeCalendar = () => {
     const container = useRef(null);
     const headerRef = useRef(null);
     const cardsRef = useRef(null);
+    const mainCardRef = useRef(null);
 
     useGSAP(() => {
 
@@ -99,29 +48,61 @@ export const NewHomeCalendar = () => {
             stagger: 0.3
         });
 
-    }, { scope: container });
+        gsap.from(mainCardRef.current, {
+            scrollTrigger: {
+                trigger: mainCardRef.current,
+                start: "top 80%",
+                end: "bottom 75%",
+                scrub: 1,
+            },
+            y: 100,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+            stagger: 0.3
+        });
+
+    }, {scope: container});
 
     const render = () => {
         return list.map((item, index) => {
-            if (index > 0 && window.innerWidth <= 430) return null
+            // if (index > 0 && window.innerWidth <= 430) return null
             return (
-                <div className={classNames(cls.container, "event-card")}>
+                <SwiperSlide className={classNames(cls.container, {
+                    "event-card": !isMobile
+                })}>
                     <div className={cls.calendarSub}>
-                        <div className={cls.header}>Dekabr</div>
+                        <div className={cls.header}>{item.month}</div>
                         <div className={cls.grid}>
                             {weekdays.map((day, idx) => (
-                                <div key={idx} className={cls.day}>{day}</div>
+                                <div
+                                    key={idx}
+                                    className={classNames(cls.day, {
+                                        [cls.weekend]: idx > 4
+                                    })}
+                                >
+                                    {day}
+                                </div>
                             ))}
                             {item.calendarRows.map((row, rowIndex) =>
                                 row.map((num, colIndex) => {
-                                    const isSelected = rowIndex === 1 && colIndex === 0
-                                    const isGrey = rowIndex === 4
+                                    if (typeof num === "object") {
+                                        return (
+                                            <div
+                                                style={{background: num.color}}
+                                                key={`${rowIndex}-${colIndex}`}
+                                                className={classNames(cls.cell)}
+                                            >
+                                                {num.day}
+                                            </div>
+                                        )
+                                    }
                                     return (
                                         <div
                                             key={`${rowIndex}-${colIndex}`}
-                                            className={`${cls.cell} ${isSelected ? cls.selected : ""} ${isGrey ? cls.grey : ""}`}
+                                            className={classNames(cls.cell)}
                                         >
-                                            {num}
+                                            {num === 0 ? "" : num}
                                         </div>
                                     )
                                 })
@@ -131,11 +112,15 @@ export const NewHomeCalendar = () => {
 
                     <div className={cls.rightPanel}>
                         <div className={cls.rightPanelTitle}>Muhim kunlar</div>
-                        <div className={cls.importantDate}>
-                            <span className={cls.highlight}>8-Dekabr</span> / Konstitutsiya kuni
+                        <div className={cls.rightPanel__container}>
+                            {item.days.map(inn => (
+                                <div className={cls.importantDate}>
+                                    <span className={cls.highlight}>{inn?.day}</span> / {inn?.name}
+                                </div>
+                            ))}
                         </div>
                     </div>
-                </div>
+                </SwiperSlide>
             )
         })
     }
@@ -149,16 +134,25 @@ export const NewHomeCalendar = () => {
                     hech narsani o‘tkazib yubormaysiz.
                 </p>
             </div>
-            <div className={cls.calendar__slider}>
-                <p className={cls.title}>Muhim sanalar</p>
-                <div className={cls.bars}>
-                    <p style={{color: "#3E323280"}} className={cls.bars__inner}>{"<"}</p>
-                    <p style={{color: "#3E3232"}} className={cls.bars__inner}>{">"}</p>
-                </div>
-            </div>
-            <div ref={cardsRef} className={cls.calendar__container}>
-                {render()}
-            </div>
+            {
+                isMobile
+                    ?
+                    <Swiper
+                        autoHeight={true}
+                        scrollbar={{ draggable: true }}
+                        modules={[Scrollbar]}
+                        spaceBetween={10}
+                        slidesPerView={1}
+                        ref={mainCardRef}
+                        className={cls.calendar__container}
+                    >
+                        {render()}
+                    </Swiper>
+                    :
+                    <div ref={cardsRef} className={cls.calendar__container}>
+                        {render()}
+                    </div>
+            }
         </div>
     );
 };

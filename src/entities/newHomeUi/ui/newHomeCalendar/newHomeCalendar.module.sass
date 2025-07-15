@@ -34,11 +34,14 @@
         border-radius: 50%
         background: #F5F5F5
   &__container
+    width: 100%
     display: flex
     justify-content: center
     flex-wrap: wrap
     gap: 2rem
+    padding-bottom: 2rem
     .container
+      //width: 100%
       display: flex
       background: white
       border: 1px solid #ccc
@@ -76,6 +79,8 @@
 
     .day
       font-weight: bold
+      &.weekend
+        background: rgba(255, 106, 0, 0.8)
 
     .cell
       background-color: white
@@ -92,6 +97,10 @@
       padding: 1rem
       background-color: #f6f6f8
       width: 30rem
+      &__container
+        display: flex
+        flex-direction: column
+        gap: .7rem
 
     .rightPanelTitle
       font-weight: bold
@@ -132,6 +141,8 @@
     &__container
       .container
         flex-direction: column
+      .rightPanel
+        width: 100%
       .grid
         justify-content: center
         gap: .5rem 1rem
