@@ -48,15 +48,10 @@ export const Menubar = () => {
 
 
         return menuConfig.map((item, index) => {
-
             const linkId = selectedLocations?.length > 1 && !item.multi ? "" : selectedLocations?.length > 1 && item.multi ? "/list" : `/${branch?.id}`
-
-
             if (selectedLocations > 1 && !item.branches) return;
             if (!item?.system.includes(system.name)) return;
             if ((typeof item.roles === "object" && user?.job.some(job => item.roles.includes(job))) || (typeof item.roles === "boolean" && item.roles)) {
-
-
                 return (
                     <NavLink
                         to={item.to}
@@ -74,8 +69,6 @@ export const Menubar = () => {
                     </NavLink>
                 );
             }
-
-
         });
     }, [theme, selectedLocations, branch, user]);
 

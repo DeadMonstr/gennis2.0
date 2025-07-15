@@ -36,6 +36,9 @@ import {onAddAlertOptions} from "../../../alert/model/slice/alertSlice";
 import {DefaultLoader, DefaultPageLoader} from "shared/ui/defaultLoader";
 import {Input} from "shared/ui/input";
 import PlusIcon from "shared/assets/icons/plus_icon.svg";
+import {getUserData} from "entities/user";
+import {getUserProfileData} from "entities/profile/userProfile";
+import {fetchTaskManager} from "features/taskManager/modal/taskManagerThunk";
 
 const FuncContext = createContext(null)
 
@@ -53,6 +56,9 @@ const agreeType = ["Keladi", "Kemidi"]
 
 
 export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
+
+    const user = useSelector(getUserProfileData)
+
     const complateCount = useSelector(getTaskManagerCompletedCount)
     const progressCount = useSelector(getTaskManagerProgressCount)
     const [selectedStatus, setSelectedStatus] = useState(null)
@@ -67,8 +73,10 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
     const formatedDate = formatDate(date)
 
     const [activeModal, setActiveModal] = useState(false)
+    const [activeAddModal,setActiveAddModal] = useState(false)
     const [activeModalItem, setActiveModalItem] = useState(null)
     const {register, handleSubmit, setValue} = useForm()
+    const {register: registerAdd, handleSubmit: handleSubmitAdd, setValue: setValueAdd} = useForm()
     const card = useSelector(getTaskManager)
     // const branchs = useSelector(getTaskManagerBranchs)
     const {request} = useHttp()
@@ -133,7 +141,6 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
         setActiveModalItem(item)
         request(`${API_URL}Lead/lead_call/${item.id}`, "GET", null, headers())
             .then(res => {
-                console.log(res, "nma gap")
                 setResComment(res.history)
             })
             .catch(err => {
@@ -156,37 +163,69 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
         request(`${API_URL}Lead/lead_call_ring/`, "POST", JSON.stringify({lead_id: activeModalItem.id}), headers())
             .then(res => {
                 console.log(res)
+
                 // setResComment(res)
             })
             .catch(err => {
                 // console.log(err)
             })
     }
-    console.log(agreeStatus)
+
+
+    console.log(user)
+    const onSubmitAdd = (data) => {
+
+
+        const newData = {
+            ...data,
+            operator: user.id,
+            branch: user.branch.id
+        }
+
+
+        request(`${API_URL}Lead/lead_create/`, "POST", JSON.stringify(newData), headers())
+            .then((res)  => {
+                setValueAdd("name","")
+                setValueAdd("surname","")
+                setValueAdd("phone","")
+                dispatch(onAddAlertOptions({
+                    type: "success",
+                    status: true,
+                    msg: "Muvaffaqiyatli yaratildi"
+                }))
+                setActiveAddModal(false)
+                dispatch(fetchTaskManager({date: formatted , taskType: taskType, branch: user.branch.id}))
+            })
+            .catch((err) => {
+                const newErrors = {
+                    phoneExist: true
+                }
+                console.log(err, "errrr");
+            });
+    }
 
 
     return (
         <div className={cls.taskLeft}>
             <div className={cls.taskLeft__header}>
 
-                {formatedDate === formatted && <div
-
-                    onClick={() => setTaskType("progress")}
-                    className={cls.taskLeft__header_box}
-                    style={{background: `rgba(249, 145, 75, 1)`}}
-                >
-                    <div className={cls.taskLeft__header_box_top}>
-                        <img src={progressIcon} alt=""/>
-                        <h2 style={{whiteSpace: "pre-line"}}>Task <br/>in Progress</h2>
+                {formatedDate === formatted &&
+                    <div
+                        onClick={() => setTaskType("progress")}
+                        className={cls.taskLeft__header_box}
+                        style={{background: `rgba(249, 145, 75, 1)`}}
+                    >
+                        <div className={cls.taskLeft__header_box_top}>
+                            <img src={progressIcon} alt=""/>
+                            <h2 style={{whiteSpace: "pre-line"}}>Task <br/>in Progress</h2>
+                        </div>
+                        <div className={cls.taskLeft__header_box_count}>{progressCount}</div>
                     </div>
-                    <div className={cls.taskLeft__header_box_count}>{progressCount}</div>
-                </div>}
+                }
 
                 <div
-
                     className={cls.taskLeft__header_box}
                     onClick={() => setTaskType("completed")}
-
                     style={{background: `rgba(26, 174, 204, 1)`}}
                 >
                     <div className={cls.taskLeft__header_box_top}>
@@ -205,7 +244,11 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
                     <div className={cls.taskLeft__body__header}>
                         <h1 className={cls.taskLeft__body_title}>{taskType === "completed" ? "Completed leads" : "Leads"}</h1>
                         {
-                            taskType === "progress" && <div className={cls.plus}>
+                            taskType === "progress" &&
+                            <div
+                                onClick={() => setActiveAddModal(true)}
+                                className={cls.plus}
+                            >
                                 <img src={PlusIcon} alt=""/>
                             </div>
                         }
@@ -287,9 +330,10 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
 
                             {selectedStatus === "Tel ko'tardi" ? <>
                                 {/*<h2>Branch</h2>*/}
-                               <div style={{display: "flex" , gap: "1rem"}}>
-                                   <Input type={"checkbox"}  onChange={e => setAgreeStatus(e.target.checked)}/> <h2>Keladi</h2>
-                               </div>
+                                <div style={{display: "flex", gap: "1rem"}}>
+                                    <Input type={"checkbox"} onChange={e => setAgreeStatus(e.target.checked)}/>
+                                    <h2>Keladi</h2>
+                                </div>
                                 {/*<Select defaultValue={branchs[0]?.id} options={branchs} name={"branch"} register={register}/>*/}
                                 <Textarea name={"comment"} register={register}/>
 
@@ -326,6 +370,16 @@ export const TaskManagerLeft = ({formatted, setTaskType, taskType}) => {
                     ))}
 
                 </div>}
+            </Modal>
+
+
+            <Modal active={activeAddModal} setActive={setActiveAddModal}>
+                <div className={cls.addModal}>
+                    <Input register={registerAdd} name={"name"} title={"Ism"}/>
+                    <Input register={registerAdd} name={"surname"} title={"Familya"}/>
+                    <Input register={registerAdd} name={"phone"} title={"Telefon"}/>
+                    <Button onClick={handleSubmitAdd(onSubmitAdd)}>Tasdiqlash</Button>
+                </div>
             </Modal>
 
         </div>

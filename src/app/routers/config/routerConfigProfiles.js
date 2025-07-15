@@ -18,7 +18,7 @@ import {
     getEmployerSalary,
     getTeacherSalary, getInkasatsiya,
     getGroupHistory,
-    getRouteClassProfile, getOtchot, getRouteRGBData, getRouteTaskManager
+    getRouteClassProfile, getOtchot, getRouteRGBData, getRouteTaskManager, getRouteFilteredLeads
 } from "shared/const/routers";
 
 
@@ -43,6 +43,7 @@ import {StudentProfileGroupsHistory} from "entities/profile/studentProfile";
 import {AccountingOtchotPage} from "../../../pages/accountingPage";
 import {TaskManager} from "pages/taskManager/ui/taskManager";
 import {AdminTaskManager} from "../../../pages/adminTaskManager";
+import {FilteredLeadsPage} from "pages/filteredLeadsPage/ui/FilteredLeadsPage";
 
 export const routersConfigProfile = [
     {
@@ -55,6 +56,11 @@ export const routersConfigProfile = [
         name: "Task Manager",
         path: getRouteTaskManager(":id"),
         element: <TaskManager/>,
+    },
+    {
+        name: "Task Manager Filtered",
+        path: getRouteFilteredLeads(),
+        element: <FilteredLeadsPage/>,
     },
     {
         to: "capitalBox",

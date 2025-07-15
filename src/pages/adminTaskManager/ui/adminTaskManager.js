@@ -9,6 +9,8 @@ import {Select} from "../../../shared/ui/select";
 import cls from "./adminTaskManager.module.sass";
 import {AdminTaskManagerList} from "../../../entities/adminTaskManager";
 import {fetchOperatorsData, getOperatorsData} from "../../../entities/oftenUsed";
+import {Button} from "shared/ui/button";
+import {Link} from "react-router-dom";
 
 
 export const AdminTaskManager = () => {
@@ -24,7 +26,12 @@ export const AdminTaskManager = () => {
     const formatted = formatDate(selectedDate)
 
     useEffect(() => {
-        dispatch(fetchAdminTaskManager({operator_id: selectedOperator, date: formatted, branch: id, taskType: taskType}))
+        dispatch(fetchAdminTaskManager({
+            operator_id: selectedOperator,
+            date: formatted,
+            branch: id,
+            taskType: taskType
+        }))
     }, [selectedOperator, formatted, taskType])
 
     useEffect(() => {
@@ -39,6 +46,11 @@ export const AdminTaskManager = () => {
                     <h1 className={cls.box__header_title}>
                         My Projects
                     </h1>
+                    <Link to={"../filteredLeadsList"}>
+                        <Button>
+                            New Leads
+                        </Button>
+                    </Link>
                     <Select
                         defaultValue={selectedOperator}
                         onChangeOption={setSelectedOperator}

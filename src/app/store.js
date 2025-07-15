@@ -91,6 +91,7 @@ import {
     schoolHomeGallerySlice, homeContactUsSlice, visionSchoolSlice
 } from "../entities/schoolHome";
 import {taskManagerSlice} from "features/taskManager";
+import {filteredLeadsListSlice} from "entities/filteredLeadsList";
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -198,7 +199,8 @@ export const store = configureStore({
         schoolHomeGallerySlice,
         homeContactUsSlice,
         visionSchoolSlice,
-        taskManagerSlice
+        taskManagerSlice,
+        filteredLeadsListSlice
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(

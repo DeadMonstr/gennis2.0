@@ -13,19 +13,13 @@ export const TaskManagerRight = ({setSelectedDate , selectedDate}) => {
 
     return (
         <div className={cls.taskManager}>
-
             <div className={cls.taskManager__rating}>
                 <div className={cls.taskManager__rating_box}>
-
                     <CircularProgress/>
-
                 </div>
                 <h1>All Rating</h1>
             </div>
-
             <CalendarItem setSelectedDate={setSelectedDate} selectedDate={selectedDate}/>
-
-
         </div>
     );
 };
