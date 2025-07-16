@@ -3,7 +3,7 @@ import {fetchFilteredListData} from "entities/filteredLeadsList/model/filteredLe
 
 const initialState = {
     data: [],
-
+    count: 0,
     loading: false,
     error: null
 }
@@ -17,7 +17,8 @@ export const filteredLeadsListSlice = createSlice({
             .addCase(fetchFilteredListData.pending, (state) => {state.loading = true})
             .addCase(fetchFilteredListData.fulfilled, (state, action) => {
                 state.loading = false
-                state.data = action.payload
+                state.data = action.payload.data
+                state.count = action.payload.lead_count
             })
             .addCase(fetchFilteredListData.rejected, (state) => {
                 state.loading = false;
