@@ -17,6 +17,7 @@ import {useDispatch} from "react-redux";
 import {onAddAlertOptions} from "features/alert/model/slice/alertSlice";
 import {PhoneController} from "shared/ui/phoneController/phoneController";
 import {useTranslation} from "react-i18next";
+import {Modal} from "shared/ui/modal";
 
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger);
@@ -33,6 +34,8 @@ export const NewHomeMain = () => {
     const {handleSubmit , register , control ,reset} = useForm()
     const dispatch = useDispatch()
     const {t} = useTranslation()
+    const [activeVideo , setActiveVideo] = useState(false)
+
     useGSAP(() => {
         gsap.from(titleRef.current, {
             scrollTrigger: {
@@ -117,11 +120,11 @@ export const NewHomeMain = () => {
     return (
         <div ref={container} id="homepage" className={cls.main}>
             <div className={cls.main__left}>
-                <div ref={titleRef} className={cls.main__left_title}>
+                <h1 ref={titleRef} className={cls.main__left_title}>
                     {t("homeMain.title")} {window.innerWidth > 1050 ? <br /> : null} {t("homeMain.subTitle")} <br />
                     <span>{t("homeMain.blueTitle")}</span>
-                </div>
-                <div ref={descRef} className={cls.main__left_desc}>{t("homeMain.desc")}</div>
+                </h1>
+                <p ref={descRef} className={cls.main__left_desc}>{t("homeMain.desc")}</p>
                 <div ref={btnRef} className={cls.main__left_link}>
                     <HomeBtnUi onClick={() => setActive(true)} icon={<i className="fa-solid fa-arrow-right" />}>
                         {t("homeMain.btn")}
@@ -148,8 +151,8 @@ export const NewHomeMain = () => {
 
             <div className={cls.main__right}>
                 <div className={cls.main__right_header}>
-                    <div className={cls.main__right_header_img}>
-                        <img src={student} alt="" />
+                    <div onClick={() => setActiveVideo(true)} className={cls.main__right_header_img}>
+                        <img src={student} alt="vide-turon" />
                     </div>
                 </div>
                 <div className={cls.main__right_form}>
@@ -185,6 +188,13 @@ export const NewHomeMain = () => {
             </div>
 
             <HomeNewForm setActiveForm={setActive} activeForm={active} />
+            <Modal type  setActive={setActiveVideo} active={activeVideo}>
+                <iframe width="70%" height="70%" src="https://www.youtube.com/embed/MsTFRTeUAMs?si=NHIaDGWgMNifYh9I"
+                        title="YouTube video player" frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+
+            </Modal>
         </div>
     );
 };

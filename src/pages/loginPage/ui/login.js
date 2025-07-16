@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router";
 import {useDispatch} from "react-redux";
-import {set, useForm} from "react-hook-form";
+import { useForm} from "react-hook-form";
 
 import {Button} from "shared/ui/button";
 import {Input} from "shared/ui/input";
@@ -9,9 +9,9 @@ import {MiniLoader} from "shared/ui/miniLoader";
 import cls from "./login.module.sass"
 import gennisImg from "shared/assets/images/logo.svg"
 import loginAside from "shared/assets/images/login-page-4468581-3783954 1.svg"
-import {API_URL, CLASSROOM_API_URL, useHttp} from "shared/api/base";
+import {API_URL, useHttp} from "shared/api/base";
 import {getUserData} from "../model/loginSlice";
-import {DefaultLoader} from "shared/ui/defaultLoader";
+
 
 
 export const Login = () => {
@@ -22,7 +22,6 @@ export const Login = () => {
 
 
     const {register, handleSubmit , setValue} = useForm()
-    const [inputChange, setInputChange] = useState([])
     const [loading, setLoading] = useState(true)
 
 
@@ -117,7 +116,7 @@ export const Login = () => {
                                 {loading ?
                                     <>
                                         <Input
-                                            onChange={(e) => setInputChange(e.target.value)}
+
                                             title={"username"}
                                             register={register}
                                             name={"username"}
@@ -137,7 +136,7 @@ export const Login = () => {
                                         <Input
 
                                             disabled
-                                            onChange={(e) => setInputChange(e.target.value)}
+
                                             title={"username"}
                                             register={register}
                                             name={"username"}

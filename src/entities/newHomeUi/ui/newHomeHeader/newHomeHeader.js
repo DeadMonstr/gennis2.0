@@ -201,7 +201,7 @@ export const NewHomeHeader = () => {
     return (
         <div className={classNames(cls.header, {[cls.scrolled]: scrolled})}>
             <div className={cls.header__logo}>
-                <img src={scrolled ? newLogoBlue : newLogo} alt="logo"/>
+                <img src={scrolled ? newLogoBlue : newLogo} alt="turon-logo"/>
             </div>
 
             <ul className={classNames(cls.header__list, {[cls.scrolledActive]: scrolled})}>

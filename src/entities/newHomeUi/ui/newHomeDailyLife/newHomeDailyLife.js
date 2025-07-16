@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import cls from "./newHomeDailyLife.module.sass";
 import image1 from "shared/assets/images/homeGallery1.jpg";
@@ -14,8 +14,20 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import {useTranslation} from "react-i18next";
+import {Modal} from "shared/ui/modal";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+const dataImg = [
+    image1,
+    image2,
+    image3,
+    image4,
+    image5,
+    image6,
+    image7,
+    image8
+]
 
 export const NewHomeDailyLife = () => {
     const container = useRef(null);
@@ -23,6 +35,26 @@ export const NewHomeDailyLife = () => {
     const imagesRef = useRef(null);
     const {t} = useTranslation()
 
+    const [active , setActive] = useState(null)
+
+
+    const renderImg = () => {
+        return dataImg.map(item => (
+            <img onClick={() => setActive(item)} className={`${cls.image} daily-image`} src={item} alt="turon-o'quvchilar"/>
+        ))
+    }
+
+    useEffect(() => {
+        if (active) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, [active]);
 
     useGSAP(() => {
 
@@ -46,7 +78,7 @@ export const NewHomeDailyLife = () => {
             scrollTrigger: {
                 trigger: imagesRef.current,
                 start: "top 85%",
-                end: "bottom 100%",
+                end: "bottom 110%",
                 scrub: 1,
 
             },
@@ -70,15 +102,15 @@ export const NewHomeDailyLife = () => {
                 </p>
             </div>
             <div ref={imagesRef} className={cls.dailyLife__container}>
-                <img className={`${cls.image} daily-image`} src={image1} alt=""/>
-                <img className={`${cls.image} daily-image`} src={image2} alt=""/>
-                <img className={`${cls.image} daily-image`} src={image3} alt=""/>
-                <img className={`${cls.image} daily-image`} src={image4} alt=""/>
-                <img className={`${cls.image} daily-image`} src={image5} alt=""/>
-                <img className={`${cls.image} daily-image`} src={image6} alt=""/>
-                <img className={`${cls.image} daily-image`} src={image7} alt=""/>
-                <img className={`${cls.image} daily-image`} src={image8} alt=""/>
+                {renderImg()}
             </div>
+
+            {active && <div onClick={() => setActive(null)} className={cls.modal}>
+
+                <div className={cls.modal__img}>
+                    <img  src={active} alt="turon-o'quvchilar"/>
+                </div>
+            </div>}
         </div>
     );
 };
