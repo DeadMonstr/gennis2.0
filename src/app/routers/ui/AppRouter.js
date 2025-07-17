@@ -37,7 +37,7 @@ export const AppRouter = () => {
         createRoutesFromElements(
             <>
 
-                <Route path={"/*"} element={<NewHomeUi/>}/>
+                {/*<Route path={"/*"} element={<NewHomeUi/>}/>*/}
                 {/*<Route path={"/"} element={<LayoutWebsite/>}>*/}
                 {/*    <Route*/}
                 {/*        index*/}
